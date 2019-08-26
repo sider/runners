@@ -2,7 +2,8 @@ module NodeHarness
   module Runners
     module Checkstyle
       class Processor < NodeHarness::Processor
-        Schema = StrongJSON.new do
+        Schema = _ = StrongJSON.new do
+          # @type self: JSONSchema
           let :runner_config, NodeHarness::Schema::RunnerConfig.base.update_fields { |fields|
             fields.merge!({
                             config: string?,
@@ -31,10 +32,10 @@ module NodeHarness
           if excludes
             excludes.each do |exclude|
               case
-              when exclude.key?(:string)
-                args.unshift("-e", exclude[:string])
-              when exclude.key?(:pattern)
-                args.unshift("-x", exclude[:pattern])
+              when exclude[:string]
+                args.unshift("-e", exclude.fetch(:string))
+              when exclude[:pattern]
+                args.unshift("-x", exclude.fetch(:pattern))
               end
             end
           end
@@ -79,9 +80,9 @@ module NodeHarness
             trace_writer.message("Excluded directories: #{excludes.map { |x|
               case
               when x[:string]
-                "string(#{x[:string]})"
+                "string(#{x.fetch(:string)})"
               when x[:pattern]
-                "pattern(#{x[:pattern]})"
+                "pattern(#{x.fetch(:pattern)})"
               end
             }.join(", ")}") unless excludes.empty?
 
@@ -90,7 +91,7 @@ module NodeHarness
 
             output, _, _ = checkstyle(*dir, config: config_file, format: :xml, excludes: excludes, properties: properties)
 
-            NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+            NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer!).tap do |result|
               construct_result(result, output)
             end
           end

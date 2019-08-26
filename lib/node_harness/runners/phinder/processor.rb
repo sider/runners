@@ -2,7 +2,8 @@ module NodeHarness
   module Runners
     module Phinder
       class Processor < NodeHarness::Processor
-        Schema = StrongJSON.new do
+        Schema = _ = StrongJSON.new do
+          # @type self: JSONSchema
           let :runner_config, NodeHarness::Schema::RunnerConfig.base.update_fields { |fields|
             fields.merge!({
                             rule: string?,
@@ -151,7 +152,7 @@ module NodeHarness
               File not found: `phinder.yml`. This file is necessary for analysis.
               See also: https://help.sider.review/tools/php/phinder
             MESSAGE
-            NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer)
+            NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer!)
           end
         end
       end

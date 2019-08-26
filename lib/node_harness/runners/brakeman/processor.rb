@@ -6,7 +6,8 @@ module NodeHarness
 
         attr_reader :analyzer
 
-        Schema = StrongJSON.new do
+        Schema = _ = StrongJSON.new do
+          # @type self: JSONSchema
           let :runner_config, NodeHarness::Schema::RunnerConfig.ruby
         end
 
@@ -26,7 +27,7 @@ module NodeHarness
         def setup
           ensure_runner_config_schema(Schema.runner_config) do
             install_gems DEFAULT_GEMS, constraints: CONSTRAINTS do |versions|
-              @analyzer = NodeHarness::Analyzer.new(name: 'brakeman', version: versions["brakeman"])
+              @analyzer = NodeHarness::Analyzer.new(name: 'brakeman', version: versions.fetch("brakeman"))
               yield
             end
           end
@@ -38,12 +39,12 @@ module NodeHarness
         def analyze(changes)
           # run analysis and return result
           stdout, stderr, status = capture3('bundle', 'exec', 'brakeman', '--format=json', '--no-exit-on-warn', '--no-exit-on-error')
-          return NodeHarness::Results::Failure.new(guid: guid, message: stderr, analyzer: analyzer) unless status.success?
+          return NodeHarness::Results::Failure.new(guid: guid, message: stderr, analyzer: analyzer!) unless status.success?
           construct_result(stdout)
         end
 
         def construct_result(stdout)
-          NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+          NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer!).tap do |result|
             json = JSON.parse(stdout, symbolize_names: true)
             json[:warnings].each do |warning|
               path = relative_path(warning[:file])

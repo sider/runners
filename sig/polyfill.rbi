@@ -17,6 +17,8 @@ class Pathname
   def write: (String) -> void
   def sub_ext: (String) -> self
   def expand_path: (*String) -> self
+  def delete: -> void
+  def parent: -> self
 end
 
 extension Object (Pathname)
@@ -26,7 +28,6 @@ end
 extension Object (Polyfill)
   def instance_of?: (any) -> bool
   def Array: (any) -> Array<any>
-  def load: (String) -> bool
 end
 
 extension Module (Polyfill)
@@ -37,6 +38,27 @@ end
 extension String (Polyfill)
   def strip: -> String
   def strip!: -> String
+  def match: (Regexp) -> MatchData?
+           | <'x> (Regexp) { (MatchData) -> 'x } -> 'x
+  def each_line: { (String) -> any } -> String
+
+  # ActiveSupport
+  def pluralize: () -> String
+               | (Integer) -> String
+end
+
+extension Float (Polyfill)
+  def to_i: -> Integer
+end
+
+extension Kernel (Polyfill)
+  def exit: (Integer) -> void
+  def system: (String) -> any
+  def load: (String) -> bool
+end
+
+extension NilClass (Polyfill)
+  def to_i: -> Integer
 end
 
 class Time
@@ -61,6 +83,7 @@ end
 
 extension File (Polyfill)
   def self.basename: (String | Pathname) -> String
+  def self.write: (String | Pathname, String) -> void
 end
 
 class Digest
@@ -68,16 +91,21 @@ end
 
 class Digest::SHA1
   def file: (String) -> instance
+  def self.hexdigest: (String) -> String
 end
 
 class FileUtils
   def self.rm: (Array<String>) -> void
+  def self.rm_r: (Array<String>, secure: bool) -> void
   def self.install: (String, String, ?any) -> void
   def self.copy_entry: (any, any) -> void
+  def self.cp: (String | Pathname, String | Pathname) -> void
 end
 
 class Dir
+  def self.home: -> String
   def self.mktmpdir: <'a> { (String) -> 'a } -> 'a
+  def self.glob: (String | Pathname) -> Array<String>
 end
 
 class URI
@@ -147,6 +175,12 @@ end
 extension Hash (Polyfill)
   def deep_merge: (Hash<any, any>) -> Hash<any, any>
   def fetch: ('key) -> 'value
+  def merge!: (*Hash<'key, 'value>) -> Hash<'key, 'value>
+  def dig: (*any) -> any
+  def named_captures: -> Hash<String, String | nil>
+
+  # ActiveSupport
+  def deep_symbolize_keys: -> Hash<Symbol, any>
 end
 
 class Bundler::LockfileParser
@@ -159,4 +193,5 @@ end
 
 class YAML
   def self.load_file: (String, fallback: any) -> any
+  def self.safe_load: (String, symbolize_names: bool) -> any
 end

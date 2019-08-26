@@ -4,7 +4,8 @@ module NodeHarness
       class Processor < NodeHarness::Processor
         include NodeHarness::Nodejs
 
-        Schema = StrongJSON.new do
+        Schema = _ = StrongJSON.new do
+          # @type self: JSONSchema
           let :runner_config, NodeHarness::Schema::RunnerConfig.npm.update_fields { |fields|
             fields.merge!({
                             glob: string?,
@@ -30,7 +31,7 @@ module NodeHarness
           extras: [
             Dependency.new(name: "typescript", version: "3.4.3"),
           ],
-        )
+        ).freeze
 
         CONSTRAINTS = {
           "tslint" => Constraint.new(">= 5.0.0", "< 6.0.0"),
@@ -87,16 +88,12 @@ module NodeHarness
         end
 
         def target_glob(config)
-          if config[:glob]
-            config[:glob]
-          else
-            '**/*.ts{,x}'
-          end
+          config[:glob] || '**/*.ts{,x}'
         end
 
         def tslint_config(config)
           config = config[:config] || config.dig(:options, :config)
-          ["--config", "#{config}"] if config
+          config ? ["--config", "#{config}"] : []
         end
 
         def exclude(config)
@@ -110,17 +107,19 @@ module NodeHarness
 
         def project(config)
           project = config[:project] || config.dig(:options, :project)
-          ["--project", "#{project}"] if project
+          project ? ["--project", "#{project}"] : []
         end
 
         def rules_dir(config)
+          # FIXME: This `@type` comment is unneeded ideally.
+          # @type var config: any
           rules_dir = config[:'rules-dir'] || config.dig(:options, :'rules-dir')
-          if rules_dir
-            Array(rules_dir).map { |dir| ["--rules-dir", dir] }.flatten
-          end
+          Array(rules_dir || []).map { |dir| ["--rules-dir", dir] }.flatten
         end
 
         def type_check(config)
+          # FIXME: This `@type` comment is unneeded ideally.
+          # @type var config: any
           type_check = config[:'type-check'] || config.dig(:options, :'type-check')
           "--type-check" if type_check
         end
@@ -138,10 +137,10 @@ module NodeHarness
           # 1: An invalid command line argument, combination thereof was used, or compilation error with `--type-check`
           # 2: Linting failed with one or more rule violations with severity error
           unless status.exitstatus == 0 || status.exitstatus == 2
-            return NodeHarness::Results::Failure.new(guid: guid, message: stderr, analyzer: analyzer)
+            return NodeHarness::Results::Failure.new(guid: guid, message: stderr, analyzer: analyzer!)
           end
 
-          NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+          NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer!).tap do |result|
             JSON.parse(stdout, symbolize_names: true).each do |issue|
               # NOTE: With --format=json, startPosition.line is zero-based numbering, that's why `+ 1` is added.
               #

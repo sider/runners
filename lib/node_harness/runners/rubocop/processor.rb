@@ -6,7 +6,8 @@ module NodeHarness
 
         attr_reader :analyzer
 
-        Schema = StrongJSON.new do
+        Schema = _ = StrongJSON.new do
+          # @type self: JSONSchema
           let :runner_config, NodeHarness::Schema::RunnerConfig.ruby.update_fields { |fields|
             fields.merge!({
                             config: string?,
@@ -77,7 +78,7 @@ module NodeHarness
             end
 
             install_gems defaults, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS do |versions|
-              @analyzer = NodeHarness::Analyzer.new(name: 'RuboCop', version: versions["rubocop"])
+              @analyzer = NodeHarness::Analyzer.new(name: 'RuboCop', version: versions.fetch("rubocop"))
               yield
             end
           end
@@ -106,11 +107,11 @@ module NodeHarness
           ]
 
           # Additional Options
-          opts << rails_option(config)
-          opts << config_file(config)
-          opts << safe(config)
+          rails_option(config).tap { |opt| opts << opt if opt }
+          config_file(config).tap { |opt| opts << opt if opt }
+          safe(config).tap { |opt| opts << opt if opt }
 
-          yield opts.compact
+          yield opts
         end
 
         def rails_option(config)
@@ -199,7 +200,7 @@ module NodeHarness
             TEXT
           end
 
-          NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+          NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer!).tap do |result|
             break result if stdout == '' # No offenses
 
             JSON.parse(stdout, symbolize_names: true)[:files].reject { |v| v[:offenses].empty? }.each do |hash|

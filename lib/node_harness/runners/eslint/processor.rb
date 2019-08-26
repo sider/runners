@@ -4,7 +4,8 @@ module NodeHarness
       class Processor < NodeHarness::Processor
         include NodeHarness::Nodejs
 
-        Schema = StrongJSON.new do
+        Schema = _ = StrongJSON.new do
+          # @type self: JSONSchema
           let :runner_config, NodeHarness::Schema::RunnerConfig.npm.update_fields { |fields|
             fields.merge!({
                             dir: enum?(string, array(string)),
@@ -31,7 +32,7 @@ module NodeHarness
           }
         end
 
-        DEFAULT_DEPS = DefaultDependencies.new(main: Dependency.new(name: "eslint", version: "5.16.0"))
+        DEFAULT_DEPS = DefaultDependencies.new(main: Dependency.new(name: "eslint", version: "5.16.0")).freeze
         CONSTRAINTS = {
           "eslint" => Constraint.new(">= 3.19.0", "< 7.0.0")
         }.freeze
@@ -111,19 +112,22 @@ module NodeHarness
         end
 
         def ignore_path(config)
+          # FIXME: This `@type` comment is unneeded ideally.
+          # @type var config: any
           ignore_path = config[:'ignore-path'] || config.dig(:options, :'ignore-path')
           "--ignore-path=#{ignore_path}" if ignore_path
         end
 
         def ignore_pattern(config)
+          # FIXME: This `@type` comment is unneeded ideally.
+          # @type var config: any
           ignore_pattern = config[:'ignore-pattern'] || config.dig(:options, :'ignore-pattern')
-          pattern = Array(ignore_pattern)
-          unless pattern.empty?
-            pattern.map { |value| "--ignore-pattern=#{value}" }
-          end
+          Array(ignore_pattern).map { |value| "--ignore-pattern=#{value}" }
         end
 
         def no_ignore(config)
+          # FIXME: This `@type` comment is unneeded ideally.
+          # @type var config: any
           no_ignore = config[:'no-ignore'] || config.dig(:options, :'no-ignore')
           "--no-ignore" if no_ignore
         end
@@ -220,11 +224,11 @@ module NodeHarness
           end
 
           if status.success? || output_json
-            NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+            NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer!).tap do |result|
               parse_result(output_json).each { |v| result.add_issue(v) } if output_json
             end
           else
-            NodeHarness::Results::Failure.new(guid: guid, message: <<~MESSAGE, analyzer: analyzer)
+            NodeHarness::Results::Failure.new(guid: guid, message: <<~MESSAGE, analyzer: analyzer!)
               stdout:
               #{stdout}
 

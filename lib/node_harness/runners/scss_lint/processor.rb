@@ -2,7 +2,8 @@ module NodeHarness
   module Runners
     module ScssLint
       class Processor < NodeHarness::Processor
-        Schema = StrongJSON.new do
+        Schema = _ = StrongJSON.new do
+          # @type self: JSONSchema
           let :runner_config, object(
             root_dir: string?,
             config: string?,
@@ -16,12 +17,21 @@ module NodeHarness
         # https://github.com/brigade/scss-lint#exit-status-codes
         EXIT_CODE_FILES_NOT_EXIST = 80
 
-        def scss_lint_version
-          @scss_lint_version ||= capture3('scss-lint', '--version').first[/scss-lint ([0-9.]+)/, 1]
+        def analyzer_version
+          @analyzer_version ||=
+            begin
+              stdout, _ = capture3!('scss-lint', '--version')
+              match = stdout.match(/scss-lint ([0-9.]+)/)
+              if match
+                match.captures.first
+              else
+                raise "Not found version in #{stdout.inspect}"
+              end
+            end
         end
 
         def analyzer
-          NodeHarness::Analyzer.new(name: "SCSS-Lint", version: scss_lint_version)
+          NodeHarness::Analyzer.new(name: "SCSS-Lint", version: analyzer_version)
         end
 
         def self.ci_config_section_name
@@ -42,7 +52,7 @@ module NodeHarness
 
         def check_runner_config(config)
           scss_lint_config = scss_lint_config(config)
-          yield [scss_lint_config].compact
+          yield(scss_lint_config ? [scss_lint_config] : [])
         end
 
         def scss_lint_config(config)
@@ -50,7 +60,6 @@ module NodeHarness
           "--config=#{config}" if config
         end
 
-        # @param stdout [String]
         def parse_result(stdout)
           JSON.parse(stdout).flat_map do |file, issues|
             issues.map do |issue|
@@ -80,15 +89,15 @@ module NodeHarness
           # https://github.com/brigade/scss-lint#exit-status-codes
           case status.exitstatus
           when 0..2
-            NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+            NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer!).tap do |result|
               parse_result(stdout).each { |v| result.add_issue(v) }
             end
           when EXIT_CODE_FILES_NOT_EXIST
             # NOTE: If there are no analysis target files, returns `Success` with a warning.
             add_warning(stdout.chomp)
-            NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer)
+            NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer!)
           else
-            NodeHarness::Results::Failure.new(guid: guid, message: <<~MESSAGE, analyzer: analyzer)
+            NodeHarness::Results::Failure.new(guid: guid, message: <<~MESSAGE, analyzer: analyzer!)
               stdout:
               #{stdout}
 

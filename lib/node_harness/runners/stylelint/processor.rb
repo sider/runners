@@ -4,7 +4,8 @@ module NodeHarness
       class Processor < NodeHarness::Processor
         include NodeHarness::Nodejs
 
-        Schema = StrongJSON.new do
+        Schema = _ = StrongJSON.new do
+          # @type self: JSONSchema
           let :runner_config, NodeHarness::Schema::RunnerConfig.npm.update_fields { |fields|
             fields.merge!({
                             config: string?,
@@ -33,7 +34,7 @@ module NodeHarness
           extras: [
             Dependency.new(name: "stylelint-config-recommended", version: "2.2.0"),
           ],
-        )
+        ).freeze
 
         CONSTRAINTS = {
           "stylelint" => Constraint.new(">= 8.3.0", "< 11.0.0"),
@@ -115,16 +116,22 @@ module NodeHarness
         end
 
         def ignore_path(config)
+          # FIXME: This `@type` comment is unneeded ideally.
+          # @type var config: any
           ignore_path = config[:'ignore-path'] || config.dig(:options, :'ignore-path')
           "--ignore-path=#{ignore_path}" if ignore_path
         end
 
         def ignore_disables(config)
+          # FIXME: This `@type` comment is unneeded ideally.
+          # @type var config: any
           ignore_disables = config[:'ignore-disables'] || config.dig(:options, :'ignore-disables')
           "--ignore-disables" if ignore_disables
         end
 
         def report_needless_disables(config)
+          # FIXME: This `@type` comment is unneeded ideally.
+          # @type var config: any
           rd = config[:'report-needless-disables'] || config.dig(:options, :'report-needless-disables')
           "--report-needless-disables" if rd
         end
@@ -134,7 +141,6 @@ module NodeHarness
           "--quiet" if quiet
         end
 
-        # @param stdout [String]
         def parse_result(stdout)
           JSON.parse(stdout).flat_map do |file|
             check_warning(file['deprecations'])
@@ -159,16 +165,17 @@ module NodeHarness
 
         def prepare_config_file(config)
           return if config_file_path(config)
+
           src = (Pathname(Dir.home) / 'sider_recommended_config.yaml').realpath
           dst = current_dir.join('.stylelintrc.yaml')
-          FileUtils.copy(src, dst)
+          FileUtils.cp(src, dst)
         end
 
         def prepare_ignore_file
           ignore_file_path = current_dir.join('.stylelintignore')
           return if ignore_file_path.file?
           src = (Pathname(Dir.home) / 'sider_recommended_stylelintignore').realpath
-          FileUtils.copy(src, ignore_file_path)
+          FileUtils.cp(src, ignore_file_path)
         end
 
         # returns available config file path. If the file doesn't exist, it returns nil.
@@ -181,15 +188,23 @@ module NodeHarness
           else
             # @see https://github.com/stylelint/stylelint/blob/master/docs/user-guide/configuration.md
             candidates = %w[
-        .stylelintrc
-        .stylelintrc.js
-        .stylelintrc.json
-        .stylelintrc.yaml
-        .stylelintrc.yml
-        stylelint.config.js
-      ]
+              .stylelintrc
+              .stylelintrc.js
+              .stylelintrc.json
+              .stylelintrc.yaml
+              .stylelintrc.yml
+              stylelint.config.js
+            ]
             candidates.map { |filename| current_dir / filename }.find(&:exist?)
           end
+        end
+
+        def config_file_path!(config)
+          config_file_path(config) or raise "Not found config file: #{config.inspect}"
+        end
+
+        def warning_set
+          @warning_set ||= Set.new
         end
 
         # Save warnings written by stylelint.
@@ -198,11 +213,10 @@ module NodeHarness
         # the same number of duplicated warnings as files will appear.
         # We use `Set` to avoid it.
         #
-        # @param deprecations [Array<Hash>]
+        # @see https://github.com/stylelint/stylelint/blob/0fb8b6d561ca59830cb6d66addf588cfe6169ff1/lib/createStylelintResult.js#L6-L18
         def check_warning(deprecations)
-          @warning_set ||= Set.new
           deprecations.each do |dep|
-            @warning_set << "#{dep['text']} #{dep['reference']}"
+            warning_set << "#{dep['text']} #{dep['reference']}"
           end
         end
 
@@ -233,14 +247,15 @@ module NodeHarness
           # 2 => Issues exist
           # Others => Something wrong, target files don't exist, ...
           unless [0, 2].include?(status.exitstatus)
-            return NodeHarness::Results::Failure.new(guid: guid, message: [stdout, stderr].join("\n"), analyzer: analyzer)
+            return NodeHarness::Results::Failure.new(guid: guid, message: [stdout, stderr].join("\n"), analyzer: analyzer!)
           end
 
-          NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+          NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer!).tap do |result|
             parse_result(stdout).each { |v| result.add_issue(v) }
-            config_file_path = relative_path(config_file_path(config)).to_s
-            @warning_set&.sort&.each do |warning|
-              add_warning(warning, file: config_file_path)
+
+            conf_path = relative_path(config_file_path!(config)).to_s
+            warning_set.sort.each do |warning|
+              add_warning(warning, file: conf_path)
             end
           end
         end

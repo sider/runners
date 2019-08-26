@@ -2,7 +2,8 @@ module NodeHarness
   module Runners
     module Misspell
       class Processor < NodeHarness::Processor
-        Schema = StrongJSON.new do
+        Schema = _ = StrongJSON.new do
+          # @type self: JSONSchema
           let :runner_config, NodeHarness::Schema::RunnerConfig.base.update_fields { |fields|
             fields.merge!({
                             exclude: array?(string),
@@ -23,11 +24,15 @@ module NodeHarness
         end
 
         def analyzer
-          @analyzer ||= NodeHarness::Analyzer.new(name: 'Misspell', version: misspell_version)
+          @analyzer ||= NodeHarness::Analyzer.new(name: 'Misspell', version: analyzer_version)
         end
 
-        def misspell_version
-          capture3!('misspell', '-v').first.chomp
+        def analyzer_version
+          @analyzer_version ||=
+            begin
+              stdout, _ = capture3! 'misspell', '-v'
+              stdout.chomp
+            end
         end
 
         def setup
@@ -60,41 +65,42 @@ module NodeHarness
           # NOTE: Prevent command injection with `'--'`.
           stdout, _stderr, _status = capture3!('misspell', *options, '--', *targets)
 
-          NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+          NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer!).tap do |result|
             stdout.split("\n").each do |line|
-              match = line.match(/^(?<file>.+):(?<line>\d+):(?<col>\d+): (?<message>"(?<misspell>.+)" is a misspelling of ".+")$/)
-              lineno = match[:line].to_i
-              col = match[:col].to_i
-              misspell = match[:misspell]
-              message = match[:message]
+              line.match(/^(?<file>.+):(?<line>\d+):(?<col>\d+): (?<message>"(?<misspell>.+)" is a misspelling of ".+")$/) do |match|
+                lineno = match[:line].to_i
+                col = match[:col].to_i
+                misspell = match[:misspell].to_s
+                message = match[:message].to_s
 
-              file = match[:file]
-              loc = NodeHarness::Location.new(
-                start_line: lineno,
-                start_column: col,
-                end_line: lineno,
-                end_column: col + misspell.size,
-              )
-              result.add_issue NodeHarness::Issues::Text.new(
-                path: relative_path(file),
-                location: loc,
-                id: message,
-                message: message,
-                links: [],
-              )
+                file = match[:file].to_s
+                loc = NodeHarness::Location.new(
+                  start_line: lineno,
+                  start_column: col,
+                  end_line: lineno,
+                  end_column: col + misspell.size,
+                )
+                result.add_issue NodeHarness::Issues::Text.new(
+                  path: relative_path(file),
+                  location: loc,
+                  id: message,
+                  message: message,
+                  links: [],
+                )
+              end
             end
           end
         end
 
         def locale(config)
           locale = config[:locale] || config.dig(:options, :locale)
-          ["-locale", "#{locale}"] if locale
+          locale ? ["-locale", "#{locale}"] : []
         end
 
         def ignore(config)
           # The option requires comma separeted with string when user would like to set ignore multiple targets.
           ignore = config[:ignore] || config.dig(:options, :ignore)
-          ["-i", "#{ignore}"] if ignore
+          ignore ? ["-i", "#{ignore}"] : []
         end
 
         def analysis_targets(config)

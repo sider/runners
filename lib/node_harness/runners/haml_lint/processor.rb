@@ -6,7 +6,8 @@ module NodeHarness
 
         attr_reader :analyzer
 
-        Schema = StrongJSON.new do
+        Schema = _ = StrongJSON.new do
+          # @type self: JSONSchema
           let :runner_config, NodeHarness::Schema::RunnerConfig.ruby.update_fields { |fields|
             fields.merge!({
                             file: string?,
@@ -76,7 +77,7 @@ module NodeHarness
             end
 
             install_gems defaults, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS do |versions|
-              @analyzer = NodeHarness::Analyzer.new(name: 'haml_lint', version: versions["haml_lint"])
+              @analyzer = NodeHarness::Analyzer.new(name: 'haml_lint', version: versions.fetch("haml_lint"))
               yield
             end
           end
@@ -108,12 +109,12 @@ module NodeHarness
           targets = file(config)
 
           # Additional option.
-          include_linter = include_linter(config)
-          exclude_linter = exclude_linter(config)
-          exclude = exclude(config)
-          haml_lint_config = haml_lint_config(config)
+          options = []
+          include_linter(config).tap { |opt| options << opt if opt }
+          exclude_linter(config).tap { |opt| options << opt if opt }
+          exclude(config).tap { |opt| options << opt if opt }
+          haml_lint_config(config).tap { |opt| options << opt if opt }
 
-          options = [include_linter, exclude_linter, exclude, haml_lint_config].compact
           yield targets, options
         end
 
@@ -147,7 +148,6 @@ module NodeHarness
           "--config=#{config}" if config
         end
 
-        # @param stdout [String]
         def parse_result(stdout)
           JSON.parse(stdout)['files'].flat_map do |file|
             path = file['path']
@@ -193,7 +193,7 @@ module NodeHarness
             MESSAGE
           end
 
-          NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+          NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer!).tap do |result|
             parse_result(stdout).each { |v| result.add_issue(v) }
           end
         end

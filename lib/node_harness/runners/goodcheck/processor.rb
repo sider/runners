@@ -6,7 +6,8 @@ module NodeHarness
 
         attr_reader :analyzer
 
-        Schema = StrongJSON.new do
+        Schema = _ = StrongJSON.new do
+          # @type self: JSONSchema
           let :rule, object(
             id: string,
             message: string,
@@ -16,7 +17,7 @@ module NodeHarness
           let :runner_config, NodeHarness::Schema::RunnerConfig.ruby.update_fields { |fields|
             fields.merge!({
                             config: string?,
-                            target: optional(enum(string, array(string)))
+                            target: enum?(string, array(string)),
                           })
           }.freeze
         end
@@ -45,8 +46,13 @@ module NodeHarness
           end
         end
 
+        def config_option(config)
+          conf = config[:config]
+          conf ? ["--config", conf] : []
+        end
+
         def goodcheck_test(config)
-          stdout, _, status = capture3("bundle", "exec", "goodcheck", "test", *(config[:config] ? ["--config", config[:config]] : []))
+          stdout, _, status = capture3("bundle", "exec", "goodcheck", "test", *config_option(config))
 
           if !status.success? && !stdout.empty?
             msg = <<~MESSAGE.chomp
@@ -62,9 +68,9 @@ module NodeHarness
         end
 
         def goodcheck_check(config)
-          targets = Array(config[:target]) || ["."]
-          config = config[:config]
-          args = (config ? ["--config", config] : []) + targets
+          args = []
+          args += config_option(config)
+          args += Array(config[:target] || ".")
 
           stdout, stderr, _ = capture3("bundle", "exec", "goodcheck", "check", "--format=json", *args)
 
@@ -77,7 +83,7 @@ module NodeHarness
             end
           end
 
-          NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+          NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer!).tap do |result|
             json.each do |hash|
               id = hash[:rule_id]
               path = relative_path(hash[:path])
@@ -115,7 +121,7 @@ module NodeHarness
         def setup
           ret = ensure_runner_config_schema(Schema.runner_config) do
             install_gems DEFAULT_GEMS, constraints: CONSTRAINTS do |versions|
-              @analyzer = NodeHarness::Analyzer.new(name: 'goodcheck', version: versions["goodcheck"])
+              @analyzer = NodeHarness::Analyzer.new(name: 'goodcheck', version: versions.fetch("goodcheck"))
               yield
             end
           end
@@ -130,7 +136,7 @@ module NodeHarness
               - https://github.com/sider/goodcheck
               - https://help.sider.review/tools/others/goodcheck
             MESSAGE
-            NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer)
+            NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer!)
           else
             ret
           end

@@ -2,7 +2,8 @@ module NodeHarness
   module Runners
     module Javasee
       class Processor < NodeHarness::Processor
-        Schema = StrongJSON.new do
+        Schema = _ = StrongJSON.new do
+          # @type self: JSONSchema
           let :runner_config, NodeHarness::Schema::RunnerConfig.base.update_fields { |hash|
             hash[:dir] = enum?(string, array(string), detector: -> (value) {
               case value
@@ -41,12 +42,17 @@ module NodeHarness
                          *dirs.map(&:to_s))
         end
 
-        def javasee_version()
-          shell.capture3!(javasee, "version")
-        end
-
         def analyzer_version
-          @analyzer_version ||= javasee_version.first.split.last
+          @analyzer_version ||=
+            begin
+              stdout, _ = shell.capture3!(javasee, "version")
+              match = stdout.match(/(\d+\.\d+\.\d+\.)/)
+              if match
+                match.captures.first
+              else
+                raise "Not found version in #{stdout.inspect}"
+              end
+            end
         end
 
         def analyzer
@@ -63,7 +69,7 @@ module NodeHarness
               stdout, stderr, status = javasee_check dirs: dirs, config_path: config_path
 
               if status.success? || status.exitstatus == 2
-                NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+                NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer!).tap do |result|
                   construct_result(result, stdout, stderr)
                 end
               else

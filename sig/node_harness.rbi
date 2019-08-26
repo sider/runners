@@ -1,10 +1,10 @@
 class NodeHarness::Location
   attr_reader start_line: Integer
-  attr_reader start_column: Integer
-  attr_reader end_line: Integer
-  attr_reader end_column: Integer
+  attr_reader start_column: Integer?
+  attr_reader end_line: Integer?
+  attr_reader end_column: Integer?
 
-  def initialize: (start_line: Integer, start_column: Integer, end_line: Integer, end_column: Integer) -> any
+  def initialize: (start_line: Integer, start_column: Integer | nil, end_line: Integer | nil, end_column: Integer | nil) -> any
   def valid?: () -> bool
   def ensure_validity: <'a> { (self) -> 'a } -> 'a
                      | -> self
@@ -161,8 +161,8 @@ class NodeHarness::Workspace
   def initialize: (working_dir: Pathname, head_dir: Pathname, base_dir: Pathname, git_ssh_path: String?) -> any
 
   def calculate_changes: () -> Changes
-  def self.open: <'a> (base: String?, base_key: String?, head: String, head_key: String?, ssh_key: String, working_dir: Pathname, trace_writer: TraceWriter) { (instance) -> 'a } -> 'a
-  def self.prepare_ssh: <'a> (String, trace_writer: TraceWriter) { (String?) -> 'a } -> 'a
+  def self.open: <'a> (base: String?, base_key: String?, head: String, head_key: String?, ssh_key: String?, working_dir: Pathname, trace_writer: TraceWriter) { (instance) -> 'a } -> 'a
+  def self.prepare_ssh: <'a> (String?, trace_writer: TraceWriter) { (String?) -> 'a } -> 'a
   def self.prepare_in_dir: (prepare_type, String, String?, Pathname, trace_writer: TraceWriter) -> void
   def self.decrypt: <'a> (Pathname, String?, trace_writer: TraceWriter) { (Pathname) -> 'a } -> 'a
   def self.decrypt_by_openssl: (Pathname, String, Pathname) -> void
@@ -184,7 +184,7 @@ class NodeHarness::Processor
   attr_reader ci_config_for_collect: any
 
   def initialize: (guid: any, working_dir: any, git_ssh_path: any, trace_writer: TraceWriter) -> any
-  def relative_path: (String, ?from: Pathname) -> Pathname
+  def relative_path: (String | Pathname, ?from: Pathname) -> Pathname
   def setup: () { -> result } -> result
   def analyze: (Changes) -> result
   def ci_config_path: () -> Pathname
@@ -211,6 +211,7 @@ class NodeHarness::Processor
   def with_analyzer: <'x> (Analyzer?) { () -> 'x } -> 'x
   def analyzer: -> Analyzer?
   def analyzer!: -> Analyzer
+  def analyzer_version: -> String
   def build_field_reference_from_path: (StrongJSON::Type::ErrorPath) -> String
   def root_dir: -> Pathname
   def directory_traversal_attack?: (String) -> bool
@@ -275,12 +276,14 @@ class NodeHarness::CLI
   attr_reader ssh_key: String
   attr_reader working_dir: String?
   attr_reader guid: String
-  @encryption_key: nil
+  attr_reader analyzer: String
 
   def initialize: (argv: Array<String>, stdout: IO, stderr: IO) -> any
 
   def with_working_dir: <'x> { (Pathname) -> 'x } -> 'x
+  def processor_class: () -> Processor.class
   def validate_options!: () -> self
+  def validate_analyzer!: () -> void
   def run: () -> void
 end
 
@@ -444,4 +447,33 @@ class NodeHarness::Nodejs::Constraint
   def initialize: (String, *String) -> any
   def satisfied_by?: (Dependency) -> bool
   def unsatisfied_by?: (Dependency) -> bool
+end
+
+class NodeHarness::Testing::Smoke
+  attr_reader argv: any
+  attr_reader data_container: any
+  attr_reader data_smoke_path: any
+
+  def docker_image: () -> any
+  def entrypoint: () -> any
+  def expectations: () -> any
+  def initialize: (any) -> any
+  def run: () -> any
+  def run_test: (any, any, any) -> any
+  def unify_result: (any, any, any) -> any
+  def with_data_container: <'x> { () -> 'x } -> 'x
+  def command_line: (any, any) -> any
+
+  def self.add_test: (any, any, **any) { (Configuration) -> void } -> void
+  def self.tests: () -> any
+  def self.configs: () -> any
+
+  # By UnificationAssertion (unification_assertion)
+  def unify: (any) { (any) -> any } -> any
+end
+
+NodeHarness::Testing::Smoke::ROOT_DATA_DIR: Pathname
+
+class NodeHarness::Testing::Smoke::Configuration
+  attr_accessor ssh_key: String?
 end

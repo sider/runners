@@ -6,7 +6,8 @@ module NodeHarness
 
         attr_reader :analyzer
 
-        Schema = StrongJSON.new do
+        Schema = _ = StrongJSON.new do
+          # @type self: JSONSchema
           let :runner_config, NodeHarness::Schema::RunnerConfig.ruby.update_fields { |fields|
             fields.merge!({
                             vendor: boolean?,
@@ -55,7 +56,7 @@ module NodeHarness
         def setup
           ensure_runner_config_schema(Schema.runner_config) do
             install_gems DEFAULT_GEMS, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS do |versions|
-              @analyzer = NodeHarness::Analyzer.new(name: 'rails_best_practices', version: versions["rails_best_practices"])
+              @analyzer = NodeHarness::Analyzer.new(name: 'rails_best_practices', version: versions.fetch("rails_best_practices"))
               yield
             end
           end
@@ -76,15 +77,16 @@ module NodeHarness
         private
 
         def check_runner_config(config)
-          vendor = vendor(config)
-          spec = spec(config)
-          test = test(config)
-          features = features(config)
-          exclude = exclude(config)
-          only = only(config)
-          config = config(config)
+          opts = []
+          vendor(config).tap { |opt| opts << opt if opt }
+          spec(config).tap { |opt| opts << opt if opt }
+          test(config).tap { |opt| opts << opt if opt }
+          features(config).tap { |opt| opts << opt if opt }
+          exclude(config).tap { |opt| opts << opt if opt }
+          only(config).tap { |opt| opts << opt if opt }
+          config(config).tap { |opt| opts << opt if opt }
 
-          yield [vendor, spec, test, features, exclude, only, config].compact
+          yield opts
         end
 
         def vendor(config)
@@ -137,7 +139,7 @@ module NodeHarness
         end
 
         def run_analyzer(options)
-          NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+          NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer!).tap do |result|
             # NOTE: rails_best_practices exit with status code n (issue count)
             #       when some issues are found.
             #       We use `capture3` instead of `capture3!`
@@ -153,7 +155,7 @@ module NodeHarness
             )
             # NOTE: rails_best_practices returns top-level YAML array with tags.
             #       We want to just parse a YAML, so we remove YAML tags before passing to `YAML.load`.
-            YAML.load(stdout.gsub('- !ruby/object:RailsBestPractices::Core::Error', '-'), symbolize_names: true).each do |yaml|
+            YAML.safe_load(stdout.gsub('- !ruby/object:RailsBestPractices::Core::Error', '-'), symbolize_names: true).each do |yaml|
               loc = NodeHarness::Location.new(
                 start_line: yaml.fetch(:line_number).to_i,
                 start_column: 0,

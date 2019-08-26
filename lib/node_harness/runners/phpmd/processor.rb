@@ -2,7 +2,8 @@ module NodeHarness
   module Runners
     module Phpmd
       class Processor < NodeHarness::Processor
-        Schema = StrongJSON.new do
+        Schema = _ = StrongJSON.new do
+          # @type self: JSONSchema
           let :runner_config, NodeHarness::Schema::RunnerConfig.base.update_fields { |fields|
             fields.merge!({
                             target: enum?(string, array(string)),
@@ -76,12 +77,8 @@ module NodeHarness
           rule = rule(config)
 
           # Additional options.
-          minimumpriority = minimumpriority(config)
-          suffixes = suffixes(config)
-          exclude = exclude(config)
-          strict = strict(config)
+          options = [minimumpriority(config), suffixes(config), exclude(config), strict(config)].flatten
 
-          options = [minimumpriority, suffixes, exclude, strict].flatten.compact
           yield targets, rule, options
         end
 
@@ -101,30 +98,30 @@ module NodeHarness
 
         def minimumpriority(config)
           min_priority = config[:minimumpriority] || config.dig(:options, :minimumpriority)
-          ["--minimumpriority", "#{min_priority}"] if min_priority
+          min_priority ? ["--minimumpriority", "#{min_priority}"] : []
         end
 
         def suffixes(config)
           suffixes = config[:suffixes] || config.dig(:options, :suffixes)
-          ["--suffixes", "#{suffixes}"] if suffixes
+          suffixes ? ["--suffixes", "#{suffixes}"] : []
         end
 
         def exclude(config)
           exclude = config[:exclude] || config.dig(:options, :exclude)
-          ["--exclude", "#{exclude}"] if exclude
+          exclude ? ["--exclude", "#{exclude}"] : []
         end
 
         def strict(config)
           strict = config[:strict] || config.dig(:options, :strict)
-          ["--strict"] if strict
+          strict ? ["--strict"] : []
         end
 
         def run_analyzer(changes, targets, rule, options)
           # PHPMD exits 1 when some violations are found.
           # The `--ignore-violation-on-exit` will exit with a zero code, even if any violations are found.
           # See. https://phpmd.org/documentation/index.html
-          commandline = ['phpmd', targets, 'xml', rule, '--ignore-violations-on-exit'] + options
-          stdout, _ = capture3!(*commandline)
+          command_args = [targets, 'xml', rule, '--ignore-violations-on-exit'] + options
+          stdout, _ = capture3!('phpmd', *command_args)
 
           change_paths = changes.changed_files.map(&:path)
           errors = Nokogiri::XML(stdout).xpath('/pmd/error').select do |error|
@@ -136,7 +133,7 @@ module NodeHarness
             return NodeHarness::Results::Failure.new(guid: guid, message: messages.join("\n"), analyzer: analyzer)
           end
 
-          NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+          NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer!).tap do |result|
             Nokogiri::XML(stdout).xpath('/pmd/file').map do |file|
               file.xpath('violation').map do |violation|
                 loc = NodeHarness::Location.new(

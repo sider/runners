@@ -4,7 +4,8 @@ module NodeHarness
       class Processor < NodeHarness::Processor
         FLAKE8_OUTPUT_FORMAT = '%(code)s:::%(path)s:::%(row)d:::%(col)d:::%(text)s'.freeze
 
-        Schema = StrongJSON.new do
+        Schema = _ = StrongJSON.new do
+          # @type self: JSONSchema
           let :runner_config, NodeHarness::Schema::RunnerConfig.base.update_fields { |fields|
             fields.merge!({
                             version: numeric?,
@@ -33,7 +34,7 @@ module NodeHarness
         private
 
         def analyzer
-          NodeHarness::Analyzer.new(name: 'Flake8', version: flake8_version)
+          NodeHarness::Analyzer.new(name: 'Flake8', version: analyzer_version)
         end
 
         def prepare_config
@@ -54,11 +55,17 @@ module NodeHarness
         end
 
         def detected_python_version(config)
-          [
+          version = [
             specified_python_version(config),
             specified_python_version_via_pyenv,
             python3_version
           ].compact.first
+
+          if version
+            version
+          else
+            raise "Not found version from #{config.inspect}"
+          end
         end
 
         def specified_python_version(config)
@@ -71,7 +78,7 @@ module NodeHarness
         end
 
         def specified_python_version_via_pyenv
-          python_version = Pathname(current_dir + '.python-version')
+          python_version = current_dir / '.python-version'
           if python_version.exist?
             version = if python_version.read.start_with? '2'
                         python2_version
@@ -88,16 +95,35 @@ module NodeHarness
           (Pathname(Dir.home) / '.config/ignored-config.ini').realpath
         end
 
+        def python_version(version_number)
+          stdout, _ = capture3! 'pyenv', 'versions', '--bare'
+          match = stdout.match(/^(#{version_number}\.\d+\.\d+)$/m)
+          if match
+            match.captures.first
+          else
+            raise "Not found version in #{stdout.inspect}"
+          end
+        end
+
         def python2_version
-          @python2_version ||= capture3!('pyenv', 'versions', '--bare').first.match(/^2[0-9\.]+$/m).to_s
+          @python2_version ||= python_version(2)
         end
 
         def python3_version
-          @python3_version ||= capture3!('pyenv', 'versions', '--bare').first.match(/^3[0-9\.]+$/m).to_s
+          @python3_version ||= python_version(3)
         end
 
-        def flake8_version
-          @flake8_version ||= capture3!('flake8', '--version').first.split.first
+        def analyzer_version
+          @analyzer_version ||=
+            begin
+              stdout, _ = capture3! 'flake8', '--version'
+              match = stdout.match(/(\d+\.\d+\.\d+)/)
+              if match
+                match.captures.first
+              else
+                raise "Not found version in #{stdout.inspect}"
+              end
+            end
         end
 
         def parse_result(output)
@@ -122,11 +148,11 @@ module NodeHarness
               message: "[#{id}] #{message}",
               links: []
             )
-          end.compact
+          end
         end
 
         def run_analyzer
-          NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+          NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer!).tap do |result|
             output = Dir.mktmpdir do |tmpdir|
               output_path = Pathname(tmpdir) + 'output.txt'
               capture3!(

@@ -6,7 +6,8 @@ module NodeHarness
 
         attr_reader :analyzer
 
-        Schema = StrongJSON.new do
+        Schema = _ = StrongJSON.new do
+          # @type self: JSONSchema
           let :runner_config, NodeHarness::Schema::RunnerConfig.ruby
 
           let :rule, object(
@@ -37,7 +38,7 @@ module NodeHarness
         def setup
           ret = ensure_runner_config_schema(Schema.runner_config) do
             install_gems DEFAULT_GEMS, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS do |versions|
-              @analyzer = NodeHarness::Analyzer.new(name: 'querly', version: versions["querly"])
+              @analyzer = NodeHarness::Analyzer.new(name: 'querly', version: versions.fetch("querly"))
               yield
             end
           end
@@ -51,7 +52,7 @@ module NodeHarness
               - https://github.com/soutaro/querly
               - https://help.sider.review/tools/ruby/querly
             MESSAGE
-            NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer)
+            NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer!)
           else
             ret
           end
@@ -66,7 +67,7 @@ module NodeHarness
           ensure_files relative_path("querly.yml"), relative_path("querly.yaml") do |config_file|
             test_config_file(config_file)
 
-            NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+            NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer!).tap do |result|
               stdout, _ = capture3!("bundle", "exec", "querly", "check", "--format=json", ".")
 
               json = JSON.parse(stdout, symbolize_names: true)
@@ -92,11 +93,12 @@ module NodeHarness
         def test_config_file(config_file)
           stdout, _stderr, _status = capture3('bundle', 'exec', 'querly', 'test')
 
-          warnings = stdout.each_line.map do |line|
+          warnings = stdout.lines.each_with_object([]) do |line, warns|
             match = line.match(/\A  (\S+:\t.+)\Z/)
-            next unless match
-            match[1]
-          end.compact
+            if match
+              warns << match[1]
+            end
+          end
 
           warnings.each do |warn|
             add_warning(warn, file: config_file.to_s)

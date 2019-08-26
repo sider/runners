@@ -6,7 +6,8 @@ module NodeHarness
 
         attr_reader :analyzer
 
-        Schema = StrongJSON.new do
+        Schema = _ = StrongJSON.new do
+          # @type self: JSONSchema
           let :runner_config, NodeHarness::Schema::RunnerConfig.ruby
         end
 
@@ -25,7 +26,7 @@ module NodeHarness
         def setup
           ensure_runner_config_schema(Schema.runner_config) do
             install_gems DEFAULT_GEMS, constraints: CONSTRAINTS do |versions|
-              @analyzer = NodeHarness::Analyzer.new(name: 'Reek', version: versions["reek"])
+              @analyzer = NodeHarness::Analyzer.new(name: 'Reek', version: versions.fetch("reek"))
               yield
             end
           end
@@ -49,7 +50,7 @@ module NodeHarness
 
           raise_warnings(stderr)
 
-          NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+          NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer!).tap do |result|
             # NOTE: reek returns top-level JSON array
             JSON.parse(stdout, symbolize_names: true).each do |hash|
               hash[:lines].each do |line|

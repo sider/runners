@@ -2,7 +2,8 @@ module NodeHarness
   module Runners
     module PmdJava
       class Processor < NodeHarness::Processor
-        Schema = StrongJSON.new do
+        Schema = _ = StrongJSON.new do
+          # @type self: JSONSchema
           let :runner_config, NodeHarness::Schema::RunnerConfig.base.update_fields { |fields|
             fields.merge!({
                             dir: string?,
@@ -58,11 +59,11 @@ module NodeHarness
           stdout, stderr, status = pmd(dir: dir, rulesets: rulesets, encoding: encoding, min_priority: min_priority)
 
           if status.success? || status.exitstatus == 4
-            NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+            NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer!).tap do |result|
               construct_result(result, stdout, stderr)
             end
           else
-            NodeHarness::Results::Failure.new(guid: guid, analyzer: analyzer, message: <<~MESSAGE)
+            NodeHarness::Results::Failure.new(guid: guid, analyzer: analyzer!, message: <<~MESSAGE)
               stdout:
               #{stdout}
 

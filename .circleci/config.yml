@@ -51,6 +51,7 @@ jobs:
       - install_gems
       - install_npm_and_yarn
       - run: bundle exec rake test
+      - run: bundle exec rake typecheck
       - run: bundle exec rake dockerfile:generate
       - run: bundle exec rake dockerfile:verify
   runner_rubocop:

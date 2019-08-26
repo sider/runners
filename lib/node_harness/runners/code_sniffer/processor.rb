@@ -2,7 +2,8 @@ module NodeHarness
   module Runners
     module CodeSniffer
       class Processor < NodeHarness::Processor
-        Schema = StrongJSON.new do
+        Schema = _ = StrongJSON.new do
+          # @type self: JSONSchema
           let :runner_config, NodeHarness::Schema::RunnerConfig.base.update_fields { |fields|
             fields.merge!({
                             version: enum?(string, numeric),
@@ -58,10 +59,16 @@ module NodeHarness
 
         def analyzer
           @analyzer ||= begin
-            stdout, _, = capture3!(phpcs_bin, '--version')
+            stdout, = capture3!(phpcs_bin, '--version')
             # stdout: "PHP_CodeSniffer version 3.3.0 (stable) by Squiz (http://www.squiz.net)"
-            version = stdout[/\s([0-9\.]+)\s/, 1]
-            NodeHarness::Analyzer.new(name: "code_sniffer", version: version)
+            stdout.match(/\s([0-9\.]+)\s/) do |match|
+              version = match.captures.first
+              if version
+                NodeHarness::Analyzer.new(name: "code_sniffer", version: version)
+              else
+                raise "Not found version: #{stdout.inspect}"
+              end
+            end
           end
         end
 
@@ -72,12 +79,13 @@ module NodeHarness
               "--#{k}=#{v}"
             end
           else
-            standard = standard_option(config)
-            extensions = extensions_option(config)
-            encoding = encoding_option(config)
-            ignore = ignore_option(config)
-
-            [standard, extensions, encoding, ignore].compact
+            options = [
+              standard_option(config),
+              extensions_option(config),
+            ]
+            encoding_option(config).tap { |opt| options << opt if opt }
+            ignore_option(config).tap { |opt| options << opt if opt }
+            options
           end
         end
 
@@ -110,40 +118,45 @@ module NodeHarness
         end
 
         def default_sideci_options
-          @default_sideci_options ||= begin
-            config = {
-              'options' => {
-                'standard' => 'PSR2',
-                'extensions' => 'php',
-              },
-              'dir' => './',
-            }
+          @default_sideci_options ||=
+            begin
+              case php_framework
+              when 'CakePHP'
+                standard = 'CakePHP'
+                dir = 'app/'
+              when 'Symfony'
+                standard = 'Symfony'
+                dir = 'src/'
+              else
+                standard = 'PSR2'
+                dir = './'
+              end
 
-            case php_framework
-            when 'CakePHP'
-              config['options']['standard'] = 'CakePHP'
-              config['dir'] = 'app/'
-            when 'Symfony'
-              config['options']['standard'] = 'Symfony'
-              config['dir'] = 'src/'
+              {
+                'options' => {
+                  'standard' => standard,
+                  'extensions' => 'php',
+                },
+                'dir' => dir,
+              }
             end
-
-            config
-          end
         end
 
         def php_framework
-          frameworks = {
-            'CakePHP' => 'lib/Cake/Core/CakePlugin.php',
-            'FuelPHP' => 'oil',
-            'CodeIgniter' => 'system/core/CodeIgniter.php',
-            'Symfony' => 'app/SymfonyRequirements.php'
-          }
-
-          @framework ||= frameworks.find do |framework, file|
-            _, _, status = capture3('test', '-f', file)
-            break framework if status.success?
-          end
+          @php_framework ||=
+            begin
+              frameworks = {
+                'CakePHP' => 'lib/Cake/Core/CakePlugin.php',
+                'FuelPHP' => 'oil',
+                'CodeIgniter' => 'system/core/CodeIgniter.php',
+                'Symfony' => 'app/SymfonyRequirements.php'
+              }
+              found = frameworks.find do |_, file|
+                _, _, status = capture3('test', '-f', file)
+                status.success?
+              end
+              found.first if found
+            end
         end
 
         def print_large_string(str)
@@ -178,7 +191,7 @@ module NodeHarness
           trace_writer.message "Result Output:"
           print_large_string(stdout)
 
-          NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+          NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer!).tap do |result|
             issues = []
 
             JSON.parse(stdout, symbolize_names: true)[:files].each do |path, suggests|

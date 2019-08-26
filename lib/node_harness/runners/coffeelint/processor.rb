@@ -4,7 +4,8 @@ module NodeHarness
       class Processor < NodeHarness::Processor
         include NodeHarness::Nodejs
 
-        Schema = StrongJSON.new do
+        Schema = _ = StrongJSON.new do
+          # @type self: JSONSchema
           let :runner_config, NodeHarness::Schema::RunnerConfig.npm.update_fields { |fields|
             fields.merge!({
                             file: string?,
@@ -73,21 +74,23 @@ module NodeHarness
           config = config.dig(:options, :config)
           if config
             add_warning("`config` option is deprecated. Use `file` instead of.", file: 'sideci.yml')
-            ['--file', "#{config}"]
+            ['--file', config.to_s]
+          else
+            []
           end
         end
 
         def file(config)
           file = config[:file] || config.dig(:options, :file)
-          ['--file', "#{file}"] if file
+          file ? ['--file', file] : []
         end
 
         def run_analyzer(options)
           # NOTE: CoffeeLint exits with 1 when any issues exist.
           stdout, stderr, _status = capture3(nodejs_analyzer_bin, '.', '--reporter', 'raw', *options)
-          return NodeHarness::Results::Failure.new(guid: guid, message: stderr, analyzer: analyzer) unless stderr.empty?
+          return NodeHarness::Results::Failure.new(guid: guid, message: stderr, analyzer: analyzer!) unless stderr.empty?
 
-          NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+          NodeHarness::Results::Success.new(guid: guid, analyzer: analyzer!).tap do |result|
             JSON.parse(stdout, symbolize_names: true).each do |file, issues|
               issues.each do |issue|
                 line = issue[:lineNumber]

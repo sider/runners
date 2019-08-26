@@ -74,6 +74,10 @@ module NodeHarness
       analyzer or raise "No analyzer set"
     end
 
+    def analyzer_version
+      raise NotImplementedError
+    end
+
     def self.ci_config_section_name
       self.name
     end
