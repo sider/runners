@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "stylelint": "^8.3.1"
+    "stylelint": "8.3.1"
   }
 }
