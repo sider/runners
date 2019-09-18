@@ -26,6 +26,10 @@ task :typecheck do
 end
 
 namespace :dockerfile do
+  def render_erb(file)
+    ERB.new(File.read(file)).result.chomp
+  end
+
   desc 'Generate Dockerfile from a template'
   task :generate do
     ANALYZERS.each do |analyzer|

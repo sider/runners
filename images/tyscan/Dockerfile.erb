@@ -1,6 +1,6 @@
 FROM sider/devon_rex_npm:2.2.0
 
-<%= ERB.new(File.read('images/Dockerfile.base.erb')).result %>
-<%= ERB.new(File.read('images/Dockerfile.npm.erb')).result %>
+<%= render_erb 'images/Dockerfile.base.erb' %>
+<%= render_erb 'images/Dockerfile.npm.erb' %>
 
 ENTRYPOINT ["runners", "--analyzer=tyscan"]

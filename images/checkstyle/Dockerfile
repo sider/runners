@@ -20,7 +20,6 @@ RUN cd ${RUNNERS_DIR} && \
 ENV BUNDLE_GEMFILE ${RUNNERS_DIR}/Gemfile
 ENV PATH ${RUNNERS_DIR}/bin:${PATH}
 
-
 USER root
 COPY images/checkstyle/checkstyle-8.23-all.jar /usr/local/share/checkstyle-all.jar
 USER $RUNNER_USER

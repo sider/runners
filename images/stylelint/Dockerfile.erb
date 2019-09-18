@@ -1,7 +1,7 @@
 FROM sider/devon_rex_npm:2.2.0
 
-<%= ERB.new(File.read('images/Dockerfile.base.erb')).result %>
-<%= ERB.new(File.read('images/Dockerfile.npm.erb')).result %>
+<%= render_erb 'images/Dockerfile.base.erb' %>
+<%= render_erb 'images/Dockerfile.npm.erb' %>
 
 COPY images/stylelint/sider_recommended_config.yaml images/stylelint/sider_recommended_stylelintignore $RUNNER_USER_HOME/
 

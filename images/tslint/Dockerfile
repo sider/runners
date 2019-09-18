@@ -20,7 +20,6 @@ RUN cd ${RUNNERS_DIR} && \
 ENV BUNDLE_GEMFILE ${RUNNERS_DIR}/Gemfile
 ENV PATH ${RUNNERS_DIR}/bin:${PATH}
 
-
 # Install the default version
 COPY images/tslint/package.json ${RUNNER_USER_HOME}/tslint_package.json
 RUN cd ${RUNNER_USER_HOME} && \
@@ -32,7 +31,6 @@ RUN cd ${RUNNER_USER_HOME} && \
 ENV PATH ${RUNNER_USER_HOME}/tslint/node_modules/.bin:${PATH}
 # See https://nodejs.org/api/cli.html#cli_node_path_path
 ENV NODE_PATH ${RUNNER_USER_HOME}/tslint/node_modules:${NODE_PATH}
-
 
 # By default, TSLint looks for a configuration file named tslint.json in the directory of the file being linted and, if not found, searches ancestor directories.
 COPY images/tslint/default_tslint.json $RUNNER_USER_HOME/tslint.json

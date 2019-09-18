@@ -1,6 +1,6 @@
 FROM sider/devon_rex_ruby:2.2.0
 
-<%= ERB.new(File.read('images/Dockerfile.base.erb')).result %>
+<%= render_erb 'images/Dockerfile.base.erb' %>
 
 COPY images/reek/v5.reek.yml $RUNNER_USER_HOME/.reek.yml
 COPY images/reek/v4.reek.yml $RUNNER_USER_HOME/config.reek

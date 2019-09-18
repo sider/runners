@@ -1,6 +1,6 @@
 FROM sider/devon_rex_ruby:2.2.0
 
-<%= ERB.new(File.read('images/Dockerfile.base.erb')).result %>
+<%= render_erb 'images/Dockerfile.base.erb' %>
 
 RUN gem install rails_best_practices -v 1.19.4 && \
     gem install slim -v 4.0.1 && \

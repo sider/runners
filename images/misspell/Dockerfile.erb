@@ -1,6 +1,6 @@
 FROM sider/devon_rex_base:2.2.0
 
-<%= ERB.new(File.read('images/Dockerfile.base.erb')).result %>
+<%= render_erb 'images/Dockerfile.base.erb' %>
 
 USER root
 ENV MISSPELL_VERSION=v0.3.4

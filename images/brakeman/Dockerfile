@@ -20,7 +20,6 @@ RUN cd ${RUNNERS_DIR} && \
 ENV BUNDLE_GEMFILE ${RUNNERS_DIR}/Gemfile
 ENV PATH ${RUNNERS_DIR}/bin:${PATH}
 
-
 # Install the default version for caching
 RUN gem install brakeman -v 4.3.1
 

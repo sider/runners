@@ -20,7 +20,6 @@ RUN cd ${RUNNERS_DIR} && \
 ENV BUNDLE_GEMFILE ${RUNNERS_DIR}/Gemfile
 ENV PATH ${RUNNERS_DIR}/bin:${PATH}
 
-
 ENV PMD_VERSION 6.17.0
 USER root
 RUN curl -SL https://github.com/pmd/pmd/releases/download/pmd_releases%2F${PMD_VERSION}/pmd-bin-${PMD_VERSION}.zip > pmd-bin-${PMD_VERSION}.zip \

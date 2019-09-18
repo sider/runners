@@ -20,7 +20,6 @@ RUN cd ${RUNNERS_DIR} && \
 ENV BUNDLE_GEMFILE ${RUNNERS_DIR}/Gemfile
 ENV PATH ${RUNNERS_DIR}/bin:${PATH}
 
-
 RUN gem install goodcheck -v 2.4.0
 
 ENTRYPOINT ["runners", "--analyzer=goodcheck"]

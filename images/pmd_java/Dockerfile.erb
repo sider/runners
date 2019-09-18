@@ -1,6 +1,6 @@
 FROM sider/devon_rex_java:2.2.0
 
-<%= ERB.new(File.read('images/Dockerfile.base.erb')).result %>
+<%= render_erb 'images/Dockerfile.base.erb' %>
 
 ENV PMD_VERSION 6.17.0
 USER root

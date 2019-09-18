@@ -1,6 +1,6 @@
 FROM sider/devon_rex_python:2.2.0
 
-<%= ERB.new(File.read('images/Dockerfile.base.erb')).result %>
+<%= render_erb 'images/Dockerfile.base.erb' %>
 
 ARG LINT_TOOL_VERSION=3.7.7
 RUN PYTHON2_VERSION=`pyenv versions --bare | grep '^2' --color=none` && \

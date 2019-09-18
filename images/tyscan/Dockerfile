@@ -20,7 +20,6 @@ RUN cd ${RUNNERS_DIR} && \
 ENV BUNDLE_GEMFILE ${RUNNERS_DIR}/Gemfile
 ENV PATH ${RUNNERS_DIR}/bin:${PATH}
 
-
 # Install the default version
 COPY images/tyscan/package.json ${RUNNER_USER_HOME}/tyscan_package.json
 RUN cd ${RUNNER_USER_HOME} && \
@@ -32,6 +31,5 @@ RUN cd ${RUNNER_USER_HOME} && \
 ENV PATH ${RUNNER_USER_HOME}/tyscan/node_modules/.bin:${PATH}
 # See https://nodejs.org/api/cli.html#cli_node_path_path
 ENV NODE_PATH ${RUNNER_USER_HOME}/tyscan/node_modules:${NODE_PATH}
-
 
 ENTRYPOINT ["runners", "--analyzer=tyscan"]

@@ -4,7 +4,7 @@ FROM sider/devon_rex_python:2.2.0
 #
 # See https://github.com/danmar/cppcheck#gnu-make
 
-<%= ERB.new(File.read('images/Dockerfile.base.erb')).result %>
+<%= render_erb 'images/Dockerfile.base.erb' %>
 
 ARG CPPCHECK_VERSION=1.89
 

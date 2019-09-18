@@ -20,7 +20,6 @@ RUN cd ${RUNNERS_DIR} && \
 ENV BUNDLE_GEMFILE ${RUNNERS_DIR}/Gemfile
 ENV PATH ${RUNNERS_DIR}/bin:${PATH}
 
-
 ARG LINT_TOOL_VERSION=3.7.7
 RUN PYTHON2_VERSION=`pyenv versions --bare | grep '^2' --color=none` && \
     PYTHON3_VERSION=`pyenv versions --bare | grep '^3' --color=none` && \

@@ -20,7 +20,6 @@ RUN cd ${RUNNERS_DIR} && \
 ENV BUNDLE_GEMFILE ${RUNNERS_DIR}/Gemfile
 ENV PATH ${RUNNERS_DIR}/bin:${PATH}
 
-
 USER root
 ENV MISSPELL_VERSION=v0.3.4
 RUN curl -L -o install-misspell.sh https://git.io/misspell && \

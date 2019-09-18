@@ -1,6 +1,6 @@
 FROM sider/devon_rex_php:2.2.0
 
-<%= ERB.new(File.read('images/Dockerfile.base.erb')).result %>
+<%= render_erb 'images/Dockerfile.base.erb' %>
 
 COPY images/phinder/composer.json images/phinder/composer.lock $COMPOSER_HOME/
 RUN composer global install

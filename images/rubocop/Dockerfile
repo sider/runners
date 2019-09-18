@@ -31,7 +31,6 @@ RUN cd ${RUNNERS_DIR} && \
 ENV BUNDLE_GEMFILE ${RUNNERS_DIR}/Gemfile
 ENV PATH ${RUNNERS_DIR}/bin:${PATH}
 
-
 RUN gem install rubocop -v 0.74.0
 
 ENTRYPOINT ["runners", "--analyzer=rubocop"]

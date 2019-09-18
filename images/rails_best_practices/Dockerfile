@@ -20,7 +20,6 @@ RUN cd ${RUNNERS_DIR} && \
 ENV BUNDLE_GEMFILE ${RUNNERS_DIR}/Gemfile
 ENV PATH ${RUNNERS_DIR}/bin:${PATH}
 
-
 RUN gem install rails_best_practices -v 1.19.4 && \
     gem install slim -v 4.0.1 && \
     gem install haml -v 5.0.4 && \

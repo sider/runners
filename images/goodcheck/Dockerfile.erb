@@ -1,6 +1,6 @@
 FROM sider/devon_rex_ruby:2.2.0
 
-<%= ERB.new(File.read('images/Dockerfile.base.erb')).result %>
+<%= render_erb 'images/Dockerfile.base.erb' %>
 
 RUN gem install goodcheck -v 2.4.0
 

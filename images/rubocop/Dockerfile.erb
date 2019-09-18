@@ -11,7 +11,7 @@ RUN rbenv install $GLOBAL_RUBY_VERSION && \
     gem install bundler --version $BUNDLER2_VERSION && \
     bundle -v | grep -q "$BUNDLER2_VERSION"
 
-<%= ERB.new(File.read('images/Dockerfile.base.erb')).result %>
+<%= render_erb 'images/Dockerfile.base.erb' %>
 
 RUN gem install rubocop -v 0.74.0
 

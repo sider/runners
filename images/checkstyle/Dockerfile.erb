@@ -1,6 +1,6 @@
 FROM sider/devon_rex_java:2.2.0
 
-<%= ERB.new(File.read('images/Dockerfile.base.erb')).result %>
+<%= render_erb 'images/Dockerfile.base.erb' %>
 
 USER root
 COPY images/checkstyle/checkstyle-8.23-all.jar /usr/local/share/checkstyle-all.jar

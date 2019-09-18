@@ -1,6 +1,6 @@
 FROM sider/devon_rex_swift:2.2.0
 
-<%= ERB.new(File.read('images/Dockerfile.base.erb')).result %>
+<%= render_erb 'images/Dockerfile.base.erb' %>
 
 ENV SWIFTLINT_VERSION="0.34.0"
 ARG SWIFTLINT_BUILD_DIR="/swiftlint_build"

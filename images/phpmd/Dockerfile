@@ -20,7 +20,6 @@ RUN cd ${RUNNERS_DIR} && \
 ENV BUNDLE_GEMFILE ${RUNNERS_DIR}/Gemfile
 ENV PATH ${RUNNERS_DIR}/bin:${PATH}
 
-
 COPY images/phpmd/composer.json images/phpmd/composer.lock $COMPOSER_HOME/
 COPY images/phpmd/sider_config.xml $RUNNER_USER_HOME/
 RUN composer global install

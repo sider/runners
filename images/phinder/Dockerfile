@@ -20,7 +20,6 @@ RUN cd ${RUNNERS_DIR} && \
 ENV BUNDLE_GEMFILE ${RUNNERS_DIR}/Gemfile
 ENV PATH ${RUNNERS_DIR}/bin:${PATH}
 
-
 COPY images/phinder/composer.json images/phinder/composer.lock $COMPOSER_HOME/
 RUN composer global install
 

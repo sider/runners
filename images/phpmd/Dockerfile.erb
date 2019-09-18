@@ -1,6 +1,6 @@
 FROM sider/devon_rex_php:2.2.0
 
-<%= ERB.new(File.read('images/Dockerfile.base.erb')).result %>
+<%= render_erb 'images/Dockerfile.base.erb' %>
 
 COPY images/phpmd/composer.json images/phpmd/composer.lock $COMPOSER_HOME/
 COPY images/phpmd/sider_config.xml $RUNNER_USER_HOME/

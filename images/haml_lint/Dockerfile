@@ -20,7 +20,6 @@ RUN cd ${RUNNERS_DIR} && \
 ENV BUNDLE_GEMFILE ${RUNNERS_DIR}/Gemfile
 ENV PATH ${RUNNERS_DIR}/bin:${PATH}
 
-
 # Install the latest version for caching
 RUN gem install haml_lint -v 0.32.0 && \
     gem install rubocop -v 0.71.0 && \
