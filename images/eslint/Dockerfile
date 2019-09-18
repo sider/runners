@@ -36,4 +36,8 @@ ENV NODE_PATH ${RUNNER_USER_HOME}/eslint/node_modules:${NODE_PATH}
 #       See https://eslint.org/docs/user-guide/configuring#configuration-cascading-and-hierarchy
 COPY images/eslint/sider_eslintrc.yml $RUNNER_USER_HOME/.eslintrc.yml
 
+USER root
+RUN chown -R ${RUNNER_USER}: ${RUNNER_USER_HOME}
+USER $RUNNER_USER
+
 ENTRYPOINT ["runners", "--analyzer=eslint"]

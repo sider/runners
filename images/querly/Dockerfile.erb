@@ -6,4 +6,4 @@ RUN gem install querly -v 1.0.0 && \
     gem install slim -v 4.0.1 && \
     gem install haml -v 5.1.2
 
-ENTRYPOINT ["runners", "--analyzer=querly"]
+<%= render_erb 'images/Dockerfile.end.erb' %>

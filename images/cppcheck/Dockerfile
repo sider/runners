@@ -35,4 +35,8 @@ RUN cd /tmp \
   && rm -rf cppcheck-${CPPCHECK_VERSION}
 USER $RUNNER_USER
 
+USER root
+RUN chown -R ${RUNNER_USER}: ${RUNNER_USER_HOME}
+USER $RUNNER_USER
+
 ENTRYPOINT ["runners", "--analyzer=cppcheck"]

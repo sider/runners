@@ -33,4 +33,9 @@ RUN curl -L https://github.com/alecthomas/gometalinter/releases/download/v${LINT
 USER $RUNNER_USER
 
 COPY images/gometalinter/gometalinter.json $RUNNER_USER_HOME/
+
+USER root
+RUN chown -R ${RUNNER_USER}: ${RUNNER_USER_HOME}
+USER $RUNNER_USER
+
 ENTRYPOINT ["runners", "--analyzer=gometalinter"]

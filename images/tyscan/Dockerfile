@@ -31,5 +31,8 @@ RUN cd ${RUNNER_USER_HOME} && \
 ENV PATH ${RUNNER_USER_HOME}/tyscan/node_modules/.bin:${PATH}
 # See https://nodejs.org/api/cli.html#cli_node_path_path
 ENV NODE_PATH ${RUNNER_USER_HOME}/tyscan/node_modules:${NODE_PATH}
+USER root
+RUN chown -R ${RUNNER_USER}: ${RUNNER_USER_HOME}
+USER $RUNNER_USER
 
 ENTRYPOINT ["runners", "--analyzer=tyscan"]

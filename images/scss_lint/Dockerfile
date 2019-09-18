@@ -23,4 +23,8 @@ ENV PATH ${RUNNERS_DIR}/bin:${PATH}
 RUN gem install scss_lint -v 0.57.1
 COPY images/scss_lint/scss-lint.default.yml $RUNNER_USER_HOME/.scss-lint.yml
 
+USER root
+RUN chown -R ${RUNNER_USER}: ${RUNNER_USER_HOME}
+USER $RUNNER_USER
+
 ENTRYPOINT ["runners", "--analyzer=scss_lint"]

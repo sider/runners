@@ -5,4 +5,4 @@ FROM sider/devon_rex_npm:2.2.0
 
 COPY images/jshint/sider_jshintignore images/jshint/sider_jshintrc $RUNNER_USER_HOME/
 
-ENTRYPOINT ["runners", "--analyzer=jshint"]
+<%= render_erb 'images/Dockerfile.end.erb' %>

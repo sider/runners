@@ -29,4 +29,8 @@ RUN curl -SL https://github.com/pmd/pmd/releases/download/pmd_releases%2F${PMD_V
 
 USER $RUNNER_USER
 
+USER root
+RUN chown -R ${RUNNER_USER}: ${RUNNER_USER_HOME}
+USER $RUNNER_USER
+
 ENTRYPOINT ["runners", "--analyzer=pmd_java"]

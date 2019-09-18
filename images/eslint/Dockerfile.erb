@@ -7,4 +7,4 @@ FROM sider/devon_rex_npm:2.2.0
 #       See https://eslint.org/docs/user-guide/configuring#configuration-cascading-and-hierarchy
 COPY images/eslint/sider_eslintrc.yml $RUNNER_USER_HOME/.eslintrc.yml
 
-ENTRYPOINT ["runners", "--analyzer=eslint"]
+<%= render_erb 'images/Dockerfile.end.erb' %>

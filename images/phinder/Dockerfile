@@ -23,4 +23,8 @@ ENV PATH ${RUNNERS_DIR}/bin:${PATH}
 COPY images/phinder/composer.json images/phinder/composer.lock $COMPOSER_HOME/
 RUN composer global install
 
+USER root
+RUN chown -R ${RUNNER_USER}: ${RUNNER_USER_HOME}
+USER $RUNNER_USER
+
 ENTRYPOINT ["runners", "--analyzer=phinder"]

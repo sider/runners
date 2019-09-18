@@ -6,4 +6,4 @@ USER root
 COPY images/checkstyle/checkstyle-8.23-all.jar /usr/local/share/checkstyle-all.jar
 USER $RUNNER_USER
 
-ENTRYPOINT ["runners", "--analyzer=checkstyle"]
+<%= render_erb 'images/Dockerfile.end.erb' %>

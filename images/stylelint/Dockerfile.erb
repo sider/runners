@@ -5,4 +5,4 @@ FROM sider/devon_rex_npm:2.2.0
 
 COPY images/stylelint/sider_recommended_config.yaml images/stylelint/sider_recommended_stylelintignore $RUNNER_USER_HOME/
 
-ENTRYPOINT ["runners", "--analyzer=stylelint"]
+<%= render_erb 'images/Dockerfile.end.erb' %>

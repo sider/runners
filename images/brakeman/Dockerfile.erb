@@ -5,4 +5,4 @@ FROM sider/devon_rex_ruby:2.2.0
 # Install the default version for caching
 RUN gem install brakeman -v 4.3.1
 
-ENTRYPOINT ["runners", "--analyzer=brakeman"]
+<%= render_erb 'images/Dockerfile.end.erb' %>

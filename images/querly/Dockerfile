@@ -24,4 +24,8 @@ RUN gem install querly -v 1.0.0 && \
     gem install slim -v 4.0.1 && \
     gem install haml -v 5.1.2
 
+USER root
+RUN chown -R ${RUNNER_USER}: ${RUNNER_USER_HOME}
+USER $RUNNER_USER
+
 ENTRYPOINT ["runners", "--analyzer=querly"]

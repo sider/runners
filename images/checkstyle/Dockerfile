@@ -24,4 +24,8 @@ USER root
 COPY images/checkstyle/checkstyle-8.23-all.jar /usr/local/share/checkstyle-all.jar
 USER $RUNNER_USER
 
+USER root
+RUN chown -R ${RUNNER_USER}: ${RUNNER_USER_HOME}
+USER $RUNNER_USER
+
 ENTRYPOINT ["runners", "--analyzer=checkstyle"]

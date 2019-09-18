@@ -24,4 +24,8 @@ COPY images/reek/v5.reek.yml $RUNNER_USER_HOME/.reek.yml
 COPY images/reek/v4.reek.yml $RUNNER_USER_HOME/config.reek
 RUN gem install reek -v 5.4.0
 
+USER root
+RUN chown -R ${RUNNER_USER}: ${RUNNER_USER_HOME}
+USER $RUNNER_USER
+
 ENTRYPOINT ["runners", "--analyzer=reek"]

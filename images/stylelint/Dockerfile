@@ -34,4 +34,8 @@ ENV NODE_PATH ${RUNNER_USER_HOME}/stylelint/node_modules:${NODE_PATH}
 
 COPY images/stylelint/sider_recommended_config.yaml images/stylelint/sider_recommended_stylelintignore $RUNNER_USER_HOME/
 
+USER root
+RUN chown -R ${RUNNER_USER}: ${RUNNER_USER_HOME}
+USER $RUNNER_USER
+
 ENTRYPOINT ["runners", "--analyzer=stylelint"]

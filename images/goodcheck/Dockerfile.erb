@@ -4,4 +4,4 @@ FROM sider/devon_rex_ruby:2.2.0
 
 RUN gem install goodcheck -v 2.4.0
 
-ENTRYPOINT ["runners", "--analyzer=goodcheck"]
+<%= render_erb 'images/Dockerfile.end.erb' %>

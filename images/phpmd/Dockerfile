@@ -24,4 +24,8 @@ COPY images/phpmd/composer.json images/phpmd/composer.lock $COMPOSER_HOME/
 COPY images/phpmd/sider_config.xml $RUNNER_USER_HOME/
 RUN composer global install
 
+USER root
+RUN chown -R ${RUNNER_USER}: ${RUNNER_USER_HOME}
+USER $RUNNER_USER
+
 ENTRYPOINT ["runners", "--analyzer=phpmd"]

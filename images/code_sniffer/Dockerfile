@@ -58,4 +58,8 @@ RUN phpcs3 --config-set installed_paths /usr/share/php/PHP/CodeSniffer3/Standard
 
 USER $RUNNER_USER
 
+USER root
+RUN chown -R ${RUNNER_USER}: ${RUNNER_USER_HOME}
+USER $RUNNER_USER
+
 ENTRYPOINT ["runners", "--analyzer=code_sniffer"]

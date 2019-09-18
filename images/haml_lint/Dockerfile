@@ -28,4 +28,9 @@ RUN gem install haml_lint -v 0.32.0 && \
     gem install meowcop -v 1.20.0
 
 COPY images/haml_lint/default_rubocop.yml $RUNNER_USER_HOME/
+
+USER root
+RUN chown -R ${RUNNER_USER}: ${RUNNER_USER_HOME}
+USER $RUNNER_USER
+
 ENTRYPOINT ["runners", "--analyzer=haml_lint"]

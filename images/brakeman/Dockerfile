@@ -23,4 +23,8 @@ ENV PATH ${RUNNERS_DIR}/bin:${PATH}
 # Install the default version for caching
 RUN gem install brakeman -v 4.3.1
 
+USER root
+RUN chown -R ${RUNNER_USER}: ${RUNNER_USER_HOME}
+USER $RUNNER_USER
+
 ENTRYPOINT ["runners", "--analyzer=brakeman"]

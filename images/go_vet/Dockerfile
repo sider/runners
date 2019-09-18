@@ -32,4 +32,8 @@ RUN curl -L https://github.com/alecthomas/gometalinter/releases/download/v${LINT
     rm -r gometalinter-${LINT_TOOL_VERSION}-linux-amd64/
 USER $RUNNER_USER
 
+USER root
+RUN chown -R ${RUNNER_USER}: ${RUNNER_USER_HOME}
+USER $RUNNER_USER
+
 ENTRYPOINT ["runners", "--analyzer=go_vet"]

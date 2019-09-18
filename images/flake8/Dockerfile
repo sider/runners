@@ -34,4 +34,8 @@ COPY images/flake8/ignored-config.ini $RUNNER_USER_HOME/.config/ignored-config.i
 RUN chown -R $RUNNER_USER $RUNNER_USER_HOME/.config
 USER $RUNNER_USER
 
+USER root
+RUN chown -R ${RUNNER_USER}: ${RUNNER_USER_HOME}
+USER $RUNNER_USER
+
 ENTRYPOINT ["runners", "--analyzer=flake8"]

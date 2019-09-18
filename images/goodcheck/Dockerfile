@@ -22,4 +22,8 @@ ENV PATH ${RUNNERS_DIR}/bin:${PATH}
 
 RUN gem install goodcheck -v 2.4.0
 
+USER root
+RUN chown -R ${RUNNER_USER}: ${RUNNER_USER_HOME}
+USER $RUNNER_USER
+
 ENTRYPOINT ["runners", "--analyzer=goodcheck"]

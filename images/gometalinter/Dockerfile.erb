@@ -15,4 +15,5 @@ RUN curl -L https://github.com/alecthomas/gometalinter/releases/download/v${LINT
 USER $RUNNER_USER
 
 COPY images/gometalinter/gometalinter.json $RUNNER_USER_HOME/
-ENTRYPOINT ["runners", "--analyzer=gometalinter"]
+
+<%= render_erb 'images/Dockerfile.end.erb' %>

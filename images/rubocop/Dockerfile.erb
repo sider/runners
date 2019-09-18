@@ -15,4 +15,4 @@ RUN rbenv install $GLOBAL_RUBY_VERSION && \
 
 RUN gem install rubocop -v 0.74.0
 
-ENTRYPOINT ["runners", "--analyzer=rubocop"]
+<%= render_erb 'images/Dockerfile.end.erb' %>

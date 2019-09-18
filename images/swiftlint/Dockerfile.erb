@@ -16,4 +16,4 @@ RUN git clone --branch ${SWIFTLINT_VERSION} --single-branch https://github.com/r
 
 USER $RUNNER_USER
 
-ENTRYPOINT ["runners", "--analyzer=swiftlint"]
+<%= render_erb 'images/Dockerfile.end.erb' %>

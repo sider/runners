@@ -33,4 +33,8 @@ ENV PATH ${RUNNERS_DIR}/bin:${PATH}
 
 RUN gem install rubocop -v 0.74.0
 
+USER root
+RUN chown -R ${RUNNER_USER}: ${RUNNER_USER_HOME}
+USER $RUNNER_USER
+
 ENTRYPOINT ["runners", "--analyzer=rubocop"]

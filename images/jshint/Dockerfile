@@ -34,4 +34,8 @@ ENV NODE_PATH ${RUNNER_USER_HOME}/jshint/node_modules:${NODE_PATH}
 
 COPY images/jshint/sider_jshintignore images/jshint/sider_jshintrc $RUNNER_USER_HOME/
 
+USER root
+RUN chown -R ${RUNNER_USER}: ${RUNNER_USER_HOME}
+USER $RUNNER_USER
+
 ENTRYPOINT ["runners", "--analyzer=jshint"]

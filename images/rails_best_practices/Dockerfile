@@ -28,4 +28,9 @@ RUN gem install rails_best_practices -v 1.19.4 && \
     gem install require_all:1.5.0 require_all:2.0.0
 
 COPY images/rails_best_practices/sider_rails_best_practices.yml $RUNNER_USER_HOME/
+
+USER root
+RUN chown -R ${RUNNER_USER}: ${RUNNER_USER_HOME}
+USER $RUNNER_USER
+
 ENTRYPOINT ["runners", "--analyzer=rails_best_practices"]

@@ -5,4 +5,4 @@ FROM sider/devon_rex_php:2.2.0
 COPY images/phinder/composer.json images/phinder/composer.lock $COMPOSER_HOME/
 RUN composer global install
 
-ENTRYPOINT ["runners", "--analyzer=phinder"]
+<%= render_erb 'images/Dockerfile.end.erb' %>
