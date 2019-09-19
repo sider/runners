@@ -423,12 +423,16 @@ class ProcessorTest < Minitest::Test
       mock(processor).capture3!("foo", "bar", "version") { ["", "7.8.20 version\n"] }
       assert_equal "7.8.20", processor.extract_version!("foo", ["bar", "version"])
 
+      # non semver
+      mock(processor).capture3!("foo", "--version") { ["Foo 1.2", ""] }
+      assert_equal "1.2", processor.extract_version!("foo")
+
       # change pattern
       mock(processor).capture3!("foo", "bar", "-v") { ["ver 1.2", ""] }
       assert_equal "1.2", processor.extract_version!("foo", ["bar", "-v"], pattern: /ver (\d+.\d+)\b/)
 
       # not found
-      mock(processor).capture3!("foo", "-v") { ["2.1", ""] }
+      mock(processor).capture3!("foo", "-v") { ["no version", ""] }
       error = assert_raises { processor.extract_version!("foo", "-v") }
       assert_equal "Not found version from 'foo -v'", error.message
     end

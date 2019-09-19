@@ -35,7 +35,7 @@ module Runners
     end
 
     def analyzer_version
-      @analyzer_version ||= extract_version! cppcheck, pattern: /Cppcheck (\d+\.\d+)/
+      @analyzer_version ||= extract_version! cppcheck
     end
 
     def setup

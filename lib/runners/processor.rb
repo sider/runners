@@ -87,7 +87,7 @@ module Runners
       MSG
     end
 
-    def extract_version!(command, version_option = "--version", pattern: /v?(\d+\.\d+\.\d+)/)
+    def extract_version!(command, version_option = "--version", pattern: /v?(\d+\.\d+(\.\d+)?)\b/)
       command_options = Array(version_option)
       outputs = capture3!(command, *command_options)
       outputs.each do |output|

@@ -54,7 +54,7 @@ module Runners
     end
 
     def analyzer_version
-      @analyzer_version ||= extract_version! "java", ["-jar", jar_path, "--version"], pattern: /\s(\d+\.\d+)$/
+      @analyzer_version ||= extract_version! "java", ["-jar", jar_path, "--version"]
     end
 
     def analyzer
