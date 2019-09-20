@@ -49,18 +49,17 @@ module Runners
       config[:config] || config.dig(:options, :config)
     end
 
-    def parse_result(stdout)
-      [].tap do |issues|
-        REXML::XPath.each(REXML::Document.new(stdout), '/checkstyle/file') do |file|
-          REXML::XPath.each(file, 'error') do |error|
-            issues << Issues::Text.new(
-              path: relative_path(file['name']),
-              location: Location.new(start_line: error['line']),
-              id: error['source'] || Digest::SHA1.hexdigest(error['message']),
-              message: error['message'].strip,
-              links: []
-            )
-          end
+    def parse_result(output)
+      REXML::Document.new(output).root.each_element("file") do |file|
+        file.each_element do |error|
+          message = error[:message].strip
+          yield Issues::Text.new(
+            path: relative_path(file[:name]),
+            location: Location.new(start_line: error[:line]),
+            id: error[:source] || Digest::SHA1.hexdigest(message),
+            message: message.strip,
+            links: [],
+          )
         end
       end
     end
@@ -75,7 +74,7 @@ module Runners
       return Results::Failure.new(guid: guid, message: stderr, analyzer: analyzer) if status.exitstatus == 1
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
         break result if status.exitstatus == 0
-        parse_result(stdout).each { |v| result.add_issue(v) }
+        parse_result(stdout) { |issue| result.add_issue(issue) }
       end
     end
   end

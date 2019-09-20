@@ -73,42 +73,36 @@ module Runners
     def construct_result(result, stdout, stderr)
       # https://github.com/pmd/pmd.github.io/blob/8b0c31ff8e18215ed213b7df400af27b9137ee67/report_2_0_0.xsd
 
-      document = REXML::Document.new(stdout)
-
-      document.root.each_element do |element|
+      REXML::Document.new(stdout).root.each_element do |element|
         case element.name
         when "file"
-          path = relative_path(element["name"])
+          path = relative_path(element[:name])
 
-          element.each_element do |child|
-            if child.name == "violation"
-              start_line = child["beginline"].to_i
-              start_column = child["begincolumn"].to_i
-              end_line = child["endline"].to_i
-              end_column = child["endcolumn"].to_i
-              links = array(child["externalInfoUrl"])
+          element.each_element("violation") do |violation|
+            links = array(violation[:externalInfoUrl])
 
-              message = child.get_text.value.strip
-              id = child["ruleset"] + "-" + child["rule"] + "-" + Digest::SHA1.hexdigest(message)
+            message = violation.text.strip
+            id = violation[:ruleset] + "-" + violation[:rule] + "-" + Digest::SHA1.hexdigest(message)
 
-              issue = Issues::Text.new(path: path,
-                                                    location: Location.new(start_line: start_line,
-                                                                                        start_column: start_column,
-                                                                                        end_line: end_line,
-                                                                                        end_column: end_column),
-                                                    id: id,
-                                                    message: message,
-                                                    links: links)
-
-              result.add_issue issue
-            end
+            result.add_issue Issues::Text.new(
+              path: path,
+              location: Location.new(
+                start_line: violation[:beginline],
+                start_column: violation[:begincolumn],
+                end_line: violation[:endline],
+                end_column: violation[:endcolumn],
+              ),
+              id: id,
+              message: message,
+              links: links,
+            )
           end
 
         when "error"
-          add_warning element["msg"], file: relative_path(element["filename"]).to_s
+          add_warning element[:msg], file: relative_path(element[:filename]).to_s
 
         when "configerror"
-          add_warning "#{element["rule"]}: #{element["msg"]}"
+          add_warning "#{element[:rule]}: #{element[:msg]}"
 
         end
       end

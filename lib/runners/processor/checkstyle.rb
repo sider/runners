@@ -95,39 +95,35 @@ module Runners
     end
 
     def construct_result(result, output)
-      document = REXML::Document.new(output)
+      REXML::Document.new(output).root.each_element("file") do |file|
+        path = relative_path file[:name]
 
-      document.root.each_element do |element|
-        if element.name == "file"
-          path = relative_path element["name"]
+        file.each_element do |error|
+          case error.name
+          when "error"
+            line = error[:line].to_i
 
-          element.each_element do |element_|
-            case element_.name
-            when "error"
-              line = element_["line"].to_i
-              # Checkstyle tells line=0 if there is no appropriate line for the error.
-              # Make the line number `1` instead.
-              line = 1 if line == 0
+            # Checkstyle tells line=0 if there is no appropriate line for the error.
+            # Make the line number `1` instead.
+            line = 1 if line == 0
 
-              id = element_["source"] + "#" + Digest::SHA2.hexdigest(element_["message"])[0, 6]
-              message = element_["message"]
-              severity = element_["severity"]
+            message = error[:message]
+            id = error[:source] + "#" + Digest::SHA2.hexdigest(message)[0, 6]
+            severity = error[:severity]
 
-              next if ignored_severities.include?(severity)
+            next if ignored_severities.include?(severity)
 
-              issue = Issues::Text.new(path: path,
-                                                    location: Location.new(start_line: line,
-                                                                                        start_column: nil,
-                                                                                        end_line: nil,
-                                                                                        end_column: nil),
-                                                    id: id,
-                                                    message: message,
-                                                    links: [])
+            issue = Issues::Text.new(
+              path: path,
+              location: Location.new(start_line: line),
+              id: id,
+              message: message,
+              links: [],
+            )
 
-              result.add_issue issue
-            when "exception"
-              add_warning element_.get_text.value.strip, file: path.to_s
-            end
+            result.add_issue issue
+          when "exception"
+            add_warning element_.get_text.value.strip, file: path.to_s
           end
         end
       end

@@ -122,8 +122,8 @@ module Runners
 
       change_paths = changes.changed_files.map(&:path)
       errors = []
-      REXML::XPath.each(xml_doc, '/pmd/error') do |error|
-        errors << error['msg'] if change_paths.include?(relative_path(error['filename']))
+      xml_doc.root.each_element('error') do |error|
+        errors << error[:msg] if change_paths.include?(relative_path(error[:filename]))
       end
       unless errors.empty?
         errors.each { |message| trace_writer.error message }
@@ -131,21 +131,21 @@ module Runners
       end
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        REXML::XPath.each(xml_doc, '/pmd/file') do |file|
-          REXML::XPath.each(file, 'violation') do |violation|
+        xml_doc.root.each_element('file') do |file|
+          file.each_element('violation') do |violation|
             loc = Location.new(
-              start_line: violation['beginline'],
+              start_line: violation[:beginline],
               start_column: nil,
-              end_line: violation['endline'],
+              end_line: violation[:endline],
               end_column: nil
             )
 
             result.add_issue Issues::Text.new(
-              path: relative_path(file['name']),
+              path: relative_path(file[:name]),
               location: loc,
-              id: violation['rule'],
+              id: violation[:rule],
               message: violation.text.strip,
-              links: [violation['externalInfoUrl']]
+              links: [violation[:externalInfoUrl]]
             )
           end
         end

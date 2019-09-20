@@ -108,8 +108,8 @@ module Runners
 
     # @see https://github.com/danmar/cppcheck/blob/master/man/manual.md#xml-output
     def parse_result(xml_doc)
-      REXML::XPath.each(xml_doc, "//errors/error") do |err|
-        REXML::XPath.each(err, "location") do |loc|
+      xml_doc.root.each_element("errors/error") do |err|
+        err.each_element("location") do |loc|
           yield Issues::Structured.new(
             id: err[:id],
             path: relative_path(loc[:file]),
