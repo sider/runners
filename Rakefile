@@ -59,6 +59,34 @@ namespace :dockerfile do
     system('git diff --exit-code') or
       abort "\nError: Run `bundle exec rake dockerfile:generate` and include the changes in commit"
   end
+
+  desc 'Bump devon_rex images'
+  task :bump_devon_rex do
+    require "net/http"
+    require "json"
+
+    latest_version = JSON.parse(Net::HTTP.get(URI("https://api.github.com/repos/sider/devon_rex/releases/latest")))["tag_name"]
+
+    ANALYZERS.each do |analyzer|
+      dockerfile = (Pathname('images') / analyzer / 'Dockerfile.erb')
+      dockerfile_content = dockerfile.read
+      current_version = dockerfile_content.match(%r{FROM sider/devon_rex_\w+:([\d\.]+)})[1]
+      next if current_version == latest_version
+
+      print "> Bump devon_rex of *#{analyzer}* from #{current_version} to *#{latest_version}* ? [Y/n] "
+      answer = STDIN.gets.chomp.downcase
+      next if answer.include? "n"
+
+      new_content = dockerfile_content.sub(
+        %r{FROM sider/devon_rex_(\w+):([\d\.]+)},
+        "FROM sider/devon_rex_\\1:#{latest_version}",
+      )
+      dockerfile.write new_content
+      puts "  ---> Done."
+    end
+
+    Rake::Task["dockerfile:generate"].execute
+  end
 end
 
 namespace :docker do
