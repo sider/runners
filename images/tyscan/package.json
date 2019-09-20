@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "tyscan": "0.2.1",
+    "tyscan": "0.3.0",
     "typescript": "3.5.3"
   }
 }
