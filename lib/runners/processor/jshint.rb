@@ -50,25 +50,17 @@ module Runners
     end
 
     def parse_result(stdout)
-      doc = Nokogiri::XML(stdout)
-      doc.errors.each do |error|
-        trace_writer.message "Error: #{error.inspect}"
-      end
-      doc.xpath('/checkstyle/file').flat_map do |file|
-        file.xpath('error').map do |error|
-          loc = Location.new(
-            start_line: error['line'].to_i,
-            start_column: nil,
-            end_line: nil,
-            end_column: nil
-          )
-          Issues::Text.new(
-            path: relative_path(file['name']),
-            location: loc,
-            id: error['source'] || Digest::SHA1.hexdigest(error['message']),
-            message: error['message'].strip,
-            links: []
-          )
+      [].tap do |issues|
+        REXML::XPath.each(REXML::Document.new(stdout), '/checkstyle/file') do |file|
+          REXML::XPath.each(file, 'error') do |error|
+            issues << Issues::Text.new(
+              path: relative_path(file['name']),
+              location: Location.new(start_line: error['line']),
+              id: error['source'] || Digest::SHA1.hexdigest(error['message']),
+              message: error['message'].strip,
+              links: []
+            )
+          end
         end
       end
     end

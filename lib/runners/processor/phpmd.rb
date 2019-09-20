@@ -118,23 +118,25 @@ module Runners
       commandline = [analyzer_bin, targets, 'xml', rule, '--ignore-violations-on-exit'] + options
       stdout, _ = capture3!(*commandline)
 
+      xml_doc = REXML::Document.new(stdout)
+
       change_paths = changes.changed_files.map(&:path)
-      errors = Nokogiri::XML(stdout).xpath('/pmd/error').select do |error|
-        change_paths.include?(relative_path(error['filename']))
+      errors = []
+      REXML::XPath.each(xml_doc, '/pmd/error') do |error|
+        errors << error['msg'] if change_paths.include?(relative_path(error['filename']))
       end
       unless errors.empty?
-        messages = errors.map { |error| error['msg'] }
-        messages.each { |message| trace_writer.error message }
-        return Results::Failure.new(guid: guid, message: messages.join("\n"), analyzer: analyzer)
+        errors.each { |message| trace_writer.error message }
+        return Results::Failure.new(guid: guid, message: errors.join("\n"), analyzer: analyzer)
       end
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        Nokogiri::XML(stdout).xpath('/pmd/file').map do |file|
-          file.xpath('violation').map do |violation|
+        REXML::XPath.each(xml_doc, '/pmd/file') do |file|
+          REXML::XPath.each(file, 'violation') do |violation|
             loc = Location.new(
-              start_line: violation['beginline'].to_i,
+              start_line: violation['beginline'],
               start_column: nil,
-              end_line: violation['endline'].to_i,
+              end_line: violation['endline'],
               end_column: nil
             )
 
@@ -142,7 +144,7 @@ module Runners
               path: relative_path(file['name']),
               location: loc,
               id: violation['rule'],
-              message: violation.content.strip,
+              message: violation.text.strip,
               links: [violation['externalInfoUrl']]
             )
           end

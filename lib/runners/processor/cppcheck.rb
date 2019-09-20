@@ -93,11 +93,10 @@ module Runners
         *target,
       )
 
-      xml_output = Nokogiri::XML::Document.parse(stderr)
+      xml_output = REXML::Document.new(stderr)
 
-      unless xml_output.errors.empty?
-        xml_syntax_errors = xml_output.errors.map(&:message).join("\n")
-        return Results::Failure.new(guid: guid, analyzer: analyzer!, message: xml_syntax_errors)
+      unless xml_output.root
+        return Results::Failure.new(guid: guid, analyzer: analyzer!, message: "Invalid XML output!")
       end
 
       Results::Success.new(guid: guid, analyzer: analyzer!).tap do |result|
@@ -109,8 +108,8 @@ module Runners
 
     # @see https://github.com/danmar/cppcheck/blob/master/man/manual.md#xml-output
     def parse_result(xml_doc)
-      xml_doc.css("errors > error").each do |err|
-        err.css("location").each do |loc|
+      REXML::XPath.each(xml_doc, "//errors/error") do |err|
+        REXML::XPath.each(err, "location") do |loc|
           yield Issues::Structured.new(
             id: err[:id],
             path: relative_path(loc[:file]),
