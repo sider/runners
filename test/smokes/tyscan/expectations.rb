@@ -58,18 +58,9 @@ Smoke.add_test("package_json_not_found", {
 Smoke.add_test("typescript_not_found", {
   guid: "test-guid",
   timestamp: :_,
-  type: "success",
-  issues: [
-    { path: "index.tsx",
-      location: { :start_line => 14, :start_column => 19, :end_line => 14, :end_column => 28 },
-      id: "com.example.user_name",
-      object: { :id => "com.example.user_name",
-                :message => "Note that the `name` is not full name, but nickname" } }
-  ],
-  analyzer: {
-    name: 'TyScan',
-    version: '0.1.3'
-  }
+  type: "failure",
+  message: /Your `tyscan` settings could not satisfy the required constraints/,
+  analyzer: nil,
 })
 
 Smoke.add_test("tyscan_not_found", {
@@ -87,6 +78,10 @@ Smoke.add_test("tyscan_not_found", {
     name: 'TyScan',
     version: '0.2.1'
   }
+}, {
+  warnings: [
+    { message: /No required dependencies for analysis were installed/, file: "package.json" },
+  ]
 })
 
 Smoke.add_test("invalid_pattern", {
@@ -142,7 +137,7 @@ Smoke.add_test("tests_failed", {
   ],
   analyzer: {
     name: 'TyScan',
-    version: '0.1.3'
+    version: '0.2.1'
   }
 }, warnings: [
   { message: "`tyscan test` failed. It may cause an unintended match.", file: "tyscan.yml" }

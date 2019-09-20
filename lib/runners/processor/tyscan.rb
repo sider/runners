@@ -18,6 +18,17 @@ module Runners
       )
     end
 
+    DEFAULT_DEPS = DefaultDependencies.new(
+      main: Dependency.new(name: "tyscan", version: "0.2.1"),
+      extras: [
+        Dependency.new(name: "typescript", version: "3.5.3"),
+      ],
+    ).freeze
+
+    CONSTRAINTS = {
+      "tyscan" => Constraint.new(">= 0.2.1", "< 1.0.0")
+    }.freeze
+
     DEFAULT_CONFIG_NOT_FOUND_ERROR = <<~MESSAGE.freeze
       `tyscan.yml` does not exist in your repository.
 
@@ -41,7 +52,12 @@ module Runners
           return Results::Success.new(guid: guid, analyzer: analyzer)
         end
 
-        install_dependencies(config)
+        begin
+          install_nodejs_deps(DEFAULT_DEPS, constraints: CONSTRAINTS, install_option: config[:npm_install])
+        rescue UserError => exn
+          return Results::Failure.new(guid: guid, message: exn.message)
+        end
+
         yield
       end
     end
@@ -50,21 +66,6 @@ module Runners
       ensure_runner_config_schema(Schema.runner_config) do |config|
         tyscan_test(config)
         tyscan_scan(config)
-      end
-    end
-
-    def install_dependencies(config)
-      return unless (current_dir + 'package.json').exist?
-
-      case config[:npm_install]
-      when false
-        # noop
-      when 'production'
-        capture3_with_retry!('npm', 'install', '--only=production', '--ignore-scripts')
-      when 'development'
-        capture3_with_retry!('npm', 'install', '--only=development', '--ignore-scripts')
-      else
-        capture3_with_retry!('npm', 'install', '--ignore-scripts')
       end
     end
 
