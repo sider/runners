@@ -2,7 +2,7 @@
 # NOTE: DO *NOT* EDIT THIS FILE.  IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM sider/devon_rex_ruby:2.2.1
+FROM sider/devon_rex_ruby:2.2.2
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 COPY Gemfile* Rakefile ${RUNNERS_DIR}/
