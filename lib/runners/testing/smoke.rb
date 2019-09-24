@@ -42,21 +42,26 @@ module Runners
             out = StringIO.new(''.dup)
             result = run_test(name, pattern, out)
             print out.string
-            result
+            [result, name]
           end
         end
 
         puts "-" * 30
-        if results.all?
+        if results.all? { |result,| result }
           puts "❤️  Smoke tests passed!"
         else
-          puts "❌ Smoke tests failed! -- #{results.count(true)} passed, #{results.count(false)} failed, #{results.count} total"
+          passed = results.count{ |result,| result == true }
+          failed = results.count{ |result,| result == false }
+          skipped = results.count{ |result,| result == nil }
+          puts "❌ Smoke tests failed! -- #{passed} passed, #{failed} failed, #{skipped} skipped, #{results.count} total"
+          marks = { true => '✅', false => '❌', nil => '⚠️' }
+          results.each { |result, name| puts "--> #{marks[result]} #{name}" }
           exit 1
         end
       end
 
       def run_test(name, pattern, out)
-        return true if ENV['ONLY'] && ENV['ONLY'] != name
+        return if ENV['ONLY'] && ENV['ONLY'] != name
         commandline = command_line(name, self.class.configs.fetch(name))
         out.puts "$ #{commandline}"
         reader = JSONSEQ::Reader.new(io: StringIO.new(`#{commandline}`), decoder: -> (json) { JSON.parse(json, symbolize_names: true) })
