@@ -2,7 +2,7 @@
 # NOTE: DO *NOT* EDIT THIS FILE.  IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM sider/devon_rex_ruby:master
+FROM sider/devon_rex_ruby:2.3.0
 
 # NOTE: RuboCop 0.60.0 does not work on Ruby 2.6, so install and use Ruby 2.5 instead.
 #       See https://github.com/sider/runners/issues/57#issuecomment-530858769
