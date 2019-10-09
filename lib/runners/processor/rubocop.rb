@@ -27,6 +27,10 @@ module Runners
       GemInstaller::Spec.new(name: "rubocop", version: ["0.75.0"]),
     ].freeze
 
+    DEFAULT_PLUGINS = [
+      GemInstaller::Spec.new(name: "meowcop", version: ["2.3.1"]),
+    ].freeze
+
     # DEPRECATED: Implicit dependencies
     # @see https://help.sider.review/tools/ruby/rubocop#gems
     OPTIONAL_GEMS = [
@@ -74,10 +78,10 @@ module Runners
       ensure_runner_config_schema(Schema.runner_config) do
         show_ruby_runtime_versions
 
-        defaults = DEFAULT_GEMS
+        defaults = DEFAULT_GEMS.dup
 
         if setup_default_config
-          defaults = defaults + [GemInstaller::Spec.new(name: "meowcop", version: [])]
+          defaults += DEFAULT_PLUGINS
         end
 
         install_gems defaults, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS do |versions|
