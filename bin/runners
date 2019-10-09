@@ -5,6 +5,7 @@ require "pathname"
 $LOAD_PATH << Pathname(__dir__).parent + "lib"
 
 require "bugsnag"
+require "timeout"
 require "runners"
 require "runners/cli"
 
@@ -18,4 +19,10 @@ at_exit do
   end
 end
 
-Runners::CLI.new(argv: ARGV, stdout: STDOUT, stderr: STDERR).validate_options!.run
+pid = fork do
+  Runners::CLI.new(argv: ARGV, stdout: STDOUT, stderr: STDERR).validate_options!.run
+end
+
+Timeout.timeout(ENV['RUNNERS_TIMEOUT'] || 1_800) do
+  Process.waitpid(pid)
+end
