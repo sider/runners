@@ -18,7 +18,7 @@ RUN cd ${RUNNERS_DIR} && \
     bundle install --without='development test'
 ENV PATH ${RUNNERS_DIR}/bin:${PATH}
 
-ARG JAVASEE_VERSION=0.1.1
+ARG JAVASEE_VERSION=0.1.2
 USER root
 RUN curl -O -L https://github.com/sider/JavaSee/releases/download/${JAVASEE_VERSION}/JavaSee-bin-${JAVASEE_VERSION}.zip \
   && unzip JavaSee-bin-${JAVASEE_VERSION}.zip \
