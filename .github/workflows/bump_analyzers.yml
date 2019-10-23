@@ -1,0 +1,23 @@
+name: Bump analyzers
+
+on: push
+  # schedule:
+  #   - cron: "0 0 */7 * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.6.x
+      - run: |
+          gem install bundler --no-document
+          bundle install --jobs=4 --retry=3 --path=vendor/bundle
+      - run: |
+          bundle exec rake bump_analyzers
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_AUTHOR_NAME: GitHub Actions
+          GITHUB_AUTHOR_EMAIL: actions@github.com

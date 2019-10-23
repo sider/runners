@@ -2,6 +2,7 @@ require "rake/testtask"
 require 'erb'
 require "aufgaben/release"
 require "aufgaben/bump/ruby"
+require_relative "lib/tasks/bump_analyzers"
 require_relative "lib/tasks/docker/timeout_test"
 
 Aufgaben::Release.new
@@ -10,6 +11,7 @@ Aufgaben::Bump::Ruby.new do |t|
   t.files = %w[
     .ruby-version
     .circleci/config.yml
+    .github/workflows/bump_analyzers.yml
   ]
 end
 
