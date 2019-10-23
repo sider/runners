@@ -19,9 +19,9 @@ RUN cd ${RUNNERS_DIR} && \
 ENV PATH ${RUNNERS_DIR}/bin:${PATH}
 
 USER root
-ENV MISSPELL_VERSION=v0.3.4
-RUN curl -L -o install-misspell.sh https://git.io/misspell && \
-    sh ./install-misspell.sh -b /usr/local/bin $MISSPELL_VERSION && \
+ARG MISSPELL_VERSION=0.3.4
+RUN curl -sSL -o install-misspell.sh https://git.io/misspell && \
+    sh ./install-misspell.sh -b /usr/local/bin "v${MISSPELL_VERSION}" && \
     rm ./install-misspell.sh
 USER $RUNNER_USER
 
