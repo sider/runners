@@ -207,7 +207,7 @@ gem 'jack_and_the_elastic_beanstalk', git: 'https://github.com/sider/jack_and_th
 EOF
 
       shell.push_dir(path) do
-        Bundler.with_clean_env do
+        Bundler.with_unbundled_env do
           shell.capture3!("bundle", "lock")
         end
       end
@@ -425,7 +425,7 @@ gem 'meowcop'
 EOF
 
       shell.push_dir(path) do
-        Bundler.with_clean_env do
+        Bundler.with_unbundled_env do
           shell.capture3!("bundle", "lock")
         end
       end
@@ -509,7 +509,7 @@ gem 'meowcop'
 EOF
 
       shell.push_dir(path) do
-        Bundler.with_clean_env do
+        Bundler.with_unbundled_env do
           shell.capture3!("bundle", "lock")
         end
       end
@@ -555,7 +555,7 @@ gem 'activerecord'
 EOF
 
       shell.push_dir(path) do
-        Bundler.with_clean_env do
+        Bundler.with_unbundled_env do
           shell.capture3!("bundle", "lock")
         end
       end
@@ -592,7 +592,7 @@ gem 'rubocop', '0.62.0'
 EOF
 
       shell.push_dir(path) do
-        Bundler.with_clean_env do
+        Bundler.with_unbundled_env do
           shell.capture3!("bundle", "lock")
         end
       end

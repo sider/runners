@@ -45,7 +45,7 @@ module Runners
       def generate_lockfile(lockfile_path)
         shell.trace_writer.message "By using detected Gemfile, generating Gemfile.lock..."
 
-        Bundler.with_clean_env do
+        Bundler.with_unbundled_env do
           shell.push_env_hash({ "BUNDLE_GEMFILE" => gemfile_path.to_s }) do
             shell.capture3! "bundle", "lock", "--lockfile", lockfile_path.to_s
             return lockfile_path.read.tap do |content|
