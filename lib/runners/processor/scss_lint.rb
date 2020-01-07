@@ -74,6 +74,7 @@ module Runners
             location: loc,
             id: id,
             message: message,
+            git_blame_info: git_blame_info(file, loc.start_line),
           )
         end
       end

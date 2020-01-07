@@ -151,6 +151,7 @@ module Runners
             location: loc,
             id: issue[:ruleName],
             message: issue[:failure],
+            git_blame_info: git_blame_info(issue[:name], loc.start_line),
           )
         end
       end

@@ -132,6 +132,7 @@ module Runners
               cwe: err[:cwe],
               location_info: loc[:info] != err[:msg] ? loc[:info] : nil,
             },
+            git_blame_info: git_blame_info(loc[:file], loc[:line]),
             schema: Schema.rule,
           )
         end

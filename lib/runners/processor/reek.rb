@@ -47,12 +47,14 @@ module Runners
         # NOTE: reek returns top-level JSON array
         JSON.parse(stdout, symbolize_names: true).each do |hash|
           hash[:lines].each do |line|
+            path = relative_path(hash[:source])
             result.add_issue Issue.new(
-              path: relative_path(hash[:source]),
+              path: path,
               location: Location.new(start_line: line),
               id: hash[:smell_type],
               message: "`#{hash[:context]}` #{hash[:message]}",
-              links: v4? ? [hash[:wiki_link]] : [hash[:documentation_link]]
+              links: v4? ? [hash[:wiki_link]] : [hash[:documentation_link]],
+              git_blame_info: git_blame_info(path.to_s, line),
             )
           end
         end

@@ -78,16 +78,16 @@ module Runners
       json[:issues].each do |hash|
         path = relative_path(hash[:script])
         loc = Location.new(start_line: hash[:location][:start][0],
-                                        start_column: hash[:location][:start][1],
-                                        end_line: hash[:location][:end][0],
-                                        end_column: hash[:location][:end][1])
-
+                           start_column: hash[:location][:start][1],
+                           end_line: hash[:location][:end][0],
+                           end_column: hash[:location][:end][1])
         result.add_issue Issue.new(
           path: path,
           location: loc,
           id: hash[:rule][:id],
           message: hash[:rule][:message],
           object: hash[:rule],
+          git_blame_info: git_blame_info(path.to_s, loc.start_line),
           schema: Schema.rule
         )
       end

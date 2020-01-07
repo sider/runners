@@ -147,7 +147,7 @@ class Runners::Processor
   def root_dir: -> Pathname
   def directory_traversal_attack?: (String) -> bool
   def show_runtime_versions: -> void
-  def git_blame_info: (String, Integer, Integer) -> Array<GitBlameInfo>
+  def git_blame_info: (String, Integer) -> GitBlameInfo?
 end
 
 type capture3_options = bool | Proc

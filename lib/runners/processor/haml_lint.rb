@@ -174,6 +174,7 @@ module Runners
             object: {
               severity: offense[:severity],
             },
+            git_blame_info: git_blame_info(path, line),
             schema: Schema.issue,
           )
         end

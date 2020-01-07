@@ -61,7 +61,8 @@ module Runners
             location: loc,
             id: "#{warning[:warning_type]}-#{warning[:warning_code]}",
             message: warning[:message],
-            links: [warning[:link]]
+            links: [warning[:link]],
+            git_blame_info: git_blame_info(warning[:file], line),
           )
         end
 

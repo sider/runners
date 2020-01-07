@@ -153,6 +153,7 @@ module Runners
             object: {
               severity: warning[:severity],
             },
+            git_blame_info: git_blame_info(path.to_s, line),
             schema: Schema.issue,
           )
         end

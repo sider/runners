@@ -156,7 +156,8 @@ module Runners
               location: loc,
               id: violation[:rule],
               message: violation.text.strip,
-              links: [violation[:externalInfoUrl]]
+              links: [violation[:externalInfoUrl]],
+              git_blame_info: git_blame_info(file[:name], loc.start_line),
             )
           end
         end

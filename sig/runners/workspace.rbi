@@ -16,7 +16,7 @@ class Runners::Workspace
   def git_source: () -> Options::GitSource
   def root_tmp_dir: () -> Pathname
   def patches: () -> GitDiffParser::Patches?
-  def git_blame_info: (String, Integer, Integer) -> Array<GitBlameInfo>
+  def range_git_blame_info: (String, Integer, Integer) -> Array<GitBlameInfo>
 end
 
 class Runners::Workspace::HTTP < Workspace

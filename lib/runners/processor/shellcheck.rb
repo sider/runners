@@ -158,6 +158,7 @@ module Runners
             severity: comment[:level],
             fix: comment[:fix],
           },
+          git_blame_info: git_blame_info(comment[:file], comment[:line]),
           schema: Schema.issue,
         )
       end

@@ -105,6 +105,7 @@ module Runners
                 object: {
                   confidence: confidence,
                 },
+                git_blame_info: git_blame_info(path.to_s, line),
                 schema: Schema.issue,
               )
             else

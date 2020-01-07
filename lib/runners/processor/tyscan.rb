@@ -106,20 +106,22 @@ module Runners
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
         json[:matches].each do |match|
+          loc = Location.new(
+            start_line: match[:location][:start][0],
+            start_column: match[:location][:start][1],
+            end_line: match[:location][:end][0],
+            end_column: match[:location][:end][1],
+          )
           result.add_issue Issue.new(
             id: match[:rule][:id],
             path: relative_path(match[:path]),
-            location: Location.new(
-              start_line: match[:location][:start][0],
-              start_column: match[:location][:start][1],
-              end_line: match[:location][:end][0],
-              end_column: match[:location][:end][1],
-            ),
+            location: loc,
             message: match[:rule][:message],
             object: {
               id: match[:rule][:id],
               message: match[:rule][:message],
             },
+            git_blame_info: git_blame_info(match[:path], loc.start_line),
             schema: Schema.issue_object,
           )
         end

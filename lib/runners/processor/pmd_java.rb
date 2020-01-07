@@ -80,15 +80,16 @@ module Runners
 
             message = violation.text.strip
             id = violation[:ruleset] + "-" + violation[:rule] + "-" + Digest::SHA1.hexdigest(message)
+            loc = Location.new(
+              start_line: violation[:beginline],
+              start_column: violation[:begincolumn],
+              end_line: violation[:endline],
+              end_column: violation[:endcolumn],
+            )
 
             result.add_issue Issue.new(
               path: path,
-              location: Location.new(
-                start_line: violation[:beginline],
-                start_column: violation[:begincolumn],
-                end_line: violation[:endline],
-                end_column: violation[:endcolumn],
-              ),
+              location: loc,
               id: id,
               message: message,
               links: links,
@@ -97,6 +98,7 @@ module Runners
                 ruleset: violation[:ruleset],
                 priority: violation[:priority],
               },
+              git_blame_info: git_blame_info(path.to_s, loc.start_line),
               schema: Schema.issue,
             )
           end

@@ -192,6 +192,7 @@ module Runners
               category: details.dig(:docs, :category),
               recommended: details.dig(:docs, :recommended),
             },
+            git_blame_info: git_blame_info(issue[:filePath], details[:line]),
             schema: Schema.issue,
           )
         end

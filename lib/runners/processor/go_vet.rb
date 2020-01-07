@@ -40,6 +40,7 @@ module Runners
             location: loc,
             id: Digest::SHA1.hexdigest(issue['message']),
             message: issue['message'],
+            git_blame_info: git_blame_info(issue['path'], issue['line']),
           )
         end
       end

@@ -120,6 +120,7 @@ module Runners
               message: message,
               links: build_links(error[:source]),
               object: { severity: severity },
+              git_blame_info: git_blame_info(file[:name], line),
               schema: Schema.issue,
             )
           when "exception"

@@ -150,6 +150,7 @@ module Runners
         # NOTE: rails_best_practices returns top-level YAML array with tags.
         #       We want to just parse a YAML, so we remove YAML tags before passing to `YAML.load`.
         YAML.load(stdout.gsub('- !ruby/object:RailsBestPractices::Core::Error', '-'), symbolize_names: true).each do |yaml|
+          path = relative_path(yaml.fetch(:filename))
           loc = Location.new(
             start_line: yaml.fetch(:line_number).to_i,
             start_column: 0,
@@ -157,11 +158,12 @@ module Runners
             end_column: 0
           )
           result.add_issue Issue.new(
-            path: relative_path(yaml.fetch(:filename)),
+            path: path,
             location: loc,
             id: yaml.fetch(:type),
             message: yaml.fetch(:message),
-            links: [yaml[:url]].compact
+            links: [yaml[:url]].compact,
+            git_blame_info: git_blame_info(path.to_s, loc.start_line),
           )
         end
       end

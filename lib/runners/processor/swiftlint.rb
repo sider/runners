@@ -103,6 +103,7 @@ module Runners
           location: loc,
           id: id,
           message: message,
+          git_blame_info: git_blame_info(fname, loc.start_line),
         )
       end.compact
     end

@@ -97,6 +97,7 @@ module Runners
               location: loc,
               id: issue[:rule] || issue[:name],
               message: message,
+              git_blame_info: git_blame_info(file, line),
             )
           end
         end

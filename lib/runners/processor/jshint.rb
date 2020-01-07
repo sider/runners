@@ -71,6 +71,7 @@ module Runners
             location: Location.new(start_line: error[:line]),
             id: error[:source] || Digest::SHA1.hexdigest(message),
             message: message.strip,
+            git_blame_info: git_blame_info(file[:name], error[:line]),
           )
         end
       end

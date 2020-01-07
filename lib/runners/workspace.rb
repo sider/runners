@@ -67,6 +67,10 @@ module Runners
       @root_tmp_dir ||= Pathname(Dir.mktmpdir)
     end
 
+    def range_git_blame_info(path_string, start_line, end_line)
+      []
+    end
+
     private
 
     def archive_source
@@ -175,10 +179,6 @@ module Runners
 
     def patches
       nil
-    end
-
-    def git_blame_info(path_string, start_line, end_line)
-      []
     end
   end
 end

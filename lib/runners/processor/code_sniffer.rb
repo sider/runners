@@ -182,6 +182,7 @@ module Runners
                 severity: suggest[:severity],
                 fixable: suggest[:fixable],
               },
+              git_blame_info: git_blame_info(path, suggest[:line]),
               schema: Schema.issue,
             )
           end

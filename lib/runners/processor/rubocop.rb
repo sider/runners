@@ -222,6 +222,7 @@ module Runners
                 severity: offense[:severity],
                 corrected: offense[:corrected],
               },
+              git_blame_info: git_blame_info(hash[:path], loc.start_line),
               schema: Schema.issue,
             )
           end

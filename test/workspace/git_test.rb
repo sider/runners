@@ -79,10 +79,10 @@ class WorkspaceGitTest < Minitest::Test
     end
   end
 
-  def test_git_blame_info
+  def test_range_git_blame_info
     with_workspace(base: "abe1cfc294c8d39de7484954bf8c3d7792fd8ad1", head: "998bc02a913e3899f3a1cd327e162dd54d489a4b",
                    git_http_url: "https://github.com", owner: "sider", repo: "runners", pull_number: 533) do |workspace|
-      info = workspace.send(:git_blame_info, 'test/smokes/haml_lint/expectations.rb', 137, 140)
+      info = workspace.range_git_blame_info('test/smokes/haml_lint/expectations.rb', 137, 140)
       assert_equal(
         [
           GitBlameInfo.new(commit: "abe1cfc294c8d39de7484954bf8c3d7792fd8ad1", original_line: 137, final_line: 137, line_hash: "c57a7c8a63aa22b9aa40625f019fe097c3a23ab8"),

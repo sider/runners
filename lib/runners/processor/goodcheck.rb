@@ -92,8 +92,10 @@ module Runners
               end_line: hash[:location][:end_line],
               end_column: hash[:location][:end_column],
             )
+            blame_info = git_blame_info(hash[:path], location.start_line)
           else
             location = nil
+            blame_info = nil
           end
 
           object = {
@@ -108,6 +110,7 @@ module Runners
             id: id,
             message: hash[:message],
             object: object,
+            git_blame_info: blame_info,
             schema: Schema.rule
           )
 

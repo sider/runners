@@ -75,21 +75,23 @@ module Runners
 
         Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
           json[:result].each do |issue|
+            loc = Location.new(
+              start_line: issue[:location][:start][0],
+              start_column: issue[:location][:start][1],
+              end_line: issue[:location][:end][0],
+              end_column: issue[:location][:end][1],
+            )
             result.add_issue Issue.new(
               id: issue[:rule][:id],
               path: relative_path(issue[:path]),
-              location: Location.new(
-                start_line: issue[:location][:start][0],
-                start_column: issue[:location][:start][1],
-                end_line: issue[:location][:end][0],
-                end_column: issue[:location][:end][1],
-              ),
+              location: loc,
               message: issue[:rule][:message],
               object: {
                 id: issue[:rule][:id],
                 message: issue[:rule][:message],
                 justifications: Array(issue[:justifications]),
               },
+              git_blame_info: git_blame_info(issue[:path], loc.start_line),
               schema: Schema.issue_object,
             )
           end
