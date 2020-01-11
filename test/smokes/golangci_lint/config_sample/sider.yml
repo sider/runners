@@ -1,0 +1,3 @@
+linter:
+  golangci-lint:
+    config: golangci.example.yml

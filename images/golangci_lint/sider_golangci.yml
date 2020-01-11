@@ -1,0 +1,12 @@
+linters-settings:
+  gocritic:
+    enabled-tags:
+      - diagnostic
+      - performance
+      - style
+linters:
+  enable:
+    - bodyclose
+    - gocyclo
+    - stylecheck
+    - gocritic

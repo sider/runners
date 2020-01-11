@@ -154,6 +154,10 @@ jobs:
     environment:
       ANALYZER: go_vet
     <<: *runner_job
+  runner_golangci_lint:
+    environment:
+      ANALYZER: golangci_lint
+    <<: *runner_job
   runner_golint:
     environment:
       ANALYZER: golint
@@ -216,6 +220,7 @@ workflows:
       - runner_flake8: { filters: { tags: { only: /.*/ } } }
       - runner_misspell: { filters: { tags: { only: /.*/ } } }
       - runner_go_vet: { filters: { tags: { only: /.*/ } } }
+      - runner_golangci_lint: { filters: { tags: { only: /.*/ } } }
       - runner_golint: { filters: { tags: { only: /.*/ } } }
       - runner_gometalinter: { filters: { tags: { only: /.*/ } } }
       - runner_swiftlint: { filters: { tags: { only: /.*/ } } }

@@ -1,0 +1,3 @@
+linter:
+  golangci-lint:
+    no-config: true

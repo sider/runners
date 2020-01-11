@@ -75,6 +75,7 @@ All notable changes to this project will be documented in this file.
 [Full diff](https://github.com/sider/runners/compare/0.17.1...0.18.0)
 
 - [hadolint] New support [#625](https://github.com/sider/runners/pull/625)
+- [GolangCI-Lint] New support [#661](https://github.com/sider/runners/pull/661)
 
 ## 0.17.1
 

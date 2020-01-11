@@ -1,0 +1,5 @@
+linter:
+  golangci-lint:
+    enable:
+      - misspell
+      - gocyclo

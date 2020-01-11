@@ -1,0 +1,6 @@
+linter:
+  golangci-lint:
+    skip-files:
+      - "lib/bad.go"
+      - ".*\\.my\\.go$"
+

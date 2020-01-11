@@ -1,0 +1,3 @@
+linter:
+  golangci-lint:
+    skip-dirs-use-default: false

@@ -1,0 +1,5 @@
+linter:
+  golangci-lint:
+    target:
+      - dir1
+      - dir2/...
