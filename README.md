@@ -50,11 +50,9 @@ Please follow these instructions.
 
 ### Prerequisites
 
-The latest version recommended.
-
-- Ruby
-- Bundler
-- Docker
+- Ruby (see [`.ruby-version`](.ruby-version))
+- Bundler (see [`Gemfile.lock`](Gemfile.lock))
+- Docker (the latest version recommended)
 
 ### Setup
 
