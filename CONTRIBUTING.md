@@ -8,7 +8,7 @@ Thank you for wanting to contribute. This guide can help you, for example,
 
 ...and so on.
 
-See also the [develper guide](../README.md#developer-guide).
+See also the [developer guide](README.md#developer-guide).
 
 ## Add a new tool
 
