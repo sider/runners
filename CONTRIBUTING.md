@@ -15,7 +15,7 @@ See also the [developer guide](README.md#developer-guide).
 First, please open a new issue for a tool that you want to add.
 
 Next, please read the previous pull requests which added a new tool and
-read ["How to write a new runner?"](how-to-write-a-new-runner.md) before you start coding.
+read ["How to write a new runner?"](docs/how-to-write-a-new-runner.md) before you start coding.
 
 The following links are for adding a *hadolint* support:
 
