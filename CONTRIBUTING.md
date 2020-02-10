@@ -4,7 +4,7 @@ Thank you for wanting to contribute. This guide can help you, for example,
 
 - when you add a new tool
 - when you fix a bug
-- when you fix a incorrect document (e.g. typo)
+- when you fix an incorrect document (e.g. typo)
 
 ...and so on.
 
@@ -16,7 +16,7 @@ First, please open a new issue for a tool that you want to add.
 
 Next, please read the previous pull requests which added a new tool before you start coding.
 
-The following links are for adding a hadolint support:
+The following links are for adding a *hadolint* support:
 
 - https://github.com/sider/runners/issues/581
 - https://github.com/sider/runners/pull/625
