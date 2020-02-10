@@ -84,6 +84,7 @@ These commands will help you develop! :wink:
 $ tree -L 1 -d
 .
 ├── bin
+├── docs
 ├── images
 ├── lib
 ├── sig
@@ -93,6 +94,7 @@ $ tree -L 1 -d
 ```
 
 - `bin`: Entry point to launch a runner
+- `docs`: Documents
 - `images`: Docker images
 - `lib`: Core programs
 - `sig`: Ruby signature files for type-checking
