@@ -8,7 +8,7 @@ See also another related project, called [devon_rex](https://github.com/sider/de
 
 ## Supported analyzers
 
-Each analyzer can be available as a Docker image.
+All analyzers are provided as a Docker image.
 
 *(in alphabetical order)*
 
