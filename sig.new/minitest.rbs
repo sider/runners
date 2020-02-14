@@ -1,0 +1,6 @@
+module Minitest
+end
+
+module Minitest::Assertions
+  def diff: (untyped, untyped) -> String
+end
