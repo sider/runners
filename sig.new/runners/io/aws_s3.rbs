@@ -1,9 +1,6 @@
 # AwsS3IO expects AWS credentials set with environment variables or an instance profile.
 # So, before using this, make sure AWS credentials available.
 # Also, prepare the S3 bucket and allow this instance to upload an S3 object.
-module Runners
-end
-
 class Runners::IO::AwsS3
   def self.parse_s3_uri!: (untyped s3_uri) -> untyped
 

@@ -1,6 +1,3 @@
-module Runners
-end
-
 class Runners::Workspace
   def self.prepare: (options: untyped options, working_dir: untyped working_dir, trace_writer: untyped trace_writer) -> untyped
 

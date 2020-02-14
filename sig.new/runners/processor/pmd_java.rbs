@@ -1,6 +1,3 @@
-module Runners
-end
-
 class Runners::Processor::PmdJava < Processor
   include Java
 

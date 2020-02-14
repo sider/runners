@@ -1,6 +1,3 @@
-module Runners
-end
-
 class Runners::IO
   attr_reader ios: untyped
 

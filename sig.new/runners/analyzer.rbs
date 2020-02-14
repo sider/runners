@@ -1,6 +1,3 @@
-module Runners
-end
-
 class Runners::Analyzer
   # @dynamic name, version
   attr_reader name: untyped

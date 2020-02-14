@@ -1,6 +1,3 @@
-module Runners
-end
-
 class Runners::Workspace::Git < Workspace
   def range_git_blame_info: (untyped path_string, untyped start_line, untyped end_line) -> untyped
 

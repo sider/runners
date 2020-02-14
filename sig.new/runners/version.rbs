@@ -1,4 +1,1 @@
-module Runners
-end
-
 Runners::VERSION: untyped
