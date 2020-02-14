@@ -1,9 +1,3 @@
-module Runners::Ruby
-end
-
-class Runners::Ruby::LockfileLoader
-end
-
 class Runners::Ruby::LockfileLoader::Lockfile
   attr_reader specs: untyped
 

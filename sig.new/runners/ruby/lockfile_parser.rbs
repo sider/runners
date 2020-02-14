@@ -1,6 +1,3 @@
-module Runners::Ruby
-end
-
 module Runners::Ruby::LockfileParser
   # HACK: This wrapper method aims to prevent the `Bundler::GemfileNotFound` error.
   #       Because Bundler assumes that the `Gemfile` file exists.

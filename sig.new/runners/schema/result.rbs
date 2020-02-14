@@ -1,6 +1,3 @@
-module Runners::Schema
-end
-
 Runners::Schema::Issue: untyped
 
 Runners::Schema::Result: untyped

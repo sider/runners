@@ -1,9 +1,3 @@
-module Runners::Ruby
-end
-
-class Runners::Ruby::GemInstaller
-end
-
 class Runners::Ruby::GemInstaller::Spec
   attr_reader name: untyped
 

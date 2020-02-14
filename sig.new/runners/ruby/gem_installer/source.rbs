@@ -1,6 +1,3 @@
-class Runners::Ruby::GemInstaller
-end
-
 module Runners::Ruby::GemInstaller::Source
   def self.create: (untyped gems_item) -> untyped
 end

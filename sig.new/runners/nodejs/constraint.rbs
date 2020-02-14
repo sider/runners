@@ -1,6 +1,3 @@
-module Runners::Nodejs
-end
-
 class Runners::Nodejs::Constraint
   def initialize: (untyped version, *untyped versions) -> untyped
 

@@ -1,6 +1,3 @@
-module Runners::Ruby
-end
-
 class Runners::Ruby::GemInstaller
   attr_reader gem_home: untyped
 
