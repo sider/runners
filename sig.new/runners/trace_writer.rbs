@@ -1,11 +1,11 @@
 class Runners::TraceWriter
   attr_reader writer: untyped
 
-  attr_reader sensitive_strings: Array<String>
+  attr_reader sensitive_strings: Array[String]
 
-  def initialize: (writer: untyped, ?sensitive_strings: Array<String>) -> untyped
+  def initialize: (writer: untyped, ?sensitive_strings: Array[String]) -> untyped
 
-  def command_line: (Array<String> command_line, ?recorded_at: Time) -> void
+  def command_line: (Array[String] command_line, ?recorded_at: Time) -> void
 
   def status: (Process::Status status, ?recorded_at: Time) -> void
 
