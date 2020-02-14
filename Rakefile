@@ -32,6 +32,7 @@ end
 
 task :default => [:test, :typecheck]
 
+desc "Check types"
 task :typecheck do
   # FIXME: Must check all files.
   files = Dir.glob("lib/runners/**/*.rb").reject { |f| f.include? "processor/" }
