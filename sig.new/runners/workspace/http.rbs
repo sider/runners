@@ -1,0 +1,17 @@
+module Runners
+end
+
+class Runners::Workspace::HTTP < Workspace
+  def prepare_base_source: (untyped dest) -> untyped
+
+  def prepare_head_source: (untyped dest) -> untyped
+
+  # @param uri [URI]
+  # @param dest [Pathname]
+  # @param key [String, nil]
+  def provision: (untyped uri, untyped dest, untyped key) -> untyped
+
+  def download: (untyped uri) { (untyped) -> untyped } -> untyped
+
+  def retryable_sleep: (untyped n) -> untyped
+end

@@ -1,0 +1,27 @@
+module Runners
+end
+
+class Runners::Processor::Tyscan < Processor
+  include Nodejs
+
+  def self.ci_config_section_name: () -> untyped
+
+  def analyzer_name: () -> untyped
+
+  def setup: () { () -> untyped } -> untyped
+
+  def analyze: (untyped _) -> untyped
+
+  def tyscan_test: (untyped config) -> untyped
+
+  def tyscan_scan: (untyped config) -> untyped
+end
+
+# Define schema in sider.yml
+Runners::Processor::Tyscan::Schema: untyped
+
+Runners::Processor::Tyscan::DEFAULT_DEPS: untyped
+
+Runners::Processor::Tyscan::CONSTRAINTS: untyped
+
+Runners::Processor::Tyscan::DEFAULT_CONFIG_NOT_FOUND_ERROR: untyped

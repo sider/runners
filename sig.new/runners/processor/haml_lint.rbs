@@ -1,0 +1,53 @@
+module Runners
+end
+
+class Runners::Processor::HamlLint < Processor
+  include Ruby
+
+  def self.ci_config_section_name: () -> untyped
+
+  def analyzer_bin: () -> untyped
+
+  def analyzer_name: () -> untyped
+
+  def default_gem_specs: () -> untyped
+
+  def setup: () { () -> untyped } -> untyped
+
+  def analyze: (untyped _changes) -> untyped
+
+  def setup_default_config: () -> untyped
+
+  def check_runner_config: (untyped config) { (untyped, untyped) -> untyped } -> untyped
+
+  def file: (untyped config) -> untyped
+
+  def include_linter: (untyped config) -> untyped
+
+  def exclude_linter: (untyped config) -> untyped
+
+  def exclude: (untyped config) -> untyped
+
+  def haml_lint_config: (untyped config) -> untyped
+
+  def parse_result: (untyped output) -> untyped
+
+  def build_links: (untyped issue_id) -> untyped
+
+  def run_analyzer: (untyped targets, untyped options) -> untyped
+
+  # NOTE: HAML-Lint exits successfully even if RuboCop fails.
+  #
+  # @see https://github.com/sds/haml-lint/issues/317
+  def add_rubocop_warnings_if_exists: (untyped stderr) -> untyped
+end
+
+Runners::Processor::HamlLint::Schema: untyped
+
+# DEPRECATED: Implicit dependencies
+# @see https://github.com/sider/runner_rubocop/blob/3.1.0/lib/entrypoint.rb#L27-L52
+Runners::Processor::HamlLint::OPTIONAL_GEMS: untyped
+
+Runners::Processor::HamlLint::DEFAULT_GEMS: untyped
+
+Runners::Processor::HamlLint::CONSTRAINTS: untyped

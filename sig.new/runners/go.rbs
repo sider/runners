@@ -1,0 +1,6 @@
+module Runners
+end
+
+module Runners::Go
+  def show_runtime_versions: () -> untyped
+end

@@ -1,0 +1,58 @@
+module Runners
+end
+
+class Runners::Processor::Eslint < Processor
+  include Nodejs
+
+  def self.ci_config_section_name: () -> untyped
+
+  def analyzer_name: () -> untyped
+
+  def setup: () { () -> untyped } -> untyped
+
+  def analyze: (untyped changes) -> untyped
+
+  def check_runner_config: (untyped config) { (untyped, untyped) -> untyped } -> untyped
+
+  def dir: (untyped config) -> untyped
+
+  def eslint_config: (untyped config) -> untyped
+
+  def user_specified_eslint_config_path: (untyped config) -> untyped
+
+  def ext: (untyped config) -> untyped
+
+  def ignore_path: (untyped config) -> untyped
+
+  def ignore_pattern: (untyped config) -> untyped
+
+  def no_ignore: (untyped config) -> untyped
+
+  def global: (untyped config) -> untyped
+
+  def quiet: (untyped config) -> untyped
+
+  # @see https://eslint.org/docs/user-guide/configuring#configuring-rules
+  def normalize_severity: (untyped severity) -> untyped
+
+  def new_location: (untyped start_line, untyped start_column, untyped end_line, untyped end_column) -> untyped
+
+  # @see https://eslint.org/docs/developer-guide/working-with-custom-formatters#the-results-object
+  def parse_result: (untyped stdout) { (untyped) -> untyped } -> untyped
+
+  def run_analyzer: (untyped target_dir, untyped additional_options) -> untyped
+
+  def custom_formatter: () -> untyped
+
+  # NOTE: Linting nonexistent files is a fatal error since v5.0.0.
+  # @see https://eslint.org/docs/user-guide/migrating-to-5.0.0#-linting-nonexistent-files-from-the-command-line-is-now-a-fatal-error
+  def no_linting_files?: (untyped stderr) -> untyped
+end
+
+Runners::Processor::Eslint::Schema: untyped
+
+Runners::Processor::Eslint::DEFAULT_DEPS: untyped
+
+Runners::Processor::Eslint::CONSTRAINTS: untyped
+
+Runners::Processor::Eslint::RECOMMENDED_MINIMUM_VERSION: untyped

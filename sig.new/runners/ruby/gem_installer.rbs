@@ -1,0 +1,40 @@
+module Runners
+end
+
+module Runners::Ruby
+end
+
+class Runners::Ruby::GemInstaller
+  attr_reader gem_home: untyped
+
+  attr_reader specs: untyped
+
+  attr_reader trace_writer: untyped
+
+  attr_reader shell: untyped
+
+  attr_reader constraints: untyped
+
+  attr_reader ci_config_path_name: untyped
+
+  def initialize: (shell: untyped shell, home: untyped home, ci_config_path_name: untyped ci_config_path_name, specs: untyped specs, constraints: untyped constraints, trace_writer: untyped trace_writer) -> untyped
+
+  def gemfile_path: () -> untyped
+
+  def lockfile_path: () -> untyped
+
+  def install!: () { (untyped) -> untyped } -> untyped
+
+  def gemfile_content: () -> untyped
+
+  def group_specs: () -> untyped
+
+  def gem: (untyped spec, untyped constraints) -> untyped
+
+  def gem_constraints: (untyped spec, untyped source) -> untyped
+end
+
+class Runners::Ruby::GemInstaller::InstallationFailure < InstallGemsFailure
+end
+
+Runners::Ruby::GemInstaller::DEFAULT_SOURCE: ::String

@@ -1,0 +1,24 @@
+module Runners
+end
+
+class Runners::Processor::Querly < Processor
+  include Ruby
+
+  def self.ci_config_section_name: () -> untyped
+
+  def analyzer_name: () -> untyped
+
+  def analyzer_version: () -> untyped
+
+  def setup: () { () -> untyped } -> untyped
+
+  def analyze: (untyped changes) -> untyped
+
+  def test_config_file: (untyped config_file) -> untyped
+end
+
+Runners::Processor::Querly::Schema: untyped
+
+Runners::Processor::Querly::OPTIONAL_GEMS: untyped
+
+Runners::Processor::Querly::CONSTRAINTS: untyped

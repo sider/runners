@@ -1,0 +1,6 @@
+module Runners
+end
+
+module Runners::Java
+  def show_runtime_versions: () -> untyped
+end

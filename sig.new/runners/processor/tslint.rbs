@@ -1,0 +1,36 @@
+module Runners
+end
+
+class Runners::Processor::Tslint < Processor
+  include Nodejs
+
+  def self.ci_config_section_name: () -> untyped
+
+  def setup: () { () -> untyped } -> untyped
+
+  def analyzer_name: () -> untyped
+
+  def analyze: (untyped _changes) -> untyped
+
+  def check_runner_config: (untyped config) { (untyped, untyped) -> untyped } -> untyped
+
+  def target_glob: (untyped config) -> untyped
+
+  def tslint_config: (untyped config) -> untyped
+
+  def exclude: (untyped config) -> untyped
+
+  def project: (untyped config) -> untyped
+
+  def rules_dir: (untyped config) -> untyped
+
+  def type_check: (untyped config) -> untyped
+
+  def run_analyzer: (untyped target, untyped options) -> untyped
+end
+
+Runners::Processor::Tslint::Schema: untyped
+
+Runners::Processor::Tslint::DEFAULT_DEPS: untyped
+
+Runners::Processor::Tslint::CONSTRAINTS: untyped

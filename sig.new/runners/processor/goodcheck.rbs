@@ -1,0 +1,26 @@
+module Runners
+end
+
+class Runners::Processor::Goodcheck < Processor
+  include Ruby
+
+  def self.ci_config_section_name: () -> untyped
+
+  def analyzer_name: () -> untyped
+
+  def analyzer_version: () -> untyped
+
+  def ensure_config: () { (untyped) -> untyped } -> untyped
+
+  def goodcheck_test: (untyped config) -> untyped
+
+  def goodcheck_check: (untyped config) -> untyped
+
+  def setup: () { () -> untyped } -> untyped
+
+  def analyze: (untyped changes) -> untyped
+end
+
+Runners::Processor::Goodcheck::Schema: untyped
+
+Runners::Processor::Goodcheck::CONSTRAINTS: untyped

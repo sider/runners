@@ -1,0 +1,11 @@
+module Runners
+end
+
+class Runners::Error < StandardError
+end
+
+class Runners::UserError < Error
+end
+
+class Runners::SystemError < Error
+end

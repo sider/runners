@@ -1,0 +1,36 @@
+module Runners
+end
+
+class Runners::Processor::Hadolint < Processor
+  def self.ci_config_section_name: () -> untyped
+
+  def analyzer_name: () -> untyped
+
+  def analyze: (untyped changes) -> untyped
+
+  def config: () -> untyped
+
+  def analyzer_options: () -> untyped
+
+  def analysis_target: () -> untyped
+
+  def run_analyzer: () -> untyped
+
+  # Output format:
+  #
+  #     { line: number, code: rule, message: description, column: number, file: filepath, level: level }
+  #
+  # Example:
+  #
+  #     {"line":14,"code":"DL3003","message":"Use WORKDIR to switch to a directory","column":1,"file":"images/hadolint/Dockerfile","level":"warning"}
+  #
+  # @see https://github.com/hadolint/hadolint#rules
+  # @param stdout [String]
+  def parse_result: (untyped stdout) -> untyped
+
+  def link_to_wiki: (untyped id) -> untyped
+end
+
+Runners::Processor::Hadolint::Schema: untyped
+
+Runners::Processor::Hadolint::DEFAULT_TARGET: untyped

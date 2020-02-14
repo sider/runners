@@ -1,0 +1,29 @@
+module Runners
+end
+
+class Runners::Processor::Coffeelint < Processor
+  include Nodejs
+
+  def self.ci_config_section_name: () -> untyped
+
+  def analyzer_name: () -> untyped
+
+  def setup: () { () -> untyped } -> untyped
+
+  def analyze: (untyped _changes) -> untyped
+
+  def check_runner_config: (untyped config) { (untyped) -> untyped } -> untyped
+
+  # NOTE: This is a deprecated option, and the option has been already undocumented.
+  def coffeelint_config: (untyped config) -> untyped
+
+  def file: (untyped config) -> untyped
+
+  def run_analyzer: (untyped options) -> untyped
+end
+
+Runners::Processor::Coffeelint::Schema: untyped
+
+Runners::Processor::Coffeelint::DEFAULT_DEPS: untyped
+
+Runners::Processor::Coffeelint::CONSTRAINTS: untyped

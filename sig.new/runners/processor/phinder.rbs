@@ -1,0 +1,21 @@
+module Runners
+end
+
+class Runners::Processor::Phinder < Processor
+  include PHP
+
+  def self.ci_config_section_name: () -> untyped
+
+  def analyzer_name: () -> untyped
+
+  def test_phinder_config: (untyped config) -> untyped
+
+  def run_phinder: (untyped config) -> untyped
+
+  def analyze: (untyped changes) -> untyped
+
+  # TODO: Implement methods as a Runners utility
+  def ensure_phinder_config_files: (*untyped paths) { (untyped) -> untyped } -> untyped
+end
+
+Runners::Processor::Phinder::Schema: untyped

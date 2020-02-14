@@ -1,0 +1,82 @@
+module Runners
+end
+
+class Runners::Processor
+  attr_reader guid: untyped
+
+  attr_reader workspace: untyped
+
+  attr_reader working_dir: untyped
+
+  attr_reader git_ssh_path: untyped
+
+  attr_reader trace_writer: untyped
+
+  attr_reader warnings: untyped
+
+  attr_reader ci_config: untyped
+
+  attr_reader ci_config_for_collect: untyped
+
+  attr_reader shell: untyped
+
+  def initialize: (guid: untyped guid, workspace: untyped workspace, git_ssh_path: untyped git_ssh_path, trace_writer: untyped trace_writer) -> untyped
+
+  def relative_path: (untyped path_string, ?from: untyped from) -> untyped
+
+  def setup: () { () -> untyped } -> untyped
+
+  def analyze: (untyped changes) -> untyped
+
+  def analyzer_name: () -> untyped
+
+  def analyzer: () -> untyped
+
+  def analyzer_bin: () -> untyped
+
+  def analyzer_version: () -> untyped
+
+  def extract_version!: (untyped command, ?::String version_option, ?pattern: untyped pattern) -> untyped
+
+  def self.ci_config_section_name: () -> untyped
+
+  def ci_config_path: () -> untyped
+
+  def ci_config_path_name: () -> untyped
+
+  def ci_section: (?::Hash[untyped, untyped] default) -> untyped
+
+  def ci_section_root_dir: () -> untyped
+
+  def check_root_dir_exist: () -> untyped
+
+  def push_root_dir: () { () -> untyped } -> untyped
+
+  def root_dir: () -> untyped
+
+  def ensure_files: (*untyped paths) { (untyped) -> untyped } -> untyped
+
+  # @param schema [StrongJSON]
+  def ensure_runner_config_schema: (untyped schema) { (untyped) -> untyped } -> untyped
+
+  # Returns e.g. "$.linter.rubocop.gems"
+  def build_field_reference_from_path: (untyped path) -> untyped
+
+  def delete_unchanged_files: (untyped changes, ?except: untyped except, ?only: untyped only) -> untyped
+
+  def add_warning: (untyped message, ?file: untyped? file) -> untyped
+
+  def add_warning_if_deprecated_version: (minimum: untyped minimum, ?file: untyped? file, ?deadline: untyped? deadline) -> untyped
+
+  def add_warning_if_deprecated_options: (untyped keys, doc: untyped doc) -> untyped
+
+  # Prohibit directory traversal attack, e.g.
+  # - '../../etc/passwd'
+  # - 'config/../../../etc/passwd'
+  def directory_traversal_attack?: (untyped path) -> untyped
+
+  def show_runtime_versions: () -> untyped
+end
+
+class Runners::Processor::CIConfigBroken < UserError
+end

@@ -1,0 +1,28 @@
+module Runners
+end
+
+class Runners::Processor::Misspell < Processor
+  def self.ci_config_section_name: () -> untyped
+
+  def analyzer_name: () -> untyped
+
+  def analyzer_version: () -> untyped
+
+  def setup: () { () -> untyped } -> untyped
+
+  def analyze: (untyped _changes) -> untyped
+
+  def check_runner_config: (untyped config) { (untyped, untyped) -> untyped } -> untyped
+
+  def run_analyzer: (untyped options, untyped targets) -> untyped
+
+  def locale: (untyped config) -> untyped
+
+  def ignore: (untyped config) -> untyped
+
+  def analysis_targets: (untyped config) -> untyped
+
+  def delete_targets: (untyped config) -> untyped
+end
+
+Runners::Processor::Misspell::Schema: untyped

@@ -1,0 +1,34 @@
+module Runners
+end
+
+class Runners::Processor::Phpmd < Processor
+  include PHP
+
+  def self.ci_config_section_name: () -> untyped
+
+  def analyzer_name: () -> untyped
+
+  def setup: () { () -> untyped } -> untyped
+
+  def analyze: (untyped changes) -> untyped
+
+  def target_files: (untyped config) -> untyped
+
+  def check_runner_config: (untyped config) { (untyped, untyped, untyped) -> untyped } -> untyped
+
+  def rule: (untyped config) -> untyped
+
+  def target_dirs: (untyped config) -> untyped
+
+  def minimumpriority: (untyped config) -> untyped
+
+  def suffixes: (untyped config) -> untyped
+
+  def exclude: (untyped config) -> untyped
+
+  def strict: (untyped config) -> untyped
+
+  def run_analyzer: (untyped changes, untyped targets, untyped rule, untyped options) -> untyped
+end
+
+Runners::Processor::Phpmd::Schema: untyped

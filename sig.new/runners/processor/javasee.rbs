@@ -1,0 +1,24 @@
+module Runners
+end
+
+class Runners::Processor::Javasee < Processor
+  include Java
+
+  def self.ci_config_section_name: () -> untyped
+
+  def analyzer_bin: () -> untyped
+
+  def javasee_check: (dirs: untyped dirs, config_path: untyped config_path) -> untyped
+
+  def analyzer_version: () -> untyped
+
+  def analyzer_name: () -> untyped
+
+  def analyze: (untyped changes) -> untyped
+
+  def construct_result: (untyped result, untyped stdout, untyped stderr) -> untyped
+
+  def check_runner_config: (untyped config) { (untyped, untyped) -> untyped } -> untyped
+end
+
+Runners::Processor::Javasee::Schema: untyped

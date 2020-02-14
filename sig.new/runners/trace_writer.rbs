@@ -1,0 +1,36 @@
+module Runners
+end
+
+class Runners::TraceWriter
+  attr_reader writer: untyped
+
+  attr_reader sensitive_strings: untyped
+
+  def initialize: (writer: untyped writer, ?sensitive_strings: untyped sensitive_strings) -> untyped
+
+  def command_line: (untyped command_line, ?recorded_at: untyped recorded_at) -> untyped
+
+  def status: (untyped status, ?recorded_at: untyped recorded_at) -> untyped
+
+  def stdout: (untyped string, ?recorded_at: untyped recorded_at, ?max_length: ::Integer max_length) -> untyped
+
+  def stderr: (untyped string, ?recorded_at: untyped recorded_at, ?max_length: ::Integer max_length) -> untyped
+
+  def message: (untyped message, ?recorded_at: untyped recorded_at, ?max_length: ::Integer max_length, ?limit: ::Integer limit, ?omission: ::String omission) { () -> untyped } -> untyped
+
+  def header: (untyped message, ?recorded_at: untyped recorded_at) -> untyped
+
+  def warning: (untyped message, ?file: untyped? file, ?recorded_at: untyped recorded_at) -> untyped
+
+  def ci_config: (untyped content, file: untyped file, ?recorded_at: untyped recorded_at) -> untyped
+
+  def error: (untyped message, ?recorded_at: untyped recorded_at, ?max_length: ::Integer max_length) -> untyped
+
+  def <<: (untyped object) -> untyped
+
+  def now: () -> untyped
+
+  def each_slice: (untyped string, size: untyped size) { (untyped, untyped) -> untyped } -> untyped
+
+  def masked_string: (untyped str) -> untyped
+end

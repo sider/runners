@@ -1,0 +1,15 @@
+module Runners
+end
+
+module Runners::Nodejs
+end
+
+class Runners::Nodejs::DefaultDependencies
+  attr_reader main: untyped
+
+  attr_reader extras: untyped
+
+  def initialize: (main: untyped main, ?extras: untyped extras) -> untyped
+
+  def all: () -> untyped
+end

@@ -1,0 +1,38 @@
+module Runners
+end
+
+class Runners::Processor::Flake8 < Processor
+  include Python
+
+  def self.ci_config_section_name: () -> untyped
+
+  def analyzer_name: () -> untyped
+
+  def setup: () { () -> untyped } -> untyped
+
+  def analyze: (untyped changes) -> untyped
+
+  def prepare_config: () -> untyped
+
+  def prepare_plugins: (untyped config) -> untyped
+
+  def detected_python_version: (untyped config) -> untyped
+
+  def specified_python_version: (untyped config) -> untyped
+
+  def specified_python_version_via_pyenv: () -> untyped
+
+  def ignored_config_path: () -> untyped
+
+  def python2_version: () -> untyped
+
+  def python3_version: () -> untyped
+
+  def parse_result: (untyped output) -> untyped
+
+  def run_analyzer: () -> untyped
+end
+
+Runners::Processor::Flake8::FLAKE8_OUTPUT_FORMAT: untyped
+
+Runners::Processor::Flake8::Schema: untyped

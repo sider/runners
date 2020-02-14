@@ -1,0 +1,26 @@
+module Runners
+end
+
+class Runners::CLI
+  attr_reader stdout: untyped
+
+  attr_reader stderr: untyped
+
+  attr_reader guid: untyped
+
+  attr_reader analyzer: untyped
+
+  attr_reader options: untyped
+
+  def initialize: (argv: untyped argv, stdout: untyped stdout, stderr: untyped stderr) -> untyped
+
+  def with_working_dir: () { (untyped) -> untyped } -> untyped
+
+  def processor_class: () -> untyped
+
+  def run: () -> untyped
+
+  def io: () -> untyped
+
+  def sensitive_strings: () -> untyped
+end

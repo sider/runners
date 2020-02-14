@@ -1,0 +1,34 @@
+module Runners
+end
+
+class Runners::Processor::Swiftlint < Processor
+  include Swift
+
+  def self.ci_config_section_name: () -> untyped
+
+  def analyzer_version: () -> untyped
+
+  def analyzer_name: () -> untyped
+
+  def setup: () { () -> untyped } -> untyped
+
+  def analyze: (untyped _changes) -> untyped
+
+  def check_runner_config: (untyped config) { (untyped, untyped) -> untyped } -> untyped
+
+  def ignore_warnings: (untyped config) -> untyped
+
+  def path: (untyped config) -> untyped
+
+  def swiftlint_config: (untyped config) -> untyped
+
+  def lenient: (untyped config) -> untyped
+
+  def enable_all_rules: (untyped config) -> untyped
+
+  def parse_result: (untyped stdout, untyped ignore_warnings) -> untyped
+
+  def run_analyzer: (untyped ignore_warnings, untyped options) -> untyped
+end
+
+Runners::Processor::Swiftlint::Schema: untyped

@@ -1,0 +1,20 @@
+module Runners
+end
+
+class Runners::Workspace::Git < Workspace
+  def range_git_blame_info: (untyped path_string, untyped start_line, untyped end_line) -> untyped
+
+  def prepare_base_source: (untyped dest) -> untyped
+
+  def prepare_head_source: (untyped dest) -> untyped
+
+  def provision: (untyped commit_hash, untyped dest) -> untyped
+
+  def git_directory: () -> untyped
+
+  def remote_url: () -> untyped
+
+  def git_fetch_args: () -> untyped
+
+  def patches: () -> untyped
+end

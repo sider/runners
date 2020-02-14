@@ -1,0 +1,49 @@
+module Runners
+end
+
+class Runners::Shell
+  attr_reader trace_writer: untyped
+
+  attr_reader dir_stack: untyped
+
+  attr_reader env_hash_stack: untyped
+
+  def initialize: (current_dir: untyped current_dir, trace_writer: untyped trace_writer, env_hash: untyped env_hash) -> untyped
+
+  def current_dir: () -> untyped
+
+  def push_dir: (untyped dir) { () -> untyped } -> untyped
+
+  def push_env_hash: (untyped env) { () -> untyped } -> untyped
+
+  def env_hash: () -> untyped
+
+  def capture3: (untyped command, *untyped args, **untyped options) -> untyped
+
+  def capture3!: (untyped command, *untyped args, **untyped options) -> untyped
+
+  def capture3_with_retry!: (untyped command, *untyped args, ?tries: ::Integer tries) -> untyped
+
+  def capture3_trace: (untyped command, *untyped args, **untyped options) -> untyped
+end
+
+class Runners::Shell::ExecError < SystemError
+  attr_reader type: untyped
+
+  attr_reader args: untyped
+
+  attr_reader stdout_str: untyped
+
+  attr_reader stderr_str: untyped
+
+  attr_reader status: untyped
+
+  attr_reader dir: untyped
+
+  def initialize: (type: untyped `type`, args: untyped args, stdout_str: untyped stdout_str, stderr_str: untyped stderr_str, status: untyped status, dir: untyped dir) -> untyped
+
+  def inspect: () -> untyped
+
+  # @see https://docs.bugsnag.com/platforms/ruby/customizing-error-reports/#custom-error-diagnostic-data
+  def bugsnag_meta_data: () -> untyped
+end

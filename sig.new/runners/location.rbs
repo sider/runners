@@ -1,0 +1,26 @@
+module Runners
+end
+
+class Runners::Location
+  attr_reader start_line: untyped
+
+  attr_reader start_column: untyped
+
+  attr_reader end_line: untyped
+
+  attr_reader end_column: untyped
+
+  def initialize: (start_line: untyped start_line, ?start_column: untyped? start_column, ?end_line: untyped? end_line, ?end_column: untyped? end_column) -> untyped
+
+  def ==: (untyped other) -> untyped
+
+  def hash: () -> untyped
+
+  def eql?: (untyped other) -> untyped
+
+  def self.from_json: (untyped json) -> untyped
+
+  def as_json: () -> untyped
+
+  def to_s: () -> untyped
+end

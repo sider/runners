@@ -1,0 +1,46 @@
+module Runners
+end
+
+class Runners::Processor::Ktlint < Processor
+  include Java
+
+  def self.ci_config_section_name: () -> untyped
+
+  def ktlint_config: () -> untyped
+
+  def cli_config: () -> untyped
+
+  def gradle_config: () -> untyped
+
+  def maven_config: () -> untyped
+
+  def run_cli: () -> untyped
+
+  def run_gradle: () -> untyped
+
+  def run_maven: () -> untyped
+
+  def analyzer_version: () -> untyped
+
+  def extract_ktlint_version_for_gradle: () -> untyped
+
+  def extract_ktlint_version_for_maven: () -> untyped
+
+  def analyzer_name: () -> untyped
+
+  def analyze: (untyped changes) -> untyped
+
+  def construct_result: (untyped reporter, untyped output) -> untyped
+
+  def construct_issue: (file: untyped file, line: untyped line, message: untyped message, ?rule: ::String rule) -> untyped
+
+  def construct_json_result: (untyped output) -> untyped
+
+  def construct_checkstyle_result: (untyped output) -> untyped
+
+  def construct_plain_result: (untyped output) -> untyped
+
+  def check_runner_config: (untyped config) { (gradle: untyped, maven: untyped, cli: untyped) -> untyped } -> untyped
+end
+
+Runners::Processor::Ktlint::Schema: untyped

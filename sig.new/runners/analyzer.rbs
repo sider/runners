@@ -1,0 +1,17 @@
+module Runners
+end
+
+class Runners::Analyzer
+  # @dynamic name, version
+  attr_reader name: untyped
+
+  attr_reader version: untyped
+
+  def initialize: (name: untyped name, version: untyped version) -> untyped
+
+  def valid?: () -> untyped
+
+  def as_json: () -> untyped
+
+  def ==: (untyped other) -> untyped
+end

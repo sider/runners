@@ -1,0 +1,81 @@
+module Runners
+end
+
+module Runners::Results
+end
+
+class Runners::Results::Base
+  # @dynamic guid, timestamp
+  attr_reader guid: untyped
+
+  attr_reader timestamp: untyped
+
+  def initialize: (guid: untyped guid) -> untyped
+
+  def as_json: () -> untyped
+
+  def valid?: () -> untyped
+end
+
+# Result to indicate that processing finished successfully
+# Client programs may return this result.
+class Runners::Results::Success < Base
+  # @dynamic issues, analyzer
+  attr_reader issues: untyped
+
+  attr_reader analyzer: untyped
+
+  def initialize: (guid: untyped guid, analyzer: untyped analyzer) -> untyped
+
+  def as_json: () -> untyped
+
+  def valid?: () -> untyped
+
+  def add_issue: (untyped issue) -> untyped
+
+  def filter_issues: (untyped changes) -> untyped
+
+  def add_git_blame_info: (untyped workspace) -> untyped
+end
+
+# Result to indicate that processing failed by some error.
+# Client programs may return this result.
+class Runners::Results::Failure < Base
+  # @dynamic message, analyzer
+  attr_reader message: untyped
+
+  attr_reader analyzer: untyped
+
+  def initialize: (guid: untyped guid, message: untyped message, ?analyzer: untyped? analyzer) -> untyped
+
+  def as_json: () -> untyped
+
+  def valid?: () -> untyped
+end
+
+# Result to indicate failure because of absent of files.
+# At least one of given files must be present for analysis.
+# Client programs may return this result.
+class Runners::Results::MissingFilesFailure < Base
+  # @dynamic files
+  attr_reader files: untyped
+
+  def initialize: (guid: untyped guid, files: untyped files) -> untyped
+
+  def as_json: () -> untyped
+
+  def valid?: () -> untyped
+end
+
+# Result to indicate that processor raises an exception.
+# Client programs should not return this result.
+class Runners::Results::Error < Base
+  # @dynamic exception
+  attr_reader exception: untyped
+
+  def initialize: (guid: untyped guid, exception: untyped exception) -> untyped
+
+  def as_json: () -> untyped
+
+  def valid?: () -> untyped
+end

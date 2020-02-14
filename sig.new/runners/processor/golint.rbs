@@ -1,0 +1,14 @@
+module Runners
+end
+
+class Runners::Processor::Golint < Processor
+  include Go
+
+  def self.ci_config_section_name: () -> untyped
+
+  def analyzer_bin: () -> untyped
+
+  def analyzer_name: () -> untyped
+
+  def analyze: (untyped changes) -> untyped
+end

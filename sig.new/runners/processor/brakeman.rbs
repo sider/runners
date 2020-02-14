@@ -1,0 +1,20 @@
+module Runners
+end
+
+class Runners::Processor::Brakeman < Processor
+  include Ruby
+
+  def self.ci_config_section_name: () -> untyped
+
+  def analyzer_name: () -> untyped
+
+  def setup: () { () -> untyped } -> untyped
+
+  def analyze: (untyped changes) -> untyped
+
+  def construct_result: (untyped stdout) -> untyped
+end
+
+Runners::Processor::Brakeman::Schema: untyped
+
+Runners::Processor::Brakeman::CONSTRAINTS: untyped

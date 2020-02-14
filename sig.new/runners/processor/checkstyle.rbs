@@ -1,0 +1,34 @@
+module Runners
+end
+
+class Runners::Processor::Checkstyle < Processor
+  include Java
+
+  def self.ci_config_section_name: () -> untyped
+
+  def analyzer_name: () -> untyped
+
+  def analyze: (untyped changes) -> untyped
+
+  def checkstyle_args: (config: untyped config, excludes: untyped excludes, properties: untyped properties) -> untyped
+
+  def construct_result: (untyped xml_root) { (untyped) -> untyped } -> untyped
+
+  def build_links: (untyped rule_id) -> untyped
+
+  def configuration: () -> untyped
+
+  def config_file: () -> untyped
+
+  def check_directory: () -> untyped
+
+  def excluded_directories: () -> untyped
+
+  def properties_file: () -> untyped
+
+  def ignored_severities: () -> untyped
+
+  def array: (untyped value) -> untyped
+end
+
+Runners::Processor::Checkstyle::Schema: untyped

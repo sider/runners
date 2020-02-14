@@ -1,0 +1,32 @@
+module Runners
+end
+
+class Runners::Processor::Cpplint < Processor
+  def self.ci_config_section_name: () -> untyped
+
+  def analyzer_name: () -> untyped
+
+  def analyze: (untyped changes) -> untyped
+
+  def config: () -> untyped
+
+  def analyzer_options: () -> untyped
+
+  def run_analyzer: () -> untyped
+
+  # Output format:
+  #
+  #     {line}: {message} [{category}] [{confidence}]
+  #
+  # Example:
+  #
+  #     3: Tab found; better to use spaces [whitespace/tab] [1]
+  #
+  # @see https://github.com/cpplint/cpplint/blob/1.4.4/cpplint.py#L1151
+  # @see https://github.com/cpplint/cpplint/blob/1.4.4/cpplint.py#L1441-L1448
+  def parse_result: (untyped xml_doc) { (untyped) -> untyped } -> untyped
+end
+
+Runners::Processor::Cpplint::Schema: untyped
+
+Runners::Processor::Cpplint::DEFAULT_TARGET: untyped

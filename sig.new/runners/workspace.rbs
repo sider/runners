@@ -1,0 +1,46 @@
+module Runners
+end
+
+class Runners::Workspace
+  def self.prepare: (options: untyped options, working_dir: untyped working_dir, trace_writer: untyped trace_writer) -> untyped
+
+  attr_reader options: untyped
+
+  attr_reader working_dir: untyped
+
+  attr_reader trace_writer: untyped
+
+  # @param options [Options]
+  # @param working_dir [Pathname]
+  # @param trace_writer [Runners::TraceWriter]
+  def initialize: (options: untyped options, working_dir: untyped working_dir, trace_writer: untyped trace_writer) -> untyped
+
+  # @yieldparam git_ssh_path [Pathname, nil]
+  # @yieldparam changes [Runners::Changes]
+  def open: () { (untyped, untyped) -> untyped } -> untyped
+
+  def root_tmp_dir: () -> untyped
+
+  def range_git_blame_info: (untyped path_string, untyped start_line, untyped end_line) -> untyped
+
+  def archive_source: () -> untyped
+
+  def git_source: () -> untyped
+
+  def prepare_ssh: () { (untyped) -> untyped } -> untyped
+
+  def prepare_base_source: (untyped dest) -> untyped
+
+  def prepare_head_source: (untyped dest) -> untyped
+
+  def decrypt: (untyped archive, untyped key) { (untyped) -> untyped } -> untyped
+
+  def decrypt_by_openssl: (untyped archive, untyped password, untyped out_path) -> untyped
+
+  def extract: (untyped archive, untyped dir) -> untyped
+
+  def patches: () -> untyped
+end
+
+class Runners::Workspace::DownloadError < SystemError
+end

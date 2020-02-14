@@ -1,0 +1,33 @@
+module Runners
+end
+
+class Runners::Harness
+  # @dynamic guid, processor_class, options, working_dir, trace_writer, warnings, ci_config
+  attr_reader guid: untyped
+
+  attr_reader processor_class: untyped
+
+  attr_reader options: untyped
+
+  attr_reader working_dir: untyped
+
+  attr_reader trace_writer: untyped
+
+  attr_reader warnings: untyped
+
+  attr_reader ci_config: untyped
+
+  def initialize: (guid: untyped guid, processor_class: untyped processor_class, options: untyped options, working_dir: untyped working_dir, trace_writer: untyped trace_writer) -> untyped
+
+  def run: () -> untyped
+
+  def ensure_result: () { () -> untyped } -> untyped
+
+  def handle_error: (untyped exn) -> untyped
+end
+
+class Runners::Harness::InvalidResult < SystemError
+  attr_reader result: untyped
+
+  def initialize: (result: untyped result) -> untyped
+end

@@ -1,0 +1,6 @@
+module Runners
+end
+
+module Runners::Swift
+  def show_runtime_versions: () -> untyped
+end

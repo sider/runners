@@ -1,0 +1,38 @@
+module Runners
+end
+
+class Runners::Processor::CodeSniffer < Processor
+  include PHP
+
+  def self.ci_config_section_name: () -> untyped
+
+  def setup: () { () -> untyped } -> untyped
+
+  def analyze: (untyped changes) -> untyped
+
+  def check_runner_config: (untyped config) { (untyped, untyped) -> untyped } -> untyped
+
+  def analyzer_name: () -> untyped
+
+  def analyzer_bin: () -> untyped
+
+  def additional_options: (untyped config) -> untyped
+
+  def standard_option: (untyped config) -> untyped
+
+  def extensions_option: (untyped config) -> untyped
+
+  def encoding_option: (untyped config) -> untyped
+
+  def ignore_option: (untyped config) -> untyped
+
+  def directory: (untyped config) -> untyped
+
+  def default_sideci_options: () -> untyped
+
+  def php_framework: () -> untyped
+
+  def run_analyzer: (untyped options, untyped target) -> untyped
+end
+
+Runners::Processor::CodeSniffer::Schema: untyped

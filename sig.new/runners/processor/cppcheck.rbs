@@ -1,0 +1,37 @@
+module Runners
+end
+
+class Runners::Processor::Cppcheck < Processor
+  def self.ci_config_section_name: () -> untyped
+
+  def analyzer_name: () -> untyped
+
+  def setup: () { () -> untyped } -> untyped
+
+  def analyze: (untyped _changes) -> untyped
+
+  def config: () -> untyped
+
+  def target: () -> untyped
+
+  def ignore: () -> untyped
+
+  def enable: () -> untyped
+
+  def std: () -> untyped
+
+  def project: () -> untyped
+
+  def language: () -> untyped
+
+  def run_analyzer: () -> untyped
+
+  # @see https://github.com/danmar/cppcheck/blob/master/man/manual.md#xml-output
+  def parse_result: (untyped xml_doc) { (untyped) -> untyped } -> untyped
+end
+
+Runners::Processor::Cppcheck::Schema: untyped
+
+Runners::Processor::Cppcheck::DEFAULT_TARGET: untyped
+
+Runners::Processor::Cppcheck::DEFAULT_IGNORE: untyped

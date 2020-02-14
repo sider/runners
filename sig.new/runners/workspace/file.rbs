@@ -1,0 +1,13 @@
+module Runners
+end
+
+class Runners::Workspace::File < Workspace
+  def prepare_base_source: (untyped dest) -> untyped
+
+  def prepare_head_source: (untyped dest) -> untyped
+
+  # @param src [Pathname]
+  # @param dest [Pathname]
+  # @param key [String, nil]
+  def provision: (untyped src, untyped dest, untyped key) -> untyped
+end

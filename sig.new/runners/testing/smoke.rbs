@@ -1,0 +1,50 @@
+module Runners
+end
+
+module Runners::Testing
+end
+
+class Runners::Testing::Smoke
+  include Minitest::Assertions
+
+  include UnificationAssertion
+
+  attr_reader argv: untyped
+
+  attr_reader data_container: untyped
+
+  attr_reader data_smoke_path: untyped
+
+  def docker_image: () -> untyped
+
+  def entrypoint: () -> untyped
+
+  def expectations: () -> untyped
+
+  def initialize: (untyped argv) -> untyped
+
+  def run: () -> untyped
+
+  def run_test: (untyped name, untyped pattern, untyped `out`) -> untyped
+
+  def unify_result: (untyped result, untyped pattern, untyped `out`) -> untyped
+
+  def with_data_container: () { () -> untyped } -> untyped
+
+  def command_line: (untyped name, untyped config) -> untyped
+
+  def system!: (*untyped command_args) -> untyped
+
+  # Comma-separated value is also available.
+  def self.only?: (untyped name) -> untyped
+
+  def self.add_test: (untyped name, untyped result, **untyped others) { (untyped) -> untyped } -> untyped
+
+  def self.tests: () -> untyped
+
+  def self.configs: () -> untyped
+end
+
+Runners::Testing::Smoke::ROOT_DATA_DIR: untyped
+
+Runners::Testing::Smoke::Configuration: untyped

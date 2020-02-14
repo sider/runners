@@ -1,0 +1,38 @@
+module Runners
+end
+
+class Runners::Processor::PmdJava < Processor
+  include Java
+
+  def self.ci_config_section_name: () -> untyped
+
+  def pmd: (dir: untyped dir, rulesets: untyped rulesets, encoding: untyped encoding, min_priority: untyped min_priority) -> untyped
+
+  def analyzer_version: () -> untyped
+
+  def analyzer_name: () -> untyped
+
+  def analyzer_bin: () -> untyped
+
+  def analyze: (untyped changes) -> untyped
+
+  def run_analyzer: (untyped dir, untyped rulesets, untyped encoding, untyped min_priority) -> untyped
+
+  def construct_result: (untyped result, untyped stdout, untyped stderr) -> untyped
+
+  def check_runner_config: (untyped config) { (untyped, untyped, untyped, untyped) -> untyped } -> untyped
+
+  def rulesets: (untyped config) -> untyped
+
+  def default_ruleset: () -> untyped
+
+  def check_directory: (untyped config) -> untyped
+
+  def encoding: (untyped config) -> untyped
+
+  def min_priority: (untyped config) -> untyped
+
+  def array: (untyped value) -> untyped
+end
+
+Runners::Processor::PmdJava::Schema: untyped

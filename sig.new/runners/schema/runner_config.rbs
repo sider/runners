@@ -1,0 +1,7 @@
+module Runners
+end
+
+module Runners::Schema
+end
+
+Runners::Schema::RunnerConfig: untyped

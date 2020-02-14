@@ -1,0 +1,67 @@
+module Runners
+end
+
+class Runners::Processor::Stylelint < Processor
+  include Nodejs
+
+  def self.ci_config_section_name: () -> untyped
+
+  def setup: () { () -> untyped } -> untyped
+
+  def analyzer_name: () -> untyped
+
+  def analyze: (untyped changes) -> untyped
+
+  def check_runner_config: (untyped config) { (untyped, untyped) -> untyped } -> untyped
+
+  def glob: (untyped config) -> untyped
+
+  def stylelint_config: (untyped config) -> untyped
+
+  def syntax: (untyped config) -> untyped
+
+  def ignore_path: (untyped config) -> untyped
+
+  def ignore_disables: (untyped config) -> untyped
+
+  def report_needless_disables: (untyped config) -> untyped
+
+  def quiet: (untyped config) -> untyped
+
+  # @param stdout [String]
+  def parse_result: (untyped stdout) -> untyped
+
+  # @see https://github.com/stylelint/stylelint/blob/11.1.1/lib/formatters/stringFormatter.js#L120
+  def normalize_message: (untyped id, untyped message) -> untyped
+
+  # @see https://github.com/stylelint/stylelint/blob/11.1.1/lib/formatters/stringFormatter.js#L120
+  def rule_doc_urls: () -> untyped
+
+  def prepare_config_file: (untyped config) -> untyped
+
+  def prepare_ignore_file: () -> untyped
+
+  # returns available config file path. If the file doesn't exist, it returns nil.
+  def config_file_path: (untyped config) -> untyped
+
+  # Save warnings written by stylelint.
+  # stylelint writes "deprecations" flags in each file, so we cannot conduct naive implementations.
+  # Without this method, if we write a warning when the "deprecations" appear,
+  # the same number of duplicated warnings as files will appear.
+  # We use `Set` to avoid it.
+  #
+  # @param deprecations [Array<Hash>]
+  def check_warning: (untyped deprecations) -> untyped
+
+  def run_analyzer: (untyped config, untyped glob, untyped additional_options) -> untyped
+end
+
+Runners::Processor::Stylelint::Schema: untyped
+
+Runners::Processor::Stylelint::DEFAULT_DEPS: untyped
+
+Runners::Processor::Stylelint::CONSTRAINTS: untyped
+
+Runners::Processor::Stylelint::DEFAULT_TARGET_FILE_EXTENSIONS: untyped
+
+Runners::Processor::Stylelint::DEFAULT_GLOB: untyped

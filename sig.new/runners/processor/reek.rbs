@@ -1,0 +1,22 @@
+module Runners
+end
+
+class Runners::Processor::Reek < Processor
+  include Ruby
+
+  def self.ci_config_section_name: () -> untyped
+
+  def analyzer_name: () -> untyped
+
+  def setup: () { () -> untyped } -> untyped
+
+  def analyze: (untyped changes) -> untyped
+
+  def v4?: () -> untyped
+
+  def raise_warnings: (untyped stderr) -> untyped
+end
+
+Runners::Processor::Reek::Schema: untyped
+
+Runners::Processor::Reek::CONSTRAINTS: untyped

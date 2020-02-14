@@ -1,0 +1,28 @@
+module Runners
+end
+
+class Runners::Processor::Gometalinter < Processor
+  include Go
+
+  def self.ci_config_section_name: () -> untyped
+
+  def analyzer_bin: () -> untyped
+
+  def analyzer_name: () -> untyped
+
+  def setup: () { () -> untyped } -> untyped
+
+  def analyze: (untyped changes) -> untyped
+
+  def with_import_path: () { (untyped) -> untyped } -> untyped
+
+  def import_path: () -> untyped
+
+  def push_import_path_dir: () { () -> untyped } -> untyped
+
+  def download_dependency: () -> untyped
+
+  def additional_options: () -> untyped
+
+  def linter_tool_options: (untyped key, untyped tools) -> untyped
+end

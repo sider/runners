@@ -1,0 +1,75 @@
+module Runners
+end
+
+module Runners::Nodejs
+  # Return the locally installed analyzer command.
+  def nodejs_analyzer_local_command: () -> untyped
+
+  # Return the analyzer command which will actually be ran.
+  def nodejs_analyzer_bin: () -> untyped
+
+  def analyzer_version: () -> untyped
+
+  # Return the actual file path of `package.json`.
+  def package_json_path: () -> untyped
+
+  # Return the `Hash` content of `package.json`.
+  def package_json: () -> untyped
+
+  # Return the actual file path of `package-lock.json`.
+  def package_lock_json_path: () -> untyped
+
+  # Return the actual file path of `yarn.lock`.
+  def yarn_lock_path: () -> untyped
+
+  # Install Node.js dependencies by using given parameters.
+  def install_nodejs_deps: (untyped defaults, constraints: untyped constraints, install_option: untyped install_option) -> untyped
+
+  def show_runtime_versions: () -> untyped
+
+  def nodejs_analyzer_locally_installed?: () -> untyped
+
+  def nodejs_analyzer_global_version: () -> untyped
+
+  def nodejs_analyzer_local_version: () -> untyped
+
+  def check_nodejs_default_deps: (untyped defaults, untyped constraints) -> untyped
+
+  # @see https://docs.npmjs.com/cli/install
+  # @see https://docs.npmjs.com/cli/ci
+  def npm_install: (untyped option) -> untyped
+
+  # @see https://yarnpkg.com/en/docs/cli/install
+  def yarn_install: (untyped option) -> untyped
+
+  def check_installed_nodejs_deps: (untyped constraints, untyped default_dependency) -> untyped
+end
+
+class Runners::Nodejs::InvalidDefaultDependencies < SystemError
+end
+
+class Runners::Nodejs::InvalidNodeVersion < SystemError
+end
+
+class Runners::Nodejs::InvalidNpmVersion < SystemError
+end
+
+class Runners::Nodejs::InvalidYarnVersion < SystemError
+end
+
+class Runners::Nodejs::ConstraintsNotSatisfied < UserError
+end
+
+class Runners::Nodejs::NpmInstallFailed < UserError
+end
+
+class Runners::Nodejs::YarnInstallFailed < UserError
+end
+
+Runners::Nodejs::INSTALL_OPTION_NONE: bool
+
+Runners::Nodejs::INSTALL_OPTION_ALL: bool
+
+Runners::Nodejs::INSTALL_OPTION_PRODUCTION: ::String
+
+Runners::Nodejs::INSTALL_OPTION_DEVELOPMENT: ::String

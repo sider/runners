@@ -1,0 +1,15 @@
+module Runners
+end
+
+module Runners::Nodejs
+end
+
+class Runners::Nodejs::Constraint
+  def initialize: (untyped version, *untyped versions) -> untyped
+
+  def to_s: () -> untyped
+
+  def satisfied_by?: (untyped dependency) -> untyped
+
+  def unsatisfied_by?: (untyped dependency) -> untyped
+end
