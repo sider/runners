@@ -1,7 +1,7 @@
 target :lib do
   signature "sig.new" # TODO: Rename to "sig"
 
-  check "lib"
+  check "lib/runners"
   #ignore "lib/runners/processor/*.rb"
 
   # library "pathname", "set"       # Standard libraries

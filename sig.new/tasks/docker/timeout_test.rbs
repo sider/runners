@@ -1,7 +1,0 @@
-extension Object (Toplevel)
-  def container_name: () -> untyped
-
-  def entrypoint: () -> untyped
-
-  def runners_cli_code: () -> untyped
-end
