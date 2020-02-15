@@ -4,7 +4,7 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM sider/devon_rex_swift:2.14.0
 
-ARG SWIFTLINT_VERSION=0.38.2
+ARG SWIFTLINT_VERSION=0.39.1
 
 # Build SwiftLint
 USER root
