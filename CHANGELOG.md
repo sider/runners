@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.19.3...HEAD)
 
+- Show Runners version to trace [#744](https://github.com/sider/runners/pull/744)
+
 ## 0.19.3
 
 [Full diff](https://github.com/sider/runners/compare/0.19.2...0.19.3)

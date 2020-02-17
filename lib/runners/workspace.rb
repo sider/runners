@@ -126,7 +126,6 @@ module Runners
           yield script_path
         end
       else
-        trace_writer.message "Nothing to do"
         yield nil
       end
     end
