@@ -44,6 +44,7 @@ module Runners
       GemInstaller::Spec.new(name: "fincop", version: []),
       GemInstaller::Spec.new(name: "forkwell_cop", version: []),
       GemInstaller::Spec.new(name: "gc_ruboconfig", version: []),
+      GemInstaller::Spec.new(name: "gitlab-styles", version: []),
       GemInstaller::Spec.new(name: "hint-rubocop_style", version: []),
       GemInstaller::Spec.new(name: "mad_rubocop", version: []),
       GemInstaller::Spec.new(name: "meowcop", version: []),
