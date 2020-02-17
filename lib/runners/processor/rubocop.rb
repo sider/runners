@@ -22,40 +22,45 @@ module Runners
       )
     end
 
-    # @see https://help.sider.review/tools/ruby/rubocop#gems
-    OPTIONAL_GEMS = [
-      GemInstaller::Spec.new(name: "meowcop", version: []),
-      GemInstaller::Spec.new(name: "onkcop", version: []),
-      GemInstaller::Spec.new(name: "deka_eiwakun", version: []),
-      GemInstaller::Spec.new(name: "forkwell_cop", version: []),
-      GemInstaller::Spec.new(name: "cookstyle", version: []),
-      GemInstaller::Spec.new(name: "rubocop-rails_config", version: []),
-      GemInstaller::Spec.new(name: "salsify_rubocop", version: []),
-      GemInstaller::Spec.new(name: "otacop", version: []),
-      GemInstaller::Spec.new(name: "unasukecop", version: []),
-      GemInstaller::Spec.new(name: "sanelint", version: []),
-      GemInstaller::Spec.new(name: "hint-rubocop_style", version: []),
-      GemInstaller::Spec.new(name: "rubocop-salemove", version: []),
-      GemInstaller::Spec.new(name: "mad_rubocop", version: []),
-      GemInstaller::Spec.new(name: "unifacop", version: []),
-      GemInstaller::Spec.new(name: "ws-style", version: []),
-      GemInstaller::Spec.new(name: "rubocop-config-umbrellio", version: []),
-      GemInstaller::Spec.new(name: "pulis", version: []),
-      GemInstaller::Spec.new(name: "gc_ruboconfig", version: []),
-      GemInstaller::Spec.new(name: "fincop", version: []),
-      GemInstaller::Spec.new(name: "rubocop-github", version: []),
-      GemInstaller::Spec.new(name: "ezcater_rubocop", version: []),
-      GemInstaller::Spec.new(name: "rubocop-cask", version: []),
-      GemInstaller::Spec.new(name: "rubocop-thread_safety", version: []),
-      # The followings are maintained by rubocop-hq. See https://github.com/rubocop-hq
-      GemInstaller::Spec.new(name: "rubocop-rails", version: []),
-      GemInstaller::Spec.new(name: "rubocop-rspec", version: []),
+    # The followings are maintained by RuboCop Headquarters.
+    # @see https://github.com/rubocop-hq
+    OFFICIAL_RUBOCOP_PLUGINS = [
+      GemInstaller::Spec.new(name: "rubocop-md", version: []),
       GemInstaller::Spec.new(name: "rubocop-minitest", version: []),
       GemInstaller::Spec.new(name: "rubocop-performance", version: []),
-      GemInstaller::Spec.new(name: "rubocop-rubycw", version: []),
+      GemInstaller::Spec.new(name: "rubocop-rails", version: []),
       GemInstaller::Spec.new(name: "rubocop-rake", version: []),
-      GemInstaller::Spec.new(name: "rubocop-md", version: []),
+      GemInstaller::Spec.new(name: "rubocop-rspec", version: []),
+      GemInstaller::Spec.new(name: "rubocop-rubycw", version: []),
       GemInstaller::Spec.new(name: "rubocop-sequel", version: []),
+    ].freeze
+
+    # @see https://help.sider.review/tools/ruby/rubocop#gems
+    OPTIONAL_GEMS = [
+      *OFFICIAL_RUBOCOP_PLUGINS,
+      GemInstaller::Spec.new(name: "cookstyle", version: []),
+      GemInstaller::Spec.new(name: "deka_eiwakun", version: []),
+      GemInstaller::Spec.new(name: "ezcater_rubocop", version: []),
+      GemInstaller::Spec.new(name: "fincop", version: []),
+      GemInstaller::Spec.new(name: "forkwell_cop", version: []),
+      GemInstaller::Spec.new(name: "gc_ruboconfig", version: []),
+      GemInstaller::Spec.new(name: "hint-rubocop_style", version: []),
+      GemInstaller::Spec.new(name: "mad_rubocop", version: []),
+      GemInstaller::Spec.new(name: "meowcop", version: []),
+      GemInstaller::Spec.new(name: "onkcop", version: []),
+      GemInstaller::Spec.new(name: "otacop", version: []),
+      GemInstaller::Spec.new(name: "pulis", version: []),
+      GemInstaller::Spec.new(name: "rubocop-cask", version: []),
+      GemInstaller::Spec.new(name: "rubocop-config-umbrellio", version: []),
+      GemInstaller::Spec.new(name: "rubocop-github", version: []),
+      GemInstaller::Spec.new(name: "rubocop-rails_config", version: []),
+      GemInstaller::Spec.new(name: "rubocop-salemove", version: []),
+      GemInstaller::Spec.new(name: "rubocop-thread_safety", version: []),
+      GemInstaller::Spec.new(name: "salsify_rubocop", version: []),
+      GemInstaller::Spec.new(name: "sanelint", version: []),
+      GemInstaller::Spec.new(name: "unasukecop", version: []),
+      GemInstaller::Spec.new(name: "unifacop", version: []),
+      GemInstaller::Spec.new(name: "ws-style", version: []),
     ].freeze
 
     CONSTRAINTS = {
