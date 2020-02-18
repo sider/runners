@@ -1,0 +1,4 @@
+linter:
+  detekt:
+    maven:
+      goal: verify

@@ -1,0 +1,30 @@
+linter:
+  detekt:
+    cli:
+      auto_correct: true
+      baseline_path: "baseline.xml"
+      # build_upon_default_config: "NOTE: this option is not supported on 'Sider.runner'"
+      classpath: 
+        - "classpath/nothing/"
+      config: 
+        - "default-detekt-config.yml"
+        - "default-detekt-config-nothing.yml"
+      config_resource: []
+      # create_baseline: "NOTE: this option is not supported on 'Sider.runner'"
+      # debug: "NOTE: this option is not supported on 'Sider.runner'"
+      disable_default_rulesets: false
+      excludes: 
+        - "**/excludes_dir/**"
+        - "**/excludes_dir_nothing/**"
+      # fail_fast: "NOTE: this option is not supported on 'Sider.runner'"
+      # generate_config: "NOTE: this option is not supported on 'Sider.runner'"
+      # help: "NOTE: this option is not supported on 'Sider.runner'"
+      includes: []
+      input: 
+        - "src/"
+      language_version: null
+      jvm_target: null
+      # parallel: "NOTE: this option is not supported on 'Sider.runner'"
+      plugins: []
+      report_id: "xml"
+      report_path: "reports/detekt.xml"

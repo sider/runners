@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <Blacklist></Blacklist>
+  <Whitelist>
+    <ID>MagicNumber:ComplexClass.kt$ComplexClass.NestedClass$10</ID>
+    <ID>TooGenericExceptionCaught:ComplexClass.kt$ComplexClass.NestedClass$ex: Exception</ID>
+  </Whitelist>
+</SmellBaseline>
