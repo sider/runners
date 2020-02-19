@@ -30,7 +30,11 @@ module Runners
         })
       end
 
-      let :reporter, enum(literal("json"), literal("plain"), literal("checkstyle"))
+      let :reporter, enum(
+        literal("xml"),
+        literal("txt"),
+        literal("checkstyle")
+      )
 
       let :cli_config, object(
         auto_correct: boolean?,
@@ -51,8 +55,8 @@ module Runners
 
       let :gradle_config, object(
         task: string,
-        reporter: reporter,
-        output: string?
+        report_id: reporter,
+        report_path: string?
       )
 
       let :maven_config, object(
@@ -79,6 +83,55 @@ module Runners
           end
         }
       )
+    end
+
+    def analyzer_name
+      'detekt'
+    end
+
+    def analyze(changes)
+      ensure_runner_config_schema(Schema.runner_config) do |config|
+        delete_unchanged_files changes, only: [".kt", ".kts"]
+
+        check_runner_config(config) do |checked_config|
+          @detekt_config = checked_config
+
+          issues = case
+                   when gradle_config
+                     run_gradle
+                   when maven_config
+                     run_maven
+                   else
+                     run_cli
+                   end
+
+          Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+            issues.each do |issue|
+              result.add_issue issue
+            end
+            trace_writer.message "*********************analyze"
+            trace_writer.message result.to_yaml
+            trace_writer.message "*********************analyze"
+          end
+        end
+      end
+    end
+
+    def analyzer_version
+      unknown_version = "0.0.0"
+
+      @analyzer_version ||=
+        case
+        when gradle_config
+          extract_detekt_version_for_gradle || unknown_version
+        when maven_config
+          extract_detekt_version_for_maven(current_dir) || unknown_version
+        when cli_config
+          pom_dir = Pathname(ENV['RUNNER_USER_HOME']) / analyzer_name
+          extract_detekt_version_for_maven(pom_dir) || unknown_version
+        else
+          unknown_version
+        end
     end
 
     def self.ci_config_section_name
@@ -194,22 +247,17 @@ module Runners
     def run_gradle
       stdout, = capture3("./gradlew", "--quiet", gradle_config[:task])
 
-      output_file = current_dir / "build/reports/detekt.txt"
+      if gradle_config[:report_id].nil? || gradle_config[:report_path].nil?
+        return construct_plain_result(stdout, true)
+      end
 
-      # output = if output_file
-      #            trace_writer.message "Reading output from #{output_file}..."
-      #            output_file.read
-      #          else
-      #            stdout
-      #          end
-
-      output = stdout
-
-      # construct_result(gradle_config[:reporter], output)
-      trace_writer.message "*********************"
-      trace_writer.message output.to_yaml
-      trace_writer.message "*********************"
-      construct_plain_result(output, true)
+      output_file = current_dir / gradle_config[:report_path]
+      if output_file.exist?
+        trace_writer.message "Reading output from #{output_file}..."
+        return construct_result(gradle_config[:report_id], output_file.read)
+      else
+        return construct_plain_result(stdout, true)
+      end
     end
 
     def run_maven
@@ -241,94 +289,15 @@ module Runners
       construct_checkstyle_result(output)
     end
 
-    def analyzer_version
-      unknown_version = "0.0.0"
-
-      @analyzer_version ||=
-        case
-        when gradle_config
-          extract_detekt_version_for_gradle || unknown_version
-        when maven_config
-          extract_detekt_version_for_maven(current_dir) || unknown_version
-        when cli_config
-          pom_dir = Pathname(ENV['RUNNER_USER_HOME']) / analyzer_name
-          extract_detekt_version_for_maven(pom_dir) || unknown_version
-        else
-          unknown_version
-        end
-    end
-
-    def extract_detekt_version_for_gradle
-      stdout, = capture3!("./gradlew", "--quiet", "dependencies")
-      stdout.each_line do |line|
-        line.match(/io\.gitlab\.arturbosch\.detekt:detekt-cli:([\d\.]+)/) do |match|
-          return match.captures.first
-        end
-      end
-    end
-
-    def extract_detekt_version_for_maven(pom_dir)
-      pom_file = pom_dir / "pom.xml"
-      return unless pom_file.exist?
-
-      groupId = "io.gitlab.arturbosch.detekt"
-      artifactId = "detekt-cli"
-      pom = REXML::Document.new(pom_file.read)
-      pom.root.each_element("//dependency/groupId[text()='#{groupId}']") do |element|
-        dependency = element.parent
-        if dependency.elements["artifactId"].text == artifactId
-          return dependency.elements["version"].text
-        end
-      end
-    end
-
-    def analyzer_name
-      'detekt'
-    end
-
-    def analyze(changes)
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        delete_unchanged_files changes, only: [".kt", ".kts"]
-
-        check_runner_config(config) do |checked_config|
-          @detekt_config = checked_config
-
-          issues = case
-                   when gradle_config
-                     run_gradle
-                   when maven_config
-                     run_maven
-                   else
-                     run_cli
-                   end
-
-          Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-            issues.each do |issue|
-              result.add_issue issue
-            end
-          end
-        end
-      end
-    end
-
     def construct_result(reporter, output)
       case reporter
       when "json"
         construct_json_result(output)
-      when "checkstyle"
+      when "xml"
         construct_checkstyle_result(output)
-      when "plain"
+      when "txt"
         construct_plain_result(output)
       end
-    end
-
-    def construct_issue(file:, line:, message:, rule: "")
-      Issue.new(
-        path: relative_path(working_dir.realpath / file, from: working_dir.realpath),
-        location: Location.new(start_line: line),
-        id: rule.empty? ? Digest::SHA1.hexdigest(message)[0, 8] : rule,
-        message: message,
-      )
     end
 
     def construct_json_result(output)
@@ -336,24 +305,16 @@ module Runners
 
       # json = Hash.from_xml(output)
 
-      trace_writer.message "jjjjjjjjjjjjjjjjjjjjjjjjj"
       trace_writer.message json.to_yaml
 
-
       json.flat_map do |hash|
-        trace_writer.message "***************************"
-        trace_writer.message hash.to_yaml
-        trace_writer.message "***************************"
         hash[:file].flat_map do |error|
-          race_writer.message error.to_yaml
-          trace_writer.message "***************************"
           construct_issue(
             file: hash[:file],
             line: (error[:line]).to_i,
             message: error[:message],
             rule: error[:rule],
           )
-          trace_writer.message "***************************"
         end
       end
     end
@@ -388,31 +349,43 @@ module Runners
     end
 
     def construct_plain_result(output, is_stdout = false)
-      regex = /(.*) at \/(.*):(.*):(.*) - (.*)/
+      issues = []
+
+      regex = /(.*) at (.*):(.*):(.*) - (.*)/
       if is_stdout
-        regex = /(.*) at \/(.*):(.*):(.*)/
+        regex = /.*\t(.*) at (.*):(.*):(.*)/
       end
 
       output.lines(chomp: true).map do |line|
-        trace_writer.message "********************* line"
-        trace_writer.message line
-        trace_writer.message "********************* line"
-
         match = line.match(regex)
 
-
         unless match.nil?
-          rule, file, line, _col, message = match.captures
-          construct_issue(
-            rule: rule,
+          rule, file, start_line, col, message = match.captures
+
+          if message.nil?
+            message = rule + " at " + file + ":" + start_line + ":" + col
+          end
+
+          issues << construct_issue(
             file: file,
-            line: line,
+            line: start_line,
             message: message,
+            rule: rule,
           )
-        else
-          raise "Unexpected line: #{line.inspect}"
         end
       end
+
+      issues
+    end
+
+    # TODO: column追加
+    def construct_issue(file:, line:, message:, rule:)
+      Issue.new(
+        path: relative_path(working_dir.realpath / file, from: working_dir.realpath),
+        location: Location.new(start_line: line),
+        id: rule,
+        message: message,
+      )
     end
 
     def check_user_file_exists(paths, option_name, args)
@@ -449,7 +422,6 @@ module Runners
       
       pom = REXML::Document.new(pom_file.read)
       id = "detekt"
-
       fds = pom.get_elements("//project/build/plugins/plugin/executions/execution/id[text()='#{id}']").first
       unless fds.nil?
         dom_setting = fds.parent
@@ -480,8 +452,8 @@ module Runners
           {
             gradle: {
               task: config[:gradle][:task],
-              reporter: config[:gradle][:reporter],
-              output: config[:gradle][:output]
+              report_id: config[:gradle][:report_id],
+              report_path: config[:gradle][:report_path]
             }
           }
         )
@@ -537,5 +509,30 @@ module Runners
         )
       end
     end
+
+    def extract_detekt_version_for_gradle
+      stdout, = capture3!("./gradlew", "--quiet", "dependencies")
+      stdout.each_line do |line|
+        line.match(/io\.gitlab\.arturbosch\.detekt:detekt-cli:([\d\.]+)/) do |match|
+          return match.captures.first
+        end
+      end
+    end
+
+    def extract_detekt_version_for_maven(pom_dir)
+      pom_file = pom_dir / "pom.xml"
+      return unless pom_file.exist?
+
+      groupId = "io.gitlab.arturbosch.detekt"
+      artifactId = "detekt-cli"
+      pom = REXML::Document.new(pom_file.read)
+      pom.root.each_element("//dependency/groupId[text()='#{groupId}']") do |element|
+        dependency = element.parent
+        if dependency.elements["artifactId"].text == artifactId
+          return dependency.elements["version"].text
+        end
+      end
+    end
+
   end
 end
