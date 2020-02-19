@@ -248,14 +248,16 @@ module Runners
       stdout, = capture3("./gradlew", "--quiet", gradle_config[:task])
 
       if gradle_config[:report_id].nil? || gradle_config[:report_path].nil?
+        trace_writer.message "'report_path' was not supplied. Create a report using standard output."
         return construct_plain_result(stdout, true)
       end
 
       output_file = current_dir / gradle_config[:report_path]
       if output_file.exist?
-        trace_writer.message "Reading output from #{output_file}..."
+        trace_writer.message "Reading output from #{gradle_config[:report_path]}..."
         return construct_result(gradle_config[:report_id], output_file.read)
       else
+        trace_writer.message "'report_path' does not exists. Create a report using standard output."
         return construct_plain_result(stdout, true)
       end
     end
@@ -363,7 +365,9 @@ module Runners
           rule, file, start_line, col, message = match.captures
 
           if message.nil?
-            message = rule + " at " + file + ":" + start_line + ":" + col
+            pn = Pathname.new(file)
+            path = pn.relative_path_from(current_dir).to_path
+            message = rule + " at " + path + ":" + start_line + ":" + col
           end
 
           issues << construct_issue(

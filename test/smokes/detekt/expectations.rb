@@ -207,35 +207,101 @@ Smoke.add_test(
   }
 )
 
-# Smoke.add_test(
-#   "gradle_ktlint-gradle-plugin",
-#   {
-#     guid: "test-guid",
-#     timestamp: :_,
-#     type: "success",
-#     analyzer: { name: "ktlint", version: "0.34.0" },
-#     issues: [
-#       {
-#         id: "experimental:indent",
-#         path: "src/main/kotlin/gradle/App.kt",
-#         location: { start_line: 10 },
-#         message: "Unexpected indentation (6) (should be 4)",
-#         links: [],
-#         object: nil,
-#         git_blame_info: nil
-#       },
-#       {
-#         id: "indent",
-#         path: "src/main/kotlin/gradle/App.kt",
-#         location: { start_line: 10 },
-#         message: "Unexpected indentation (6) (it should be 8) (cannot be auto-corrected)",
-#         links: [],
-#         object: nil,
-#         git_blame_info: nil
-#       }
-#     ]
-#   }
-# )
+Smoke.add_test(
+  "gradle-groovy-dsl",
+  {
+    guid: "test-guid",
+    timestamp: :_,
+    type: "success",
+    analyzer: { name: "detekt", version: "1.5.1" },
+    issues: [
+      {
+        id: "EmptyClassBlock - [FilteredClass]",
+        path: "src/FilteredClass.kt",
+        location: { start_line: 2 },
+        message: "Signature=FilteredClass.kt$FilteredClass${ }",
+        links: [],
+        object: nil,
+        git_blame_info: nil
+      },
+      {
+        id: "ForEachOnRange - [complex]",
+        path: "src/ComplexClass.kt",
+        location: { start_line: 44 },
+        message: "Signature=ComplexClass.kt$ComplexClass.NestedClass$forEach { //1 println() }",
+        links: [],
+        object: nil,
+        git_blame_info: nil
+      },
+      {
+        id: "FunctionOnlyReturningConstant - [get]",
+        path: "src/App.kt",
+        location: { start_line: 8 },
+        message: "Signature=App.kt$App$fun get()",
+        links: [],
+        object: nil,
+        git_blame_info: nil
+      },
+      {
+        id: "NestedBlockDepth - 4/4 - [complex]",
+        path: "src/ComplexClass.kt",
+        location: { start_line: 9 },
+        message: "Signature=ComplexClass.kt$ComplexClass.NestedClass$complex",
+        links: [],
+        object: nil,
+        git_blame_info: nil
+      },
+    ]
+  }
+)
+
+Smoke.add_test(
+  "gradle-kotlin-dsl",
+  {
+    guid: "test-guid",
+    timestamp: :_,
+    type: "success",
+    analyzer: { name: "detekt", version: "1.5.1" },
+    issues: [
+      {
+        id: "EmptyClassBlock - [FilteredClass]",
+        path: "src/FilteredClass.kt",
+        location: { start_line: 2 },
+        message: "EmptyClassBlock - [FilteredClass] at src/FilteredClass.kt:2:21",
+        links: [],
+        object: nil,
+        git_blame_info: nil
+      },
+      {
+        id: "ForEachOnRange - [complex]",
+        path: "src/ComplexClass.kt",
+        location: { start_line: 44 },
+        message: "ForEachOnRange - [complex] at src/ComplexClass.kt:44:21",
+        links: [],
+        object: nil,
+        git_blame_info: nil
+      },
+      {
+        id: "FunctionOnlyReturningConstant - [get]",
+        path: "src/App.kt",
+        location: { start_line: 8 },
+        message: "FunctionOnlyReturningConstant - [get] at src/App.kt:8:3",
+        links: [],
+        object: nil,
+        git_blame_info: nil
+      },
+      {
+        id: "NestedBlockDepth - 4/4 - [complex]",
+        path: "src/ComplexClass.kt",
+        location: { start_line: 9 },
+        message: "NestedBlockDepth - 4/4 - [complex] at src/ComplexClass.kt:9:13",
+        links: [],
+        object: nil,
+        git_blame_info: nil
+      },
+    ]
+  }
+)
 
 Smoke.add_test(
   "maven",
