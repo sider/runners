@@ -14,13 +14,12 @@ You need to finish the [setup](../README.md#setup) before performing the followi
 
 ### Create a base image
 
-If it is not provided yet, create a Docker base image on [sider/devon_rex](https://github.com/sider/devon_rex) first.
+The images of Runners inherit from our Docker base images on [sider/devon_rex](https://github.com/sider/devon_rex),
+and each of them provides a specific programming environment (e.g., Ruby, Java, PHP, and so on).
 
-A runner image is built based on a base image. We manage base images in [sider/devon_rex](https://github.com/sider/devon_rex) repository.
-These images are prepared for each programming environment (e.g. Ruby, Java, PHP, and so on).
-
-We have already provided many base images. Thus, you do not need to add a new base image in almost cases.
-However, you need to make a new one when you try to add a new programming language and environment.
+You don't have to create a new base image in almost cases.
+However, if your new runner requires a new programming environment,
+you would have to get into building the new base image first.
 
 ### Define a runner ID
 
