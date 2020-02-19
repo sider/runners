@@ -1,0 +1,3 @@
+module FileUtils
+  def self.rm: (Array[String]) -> void
+end

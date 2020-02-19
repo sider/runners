@@ -1,5 +1,6 @@
 module Runners
   class Changes
+    # @dynamic changed_paths, unchanged_paths, untracked_paths, patches
     attr_reader :changed_paths
     attr_reader :unchanged_paths
     attr_reader :untracked_paths
@@ -13,7 +14,7 @@ module Runners
     end
 
     def delete_unchanged(dir:, except: [], only: [])
-      # @type var files_to_delete: Array<Pathname>
+      # @type var files_to_delete: Array[Pathname]
       files_to_delete = []
 
       unchanged_paths.each do |path|

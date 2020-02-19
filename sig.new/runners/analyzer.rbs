@@ -1,12 +1,8 @@
 class Runners::Analyzer
-  # @dynamic name, version
   attr_reader name: String
-
   attr_reader version: String
 
   def initialize: (name: String, version: String) -> void
-
   def valid?: () -> bool
-
   def as_json: () -> Hash[Symbol, String]
 end

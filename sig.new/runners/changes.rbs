@@ -1,10 +1,7 @@
 class Runners::Changes
   attr_reader changed_paths: Array[Pathname]
-
   attr_reader unchanged_paths: Array[Pathname]
-
   attr_reader untracked_paths: Array[Pathname]
-
   attr_reader patches: GitDiffParser::Patches?
 
   def initialize: (changed_paths: Array[Pathname], unchanged_paths: Array[Pathname], untracked_paths: Array[Pathname], patches: GitDiffParser::Patches?) -> void

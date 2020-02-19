@@ -4,7 +4,7 @@ target :lib do
   check "lib/runners"
   #ignore "lib/runners/processor/*.rb"
 
-  # library "pathname", "set"       # Standard libraries
+  library "pathname"
   library "strong_json"
 end
 
