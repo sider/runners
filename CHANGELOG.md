@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.19.4...HEAD)
 
+- [RuboCop] Update rubocop requirement from 0.79.0 to 0.80.0 [#752](https://github.com/sider/runners/pull/752)
+
 ## 0.19.4
 
 [Full diff](https://github.com/sider/runners/compare/0.19.3...0.19.4)
