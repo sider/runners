@@ -88,10 +88,9 @@ $ tree -F -L 1 -d
 ├── images
 ├── lib
 ├── sig
-├── test
-└── vendor
+└── test
 
-7 directories
+6 directories
 ```
 
 - `bin`: Entry point to launch a runner
