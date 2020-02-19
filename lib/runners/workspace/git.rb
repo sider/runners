@@ -5,7 +5,7 @@ module Runners
       head = git_source.head
       if base && head
         shell = Shell.new(current_dir: git_directory, trace_writer: trace_writer, env_hash: {})
-        stdout, _ = shell.capture3!("git", "blame", "-p", "-L", "#{start_line},#{end_line}", "#{base}...#{head}", "--", path_string, trace_stdout: false, trace_stderr: false)
+        stdout, _ = shell.capture3!("git", "blame", "-p", "-L", "#{start_line},#{end_line}", "#{base}...#{head}", "--", path_string, trace_stdout: false, trace_stderr: true)
         GitBlameInfo.parse(stdout)
       else
         []

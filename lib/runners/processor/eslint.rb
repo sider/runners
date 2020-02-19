@@ -37,9 +37,8 @@ module Runners
 
     DEFAULT_DEPS = DefaultDependencies.new(main: Dependency.new(name: "eslint", version: "6.8.0"))
     CONSTRAINTS = {
-      "eslint" => Constraint.new(">= 3.19.0", "< 7.0.0")
+      "eslint" => Constraint.new(">= 5.0.0", "< 7.0.0")
     }.freeze
-    RECOMMENDED_MINIMUM_VERSION = "5.0.0".freeze
 
     def self.ci_config_section_name
       'eslint'
@@ -59,7 +58,6 @@ module Runners
           return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
         end
         analyzer
-        add_warning_if_deprecated_version(minimum: RECOMMENDED_MINIMUM_VERSION, file: "package.json", deadline: Time.new(2020, 1, 31))
         yield
       end
     end
@@ -246,8 +244,7 @@ module Runners
     # NOTE: Linting nonexistent files is a fatal error since v5.0.0.
     # @see https://eslint.org/docs/user-guide/migrating-to-5.0.0#-linting-nonexistent-files-from-the-command-line-is-now-a-fatal-error
     def no_linting_files?(stderr)
-      Gem::Version.create(analyzer_version) >= Gem::Version.create("5.0.0") &&
-        stderr.match?(/No files matching the pattern ".+" were found/)
+      stderr.match?(/No files matching the pattern ".+" were found/)
     end
   end
 end

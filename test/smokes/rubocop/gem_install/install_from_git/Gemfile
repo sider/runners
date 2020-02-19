@@ -1,3 +1,0 @@
-source 'https://rubygems.org'
-gem 'rubocop'
-gem 'rubocop-rspec', git: 'https://github.com/rubocop-hq/rubocop-rspec.git', tag: 'v1.32.0'

@@ -1,3 +1,0 @@
-source 'https://rubygems.org'
-gem 'onkcop'
-gem 'rubocop', '= 0.50.0'

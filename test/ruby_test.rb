@@ -234,6 +234,97 @@ EOF
     end
   end
 
+  def test_ensure_lockfile_with_gemfile_lock_generated_by_bundler_v1
+    mktmpdir do |path|
+      (path / "Gemfile").write(<<EOF)
+source 'https://rubygems.org'
+gem 'rubocop', '0.60.0'
+gem 'rubocop-rspec', '1.30.1'
+EOF
+
+      (path / "Gemfile.lock").write(<<EOF)
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ast (2.4.0)
+    jaro_winkler (1.5.2)
+    parallel (1.13.0)
+    parser (2.6.0.0)
+      ast (~> 2.4.0)
+    powerpack (0.1.2)
+    rainbow (3.0.0)
+    rubocop (0.60.0)
+      jaro_winkler (~> 1.5.1)
+      parallel (~> 1.10)
+      parser (>= 2.5, != 2.5.1.1)
+      powerpack (~> 0.1)
+      rainbow (>= 2.2.2, < 4.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (~> 1.4.0)
+    rubocop-rspec (1.30.1)
+      rubocop (>= 0.60.0)
+    ruby-progressbar (1.10.0)
+    unicode-display_width (1.4.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rubocop (= 0.60.0)
+  rubocop-rspec (= 1.30.1)
+
+BUNDLED WITH
+   1.17.3
+EOF
+
+      LockfileLoader.new(root_dir: path, shell: shell).ensure_lockfile do |lockfile|
+        assert lockfile.spec_exists?("rubocop")
+        assert lockfile.spec_exists?("rubocop-rspec")
+      end
+    end
+  end
+
+  def test_ensure_lockfile_with_gemspec
+    mktmpdir do |path|
+      (path / "Gemfile").write(<<EOF)
+source "https://rubygems.org"
+gemspec
+EOF
+
+      (path / "test.gemspec").write(<<EOF)
+# coding: utf-8
+lib = File.expand_path("../lib", __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
+Gem::Specification.new do |spec|
+  spec.name          = "test"
+  spec.version       = "0.0.1"
+  spec.authors       = ["Sider"]
+  spec.email         = ["support@sider.review"]
+
+  spec.summary       = %q{test gem}
+  spec.description   = %q{test gem}
+  spec.homepage      = "https://github.com/sider/test"
+
+  spec.files         = `git ls-files -z`.split("\x0").reject do |f|
+    f.match(%r{^(test|spec|features)/})
+  end
+  spec.bindir        = "exe"
+  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.require_paths = ["lib"]
+
+  spec.add_development_dependency "strong_json", "~> 0.7.1"
+  spec.add_development_dependency "rubocop", "0.79.0"
+end
+EOF
+
+      LockfileLoader.new(root_dir: path, shell: shell).ensure_lockfile do |lockfile|
+        assert lockfile.spec_exists?("rubocop")
+        assert lockfile.spec_exists?("strong_json")
+      end
+    end
+  end
+
   def test_ensure_lockfile_without_gemfile_lock
     mktmpdir do |path|
       (path + "Gemfile").write(<<EOF)
@@ -734,6 +825,32 @@ EOF
       processor.install_gems([], optionals: [], constraints: {}) do
         stdout, _ = processor.shell.capture3!("bundle", "show")
         assert_match(/\* rubocop/, stdout)
+      end
+    end
+  end
+
+  def test_install_gems_with_only_other_rubygems
+    klass = Class.new(Runners::Processor) do
+      include Runners::Ruby
+
+      def ci_section
+        {
+          "gems" => [
+            { "name" => "rack", "version" => "2.2.2", "source" => "https://rubygems.cae.me.uk" },
+          ]
+        }
+      end
+    end
+
+    with_workspace do |workspace|
+      processor = klass.new(guid: SecureRandom.uuid,
+                            workspace: workspace,
+                            git_ssh_path: nil,
+                            trace_writer: trace_writer)
+
+      processor.install_gems([], optionals: [], constraints: {}) do
+        stdout, _ = processor.shell.capture3!("bundle", "show")
+        assert_match(/\* rack \(2.2.2\)/, stdout)
       end
     end
   end

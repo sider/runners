@@ -16,7 +16,7 @@ Smoke.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "JSHint", version: "2.10.3" }
+  analyzer: { name: "JSHint", version: "2.11.0" }
 )
 
 Smoke.add_test(
@@ -53,7 +53,7 @@ Smoke.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "JSHint", version: "2.10.3" }
+  analyzer: { name: "JSHint", version: "2.11.0" }
 )
 
 Smoke.add_test(
@@ -72,7 +72,7 @@ Smoke.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "JSHint", version: "2.10.3" }
+  analyzer: { name: "JSHint", version: "2.11.0" }
 )
 
 Smoke.add_test(
@@ -103,7 +103,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "JSHint", version: "2.10.3" }
+    analyzer: { name: "JSHint", version: "2.11.0" }
   },
   {
     warnings: [
@@ -122,7 +122,7 @@ Smoke.add_test(
 
 Smoke.add_test(
   "broken_package_json",
-  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "JSHint", version: "2.10.3" } },
+  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "JSHint", version: "2.11.0" } },
   { warnings: [{ message: /`package.json` is broken: 767: unexpected token at/, file: "package.json" }] }
 )
 
@@ -133,6 +133,6 @@ Smoke.add_test(
     timestamp: :_,
     type: "failure",
     message: 'The output XML is invalid: Illegal character "\\u0000" in raw string "Unexpected &apos;\\u0000&apos;."',
-    analyzer: { name: "JSHint", version: "2.10.3" }
+    analyzer: { name: "JSHint", version: "2.11.0" }
   }
 )

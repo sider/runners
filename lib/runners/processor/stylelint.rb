@@ -31,14 +31,14 @@ module Runners
     end
 
     DEFAULT_DEPS = DefaultDependencies.new(
-      main: Dependency.new(name: "stylelint", version: "12.0.1"),
+      main: Dependency.new(name: "stylelint", version: "13.0.0"),
       extras: [
         Dependency.new(name: "stylelint-config-recommended", version: "3.0.0"),
       ],
     )
 
     CONSTRAINTS = {
-      "stylelint" => Constraint.new(">= 8.3.0", "< 13.0.0"),
+      "stylelint" => Constraint.new(">= 8.3.0", "< 14.0.0"),
     }.freeze
 
     DEFAULT_TARGET_FILE_EXTENSIONS = ["css", "less", "sass", "scss", "sss"].freeze

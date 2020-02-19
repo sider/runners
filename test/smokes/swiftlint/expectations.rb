@@ -6,7 +6,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "swiftlint", version: "0.38.1" },
+    analyzer: { name: "swiftlint", version: "0.38.2" },
     issues: [
       {
         path: "test.swift",
@@ -27,97 +27,106 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "swiftlint", version: "0.38.1" },
+    analyzer: { name: "swiftlint", version: "0.38.2" },
     issues: [
       {
         path: "test.swift",
         location: { start_line: 1 },
         id: "class_delegate_protocol",
         message: "Delegate protocols should be class-only so they can be weakly referenced.",
+        links: [],
         object: nil,
-        git_blame_info: nil,
-        links: []
+        git_blame_info: nil
       },
       {
         path: "test.swift",
         location: { start_line: 6 },
         id: "closure_parameter_position",
         message: "Closure parameters should be on the same line as opening brace.",
+        links: [],
         object: nil,
-        git_blame_info: nil,
-        links: []
+        git_blame_info: nil
       },
       {
+        path: "test.swift",
+        location: { start_line: 1 },
+        id: "explicit_acl",
         message: "All declarations should specify Access Control Level keywords explicitly.",
         links: [],
-        id: "explicit_acl",
-        path: "test.swift",
         object: nil,
-        git_blame_info: nil,
-        location: { start_line: 1 }
+        git_blame_info: nil
       },
       {
         path: "test.swift",
         location: { start_line: 1 },
         id: "explicit_top_level_acl",
         message: "Top-level declarations should specify Access Control Level keywords explicitly.",
+        links: [],
         object: nil,
-        git_blame_info: nil,
-        links: []
+        git_blame_info: nil
       },
       {
+        path: "test.swift",
+        location: { start_line: 1 },
+        id: "file_name",
         message: "File name should match a type or extension declared in the file (if any).",
         links: [],
-        id: "file_name",
-        path: "test.swift",
         object: nil,
-        git_blame_info: nil,
-        location: { start_line: 1 }
+        git_blame_info: nil
       },
       {
+        path: "test.swift",
+        location: { start_line: 6 },
+        id: "indentation_width",
+        message: "Code should be indented using one tab or 4 spaces.",
+        links: [],
+        object: nil,
+        git_blame_info: nil
+      },
+      {
+        path: "test.swift",
+        location: { start_line: 8 },
+        id: "multiline_arguments_brackets",
         message: "Multiline arguments should have their surrounding brackets in a new line.",
         links: [],
-        id: "multiline_arguments_brackets",
-        path: "test.swift",
         object: nil,
-        git_blame_info: nil,
-        location: { start_line: 8 }
+        git_blame_info: nil
       },
       {
+        path: "test.swift",
+        location: { start_line: 5 },
+        id: "trailing_closure",
         message: "Trailing closure syntax should be used whenever possible.",
         links: [],
-        id: "trailing_closure",
-        path: "test.swift",
         object: nil,
-        git_blame_info: nil,
-        location: { start_line: 5 }
+        git_blame_info: nil
       },
       {
         path: "test.swift",
         location: { start_line: 2 },
         id: "trailing_whitespace",
         message: "Lines should not have trailing whitespace.",
+        links: [],
         object: nil,
-        git_blame_info: nil,
-        links: []
+        git_blame_info: nil
       },
       {
+        path: "test.swift",
+        location: { start_line: 2 },
+        id: "vertical_whitespace_closing_braces",
         message: "Don't include vertical whitespace (empty line) before closing braces.",
         links: [],
-        id: "vertical_whitespace_closing_braces",
-        path: "test.swift",
         object: nil,
-        git_blame_info: nil,
-        location: { start_line: 2 }
+        git_blame_info: nil
       },
       {
+        path: "test.swift",
+        location: { start_line: 2 },
+        id: "vertical_whitespace_opening_braces",
         message: "Don't include vertical whitespace (empty line) after opening braces.",
         links: [],
-        id: "vertical_whitespace_opening_braces",
-        path: "test.swift",
         object: nil,
-        git_blame_info: nil,
-        location: { start_line: 2 }
+        git_blame_info: nil
       }
     ]
   }
@@ -129,7 +138,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "swiftlint", version: "0.38.1" },
+    analyzer: { name: "swiftlint", version: "0.38.2" },
     issues: [
       {
         path: "test.swift",
@@ -146,7 +155,7 @@ Smoke.add_test(
 
 Smoke.add_test(
   "no_swift_file",
-  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "swiftlint", version: "0.38.1" } },
+  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "swiftlint", version: "0.38.2" } },
   { warnings: [{ message: "No lintable files found.", file: nil }] }
 )
 
@@ -157,7 +166,7 @@ Smoke.add_test(
     timestamp: :_,
     type: "failure",
     message: /\ASwiftLint aborted\.\n(.+)\nCould not read configuration file at path (.+)/m,
-    analyzer: { name: "swiftlint", version: "0.38.1" }
+    analyzer: { name: "swiftlint", version: "0.38.2" }
   },
   {
     warnings: [
@@ -193,6 +202,6 @@ Smoke.add_test(
     type: "failure",
     # TODO: The message sometimes can be "". It should be "Loading configuration from '.swiftlint.yml'".
     message: :_,
-    analyzer: { name: "swiftlint", version: "0.38.1" }
+    analyzer: { name: "swiftlint", version: "0.38.2" }
   }
 )

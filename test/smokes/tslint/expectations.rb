@@ -24,36 +24,9 @@ Smoke.add_test(
         links: [],
         object: nil,
         git_blame_info: nil
-      },
-      {
-        id: "object-literal-sort-keys",
-        path: "range.ts",
-        location: { start_line: 7, end_line: 7 },
-        message: "The key 'middle' is not sorted alphabetically",
-        links: [],
-        object: nil,
-        git_blame_info: nil
-      },
-      {
-        id: "space-before-function-paren",
-        path: "range.ts",
-        location: { start_line: 1, end_line: 1 },
-        message: "Spaces before function parens are disallowed",
-        links: [],
-        object: nil,
-        git_blame_info: nil
-      },
-      {
-        id: "trailing-comma",
-        path: "range.ts",
-        location: { start_line: 8, end_line: 8 },
-        message: "Missing trailing comma",
-        links: [],
-        object: nil,
-        git_blame_info: nil
       }
     ],
-    analyzer: { name: "TSLint", version: "5.20.1" }
+    analyzer: { name: "TSLint", version: "6.0.0" }
   }
 )
 
@@ -74,7 +47,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "TSLint", version: "5.20.1" }
+    analyzer: { name: "TSLint", version: "6.0.0" }
   }
 )
 
@@ -162,36 +135,9 @@ Smoke.add_test(
         links: [],
         object: nil,
         git_blame_info: nil
-      },
-      {
-        id: "object-literal-sort-keys",
-        path: "range.ts",
-        location: { start_line: 7, end_line: 7 },
-        message: "The key 'middle' is not sorted alphabetically",
-        links: [],
-        object: nil,
-        git_blame_info: nil
-      },
-      {
-        id: "space-before-function-paren",
-        path: "range.ts",
-        location: { start_line: 1, end_line: 1 },
-        message: "Spaces before function parens are disallowed",
-        links: [],
-        object: nil,
-        git_blame_info: nil
-      },
-      {
-        id: "trailing-comma",
-        path: "range.ts",
-        location: { start_line: 8, end_line: 8 },
-        message: "Missing trailing comma",
-        links: [],
-        object: nil,
-        git_blame_info: nil
       }
     ],
-    analyzer: { name: "TSLint", version: "5.20.1" }
+    analyzer: { name: "TSLint", version: "6.0.0" }
   }
 )
 
@@ -209,7 +155,7 @@ Smoke.add_test(
       Error at range.ts:2:63: Property 'max' does not exist on type 'string'.
       Error at range.ts:11:24: Argument of type '{ min: number; middle: number; max: number; }' is not assignable to parameter of type 'string'.
       MESSAGE
-    analyzer: { name: "TSLint", version: "5.20.1" }
+    analyzer: { name: "TSLint", version: "6.0.0" }
   },
   {
     warnings: [
@@ -361,13 +307,13 @@ Smoke.add_test(
 
 Smoke.add_test(
   "without-tslint-in-package-json",
-  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "TSLint", version: "5.20.1" } },
+  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "TSLint", version: "6.0.0" } },
   { warnings: [{ message: /No required dependencies for analysis were installed/, file: "package.json" }] }
 )
 
 Smoke.add_test(
   "without-tslint-and-with-typescript-in-package-json",
-  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "TSLint", version: "5.20.1" } },
+  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "TSLint", version: "6.0.0" } },
   { warnings: [{ message: /No required dependencies for analysis were installed/, file: "package.json" }] }
 )
 

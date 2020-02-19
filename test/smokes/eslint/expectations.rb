@@ -30,44 +30,6 @@ Smoke.add_test(
   }
 )
 
-Smoke.add_test(
-  "sideci_valid_npm_install_option",
-  {
-    guid: "test-guid",
-    timestamp: :_,
-    type: "success",
-    issues: [
-      {
-        path: "src/index.jsx",
-        location: { start_line: 1 },
-        id: "filenames/no-index",
-        message: "'index.js' files are not allowed.",
-        links: [],
-        object: { severity: "error", category: nil, recommended: nil },
-        git_blame_info: nil
-      },
-      {
-        path: "src/App.jsx",
-        location: { start_line: 3 },
-        id: "react/prefer-stateless-function",
-        message: "Component should be written as a pure function",
-        links: [],
-        object: { severity: "error", category: nil, recommended: nil },
-        git_blame_info: nil
-      }
-    ],
-    analyzer: { name: "ESLint", version: "3.19.0" }
-  },
-  {
-    warnings: [
-      {
-        message: /The 3.19.0 and older versions are deprecated. Sider will drop these versions on January 31, 2020./,
-        file: "package.json"
-      }
-    ]
-  }
-)
-
 # This test case's .eslintrc includes ESLint plugin, thus Sider fails because of the plugin unavailable.
 Smoke.add_test(
   "only_eslintrc",
@@ -78,11 +40,11 @@ Smoke.add_test(
     message:
       Regexp.new(
         Regexp.quote(<<~MESSAGE)
-    Oops! Something went wrong! :(
+          Oops! Something went wrong! :(
 
-    ESLint: 6.8.0.
+          ESLint: 6.8.0.
 
-    ESLint couldn't find the plugin "eslint-plugin-filenames".
+          ESLint couldn't find the plugin "eslint-plugin-filenames".
   MESSAGE
       ),
     analyzer: { name: "ESLint", version: "6.8.0" }
@@ -90,143 +52,23 @@ Smoke.add_test(
 )
 
 Smoke.add_test(
-  "dir_option_is_array",
+  "pinned_old_eslint",
   {
     guid: "test-guid",
     timestamp: :_,
-    type: "success",
-    issues: [
-      {
-        path: "dir1/index.jsx",
-        location: { start_line: 1 },
-        id: "filenames/no-index",
-        message: "'index.js' files are not allowed.",
-        links: [],
-        object: { severity: "error", category: nil, recommended: nil },
-        git_blame_info: nil
-      },
-      {
-        path: "dir2/index.js",
-        location: { start_line: 1 },
-        id: "filenames/no-index",
-        message: "'index.js' files are not allowed.",
-        links: [],
-        object: { severity: "error", category: nil, recommended: nil },
-        git_blame_info: nil
-      },
-      {
-        path: "dir2/index.js",
-        location: { start_line: 4 },
-        id: "react/jsx-filename-extension",
-        message: "JSX not allowed in files with extension '.js'",
-        links: [],
-        object: { severity: "error", category: nil, recommended: nil },
-        git_blame_info: nil
-      },
-      {
-        path: "dir1/App.jsx",
-        location: { start_line: 3 },
-        id: "react/prefer-stateless-function",
-        message: "Component should be written as a pure function",
-        links: [],
-        object: { severity: "error", category: nil, recommended: nil },
-        git_blame_info: nil
-      }
-    ],
-    analyzer: { name: "ESLint", version: "3.19.0" }
-  },
-  { warnings: [{ message: /The 3.19.0 and older versions are deprecated/, file: "package.json" }] }
-)
-
-Smoke.add_test(
-  "dir_option_is_string",
-  {
-    guid: "test-guid",
-    timestamp: :_,
-    type: "success",
-    issues: [
-      {
-        path: "dir2/index.js",
-        location: { start_line: 1 },
-        id: "filenames/no-index",
-        message: "'index.js' files are not allowed.",
-        links: [],
-        object: { severity: "error", category: nil, recommended: nil },
-        git_blame_info: nil
-      },
-      {
-        path: "dir2/index.js",
-        location: { start_line: 4 },
-        id: "react/jsx-filename-extension",
-        message: "JSX not allowed in files with extension '.js'",
-        links: [],
-        object: { severity: "error", category: nil, recommended: nil },
-        git_blame_info: nil
-      }
-    ],
-    analyzer: { name: "ESLint", version: "3.19.0" }
-  },
-  { warnings: [{ message: /The 3.19.0 and older versions are deprecated/, file: "package.json" }] }
-)
-
-Smoke.add_test(
-  "pinned_eslint",
-  {
-    guid: "test-guid",
-    timestamp: :_,
-    type: "success",
-    issues: [
-      {
-        message: "Found identifier with same name as label.",
-        links: [],
-        id: "no-label-var",
-        path: "src/index.js",
-        location: { start_line: 3 },
-        object: { severity: "warn", category: nil, recommended: nil },
-        git_blame_info: nil
-      },
-      {
-        message: "'foo' is not defined.",
-        links: [],
-        id: "no-undef",
-        path: "src/index.js",
-        location: { start_line: 1 },
-        object: { severity: "error", category: nil, recommended: nil },
-        git_blame_info: nil
-      },
-      {
-        message: "'x' is assigned a value but never used.",
-        links: [],
-        id: "no-unused-vars",
-        path: "src/index.js",
-        location: { start_line: 1 },
-        object: { severity: "error", category: nil, recommended: nil },
-        git_blame_info: nil
-      },
-      {
-        message: "'bar' is defined but never used.",
-        links: [],
-        id: "no-unused-vars",
-        path: "src/index.js",
-        location: { start_line: 2 },
-        object: { severity: "error", category: nil, recommended: nil },
-        git_blame_info: nil
-      }
-    ],
-    analyzer: { name: "ESLint", version: "4.0.0" }
-  },
-  { warnings: [{ message: /The 4.0.0 and older versions are deprecated/, file: "package.json" }] }
+    type: "failure",
+    message: <<~MSG
+      Your `eslint` settings could not satisfy the required constraints. Please check your `package.json` again.
+      If you want to analyze via the Sider default settings, please configure your `sideci.yml`. For details, see the documentation.
+    MSG
+      .strip,
+    analyzer: nil
+  }
 )
 
 Smoke.add_test(
   "no_files",
   { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "ESLint", version: "6.8.0" } }
-)
-
-Smoke.add_test(
-  "no_files_eslint4",
-  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "ESLint", version: "4.19.1" } },
-  { warnings: [{ message: /The 4.19.1 and older versions are deprecated/, file: "package.json" }] }
 )
 
 Smoke.add_test(
@@ -331,9 +173,9 @@ Smoke.add_test(
     warnings: [
       {
         message: <<~MSG
-    DEPRECATION WARNING!!!
-    The `$.linter.eslint.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
-    Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/javascript/eslint ).
+          DEPRECATION WARNING!!!
+          The `$.linter.eslint.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
+          Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/javascript/eslint ).
   MSG
           .strip,
         file: "sideci.yml"
@@ -498,14 +340,14 @@ Smoke.add_test(
     issues: [
       {
         message: <<~MESSAGE
-        Parsing error: Unexpected token, expected ";"
+          Parsing error: Unexpected token, expected ";"
 
-          1 | function bar() {
-        > 2 |   var x = foo:
-            |              ^
-          3 |   for (;;) {
-          4 |     break x;
-          5 |   }
+            1 | function bar() {
+          > 2 |   var x = foo:
+              |              ^
+            3 |   for (;;) {
+            4 |     break x;
+            5 |   }
       MESSAGE
           .rstrip,
         links: [],

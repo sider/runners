@@ -1,6 +1,0 @@
-linter:
-  rubocop:
-    gems:
-      - name: rubocop
-        version: 0.60.0
-        source: https://rubygems.cae.me.uk

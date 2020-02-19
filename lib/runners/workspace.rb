@@ -106,16 +106,19 @@ module Runners
           config_path = Pathname(dir) / 'config'
           key_path = Pathname(dir) / 'key'
           script_path = Pathname(dir) / 'run.sh'
+          known_hosts_path = Pathname(dir) / 'known_hosts'
 
           config_path.write(<<~SSH_CONFIG, perm: 0600)
             Host *
               CheckHostIP no
               ConnectTimeout 30
+              UserKnownHostsFile #{known_hosts_path}
               StrictHostKeyChecking no
               IdentitiesOnly yes
               IdentityFile #{key_path}
           SSH_CONFIG
           key_path.write(ssh_key, perm: 0600)
+          known_hosts_path.write('', perm: 0600)
           script_path.write(<<~GIT_SSH, perm: 0700)
             #!/bin/sh
             ssh -F #{config_path} "$@"
@@ -123,7 +126,6 @@ module Runners
           yield script_path
         end
       else
-        trace_writer.message "Nothing to do"
         yield nil
       end
     end

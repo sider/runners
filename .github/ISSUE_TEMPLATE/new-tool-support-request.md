@@ -4,45 +4,22 @@ about: Suggest new analysis tool support for this project
 title: Support [ANALYSIS_TOOL_NAME]
 labels: enhancement
 assignees: ''
-
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+## Information
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+- Website: https://<URL><!-- (Required) Input the official website URL. -->
+- Source code: https://<URL><!-- (Optional) Input the source repository URL if it's different from its website URL. -->
+- Language: <!-- (Required) Input the tool's target programming language(s), e.g. Ruby, Go, etc. -->
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+## Why do you need the tool?
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+<!-- (Required) Input your motivation or reason to support the tool. -->
 
+## Additional context
 
-## Support [ANALYSIS_TOOL_NAME]
+<!-- (Optional) Input additional context or description if you have. If you don't, input "None". -->
 
-- Source code URL: [URL]
-- Official Site/Documentation: [URL]
+## See also
 
-### Supplementary information
-
-This issue is similar to these completed issues.
-
-- cpplint support
-  - https://github.com/sider/runners/pull/417
-  - https://help.sider.review/tools/cplusplus/cpplint
-- hadolint support
-  - https://github.com/sider/runners/issues/581
-  - https://github.com/sider/runners/pull/625
-  - https://github.com/sider/sider-docs/pull/282
-
-## TODO
-
-- [ ] Write smoke test(with some linter's Option). Add pattern for success end, waring exit, error exit
-- [ ] Add config option
-- [ ] (Optional) Add unit tests for the new analysis tool's `Processor` if needed.
-- [ ] Write documentation accordingly
-- [ ] Add CI setting (https://github.com/sider/runners/blob/master/.circleci/config.yml)
-- [ ] Discuss this Lint tool in this Issue
-- [ ] Fix developer guide if needed (https://github.com/sider/runners#developer-guide)
+<!-- (Optional) Input additional links if you have. If you don't, input "None". -->

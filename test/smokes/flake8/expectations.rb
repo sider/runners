@@ -201,7 +201,8 @@ Smoke.add_test(
 
 Smoke.add_test(
   "python2",
-  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "Flake8", version: "3.7.9" } }
+  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "Flake8", version: "3.7.9" } },
+  { warnings: [{ message: "Python 2 is deprecated. Consider migrating to Python 3.", file: nil }] }
 )
 
 Smoke.add_test(
@@ -211,5 +212,6 @@ Smoke.add_test(
 
 Smoke.add_test(
   "dot_python_version_2",
-  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "Flake8", version: "3.7.9" } }
+  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "Flake8", version: "3.7.9" } },
+  { warnings: [{ message: "Python 2 is deprecated. Consider migrating to Python 3.", file: nil }] }
 )

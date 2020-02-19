@@ -4,9 +4,65 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.18.1...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.20.0...HEAD)
+
+- Show stderr of git-blame(1) [#756](https://github.com/sider/runners/pull/756)
+
+## 0.20.0
+
+[Full diff](https://github.com/sider/runners/compare/0.19.4...0.20.0)
+
+- [RuboCop] Update rubocop requirement from 0.79.0 to 0.80.0 [#752](https://github.com/sider/runners/pull/752)
+- [HAML-Lint] Update rubocop requirement from 0.79.0 to 0.80.0 [#753](https://github.com/sider/runners/pull/753)
+- [RuboCop] [HAML-Lint] Set an upper limit for constraints [#755](https://github.com/sider/runners/pull/755)
+
+## 0.19.4
+
+[Full diff](https://github.com/sider/runners/compare/0.19.3...0.19.4)
+
+- Show Runners version and GUID to trace [#744](https://github.com/sider/runners/pull/744)
+
+## 0.19.3
+
+[Full diff](https://github.com/sider/runners/compare/0.19.2...0.19.3)
+
+- [RuboCop] Add `gitlab-styles` to optional gem list [#743](https://github.com/sider/runners/pull/743)
+
+## 0.19.2
+
+[Full diff](https://github.com/sider/runners/compare/0.19.1...0.19.2)
+
+- Add more plugins to OPTIONAL_GEMS in haml_lint.rb [#734](https://github.com/sider/runners/pull/734)
+
+## 0.19.1
+
+[Full diff](https://github.com/sider/runners/compare/0.19.0...0.19.1)
+
+- Set UserKnownHostsFile to avoid error message [#730](https://github.com/sider/runners/pull/730)
+
+## 0.19.0
+
+[Full diff](https://github.com/sider/runners/compare/0.18.1...0.19.0)
 
 - [RuboCop] Add more plugins to OPTIONAL_GEMS [#683](https://github.com/sider/runners/pull/683)
+- [Flake8] Add warnings if the analysis tries to use Python 2 [#702](https://github.com/sider/runners/pull/702)
+- [SwiftLint] Bump SwiftLint from 0.38.1 to 0.38.2 [#669](https://github.com/sider/runners/pull/669)
+- [HAML-Lint] Bump rubocop-rails from 2.4.1 to 2.4.2 [#680](https://github.com/sider/runners/pull/680)
+- [Checkstyle][Security] Bump checkstyle from 8.28 to 8.29 [#685](https://github.com/sider/runners/pull/685)
+- [PHP_CodeSniffer] Bump squizlabs/php_codesniffer from 3.5.3 to 3.5.4 [#686](https://github.com/sider/runners/pull/686)
+- [PHP_CodeSniffer] Bump escapestudios/symfony2-coding-standard from 3.10.0 to 3.11.0 [#688](https://github.com/sider/runners/pull/688)
+- [TSLint] Bump typescript from 3.7.4 to 3.7.5 [#681](https://github.com/sider/runners/pull/691)
+- [TyScan] Bump typescript from 3.7.4 to 3.7.5 [#692](https://github.com/sider/runners/pull/692)
+- [PMD Java] Bump pmd-java from 6.20.0 to 6.21.0 [#695](https://github.com/sider/runners/pull/695)
+- [Reek] Update reek requirement from 5.5.0 to 5.6.0 [#694](https://github.com/sider/runners/pull/694)
+- [JSHint] Bump jshint from 2.10.3 to 2.11.0 [#690](https://github.com/sider/runners/pull/690)
+- [stylelint] Bump stylelint from 12.0.1 to 13.0.0 [#693](https://github.com/sider/runners/pull/693)
+- [TSLint] Bump tslint from 5.20.1 to 6.0.0 [#689](https://github.com/sider/runners/pull/689)
+- [HAML-Lint] Update haml_lint requirement from 0.34.1 to 0.34.2 [#705](https://github.com/sider/runners/pull/705)
+- [ESLint] Drop older versions of ESLint [#721](https://github.com/sider/runners/pull/721)
+- [RuboCop] Drop older versions of RuboCop [#726](https://github.com/sider/runners/pull/726)
+- Bump devon_rex images from 2.12.0 to 2.14.0 [#727](https://github.com/sider/runners/pull/727)
+- [HAML-Lint] Update rubocop-rspec requirement from 1.37.1 to 1.38.0 [#720](https://github.com/sider/runners/pull/720)
 
 ## 0.18.1
 

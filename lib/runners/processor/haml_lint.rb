@@ -1,3 +1,5 @@
+require_relative 'rubocop'
+
 module Runners
   class Processor::HamlLint < Processor
     include Ruby
@@ -26,39 +28,15 @@ module Runners
       )
     end
 
-    # DEPRECATED: Implicit dependencies
-    # @see https://github.com/sider/runner_rubocop/blob/3.1.0/lib/entrypoint.rb#L27-L52
     OPTIONAL_GEMS = [
-      GemInstaller::Spec.new(name: "meowcop", version: []),
-      GemInstaller::Spec.new(name: "onkcop", version: []),
-      GemInstaller::Spec.new(name: "deka_eiwakun", version: []),
-      GemInstaller::Spec.new(name: "forkwell_cop", version: []),
-      GemInstaller::Spec.new(name: "cookstyle", version: []),
-      GemInstaller::Spec.new(name: "rubocop-rails_config", version: []),
-      GemInstaller::Spec.new(name: "salsify_rubocop", version: []),
-      GemInstaller::Spec.new(name: "otacop", version: []),
-      GemInstaller::Spec.new(name: "unasukecop", version: []),
-      GemInstaller::Spec.new(name: "sanelint", version: []),
-      GemInstaller::Spec.new(name: "hint-rubocop_style", version: []),
-      GemInstaller::Spec.new(name: "rubocop-salemove", version: []),
-      GemInstaller::Spec.new(name: "mad_rubocop", version: []),
-      GemInstaller::Spec.new(name: "unifacop", version: []),
-      GemInstaller::Spec.new(name: "ws-style", version: []),
-      GemInstaller::Spec.new(name: "rubocop-config-umbrellio", version: []),
-      GemInstaller::Spec.new(name: "pulis", version: []),
-      GemInstaller::Spec.new(name: "gc_ruboconfig", version: []),
-      GemInstaller::Spec.new(name: "fincop", version: []),
-      GemInstaller::Spec.new(name: "rubocop-github", version: []),
-      GemInstaller::Spec.new(name: "ezcater_rubocop", version: []),
-      GemInstaller::Spec.new(name: "rubocop-rspec", version: []),
-      GemInstaller::Spec.new(name: "rubocop-cask", version: []),
-      GemInstaller::Spec.new(name: "rubocop-thread_safety", version: []),
+      *Processor::RuboCop::OPTIONAL_GEMS,
+      # additional gems for HAML-Lint
     ].freeze
 
     DEFAULT_GEMS = ["haml_lint", "rubocop"].freeze
 
     CONSTRAINTS = {
-      "haml_lint" => [">= 0.26.0"]
+      "haml_lint" => [">= 0.26.0", "< 1.0.0"]
     }.freeze
 
     def self.ci_config_section_name
@@ -196,7 +174,7 @@ module Runners
         *options,
       )
 
-      # @see https://github.com/sds/haml-lint/blob/v0.34.1/lib/haml_lint/cli.rb#L110
+      # @see https://github.com/sds/haml-lint/blob/v0.34.2/lib/haml_lint/cli.rb#L110
       unless [65, 0].include?(status.exitstatus)
         return Results::Failure.new(guid: guid, message: <<~MESSAGE, analyzer: analyzer)
           stdout:

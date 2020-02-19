@@ -44,6 +44,8 @@ module Runners
         trace_writer = TraceWriter.new(writer: writer, sensitive_strings: sensitive_strings)
         started_at = Time.now
         trace_writer.header "Analysis started", recorded_at: started_at
+        trace_writer.message "Runners version #{VERSION}"
+        trace_writer.message "Build GUID #{guid}"
 
         harness = Harness.new(guid: guid, processor_class: processor_class, options: options, working_dir: working_dir, trace_writer: trace_writer)
 
@@ -54,7 +56,7 @@ module Runners
           result: result.as_json,
           warnings: warnings,
           ci_config: ci_config,
-          version: Runners::VERSION,
+          version: VERSION,
         }
 
         trace_writer.message "Writing result..." do

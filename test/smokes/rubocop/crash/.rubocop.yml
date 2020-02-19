@@ -1,3 +1,0 @@
-# Put this .rubocop.yml to avoid to use MeowCop
-AllCops:
-  TargetRubyVersion: 2.4
