@@ -41,7 +41,7 @@ Next, let's create a Docker image for the runner.
 For example, the `Dockerfile` location is `images/foolint/Dockerfile.erb`.
 `images/foolint/Dockerfile` is generated automatically.
 
-`.erb` is a file extension for [ERB](https://en.wikipedia.org/wiki/ERuby), that is a Ruby template engine.
+`.erb` is a file extension for [ERB](https://en.wikipedia.org/wiki/ERuby) which is a Ruby template engine.
 See the official manual for more details about ERB.
 
 In the `Dockerfile`, you will write the followings:
@@ -57,7 +57,7 @@ This is the most important task in creating a new runner.
 
 The processor code defines:
 
-- the runner meta information, e.g. the runner name
+- the runner meta-information, e.g. the runner name
 - the runner schema for `sider.yml` (the Sider's configuration file)
 - how to run the tool
 - how to process the tool's execution results
@@ -148,3 +148,5 @@ If you want to run the smoke test, run the following command:
 ```shell
 $ bundle exec rake docker:build docker:smoke ANALYZER=foolint
 ```
+
+See [this description](../README.md#testing), about the available `rake` commands.
