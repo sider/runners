@@ -81,16 +81,17 @@ These commands will help you develop! :wink:
 ### Project structure
 
 ```shell
-$ tree -L 1 -d
+$ tree -F -L 1 -d
 .
 ├── bin
 ├── docs
 ├── images
 ├── lib
 ├── sig
-└── test
+├── test
+└── vendor
 
-5 directories
+7 directories
 ```
 
 - `bin`: Entry point to launch a runner
