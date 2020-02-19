@@ -462,7 +462,7 @@ Smoke.add_test(
     {
       message: <<~MSG,
         Sider tried to install `rubocop 0.60.0` according to your `Gemfile.lock`, but it installs `0.80.0` instead.
-        Because `0.60.0` does not satisfy the Sider constraints [\">= 0.61.0\"].
+        Because `0.60.0` does not satisfy the Sider constraints [\">= 0.61.0\", \"< 1.0.0\"].
 
         If you want to use a different version of `rubocop`, update your `Gemfile.lock` to satisfy the constraint or specify the gem version in your `sider.yml`.
         See https://help.sider.review/getting-started/custom-configuration#gems-option
