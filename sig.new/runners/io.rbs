@@ -1,13 +1,10 @@
 class Runners::IO
-  attr_reader ios: untyped
+  attr_reader ios: Array[::IO | Runners::IO::AwsS3]
 
-  def initialize: (*untyped ios) -> untyped
-
-  def write: (*untyped args) -> untyped
-
-  def flush: (*untyped args) -> untyped
-
-  def flush!: () -> untyped
+  def initialize: (*(::IO | Runners::IO::AwsS3) ios) -> void
+  def write: (String str) -> void
+  def flush: () -> void
+  def flush!: () -> void
 end
 
-Runners::IO::REQUIRED_METHODS_FOR_IOS: untyped
+Runners::IO::REQUIRED_METHODS_FOR_IOS: Array[Symbol]

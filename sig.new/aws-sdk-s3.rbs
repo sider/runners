@@ -1,0 +1,8 @@
+class Aws::S3::Client
+  def initialize: (retry_limit: Integer,
+                   retry_base_delay: Float,
+                   instance_profile_credentials_retries: Integer,
+                   instance_profile_credentials_timeout: Integer,
+                   ?endpoint: String,
+                   ?force_path_style: bool) -> void
+end

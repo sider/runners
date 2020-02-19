@@ -49,8 +49,11 @@ module Runners
     end
 
     def self.calculate(base_dir:, head_dir:, working_dir:, patches:)
+      # @type var changed_paths: Array[Pathname]
       changed_paths = []
+      # @type var unchanged_paths: Array[Pathname]
       unchanged_paths = []
+      # @type var untracked_paths: Array[Pathname]
       untracked_paths = []
 
       Pathname.glob(working_dir + "**/*", File::FNM_DOTMATCH).each do |working_path|

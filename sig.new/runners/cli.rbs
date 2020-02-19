@@ -1,23 +1,14 @@
 class Runners::CLI
-  attr_reader stdout: untyped
+  attr_reader stdout: ::IO
+  attr_reader stderr: ::IO
+  attr_reader guid: String
+  attr_reader analyzer: String
+  attr_reader options: Options
 
-  attr_reader stderr: untyped
-
-  attr_reader guid: untyped
-
-  attr_reader analyzer: untyped
-
-  attr_reader options: untyped
-
-  def initialize: (argv: untyped argv, stdout: untyped stdout, stderr: untyped stderr) -> untyped
-
-  def with_working_dir: () { (untyped) -> untyped } -> untyped
-
-  def processor_class: () -> untyped
-
-  def run: () -> untyped
-
-  def io: () -> untyped
-
-  def sensitive_strings: () -> untyped
+  def initialize: (argv: Array[String], stdout: ::IO, stderr: ::IO) -> void
+  def with_working_dir: [T] { (Pathname) -> T } -> T
+  def processor_class: () -> untyped # FIXME
+  def run: () -> result
+  def io: () -> IO
+  def sensitive_strings: () -> Array[String]
 end

@@ -1,33 +1,23 @@
-class Runners::TraceWriter
-  attr_reader writer: untyped
+interface Runners::_Writer
+  def <<: (untyped) -> void
+end
 
+class Runners::TraceWriter
+  attr_reader writer: _Writer
   attr_reader sensitive_strings: Array[String]
 
-  def initialize: (writer: untyped, ?sensitive_strings: Array[String]) -> untyped
-
+  def initialize: (writer: _Writer, ?sensitive_strings: Array[String]) -> void
   def command_line: (Array[String] command_line, ?recorded_at: Time) -> void
-
   def status: (Process::Status status, ?recorded_at: Time) -> void
-
   def stdout: (String string, ?recorded_at: Time, ?max_length: Integer) -> void
-
   def stderr: (String string, ?recorded_at: Time, ?max_length: Integer) -> void
-
-  def message: (String message, ?recorded_at: Time, ?max_length: Integer, ?limit: Integer, ?omission: String) { () -> untyped } -> untyped
-
+  def message: (String message, ?recorded_at: Time, ?max_length: Integer, ?limit: Integer, ?omission: String) ?{ () -> untyped } -> void
   def header: (String message, ?recorded_at: Time) -> void
-
   def warning: (String message, ?file: untyped?, ?recorded_at: Time) -> void
-
   def ci_config: (Hash[Symbol, untyped] content, file: String, ?recorded_at: Time) -> void
-
   def error: (String message, ?recorded_at: Time, ?max_length: Integer) -> void
-
   def <<: (Hash[Symbol, untyped] object) -> void
-
   def now: () -> Time
-
   def each_slice: (String string, size: Integer) { (String, bool) -> void } -> void
-
   def masked_string: (String str) -> String
 end

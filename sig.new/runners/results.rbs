@@ -46,3 +46,8 @@ class Runners::Results::Error < Base
 
   def initialize: (guid: String, exception: Exception) -> void
 end
+
+type Runners::result = Runners::Results::Success
+                     | Runners::Results::Failure
+                     | Runners::Results::MissingFilesFailure
+                     | Runners::Results::Error

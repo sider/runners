@@ -3,7 +3,6 @@
 # Also, prepare the S3 bucket and allow this instance to upload an S3 object.
 module Runners
   class IO::AwsS3
-    # @type const BUFFER_SIZE: Integer
     BUFFER_SIZE = 300
 
     def self.parse_s3_uri!(s3_uri)
@@ -19,7 +18,6 @@ module Runners
 
     attr_reader :uri, :bucket_name, :object_name, :tempfile, :written_items, :client
 
-    # @param uri [String]
     def initialize(uri)
       @uri = uri
       @bucket_name, @object_name = self.class.parse_s3_uri!(uri)
@@ -40,13 +38,13 @@ module Runners
       @client = Aws::S3::Client.new(**args)
     end
 
-    def write(*args)
+    def write(str)
       @written_items += 1
-      tempfile.write(*args)
+      tempfile.write(str)
     end
 
-    def flush(*args)
-      tempfile.flush(*args)
+    def flush
+      tempfile.flush
       flush_to_s3! if should_flush?
     end
 

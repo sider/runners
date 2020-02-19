@@ -1,19 +1,34 @@
 class Runners::Options
-  attr_reader stdout: untyped
+  attr_reader stdout: ::IO
+  attr_reader stderr: ::IO
+  attr_reader source: Options::GitSource | Options::ArchiveSource
+  attr_reader ssh_key: String?
+  attr_reader io: Runners::IO
 
-  attr_reader stderr: untyped
-
-  attr_reader source: untyped
-
-  attr_reader ssh_key: untyped
-
-  attr_reader io: untyped
-
-  def initialize: (untyped stdout, untyped stderr) -> untyped
-
-  def parse_options: () -> untyped
+  def initialize: (::IO stdout, ::IO stderr) -> void
+  def parse_options: () -> { source: untyped, outputs: Array[String]?, ssh_key: String? }
 end
 
-Runners::Options::GitSource: untyped
+class Runners::Options::GitSource
+  attr_accessor head: String
+  attr_accessor base: String?
+  attr_accessor git_http_url: String
+  attr_accessor owner: String
+  attr_accessor repo: String
+  attr_accessor git_http_userinfo: String?
+  attr_accessor pull_number: Integer?
 
-Runners::Options::ArchiveSource: untyped
+  def initialize: (head: String, ?base: String, git_http_url: String,
+                   owner: String, repo: String, ?git_http_userinfo: String, ?pull_number: Integer) -> void
+end
+
+class Runners::Options::ArchiveSource
+  attr_accessor head: String
+  attr_accessor head_key: String?
+  attr_accessor base: String?
+  attr_accessor base_key: String?
+
+  def initialize: (head: String, ?head_key: String, ?base: String, ?base_key: String) -> void
+  def http?: () -> bool
+  def file?: () -> bool
+end

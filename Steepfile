@@ -1,10 +1,20 @@
 target :lib do
   signature "sig.new" # TODO: Rename to "sig"
 
-  check "lib/runners"
-  #ignore "lib/runners/processor/*.rb"
+  check "lib/runners/analyzer.rb"
+  check "lib/runners/changes.rb"
+  check "lib/runners/cli.rb"
+  check "lib/runners/trace_writer.rb"
+  check "lib/runners/options.rb"
+  check "lib/runners/io.rb"
 
+  # stdlib
   library "pathname"
+  library "set"
+  library "tmpdir"
+
+  # 3rd-party
+  library "jsonseq"
   library "strong_json"
 end
 

@@ -2,6 +2,7 @@ require "optparse"
 
 module Runners
   class CLI
+    # @dynamic stdout, stderr, guid, analyzer, options
     attr_reader :stdout
     attr_reader :stderr
     attr_reader :guid

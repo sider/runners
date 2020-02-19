@@ -1,5 +1,6 @@
 module Runners
   class TraceWriter
+    # @dynamic writer, sensitive_strings
     attr_reader :writer, :sensitive_strings
 
     def initialize(writer:, sensitive_strings: [])
@@ -34,8 +35,13 @@ module Runners
     def message(message, recorded_at: now, max_length: 4_000, limit: 40_000, omission: "...(truncated)")
       string = masked_string(message)
       if string.size > limit
-        string = string[0, limit] + omission
-        all_truncated = true
+        slice = string.slice(0, limit)
+        if slice
+          string = slice + omission
+          all_truncated = true
+        else
+          raise "Invalid range: limit=#{limit.inspect}"
+        end
       end
 
       block_given = block_given?
@@ -92,8 +98,12 @@ module Runners
 
       while string.length > 0
         slice = string.slice!(0, size)
-        truncated = slice.length == size
-        yield slice, truncated
+        if slice
+          truncated = slice.length == size
+          yield slice, truncated
+        else
+          raise "Invalid range: size=#{size.inspect}"
+        end
       end
     end
 
