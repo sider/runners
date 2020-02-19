@@ -36,7 +36,7 @@ module Runners
     DEFAULT_GEMS = ["haml_lint", "rubocop"].freeze
 
     CONSTRAINTS = {
-      "haml_lint" => [">= 0.26.0"]
+      "haml_lint" => [">= 0.26.0", "< 1.0.0"]
     }.freeze
 
     def self.ci_config_section_name

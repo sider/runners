@@ -65,7 +65,7 @@ module Runners
     ].freeze
 
     CONSTRAINTS = {
-      "rubocop" => [">= 0.61.0"]
+      "rubocop" => [">= 0.61.0", "< 1.0.0"]
     }.freeze
 
     def self.ci_config_section_name
