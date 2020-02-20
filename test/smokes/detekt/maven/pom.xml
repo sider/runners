@@ -145,7 +145,7 @@
                   <arg value="--excludes"/>
                   <arg value="**/special/package/internal/**"/>
                   <arg value="--report"/>
-                  <arg value="xml:reports/detekt.xml"/>
+                  <arg value="html:reports/detekt.html"/>
                   <arg value="--baseline"/>
                   <arg value="baseline.xml"/>
                 </java>

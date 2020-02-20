@@ -1,7 +1,6 @@
 module Runners
   class Processor::Detekt < Processor
     include Java
-    require 'active_support/core_ext'
 
     Schema = StrongJSON.new do
 
@@ -30,12 +29,6 @@ module Runners
         })
       end
 
-      let :reporter, enum(
-        literal("xml"),
-        literal("txt"),
-        literal("checkstyle")
-      )
-
       let :cli_config, object(
         auto_correct: boolean?,
         baseline_path: string?,
@@ -55,13 +48,11 @@ module Runners
 
       let :gradle_config, object(
         task: string,
-        report_id: reporter,
+        report_id: string?,
         report_path: string?
       )
 
-      let :maven_config, object(
-        goal: string
-      )
+      let :maven_config, boolean
 
       let :cli, Schema::RunnerConfig.base.update_fields {|hash| hash[:cli] = cli_config}
       let :gradle, Schema::RunnerConfig.base.update_fields {|hash| hash[:gradle] = gradle_config}
@@ -109,9 +100,6 @@ module Runners
             issues.each do |issue|
               result.add_issue issue
             end
-            trace_writer.message "*********************analyze"
-            trace_writer.message result.to_yaml
-            trace_writer.message "*********************analyze"
           end
         end
       end
@@ -152,6 +140,10 @@ module Runners
 
     def maven_config
       detekt_config[:maven]
+    end
+
+    def reporter
+      ["xml", "txt", "html"]
     end
 
     def run_cli
@@ -226,6 +218,9 @@ module Runners
       end
 
       report_id = cli_config[:report_id]
+      unless reporter.include?(report_id)
+        report_id = "xml"
+      end
       report_path = cli_config[:report_path]
       output_file_path = current_dir / report_path
       args.push("--report", "#{report_id}:#{output_file_path.to_path}")
@@ -236,89 +231,93 @@ module Runners
         trace_writer.message "Reading output from #{report_path}..."
         output = output_file_path.read
       else
-        msg = "#{report_path} does not exist because an unexpected error occurred!"
+        msg = "#{report_path} does not exist. Unexpected error occurred, processing cannot continue."
         trace_writer.error msg
         raise msg
       end
 
-      construct_checkstyle_result(output)
+      switch_constructor(report_id, output)
     end
 
     def run_gradle
-      stdout, = capture3("./gradlew", "--quiet", gradle_config[:task])
+      stdout, = capture3("./gradlew", gradle_option_quiet, gradle_config[:task])
 
-      if gradle_config[:report_id].nil? || gradle_config[:report_path].nil?
-        trace_writer.message "'report_path' was not supplied. Create a report using standard output."
-        return construct_plain_result(stdout, true)
-      end
-
-      output_file = current_dir / gradle_config[:report_path]
-      if output_file.exist?
-        trace_writer.message "Reading output from #{gradle_config[:report_path]}..."
-        return construct_result(gradle_config[:report_id], output_file.read)
-      else
-        trace_writer.message "'report_path' does not exists. Create a report using standard output."
-        return construct_plain_result(stdout, true)
-      end
+      construct_result(gradle_config[:report_id], gradle_config[:report_path], stdout)
     end
 
     def run_maven
-      report_path, phase = check_maven_config()
+      report_id, report_path, phase = check_maven_config()
+      mvn_options = %w[--quiet --batch-mode -Dmaven.test.skip=true -Dmaven.main.skip=true]
+      stdout, = capture3("mvn", phase, *mvn_options)
 
-      unless maven_config[:goal].nil?
-        goal = maven_config[:goal]
-      else
-        goal = phase
+      construct_result(report_id, report_path, stdout)
+    end
+
+    def construct_result(report_id, report_path, stdout)
+      if report_id.nil? || report_path.nil?
+        trace_writer.message "'report' option was not supplied. Create a report using standard output."
+        return construct_plain_result(stdout, true)
       end
 
-      mvn_options = %w[--quiet --batch-mode -Dmaven.test.skip=true -Dmaven.main.skip=true]
-
-      # NOTE: `mvn` fails when issues are found, so we should not check the exit status.
-      capture3("mvn", goal, *mvn_options)
+      unless reporter.include?(report_id)
+        raise_err_unknown_report_id
+      end
 
       output_file_path = current_dir / report_path
-
       if output_file_path.exist?
         trace_writer.message "Reading output from #{report_path}..."
         output = output_file_path.read
       else
-        msg = "#{report_path} does not exist because an unexpected error occurred!"
+        msg = "#{report_path} does not exist. Unexpected error occurred, processing cannot continue."
         trace_writer.error msg
         raise msg
       end
 
-      # construct_result(maven_config[:reporter], output)
-      construct_checkstyle_result(output)
+      switch_constructor(report_id, output)
     end
 
-    def construct_result(reporter, output)
+    def switch_constructor(reporter, output)
       case reporter
-      when "json"
-        construct_json_result(output)
+      when "html"
+        construct_html_result(output)
       when "xml"
         construct_checkstyle_result(output)
       when "txt"
         construct_plain_result(output)
+      else
+        raise_err_unknown_report_id
       end
     end
 
-    def construct_json_result(output)
-      json = JSON.parse(output, symbolize_names: true)
+    def construct_html_result(output)
+      issues = []
 
-      # json = Hash.from_xml(output)
+      # NOTE: HTML that Detekt returns unable to parse..
+      regexp_id = /<details id="(.*)" open=.*/
+      regexp_detail = /<li><span class="location">(.*):(.*):(.*)<\/span><br><span class="message">(.*)<\/span>/
+      
+      rule = nil
+      output.lines(chomp: true).map do |line|
+        
+        lrule = line.match(regexp_id)
+        unless lrule.nil?
+          rule, = lrule.captures
+          next
+        end
 
-      trace_writer.message json.to_yaml
-
-      json.flat_map do |hash|
-        hash[:file].flat_map do |error|
-          construct_issue(
-            file: hash[:file],
-            line: (error[:line]).to_i,
-            message: error[:message],
-            rule: error[:rule],
+        ldetail = line.match(regexp_detail)
+        unless ldetail.nil?
+          file, start_line, _col, message = ldetail.captures
+          issues << construct_issue(
+            file: file,
+            line: start_line,
+            message: message,
+            rule: rule,
           )
         end
       end
+
+      issues
     end
 
     def construct_checkstyle_result(output)
@@ -341,7 +340,7 @@ module Runners
               message: error[:message],
               rule: error[:source],
             )
-          when "exception"
+          else
             add_warning error.text.strip, file: file[:name]
           end
         end
@@ -353,13 +352,13 @@ module Runners
     def construct_plain_result(output, is_stdout = false)
       issues = []
 
-      regex = /(.*) at (.*):(.*):(.*) - (.*)/
+      regexp = /(.*) at (.*):(.*):(.*) - (.*)/
       if is_stdout
-        regex = /.*\t(.*) at (.*):(.*):(.*)/
+        regexp = /.*\t(.*) at (.*):(.*):(.*)/
       end
 
       output.lines(chomp: true).map do |line|
-        match = line.match(regex)
+        match = line.match(regexp)
 
         unless match.nil?
           rule, file, start_line, col, message = match.captures
@@ -382,7 +381,6 @@ module Runners
       issues
     end
 
-    # TODO: column追加
     def construct_issue(file:, line:, message:, rule:)
       Issue.new(
         path: relative_path(working_dir.realpath / file, from: working_dir.realpath),
@@ -413,9 +411,20 @@ module Runners
       return ret
     end
 
+    # read Detekt setting from 'pom.xml'
+    # 
+    # @return report_id [String] "xml", "txt", "html" or nil
+    # @return report_path [String] "path/to/detekt_report" or nil
+    # @return phase [String] <phase>verify</phase>.text
+    # 
+    # @raise 'pom.xml' does not exist
+    # @raise 'execution/id[text()=detekt]' block undefined
+    # @raise 'execution/phase' undefined
+    # 
     def check_maven_config()
+      report_id = nil
       report_path = nil
-      phase = "verify"
+      phase = nil
 
       pom_file = current_dir / "pom.xml"
       unless pom_file.exist?
@@ -425,28 +434,33 @@ module Runners
       end
       
       pom = REXML::Document.new(pom_file.read)
-      id = "detekt"
-      fds = pom.get_elements("//project/build/plugins/plugin/executions/execution/id[text()='#{id}']").first
-      unless fds.nil?
-        dom_setting = fds.parent
-        unless dom_setting.elements["phase"].nil?
-          phase = dom_setting.elements["phase"]
+      fds = pom.get_elements(
+        "//project/build/plugins/plugin/executions/execution/id[text()='detekt']"
+      ).first
+      if fds.nil?
+        msg = "'execution/id[text()=detekt]' block undefined on 'pom.xml'. Processing cannot continue."
+        trace_writer.error msg
+        raise msg
+      else
+        detekt_setting = fds.parent
+
+        if detekt_setting.elements["phase"].nil?
+          msg = "'execution/phase' undefined on 'pom.xml'. Processing cannot continue."
+          trace_writer.error msg
+          raise msg
+        else
+          phase = detekt_setting.elements["phase"].text
         end
 
-        fdsp = dom_setting.get_elements("//configuration/target/java/arg[@value='--report']").first
+        fdsp = detekt_setting.get_elements("//configuration/target/java/arg[@value='--report']").first
         unless fdsp.nil?
           dom_setting_report = fdsp.next_element.attribute("value").to_s.split(/:/)
           report_path = dom_setting_report[1]
+          report_id = dom_setting_report[0]
         end
       end
 
-      if report_path.nil?
-        msg = "arg '--report' undefined on 'pom.xml'. Processing cannot continue."
-        trace_writer.error msg
-        raise msg
-      end
-
-      return report_path, phase
+      return report_id, report_path, phase
     end
 
     def check_runner_config(config)
@@ -456,17 +470,15 @@ module Runners
           {
             gradle: {
               task: config[:gradle][:task],
-              report_id: config[:gradle][:report_id],
-              report_path: config[:gradle][:report_path]
+              report_id: config[:gradle][:report_id] || nil,
+              report_path: config[:gradle][:report_path] || nil
             }
           }
         )
       when config[:maven]
         yield(
           {
-            maven: {
-              goal: config[:maven][:goal],
-            }
+            maven: config[:maven]
           }
         )
       when config[:cli]
@@ -515,7 +527,7 @@ module Runners
     end
 
     def extract_detekt_version_for_gradle
-      stdout, = capture3!("./gradlew", "--quiet", "dependencies")
+      stdout, = capture3!("./gradlew", gradle_option_quiet, "dependencies")
       stdout.each_line do |line|
         line.match(/io\.gitlab\.arturbosch\.detekt:detekt-cli:([\d\.]+)/) do |match|
           return match.captures.first
@@ -527,15 +539,25 @@ module Runners
       pom_file = pom_dir / "pom.xml"
       return unless pom_file.exist?
 
-      groupId = "io.gitlab.arturbosch.detekt"
-      artifactId = "detekt-cli"
+      group_id = "io.gitlab.arturbosch.detekt"
+      artifact_id = "detekt-cli"
       pom = REXML::Document.new(pom_file.read)
-      pom.root.each_element("//dependency/groupId[text()='#{groupId}']") do |element|
+      pom.root.each_element("//dependency/groupId[text()='#{group_id}']") do |element|
         dependency = element.parent
-        if dependency.elements["artifactId"].text == artifactId
+        if dependency.elements["artifactId"].text == artifact_id
           return dependency.elements["version"].text
         end
       end
+    end
+
+    def raise_err_unknown_report_id
+      msg = "Unknown 'report type' was supplied. Processing cannot continue."
+      trace_writer.error msg
+      raise msg
+    end
+
+    def gradle_option_quiet
+      "--quiet"
     end
 
   end

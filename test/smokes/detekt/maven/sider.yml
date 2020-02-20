@@ -1,4 +1,3 @@
 linter:
   detekt:
-    maven:
-      goal: verify
+    maven: true

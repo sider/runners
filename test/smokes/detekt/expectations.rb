@@ -312,7 +312,7 @@ Smoke.add_test(
     analyzer: { name: "detekt", version: "1.5.1" },
     issues: [
       {
-        id: "detekt.EmptyClassBlock",
+        id: "EmptyClassBlock",
         path: "src/FilteredClass.kt",
         location: { start_line: 2 },
         message: "The class or object FilteredClass is empty.",
@@ -321,7 +321,7 @@ Smoke.add_test(
         git_blame_info: nil
       },
       {
-        id: "detekt.ForEachOnRange",
+        id: "ForEachOnRange",
         path: "src/ComplexClass.kt",
         location: { start_line: 44 },
         message: "Using the forEach method on ranges has a heavy performance cost. Prefer using simple for loops.",
@@ -330,7 +330,7 @@ Smoke.add_test(
         git_blame_info: nil
       },
       {
-        id: "detekt.FunctionOnlyReturningConstant",
+        id: "FunctionOnlyReturningConstant",
         path: "src/App.kt",
         location: { start_line: 8 },
         message: "get is returning a constant. Prefer declaring a constant instead.",
@@ -339,7 +339,7 @@ Smoke.add_test(
         git_blame_info: nil
       },
       {
-        id: "detekt.NestedBlockDepth",
+        id: "NestedBlockDepth",
         path: "src/ComplexClass.kt",
         location: { start_line: 9 },
         message: "Function complex is nested too deeply.",

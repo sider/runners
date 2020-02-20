@@ -2,5 +2,4 @@ linter:
   detekt:
     gradle:
       task: detekt
-      report_id: xml
-      report_path: build/reports/detekt.xml
+
