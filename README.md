@@ -81,7 +81,7 @@ These commands will help you develop! :wink:
 ### Project structure
 
 ```shell
-$ tree -L 1 -d
+$ tree -F -L 1 -d
 .
 ├── bin
 ├── docs
@@ -90,7 +90,7 @@ $ tree -L 1 -d
 ├── sig
 └── test
 
-5 directories
+6 directories
 ```
 
 - `bin`: Entry point to launch a runner
