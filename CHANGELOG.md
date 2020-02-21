@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - Show stderr of git-blame(1) [#756](https://github.com/sider/runners/pull/756)
 - [GolangCI-Lint] New support [#661](https://github.com/sider/runners/pull/661)
+- [SwiftLint] Bump SwiftLint from 0.38.2 to 0.39.1 [#738](https://github.com/sider/runners/pull/738)
 
 ## 0.20.0
 
