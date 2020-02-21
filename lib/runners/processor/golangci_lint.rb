@@ -30,10 +30,9 @@ module Runners
 
     DEFAULT_TARGET = "./...".freeze
 
-    DEFAULT_CONFIG_PATH =
-      def self.ci_config_section_name
-        "golangci-lint"
-      end
+    def self.ci_config_section_name
+      "golangci-lint"
+    end
 
     def analyzer_name
       "GolangCI-Lint"
@@ -149,7 +148,7 @@ module Runners
     # Example:
     #
     #     {:FromLinter=>"govet", :Text=>"printf: Printf call has arguments but no formatting directives",
-    #     :SourceLines=>["\tfmt.Printf(\"text\", awesome_text)"], :Replacement=>nil, 
+    #     :SourceLines=>["\tfmt.Printf(\"text\", awesome_text)"], :Replacement=>nil,
     #     :Pos=>{:Filename=>"test/smokes/golangci_lint/success/main.go", :Offset=>85, :Line=>7, :Column=>12}}
     #
     # @param stdout [String]
