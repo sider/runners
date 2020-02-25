@@ -12,6 +12,7 @@
     </dependency>
   </dependencies>
   <repositories>
+    <!-- NOTE: "kotlinx-html" is not hosted on the Maven central. See https://github.com/arturbosch/detekt/issues/2146 -->
     <repository>
       <id>jcenter</id>
       <name>jcenter</name>
