@@ -95,7 +95,8 @@ class Runners::Changes
                    unchanged_paths: Array<Pathname>,
                    untracked_paths: Array<Pathname>,
                    patches: GitDiffParser::Patches | nil) -> any
-  def delete_unchanged: (dir: Pathname, ?except: Array<String>, ?only: Array<String>) { (Pathname) -> void }-> void
+  def delete_unchanged: (dir: Pathname, ?except: Array<String>, ?only: Array<String>) -> Array<Pathname>
+  def deletable?: (Pathname, Pathname, Array<String>, Array<String>) -> bool
   def include?: (Issue) -> bool
   def self.calculate: (base_dir: Pathname, head_dir: Pathname, working_dir: Pathname, patches: GitDiffParser::Patches | nil) -> instance
 end

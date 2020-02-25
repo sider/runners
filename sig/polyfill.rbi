@@ -6,7 +6,7 @@ class Pathname
   def file?: -> bool
   def relative_path_from: (Pathname) -> Pathname
   def open: <'a> (?String) { (IO) -> 'a } -> 'a
-  def join: (String) -> self
+  def join: (String | Pathname) -> self
   def realpath: -> self
   def directory?: -> bool
   def relative?: -> bool
@@ -18,6 +18,8 @@ class Pathname
   def expand_path: (*String) -> self
   def parent: -> self
   def basename: -> self
+  def fnmatch?: (String, Integer) -> bool
+  def delete: -> void
 end
 
 extension Object (Polyfill)

@@ -13,22 +13,19 @@ module Runners
     end
 
     def delete_unchanged(dir:, except: [], only: [])
-      # @type var files_to_delete: Array<Pathname>
-      files_to_delete = []
+      unchanged_paths
+        .filter { |file| deletable?(dir, file, except, only) }
+        .each { |file| dir.join(file).delete }
+    end
 
-      unchanged_paths.each do |path|
-        if only.empty? || only.any? {|pattern| File.fnmatch(pattern, path.to_s, File::FNM_DOTMATCH) }
-          if except.none? {|pattern| File.fnmatch(pattern, path.to_s, File::FNM_DOTMATCH) }
-            file = dir + path
-            if file.file?
-              files_to_delete << dir + path
-              yield(dir + path) if block_given?
-            end
-          end
+    def deletable?(dir, file, except, only)
+      if only.empty? || only.any? { |pattern| file.fnmatch?(pattern, File::FNM_DOTMATCH) }
+        if except.none? { |pattern| file.fnmatch?(pattern, File::FNM_DOTMATCH) }
+          return dir.join(file).file?
         end
       end
 
-      FileUtils.rm(files_to_delete.map(&:to_s))
+      false
     end
 
     def include?(issue)
