@@ -4,55 +4,35 @@ module Runners
 
     Schema = StrongJSON.new do
 
-      def self.array_or?(type)
-        array = array(type)
-        enum?(type, array, detector: -> (value) {
-          case value
-          when Array
-            array
-          else
-            type
-          end
-        })
-      end
-
-      def self.array_or(type)
-        array = array(type)
-
-        enum(type, array, detector: -> (value) {
-          case value
-          when Array
-            array
-          else
-            type
-          end
-        })
-      end
+      let :report_ids, enum(
+        literal("xml"),
+        literal("txt"),
+        literal("html")
+      )
 
       let :cli_config, object(
-        auto_correct: boolean?,
-        baseline_path: string?,
+        baseline: string?,
         classpath: array?(string),
         config: array?(string),
-        config_resource: array?(string),
-        disable_default_rulesets: boolean?,
+        "config-resource": array?(string),
+        "disable-default-rulesets": boolean?,
         excludes: array?(string),
         includes: array?(string),
         input: array?(string),
-        language_version: number?,
-        jvm_target: number?,
-        plugins: array?(string),
-        report_id: string?,
-        report_path: string?
+        "language-version": number?
       )
 
       let :gradle_config, object(
         task: string,
-        report_id: string?,
-        report_path: string?
+        report_id: report_ids,
+        report_path: string
       )
 
-      let :maven_config, boolean
+      let :maven_config, object(
+        phase: string,
+        report_id: report_ids,
+        report_path: string
+      )
 
       let :cli, Schema::RunnerConfig.base.update_fields {|hash| hash[:cli] = cli_config}
       let :gradle, Schema::RunnerConfig.base.update_fields {|hash| hash[:gradle] = gradle_config}
@@ -74,6 +54,10 @@ module Runners
           end
         }
       )
+    end
+
+    def self.ci_config_section_name
+      'detekt'
     end
 
     def analyzer_name
@@ -113,17 +97,11 @@ module Runners
         when gradle_config
           extract_detekt_version_for_gradle || unknown_version
         when maven_config
-          extract_detekt_version_for_maven(current_dir) || unknown_version
-        when cli_config
+          extract_detekt_version_for_maven || unknown_version
+        else
           pom_dir = Pathname(ENV['RUNNER_USER_HOME']) / analyzer_name
           extract_detekt_version_for_maven(pom_dir) || unknown_version
-        else
-          unknown_version
         end
-    end
-
-    def self.ci_config_section_name
-      'detekt'
     end
 
     def detekt_config
@@ -142,127 +120,44 @@ module Runners
       detekt_config[:maven]
     end
 
-    def reporter
-      ["xml", "txt", "html"]
-    end
-
     def run_cli
-      args = []
-
-      if cli_config[:auto_correct]
-        args.push("--auto-correct")
-      end
-
-      unless cli_config[:baseline_path].nil?
-        args = check_user_file_exists(
-          [cli_config[:baseline_path]],
-          "baseline",
-          args
-        )
-      end
-
-      unless cli_config[:classpath].empty?
-        args = check_user_file_exists(
-          cli_config[:classpath],
-          "classpath",
-          args
-        )
-      end
-
-      unless cli_config[:config].empty?
-        args = check_user_file_exists(
-          cli_config[:config],
-          "config",
-          args
-        )
-      end
-
-      unless cli_config[:config_resource].empty?
-        args = check_user_file_exists(
-          cli_config[:config_resource],
-          "config_resource",
-          args
-        )
-      end
-
-      if cli_config[:disable_default_rulesets]
-        args.push("--disable-default-rulesets")
-      end
-
-      unless cli_config[:excludes].empty?
-        args.push("--excludes", cli_config[:excludes].join(","))
-      end
-
-      unless cli_config[:includes].empty?
-        args.push("--includes", cli_config[:includes].join(","))
-      end
-
-      unless cli_config[:input].empty?
-        args = check_user_file_exists(
-          cli_config[:input],
-          "input",
-          args
-        )
-      end
-
-      unless cli_config[:language_version].nil?
-        args.push("--language-version", cli_config[:language_version].to_s)
-      end
-
-      unless cli_config[:jvm_target].nil?
-        args.push("--jvm-target", cli_config[:jvm_target].to_s)
-      end
-
-      unless cli_config[:plugins].empty?
-        args.push("--plugins", cli_config[:plugins].join(","))
-      end
-
-      report_id = cli_config[:report_id]
-      unless reporter.include?(report_id)
-        report_id = "xml"
-      end
-      report_path = cli_config[:report_path]
-      output_file_path = current_dir / report_path
-      args.push("--report", "#{report_id}:#{output_file_path.to_path}")
+      report_id = "xml"
+      report_path = "detekt-report.xml"
+      
+      args = [
+        cli_baseline,
+        cli_classpath,
+        cli_config_files,
+        cli_config_resource,
+        cli_disable_default_rulesets,
+        cli_excludes,
+        cli_input,
+        cli_language_version,
+        cli_report(report_id, report_path)
+      ].flatten.compact
 
       capture3(analyzer_bin, *args)
-
-      if output_file_path.exist?
-        trace_writer.message "Reading output from #{report_path}..."
-        output = output_file_path.read
-      else
-        msg = "#{report_path} does not exist. Unexpected error occurred, processing cannot continue."
-        trace_writer.error msg
-        raise msg
-      end
-
-      switch_constructor(report_id, output)
+      construct_result(report_id, report_path)
     end
 
     def run_gradle
-      stdout, = capture3("./gradlew", gradle_option_quiet, gradle_config[:task])
-
-      construct_result(gradle_config[:report_id], gradle_config[:report_path], stdout)
+      capture3("./gradlew", "--quiet", gradle_config[:task])
+      construct_result( 
+        gradle_config[:report_id],
+        gradle_config[:report_path]
+      )
     end
 
     def run_maven
-      report_id, report_path, phase = check_maven_config()
       mvn_options = %w[--quiet --batch-mode -Dmaven.test.skip=true -Dmaven.main.skip=true]
-      stdout, = capture3("mvn", phase, *mvn_options)
-
-      construct_result(report_id, report_path, stdout)
+      capture3("mvn", maven_config[:phase], *mvn_options)
+      construct_result(
+        maven_config[:report_id],
+        maven_config[:report_path]
+      )
     end
 
-    def construct_result(report_id, report_path, stdout)
-      if report_id.nil? || report_path.nil?
-        trace_writer.message "'report' option was not supplied. Create a report using standard output."
-        return construct_plain_result(stdout, true)
-      end
-
-      unless reporter.include?(report_id)
-        raise_err_unknown_report_id
-      end
-
+    def construct_result(report_id, report_path)
       output_file_path = current_dir / report_path
       if output_file_path.exist?
         trace_writer.message "Reading output from #{report_path}..."
@@ -276,16 +171,14 @@ module Runners
       switch_constructor(report_id, output)
     end
 
-    def switch_constructor(reporter, output)
-      case reporter
+    def switch_constructor(report_id, output)
+      case report_id
       when "html"
         construct_html_result(output)
       when "xml"
         construct_checkstyle_result(output)
       when "txt"
         construct_plain_result(output)
-      else
-        raise_err_unknown_report_id
       end
     end
 
@@ -349,26 +242,16 @@ module Runners
       issues
     end
 
-    def construct_plain_result(output, is_stdout = false)
+    def construct_plain_result(output)
       issues = []
 
       regexp = /(.*) at (.*):(.*):(.*) - (.*)/
-      if is_stdout
-        regexp = /.*\t(.*) at (.*):(.*):(.*)/
-      end
 
       output.lines(chomp: true).map do |line|
         match = line.match(regexp)
 
         unless match.nil?
-          rule, file, start_line, col, message = match.captures
-
-          if message.nil?
-            pn = Pathname.new(file)
-            path = pn.relative_path_from(current_dir).to_path
-            message = rule + " at " + path + ":" + start_line + ":" + col
-          end
-
+          rule, file, start_line, _, message = match.captures
           issues << construct_issue(
             file: file,
             line: start_line,
@@ -390,10 +273,80 @@ module Runners
       )
     end
 
-    def check_user_file_exists(paths, option_name, args)
-      ret = args.dup
-      exists = []
+    def cli_baseline
+      unless cli_config[:baseline].nil?
+        return check_user_file_exists(
+          [cli_config[:baseline]],
+          "baseline"
+        )
+      end
+    end
 
+    def cli_classpath
+      unless cli_config[:classpath].empty?
+        return check_user_file_exists(
+          cli_config[:classpath],
+          "classpath"
+        )
+      end
+    end
+
+    def cli_config_files
+      unless cli_config[:config].empty?
+        return check_user_file_exists(
+          cli_config[:config],
+          "config"
+        )
+      end
+    end
+
+    def cli_config_resource
+      unless cli_config[:"config-resource"].empty?
+        return check_user_file_exists(
+          cli_config[:"config-resource"],
+          "config-resource"
+        )
+      end
+    end
+
+    def cli_disable_default_rulesets
+      "--disable-default-rulesets" if cli_config[:"disable-default-rulesets"]
+    end
+
+    def cli_excludes
+      unless cli_config[:excludes].empty?
+        return "--excludes", cli_config[:excludes].join(",")
+      end
+    end
+
+    def cli_includes
+      unless cli_config[:includes].empty?
+        return "--includes", cli_config[:includes].join(",")
+      end
+    end
+
+    def cli_input
+      unless cli_config[:input].empty?
+        return check_user_file_exists(
+          cli_config[:input],
+          "input"
+        )
+      end
+    end
+
+    def cli_language_version
+      unless cli_config[:"language-version"].nil?
+        return "--language-version", cli_config[:"language-version"].to_s
+      end
+    end
+
+    def cli_report(report_id, report_path)
+      output_file_path = current_dir / report_path
+      return "--report", "#{report_id}:#{output_file_path.to_path}"
+    end
+
+    def check_user_file_exists(paths, option_name)
+      exists = []
       paths.each do |a_path|
         path = current_dir / a_path
         if path.exist?
@@ -402,65 +355,13 @@ module Runners
       end
 
       unless exists.empty?
-        ret.push("--#{option_name}", exists.join(","))
+        return "--#{option_name}", exists.join(",")
       else
-        msg = "Given '#{option_name}' does not exist. Run without adding '--#{option_name}' option."
-        trace_writer.error msg
+        msg = "Given '#{option_name}' path does not exist. Run without adding '--#{option_name}' option."
+        trace_writer.message msg
+
+        return nil
       end
-
-      return ret
-    end
-
-    # read Detekt setting from 'pom.xml'
-    # 
-    # @return report_id [String] "xml", "txt", "html" or nil
-    # @return report_path [String] "path/to/detekt_report" or nil
-    # @return phase [String] <phase>verify</phase>.text
-    # 
-    # @raise 'pom.xml' does not exist
-    # @raise 'execution/id[text()=detekt]' block undefined
-    # @raise 'execution/phase' undefined
-    # 
-    def check_maven_config()
-      report_id = nil
-      report_path = nil
-      phase = nil
-
-      pom_file = current_dir / "pom.xml"
-      unless pom_file.exist?
-        msg = "'pom.xml' does not exist. Processing cannot continue."
-        trace_writer.error msg
-        raise msg
-      end
-      
-      pom = REXML::Document.new(pom_file.read)
-      fds = pom.get_elements(
-        "//project/build/plugins/plugin/executions/execution/id[text()='detekt']"
-      ).first
-      if fds.nil?
-        msg = "'execution/id[text()=detekt]' block undefined on 'pom.xml'. Processing cannot continue."
-        trace_writer.error msg
-        raise msg
-      else
-        detekt_setting = fds.parent
-
-        if detekt_setting.elements["phase"].nil?
-          msg = "'execution/phase' undefined on 'pom.xml'. Processing cannot continue."
-          trace_writer.error msg
-          raise msg
-        else
-          phase = detekt_setting.elements["phase"].text
-        end
-
-        fdsp = detekt_setting.get_elements("//configuration/target/java/arg[@value='--report']").first
-        unless fdsp.nil?
-          dom_setting_report = fdsp.next_element.attribute("value").to_s.split(/:/)
-          report_path = dom_setting_report[1]
-          report_id = dom_setting_report[0]
-        end
-      end
-
-      return report_id, report_path, phase
     end
 
     def check_runner_config(config)
@@ -470,35 +371,34 @@ module Runners
           {
             gradle: {
               task: config[:gradle][:task],
-              report_id: config[:gradle][:report_id] || nil,
-              report_path: config[:gradle][:report_path] || nil
+              report_id: config[:gradle][:report_id],
+              report_path: config[:gradle][:report_path]
             }
           }
         )
       when config[:maven]
         yield(
           {
-            maven: config[:maven]
+            maven: {
+              phase: config[:maven][:phase],
+              report_id: config[:maven][:report_id],
+              report_path: config[:maven][:report_path]
+            }
           }
         )
       when config[:cli]
         yield(
           {
             cli: {
-              auto_correct: config[:cli][:auto_correct] || false,
-              baseline_path: config[:cli][:baseline_path],
+              baseline: config[:cli][:baseline],
               classpath: Array(config[:cli][:classpath]) || [],
               config: Array(config[:cli][:config]) || [],
-              config_resource: config[:cli][:config_resource] || [],
-              disable_default_rulesets: config[:cli][:disable_default_rulesets] || false,
+              "config-resource": config[:cli][:config_resource] || [],
+              "disable-default-rulesets": config[:cli][:disable_default_rulesets] || false,
               excludes: Array(config[:cli][:excludes]) || [],
               includes: Array(config[:cli][:includes]) || [],
               input: Array(config[:cli][:input]) || [],
-              language_version: config[:cli][:language_version],
-              jvm_target: config[:cli][:jvm_target],
-              plugins: Array(config[:cli][:plugins]) || [],
-              report_id: config[:cli][:report_id] || "xml",
-              report_path: config[:cli][:report_path] || "detekt_cli_report.xml"
+              "language-version": config[:cli][:language_version]
             }
           }
         )
@@ -506,20 +406,15 @@ module Runners
         yield(
           {
             cli: {
-              auto_correct: false,
-              baseline_path: nil,
+              baseline: nil,
               classpath: [],
               config: [],
-              config_resource: [],
-              disable_default_rulesets: false,
+              "config-resource": [],
+              "disable-default-rulesets": false,
               excludes: [],
               includes: [],
               input: [],
-              language_version: nil,
-              jvm_target: nil,
-              plugins: [],
-              report_id: "xml",
-              report_path: "detekt_cli_report.xml"
+              "language-version": nil
             }
           }
         )
@@ -527,7 +422,7 @@ module Runners
     end
 
     def extract_detekt_version_for_gradle
-      stdout, = capture3!("./gradlew", gradle_option_quiet, "dependencies")
+      stdout, = capture3!("./gradlew", "--quiet", "dependencies")
       stdout.each_line do |line|
         line.match(/io\.gitlab\.arturbosch\.detekt:detekt-cli:([\d\.]+)/) do |match|
           return match.captures.first
@@ -535,7 +430,7 @@ module Runners
       end
     end
 
-    def extract_detekt_version_for_maven(pom_dir)
+    def extract_detekt_version_for_maven(pom_dir = current_dir)
       pom_file = pom_dir / "pom.xml"
       return unless pom_file.exist?
 
@@ -548,16 +443,6 @@ module Runners
           return dependency.elements["version"].text
         end
       end
-    end
-
-    def raise_err_unknown_report_id
-      msg = "Unknown 'report type' was supplied. Processing cannot continue."
-      trace_writer.error msg
-      raise msg
-    end
-
-    def gradle_option_quiet
-      "--quiet"
     end
 
   end

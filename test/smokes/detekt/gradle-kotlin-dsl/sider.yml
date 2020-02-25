@@ -2,4 +2,6 @@ linter:
   detekt:
     gradle:
       task: detekt
+      report_id: html
+      report_path: build/reports/detekt.html
 

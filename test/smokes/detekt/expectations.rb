@@ -264,37 +264,37 @@ Smoke.add_test(
     analyzer: { name: "detekt", version: "1.5.1" },
     issues: [
       {
-        id: "EmptyClassBlock - [FilteredClass]",
+        id: "EmptyClassBlock",
         path: "src/FilteredClass.kt",
         location: { start_line: 2 },
-        message: "EmptyClassBlock - [FilteredClass] at src/FilteredClass.kt:2:21",
+        message: "The class or object FilteredClass is empty.",
         links: [],
         object: nil,
         git_blame_info: nil
       },
       {
-        id: "ForEachOnRange - [complex]",
+        id: "ForEachOnRange",
         path: "src/ComplexClass.kt",
         location: { start_line: 44 },
-        message: "ForEachOnRange - [complex] at src/ComplexClass.kt:44:21",
+        message: "Using the forEach method on ranges has a heavy performance cost. Prefer using simple for loops.",
         links: [],
         object: nil,
         git_blame_info: nil
       },
       {
-        id: "FunctionOnlyReturningConstant - [get]",
+        id: "FunctionOnlyReturningConstant",
         path: "src/App.kt",
         location: { start_line: 8 },
-        message: "FunctionOnlyReturningConstant - [get] at src/App.kt:8:3",
+        message: "get is returning a constant. Prefer declaring a constant instead.",
         links: [],
         object: nil,
         git_blame_info: nil
       },
       {
-        id: "NestedBlockDepth - 4/4 - [complex]",
+        id: "NestedBlockDepth",
         path: "src/ComplexClass.kt",
         location: { start_line: 9 },
-        message: "NestedBlockDepth - 4/4 - [complex] at src/ComplexClass.kt:9:13",
+        message: "Function complex is nested too deeply.",
         links: [],
         object: nil,
         git_blame_info: nil

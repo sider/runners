@@ -1,3 +1,6 @@
 linter:
   detekt:
-    maven: true
+    maven: 
+      phase: verify
+      report_id: html
+      report_path: reports/detekt.html
