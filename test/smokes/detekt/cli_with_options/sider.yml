@@ -2,8 +2,6 @@ linter:
   detekt:
     cli:
       baseline: "baseline.xml"
-      classpath: 
-        - "classpath/nothing/"
       config: 
         - "default-detekt-config.yml"
         - "default-detekt-config-nothing.yml"
@@ -16,4 +14,3 @@ linter:
       input: 
         - "src/"
       language-version: null
-      plugins: []

@@ -12,15 +12,13 @@ module Runners
 
       let :cli_config, object(
         baseline: string?,
-        classpath: array?(string),
         config: array?(string),
         "config-resource": array?(string),
         "disable-default-rulesets": boolean?,
         excludes: array?(string),
         includes: array?(string),
         input: array?(string),
-        "language-version": number?,
-        plugins: array?(string)
+        "language-version": number?
       )
 
       let :gradle_config, object(
@@ -127,14 +125,12 @@ module Runners
       
       args = [
         cli_baseline,
-        cli_classpath,
         cli_config_files,
         cli_config_resource,
         cli_disable_default_rulesets,
         cli_excludes,
         cli_input,
         cli_language_version,
-        cli_plugins,
         cli_report(report_id, report_path)
       ].flatten.compact
 
@@ -284,15 +280,6 @@ module Runners
       end
     end
 
-    def cli_classpath
-      unless cli_config[:classpath].empty?
-        return check_user_file_exists(
-          cli_config[:classpath],
-          "classpath"
-        )
-      end
-    end
-
     def cli_config_files
       unless cli_config[:config].empty?
         return check_user_file_exists(
@@ -339,12 +326,6 @@ module Runners
     def cli_language_version
       unless cli_config[:"language-version"].nil?
         return "--language-version", cli_config[:"language-version"].to_s
-      end
-    end
-
-    def cli_plugins
-      unless cli_config[:plugins].empty?
-        return "--plugins", cli_config[:plugins].join(",")
       end
     end
 
@@ -399,15 +380,13 @@ module Runners
           {
             cli: {
               baseline: config[:cli][:baseline],
-              classpath: Array(config[:cli][:classpath]) || [],
               config: Array(config[:cli][:config]) || [],
               "config-resource": config[:cli][:"config-resource"] || [],
               "disable-default-rulesets": config[:cli][:"disable-default-rulesets"] || false,
               excludes: Array(config[:cli][:excludes]) || [],
               includes: Array(config[:cli][:includes]) || [],
               input: Array(config[:cli][:input]) || [],
-              "language-version": config[:cli][:"language-version"],
-              plugins: Array(config[:cli][:plugins]) || []
+              "language-version": config[:cli][:"language-version"]
             }
           }
         )
@@ -416,15 +395,13 @@ module Runners
           {
             cli: {
               baseline: nil,
-              classpath: [],
               config: [],
               "config-resource": [],
               "disable-default-rulesets": false,
               excludes: [],
               includes: [],
               input: [],
-              "language-version": nil,
-              plugins: []
+              "language-version": nil
             }
           }
         )
