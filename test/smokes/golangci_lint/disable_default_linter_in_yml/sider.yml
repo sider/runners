@@ -1,0 +1,4 @@
+linter:
+  golangci-lint:
+    disable:
+      - gocyclo

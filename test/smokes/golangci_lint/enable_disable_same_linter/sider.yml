@@ -1,0 +1,6 @@
+linter:
+  golangci-lint:
+    disable:
+      - unused
+    enable:
+      - unused

@@ -3,30 +3,6 @@ module Runners
     include Java
 
     Schema = StrongJSON.new do
-      def self.array_or?(type)
-        array = array(type)
-        enum?(type, array, detector: -> (value) {
-          case value
-          when Array
-            array
-          else
-            type
-          end
-        })
-      end
-
-      def self.array_or(type)
-        array = array(type)
-        enum(type, array, detector: -> (value) {
-          case value
-          when Array
-            array
-          else
-            type
-          end
-        })
-      end
-
       let :reporter, enum(literal("json"), literal("plain"), literal("checkstyle"))
 
       let :gradle_config, object(
@@ -36,9 +12,9 @@ module Runners
       )
 
       let :cli_config, object(
-        patterns: array_or?(string),
-        ruleset: array_or?(string),
-        disabled_rules: array_or?(string),
+        patterns: enum?(string, array(string)),
+        ruleset: enum?(string, array(string)),
+        disabled_rules: enum?(string, array(string)),
         experimental: boolean?
       )
 

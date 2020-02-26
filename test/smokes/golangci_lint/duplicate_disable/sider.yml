@@ -1,0 +1,7 @@
+linter:
+  golangci-lint:
+    disable-all: true
+    disable:
+      - gofmt
+    enable:
+      - govet

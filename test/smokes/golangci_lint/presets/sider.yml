@@ -1,0 +1,6 @@
+linter:
+  golangci-lint:
+    presets:
+      - "format"
+    disable:
+      - "goimports"

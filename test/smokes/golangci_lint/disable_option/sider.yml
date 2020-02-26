@@ -1,0 +1,8 @@
+linter:
+  golangci-lint:
+    disable:
+      - unused
+      - deadcode
+      - govet
+      - staticcheck
+      - errcheck
