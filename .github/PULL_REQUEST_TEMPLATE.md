@@ -1,7 +1,11 @@
-<!-- (Optional) Write closing issue ID(s). E.g. "Fix #12345". If no relevant issues, remove the section. -->
-Fix #<issue_id>
+<!-- (Required) Describe a summary, purpose(s), or background, etc. for this change. -->
 
-<!-- (Optional) If you are adding a new runner, please check the following to-do list: -->
+<!-- (Optional) Add closing issue ID(s). If no relevant issues, remove this section. -->
+
+Fix #<ISSUE_ID>
+Fix #<ISSUE_ID>
+
+<!-- (Optional) If you are adding a new runner, check the following to-do list. Otherwise, remove this section. -->
 
 - [ ] Read and follow the [document](https://github.com/sider/runners/blob/master/docs/how-to-write-a-new-runner.md) for a new runner.
 - [ ] Provide option(s) that users can customize.
