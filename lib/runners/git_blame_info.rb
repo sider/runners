@@ -1,5 +1,6 @@
 module Runners
-  GitBlameInfo = Struct.new(:commit, :original_line, :final_line, :line_hash, keyword_init: true) do
+  # @type var _: untyped
+  GitBlameInfo = _ = Struct.new(:commit, :original_line, :final_line, :line_hash, keyword_init: true) do
     # @param porelain_output [String] The output of git-blame(1) with -p option
     # @see https://www.git-scm.com/docs/git-blame#_the_porcelain_format
     def self.parse(porelain_output)

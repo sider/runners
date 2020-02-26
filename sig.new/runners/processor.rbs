@@ -1,3 +1,7 @@
+interface Runners::_Processor
+  def show_runtime_versions: () -> void
+end
+
 class Runners::Processor
   attr_reader guid: untyped
 

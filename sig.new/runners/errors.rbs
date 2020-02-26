@@ -1,8 +1,8 @@
 class Runners::Error < StandardError
 end
 
-class Runners::UserError < Error
+class Runners::UserError < Runners::Error
 end
 
-class Runners::SystemError < Error
+class Runners::SystemError < Runners::Error
 end
