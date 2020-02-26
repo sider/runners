@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - [FxCop] New support [#731](https://github.com/sider/runners/pull/731)
 - Aggregate log entries by `delete_unchanged_files` method [#765](https://github.com/sider/runners/pull/765)
 - [RuboCop] Use `--out=FILE` option [#769](https://github.com/sider/runners/pull/769)
+- [go-vet][Golint][Go Meta Linter] Add deprecated warning [#767](https://github.com/sider/runners/pull/767)
 
 ## 0.20.0
 
