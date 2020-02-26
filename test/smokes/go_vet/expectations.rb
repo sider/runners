@@ -21,12 +21,11 @@ Smoke.add_test(
   },
   warnings: [
     {
-      message: <<~MSG
+      message: <<~MSG.strip,
         DEPRECATION WARNING!!!
         The support for go_vet is deprecated. Sider will drop these versions on March 31, 2020.
-        Please consider to use an alternative tool GolangCi-Lint.
-MSG
-        .strip,
+        Please consider using an alternative tool GolangCi-Lint.
+      MSG
       file: "sider.yml"
     }
   ]

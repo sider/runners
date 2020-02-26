@@ -7,12 +7,11 @@ Smoke.add_test(
   },
   warnings: [
     {
-      message: <<~MSG
+      message: <<~MSG.strip,
           DEPRECATION WARNING!!!
           The support for gometalinter is deprecated. Sider will drop these versions on March 31, 2020.
-          Please consider to use an alternative tool GolangCi-Lint.
-    MSG
-        .strip,
+          Please consider using an alternative tool GolangCi-Lint.
+      MSG
       file: "sider.yml"
     }
   ]
@@ -39,12 +38,11 @@ Smoke.add_test(
   },
   warnings: [
     {
-      message: <<~MSG
+      message: <<~MSG.strip,
           DEPRECATION WARNING!!!
           The support for gometalinter is deprecated. Sider will drop these versions on March 31, 2020.
-          Please consider to use an alternative tool GolangCi-Lint.
-    MSG
-        .strip,
+          Please consider using an alternative tool GolangCi-Lint.
+      MSG
       file: "sideci.yml"
     }
   ]
@@ -71,12 +69,11 @@ Smoke.add_test(
   },
   warnings: [
     {
-      message: <<~MSG
+      message: <<~MSG.strip,
           DEPRECATION WARNING!!!
           The support for gometalinter is deprecated. Sider will drop these versions on March 31, 2020.
-          Please consider to use an alternative tool GolangCi-Lint.
-    MSG
-        .strip,
+          Please consider using an alternative tool GolangCi-Lint.
+      MSG
       file: "sideci.yml"
     }
   ]
@@ -140,12 +137,11 @@ Smoke.add_test(
   },
   warnings: [
     {
-      message: <<~MSG
+      message: <<~MSG.strip,
         DEPRECATION WARNING!!!
         The support for gometalinter is deprecated. Sider will drop these versions on March 31, 2020.
-        Please consider to use an alternative tool GolangCi-Lint.
-  MSG
-        .strip,
+        Please consider using an alternative tool GolangCi-Lint.
+      MSG
       file: "sideci.yml"
     }
   ]
@@ -159,12 +155,11 @@ Smoke.add_test(
   warnings: [
     { message: "`install_path` option is deprecated. Use `import_path` instead.", file: "sideci.yml" },
     {
-      message: <<~MSG
+      message: <<~MSG.strip,
         DEPRECATION WARNING!!!
         The support for gometalinter is deprecated. Sider will drop these versions on March 31, 2020.
-        Please consider to use an alternative tool GolangCi-Lint.
-  MSG
-        .strip,
+        Please consider using an alternative tool GolangCi-Lint.
+      MSG
       file: "sideci.yml"
     }
   ]
@@ -177,12 +172,11 @@ Smoke.add_test(
   },
   warnings: [
     {
-      message: <<~MSG
+      message: <<~MSG.strip,
           DEPRECATION WARNING!!!
           The support for gometalinter is deprecated. Sider will drop these versions on March 31, 2020.
-          Please consider to use an alternative tool GolangCi-Lint.
-    MSG
-        .strip,
+          Please consider using an alternative tool GolangCi-Lint.
+      MSG
       file: "sideci.yml"
     }
   ]
@@ -195,12 +189,11 @@ Smoke.add_test(
   },
   warnings: [
     {
-      message: <<~MSG
+      message: <<~MSG.strip,
           DEPRECATION WARNING!!!
           The support for gometalinter is deprecated. Sider will drop these versions on March 31, 2020.
-          Please consider to use an alternative tool GolangCi-Lint.
-    MSG
-        .strip,
+          Please consider using an alternative tool GolangCi-Lint.
+      MSG
       file: "sideci.yml"
     }
   ]
