@@ -19,7 +19,8 @@ module Runners
         excludes: array?(string),
         includes: array?(string),
         input: array?(string),
-        "language-version": number?
+        "language-version": number?,
+        plugins: array?(string)
       )
 
       let :gradle_config, object(
@@ -133,6 +134,7 @@ module Runners
         cli_excludes,
         cli_input,
         cli_language_version,
+        cli_plugins,
         cli_report(report_id, report_path)
       ].flatten.compact
 
@@ -340,6 +342,12 @@ module Runners
       end
     end
 
+    def cli_plugins
+      unless cli_config[:plugins].empty?
+        return "--plugins", cli_config[:plugins].join(",")
+      end
+    end
+
     def cli_report(report_id, report_path)
       output_file_path = current_dir / report_path
       return "--report", "#{report_id}:#{output_file_path.to_path}"
@@ -393,12 +401,13 @@ module Runners
               baseline: config[:cli][:baseline],
               classpath: Array(config[:cli][:classpath]) || [],
               config: Array(config[:cli][:config]) || [],
-              "config-resource": config[:cli][:config_resource] || [],
-              "disable-default-rulesets": config[:cli][:disable_default_rulesets] || false,
+              "config-resource": config[:cli][:"config-resource"] || [],
+              "disable-default-rulesets": config[:cli][:"disable-default-rulesets"] || false,
               excludes: Array(config[:cli][:excludes]) || [],
               includes: Array(config[:cli][:includes]) || [],
               input: Array(config[:cli][:input]) || [],
-              "language-version": config[:cli][:language_version]
+              "language-version": config[:cli][:"language-version"],
+              plugins: Array(config[:cli][:plugins]) || []
             }
           }
         )
@@ -414,7 +423,8 @@ module Runners
               excludes: [],
               includes: [],
               input: [],
-              "language-version": nil
+              "language-version": nil,
+              plugins: []
             }
           }
         )

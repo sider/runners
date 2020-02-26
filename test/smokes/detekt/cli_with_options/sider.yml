@@ -16,3 +16,4 @@ linter:
       input: 
         - "src/"
       language-version: null
+      plugins: []
