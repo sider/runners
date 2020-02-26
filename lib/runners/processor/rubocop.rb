@@ -200,7 +200,7 @@ module Runners
 
       # NOTE: `--out` option must be after `--format` option.
       #
-      # @see https://github.com/rubocop-hq/rubocop/blob/v0.80.0/manual/formatters.md
+      # @see https://docs.rubocop.org/en/stable/formatters
       options << "--format=json"
       options << "--out=#{output_file.path}"
 
