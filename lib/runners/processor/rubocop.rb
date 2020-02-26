@@ -117,7 +117,6 @@ module Runners
       opts = %w[
         --display-style-guide
         --cache=false
-        --format=json
         --no-display-cop-names
       ]
 
@@ -198,6 +197,11 @@ module Runners
 
     def run_analyzer(options)
       output_file = Tempfile.new("rubocop-")
+
+      # NOTE: `--out` option must be after `--format` option.
+      #
+      # @see https://github.com/rubocop-hq/rubocop/blob/v0.80.0/manual/formatters.md
+      options << "--format=json"
       options << "--out=#{output_file.path}"
 
       _, stderr, status = capture3(*ruby_analyzer_bin, *options)
