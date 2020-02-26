@@ -44,7 +44,7 @@ module Runners
           './...',
           '--deadline=1200s'
         )
-
+        add_warning_for_deprecated_linter(deadline: Time.new(2_020, 3, 31), alternative: "GolangCi-Lint")
         Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
           JSON.parse(stdout).each do |issue|
             loc = Location.new(

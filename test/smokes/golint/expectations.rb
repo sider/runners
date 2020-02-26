@@ -18,5 +18,16 @@ Smoke.add_test(
       }
     ],
     analyzer: { name: "golint", version: "3.0.0" }
-  }
+  },
+  warnings: [
+    {
+      message: <<~MSG
+        DEPRECATION WARNING!!!
+        The support for golint is deprecated. Sider will drop these versions on March 31, 2020.
+        Please consider to use an alternative tool GolangCi-Lint.
+  MSG
+        .strip,
+      file: "sider.yml"
+    }
+  ]
 )
