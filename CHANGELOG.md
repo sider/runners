@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Aggregate log entries by `delete_unchanged_files` method [#765](https://github.com/sider/runners/pull/765)
 - [RuboCop] Use `--out=FILE` option [#769](https://github.com/sider/runners/pull/769)
 - [go-vet][Golint][Go Meta Linter] Add deprecated warning [#767](https://github.com/sider/runners/pull/767)
+- [Goodcheck] Update goodcheck requirement from 2.4.5 to 2.5.0 [#775](https://github.com/sider/runners/pull/775)
 
 ## 0.20.0
 
