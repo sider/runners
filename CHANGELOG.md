@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 - [go-vet][Golint][Go Meta Linter] Add deprecated warning [#767](https://github.com/sider/runners/pull/767)
 - [Goodcheck] Update goodcheck requirement from 2.4.5 to 2.5.0 [#775](https://github.com/sider/runners/pull/775)
 - Add Runners::Config, which is responsible for sider.yml [#763](https://github.com/sider/runners/pull/763)
+- [hadolint] Exclude template files by default [#780](https://github.com/sider/runners/pull/780)
 
 ## 0.20.0
 

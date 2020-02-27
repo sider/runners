@@ -18,6 +18,7 @@ module Runners
     register_config_schema(name: :hadolint, schema: Schema.runner_config)
 
     DEFAULT_TARGET = "**/Dockerfile{,.*}".freeze
+    DEFAULT_TARGET_EXCLUDED = "*.{erb,txt}".freeze # Exclude templates
 
     def self.ci_config_section_name
       "hadolint"
@@ -57,7 +58,9 @@ module Runners
       if config[:target]
         Array(config[:target])
       else
-        Dir.glob(DEFAULT_TARGET, File::FNM_EXTGLOB, base: current_dir)
+        current_dir.glob(DEFAULT_TARGET, File::FNM_EXTGLOB)
+          .reject { |path| path.fnmatch?(DEFAULT_TARGET_EXCLUDED, File::FNM_EXTGLOB) }
+          .map { |path| relative_path(path).to_path }
       end
     end
 

@@ -88,6 +88,15 @@ Smoke.add_test(
       message: "Last USER should not be root",
       object: { severity: "warning" },
       git_blame_info: nil
+    },
+    {
+      id: "DL3002",
+      links: %w[https://github.com/hadolint/hadolint/wiki/DL3002],
+      path: "Dockerfile.production",
+      location: { start_line: 3 },
+      message: "Last USER should not be root",
+      object: { severity: "warning" },
+      git_blame_info: nil
     }
   ],
   analyzer: { name: "hadolint", version: "1.17.4" }
