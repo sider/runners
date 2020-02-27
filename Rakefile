@@ -49,7 +49,7 @@ namespace :dockerfile do
     }
 
     res = ERB.new(File.read(file), trim_mode: "<>").result_with_hash(locals)
-    "\n#{res.strip}\n"
+    "\n#{res.strip}\n" # Ensure to start with one newline and end with one newline
   end
 
   desc 'Generate Dockerfile from a template'
