@@ -18,9 +18,8 @@ module Runners
       @git_ssh_path = git_ssh_path
       @trace_writer = trace_writer
       @warnings = []
-      @config = config.tap do |c|
-        c.content&.tap { |content| trace_writer.ci_config(content, file: c.path_name) }
-      end
+      @config = config
+      trace_writer.ci_config(config.content, file: config.path_name) if config.path_exist?
 
       hash = {
         "RUBYOPT" => nil,

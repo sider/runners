@@ -25,6 +25,10 @@ module Runners
       path&.basename&.to_s || CONFIG_FILE_NAME
     end
 
+    def path_exist?
+      path
+    end
+
     def ignore
       Array(content&.fetch(:ignore))
     end
