@@ -1,3 +1,3 @@
 source 'https://rubygems.org'
 
-gem 'goodcheck', '2.4.5'
+gem 'goodcheck', '2.5.0'
