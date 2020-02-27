@@ -33,7 +33,7 @@ module Runners
     DEFAULT_TARGET = "./...".freeze
 
     def self.ci_config_section_name
-      "golangci-lint"
+      "golangci_lint"
     end
 
     def analyzer_name
