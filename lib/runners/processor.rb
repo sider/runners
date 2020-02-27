@@ -83,7 +83,7 @@ module Runners
     end
 
     def ci_section
-      Hash(config.content.dig(:linter, self.class.ci_config_section_name.to_sym))
+      config.content.dig(:linter, self.class.ci_config_section_name.to_sym) || {}
     end
 
     def ci_section_root_dir
