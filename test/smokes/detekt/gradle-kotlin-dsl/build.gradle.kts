@@ -12,7 +12,7 @@ plugins {
     // Apply the application plugin to add support for building a CLI application.
     application
     
-    id("io.gitlab.arturbosch.detekt").version("1.6.0")
+    id("io.gitlab.arturbosch.detekt").version("1.5.1")
 }
 
 repositories {
@@ -41,7 +41,7 @@ application {
 }
 
 detekt {
-    toolVersion = "1.6.0"                             // Version of the Detekt CLI that will be used. When unspecified the latest detekt version found will be used. Override to stay on the same version.
+    toolVersion = "1.5.1"                             // Version of the Detekt CLI that will be used. When unspecified the latest detekt version found will be used. Override to stay on the same version.
     input = files("src/")    // The directories where detekt looks for source files. Defaults to `files("src/main/java", "src/main/kotlin")`.
     parallel = false                                      // Builds the AST in parallel. Rules are always executed in parallel. Can lead to speedups in larger projects. `false` by default.
     config = files("default-detekt-config.yml")                  // Define the detekt configuration(s) you want to use. Defaults to the default detekt configuration.

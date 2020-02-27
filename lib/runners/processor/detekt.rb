@@ -32,10 +32,10 @@ module Runners
         report_path: string
       )
 
-      let :cli, Schema::RunnerConfig.base.update_fields {|hash| hash[:cli] = cli_config}
-      let :gradle, Schema::RunnerConfig.base.update_fields {|hash| hash[:gradle] = gradle_config}
-      let :maven, Schema::RunnerConfig.base.update_fields {|hash| hash[:maven] = maven_config }
-      let :base, Schema::RunnerConfig.base
+      let :cli, Schema::BaseConfig.base.update_fields {|hash| hash[:cli] = cli_config}
+      let :gradle, Schema::BaseConfig.base.update_fields {|hash| hash[:gradle] = gradle_config}
+      let :maven, Schema::BaseConfig.base.update_fields {|hash| hash[:maven] = maven_config }
+      let :base, Schema::BaseConfig.base
 
       let :runner_config, enum(
         cli, gradle, maven, base,
@@ -201,7 +201,7 @@ module Runners
 
       # NOTE: HTML that Detekt returns unable to parse..
       regexp_id = /<details id="(.*)" open=.*/
-      regexp_detail = /<li><span class="location">(.*):(.*):(.*)<\/span><span class="message">(.*)<\/span>/
+      regexp_detail = /<li><span class="location">(.*):(.*):(.*)<\/span>.*<span class="message">(.*)<\/span>/
 
       rule = nil
       output.lines(chomp: true).map do |line|

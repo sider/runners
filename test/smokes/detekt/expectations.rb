@@ -261,7 +261,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "detekt", version: "1.6.0" },
+    analyzer: { name: "detekt", version: "1.5.1" },
     issues: [
       {
         id: "EmptyClassBlock",
