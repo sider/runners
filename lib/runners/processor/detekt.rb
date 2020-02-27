@@ -6,8 +6,7 @@ module Runners
 
       let :report_ids, enum(
         literal("xml"),
-        literal("txt"),
-        literal("html")
+        literal("txt")
       )
 
       let :cli_config, object(
@@ -139,19 +138,17 @@ module Runners
 
       _stdout, stderr, status = capture3(analyzer_bin, *args)
 
-      # detekt will exit with one of the following exit codes:
-      # 0: detekt ran normally and maxIssues count was not reached in BuildFailureReport.
-      # 1: An unexpected error occurred
-      # 2: detekt ran normally and MaxIssues count was reached in BuildFailureReport.
-      # 3: Invalid detekt configuration file detected.
-      if status.exitstatus == 1
-        trace_writer.error stderr.strip
-        raise stderr.strip
-      elsif status.exitstatus == 3
-        return Results::Failure.new(guid: guid, message: stderr.strip, analyzer: analyzer)
+      # detekt has some exit codes.
+      # @see https://github.com/arturbosch/detekt/blob/1.6.0/docs/pages/gettingstarted/cli.md
+      case status.exitstatus
+      when 0, 2
+        construct_result(report_id, report_path)
+      when 3 # invalid configuration
+        Results::Failure.new(guid: guid, message: "Your detekt configuration is invalid", analyzer: analyzer)
       else
-        return construct_result(report_id, report_path)
-      end      
+        trace_writer.error stderr.strip
+        raise stderr
+      end
     end
 
     def run_gradle
@@ -187,44 +184,11 @@ module Runners
 
     def switch_constructor(report_id, output)
       case report_id
-      when "html"
-        construct_html_result(output)
       when "xml"
         construct_checkstyle_result(output)
       when "txt"
         construct_plain_result(output)
       end
-    end
-
-    def construct_html_result(output)
-      issues = []
-
-      # NOTE: HTML that Detekt returns unable to parse..
-      regexp_id = /<details id="(.*)" open=.*/
-      regexp_detail = /<li><span class="location">(.*):(.*):(.*)<\/span>.*<span class="message">(.*)<\/span>/
-
-      rule = nil
-      output.lines(chomp: true).map do |line|
-        
-        lrule = line.match(regexp_id)
-        unless lrule.nil?
-          rule, = lrule.captures
-          next
-        end
-
-        ldetail = line.match(regexp_detail)
-        unless ldetail.nil?
-          file, start_line, _col, message = ldetail.captures
-          issues << construct_issue(
-            file: file,
-            line: start_line,
-            message: message,
-            rule: rule,
-          )
-        end
-      end
-
-      issues
     end
 
     def construct_checkstyle_result(output)

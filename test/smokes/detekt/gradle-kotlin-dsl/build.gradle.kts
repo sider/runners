@@ -52,7 +52,7 @@ detekt {
     ignoreFailures = false                                // If set to `true` the build does not fail when the maxIssues count was reached. Defaults to `false`.
     reports {
         xml {
-            enabled = false                                // Enable/Disable XML report (default: true)
+            enabled = true                                // Enable/Disable XML report (default: true)
             destination = file("build/reports/detekt.xml")  // Path where XML report will be stored (default: `build/reports/detekt/detekt.xml`)
         }
         html {
