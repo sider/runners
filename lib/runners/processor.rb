@@ -167,9 +167,8 @@ module Runners
     end
 
     def add_warning_if_deprecated_options(keys, doc:)
-      deprecated_keys = ci_section.slice(*keys)
-        .select { |_key, value| value }
-        .map { |k, _v| "`" + build_field_reference_from_path("$.#{k}") + "`" }
+      deprecated_keys = ci_section.slice(*keys).compact.keys
+        .map { |k| "`" + build_field_reference_from_path("$.#{k}") + "`" }
 
       unless deprecated_keys.empty?
         add_warning <<~MSG.strip, file: config.path_name
