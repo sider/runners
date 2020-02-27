@@ -127,7 +127,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "failure",
-    message: "The value of the attribute `$.linter.phpmd.minimumpriority` is invalid.",
+    message: "The value of the attribute `$.linter.phpmd.minimumpriority` of `sideci.yml` is invalid.",
     analyzer: nil
   }
 )

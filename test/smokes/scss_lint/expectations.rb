@@ -135,7 +135,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "failure",
-    message: "The value of the attribute `$.linter.scss_lint.config` is invalid.",
+    message: "The value of the attribute `$.linter.scss_lint.config` of `sideci.yml` is invalid.",
     analyzer: nil
   }
 )

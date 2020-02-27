@@ -120,7 +120,7 @@ class ConfigTest < Minitest::Test
       exn = assert_raises Runners::Config::InvalidConfiguration do
         Runners::Config.new(path)
       end
-      assert_equal "The value of the attribute `$.linter` is invalid.", exn.message
+      assert_equal "The value of the attribute `$.linter` of `sider.yml` is invalid.", exn.message
       assert_equal yaml, exn.input_string
     end
   end

@@ -256,7 +256,7 @@ Smoke.add_test(
     timestamp: :_,
     type: "failure",
     analyzer: nil,
-    message: "The value of the attribute `$.linter.pmd_java.min_priority` is invalid."
+    message: "The value of the attribute `$.linter.pmd_java.min_priority` of `sideci.yml` is invalid."
   }
 )
 

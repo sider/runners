@@ -82,7 +82,7 @@ Smoke.add_test(
     timestamp: :_,
     type: "failure",
     analyzer: nil,
-    message: "The value of the attribute `$.linter.jshint.config` is invalid."
+    message: "The value of the attribute `$.linter.jshint.config` of `sideci.yml` is invalid."
   }
 )
 

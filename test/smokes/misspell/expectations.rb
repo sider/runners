@@ -241,7 +241,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "failure",
-    message: "The value of the attribute `$.linter.misspell.locale` is invalid.",
+    message: "The value of the attribute `$.linter.misspell.locale` of `sideci.yml` is invalid.",
     analyzer: nil
   }
 )
