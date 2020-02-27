@@ -1,5 +1,5 @@
 linter:
-  golangci-lint:
+  golangci_lint:
     skip-dirs:
       - src/external_libs
 
