@@ -2,9 +2,7 @@ linter:
   detekt:
     cli:
       baseline: "baseline.xml"
-      config: 
-        - "default-detekt-config.yml"
-        - "default-detekt-config-nothing.yml"
+      config: "default-detekt-config.yml"
       config-resource: []
       disable-default-rulesets: false
       excludes: 
@@ -13,4 +11,3 @@ linter:
       includes: []
       input: 
         - "src/"
-      language-version: null

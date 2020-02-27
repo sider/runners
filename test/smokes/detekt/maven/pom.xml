@@ -136,10 +136,7 @@
               <target name="detekt">
                 <java taskname="detekt"
                   dir="${basedir}"
-                  fork="true" 
-                  failonerror="true"
-                  classname="io.gitlab.arturbosch.detekt.cli.Main"
-                  classpathref="maven.plugin.classpath">
+                  classname="io.gitlab.arturbosch.detekt.cli.Main">
                   <arg value="--input"/>
                   <arg value="${basedir}/src"/>
                   <arg value="--excludes"/>
@@ -158,7 +155,7 @@
           <dependency>
             <groupId>io.gitlab.arturbosch.detekt</groupId>
             <artifactId>detekt-cli</artifactId>
-            <version>1.5.1</version>
+            <version>1.6.0</version>
           </dependency>
         </dependencies>
       </plugin>

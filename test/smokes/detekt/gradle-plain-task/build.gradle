@@ -31,5 +31,5 @@ task detekt(type: JavaExec) {
 }
 
 dependencies {
-	detekt 'io.gitlab.arturbosch.detekt:detekt-cli:1.5.1'
+	detekt 'io.gitlab.arturbosch.detekt:detekt-cli:1.6.0'
 }

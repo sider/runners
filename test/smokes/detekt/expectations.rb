@@ -6,10 +6,10 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "detekt", version: "1.5.1" },
+    analyzer: { name: "detekt", version: "1.6.0" },
     issues: [
       {
-        id: "detekt.EmptyClassBlock",
+        id: "EmptyClassBlock",
         path: "src/FilteredClass.kt",
         location: { start_line: 2 },
         message: "The class or object FilteredClass is empty.",
@@ -18,7 +18,7 @@ Smoke.add_test(
         git_blame_info: nil
       },
       {
-        id: "detekt.ForEachOnRange",
+        id: "ForEachOnRange",
         path: "src/ComplexClass.kt",
         location: { start_line: 44 },
         message: "Using the forEach method on ranges has a heavy performance cost. Prefer using simple for loops.",
@@ -27,7 +27,7 @@ Smoke.add_test(
         git_blame_info: nil
       },
       {
-        id: "detekt.FunctionOnlyReturningConstant",
+        id: "FunctionOnlyReturningConstant",
         path: "src/App.kt",
         location: { start_line: 8 },
         message: "get is returning a constant. Prefer declaring a constant instead.",
@@ -36,7 +36,7 @@ Smoke.add_test(
         git_blame_info: nil
       },
       {
-        id: "detekt.MagicNumber",
+        id: "MagicNumber",
         path: "src/ComplexClass.kt",
         location: { start_line: 44 },
         message: "This expression contains a magic number. Consider defining it to a well named constant.",
@@ -45,7 +45,7 @@ Smoke.add_test(
         git_blame_info: nil
       },
       {
-        id: "detekt.MagicNumber",
+        id: "MagicNumber",
         path: "src/ComplexClass.kt",
         location: { start_line: 48 },
         message: "This expression contains a magic number. Consider defining it to a well named constant.",
@@ -54,7 +54,7 @@ Smoke.add_test(
         git_blame_info: nil
       },
       {
-        id: "detekt.NestedBlockDepth",
+        id: "NestedBlockDepth",
         path: "src/ComplexClass.kt",
         location: { start_line: 9 },
         message: "Function complex is nested too deeply.",
@@ -63,7 +63,7 @@ Smoke.add_test(
         git_blame_info: nil
       },
       {
-        id: "detekt.TooGenericExceptionCaught",
+        id: "TooGenericExceptionCaught",
         path: "src/ComplexClass.kt",
         location: { start_line: 19 },
         message: "Caught exception is too generic. Prefer catching specific exceptions to the case that is currently handled.",
@@ -72,7 +72,7 @@ Smoke.add_test(
         git_blame_info: nil
       },
       {
-        id: "detekt.TooGenericExceptionCaught",
+        id: "TooGenericExceptionCaught",
         path: "src/ComplexClass.kt",
         location: { start_line: 22 },
         message: "Caught exception is too generic. Prefer catching specific exceptions to the case that is currently handled.",
@@ -81,7 +81,7 @@ Smoke.add_test(
         git_blame_info: nil
       },
       {
-        id: "detekt.TooGenericExceptionCaught",
+        id: "TooGenericExceptionCaught",
         path: "src/ComplexClass.kt",
         location: { start_line: 34 },
         message: "Caught exception is too generic. Prefer catching specific exceptions to the case that is currently handled.",
@@ -99,10 +99,10 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "detekt", version: "1.5.1" },
+    analyzer: { name: "detekt", version: "1.6.0" },
     issues: [
       {
-        id: "detekt.EmptyClassBlock",
+        id: "EmptyClassBlock",
         path: "src/FilteredClass.kt",
         location: { start_line: 2 },
         message: "The class or object FilteredClass is empty.",
@@ -111,7 +111,7 @@ Smoke.add_test(
         git_blame_info: nil
       },
       {
-        id: "detekt.ForEachOnRange",
+        id: "ForEachOnRange",
         path: "src/ComplexClass.kt",
         location: { start_line: 44 },
         message: "Using the forEach method on ranges has a heavy performance cost. Prefer using simple for loops.",
@@ -120,7 +120,7 @@ Smoke.add_test(
         git_blame_info: nil
       },
       {
-        id: "detekt.FunctionOnlyReturningConstant",
+        id: "FunctionOnlyReturningConstant",
         path: "src/App.kt",
         location: { start_line: 8 },
         message: "get is returning a constant. Prefer declaring a constant instead.",
@@ -129,7 +129,7 @@ Smoke.add_test(
         git_blame_info: nil
       },
       {
-        id: "detekt.NestedBlockDepth",
+        id: "NestedBlockDepth",
         path: "src/ComplexClass.kt",
         location: { start_line: 9 },
         message: "Function complex is nested too deeply.",
@@ -147,10 +147,10 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "detekt", version: "1.5.1" },
+    analyzer: { name: "detekt", version: "1.6.0" },
     issues: [
       {
-        id: "detekt.EmptyClassBlock",
+        id: "EmptyClassBlock",
         path: "src/FilteredClass.kt",
         location: { start_line: 2 },
         message: "The class or object FilteredClass is empty.",
@@ -159,7 +159,7 @@ Smoke.add_test(
         git_blame_info: nil
       },
       {
-        id: "detekt.ForEachOnRange",
+        id: "ForEachOnRange",
         path: "src/ComplexClass.kt",
         location: { start_line: 44 },
         message: "Using the forEach method on ranges has a heavy performance cost. Prefer using simple for loops.",
@@ -168,7 +168,7 @@ Smoke.add_test(
         git_blame_info: nil
       },
       {
-        id: "detekt.FunctionOnlyReturningConstant",
+        id: "FunctionOnlyReturningConstant",
         path: "src/App.kt",
         location: { start_line: 8 },
         message: "get is returning a constant. Prefer declaring a constant instead.",
@@ -177,7 +177,7 @@ Smoke.add_test(
         git_blame_info: nil
       },
       {
-        id: "detekt.MagicNumber",
+        id: "MagicNumber",
         path: "src/ComplexClass.kt",
         location: { start_line: 44 },
         message: "This expression contains a magic number. Consider defining it to a well named constant.",
@@ -186,7 +186,7 @@ Smoke.add_test(
         git_blame_info: nil
       },
       {
-        id: "detekt.MagicNumber",
+        id: "MagicNumber",
         path: "src/ComplexClass.kt",
         location: { start_line: 48 },
         message: "This expression contains a magic number. Consider defining it to a well named constant.",
@@ -195,7 +195,7 @@ Smoke.add_test(
         git_blame_info: nil
       },
       {
-        id: "detekt.NestedBlockDepth",
+        id: "NestedBlockDepth",
         path: "src/ComplexClass.kt",
         location: { start_line: 9 },
         message: "Function complex is nested too deeply.",
@@ -213,10 +213,10 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "detekt", version: "1.5.1" },
+    analyzer: { name: "detekt", version: "1.6.0" },
     issues: [
       {
-        id: "EmptyClassBlock - [FilteredClass]",
+        id: "EmptyClassBlock",
         path: "src/FilteredClass.kt",
         location: { start_line: 2 },
         message: "Signature=FilteredClass.kt$FilteredClass${ }",
@@ -225,7 +225,7 @@ Smoke.add_test(
         git_blame_info: nil
       },
       {
-        id: "ForEachOnRange - [complex]",
+        id: "ForEachOnRange",
         path: "src/ComplexClass.kt",
         location: { start_line: 44 },
         message: "Signature=ComplexClass.kt$ComplexClass.NestedClass$forEach { //1 println() }",
@@ -234,7 +234,7 @@ Smoke.add_test(
         git_blame_info: nil
       },
       {
-        id: "FunctionOnlyReturningConstant - [get]",
+        id: "FunctionOnlyReturningConstant",
         path: "src/App.kt",
         location: { start_line: 8 },
         message: "Signature=App.kt$App$fun get()",
@@ -243,7 +243,7 @@ Smoke.add_test(
         git_blame_info: nil
       },
       {
-        id: "NestedBlockDepth - 4/4 - [complex]",
+        id: "NestedBlockDepth",
         path: "src/ComplexClass.kt",
         location: { start_line: 9 },
         message: "Signature=ComplexClass.kt$ComplexClass.NestedClass$complex",
@@ -261,7 +261,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "detekt", version: "1.5.1" },
+    analyzer: { name: "detekt", version: "1.6.0" },
     issues: [
       {
         id: "EmptyClassBlock",
@@ -309,7 +309,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "detekt", version: "1.5.1" },
+    analyzer: { name: "detekt", version: "1.6.0" },
     issues: [
       {
         id: "EmptyClassBlock",

@@ -12,13 +12,12 @@ module Runners
 
       let :cli_config, object(
         baseline: string?,
-        config: array?(string),
-        "config-resource": array?(string),
+        config: enum?(string, array(string)),
+        "config-resource": enum?(string, array(string)),
         "disable-default-rulesets": boolean?,
-        excludes: array?(string),
-        includes: array?(string),
-        input: array?(string),
-        "language-version": number?
+        excludes: enum?(string, array(string)),
+        includes: enum?(string, array(string)),
+        input: enum?(string, array(string)),
       )
 
       let :gradle_config, object(
@@ -28,7 +27,7 @@ module Runners
       )
 
       let :maven_config, object(
-        phase: string,
+        goal: string,
         report_id: report_ids,
         report_path: string
       )
@@ -70,17 +69,22 @@ module Runners
         check_runner_config(config) do |checked_config|
           @detekt_config = checked_config
 
-          issues = case
-                   when gradle_config
-                     run_gradle
-                   when maven_config
-                     run_maven
-                   else
-                     run_cli
-                   end
+          response = 
+            case
+            when gradle_config
+              run_gradle
+            when maven_config
+              run_maven
+            else
+              run_cli
+            end
 
+          if response.kind_of?(Results::Failure)
+            return response
+          end
+          
           Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-            issues.each do |issue|
+            response.each do |issue|
               result.add_issue issue
             end
           end
@@ -121,7 +125,7 @@ module Runners
 
     def run_cli
       report_id = "xml"
-      report_path = "detekt-report.xml"
+      report_path = Tempfile.new("detekt-report")
       
       args = [
         cli_baseline,
@@ -130,12 +134,24 @@ module Runners
         cli_disable_default_rulesets,
         cli_excludes,
         cli_input,
-        cli_language_version,
-        cli_report(report_id, report_path)
+        cli_report(report_id, report_path.path)
       ].flatten.compact
 
-      capture3(analyzer_bin, *args)
-      construct_result(report_id, report_path)
+      _stdout, stderr, status = capture3(analyzer_bin, *args)
+
+      # detekt will exit with one of the following exit codes:
+      # 0: detekt ran normally and maxIssues count was not reached in BuildFailureReport.
+      # 1: An unexpected error occurred
+      # 2: detekt ran normally and MaxIssues count was reached in BuildFailureReport.
+      # 3: Invalid detekt configuration file detected.
+      if status.exitstatus == 1
+        trace_writer.error stderr.strip
+        raise stderr.strip
+      elsif status.exitstatus == 3
+        return Results::Failure.new(guid: guid, message: stderr.strip, analyzer: analyzer)
+      else
+        return construct_result(report_id, report_path)
+      end      
     end
 
     def run_gradle
@@ -148,7 +164,7 @@ module Runners
 
     def run_maven
       mvn_options = %w[--quiet --batch-mode -Dmaven.test.skip=true -Dmaven.main.skip=true]
-      capture3("mvn", maven_config[:phase], *mvn_options)
+      capture3("mvn", maven_config[:goal], *mvn_options)
       construct_result(
         maven_config[:report_id],
         maven_config[:report_path]
@@ -185,8 +201,8 @@ module Runners
 
       # NOTE: HTML that Detekt returns unable to parse..
       regexp_id = /<details id="(.*)" open=.*/
-      regexp_detail = /<li><span class="location">(.*):(.*):(.*)<\/span><br><span class="message">(.*)<\/span>/
-      
+      regexp_detail = /<li><span class="location">(.*):(.*):(.*)<\/span><span class="message">(.*)<\/span>/
+
       rule = nil
       output.lines(chomp: true).map do |line|
         
@@ -225,11 +241,14 @@ module Runners
         file.each_element do |error|
           case error.name
           when "error"
+            regexp = /.*\.(.*)/
+            rule, = error[:source].match(regexp).captures
+
             issues << construct_issue(
               file: file[:name],
               line: error[:line],
               message: error[:message],
-              rule: error[:source],
+              rule: rule,
             )
           else
             add_warning error.text.strip, file: file[:name]
@@ -243,10 +262,14 @@ module Runners
     def construct_plain_result(output)
       issues = []
 
-      regexp = /(.*) at (.*):(.*):(.*) - (.*)/
-
+      regexp_a = /(.*) - .* - .* at (.*):(.*):(.*) - (.*)/
+      regexp_b = /(.*) - .* at (.*):(.*):(.*) - (.*)/
+      
       output.lines(chomp: true).map do |line|
-        match = line.match(regexp)
+        match = line.match(regexp_a)
+        if match.nil?
+          match = line.match(regexp_b)
+        end
 
         unless match.nil?
           rule, file, start_line, _, message = match.captures
@@ -272,30 +295,15 @@ module Runners
     end
 
     def cli_baseline
-      unless cli_config[:baseline].nil?
-        return check_user_file_exists(
-          [cli_config[:baseline]],
-          "baseline"
-        )
-      end
+      cli_config[:baseline].then { |value| value ? ["--baseline", value] : [] }
     end
 
     def cli_config_files
-      unless cli_config[:config].empty?
-        return check_user_file_exists(
-          cli_config[:config],
-          "config"
-        )
-      end
+      cli_config[:config].then { |value| value.present? ? ["--config", value.join(",")] : [] }      
     end
 
     def cli_config_resource
-      unless cli_config[:"config-resource"].empty?
-        return check_user_file_exists(
-          cli_config[:"config-resource"],
-          "config-resource"
-        )
-      end
+      cli_config[:"config-resource"].then { |value| value.present? ? ["--config-resource", value.join(",")] : [] }
     end
 
     def cli_disable_default_rulesets
@@ -303,54 +311,19 @@ module Runners
     end
 
     def cli_excludes
-      unless cli_config[:excludes].empty?
-        return "--excludes", cli_config[:excludes].join(",")
-      end
+      cli_config[:excludes].then { |value| value.present? ? ["--excludes", value.join(",")] : [] }
     end
 
     def cli_includes
-      unless cli_config[:includes].empty?
-        return "--includes", cli_config[:includes].join(",")
-      end
+      cli_config[:includes].then { |value| value.present? ? ["--includes", value.join(",")] : [] }
     end
 
     def cli_input
-      unless cli_config[:input].empty?
-        return check_user_file_exists(
-          cli_config[:input],
-          "input"
-        )
-      end
-    end
-
-    def cli_language_version
-      unless cli_config[:"language-version"].nil?
-        return "--language-version", cli_config[:"language-version"].to_s
-      end
+      cli_config[:input].then { |value| value.present? ? ["--input", value.join(",")] : [] }
     end
 
     def cli_report(report_id, report_path)
-      output_file_path = current_dir / report_path
-      return "--report", "#{report_id}:#{output_file_path.to_path}"
-    end
-
-    def check_user_file_exists(paths, option_name)
-      exists = []
-      paths.each do |a_path|
-        path = current_dir / a_path
-        if path.exist?
-          exists.push(a_path)
-        end
-      end
-
-      unless exists.empty?
-        return "--#{option_name}", exists.join(",")
-      else
-        msg = "Given '#{option_name}' path does not exist. Run without adding '--#{option_name}' option."
-        trace_writer.message msg
-
-        return nil
-      end
+      ["--report", "#{report_id}:#{report_path}"]
     end
 
     def check_runner_config(config)
@@ -369,7 +342,7 @@ module Runners
         yield(
           {
             maven: {
-              phase: config[:maven][:phase],
+              goal: config[:maven][:goal],
               report_id: config[:maven][:report_id],
               report_path: config[:maven][:report_path]
             }
@@ -385,8 +358,7 @@ module Runners
               "disable-default-rulesets": config[:cli][:"disable-default-rulesets"] || false,
               excludes: Array(config[:cli][:excludes]) || [],
               includes: Array(config[:cli][:includes]) || [],
-              input: Array(config[:cli][:input]) || [],
-              "language-version": config[:cli][:"language-version"]
+              input: Array(config[:cli][:input]) || []
             }
           }
         )
@@ -400,8 +372,7 @@ module Runners
               "disable-default-rulesets": false,
               excludes: [],
               includes: [],
-              input: [],
-              "language-version": nil
+              input: []
             }
           }
         )

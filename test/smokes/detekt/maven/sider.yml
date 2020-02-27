@@ -1,6 +1,6 @@
 linter:
   detekt:
     maven: 
-      phase: verify
+      goal: antrun:run@detekt
       report_id: html
       report_path: reports/detekt.html
