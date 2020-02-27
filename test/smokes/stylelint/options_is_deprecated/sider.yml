@@ -1,0 +1,4 @@
+linter:
+  stylelint:
+    options:
+      quiet: true

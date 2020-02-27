@@ -115,14 +115,13 @@ module Runners
     def import_path
       return @import_path if defined? @import_path
 
-      @import_path = ci_section['import_path']
+      @import_path = ci_section[:import_path]
       return @import_path if @import_path
 
-      @import_path = ci_section['install_path'].tap do |install_path|
+      @import_path = ci_section[:install_path].tap do |install_path|
         if install_path
           msg = '`install_path` option is deprecated. Use `import_path` instead.'
-          file = relative_path(ci_config_path).to_s
-          add_warning(msg, file: file)
+          add_warning(msg, file: config.path_name)
         end
       end
     end
@@ -153,16 +152,17 @@ module Runners
     end
 
     def additional_options
-      options = ci_section['options'] || {}
-      options['config'] ||= (Pathname(Dir.home) / 'gometalinter.json').realpath
+      options = ci_section[:options] || {}
+      options[:config] ||= (Pathname(Dir.home) / 'gometalinter.json').realpath
       options.map do |k, v|
+        next unless v
         case k
-        when 'exclude', 'include', 'skip', 'cyclo-over', 'min-confidence', 'dupl-threshold', 'severity', 'config'
+        when :exclude, :include, :skip, :'cyclo-over', :'min-confidence', :'dupl-threshold', :severity, :config
           "--#{k}=#{v}"
-        when 'vendor', 'tests', 'errors', 'disable-all', 'fast'
+        when :vendor, :tests, :errors, :'disable-all', :fast
           next unless !!v
           "--#{k}"
-        when 'disable', 'enable'
+        when :disable, :enable
           linter_tool_options(k, Array(v))
         else
           nil
@@ -173,7 +173,7 @@ module Runners
     def linter_tool_options(key, tools)
       tools.map do |tool|
         case tool
-        when 'test', 'testify'
+        when :test, :testify
           # NOTE: Prevent testing
           next
         else

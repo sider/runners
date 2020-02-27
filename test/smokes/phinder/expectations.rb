@@ -126,7 +126,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "failure",
-    message: "Invalid configuration in `sideci.yml`: unknown attribute at config: `$.linter.phinder`",
+    message: "The attribute `$.linter.phinder.format` of `sideci.yml` cannot exist.",
     analyzer: nil
   }
 )

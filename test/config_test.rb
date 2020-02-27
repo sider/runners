@@ -64,7 +64,7 @@ class ConfigTest < Minitest::Test
           flake8: nil,
           fxcop: nil,
           go_vet: nil,
-          golangci_lint: nil,
+          'golangci-lint': nil,
           golint: nil,
           gometalinter: nil,
           goodcheck: nil,

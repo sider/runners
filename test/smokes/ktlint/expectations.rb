@@ -166,6 +166,6 @@ Smoke.add_test(
     timestamp: :_,
     type: "failure",
     analyzer: nil,
-    message: "Invalid configuration in `sider.yml`: unknown attribute at config: `$.linter.ktlint`"
+    message: "The attribute `$.linter.ktlint.gradle` of `sider.yml` cannot exist."
   }
 )

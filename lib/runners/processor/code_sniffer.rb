@@ -41,8 +41,8 @@ module Runners
     end
 
     def analyze(changes)
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        check_runner_config(config) do |options, target|
+      ensure_runner_config_schema(Schema.runner_config) do
+        check_runner_config do |options, target|
           run_analyzer(options, target)
         end
       end
@@ -50,13 +50,13 @@ module Runners
 
     private
 
-    def check_runner_config(config)
-      if config[:version].to_i == 2
-        add_warning("Sider has no longer supported PHP_CodeSniffer v2. Sider executes v3 even if putting `2` as `version` option.", file: ci_config_path_name)
+    def check_runner_config
+      if ci_section[:version].to_i == 2
+        add_warning("Sider has no longer supported PHP_CodeSniffer v2. Sider executes v3 even if putting `2` as `version` option.", file: config.path_name)
       end
 
-      options = additional_options(config)
-      target = directory(config)
+      options = additional_options(ci_section)
+      target = directory(ci_section)
 
       yield options, target
     end

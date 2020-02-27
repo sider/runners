@@ -1,9 +1,9 @@
 module Runners
-  class Ruby:: GemInstaller
+  class Ruby::GemInstaller
     module Source
       def self.create(gems_item)
-        source = gems_item["source"]
-        git = gems_item["git"]
+        source = gems_item[:source]
+        git = gems_item[:git]
 
         case
         when source.is_a?(String)
@@ -13,8 +13,8 @@ module Runners
         when git.is_a?(Hash)
           # @type var git: Ruby::git_source
           git = git
-          if git["repo"]
-            Git.new(git["repo"], ref: git["ref"], branch: git["branch"], tag: git["tag"])
+          if git[:repo]
+            Git.new(git[:repo], ref: git[:ref], branch: git[:branch], tag: git[:tag])
           else
             raise ArgumentError.new("Unexpected gem: #{gems_item.inspect}")
           end

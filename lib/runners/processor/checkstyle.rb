@@ -148,7 +148,7 @@ module Runners
     end
 
     def configuration
-      @configuration ||= ci_section.deep_symbolize_keys
+      @configuration ||= ci_section
     end
 
     def config_file

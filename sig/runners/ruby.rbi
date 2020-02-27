@@ -10,17 +10,17 @@ module Runners::Ruby : Processor
 end
 
 type Runners::Ruby::gems_item = {
-  "name" => String,
-  "version" => String?,
-  "source" => String?,
-  "git" => git_source?,
+  name: String,
+  version: String?,
+  source: String?,
+  git: git_source?,
 }
 
 type Runners::Ruby::git_source = {
-  "repo" => String,
-  "ref" => String?,
-  "branch" => String?,
-  "tag" => String?,
+  repo: String,
+  ref: String?,
+  branch: String?,
+  tag: String?,
 }
 
 Runners::Ruby::GemInstaller::DEFAULT_SOURCE: String
@@ -34,7 +34,7 @@ class Runners::Ruby::GemInstaller
 
   def initialize: (shell: Shell,
                    home: Pathname,
-                   ci_config_path_name: String,
+                   config_path_name: String,
                    specs: Array<Spec>,
                    constraints: Hash<String, Array<String>>,
                    trace_writer: TraceWriter) -> void

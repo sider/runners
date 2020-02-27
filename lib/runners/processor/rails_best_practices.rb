@@ -82,7 +82,7 @@ module Runners
       features = features(config)
       exclude = exclude(config)
       only = only(config)
-      config = config(config)
+      config = config_option(config)
 
       yield [vendor, spec, test, features, exclude, only, config].compact
     end
@@ -122,7 +122,7 @@ module Runners
       "--only=#{only}" if only
     end
 
-    def config(config)
+    def config_option(config)
       config = config[:config] || config.dig(:options, :config)
       "--config=#{config}" if config
     end

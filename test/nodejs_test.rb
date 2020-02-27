@@ -37,6 +37,7 @@ class NodejsTest < Minitest::Test
     processor_class.new(
       guid: SecureRandom.uuid,
       workspace: workspace,
+      config: config,
       git_ssh_path: nil,
       trace_writer: trace_writer,
     )

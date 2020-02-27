@@ -76,7 +76,7 @@ Smoke.add_test(
     timestamp: :_,
     type: "failure",
     analyzer: nil,
-    message: "Invalid configuration in `sideci.yml`: unknown attribute at config: `$.linter.code_sniffer`"
+    message: "The attribute `$.linter.code_sniffer.extension` of `sideci.yml` cannot exist."
   }
 )
 

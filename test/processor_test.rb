@@ -13,6 +13,24 @@ class ProcessorTest < Minitest::Test
     @trace_writer ||= TraceWriter.new(writer: [])
   end
 
+  def processor_class
+    @processor_class ||= Class.new(Runners::Processor) do
+      def self.ci_config_section_name
+        "eslint"
+      end
+    end
+  end
+
+  def new_processor(workspace:, git_ssh_path: nil, config_yaml: nil)
+    processor_class.new(
+      guid: SecureRandom.uuid,
+      workspace: workspace,
+      config: config(config_yaml),
+      git_ssh_path: git_ssh_path,
+      trace_writer: trace_writer,
+    )
+  end
+
   def test_capture3_env_setup
     with_workspace do |workspace|
       mock(Open3).capture3({"RUBYOPT" => nil, "GIT_SSH" => (workspace.working_dir / "id_rsa").to_s},
@@ -27,15 +45,14 @@ class ProcessorTest < Minitest::Test
         ["", "", status]
       end
 
-      processor = Processor.new(guid: SecureRandom.uuid, workspace: workspace, git_ssh_path: (workspace.working_dir / "id_rsa").to_s, trace_writer: trace_writer)
-
+      processor = new_processor(workspace: workspace, git_ssh_path: (workspace.working_dir / "id_rsa").to_s)
       processor.capture3_trace("ls")
     end
   end
 
   def test_capture3_success
     with_workspace do |workspace|
-      processor = Processor.new(guid: SecureRandom.uuid, workspace: workspace, git_ssh_path: nil, trace_writer: trace_writer)
+      processor = new_processor(workspace: workspace)
 
       stdout, stderr, status = processor.capture3 "/bin/echo", "1", "2", "3"
 
@@ -53,7 +70,7 @@ class ProcessorTest < Minitest::Test
 
   def test_capture3bang_failure
     with_workspace do |workspace|
-      processor = Processor.new(guid: SecureRandom.uuid, workspace: workspace, git_ssh_path: nil, trace_writer: trace_writer)
+      processor = new_processor(workspace: workspace)
 
       error = begin
         processor.capture3! "rmdir", "no such dir"
@@ -77,7 +94,7 @@ class ProcessorTest < Minitest::Test
 
   def test_capture3_with_retry
     with_workspace do |workspace|
-      processor = Processor.new(guid: SecureRandom.uuid, workspace: workspace, git_ssh_path: nil, trace_writer: trace_writer)
+      processor = new_processor(workspace: workspace)
 
       assert_raises(Shell::ExecError) do
         processor.capture3_with_retry! "rmdir", "no such dir"
@@ -96,7 +113,7 @@ class ProcessorTest < Minitest::Test
 
   def test_relative_path_from
     with_workspace do |workspace|
-      processor = Processor.new(guid: SecureRandom.uuid, workspace: workspace, git_ssh_path: nil, trace_writer: trace_writer)
+      processor = new_processor(workspace: workspace)
 
       # Returns relative path from working_dir
       assert_equal Pathname("foo/bar/baz"), processor.relative_path((workspace.working_dir / "foo/bar/baz").to_s)
@@ -110,138 +127,98 @@ class ProcessorTest < Minitest::Test
     end
   end
 
-  def test_sider_yml
-    klass = Class.new(Processor) do
-      def self.ci_config_section_name
-        "foo_tool"
-      end
-    end
-
+  def test_ci_section
     with_workspace do |workspace|
       # No sider.yml
-      processor = klass.new(guid: SecureRandom.uuid, workspace: workspace, git_ssh_path: nil, trace_writer: trace_writer)
-      assert_nil processor.ci_config
+      processor = new_processor(workspace: workspace)
 
       assert_equal({}, processor.ci_section)
-      assert_equal({ "hello" => "world" }, processor.ci_section({ "hello" => "world" }))
     end
 
     with_workspace do |workspace|
       # With an empty sider.yml
-      workspace.working_dir.join('sider.yml').write('')
-      processor = klass.new(guid: SecureRandom.uuid, workspace: workspace, git_ssh_path: nil, trace_writer: trace_writer)
-      assert_equal({}, processor.ci_config)
-
+      processor = new_processor(workspace: workspace, config_yaml: "")
       assert_equal({}, processor.ci_section)
     end
 
     with_workspace do |workspace|
       # With sider.yml
-      (workspace.working_dir / "sider.yml").write(YAML.dump({
-                                              "linter" => {
-                                                "foo_tool" => {
-                                                  "root_dir" => "app/bar",
-                                                  "options" => {
-                                                    "exclude" => ".git",
-                                                  },
-                                                }
-                                              }
-                                            }))
-
-      processor = klass.new(guid: SecureRandom.uuid, workspace: workspace, git_ssh_path: nil, trace_writer: trace_writer)
-      assert_instance_of Hash, processor.ci_config
+      processor = new_processor(workspace: workspace, config_yaml: <<~YAML)
+        linter:
+          eslint:
+            root_dir: app/bar
+            options:
+              ext: .ts
+      YAML
       assert_instance_of Hash, processor.ci_section
-      assert_equal({ "root_dir" => "app/bar", "options" => { "exclude" => ".git" } }, processor.ci_section)
-      assert_equal({ "root_dir" => "app/bar", "options" => { "exclude" => ".git" } }, processor.ci_section("root_dir" => "app/hoge"))
-      assert_equal({ "root_dir" => "app/bar", "glob" => "**/*.foo", "options" => { "exclude" => ".git" } }, processor.ci_section("glob" => "**/*.foo"))
-      assert_equal({ "root_dir" => "app/bar", "options" => { "exclude" => ".git", "ignore" => "node_modules" } }, processor.ci_section("options" => { "ignore" => "node_modules" }))
+      assert_equal(
+        {
+          root_dir: "app/bar",
+          npm_install: nil,
+          dir: nil,
+          ext: nil,
+          config: nil,
+          "ignore-path": nil,
+          "ignore-pattern": nil,
+          "no-ignore": nil,
+          global: nil,
+          quiet: nil,
+          options: {
+            npm_install: nil,
+            dir: nil,
+            ext: ".ts",
+            config: nil,
+            "ignore-path": nil,
+            "no-ignore": nil,
+            "ignore-pattern": nil,
+            global: nil,
+            quiet: nil,
+          },
+        },
+        processor.ci_section,
+      )
 
-      assert(trace_writer.writer.find{|hash| hash[:trace] == :ci_config && hash[:content] })
-      assert(processor.ci_config.is_a?(Hash))
-    end
-
-    with_workspace do |workspace|
-      # With sideci.yml
-      (workspace.working_dir / "sideci.yml").write(YAML.dump({
-                                              "linter" => {
-                                                "foo_tool" => {
-                                                  "root_dir" => "app"
-                                                }
-                                              }
-                                            }))
-      processor = klass.new(guid: SecureRandom.uuid, workspace: workspace, git_ssh_path: nil, trace_writer: trace_writer)
-      assert_equal({ "root_dir" => "app" }, processor.ci_section)
-    end
-
-    with_workspace do |workspace|
-      # With sider.yml and sideci.yml
-      (workspace.working_dir / "sider.yml").write(YAML.dump({
-                                              "linter" => {
-                                                "foo_tool" => {
-                                                  "root_dir" => "app"
-                                                }
-                                              }
-                                            }))
-      (workspace.working_dir / "sideci.yml").write(YAML.dump({
-                                              "linter" => {
-                                                "foo_tool" => {
-                                                  "root_dir" => "frontend"
-                                                }
-                                              }
-                                            }))
-      processor = klass.new(guid: SecureRandom.uuid, workspace: workspace, git_ssh_path: nil, trace_writer: trace_writer)
-      assert_equal({ "root_dir" => "app" }, processor.ci_section)
+      assert(trace_writer.writer.find { |hash| hash[:trace] == :ci_config && hash[:content] })
     end
   end
 
   def test_check_root_dir_exist
-    klass = Class.new(Processor) do
-      def self.ci_config_section_name
-        "foo_tool"
-      end
-    end
-
     with_workspace do |workspace|
-      (workspace.working_dir / "sider.yml").write(YAML.dump({ "linter" => { "foo_tool" => { "root_dir" => "path/to/unknown" } } }))
-
-      processor = klass.new(guid: SecureRandom.uuid, workspace: workspace, git_ssh_path: nil, trace_writer: trace_writer)
+      processor = new_processor(workspace: workspace, config_yaml: <<~YAML)
+        linter:
+          eslint:
+            root_dir: path/to/unknown
+      YAML
       result = processor.check_root_dir_exist
       assert_instance_of Runners::Results::Failure, result
-      assert_equal "`path/to/unknown` directory is not found! Please check `linter.foo_tool.root_dir` in your `sider.yml`", result.message
+      assert_equal "`path/to/unknown` directory is not found! Please check `linter.eslint.root_dir` in your `sider.yml`", result.message
       assert_nil result.analyzer
     end
   end
 
   def test_check_root_dir_exist_with_success
-    klass = Class.new(Processor) do
-      def self.ci_config_section_name
-        "foo_tool"
-      end
-    end
-
     with_workspace do |workspace|
-      (workspace.working_dir / "sider.yml").write(YAML.dump({ "linter" => { "foo_tool" => { "root_dir" => "abc" } } }))
       (workspace.working_dir / "abc").mkpath
 
-      processor = klass.new(guid: SecureRandom.uuid, workspace: workspace, git_ssh_path: nil, trace_writer: trace_writer)
+      processor = new_processor(workspace: workspace, config_yaml: <<~YAML)
+        linter:
+          eslint:
+            root_dir: abc
+      YAML
       assert_nil processor.check_root_dir_exist
     end
   end
 
   def test_push_root_dir_with_config
     # when root_dir is given, run is invoked within the dir
-
-    klass = Class.new(Processor) do
-      def self.ci_config_section_name
-        "foo_tool"
-      end
-    end
-
     with_workspace do |workspace|
-      (workspace.working_dir / "sider.yml").write(YAML.dump({ "linter" => { "foo_tool" => { "root_dir" => "app/bar" } } }))
       (workspace.working_dir / "app/bar").mkpath
 
-      processor = klass.new(guid: SecureRandom.uuid, workspace: workspace, git_ssh_path: nil, trace_writer: trace_writer)
+      processor = new_processor(workspace: workspace, config_yaml: <<~YAML)
+        linter:
+          eslint:
+            root_dir: app/bar
+      YAML
 
       run_path = nil
       processor.push_root_dir do
@@ -254,23 +231,15 @@ class ProcessorTest < Minitest::Test
 
   def test_push_root_dir_without_config
     # when root_dir is not given, run is invoked within the working_dir
-
-    klass = Class.new(Processor) do
-      def self.ci_config_section_name
-        "foo_tool"
-      end
-    end
-
     with_workspace do |workspace|
       (workspace.working_dir / "app/bar").mkpath
 
-      processor = klass.new(guid: SecureRandom.uuid, workspace: workspace, git_ssh_path: nil, trace_writer: trace_writer)
+      processor = new_processor(workspace: workspace)
 
       run_path = nil
       processor.push_root_dir do
         run_path = processor.current_dir
       end
-
 
       assert_equal workspace.working_dir, run_path
     end
@@ -278,7 +247,7 @@ class ProcessorTest < Minitest::Test
 
   def test_add_warning
     with_workspace do |workspace|
-      processor = Processor.new(guid: SecureRandom.uuid, workspace: workspace, git_ssh_path: nil, trace_writer: trace_writer)
+      processor = new_processor(workspace: workspace)
       processor.add_warning('piyopiyo')
       processor.add_warning('hogehogehoge', file: 'path/to/hogehoge.rb')
 
@@ -291,7 +260,7 @@ class ProcessorTest < Minitest::Test
 
   def test_add_warning_if_deprecated_version
     with_workspace do |workspace|
-      processor = Processor.new(guid: SecureRandom.uuid, workspace: workspace, git_ssh_path: nil, trace_writer: trace_writer)
+      processor = new_processor(workspace: workspace)
 
       stub(processor).analyzer_version { '1.0.0' }
 
@@ -318,7 +287,7 @@ class ProcessorTest < Minitest::Test
           { trace: :warning, message: expected_message.call("2.0.0"), file: "foo" },
           { trace: :warning, message: expected_message2.call("2.0.0"), file: nil },
         ],
-        trace_writer.writer.map { |hash| hash.slice(:trace, :message, :file) },
+        trace_writer.writer.map { |hash| hash.slice(:trace, :message, :file) }.select { |hash| hash[:trace] == :warning },
       )
       assert_equal(
         [
@@ -333,23 +302,26 @@ class ProcessorTest < Minitest::Test
 
   def test_add_warning_if_deprecated_options
     with_workspace do |workspace|
-      processor = Processor.new(guid: SecureRandom.uuid, workspace: workspace, git_ssh_path: nil, trace_writer: trace_writer)
+      processor = new_processor(workspace: workspace, config_yaml: <<~YAML)
+        linter:
+          eslint:
+            quiet: true
+            options:
+              ext: .ts
+      YAML
 
-      stub(processor.class).ci_config_section_name { "some" }
-      stub(processor).ci_section { { "foo" => 1, "bar" => 2, "key" => true } }
-
-      processor.add_warning_if_deprecated_options([:foo, :bar], doc: "https://foo/bar")
-      processor.add_warning_if_deprecated_options([:yes], doc: "https://foo/bar")
+      processor.add_warning_if_deprecated_options([:quiet, :options], doc: "https://foo/bar")
+      processor.add_warning_if_deprecated_options([:global], doc: "https://foo/bar")
 
       expected_message = <<~MSG.strip
         DEPRECATION WARNING!!!
-        The `$.linter.some.foo`, `$.linter.some.bar` option(s) in your `sider.yml` are deprecated and will be removed in the near future.
+        The `$.linter.eslint.quiet`, `$.linter.eslint.options` option(s) in your `sider.yml` are deprecated and will be removed in the near future.
         Please update to the new option(s) according to our documentation (see https://foo/bar ).
       MSG
 
       assert_equal(
         [{ trace: :warning, message: expected_message, file: "sider.yml" }],
-        trace_writer.writer.map { |hash| hash.slice(:trace, :message, :file) },
+        trace_writer.writer.map { |hash| hash.slice(:trace, :message, :file) }.select { |hash| hash[:trace] == :warning },
       )
       assert_equal(
         [{ message: expected_message, file: "sider.yml" }],
@@ -359,60 +331,35 @@ class ProcessorTest < Minitest::Test
   end
 
   def test_ensure_runner_config_schema_with_expected_fields
-    klass = Class.new(Processor) do
-      def self.ci_config_section_name
-        "foo_tool"
-      end
-    end
-
     with_workspace do |workspace|
-      (workspace.working_dir / "sider.yml").write(YAML.dump({ "linter" => { "foo_tool" => { "root_dir" => "app/bar" } } }))
-
-      processor = klass.new(guid: SecureRandom.uuid, workspace: workspace, git_ssh_path: nil, trace_writer: trace_writer)
-      config = processor.ensure_runner_config_schema(StrongJSON.new { let :config, object(root_dir: string?) }.config) { |c| c }
-      assert_equal({ root_dir: "app/bar" }, config)
-    end
-  end
-
-  def test_ensure_runner_config_schema_with_unexpected_fields
-    klass = Class.new(Processor) do
-      def self.ci_config_section_name
-        "foo_tool"
-      end
-    end
-
-    with_workspace do |workspace|
-      (workspace.working_dir / "sider.yml").write(YAML.dump({ "linter" => { "foo_tool" => { "npm_install" => true } } }))
-
-      processor = klass.new(guid: SecureRandom.uuid, workspace: workspace, git_ssh_path: nil, trace_writer: trace_writer)
-      result = processor.ensure_runner_config_schema(StrongJSON.new { let :config, object(root_dir: string?) }.config) { |c| c }
-      assert_instance_of Runners::Results::Failure, result
-      assert_equal "Invalid configuration in `sider.yml`: unknown attribute at config: `$.linter.foo_tool`", result.message
-      assert_nil result.analyzer
-    end
-  end
-
-  def test_ensure_runner_config_schema_with_unexpected_type
-    klass = Class.new(Processor) do
-      def self.ci_config_section_name
-        "foo_tool"
-      end
-    end
-
-    with_workspace do |workspace|
-      (workspace.working_dir / "sider.yml").write(YAML.dump({ "linter" => { "foo_tool" => { "root_dir" => true } } }))
-
-      processor = klass.new(guid: SecureRandom.uuid, workspace: workspace, git_ssh_path: nil, trace_writer: trace_writer)
-      result = processor.ensure_runner_config_schema(StrongJSON.new { let :config, object(root_dir: string?) }.config) { |c| c }
-      assert_instance_of Runners::Results::Failure, result
-      assert_equal "Invalid configuration in `sider.yml`: unexpected value at config: `$.linter.foo_tool.root_dir`", result.message
-      assert_nil result.analyzer
+      processor = new_processor(workspace: workspace, config_yaml: <<~YAML)
+        linter:
+          eslint:
+            root_dir: app/bar
+      YAML
+      config = processor.ensure_runner_config_schema(Processor::Eslint::Schema.runner_config) { |c| c }
+      assert_equal(
+        {
+          root_dir: "app/bar",
+          npm_install: nil,
+          dir: nil,
+          ext: nil,
+          config: nil,
+          "ignore-path": nil,
+          "ignore-pattern": nil,
+          "no-ignore": nil,
+          global: nil,
+          quiet: nil,
+          options: nil,
+        },
+        config,
+      )
     end
   end
 
   def test_abort_capture3
     with_workspace do |workspace|
-      processor = Processor.new(guid: SecureRandom.uuid, workspace: workspace, git_ssh_path: nil, trace_writer: trace_writer)
+      processor = new_processor(workspace: workspace)
 
       # Simulate aborted status
       stub(Open3).capture3 do
@@ -445,7 +392,7 @@ class ProcessorTest < Minitest::Test
 
   def test_env_hash
     with_workspace do |workspace|
-      processor = Processor.new(guid: SecureRandom.uuid, workspace: workspace, git_ssh_path: nil, trace_writer: trace_writer)
+      processor = new_processor(workspace: workspace)
 
       assert_equal({ "RUBYOPT" => nil, "GIT_SSH" => nil }, processor.env_hash)
 
@@ -460,7 +407,7 @@ class ProcessorTest < Minitest::Test
 
   def test_directory_traversal_attack?
     with_workspace do |workspace|
-      processor = Processor.new(guid: SecureRandom.uuid, workspace: workspace, git_ssh_path: nil, trace_writer: trace_writer)
+      processor = new_processor(workspace: workspace)
 
       assert processor.directory_traversal_attack?("../../etc/passwd")
       assert processor.directory_traversal_attack?("config/../../../etc/passwd")
@@ -471,24 +418,24 @@ class ProcessorTest < Minitest::Test
 
   def test_analyzer_bin
     with_workspace do |workspace|
-      processor = Processor.new(guid: SecureRandom.uuid, workspace: workspace, git_ssh_path: nil, trace_writer: trace_writer)
+      processor = new_processor(workspace: workspace)
 
-      assert_equal "Runners::Processor", processor.analyzer_bin
+      assert_equal "eslint", processor.analyzer_bin
     end
   end
 
   def test_analyzer_version
     with_workspace do |workspace|
-      processor = Processor.new(guid: SecureRandom.uuid, workspace: workspace, git_ssh_path: nil, trace_writer: trace_writer)
+      processor = new_processor(workspace: workspace)
 
-      mock(processor).capture3!("Runners::Processor", "--version") { ["1.2.3", ""] }
+      mock(processor).capture3!("eslint", "--version") { ["1.2.3", ""] }
       assert_equal "1.2.3", processor.analyzer_version
     end
   end
 
   def test_extract_version!
     with_workspace do |workspace|
-      processor = Processor.new(guid: SecureRandom.uuid, workspace: workspace, git_ssh_path: nil, trace_writer: trace_writer)
+      processor = new_processor(workspace: workspace)
 
       # from stdout
       mock(processor).capture3!("foo", "--version") { ["Foo v10.20.1", ""] }

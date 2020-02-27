@@ -153,7 +153,7 @@ module Runners
       rescue Shell::ExecError
         message = <<~MSG.strip
           `npm #{subcommand}` failed. Please check the log for details.
-          If you want to explicitly disable the installation, please set `npm_install: #{INSTALL_OPTION_NONE}` on your `#{ci_config_path_name}`.
+          If you want to explicitly disable the installation, please set `npm_install: #{INSTALL_OPTION_NONE}` on your `#{config.path_name}`.
         MSG
         trace_writer.error message
         raise NpmInstallFailed, message
@@ -237,7 +237,7 @@ module Runners
       unless all_constraints_satisfied
         message = <<~MSG.strip
           Your `#{analyzer_bin}` settings could not satisfy the required constraints. Please check your `package.json` again.
-          If you want to analyze via the Sider default settings, please configure your `#{ci_config_path_name}`. For details, see the documentation.
+          If you want to analyze via the Sider default settings, please configure your `#{config.path_name}`. For details, see the documentation.
         MSG
         trace_writer.error message
         raise ConstraintsNotSatisfied, message

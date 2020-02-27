@@ -48,16 +48,6 @@ class CLITest < Minitest::Test
     end
   end
 
-  def sider_yml
-    {
-      linter: {
-        rubocop: {
-          config: 'myrubocop.yml'
-        }
-      }
-    }
-  end
-
   class TestProcessor < Runners::Processor
     def self.version
       "1.0.0"
@@ -80,7 +70,9 @@ class CLITest < Minitest::Test
   def test_run
     mktmpdir do |head_dir|
       with_runners_options_env(source: { head: head_dir }) do
-        head_dir.join('sider.yml').write(YAML.dump(sider_yml))
+        head_dir.join('sider.yml').write(<<~YAML)
+          ignore: 'special/files'
+        YAML
         cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr)
         cli.instance_variable_set(:@processor_class, TestProcessor)
         cli.run
@@ -95,7 +87,7 @@ class CLITest < Minitest::Test
         assert objects.find { |hash| hash[:trace] == 'status' && hash[:status] == 31 }
         assert objects.find { |hash| hash[:trace] == 'warning' && hash[:message] == 'hogehogewarn' }
         assert objects.find { |hash| hash[:warnings] == [{ message: 'hogehogewarn', file: nil }] }
-        assert objects.find { |hash| hash[:ci_config] == sider_yml }
+        assert objects.find { |hash| hash[:ci_config] == { linter: nil, ignore: "special/files", branches: nil } }
       end
     end
   end
