@@ -1,6 +1,6 @@
 # Copy the main source code
-COPY --chown=<%= ENV.fetch("RUNNER_CHOWN") %> bin ${RUNNERS_DIR}/bin
-COPY --chown=<%= ENV.fetch("RUNNER_CHOWN") %> lib ${RUNNERS_DIR}/lib
+COPY --chown=<%= chown %> bin ${RUNNERS_DIR}/bin
+COPY --chown=<%= chown %> lib ${RUNNERS_DIR}/lib
 
 ENV PATH ${RUNNERS_DIR}/bin:${PATH}
 

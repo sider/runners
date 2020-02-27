@@ -9,7 +9,7 @@ RUN cd ${RUNNER_USER_HOME} && \
     cd stylelint-config-recommended.old && \
     npm install stylelint-config-recommended@2
 
-COPY --chown=<%= ENV.fetch("RUNNER_CHOWN") %> \
+COPY --chown=<%= chown %> \
      images/stylelint/sider_recommended_config.old.yaml \
      images/stylelint/sider_recommended_config.yaml \
      images/stylelint/sider_recommended_stylelintignore \

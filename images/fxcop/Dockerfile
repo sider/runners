@@ -1,9 +1,10 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# NOTE: DO *NOT* EDIT THIS FILE.  IT IS GENERATED.
-# PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE
+# NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
+# PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM sider/devon_rex_dotnet:2.14.0
 ENV FXCOP_VERSION=2.9.8
+
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
@@ -25,6 +26,7 @@ RUN cd && \
     dotnet add package Microsoft.CodeAnalysis.FxCopAnalyzers --version ${FXCOP_VERSION} && \
     cd && \
     rm -rf dummy_project
+
 
 # Copy the main source code
 COPY --chown=analyzer_runner:nogroup bin ${RUNNERS_DIR}/bin

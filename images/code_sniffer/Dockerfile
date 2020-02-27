@@ -1,6 +1,6 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# NOTE: DO *NOT* EDIT THIS FILE.  IT IS GENERATED.
-# PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE
+# NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
+# PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM sider/devon_rex_php:2.14.0
 
@@ -15,6 +15,7 @@ RUN basepath=${COMPOSER_HOME}/vendor && \
       ${basepath}/cakephp/cakephp-codesniffer,${basepath}/escapestudios/symfony2-coding-standard,${basepath}/wp-coding-standards/wpcs && \
     phpcs -i
 
+
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
@@ -25,6 +26,7 @@ RUN cd ${RUNNERS_DIR} && \
     bundle config --local without development:test && \
     bundle config && \
     bundle install
+
 # Copy the main source code
 COPY --chown=analyzer_runner:nogroup bin ${RUNNERS_DIR}/bin
 COPY --chown=analyzer_runner:nogroup lib ${RUNNERS_DIR}/lib

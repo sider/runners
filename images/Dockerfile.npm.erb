@@ -1,6 +1,5 @@
-<% analyzer = ENV.fetch('ANALYZER') %>
 # Install the default version
-COPY --chown=<%= ENV.fetch("RUNNER_CHOWN") %> images/<%= analyzer %>/package.json ${RUNNER_USER_HOME}/<%= analyzer %>_package.json
+COPY --chown=<%= chown %> images/<%= analyzer %>/package.json ${RUNNER_USER_HOME}/<%= analyzer %>_package.json
 RUN cd ${RUNNER_USER_HOME} && \
     mkdir <%= analyzer %> && \
     mv <%= analyzer %>_package.json <%= analyzer %>/package.json && \

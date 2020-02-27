@@ -3,6 +3,6 @@ FROM sider/devon_rex_npm:2.14.0
 <%= render_erb 'images/Dockerfile.base.erb' %>
 <%= render_erb 'images/Dockerfile.npm.erb' %>
 
-COPY --chown=<%= ENV.fetch("RUNNER_CHOWN") %> images/jshint/sider_jshintignore images/jshint/sider_jshintrc $RUNNER_USER_HOME/
+COPY --chown=<%= chown %> images/jshint/sider_jshintignore images/jshint/sider_jshintrc $RUNNER_USER_HOME/
 
 <%= render_erb 'images/Dockerfile.end.erb' %>

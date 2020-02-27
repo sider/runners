@@ -1,8 +1,9 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# NOTE: DO *NOT* EDIT THIS FILE.  IT IS GENERATED.
-# PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE
+# NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
+# PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM sider/devon_rex_npm:2.14.0
+
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
@@ -35,6 +36,7 @@ ENV NODE_PATH ${RUNNER_USER_HOME}/eslint/node_modules:${NODE_PATH}
 COPY --chown=analyzer_runner:nogroup images/eslint/sider_eslintrc.yml ${RUNNER_USER_HOME}/.eslintrc.yml
 
 COPY --chown=analyzer_runner:nogroup images/eslint/custom-eslint-json-formatter.js ${RUNNER_USER_HOME}/
+
 
 # Copy the main source code
 COPY --chown=analyzer_runner:nogroup bin ${RUNNERS_DIR}/bin

@@ -3,11 +3,11 @@
 
 COPY images/pmd_java/pmd /usr/local/bin/
 
-COPY --chown=<%= ENV.fetch("RUNNER_CHOWN") %> images/pmd_java/default-ruleset.xml ${RUNNER_USER_HOME}/
+COPY --chown=<%= chown %> images/pmd_java/default-ruleset.xml ${RUNNER_USER_HOME}/
 
 # NOTE: PMD does not have a CLI option to show its version.
-COPY --chown=<%= ENV.fetch("RUNNER_CHOWN") %> images/pmd_java/ShowPMDVersion.java ${RUNNER_USER_HOME}/work/
-COPY --chown=<%= ENV.fetch("RUNNER_CHOWN") %> images/pmd_java/show_pmd_version ${RUNNER_USER_HOME}/work/
+COPY --chown=<%= chown %> images/pmd_java/ShowPMDVersion.java ${RUNNER_USER_HOME}/work/
+COPY --chown=<%= chown %> images/pmd_java/show_pmd_version ${RUNNER_USER_HOME}/work/
 ENV PATH ${RUNNER_USER_HOME}/work:${PATH}
 RUN cd "${RUNNER_USER_HOME}/work" && \
     javac ShowPMDVersion.java && \

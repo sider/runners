@@ -1,8 +1,9 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# NOTE: DO *NOT* EDIT THIS FILE.  IT IS GENERATED.
-# PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE
+# NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
+# PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM sider/devon_rex_python:2.14.0
+
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
@@ -33,6 +34,7 @@ RUN cd ${RUNNER_USER_HOME} && \
 
 COPY --chown=analyzer_runner:nogroup images/flake8/sider_config.ini ${RUNNER_USER_HOME}/.config/flake8
 COPY --chown=analyzer_runner:nogroup images/flake8/ignored-config.ini ${RUNNER_USER_HOME}/.config/ignored-config.ini
+
 
 # Copy the main source code
 COPY --chown=analyzer_runner:nogroup bin ${RUNNERS_DIR}/bin

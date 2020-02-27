@@ -3,6 +3,6 @@ FROM sider/devon_rex_ruby:2.14.0
 <%= render_erb 'images/Dockerfile.base.erb' %>
 <%= render_erb 'images/Dockerfile.ruby.erb' %>
 
-COPY --chown=<%= ENV.fetch("RUNNER_CHOWN") %> images/scss_lint/scss-lint.default.yml ${RUNNER_USER_HOME}/.scss-lint.yml
+COPY --chown=<%= chown %> images/scss_lint/scss-lint.default.yml ${RUNNER_USER_HOME}/.scss-lint.yml
 
 <%= render_erb 'images/Dockerfile.end.erb' %>

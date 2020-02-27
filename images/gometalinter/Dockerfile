@@ -1,6 +1,6 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# NOTE: DO *NOT* EDIT THIS FILE.  IT IS GENERATED.
-# PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE
+# NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
+# PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM sider/devon_rex_go:2.14.0
 
@@ -16,6 +16,7 @@ RUN curl -sSL --compressed https://github.com/alecthomas/gometalinter/releases/d
     rm -r gometalinter-${LINT_TOOL_VERSION}-linux-amd64/
 USER $RUNNER_USER
 
+
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
@@ -28,6 +29,7 @@ RUN cd ${RUNNERS_DIR} && \
     bundle install
 
 COPY --chown=analyzer_runner:nogroup images/gometalinter/gometalinter.json ${RUNNER_USER_HOME}/
+
 
 # Copy the main source code
 COPY --chown=analyzer_runner:nogroup bin ${RUNNERS_DIR}/bin

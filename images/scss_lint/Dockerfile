@@ -1,8 +1,9 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# NOTE: DO *NOT* EDIT THIS FILE.  IT IS GENERATED.
-# PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE
+# NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
+# PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM sider/devon_rex_ruby:2.14.0
+
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
@@ -28,6 +29,7 @@ RUN cd ${RUNNER_USER_HOME} && \
     gem list scss_lint
 
 COPY --chown=analyzer_runner:nogroup images/scss_lint/scss-lint.default.yml ${RUNNER_USER_HOME}/.scss-lint.yml
+
 
 # Copy the main source code
 COPY --chown=analyzer_runner:nogroup bin ${RUNNERS_DIR}/bin
