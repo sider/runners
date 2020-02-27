@@ -1,3 +1,7 @@
 linter:
   gometalinter:
     import_path: github.com/sideci/install_path_test
+    options:
+      disable: gofmt
+      enable:
+        - test

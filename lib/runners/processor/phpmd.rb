@@ -3,7 +3,7 @@ module Runners
     include PHP
 
     Schema = StrongJSON.new do
-      let :runner_config, Schema::RunnerConfig.base.update_fields { |fields|
+      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
                         target: enum?(string, array(string)),
                         rule: string?,
@@ -23,6 +23,8 @@ module Runners
                       })
       }
     end
+
+    register_config_schema(name: :phpmd, schema: Schema.runner_config)
 
     def self.ci_config_section_name
       "phpmd"

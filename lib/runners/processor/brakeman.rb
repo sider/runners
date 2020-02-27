@@ -3,8 +3,10 @@ module Runners
     include Ruby
 
     Schema = StrongJSON.new do
-      let :runner_config, Schema::RunnerConfig.ruby
+      let :runner_config, Schema::BaseConfig.ruby
     end
+
+    register_config_schema(name: :brakeman, schema: Schema.runner_config)
 
     CONSTRAINTS = {
       "brakeman" => [">= 4.0.0", "< 4.4.0"]

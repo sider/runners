@@ -1,7 +1,7 @@
 module Runners
   class Processor::Misspell < Processor
     Schema = StrongJSON.new do
-      let :runner_config, Schema::RunnerConfig.base.update_fields { |fields|
+      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
                         exclude: array?(string),
                         targets: array?(string),
@@ -15,6 +15,8 @@ module Runners
                       })
       }
     end
+
+    register_config_schema(name: :misspell, schema: Schema.runner_config)
 
     def self.ci_config_section_name
       'misspell'

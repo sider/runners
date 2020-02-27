@@ -173,4 +173,5 @@ end
 
 class YAML
   def self.load_file: (String, fallback: any) -> any
+  def self.safe_load: (String, symbolize_names: bool) -> any
 end

@@ -2,6 +2,34 @@ module Runners
   class Processor::Gometalinter < Processor
     include Go
 
+    Schema = StrongJSON.new do
+      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
+        fields.merge!(
+          import_path: string?,
+          install_path: string?,
+          options: object?(
+            config: string?,
+            exclude: string?,
+            include: string?,
+            skip: string?,
+            'cyclo-over': numeric?,
+            'min-confidence': numeric?,
+            'dupl-threshold': numeric?,
+            severity: string?,
+            vendor: boolean?,
+            tests: boolean?,
+            errors: boolean?,
+            'disable-all': boolean?,
+            fast: boolean?,
+            disable: enum?(string, array(string)),
+            enable: enum?(string, array(string)),
+          ),
+        )
+      }
+    end
+
+    register_config_schema(name: :gometalinter, schema: Schema.runner_config)
+
     def self.ci_config_section_name
       # Section name in sideci.yml, Generally it is the name of analyzer tool.
       "gometalinter"
@@ -30,6 +58,7 @@ module Runners
         end
       end
 
+      add_warning_for_deprecated_linter(alternative: "GolangCi-Lint", deadline: Time.new(2_020, 3, 31))
       yield
     end
 
@@ -44,7 +73,6 @@ module Runners
           './...',
           '--deadline=1200s'
         )
-
         Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
           JSON.parse(stdout).each do |issue|
             loc = Location.new(
@@ -135,7 +163,7 @@ module Runners
           next unless !!v
           "--#{k}"
         when 'disable', 'enable'
-          linter_tool_options(k, v)
+          linter_tool_options(k, Array(v))
         else
           nil
         end

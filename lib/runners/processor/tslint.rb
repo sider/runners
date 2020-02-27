@@ -3,7 +3,7 @@ module Runners
     include Nodejs
 
     Schema = StrongJSON.new do
-      let :runner_config, Schema::RunnerConfig.npm.update_fields { |fields|
+      let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
         fields.merge!({
                         glob: string?,
                         config: string?,
@@ -22,6 +22,8 @@ module Runners
                       })
       }
     end
+
+    register_config_schema(name: :tslint, schema: Schema.runner_config)
 
     DEFAULT_DEPS = DefaultDependencies.new(
       main: Dependency.new(name: "tslint", version: "6.0.0"),

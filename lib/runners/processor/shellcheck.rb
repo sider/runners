@@ -1,7 +1,7 @@
 module Runners
   class Processor::ShellCheck < Processor
     Schema = _ = StrongJSON.new do
-      let :runner_config, Schema::RunnerConfig.base.update_fields { |fields|
+      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         target_element = enum(string, object(shebang: boolean))
         fields.merge!(
           # Original options
@@ -31,6 +31,8 @@ module Runners
         ))),
       )
     end
+
+    register_config_schema(name: :shellcheck, schema: Schema.runner_config)
 
     DEFAULT_TARGET = [
       "**/*.{bash,bats,dash,ksh,sh}",

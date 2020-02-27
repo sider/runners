@@ -3,7 +3,7 @@ module Runners
     include Nodejs
 
     Schema = StrongJSON.new do
-      let :runner_config, Schema::RunnerConfig.npm.update_fields { |fields|
+      let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
         fields.merge!({
                         file: string?,
                         # DO NOT ADD ANY OPTIONS in `options` option.
@@ -14,6 +14,8 @@ module Runners
                       })
       }
     end
+
+    register_config_schema(name: :coffeelint, schema: Schema.runner_config)
 
     DEFAULT_DEPS = DefaultDependencies.new(
       main: Dependency.new(name: "coffeelint", version: "1.16.0"),

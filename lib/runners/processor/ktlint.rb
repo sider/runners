@@ -24,10 +24,10 @@ module Runners
         output: string
       )
 
-      let :cli, Schema::RunnerConfig.base.update_fields {|hash| hash[:cli] = cli_config}
-      let :gradle, Schema::RunnerConfig.base.update_fields {|hash| hash[:gradle] = gradle_config}
-      let :maven, Schema::RunnerConfig.base.update_fields {|hash| hash[:maven] = maven_config }
-      let :base, Schema::RunnerConfig.base
+      let :cli, Schema::BaseConfig.base.update_fields {|hash| hash[:cli] = cli_config}
+      let :gradle, Schema::BaseConfig.base.update_fields {|hash| hash[:gradle] = gradle_config}
+      let :maven, Schema::BaseConfig.base.update_fields {|hash| hash[:maven] = maven_config }
+      let :base, Schema::BaseConfig.base
 
       let :runner_config, enum(
         cli, gradle, maven, base,
@@ -45,6 +45,8 @@ module Runners
         }
       )
     end
+
+    register_config_schema(name: :ktlint, schema: Schema.runner_config)
 
     def self.ci_config_section_name
       'ktlint'

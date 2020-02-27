@@ -3,7 +3,7 @@ module Runners
     include Swift
 
     Schema = StrongJSON.new do
-      let :runner_config, Schema::RunnerConfig.base.update_fields { |fields|
+      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
                         ignore_warnings: boolean?,
                         path: string?,
@@ -19,6 +19,8 @@ module Runners
                       })
       }
     end
+
+    register_config_schema(name: :swiftlint, schema: Schema.runner_config)
 
     def self.ci_config_section_name
       'swiftlint'

@@ -5,7 +5,7 @@ module Runners
     include Ruby
 
     Schema = StrongJSON.new do
-      let :runner_config, Schema::RunnerConfig.ruby.update_fields { |fields|
+      let :runner_config, Schema::BaseConfig.ruby.update_fields { |fields|
         fields.merge!({
                         file: string?,
                         include_linter: enum?(string, array(string)),
@@ -27,6 +27,8 @@ module Runners
         severity: string?,
       )
     end
+
+    register_config_schema(name: :haml_lint, schema: Schema.runner_config)
 
     OPTIONAL_GEMS = [
       *Processor::RuboCop::OPTIONAL_GEMS,

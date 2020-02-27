@@ -3,7 +3,7 @@ module Runners
     include Java
 
     Schema = StrongJSON.new do
-      let :runner_config, Schema::RunnerConfig.base.update_fields { |hash|
+      let :runner_config, Schema::BaseConfig.base.update_fields { |hash|
         hash[:dir] = enum?(string, array(string), detector: -> (value) {
           case value
           when String
@@ -21,6 +21,8 @@ module Runners
         justifications: array?(string),
       )
     end
+
+    register_config_schema(name: :javasee, schema: Schema.runner_config)
 
     def self.ci_config_section_name
       'javasee'

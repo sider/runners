@@ -7,6 +7,10 @@ module Runners
     delegate :push_dir, :current_dir, :capture3, :capture3!, :capture3_trace, :capture3_with_retry!, to: :shell
     delegate :env_hash, :push_env_hash, to: :shell
 
+    def self.register_config_schema(**args)
+      Schema::Config.register(**args)
+    end
+
     def initialize(guid:, workspace:, git_ssh_path:, trace_writer:)
       @guid = guid
       @workspace = workspace
@@ -223,6 +227,15 @@ module Runners
           Please update to the new option(s) according to our documentation (see #{doc} ).
         MSG
       end
+    end
+
+    def add_warning_for_deprecated_linter(alternative:, deadline: nil)
+      deadline_str = deadline ? deadline.strftime("on %B %-d, %Y") : "in the near future"
+      add_warning <<~MSG.strip, file: ci_config_path_name
+        DEPRECATION WARNING!!!
+        The support for #{analyzer_name} is deprecated. Sider will drop these versions #{deadline_str}.
+        Please consider using an alternative tool #{alternative}.
+      MSG
     end
 
     # Prohibit directory traversal attack, e.g.

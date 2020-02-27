@@ -3,7 +3,7 @@ module Runners
     include Nodejs
 
     Schema = StrongJSON.new do
-      let :runner_config, Schema::RunnerConfig.npm.update_fields { |fields|
+      let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
         fields.merge!({
                         dir: enum?(string, array(string)),
                         ext: string?,
@@ -26,14 +26,16 @@ module Runners
                                             quiet: boolean?
                                           ))
                       })
-
-        let :issue, object(
-          severity: string,
-          category: string?,
-          recommended: enum?(boolean, string),
-        )
       }
+
+      let :issue, object(
+        severity: string,
+        category: string?,
+        recommended: enum?(boolean, string),
+      )
     end
+
+    register_config_schema(name: :eslint, schema: Schema.runner_config)
 
     DEFAULT_DEPS = DefaultDependencies.new(main: Dependency.new(name: "eslint", version: "6.8.0"))
     CONSTRAINTS = {

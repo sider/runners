@@ -3,7 +3,7 @@ module Runners
     include Nodejs
 
     Schema = StrongJSON.new do
-      let :runner_config, Schema::RunnerConfig.base.update_fields { |fields|
+      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
                         dir: string?,
                         config: string?,
@@ -14,6 +14,8 @@ module Runners
                       })
       }
     end
+
+    register_config_schema(name: :jshint, schema: Schema.runner_config)
 
     def self.ci_config_section_name
       'jshint'

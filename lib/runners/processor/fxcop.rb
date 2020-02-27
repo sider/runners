@@ -7,10 +7,14 @@ module Runners
     RULE_ID_PATTERN = /CA[0-9]+/.freeze
 
     Schema = StrongJSON.new do
+      let :runner_config, Schema::BaseConfig.base
+
       let :issue, object(
         severity: string?,
         )
     end
+
+    register_config_schema(name: :fxcop, schema: Schema.runner_config)
 
     def self.ci_config_section_name
       'fxcop'

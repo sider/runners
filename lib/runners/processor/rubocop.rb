@@ -3,7 +3,7 @@ module Runners
     include Ruby
 
     Schema = StrongJSON.new do
-      let :runner_config, Schema::RunnerConfig.ruby.update_fields { |fields|
+      let :runner_config, Schema::BaseConfig.ruby.update_fields { |fields|
         fields.merge!({
                         config: string?,
                         rails: boolean?,
@@ -21,6 +21,8 @@ module Runners
         corrected: boolean?,
       )
     end
+
+    register_config_schema(name: :rubocop, schema: Schema.runner_config)
 
     # The followings are maintained by RuboCop Headquarters.
     # @see https://github.com/rubocop-hq

@@ -5,7 +5,7 @@ module Runners
     Schema =
       StrongJSON.new do
         let :runner_config,
-            Schema::RunnerConfig.base.update_fields { |fields|
+            Schema::BaseConfig.base.update_fields { |fields|
               fields.merge!(
                 {
                   target: enum?(string, array(string)),
@@ -27,6 +27,8 @@ module Runners
 
         let :issue, object(severity: string?)
       end
+
+    register_config_schema(name: :golangci_lint, schema: Schema.runner_config)
 
     DEFAULT_TARGET = "./...".freeze
 

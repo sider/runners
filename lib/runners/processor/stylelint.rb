@@ -3,7 +3,7 @@ module Runners
     include Nodejs
 
     Schema = StrongJSON.new do
-      let :runner_config, Schema::RunnerConfig.npm.update_fields { |fields|
+      let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
         fields.merge!({
                         config: string?,
                         syntax: string?,
@@ -23,12 +23,14 @@ module Runners
                                             glob: string?
                                           ))
                       })
-
-        let :issue, object(
-          severity: string?,
-        )
       }
+
+      let :issue, object(
+        severity: string?,
+      )
     end
+
+    register_config_schema(name: :stylelint, schema: Schema.runner_config)
 
     DEFAULT_DEPS = DefaultDependencies.new(
       main: Dependency.new(name: "stylelint", version: "13.0.0"),

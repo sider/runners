@@ -4,7 +4,17 @@ Smoke.add_test(
   "success",
   {
     guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "gometalinter", version: "2.0.11" }
-  }
+  },
+  warnings: [
+    {
+      message: <<~MSG.strip,
+          DEPRECATION WARNING!!!
+          The support for gometalinter is deprecated. Sider will drop these versions on March 31, 2020.
+          Please consider using an alternative tool GolangCi-Lint.
+      MSG
+      file: "sider.yml"
+    }
+  ]
 )
 
 Smoke.add_test(
@@ -25,7 +35,17 @@ Smoke.add_test(
       }
     ],
     analyzer: { name: "gometalinter", version: "2.0.11" }
-  }
+  },
+  warnings: [
+    {
+      message: <<~MSG.strip,
+          DEPRECATION WARNING!!!
+          The support for gometalinter is deprecated. Sider will drop these versions on March 31, 2020.
+          Please consider using an alternative tool GolangCi-Lint.
+      MSG
+      file: "sideci.yml"
+    }
+  ]
 )
 
 Smoke.add_test(
@@ -46,7 +66,17 @@ Smoke.add_test(
       }
     ],
     analyzer: { name: "gometalinter", version: "2.0.11" }
-  }
+  },
+  warnings: [
+    {
+      message: <<~MSG.strip,
+          DEPRECATION WARNING!!!
+          The support for gometalinter is deprecated. Sider will drop these versions on March 31, 2020.
+          Please consider using an alternative tool GolangCi-Lint.
+      MSG
+      file: "sideci.yml"
+    }
+  ]
 ) { |config| config.ssh_key = "ssh_key" }
 
 Smoke.add_test(
@@ -104,7 +134,17 @@ Smoke.add_test(
       }
     ],
     analyzer: { name: "gometalinter", version: "2.0.11" }
-  }
+  },
+  warnings: [
+    {
+      message: <<~MSG.strip,
+        DEPRECATION WARNING!!!
+        The support for gometalinter is deprecated. Sider will drop these versions on March 31, 2020.
+        Please consider using an alternative tool GolangCi-Lint.
+      MSG
+      file: "sideci.yml"
+    }
+  ]
 )
 
 Smoke.add_test(
@@ -112,19 +152,49 @@ Smoke.add_test(
   {
     guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "gometalinter", version: "2.0.11" }
   },
-  warnings: [{ message: "`install_path` option is deprecated. Use `import_path` instead.", file: "sideci.yml" }]
+  warnings: [
+    { message: "`install_path` option is deprecated. Use `import_path` instead.", file: "sideci.yml" },
+    {
+      message: <<~MSG.strip,
+        DEPRECATION WARNING!!!
+        The support for gometalinter is deprecated. Sider will drop these versions on March 31, 2020.
+        Please consider using an alternative tool GolangCi-Lint.
+      MSG
+      file: "sideci.yml"
+    }
+  ]
 )
 
 Smoke.add_test(
   "import_path",
   {
     guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "gometalinter", version: "2.0.11" }
-  }
+  },
+  warnings: [
+    {
+      message: <<~MSG.strip,
+          DEPRECATION WARNING!!!
+          The support for gometalinter is deprecated. Sider will drop these versions on March 31, 2020.
+          Please consider using an alternative tool GolangCi-Lint.
+      MSG
+      file: "sideci.yml"
+    }
+  ]
 )
 
 Smoke.add_test(
   "import_path_and_install_path",
   {
     guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "gometalinter", version: "2.0.11" }
-  }
+  },
+  warnings: [
+    {
+      message: <<~MSG.strip,
+          DEPRECATION WARNING!!!
+          The support for gometalinter is deprecated. Sider will drop these versions on March 31, 2020.
+          Please consider using an alternative tool GolangCi-Lint.
+      MSG
+      file: "sideci.yml"
+    }
+  ]
 )

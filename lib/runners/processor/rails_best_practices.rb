@@ -3,7 +3,7 @@ module Runners
     include Ruby
 
     Schema = StrongJSON.new do
-      let :runner_config, Schema::RunnerConfig.ruby.update_fields { |fields|
+      let :runner_config, Schema::BaseConfig.ruby.update_fields { |fields|
         fields.merge!({
                         vendor: boolean?,
                         spec: boolean?,
@@ -25,6 +25,8 @@ module Runners
                       })
       }
     end
+
+    register_config_schema(name: :rails_best_practices, schema: Schema.runner_config)
 
     OPTIONAL_GEMS = [
       GemInstaller::Spec.new(name: "slim", version: []),

@@ -203,14 +203,31 @@ type Runners::Schema::Types::npm_runner_config = {
   npm_install: npm_install_runner_config?
 }
 
-class Runners::Schema::Types::RunnerConfig < StrongJSON
+type Runners::Schema::Types::array_or_string = Array<String> | String
+
+type Runners::Schema::Types::config_payload = {
+  linter: StrongJSON::Type::Object?, # OK
+  ignore: StrongJSON::Type::Enum<array_or_string>?,
+  branches: StrongJSON::Type::Object<{
+    branches: StrongJSON::Type::Enum<array_or_string>?
+  }>?,
+}
+
+class Runners::Schema::Types::BaseConfig < StrongJSON
   def base: -> StrongJSON::Type::Object<base_runner_config>
   def git: -> StrongJSON::Type::Enum<git_runner_config>
   def ruby: -> StrongJSON::Type::Object<ruby_runner_config>
+  def npm_install: -> StrongJSON::Type::Enum<npm_install_runner_config>
   def npm: -> StrongJSON::Type::Object<npm_runner_config>
+end
+
+class Runners::Schema::Types::Config < StrongJSON
+  def payload: -> StrongJSON::Type::Object<config_payload>
+  def register: (name: Symbol, schema: any) -> void
 end
 
 Runners::Schema::Issue: Runners::Schema::Types::Issue
 Runners::Schema::Result: Runners::Schema::Types::Result
 Runners::Schema::Trace: Runners::Schema::Types::Trace
-Runners::Schema::RunnerConfig: Runners::Schema::Types::RunnerConfig
+Runners::Schema::BaseConfig: Runners::Schema::Types::BaseConfig
+Runners::Schema::Config: Runners::Schema::Types::Config

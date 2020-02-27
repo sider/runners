@@ -1,7 +1,7 @@
 module Runners
   class Processor::Cpplint < Processor
     Schema = StrongJSON.new do
-      let :runner_config, Schema::RunnerConfig.base.update_fields { |fields|
+      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
           target: enum?(string, array(string)),
           extensions: string?,
@@ -16,6 +16,8 @@ module Runners
         confidence: string?,
       )
     end
+
+    register_config_schema(name: :cpplint, schema: Schema.runner_config)
 
     DEFAULT_TARGET = ".".freeze
 

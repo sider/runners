@@ -3,15 +3,18 @@ module Runners
     include Ruby
 
     Schema = StrongJSON.new do
-      let :runner_config, object(
-        root_dir: string?,
-        config: string?,
-        # DO NOT ADD ANY OPTIONS in `options` option.
-        options: optional(object(
-                            config: string?
-                          ))
-      )
+      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
+        fields.merge!(
+          config: string?,
+          # DO NOT ADD OPTIONS ANY MORE in `options`.
+          options: object?(
+            config: string?,
+          )
+        )
+      }
     end
+
+    register_config_schema(name: :scss_lint, schema: Schema.runner_config)
 
     # https://github.com/brigade/scss-lint#exit-status-codes
     EXIT_CODE_FILES_NOT_EXIST = 80

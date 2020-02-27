@@ -1,7 +1,7 @@
 module Runners
   class Processor::Hadolint < Processor
     Schema = StrongJSON.new do
-      let :runner_config, Schema::RunnerConfig.base.update_fields { |fields|
+      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
                         target: enum?(string, array(string)),
                         ignore: enum?(string, array(string)),
@@ -14,6 +14,8 @@ module Runners
         severity: string?,
       )
     end
+
+    register_config_schema(name: :hadolint, schema: Schema.runner_config)
 
     DEFAULT_TARGET = "**/Dockerfile{,.*}".freeze
 

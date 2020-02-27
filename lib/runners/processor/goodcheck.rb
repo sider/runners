@@ -9,13 +9,15 @@ module Runners
         justifications: array(string),
       )
 
-      let :runner_config, Schema::RunnerConfig.ruby.update_fields { |fields|
+      let :runner_config, Schema::BaseConfig.ruby.update_fields { |fields|
         fields.merge!({
                         config: string?,
                         target: optional(enum(string, array(string)))
                       })
       }.freeze
     end
+
+    register_config_schema(name: :goodcheck, schema: Schema.runner_config)
 
     CONSTRAINTS = {
       "goodcheck" => [">= 1.0.0", "< 3.0"]

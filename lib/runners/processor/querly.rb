@@ -3,7 +3,7 @@ module Runners
     include Ruby
 
     Schema = StrongJSON.new do
-      let :runner_config, Schema::RunnerConfig.ruby
+      let :runner_config, Schema::BaseConfig.ruby
 
       let :rule, object(
         id: string,
@@ -12,6 +12,8 @@ module Runners
         examples: array?(object(before: string?, after: string?)),
       )
     end
+
+    register_config_schema(name: :querly, schema: Schema.runner_config)
 
     OPTIONAL_GEMS = [
       GemInstaller::Spec.new(name: "slim", version: []),

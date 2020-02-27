@@ -5,13 +5,15 @@ module Runners
     FLAKE8_OUTPUT_FORMAT = '%(code)s:::%(path)s:::%(row)d:::%(col)d:::%(text)s'.freeze
 
     Schema = StrongJSON.new do
-      let :runner_config, Schema::RunnerConfig.base.update_fields { |fields|
+      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
                         version: numeric?,
                         plugins: enum?(string, array(string))
                       })
       }
     end
+
+    register_config_schema(name: :flake8, schema: Schema.runner_config)
 
     def self.ci_config_section_name
       'flake8'

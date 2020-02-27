@@ -3,7 +3,7 @@ module Runners
     include Java
 
     Schema = StrongJSON.new do
-      let :runner_config, Schema::RunnerConfig.base.update_fields { |fields|
+      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
                         dir: string?,
                         rulesets: enum?(string, array(string)),
@@ -18,6 +18,8 @@ module Runners
         priority: string,
       )
     end
+
+    register_config_schema(name: :pmd_java, schema: Schema.runner_config)
 
     def self.ci_config_section_name
       'pmd_java'
