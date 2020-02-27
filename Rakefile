@@ -39,10 +39,9 @@ task :typecheck do
 end
 
 namespace :dockerfile do
-  def render_erb(file, analyzer: ENV.fetch('ANALYZER'), env: {})
+  def render_erb(file, analyzer: ENV.fetch('ANALYZER'))
     locals = {
       analyzer: analyzer,
-      env: env,
 
       # TODO: `COPY --chown=${RUNNER_USER}:${RUNNER_GROUP}` format has been available since Docker v19.03.4.
       #       However, CircleCI does not support the Docker version...
