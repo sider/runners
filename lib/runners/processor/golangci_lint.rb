@@ -36,6 +36,10 @@ module Runners
       "golangci_lint"
     end
 
+    def analyzer_bin
+      "golangci-lint"
+    end
+
     def analyzer_name
       "GolangCI-Lint"
     end
