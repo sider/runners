@@ -101,7 +101,7 @@ module Runners
         when maven_config
           extract_detekt_version_for_maven || unknown_version
         else
-          pom_dir = Pathname(ENV['RUNNER_USER_HOME']) / analyzer_name
+          pom_dir = Pathname(Dir.home) / analyzer_name
           extract_detekt_version_for_maven(pom_dir) || unknown_version
         end
     end
@@ -173,6 +173,7 @@ module Runners
       if output_file_path.exist?
         trace_writer.message "Reading output from #{report_path}..."
         output = output_file_path.read
+        trace_writer.message output
       else
         msg = "#{report_path} does not exist. Unexpected error occurred, processing cannot continue."
         trace_writer.error msg
@@ -205,7 +206,7 @@ module Runners
         file.each_element do |error|
           case error.name
           when "error"
-            regexp = /.*\.(.*)/
+            regexp = /detekt\.(.*)/
             rule, = error[:source].match(regexp).captures
 
             issues << construct_issue(
@@ -213,6 +214,7 @@ module Runners
               line: error[:line],
               message: error[:message],
               rule: rule,
+              severity: error[:severity]
             )
           else
             add_warning error.text.strip, file: file[:name]
@@ -226,6 +228,9 @@ module Runners
     def construct_plain_result(output)
       issues = []
 
+      # Case of using txt reporter, they has 2 pattern like this:
+      # a) `NestedBlockDepth - 4/4 - [complex] at /path/to/ComplexClass.kt:9:13 - message...`
+      # b) `EmptyClassBlock - [FilteredClass] at /path/to/FilteredClass.kt:2:21 - message...`
       regexp_a = /(.*) - .* - .* at (.*):(.*):(.*) - (.*)/
       regexp_b = /(.*) - .* at (.*):(.*):(.*) - (.*)/
       
@@ -241,7 +246,7 @@ module Runners
             file: file,
             line: start_line,
             message: message,
-            rule: rule,
+            rule: rule
           )
         end
       end
@@ -249,12 +254,17 @@ module Runners
       issues
     end
 
-    def construct_issue(file:, line:, message:, rule:)
+    def construct_issue(file:, line:, message:, rule:, severity: nil)
+      unless severity.nil?
+        object = { severity: severity }
+      end
+
       Issue.new(
-        path: relative_path(working_dir.realpath / file, from: working_dir.realpath),
+        path: relative_path(file),
         location: Location.new(start_line: line),
         id: rule,
         message: message,
+        object: object
       )
     end
 
@@ -271,7 +281,7 @@ module Runners
     end
 
     def cli_disable_default_rulesets
-      "--disable-default-rulesets" if cli_config[:"disable-default-rulesets"]
+      cli_config[:"disable-default-rulesets"] ? ["--disable-default-rulesets"] : []
     end
 
     def cli_excludes

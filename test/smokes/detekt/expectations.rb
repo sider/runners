@@ -14,7 +14,7 @@ Smoke.add_test(
         location: { start_line: 2 },
         message: "The class or object FilteredClass is empty.",
         links: [],
-        object: nil,
+        object: { severity: "info" },
         git_blame_info: nil
       },
       {
@@ -23,7 +23,7 @@ Smoke.add_test(
         location: { start_line: 44 },
         message: "Using the forEach method on ranges has a heavy performance cost. Prefer using simple for loops.",
         links: [],
-        object: nil,
+        object: { severity: "warning" },
         git_blame_info: nil
       },
       {
@@ -32,7 +32,7 @@ Smoke.add_test(
         location: { start_line: 8 },
         message: "get is returning a constant. Prefer declaring a constant instead.",
         links: [],
-        object: nil,
+        object: { severity: "warning" },
         git_blame_info: nil
       },
       {
@@ -41,7 +41,7 @@ Smoke.add_test(
         location: { start_line: 44 },
         message: "This expression contains a magic number. Consider defining it to a well named constant.",
         links: [],
-        object: nil,
+        object: { severity: "warning" },
         git_blame_info: nil
       },
       {
@@ -50,7 +50,7 @@ Smoke.add_test(
         location: { start_line: 48 },
         message: "This expression contains a magic number. Consider defining it to a well named constant.",
         links: [],
-        object: nil,
+        object: { severity: "warning" },
         git_blame_info: nil
       },
       {
@@ -59,7 +59,7 @@ Smoke.add_test(
         location: { start_line: 9 },
         message: "Function complex is nested too deeply.",
         links: [],
-        object: nil,
+        object: { severity: "warning" },
         git_blame_info: nil
       },
       {
@@ -68,7 +68,7 @@ Smoke.add_test(
         location: { start_line: 19 },
         message: "Caught exception is too generic. Prefer catching specific exceptions to the case that is currently handled.",
         links: [],
-        object: nil,
+        object: { severity: "error" },
         git_blame_info: nil
       },
       {
@@ -77,7 +77,7 @@ Smoke.add_test(
         location: { start_line: 22 },
         message: "Caught exception is too generic. Prefer catching specific exceptions to the case that is currently handled.",
         links: [],
-        object: nil,
+        object: { severity: "error" },
         git_blame_info: nil
       },
       {
@@ -86,7 +86,7 @@ Smoke.add_test(
         location: { start_line: 34 },
         message: "Caught exception is too generic. Prefer catching specific exceptions to the case that is currently handled.",
         links: [],
-        object: nil,
+        object: { severity: "error" },
         git_blame_info: nil
       },
     ]
@@ -107,7 +107,7 @@ Smoke.add_test(
         location: { start_line: 2 },
         message: "The class or object FilteredClass is empty.",
         links: [],
-        object: nil,
+        object: { severity: "info" },
         git_blame_info: nil
       },
       {
@@ -116,7 +116,7 @@ Smoke.add_test(
         location: { start_line: 44 },
         message: "Using the forEach method on ranges has a heavy performance cost. Prefer using simple for loops.",
         links: [],
-        object: nil,
+        object: { severity: "warning" },
         git_blame_info: nil
       },
       {
@@ -125,7 +125,7 @@ Smoke.add_test(
         location: { start_line: 8 },
         message: "get is returning a constant. Prefer declaring a constant instead.",
         links: [],
-        object: nil,
+        object: { severity: "warning" },
         git_blame_info: nil
       },
       {
@@ -134,7 +134,7 @@ Smoke.add_test(
         location: { start_line: 9 },
         message: "Function complex is nested too deeply.",
         links: [],
-        object: nil,
+        object: { severity: "warning" },
         git_blame_info: nil
       },
     ]
@@ -155,7 +155,7 @@ Smoke.add_test(
         location: { start_line: 2 },
         message: "The class or object FilteredClass is empty.",
         links: [],
-        object: nil,
+        object: { severity: "info" },
         git_blame_info: nil
       },
       {
@@ -164,7 +164,7 @@ Smoke.add_test(
         location: { start_line: 44 },
         message: "Using the forEach method on ranges has a heavy performance cost. Prefer using simple for loops.",
         links: [],
-        object: nil,
+        object: { severity: "warning" },
         git_blame_info: nil
       },
       {
@@ -173,7 +173,7 @@ Smoke.add_test(
         location: { start_line: 8 },
         message: "get is returning a constant. Prefer declaring a constant instead.",
         links: [],
-        object: nil,
+        object: { severity: "warning" },
         git_blame_info: nil
       },
       {
@@ -182,7 +182,7 @@ Smoke.add_test(
         location: { start_line: 44 },
         message: "This expression contains a magic number. Consider defining it to a well named constant.",
         links: [],
-        object: nil,
+        object: { severity: "warning" },
         git_blame_info: nil
       },
       {
@@ -191,7 +191,7 @@ Smoke.add_test(
         location: { start_line: 48 },
         message: "This expression contains a magic number. Consider defining it to a well named constant.",
         links: [],
-        object: nil,
+        object: { severity: "warning" },
         git_blame_info: nil
       },
       {
@@ -200,7 +200,7 @@ Smoke.add_test(
         location: { start_line: 9 },
         message: "Function complex is nested too deeply.",
         links: [],
-        object: nil,
+        object: { severity: "warning" },
         git_blame_info: nil
       },
     ]
@@ -269,7 +269,7 @@ Smoke.add_test(
         location: { start_line: 2 },
         message: "The class or object FilteredClass is empty.",
         links: [],
-        object: nil,
+        object: { severity: "info" },
         git_blame_info: nil
       },
       {
@@ -278,7 +278,7 @@ Smoke.add_test(
         location: { start_line: 44 },
         message: "Using the forEach method on ranges has a heavy performance cost. Prefer using simple for loops.",
         links: [],
-        object: nil,
+        object: { severity: "warning" },
         git_blame_info: nil
       },
       {
@@ -287,7 +287,7 @@ Smoke.add_test(
         location: { start_line: 8 },
         message: "get is returning a constant. Prefer declaring a constant instead.",
         links: [],
-        object: nil,
+        object: { severity: "warning" },
         git_blame_info: nil
       },
       {
@@ -296,7 +296,7 @@ Smoke.add_test(
         location: { start_line: 9 },
         message: "Function complex is nested too deeply.",
         links: [],
-        object: nil,
+        object: { severity: "warning" },
         git_blame_info: nil
       },
     ]
@@ -317,7 +317,7 @@ Smoke.add_test(
         location: { start_line: 2 },
         message: "The class or object FilteredClass is empty.",
         links: [],
-        object: nil,
+        object: { severity: "info" },
         git_blame_info: nil
       },
       {
@@ -326,7 +326,7 @@ Smoke.add_test(
         location: { start_line: 44 },
         message: "Using the forEach method on ranges has a heavy performance cost. Prefer using simple for loops.",
         links: [],
-        object: nil,
+        object: { severity: "warning" },
         git_blame_info: nil
       },
       {
@@ -335,7 +335,7 @@ Smoke.add_test(
         location: { start_line: 8 },
         message: "get is returning a constant. Prefer declaring a constant instead.",
         links: [],
-        object: nil,
+        object: { severity: "warning" },
         git_blame_info: nil
       },
       {
@@ -344,7 +344,7 @@ Smoke.add_test(
         location: { start_line: 9 },
         message: "Function complex is nested too deeply.",
         links: [],
-        object: nil,
+        object: { severity: "warning" },
         git_blame_info: nil
       },
     ]
