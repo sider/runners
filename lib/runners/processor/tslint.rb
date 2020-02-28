@@ -41,7 +41,9 @@ module Runners
     end
 
     def setup
-      add_warning_if_deprecated_options([:options], doc: "https://help.sider.review/tools/javascript/tslint")
+      add_warning_for_deprecated_linter(alternative: "ESLint",
+                                        ref: "https://github.com/palantir/tslint/issues/4534",
+                                        deadline: Time.new(2020, 12, 1))
 
       begin
         install_nodejs_deps(DEFAULT_DEPS, constraints: CONSTRAINTS, install_option: ci_section[:npm_install])

@@ -44,6 +44,10 @@ module Runners
     end
 
     def setup
+      add_warning_for_deprecated_linter(alternative: "GolangCi-Lint",
+                                        ref: "https://github.com/alecthomas/gometalinter/issues/590",
+                                        deadline: Time.new(2020, 3, 31))
+
       with_import_path do |path|
         if path
           trace_writer.message "Copying source files to #{path}" do
@@ -58,7 +62,6 @@ module Runners
         end
       end
 
-      add_warning_for_deprecated_linter(alternative: "GolangCi-Lint", deadline: Time.new(2_020, 3, 31))
       yield
     end
 

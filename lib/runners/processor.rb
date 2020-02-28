@@ -173,12 +173,12 @@ module Runners
       end
     end
 
-    def add_warning_for_deprecated_linter(alternative:, deadline: nil)
+    def add_warning_for_deprecated_linter(alternative:, ref:, deadline: nil)
       deadline_str = deadline ? deadline.strftime("on %B %-d, %Y") : "in the near future"
       add_warning <<~MSG.strip, file: config.path_name
         DEPRECATION WARNING!!!
         The support for #{analyzer_name} is deprecated. Sider will drop these versions #{deadline_str}.
-        Please consider using an alternative tool #{alternative}.
+        Please consider using an alternative tool #{alternative}. See #{ref}
       MSG
     end
 

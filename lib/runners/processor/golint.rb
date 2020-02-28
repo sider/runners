@@ -22,7 +22,9 @@ module Runners
     end
 
     def setup
-      add_warning_for_deprecated_linter(alternative: "GolangCi-Lint", deadline: Time.new(2_020, 3, 31))
+      add_warning_for_deprecated_linter(alternative: "GolangCi-Lint",
+                                        ref: "https://help.sider.review/tools/go/golint",
+                                        deadline: Time.new(2020, 3, 31))
       yield
     end
 

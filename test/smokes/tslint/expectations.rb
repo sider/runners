@@ -27,7 +27,8 @@ Smoke.add_test(
       }
     ],
     analyzer: { name: "TSLint", version: "6.0.0" }
-  }
+  },
+  { warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }] }
 )
 
 Smoke.add_test(
@@ -48,7 +49,8 @@ Smoke.add_test(
       }
     ],
     analyzer: { name: "TSLint", version: "6.0.0" }
-  }
+  },
+  { warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }] }
 )
 
 Smoke.add_test(
@@ -87,7 +89,8 @@ Smoke.add_test(
       }
     ],
     analyzer: { name: "TSLint", version: "5.2.0" }
-  }
+  },
+  { warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }] }
 )
 
 Smoke.add_test(
@@ -108,7 +111,8 @@ Smoke.add_test(
       }
     ],
     analyzer: { name: "TSLint", version: "5.4.3" }
-  }
+  },
+  { warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }] }
 )
 
 Smoke.add_test(
@@ -138,7 +142,8 @@ Smoke.add_test(
       }
     ],
     analyzer: { name: "TSLint", version: "6.0.0" }
-  }
+  },
+  { warnings: [{ message: /The support for TSLint is deprecated/, file: "sideci.yml" }] }
 )
 
 Smoke.add_test(
@@ -161,10 +166,10 @@ Smoke.add_test(
     warnings: [
       {
         message: <<~MSG
-    DEPRECATION WARNING!!!
-    The `$.linter.tslint.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
-    Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/javascript/tslint ).
-  MSG
+          DEPRECATION WARNING!!!
+          The support for TSLint is deprecated. Sider will drop these versions on December 1, 2020.
+          Please consider using an alternative tool ESLint. See https://github.com/palantir/tslint/issues/4534
+        MSG
           .strip,
         file: "sideci.yml"
       }
@@ -208,7 +213,8 @@ Smoke.add_test(
       }
     ],
     analyzer: { name: "TSLint", version: "5.11.0" }
-  }
+  },
+  { warnings: [{ message: /The support for TSLint is deprecated/, file: "sideci.yml" }] }
 )
 
 Smoke.add_test(
@@ -240,7 +246,8 @@ Smoke.add_test(
       }
     ],
     analyzer: { name: "TSLint", version: "5.15.0" }
-  }
+  },
+  { warnings: [{ message: /The support for TSLint is deprecated/, file: "sideci.yml" }] }
 )
 
 Smoke.add_test(
@@ -261,7 +268,8 @@ Smoke.add_test(
       }
     ],
     analyzer: { name: "TSLint", version: "5.15.0" }
-  }
+  },
+  { warnings: [{ message: /The support for TSLint is deprecated/, file: "sideci.yml" }] }
 )
 
 Smoke.add_test(
@@ -291,7 +299,8 @@ Smoke.add_test(
       }
     ],
     analyzer: { name: "TSLint", version: "5.15.0" }
-  }
+  },
+  { warnings: [{ message: /The support for TSLint is deprecated/, file: "sideci.yml" }] }
 )
 
 Smoke.add_test(
@@ -302,19 +311,30 @@ Smoke.add_test(
     type: "failure",
     message: /Your `tslint` settings could not satisfy the required constraints/,
     analyzer: nil
-  }
+  },
+  { warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }] }
 )
 
 Smoke.add_test(
   "without-tslint-in-package-json",
   { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "TSLint", version: "6.0.0" } },
-  { warnings: [{ message: /No required dependencies for analysis were installed/, file: "package.json" }] }
+  {
+    warnings: [
+      { message: /The support for TSLint is deprecated/, file: "sider.yml" },
+      { message: /No required dependencies for analysis were installed/, file: "package.json" }
+    ]
+  }
 )
 
 Smoke.add_test(
   "without-tslint-and-with-typescript-in-package-json",
   { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "TSLint", version: "6.0.0" } },
-  { warnings: [{ message: /No required dependencies for analysis were installed/, file: "package.json" }] }
+  {
+    warnings: [
+      { message: /The support for TSLint is deprecated/, file: "sider.yml" },
+      { message: /No required dependencies for analysis were installed/, file: "package.json" }
+    ]
+  }
 )
 
 Smoke.add_test(
@@ -325,7 +345,8 @@ Smoke.add_test(
     type: "failure",
     message: "`yarn install` failed. Please confirm `yarn.lock` is consistent with `package.json`.",
     analyzer: nil
-  }
+  },
+  { warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }] }
 )
 
 Smoke.add_test(
@@ -346,5 +367,6 @@ Smoke.add_test(
       }
     ],
     analyzer: { name: "TSLint", version: "6.0.0" }
-  }
+  },
+  { warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }] }
 )
