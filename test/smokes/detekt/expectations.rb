@@ -221,7 +221,7 @@ Smoke.add_test(
         location: { start_line: 2 },
         message: "Signature=FilteredClass.kt$FilteredClass${ }",
         links: [],
-        object: nil,
+        object: { severity: nil },
         git_blame_info: nil
       },
       {
@@ -230,7 +230,7 @@ Smoke.add_test(
         location: { start_line: 44 },
         message: "Signature=ComplexClass.kt$ComplexClass.NestedClass$forEach { //1 println() }",
         links: [],
-        object: nil,
+        object: { severity: nil },
         git_blame_info: nil
       },
       {
@@ -239,7 +239,7 @@ Smoke.add_test(
         location: { start_line: 8 },
         message: "Signature=App.kt$App$fun get()",
         links: [],
-        object: nil,
+        object: { severity: nil },
         git_blame_info: nil
       },
       {
@@ -248,7 +248,7 @@ Smoke.add_test(
         location: { start_line: 9 },
         message: "Signature=ComplexClass.kt$ComplexClass.NestedClass$complex",
         links: [],
-        object: nil,
+        object: { severity: nil },
         git_blame_info: nil
       },
     ]

@@ -51,6 +51,10 @@ module Runners
           end
         }
       )
+
+      let :issue, object(
+        severity: string?
+      )
     end
 
     def self.ci_config_section_name
@@ -206,8 +210,7 @@ module Runners
         file.each_element do |error|
           case error.name
           when "error"
-            regexp = /detekt\.(.*)/
-            rule, = error[:source].match(regexp).captures
+            rule = error[:source].delete_prefix("detekt.")
 
             issues << construct_issue(
               file: file[:name],
@@ -255,16 +258,13 @@ module Runners
     end
 
     def construct_issue(file:, line:, message:, rule:, severity: nil)
-      unless severity.nil?
-        object = { severity: severity }
-      end
-
       Issue.new(
         path: relative_path(file),
         location: Location.new(start_line: line),
         id: rule,
         message: message,
-        object: object
+        object: { severity: severity },
+        schema: Schema.issue
       )
     end
 
