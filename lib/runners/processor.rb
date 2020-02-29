@@ -2,7 +2,7 @@ module Runners
   class Processor
     class CIConfigBroken < UserError; end
 
-    attr_reader :guid, :workspace, :working_dir, :git_ssh_path, :trace_writer, :warnings, :ci_config, :ci_config_for_collect, :shell
+    attr_reader :guid, :workspace, :working_dir, :git_ssh_path, :trace_writer, :warnings, :config, :shell
 
     delegate :push_dir, :current_dir, :capture3, :capture3!, :capture3_trace, :capture3_with_retry!, to: :shell
     delegate :env_hash, :push_env_hash, to: :shell
@@ -11,28 +11,15 @@ module Runners
       Schema::Config.register(**args)
     end
 
-    def initialize(guid:, workspace:, git_ssh_path:, trace_writer:)
+    def initialize(guid:, workspace:, config:, git_ssh_path:, trace_writer:)
       @guid = guid
       @workspace = workspace
       @working_dir = workspace.working_dir
       @git_ssh_path = git_ssh_path
       @trace_writer = trace_writer
       @warnings = []
-      @ci_config =
-        if ci_config_path.file?
-          begin
-            YAML.load_file(ci_config_path.to_s, fallback: {}).tap do |conf|
-              trace_writer.ci_config(conf, file: ci_config_path.basename.to_s)
-            end
-          rescue Psych::SyntaxError => exn
-            message = "Your `#{relative_path(ci_config_path.to_s)}` file may be broken (line #{exn.line}, column #{exn.column})."
-            trace_writer.error message
-            raise CIConfigBroken.new(message)
-          end
-        end
-      # Runner maybe break `@ci_config`.
-      # So we should deep copy it to avoid collecting incorrect config file.
-      @ci_config_for_collect = Marshal.load(Marshal.dump(@ci_config))
+      @config = config
+      trace_writer.ci_config(config.content, file: config.path_name) if config.path_exist?
 
       hash = {
         "RUBYOPT" => nil,
@@ -94,30 +81,12 @@ module Runners
       self.name
     end
 
-    def ci_config_path
-      new_config_path = working_dir + "sider.yml"
-      if new_config_path.file?
-        new_config_path
-      else
-        working_dir + "sideci.yml"
-      end
-    end
-
-    def ci_config_path_name
-      if ci_config_path.file?
-        File.basename(ci_config_path)
-      else
-        "sider.yml"
-      end
-    end
-
-    def ci_section(default = {})
-      section = ci_config&.dig("linter", self.class.ci_config_section_name)
-      default.deep_merge(Hash(section))
+    def ci_section
+      config.content.dig(:linter, self.class.ci_config_section_name.to_sym) || {}
     end
 
     def ci_section_root_dir
-      ci_section["root_dir"]
+      ci_section[:root_dir]
     end
 
     def check_root_dir_exist
@@ -126,7 +95,7 @@ module Runners
         return if (working_dir / root_dir).directory?
 
         message = "`#{root_dir}` directory is not found!" \
-          " Please check `linter.#{self.class.ci_config_section_name}.root_dir` in your `#{ci_config_path_name}`"
+          " Please check `linter.#{self.class.ci_config_section_name}.root_dir` in your `#{config.path_name}`"
         trace_writer.error message
         Results::Failure.new(guid: guid, message: message)
       end
@@ -163,31 +132,6 @@ module Runners
       end
     end
 
-    # @param schema [StrongJSON]
-    def ensure_runner_config_schema(schema)
-      config =
-        begin
-          schema.coerce(ci_section.deep_symbolize_keys)
-        rescue StrongJSON::Type::UnexpectedAttributeError => error
-          message = "Invalid configuration in `#{ci_config_path_name}`: unknown attribute at config: `#{build_field_reference_from_path(error.path)}`"
-          trace_writer.error message
-          return Results::Failure.new(
-            guid: guid,
-            message: message,
-            analyzer: nil
-          )
-        rescue StrongJSON::Type::TypeError => error
-          message = "Invalid configuration in `#{ci_config_path_name}`: unexpected value at config: `#{build_field_reference_from_path(error.path)}`"
-          trace_writer.error message
-          return Results::Failure.new(
-            guid: guid,
-            message: message,
-            analyzer: nil
-          )
-        end
-      yield config
-    end
-
     # Returns e.g. "$.linter.rubocop.gems"
     def build_field_reference_from_path(path)
       path.to_s.sub('$', "$.linter.#{self.class.ci_config_section_name}")
@@ -217,24 +161,24 @@ module Runners
     end
 
     def add_warning_if_deprecated_options(keys, doc:)
-      deprecated_keys = ci_section.symbolize_keys.slice(*keys).keys
+      deprecated_keys = ci_section.slice(*keys).compact.keys
         .map { |k| "`" + build_field_reference_from_path("$.#{k}") + "`" }
 
       unless deprecated_keys.empty?
-        add_warning <<~MSG.strip, file: ci_config_path_name
+        add_warning <<~MSG.strip, file: config.path_name
           DEPRECATION WARNING!!!
-          The #{deprecated_keys.join(", ")} option(s) in your `#{ci_config_path_name}` are deprecated and will be removed in the near future.
+          The #{deprecated_keys.join(", ")} option(s) in your `#{config.path_name}` are deprecated and will be removed in the near future.
           Please update to the new option(s) according to our documentation (see #{doc} ).
         MSG
       end
     end
 
-    def add_warning_for_deprecated_linter(alternative:, deadline: nil)
+    def add_warning_for_deprecated_linter(alternative:, ref:, deadline: nil)
       deadline_str = deadline ? deadline.strftime("on %B %-d, %Y") : "in the near future"
-      add_warning <<~MSG.strip, file: ci_config_path_name
+      add_warning <<~MSG.strip, file: config.path_name
         DEPRECATION WARNING!!!
         The support for #{analyzer_name} is deprecated. Sider will drop these versions #{deadline_str}.
-        Please consider using an alternative tool #{alternative}.
+        Please consider using an alternative tool #{alternative}. See #{ref}
       MSG
     end
 

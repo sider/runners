@@ -40,48 +40,31 @@ module Runners
     end
 
     def analyze(_changes)
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        check_runner_config(config) do |ignore_warnings, options|
-          run_analyzer(ignore_warnings, options)
-        end
-      end
-    end
-
-    def check_runner_config(config)
-      # Sider option.
-      ignore_warnings = ignore_warnings(config)
-
-      # Command line options.
-      path = path(config)
-      swiftlint_config = swiftlint_config(config)
-      lenient = lenient(config)
-      enable_all_rules = enable_all_rules(config)
-
       options = [path, swiftlint_config, lenient, enable_all_rules].compact.flatten
-      yield ignore_warnings, options
+      run_analyzer(ignore_warnings, options)
     end
 
-    def ignore_warnings(config)
-      config[:ignore_warnings] || false
+    def ignore_warnings
+      ci_section[:ignore_warnings] || false
     end
 
-    def path(config)
-      path = config[:path] || config.dig(:options, :path)
+    def path
+      path = ci_section[:path] || ci_section.dig(:options, :path)
       ["--path", "#{path}"] if path
     end
 
-    def swiftlint_config(config)
-      config = config[:config] || config.dig(:options, :config)
+    def swiftlint_config
+      config = ci_section[:config] || ci_section.dig(:options, :config)
       ["--config", "#{config}"] if config
     end
 
-    def lenient(config)
-      lenient = config[:lenient] || config.dig(:options, :lenient)
+    def lenient
+      lenient = ci_section[:lenient] || ci_section.dig(:options, :lenient)
       "--lenient" if lenient
     end
 
-    def enable_all_rules(config)
-      enable_all_rules = config[:'enable-all-rules'] || config.dig(:options, :'enable-all-rules')
+    def enable_all_rules
+      enable_all_rules = ci_section[:'enable-all-rules'] || ci_section.dig(:options, :'enable-all-rules')
       "--enable-all-rules" if enable_all_rules
     end
 

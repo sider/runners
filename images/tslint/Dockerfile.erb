@@ -4,6 +4,6 @@ FROM sider/devon_rex_npm:2.14.0
 <%= render_erb 'images/Dockerfile.npm.erb' %>
 
 # By default, TSLint looks for a configuration file named tslint.json in the directory of the file being linted and, if not found, searches ancestor directories.
-COPY --chown=<%= ENV.fetch("RUNNER_CHOWN") %> images/tslint/default_tslint.json ${RUNNER_USER_HOME}/tslint.json
+COPY --chown=<%= chown %> images/tslint/default_tslint.json ${RUNNER_USER_HOME}/tslint.json
 
 <%= render_erb 'images/Dockerfile.end.erb' %>

@@ -40,38 +40,20 @@ module Runners
     end
 
     def analyze(changes)
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        check_runner_config(config) do |targets, rule, options|
-          delete_unchanged_files(changes, only: target_files(config), except: config[:custom_rule_path] || [])
-          run_analyzer(changes, targets, rule, options)
-        end
-      end
+      delete_unchanged_files(changes, only: target_files, except: ci_section[:custom_rule_path] || [])
+      options = [minimumpriority, suffixes, exclude, strict].flatten.compact
+      run_analyzer(changes, target_dirs, rule, options)
     end
 
     private
 
-    def target_files(config)
-      _, suffixes = suffixes(config)
-      suffixes&.split(",")&.map { |suffix| "*.#{suffix}" } || ["*.php"]
+    def target_files
+      _, value = suffixes
+      value&.split(",")&.map { |suffix| "*.#{suffix}" } || ["*.php"]
     end
 
-    def check_runner_config(config)
-      # Options which have default values.
-      targets = target_dirs(config)
-      rule = rule(config)
-
-      # Additional options.
-      minimumpriority = minimumpriority(config)
-      suffixes = suffixes(config)
-      exclude = exclude(config)
-      strict = strict(config)
-
-      options = [minimumpriority, suffixes, exclude, strict].flatten.compact
-      yield targets, rule, options
-    end
-
-    def rule(config)
-      rules = config[:rule] || config.dig(:options, :rule)
+    def rule
+      rules = ci_section[:rule] || ci_section.dig(:options, :rule)
       if rules
         rules
       else
@@ -80,27 +62,27 @@ module Runners
       end
     end
 
-    def target_dirs(config)
-      Array(config[:target] || './').flat_map { |target| target.split(',') }.join(',')
+    def target_dirs
+      Array(ci_section[:target] || './').flat_map { |target| target.split(',') }.join(',')
     end
 
-    def minimumpriority(config)
-      min_priority = config[:minimumpriority] || config.dig(:options, :minimumpriority)
+    def minimumpriority
+      min_priority = ci_section[:minimumpriority] || ci_section.dig(:options, :minimumpriority)
       ["--minimumpriority", "#{min_priority}"] if min_priority
     end
 
-    def suffixes(config)
-      suffixes = config[:suffixes] || config.dig(:options, :suffixes)
+    def suffixes
+      suffixes = ci_section[:suffixes] || ci_section.dig(:options, :suffixes)
       ["--suffixes", "#{suffixes}"] if suffixes
     end
 
-    def exclude(config)
-      exclude = config[:exclude] || config.dig(:options, :exclude)
+    def exclude
+      exclude = ci_section[:exclude] || ci_section.dig(:options, :exclude)
       ["--exclude", "#{exclude}"] if exclude
     end
 
-    def strict(config)
-      strict = config[:strict] || config.dig(:options, :strict)
+    def strict
+      strict = ci_section[:strict] || ci_section.dig(:options, :strict)
       ["--strict"] if strict
     end
 

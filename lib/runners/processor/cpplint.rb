@@ -30,30 +30,23 @@ module Runners
     end
 
     def analyze(changes)
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        @config = config
-        run_analyzer
-      end
+      run_analyzer
     end
 
     private
-
-    def config
-      @config or raise "Must be initialized!"
-    end
 
     def analyzer_options
       [].tap do |opts|
         opts << "--output=junit"
         opts << "--recursive"
-        opts << "--extensions=#{config[:extensions]}" if config[:extensions]
-        opts << "--headers=#{config[:headers]}" if config[:headers]
-        opts << "--filter=#{config[:filter]}" if config[:filter]
-        opts << "--linelength=#{config[:linelength]}" if config[:linelength]
-        Array(config[:exclude]).each do |exclude|
+        opts << "--extensions=#{ci_section[:extensions]}" if ci_section[:extensions]
+        opts << "--headers=#{ci_section[:headers]}" if ci_section[:headers]
+        opts << "--filter=#{ci_section[:filter]}" if ci_section[:filter]
+        opts << "--linelength=#{ci_section[:linelength]}" if ci_section[:linelength]
+        Array(ci_section[:exclude]).each do |exclude|
           opts << "--exclude=#{exclude}"
         end
-        Array(config[:target] || DEFAULT_TARGET).each do |target|
+        Array(ci_section[:target] || DEFAULT_TARGET).each do |target|
           opts << target
         end
       end

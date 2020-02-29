@@ -36,43 +36,30 @@ module Runners
     def setup
       add_warning_if_deprecated_options([:options], doc: "https://help.sider.review/tools/javascript/coffeelint")
 
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        begin
-          install_nodejs_deps(DEFAULT_DEPS, constraints: CONSTRAINTS, install_option: config[:npm_install])
-        rescue UserError => exn
-          return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
-        end
-
-        analyzer # Must initialize after installation
-        yield
+      begin
+        install_nodejs_deps(DEFAULT_DEPS, constraints: CONSTRAINTS, install_option: ci_section[:npm_install])
+      rescue UserError => exn
+        return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
       end
+
+      analyzer # Must initialize after installation
+      yield
     end
 
     def analyze(_changes)
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        check_runner_config(config) do |options|
-          run_analyzer(options)
-        end
+      check_runner_config do |options|
+        run_analyzer(options)
       end
     end
 
     private
 
-    def check_runner_config(config)
-      file = file(config) || coffeelint_config(config)
+    def check_runner_config
       yield file
     end
 
-    # NOTE: This is a deprecated option, and the option has been already undocumented.
-    def coffeelint_config(config)
-      config = config.dig(:options, :config)
-      if config
-        ['--file', "#{config}"]
-      end
-    end
-
-    def file(config)
-      file = config[:file] || config.dig(:options, :file)
+    def file
+      file = ci_section[:file] || ci_section.dig(:options, :file) || ci_section.dig(:options, :config)
       ['--file', "#{file}"] if file
     end
 
@@ -84,19 +71,12 @@ module Runners
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
         JSON.parse(stdout, symbolize_names: true).each do |file, issues|
           issues.each do |issue|
-            line = issue[:lineNumber]
-            loc = Location.new(
-              start_line: line,
-              start_column: nil,
-              end_line: nil,
-              end_column: nil,
-            )
             # TODO: Use Structured issue
             message = issue[:message].dup
             message << " #{issue[:context]}" if issue[:context]
             result.add_issue Issue.new(
               path: relative_path(file.to_s),
-              location: loc,
+              location: Location.new(start_line: issue[:lineNumber]),
               id: issue[:rule] || issue[:name],
               message: message,
             )

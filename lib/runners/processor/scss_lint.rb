@@ -40,21 +40,13 @@ module Runners
       yield
     end
 
-    def analyze(changes)
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        check_runner_config(config) do |options|
-          run_analyzer(options)
-        end
-      end
+    def analyze(_changes)
+      options = [scss_lint_config].compact
+      run_analyzer(options)
     end
 
-    def check_runner_config(config)
-      scss_lint_config = scss_lint_config(config)
-      yield [scss_lint_config].compact
-    end
-
-    def scss_lint_config(config)
-      config = config[:config] || config.dig(:options, :config)
+    def scss_lint_config
+      config = ci_section[:config] || ci_section.dig(:options, :config)
       "--config=#{config}" if config
     end
 

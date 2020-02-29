@@ -561,19 +561,30 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "failure",
-    message:
-      "Invalid configuration in `sideci.yml`: unexpected value at config: `$.linter.stylelint.options.ignore-path`"
+    message: "The value of the attribute `$.linter.stylelint.options.ignore-path` of `sideci.yml` is invalid."
+  }
+)
+
+Smoke.add_test(
+  "options_is_deprecated",
+  {
+    analyzer: nil,
+    guid: "test-guid",
+    timestamp: :_,
+    type: "success",
+    issues: [],
+    analyzer: { name: "stylelint", version: "13.0.0" }
   },
   {
     warnings: [
       {
         message: <<~MSG
     DEPRECATION WARNING!!!
-    The `$.linter.stylelint.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
+    The `$.linter.stylelint.options` option(s) in your `sider.yml` are deprecated and will be removed in the near future.
     Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/css/stylelint ).
   MSG
           .strip,
-        file: "sideci.yml"
+        file: "sider.yml"
       }
     ]
   }

@@ -31,24 +31,22 @@ module Runners
     end
 
     def analyze(changes)
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        prepare_config(config)
-        run_analyzer(config)
-      end
+      prepare_config
+      run_analyzer
     end
 
     private
 
-    def prepare_config(config)
-      return if jshintrc_exist?(config)
+    def prepare_config
+      return if jshintrc_exist?
       config = (Pathname(Dir.home) / 'sider_jshintrc').realpath
       ignore = (Pathname(Dir.home) / 'sider_jshintignore').realpath
       FileUtils.cp(config, current_dir / '.jshintrc')
       FileUtils.cp(ignore, current_dir / '.jshintignore')
     end
 
-    def jshintrc_exist?(config)
-      return true if config_path(config)
+    def jshintrc_exist?
+      return true if config_path
       return true if (current_dir + '.jshintrc').exist? || (current_dir + '.jshintignore').exist?
 
       begin
@@ -60,8 +58,8 @@ module Runners
       false
     end
 
-    def config_path(config)
-      config[:config] || config.dig(:options, :config)
+    def config_path
+      ci_section[:config] || ci_section.dig(:options, :config)
     end
 
     def parse_result(output)
@@ -78,11 +76,11 @@ module Runners
       end
     end
 
-    def run_analyzer(config)
+    def run_analyzer
       args = []
       args << "--reporter=checkstyle"
-      args << "--config=#{config_path(config)}" if config_path(config)
-      args << (config[:dir] || "./")
+      args << "--config=#{config_path}" if config_path
+      args << (ci_section[:dir] || "./")
       stdout, stderr, status = capture3(analyzer_bin, *args)
       # If command is succeeded, status.exitstatus is 0 or 2(issues are found).
       return Results::Failure.new(guid: guid, message: stderr, analyzer: analyzer) if status.exitstatus == 1

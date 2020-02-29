@@ -60,7 +60,7 @@ Smoke.add_test(
     timestamp: :_,
     type: "failure",
     analyzer: nil,
-    message: "Invalid configuration in `sider.yml`: unexpected value at config: `$.linter.javasee.dir[2]`"
+    message: "The value of the attribute `$.linter.javasee.dir[2]` of `sider.yml` is invalid."
   }
 )
 

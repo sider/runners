@@ -36,26 +36,12 @@ module Runners
     end
 
     def analyze(_changes)
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        delete_targets(config)
-        check_runner_config(config) do |options, targets|
-          run_analyzer(options, targets)
-        end
-      end
+      delete_targets
+      options = [locale, ignore].flatten.compact
+      run_analyzer(options, analysis_targets)
     end
 
     private
-
-    def check_runner_config(config)
-      # Misspell options
-      locale = locale(config)
-      ignore = ignore(config)
-
-      # Target files for analysis.
-      targets = analysis_targets(config)
-
-      yield [locale, ignore].flatten.compact, targets
-    end
 
     def run_analyzer(options, targets)
       # NOTE: Prevent command injection with `'--'`.
@@ -86,23 +72,23 @@ module Runners
       end
     end
 
-    def locale(config)
-      locale = config[:locale] || config.dig(:options, :locale)
+    def locale
+      locale = ci_section[:locale] || ci_section.dig(:options, :locale)
       ["-locale", "#{locale}"] if locale
     end
 
-    def ignore(config)
+    def ignore
       # The option requires comma separeted with string when user would like to set ignore multiple targets.
-      ignore = config[:ignore] || config.dig(:options, :ignore)
+      ignore = ci_section[:ignore] || ci_section.dig(:options, :ignore)
       ["-i", "#{ignore}"] if ignore
     end
 
-    def analysis_targets(config)
-      Array(config[:targets] || '.')
+    def analysis_targets
+      Array(ci_section[:targets] || '.')
     end
 
-    def delete_targets(config)
-      exclude_targets = Array(config[:exclude])
+    def delete_targets
+      exclude_targets = Array(ci_section[:exclude])
       return if exclude_targets.empty?
       trace_writer.message "Excluding #{exclude_targets.join(', ')} ..." do
         paths = exclude_targets.flat_map { |target| Dir.glob(working_dir + target.to_s) }.uniq

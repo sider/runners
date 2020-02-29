@@ -3,7 +3,7 @@ FROM sider/devon_rex_ruby:2.14.0
 <%= render_erb 'images/Dockerfile.base.erb' %>
 <%= render_erb 'images/Dockerfile.ruby.erb' %>
 
-COPY --chown=<%= ENV.fetch("RUNNER_CHOWN") %> images/reek/v5.reek.yml ${RUNNER_USER_HOME}/.reek.yml
-COPY --chown=<%= ENV.fetch("RUNNER_CHOWN") %> images/reek/v4.reek.yml ${RUNNER_USER_HOME}/config.reek
+COPY --chown=<%= chown %> images/reek/v5.reek.yml ${RUNNER_USER_HOME}/.reek.yml
+COPY --chown=<%= chown %> images/reek/v4.reek.yml ${RUNNER_USER_HOME}/config.reek
 
 <%= render_erb 'images/Dockerfile.end.erb' %>

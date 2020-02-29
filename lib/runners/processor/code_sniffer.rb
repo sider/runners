@@ -41,24 +41,19 @@ module Runners
     end
 
     def analyze(changes)
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        check_runner_config(config) do |options, target|
-          run_analyzer(options, target)
-        end
+      check_runner_config do |options, target|
+        run_analyzer(options, target)
       end
     end
 
     private
 
-    def check_runner_config(config)
-      if config[:version].to_i == 2
-        add_warning("Sider has no longer supported PHP_CodeSniffer v2. Sider executes v3 even if putting `2` as `version` option.", file: ci_config_path_name)
+    def check_runner_config
+      if ci_section[:version].to_i == 2
+        add_warning("Sider has no longer supported PHP_CodeSniffer v2. Sider executes v3 even if putting `2` as `version` option.", file: config.path_name)
       end
 
-      options = additional_options(config)
-      target = directory(config)
-
-      yield options, target
+      yield additional_options, directory
     end
 
     def analyzer_name
@@ -69,44 +64,39 @@ module Runners
       "phpcs"
     end
 
-    def additional_options(config)
-      # If a repository doesn't have `sideci.yml`, use default configuration with `default_sideci_options` method.
-      if config.empty?
+    def additional_options
+      # If a repository doesn't have `sider.yml`, use default configuration with `default_sideci_options` method.
+      if ci_section.empty?
         default_sideci_options[:options].map do |k, v|
           "--#{k}=#{v}"
         end
       else
-        standard = standard_option(config)
-        extensions = extensions_option(config)
-        encoding = encoding_option(config)
-        ignore = ignore_option(config)
-
-        [standard, extensions, encoding, ignore].compact
+        [standard_option, extensions_option, encoding_option, ignore_option].compact
       end
     end
 
-    def standard_option(config)
-      standard = config[:standard] || config.dig(:options, :standard) || default_sideci_options.dig(:options, :standard)
+    def standard_option
+      standard = ci_section[:standard] || ci_section.dig(:options, :standard) || default_sideci_options.dig(:options, :standard)
       "--standard=#{standard}"
     end
 
-    def extensions_option(config)
-      extensions = config[:extensions] || config.dig(:options, :extensions) || default_sideci_options.dig(:options, :extensions)
+    def extensions_option
+      extensions = ci_section[:extensions] || ci_section.dig(:options, :extensions) || default_sideci_options.dig(:options, :extensions)
       "--extensions=#{extensions}"
     end
 
-    def encoding_option(config)
-      encoding = config[:encoding] || config.dig(:options, :encoding)
+    def encoding_option
+      encoding = ci_section[:encoding] || ci_section.dig(:options, :encoding)
       "--encoding=#{encoding}" if encoding
     end
 
-    def ignore_option(config)
-      ignore = config[:ignore] || config.dig(:options, :ignore)
+    def ignore_option
+      ignore = ci_section[:ignore] || ci_section.dig(:options, :ignore)
       "--ignore=#{ignore}" if ignore
     end
 
-    def directory(config)
-      config[:dir] || config.dig(:options, :dir) || default_sideci_options[:dir]
+    def directory
+      ci_section[:dir] || ci_section.dig(:options, :dir) || default_sideci_options[:dir]
     end
 
     def default_sideci_options

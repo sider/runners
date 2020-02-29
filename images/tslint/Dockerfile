@@ -1,8 +1,9 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# NOTE: DO *NOT* EDIT THIS FILE.  IT IS GENERATED.
-# PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE
+# NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
+# PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM sider/devon_rex_npm:2.14.0
+
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
@@ -32,6 +33,7 @@ ENV NODE_PATH ${RUNNER_USER_HOME}/tslint/node_modules:${NODE_PATH}
 
 # By default, TSLint looks for a configuration file named tslint.json in the directory of the file being linted and, if not found, searches ancestor directories.
 COPY --chown=analyzer_runner:nogroup images/tslint/default_tslint.json ${RUNNER_USER_HOME}/tslint.json
+
 
 # Copy the main source code
 COPY --chown=analyzer_runner:nogroup bin ${RUNNERS_DIR}/bin

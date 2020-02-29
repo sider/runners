@@ -39,29 +39,34 @@ task :typecheck do
 end
 
 namespace :dockerfile do
-  def render_erb(file)
-    ERB.new(File.read(file)).result.chomp
+  def render_erb(file, analyzer: ENV.fetch('ANALYZER'))
+    locals = {
+      analyzer: analyzer,
+
+      # TODO: `COPY --chown=${RUNNER_USER}:${RUNNER_GROUP}` format has been available since Docker v19.03.4.
+      #       However, CircleCI does not support the Docker version...
+      chown: "analyzer_runner:nogroup",
+    }
+
+    res = ERB.new(File.read(file), trim_mode: "<>").result_with_hash(locals)
+    "\n#{res.strip}\n" # Ensure to start with one newline and end with one newline
   end
 
   desc 'Generate Dockerfile from a template'
   task :generate do
-    # TODO: `COPY --chown=${RUNNER_USER}:${RUNNER_GROUP}` format has been available since Docker v19.03.4.
-    #       However, CircleCI does not support the Docker version...
-    ENV["RUNNER_CHOWN"] = "analyzer_runner:nogroup"
-
     ANALYZERS.each do |analyzer|
       backup_analyzer = ENV['ANALYZER']
       ENV['ANALYZER'] = analyzer
-      path = Pathname('images') / analyzer
-      template = ERB.new((path / 'Dockerfile.erb').read)
-      result = <<~EOD
+      dir = Pathname('images') / analyzer
+      file = dir / 'Dockerfile.erb'
+      content = <<~EOD
         # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        # NOTE: DO *NOT* EDIT THIS FILE.  IT IS GENERATED.
-        # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE
+        # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
+        # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
         # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        #{template.result.chomp}
+        #{render_erb(file, analyzer: analyzer).strip}
       EOD
-      File.write(path / 'Dockerfile', result)
+      (dir / 'Dockerfile').write(content)
     ensure
       if backup_analyzer
         ENV['ANALYZER'] = backup_analyzer
@@ -69,8 +74,6 @@ namespace :dockerfile do
         ENV.delete 'ANALYZER'
       end
     end
-  ensure
-    ENV.delete "RUNNER_CHOWN"
   end
 
   desc 'Verify Dockerfile is committed'

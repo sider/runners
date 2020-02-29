@@ -5,13 +5,13 @@ module Runners
 
       DEFAULT_SOURCE = "https://rubygems.org"
 
-      attr_reader :gem_home, :specs, :trace_writer, :shell, :constraints, :ci_config_path_name
+      attr_reader :gem_home, :specs, :trace_writer, :shell, :constraints, :config_path_name
 
-      def initialize(shell:, home:, ci_config_path_name:, specs:, constraints:, trace_writer:)
+      def initialize(shell:, home:, config_path_name:, specs:, constraints:, trace_writer:)
         @gem_home = home
         @specs = specs
         @shell = shell
-        @ci_config_path_name = ci_config_path_name
+        @config_path_name = config_path_name
         @constraints = constraints
         @trace_writer = trace_writer
       end
@@ -35,8 +35,8 @@ module Runners
             shell.capture3!("bundle", "list")
           rescue Shell::ExecError
             raise InstallationFailure.new(<<~MESSAGE)
-              Failed to install gems. Sider automatically installs gems according to `#{ci_config_path_name}` and `Gemfile.lock`.
-              You can select the version of gems you want to install via `#{ci_config_path_name}`.
+              Failed to install gems. Sider automatically installs gems according to `#{config_path_name}` and `Gemfile.lock`.
+              You can select the version of gems you want to install via `#{config_path_name}`.
               See https://help.sider.review/getting-started/custom-configuration#gems-option
             MESSAGE
           end

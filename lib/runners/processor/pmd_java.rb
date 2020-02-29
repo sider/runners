@@ -48,13 +48,9 @@ module Runners
     end
 
     def analyze(changes)
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        delete_unchanged_files changes, only: [".java"]
+      delete_unchanged_files changes, only: [".java"]
 
-        check_runner_config(config) do |dir, rulesets, encoding, min_priority|
-          run_analyzer(dir, rulesets, encoding, min_priority)
-        end
-      end
+      run_analyzer(dir, rulesets, encoding, min_priority)
     end
 
     def run_analyzer(dir, rulesets, encoding, min_priority)
@@ -122,33 +118,24 @@ module Runners
       end
     end
 
-    def check_runner_config(config)
-      dir = check_directory(config)
-      rulesets = rulesets(config)
-      encoding = encoding(config)
-      min_priority = min_priority(config)
-
-      yield dir, rulesets, encoding, min_priority
-    end
-
-    def rulesets(config)
-      array(config[:rulesets] || default_ruleset)
+    def rulesets
+      array(ci_section[:rulesets] || default_ruleset)
     end
 
     def default_ruleset
       (Pathname(Dir.home) / "default-ruleset.xml").realpath
     end
 
-    def check_directory(config)
-      config[:dir] || "."
+    def dir
+      ci_section[:dir] || "."
     end
 
-    def encoding(config)
-      config[:encoding]
+    def encoding
+      ci_section[:encoding]
     end
 
-    def min_priority(config)
-      config[:min_priority]
+    def min_priority
+      ci_section[:min_priority]
     end
 
     def array(value)

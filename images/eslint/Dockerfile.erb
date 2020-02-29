@@ -5,8 +5,8 @@ FROM sider/devon_rex_npm:2.14.0
 
 # NOTE: ESLint uses a configuration file in the home directory if no other configuration files are found.
 #       See https://eslint.org/docs/user-guide/configuring#configuration-cascading-and-hierarchy
-COPY --chown=<%= ENV.fetch("RUNNER_CHOWN") %> images/eslint/sider_eslintrc.yml ${RUNNER_USER_HOME}/.eslintrc.yml
+COPY --chown=<%= chown %> images/eslint/sider_eslintrc.yml ${RUNNER_USER_HOME}/.eslintrc.yml
 
-COPY --chown=<%= ENV.fetch("RUNNER_CHOWN") %> images/eslint/custom-eslint-json-formatter.js ${RUNNER_USER_HOME}/
+COPY --chown=<%= chown %> images/eslint/custom-eslint-json-formatter.js ${RUNNER_USER_HOME}/
 
 <%= render_erb 'images/Dockerfile.end.erb' %>

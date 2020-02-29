@@ -59,17 +59,10 @@ module Runners
     end
 
     def analyze(_changes)
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        @config = config
-        run_analyzer
-      end
+      run_analyzer
     end
 
     private
-
-    def config
-      @config or raise "Must be initialized!"
-    end
 
     def find_files_with_shebang
       trace_writer.message "Finding files with shell script shebang..."
@@ -90,7 +83,7 @@ module Runners
 
     def analyzed_files
       # Via glob
-      targets = Array(config[:target] || DEFAULT_TARGET)
+      targets = Array(ci_section[:target] || DEFAULT_TARGET)
       globs = targets.select { |glob| glob.is_a? String }
       files_via_glob = Dir.glob(globs, File::FNM_EXTGLOB, base: current_dir)
 
@@ -103,7 +96,7 @@ module Runners
     end
 
     def option_values(name, sep)
-      Array(config[name]).join(sep).split(sep).map(&:strip).join(sep)
+      Array(ci_section[name]).join(sep).split(sep).map(&:strip).join(sep)
     end
 
     def analyzer_options
@@ -112,9 +105,9 @@ module Runners
         option_values(:include, ",").tap { |val| opts << "--include=#{val}" unless val.empty? }
         option_values(:exclude, ",").tap { |val| opts << "--exclude=#{val}" unless val.empty? }
         option_values(:enable, ",").tap { |val| opts << "--enable=#{val}" unless val.empty? }
-        config[:shell].tap { |val| opts << "--shell=#{val}" if val }
-        config[:severity].tap { |val| opts << "--severity=#{val}" if val }
-        opts << "--norc" if config[:norc]
+        ci_section[:shell].tap { |val| opts << "--shell=#{val}" if val }
+        ci_section[:severity].tap { |val| opts << "--severity=#{val}" if val }
+        opts << "--norc" if ci_section[:norc]
       end
     end
 

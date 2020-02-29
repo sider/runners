@@ -35,26 +35,24 @@ module Runners
       @analyzer_version ||= extract_version! ruby_analyzer_bin, "version"
     end
 
-    def ensure_config
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        if config[:config]
-          yield config
-        else
-          ensure_files relative_path("goodcheck.yml") do
-            yield config
-          end
-        end
-      end
+    def goodcheck_config_file
+      @goodcheck_config_file ||= ci_section[:config] || "goodcheck.yml"
     end
 
-    def goodcheck_test(config)
-      stdout, stderr, status = capture3(*ruby_analyzer_bin, "test", *(config[:config] ? ["--config", config[:config]] : []))
+    def cli_options(*additional_args)
+      [
+        ci_section[:config]&.yield_self { |config| "--config=#{config}"},
+      ].compact + additional_args
+    end
+
+    def goodcheck_test
+      stdout, stderr, status = capture3(*ruby_analyzer_bin, "test", *cli_options)
 
       if !status.success? && !stdout.empty?
         msg = <<~MESSAGE.chomp
           The validation of your Goodcheck configuration file failed. Check the output of `goodcheck test` command.
         MESSAGE
-        add_warning(msg, file: config[:config] || "goodcheck.yml")
+        add_warning(msg, file: goodcheck_config_file)
       end
 
       if !status.success? && !stderr.empty?
@@ -64,12 +62,9 @@ module Runners
       end
     end
 
-    def goodcheck_check(config)
-      targets = Array(config[:target]) || ["."]
-      config = config[:config]
-      args = (config ? ["--config", config] : []) + targets
-
-      stdout, stderr, _ = capture3(*ruby_analyzer_bin, "check", "--format=json", *args)
+    def goodcheck_check
+      targets = Array(ci_section[:target]) || ["."]
+      stdout, stderr, _ = capture3(*ruby_analyzer_bin, "check", "--format=json", *cli_options(*targets))
 
       json = JSON.parse(stdout, symbolize_names: true)
 
@@ -119,11 +114,9 @@ module Runners
     end
 
     def setup
-      ret = ensure_runner_config_schema(Schema.runner_config) do
-        install_gems default_gem_specs, constraints: CONSTRAINTS do |versions|
-          analyzer
-          yield
-        end
+      ret = install_gems default_gem_specs, constraints: CONSTRAINTS do
+        analyzer
+        yield
       end
 
       # NOTE: Exceptionally MissingFileFailure is treated as successful
@@ -148,12 +141,12 @@ module Runners
     def analyze(changes)
       delete_unchanged_files(changes, except: ["*.yml", "*.yaml"])
 
-      ensure_config do |config|
-        error_message = goodcheck_test(config)
+      ensure_files(relative_path(goodcheck_config_file)) do
+        error_message = goodcheck_test
         if error_message
           Results::Failure.new(guid: guid, analyzer: analyzer, message: error_message)
         else
-          goodcheck_check(config)
+          goodcheck_check
         end
       end
     end

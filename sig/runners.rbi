@@ -109,21 +109,18 @@ class Runners::Processor
   attr_reader trace_writer: TraceWriter
   attr_reader shell: Shell
   attr_reader warnings: Array<any>
-  attr_reader ci_config: any
-  attr_reader ci_config_for_collect: any
+  attr_reader config: Config
 
-  def initialize: (guid: any, workspace: Workspace, git_ssh_path: any, trace_writer: TraceWriter) -> any
+  def initialize: (guid: any, workspace: Workspace, config: Config, git_ssh_path: any, trace_writer: TraceWriter) -> any
   def relative_path: (String, ?from: Pathname) -> Pathname
   def setup: () { -> result } -> result
   def analyze: (Changes) -> result
-  def ci_config_path: () -> Pathname
-  def ci_config_path_name: () -> String
-  def ci_section: (?Hash<any, any>) -> Hash<any, any>
+  def ci_section: () -> Hash<any, any>
   def ci_section_root_dir: () -> String?
   def check_root_dir_exist: () -> result?
   def push_root_dir: <'x> { -> 'x } -> 'x
   def ensure_files: (*Pathname) { (Pathname) -> result } -> result
-  def ensure_runner_config_schema: <'x> (any) { ('x) -> result } -> result
+  def ensure_runner_config_schema: (any) { (any) -> result } -> result
   def push_dir: <'x> (Pathname) { -> 'x } -> 'x
   def current_dir: () -> Pathname
 
@@ -141,7 +138,7 @@ class Runners::Processor
   def add_warning: (String, ?file: String?) -> void
   def add_warning_if_deprecated_version: (minimum: String, ?file: String?, ?deadline: Time?) -> void
   def add_warning_if_deprecated_options: (Array<Symbol>, doc: String) -> void
-  def add_warning_for_deprecated_linter: (alternative: String, ?deadline: Time?) -> void
+  def add_warning_for_deprecated_linter: (alternative: String, ref: String, ?deadline: Time?) -> void
   def analyzer: -> Analyzer
   def analyzer_name: -> String
   def analyzer_bin: -> String

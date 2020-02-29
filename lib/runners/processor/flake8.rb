@@ -29,13 +29,11 @@ module Runners
     end
 
     def analyze(changes)
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        capture3! 'pyenv', 'global', detected_python_version(config)
-        capture3! "python", "--version" # NOTE: `show_runtime_versions` does not work...
-        capture3! "pip", "--version"
-        prepare_plugins(config)
-        run_analyzer
-      end
+      capture3! 'pyenv', 'global', detected_python_version
+      capture3! "python", "--version" # NOTE: `show_runtime_versions` does not work...
+      capture3! "pip", "--version"
+      prepare_plugins
+      run_analyzer
     end
 
     private
@@ -50,23 +48,23 @@ module Runners
       return default_config.delete unless configs.empty?
     end
 
-    def prepare_plugins(config)
-      if config[:plugins]
-        plugins = Array(config[:plugins]).flatten
+    def prepare_plugins
+      if ci_section[:plugins]
+        plugins = Array(ci_section[:plugins]).flatten
         capture3!('pip', 'install', *plugins)
       end
     end
 
-    def detected_python_version(config)
+    def detected_python_version
       [
-        specified_python_version(config),
+        specified_python_version,
         specified_python_version_via_pyenv,
         python3_version
       ].compact.first
     end
 
-    def specified_python_version(config)
-      case config[:version]&.to_i
+    def specified_python_version
+      case ci_section[:version]&.to_i
       when 2
         python2_version
       when 3

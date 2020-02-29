@@ -47,34 +47,30 @@ module Runners
     end
 
     def setup
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        if !(current_dir + 'tyscan.yml').exist? && config[:config].nil?
-          trace_writer.error DEFAULT_CONFIG_NOT_FOUND_ERROR
-          add_warning DEFAULT_CONFIG_NOT_FOUND_ERROR
-          return Results::Success.new(guid: guid, analyzer: analyzer)
-        end
-
-        begin
-          install_nodejs_deps(DEFAULT_DEPS, constraints: CONSTRAINTS, install_option: config[:npm_install])
-        rescue UserError => exn
-          return Results::Failure.new(guid: guid, message: exn.message)
-        end
-
-        yield
+      if !(current_dir + 'tyscan.yml').exist? && ci_section[:config].nil?
+        trace_writer.error DEFAULT_CONFIG_NOT_FOUND_ERROR
+        add_warning DEFAULT_CONFIG_NOT_FOUND_ERROR
+        return Results::Success.new(guid: guid, analyzer: analyzer)
       end
+
+      begin
+        install_nodejs_deps(DEFAULT_DEPS, constraints: CONSTRAINTS, install_option: ci_section[:npm_install])
+      rescue UserError => exn
+        return Results::Failure.new(guid: guid, message: exn.message)
+      end
+
+      yield
     end
 
     def analyze(_)
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        tyscan_test(config)
-        tyscan_scan(config)
-      end
+      tyscan_test
+      tyscan_scan
     end
 
-    def tyscan_test(config)
+    def tyscan_test
       args = []
-      args.unshift("-t", config[:tsconfig]) if config[:tsconfig]
-      args.unshift("-c", config[:config]) if config[:config]
+      args.unshift("-t", ci_section[:tsconfig]) if ci_section[:tsconfig]
+      args.unshift("-c", ci_section[:config]) if ci_section[:config]
 
       _, _, status = capture3(nodejs_analyzer_bin, "test", *args)
 
@@ -82,15 +78,15 @@ module Runners
         msg = <<~MESSAGE.chomp
           `tyscan test` failed. It may cause an unintended match.
         MESSAGE
-        add_warning(msg, file: config[:config] || "tyscan.yml")
+        add_warning(msg, file: ci_section[:config] || "tyscan.yml")
       end
     end
 
-    def tyscan_scan(config)
+    def tyscan_scan
       args = []
-      args.unshift(*config[:paths]) if config[:paths]
-      args.unshift("-t", config[:tsconfig]) if config[:tsconfig]
-      args.unshift("-c", config[:config]) if config[:config]
+      args.unshift(*ci_section[:paths]) if ci_section[:paths]
+      args.unshift("-t", ci_section[:tsconfig]) if ci_section[:tsconfig]
+      args.unshift("-c", ci_section[:config]) if ci_section[:config]
 
       stdout, stderr, status = capture3(nodejs_analyzer_bin, "scan", "--json", *args)
 

@@ -48,28 +48,26 @@ module Runners
     end
 
     def analyze(changes)
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        analyzer_version
+      analyzer_version
 
-        delete_unchanged_files changes, only: [".java"]
+      delete_unchanged_files changes, only: [".java"]
 
-        check_runner_config(config) do |dirs, config_path|
-          stdout, stderr, status = javasee_check dirs: dirs, config_path: config_path
+      check_runner_config do |dirs, config_path|
+        stdout, stderr, status = javasee_check dirs: dirs, config_path: config_path
 
-          if status.success? || status.exitstatus == 2
-            Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-              construct_result(result, stdout, stderr)
-            end
-          elsif stderr.match?(/Configuration file .+ does not look a file/)
-            add_warning stderr
-            return Results::Success.new(guid: guid, analyzer: analyzer)
-          else
-            Results::Failure.new(
-              guid: guid,
-              analyzer: analyzer,
-              message: stderr,
-            )
+        if status.success? || status.exitstatus == 2
+          Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+            construct_result(result, stdout, stderr)
           end
+        elsif stderr.match?(/Configuration file .+ does not look a file/)
+          add_warning stderr
+          return Results::Success.new(guid: guid, analyzer: analyzer)
+        else
+          Results::Failure.new(
+            guid: guid,
+            analyzer: analyzer,
+            message: stderr,
+          )
         end
       end
     end
@@ -95,10 +93,10 @@ module Runners
       end
     end
 
-    def check_runner_config(config)
-      dirs = Array(config[:dir]).map { |dir| Pathname(dir) }
+    def check_runner_config
+      dirs = Array(ci_section[:dir]).map { |dir| Pathname(dir) }
 
-      config_path = config[:config]
+      config_path = ci_section[:config]
       config_path = Pathname(config_path) if config_path
 
       yield dirs, config_path

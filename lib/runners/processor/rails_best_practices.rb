@@ -53,43 +53,26 @@ module Runners
     def setup
       add_warning_if_deprecated_options([:options], doc: "https://help.sider.review/tools/ruby/rails-bestpractices")
 
-      ensure_runner_config_schema(Schema.runner_config) do
-        install_gems default_gem_specs, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS do |versions|
-          analyzer
-          yield
-        end
+      prepare_config
+      install_gems default_gem_specs, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS do
+        analyzer
+        yield
       end
     rescue InstallGemsFailure => exn
       trace_writer.error exn.message
       return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
     end
 
-    def analyze(changes)
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        prepare_config
-        check_runner_config(config) do |options|
-          run_analyzer(options)
-        end
-      end
+    def analyze(_changes)
+      options = [vendor, spec, test, features, exclude, only, config_option].compact
+      run_analyzer(options)
     end
 
     private
 
-    def check_runner_config(config)
-      vendor = vendor(config)
-      spec = spec(config)
-      test = test(config)
-      features = features(config)
-      exclude = exclude(config)
-      only = only(config)
-      config = config(config)
-
-      yield [vendor, spec, test, features, exclude, only, config].compact
-    end
-
-    def vendor(config)
-      vendor = config[:vendor]
-      vendor = config.dig(:options, :vendor) if vendor.nil?
+    def vendor
+      vendor = ci_section[:vendor]
+      vendor = ci_section.dig(:options, :vendor) if vendor.nil?
       if vendor == false
         nil
       else
@@ -97,33 +80,33 @@ module Runners
       end
     end
 
-    def spec(config)
-      spec = config[:spec] || config.dig(:options, :spec)
+    def spec
+      spec = ci_section[:spec] || ci_section.dig(:options, :spec)
       "--spec" if spec
     end
 
-    def test(config)
-      test = config[:test] || config.dig(:options, :test)
+    def test
+      test = ci_section[:test] || ci_section.dig(:options, :test)
       "--test" if test
     end
 
-    def features(config)
-      features = config[:features] || config.dig(:options, :features)
+    def features
+      features = ci_section[:features] || ci_section.dig(:options, :features)
       "--features" if features
     end
 
-    def exclude(config)
-      exclude = config[:exclude] || config.dig(:options, :exclude)
+    def exclude
+      exclude = ci_section[:exclude] || ci_section.dig(:options, :exclude)
       "--exclude=#{exclude}" if exclude
     end
 
-    def only(config)
-      only = config[:only] || config.dig(:options, :only)
+    def only
+      only = ci_section[:only] || ci_section.dig(:options, :only)
       "--only=#{only}" if only
     end
 
-    def config(config)
-      config = config[:config] || config.dig(:options, :config)
+    def config_option
+      config = ci_section[:config] || ci_section.dig(:options, :config)
       "--config=#{config}" if config
     end
 

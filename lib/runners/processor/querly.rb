@@ -37,11 +37,9 @@ module Runners
     end
 
     def setup
-      ret = ensure_runner_config_schema(Schema.runner_config) do
-        install_gems default_gem_specs, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS do |versions|
-          analyzer
-          yield
-        end
+      ret = install_gems default_gem_specs, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS do
+        analyzer
+        yield
       end
 
       # NOTE: Exceptionally MissingFileFailure is treated as successful

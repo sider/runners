@@ -1,4 +1,4 @@
 linter:
-  golangci-lint:
+  golangci_lint:
     enable:
       - "no-such_linter"

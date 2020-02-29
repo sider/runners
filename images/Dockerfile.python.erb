@@ -1,6 +1,5 @@
-<% analyzer = ENV.fetch('ANALYZER') %>
 # Install the default version
-COPY --chown=<%= ENV.fetch("RUNNER_CHOWN") %> images/<%= analyzer %>/Pipfile ${RUNNER_USER_HOME}/<%= analyzer %>_Pipfile
+COPY --chown=<%= chown %> images/<%= analyzer %>/Pipfile ${RUNNER_USER_HOME}/<%= analyzer %>_Pipfile
 RUN cd ${RUNNER_USER_HOME} && \
     mkdir <%= analyzer %> && \
     mv <%= analyzer %>_Pipfile <%= analyzer %>/Pipfile && \

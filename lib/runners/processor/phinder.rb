@@ -2,6 +2,7 @@ module Runners
   class Processor::Phinder < Processor
     include PHP
 
+    DEFAULT_RULE_FILE = "phinder.yml".freeze
     Schema = StrongJSON.new do
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
@@ -27,9 +28,9 @@ module Runners
       "Phinder"
     end
 
-    def test_phinder_config(config)
+    def test_phinder_config
       args = []
-      args.push("--config", config[:rule]) if config[:rule]
+      args.push("--config", ci_section[:rule]) if ci_section[:rule]
 
       _, stderr, status = capture3(analyzer_bin, "test", *args)
 
@@ -43,7 +44,7 @@ module Runners
         # Skip other configuration errors.
         # These errors should be reported when running `phinder find`.
       when 2
-        add_warning(<<~MESSAGE.chomp, file: config[:rule] || "phinder.yml")
+        add_warning(<<~MESSAGE.chomp, file: ci_section[:rule] || DEFAULT_RULE_FILE)
           Phinder configuration validation failed.
           Check the following output by `phinder test` command.
 
@@ -58,10 +59,10 @@ module Runners
       end
     end
 
-    def run_phinder(config)
+    def run_phinder
       args = []
-      args.push("--config", config[:rule]) if config[:rule]
-      args << config[:php] if config[:php]
+      args.push("--config", ci_section[:rule]) if ci_section[:rule]
+      args << ci_section[:php] if ci_section[:php]
 
       stdout, stderr, status = capture3(analyzer_bin, "find", "-f", "json", *args)
 
@@ -116,32 +117,27 @@ module Runners
     def analyze(changes)
       delete_unchanged_files(changes, except: ["*.yml", "*.yaml"])
 
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        paths = []
-        paths << relative_path(config[:rule]) if config[:rule]
-        paths << relative_path("phinder.yml")
-        ensure_phinder_config_files(*paths) do
-          test_phinder_config config
-          run_phinder config
-        end
+      paths = []
+      paths << relative_path(ci_section[:rule]) if ci_section[:rule]
+      paths << relative_path(DEFAULT_RULE_FILE)
+      ret = ensure_files(*paths) do
+        test_phinder_config
+        run_phinder
       end
-    end
 
-    # TODO: Implement methods as a Runners utility
-    def ensure_phinder_config_files(*paths)
-      trace_writer.message "Checking if required file exists: #{paths.join(', ')}"
+      # NOTE: Exceptionally MissingFileFailure is treated as successful
+      if ret.instance_of? Results::MissingFilesFailure
+        trace_writer.error "File not found: #{paths.join(", ")}"
+        add_warning(<<~MESSAGE, file: DEFAULT_RULE_FILE)
+          Sider cannot find the required configuration file(s): `#{DEFAULT_RULE_FILE}`.
+          Please set up Phinder by following the instructions, or you can disable it in the repository settings.
 
-      file = paths.find { |path| (working_dir + path).file? }
-      if file
-        trace_writer.message "Found #{file}"
-        yield file
-      else
-        trace_writer.error "No file found..."
-        add_warning(<<~MESSAGE, file: "phinder.yml")
-          File not found: `phinder.yml`. This file is necessary for analysis.
-          See also: https://help.sider.review/tools/php/phinder
+          - https://github.com/sider/phinder
+          - https://help.sider.review/tools/php/phinder
         MESSAGE
         Results::Success.new(guid: guid, analyzer: analyzer)
+      else
+        ret
       end
     end
   end

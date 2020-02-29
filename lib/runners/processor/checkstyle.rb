@@ -36,50 +36,48 @@ module Runners
     end
 
     def analyze(changes)
-      ensure_runner_config_schema(Schema.runner_config) do
-        analyzer_version
+      analyzer_version
 
-        delete_unchanged_files(changes, only: ["*.java"])
+      delete_unchanged_files(changes, only: ["*.java"])
 
-        config_file = config_file()
-        trace_writer.message("Using configuration: #{config_file}")
+      config_file = config_file()
+      trace_writer.message("Using configuration: #{config_file}")
 
-        dir = check_directory()
-        trace_writer.message("Checking directory: #{dir}")
+      dir = check_directory()
+      trace_writer.message("Checking directory: #{dir}")
 
-        excludes = excluded_directories()
-        trace_writer.message("Excluded directories: #{excludes.map { |x|
-          case
-          when x[:string]
-            "string(#{x[:string]})"
-          when x[:pattern]
-            "pattern(#{x[:pattern]})"
-          end
-        }.join(", ")}") unless excludes.empty?
-
-        properties = properties_file()
-        trace_writer.message("Properties file: #{properties}") if properties
-
-        stdout, stderr, _ = capture3(analyzer_bin, *dir, *checkstyle_args(config: config_file, excludes: excludes, properties: properties))
-
-        begin
-          xml_root = REXML::Document.new(stdout).root
-        rescue REXML::ParseException => exn
-          message = exn.message
-          trace_writer.error "Invalid XML output: #{message}"
-          return Results::Failure.new(guid: guid, analyzer: analyzer, message: message)
+      excludes = excluded_directories()
+      trace_writer.message("Excluded directories: #{excludes.map { |x|
+        case
+        when x[:string]
+          "string(#{x[:string]})"
+        when x[:pattern]
+          "pattern(#{x[:pattern]})"
         end
+      }.join(", ")}") unless excludes.empty?
 
-        if xml_root
-          Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-            construct_result(xml_root) do |issue|
-              result.add_issue(issue)
-            end
+      properties = properties_file()
+      trace_writer.message("Properties file: #{properties}") if properties
+
+      stdout, stderr, _ = capture3(analyzer_bin, *dir, *checkstyle_args(config: config_file, excludes: excludes, properties: properties))
+
+      begin
+        xml_root = REXML::Document.new(stdout).root
+      rescue REXML::ParseException => exn
+        message = exn.message
+        trace_writer.error "Invalid XML output: #{message}"
+        return Results::Failure.new(guid: guid, analyzer: analyzer, message: message)
+      end
+
+      if xml_root
+        Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+          construct_result(xml_root) do |issue|
+            result.add_issue(issue)
           end
-        else
-          message = stdout.empty? ? stderr.lines.first : stdout
-          Results::Failure.new(guid: guid, analyzer: analyzer, message: message.strip)
         end
+      else
+        message = stdout.empty? ? stderr.lines.first : stdout
+        Results::Failure.new(guid: guid, analyzer: analyzer, message: message.strip)
       end
     end
 
@@ -147,27 +145,23 @@ module Runners
       ["https://checkstyle.org/config_#{category}.html##{id}"]
     end
 
-    def configuration
-      @configuration ||= ci_section.deep_symbolize_keys
-    end
-
     def config_file
-      case configuration[:config] || "google"
+      case ci_section[:config] || "google"
       when "sun"
         "/sun_checks.xml"
       when "google"
         "/google_checks.xml"
       else
-        configuration[:config]
+        ci_section[:config]
       end
     end
 
     def check_directory
-      array(configuration[:dir] || ".")
+      array(ci_section[:dir] || ".")
     end
 
     def excluded_directories
-      array(configuration[:exclude]).map do |x|
+      array(ci_section[:exclude]).map do |x|
         case x
         when String
           { string: x }
@@ -178,11 +172,11 @@ module Runners
     end
 
     def properties_file
-      configuration[:properties]
+      ci_section[:properties]
     end
 
     def ignored_severities
-      array(configuration[:ignore])
+      array(ci_section[:ignore])
     end
 
     def array(value)

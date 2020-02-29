@@ -5,6 +5,7 @@ class Runners::Config
 
   def initialize: (Pathname) -> any
   def path_name: -> String
+  def path_exist?: -> bool
   def ignore: -> Array<String>
   def path: -> Pathname?
   def parse_yaml: () -> String?

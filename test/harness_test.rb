@@ -72,6 +72,10 @@ class HarnessTest < Minitest::Test
 
   def test_run_filters_issues
     processor = Class.new(Processor) do
+      def self.ci_config_section_name
+        'test'
+      end
+
       def analyze(changes)
         Results::Success.new(guid: guid, analyzer: Analyzer.new(name: "Test", version: "0.1.3")).tap do |result|
           result.add_issue Issue.new(
@@ -178,6 +182,10 @@ class HarnessTest < Minitest::Test
 
   def test_setup_analyze
     processor = Class.new(Processor) do
+      def self.ci_config_section_name
+        'test'
+      end
+
       def setup
         (current_dir + "touch").write("#setup should be called before #analyze")
         yield

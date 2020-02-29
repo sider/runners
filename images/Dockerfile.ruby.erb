@@ -1,6 +1,5 @@
-<% analyzer = ENV.fetch('ANALYZER') %>
 # Install the default version
-COPY --chown=<%= ENV.fetch("RUNNER_CHOWN") %> images/<%= analyzer %>/Gemfile ${RUNNER_USER_HOME}/<%= analyzer %>_Gemfile
+COPY --chown=<%= chown %> images/<%= analyzer %>/Gemfile ${RUNNER_USER_HOME}/<%= analyzer %>_Gemfile
 RUN cd ${RUNNER_USER_HOME} && \
     mkdir <%= analyzer %> && \
     mv <%= analyzer %>_Gemfile <%= analyzer %>/Gemfile && \

@@ -93,11 +93,9 @@ module Runners
     def setup
       add_warning_if_deprecated_options([:options], doc: "https://help.sider.review/tools/ruby/rubocop")
 
-      ensure_runner_config_schema(Schema.runner_config) do
-        install_gems default_gem_specs, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS do |versions|
-          analyzer
-          yield
-        end
+      install_gems default_gem_specs, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS do
+        analyzer
+        yield
       end
     rescue InstallGemsFailure => exn
       trace_writer.error exn.message
@@ -105,34 +103,15 @@ module Runners
     end
 
     def analyze(_)
-      # TODO: Remove duplicated `ensure_runner_config_schema` method call
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        check_runner_config(config) do |options|
-          run_analyzer(options)
-        end
-      end
+      options = ["--display-style-guide", "--cache=false", "--no-display-cop-names", rails_option, config_file, safe].compact
+      run_analyzer(options)
     end
 
     private
 
-    def check_runner_config(config)
-      opts = %w[
-        --display-style-guide
-        --cache=false
-        --no-display-cop-names
-      ]
-
-      # Additional Options
-      opts << rails_option(config)
-      opts << config_file(config)
-      opts << safe(config)
-
-      yield opts.compact
-    end
-
-    def rails_option(config)
-      rails = config[:rails]
-      rails = config.dig(:options, :rails) if rails.nil?
+    def rails_option
+      rails = ci_section[:rails]
+      rails = ci_section.dig(:options, :rails) if rails.nil?
       case
       when rails && !rails_cops_removed?
         '--rails'
@@ -151,13 +130,13 @@ module Runners
       end
     end
 
-    def config_file(config)
-      config_path = config[:config] || config.dig(:options, :config)
+    def config_file
+      config_path = ci_section[:config] || ci_section.dig(:options, :config)
       "--config=#{config_path}" if config_path
     end
 
-    def safe(config)
-      "--safe" if config[:safe]
+    def safe
+      "--safe" if ci_section[:safe]
     end
 
     def setup_default_config

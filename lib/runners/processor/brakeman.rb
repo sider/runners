@@ -21,11 +21,9 @@ module Runners
     end
 
     def setup
-      ensure_runner_config_schema(Schema.runner_config) do
-        install_gems default_gem_specs, constraints: CONSTRAINTS do |versions|
-          analyzer
-          yield
-        end
+      install_gems default_gem_specs, constraints: CONSTRAINTS do
+        analyzer
+        yield
       end
     rescue InstallGemsFailure => exn
       trace_writer.error exn.message

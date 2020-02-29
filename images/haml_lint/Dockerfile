@@ -1,8 +1,9 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# NOTE: DO *NOT* EDIT THIS FILE.  IT IS GENERATED.
-# PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE
+# NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
+# PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM sider/devon_rex_ruby:2.14.0
+
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
@@ -28,6 +29,7 @@ RUN cd ${RUNNER_USER_HOME} && \
     gem list haml_lint
 
 COPY --chown=analyzer_runner:nogroup images/haml_lint/default_rubocop.yml ${RUNNER_USER_HOME}/
+
 
 # Copy the main source code
 COPY --chown=analyzer_runner:nogroup bin ${RUNNERS_DIR}/bin

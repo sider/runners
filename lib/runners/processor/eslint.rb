@@ -53,92 +53,70 @@ module Runners
     def setup
       add_warning_if_deprecated_options([:options], doc: "https://help.sider.review/tools/javascript/eslint")
 
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        begin
-          install_nodejs_deps(DEFAULT_DEPS, constraints: CONSTRAINTS, install_option: config[:npm_install])
-        rescue UserError => exn
-          return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
-        end
-        analyzer
-        yield
+      begin
+        install_nodejs_deps(DEFAULT_DEPS, constraints: CONSTRAINTS, install_option: ci_section[:npm_install])
+      rescue UserError => exn
+        return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
       end
+      analyzer
+      yield
     end
 
-    def analyze(changes)
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        check_runner_config(config) do |dir, additional_options|
-          run_analyzer(dir, additional_options)
-        end
-      end
+    def analyze(_changes)
+      additional_options = [eslint_config, ext, ignore_path, ignore_pattern, no_ignore, global, quiet].flatten.compact
+      run_analyzer(dir, additional_options)
     end
 
     private
 
-    def check_runner_config(config)
-      # Required option, which has the default value.
-      dir = dir(config)
-
-      # Additional options
-      eslint_config = eslint_config(config)
-      ext = ext(config)
-      ignore_path = ignore_path(config)
-      ignore_pattern = ignore_pattern(config)
-      no_ignore = no_ignore(config)
-      global = global(config)
-      quiet = quiet(config)
-
-      additional_options = [eslint_config, ext, ignore_path, ignore_pattern, no_ignore, global, quiet].flatten.compact
-      yield dir, additional_options
-    end
-
-    def dir(config)
-      dir = config[:dir] || config.dig(:options, :dir) || '.'
+    def dir
+      dir = ci_section[:dir] || ci_section.dig(:options, :dir) || '.'
       Array(dir)
     end
 
-    def eslint_config(config)
-      conf = user_specified_eslint_config_path(config)
+    def eslint_config
+      conf = user_specified_eslint_config_path
       "--config=#{conf}" if conf
     end
 
-    def user_specified_eslint_config_path(config)
-      path = config[:config] || config.dig(:options, :config)
+    def user_specified_eslint_config_path
+      path = ci_section[:config] || ci_section.dig(:options, :config)
       if path && directory_traversal_attack?(path)
         path = nil
       end
       path
     end
 
-    def ext(config)
-      ext = config[:ext] || config.dig(:options, :ext)
+    def ext
+      ext = ci_section[:ext] || ci_section.dig(:options, :ext)
       "--ext=#{ext}" if ext
     end
 
-    def ignore_path(config)
-      ignore_path = config[:'ignore-path'] || config.dig(:options, :'ignore-path')
+    def ignore_path
+      ignore_path = ci_section[:'ignore-path'] || ci_section.dig(:options, :'ignore-path')
       "--ignore-path=#{ignore_path}" if ignore_path
     end
 
-    def ignore_pattern(config)
-      ignore_pattern = config[:'ignore-pattern'] || config.dig(:options, :'ignore-pattern')
+    def ignore_pattern
+      ignore_pattern = ci_section[:'ignore-pattern'] || ci_section.dig(:options, :'ignore-pattern')
       pattern = Array(ignore_pattern)
       unless pattern.empty?
         pattern.map { |value| "--ignore-pattern=#{value}" }
       end
     end
 
-    def no_ignore(config)
-      no_ignore = config[:'no-ignore'] || config.dig(:options, :'no-ignore')
+    def no_ignore
+      no_ignore = ci_section[:'no-ignore'] || ci_section.dig(:options, :'no-ignore')
       "--no-ignore" if no_ignore
     end
 
-    def global(config)
-      global = config[:global] || config.dig(:options, :global)
+    def global
+      global = ci_section[:global] || ci_section.dig(:options, :global)
       "--global='#{global}'" if global
     end
 
-    def quiet(config)
-      quiet = config[:quiet] || config.dig(:options, :quiet)
+    def quiet
+      quiet = ci_section[:quiet] || ci_section.dig(:options, :quiet)
       "--quiet" if quiet
     end
 

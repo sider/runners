@@ -1,6 +1,6 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# NOTE: DO *NOT* EDIT THIS FILE.  IT IS GENERATED.
-# PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE
+# NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
+# PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM sider/devon_rex_go:2.12.0
 
@@ -11,6 +11,7 @@ RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/i
 
 USER $RUNNER_USER
 RUN golangci-lint --version
+
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
@@ -23,6 +24,7 @@ RUN cd ${RUNNERS_DIR} && \
     bundle config && \
     bundle install
 COPY --chown=analyzer_runner:nogroup images/golangci_lint/sider_golangci.yml ${RUNNER_USER_HOME}/
+
 # Copy the main source code
 COPY --chown=analyzer_runner:nogroup bin ${RUNNERS_DIR}/bin
 COPY --chown=analyzer_runner:nogroup lib ${RUNNERS_DIR}/lib

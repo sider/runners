@@ -25,6 +25,10 @@ module Runners
       path&.basename&.to_s || CONFIG_FILE_NAME
     end
 
+    def path_exist?
+      path
+    end
+
     def ignore
       Array(content&.fetch(:ignore))
     end
@@ -51,7 +55,7 @@ module Runners
       message = "The attribute `#{exn.path}.#{exn.attribute}` of `#{path_name}` cannot exist."
       raise InvalidConfiguration.new(message, input_string)
     rescue StrongJSON::Type::TypeError => exn
-      message = "The value of the attribute `#{exn.path}` is invalid."
+      message = "The value of the attribute `#{exn.path}` of `#{path_name}` is invalid."
       raise InvalidConfiguration.new(message, input_string)
     end
 

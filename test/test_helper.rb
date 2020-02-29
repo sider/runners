@@ -50,4 +50,11 @@ module TestHelper
       end
     end
   end
+
+  def config(yaml = nil)
+    mktmpdir do |path|
+      (path / 'sider.yml').write(yaml) if yaml
+      Runners::Config.new(path)
+    end
+  end
 end

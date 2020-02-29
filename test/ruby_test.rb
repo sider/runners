@@ -20,6 +20,26 @@ class RubyTest < Minitest::Test
     )
   end
 
+  def processor_class
+    @processor_class ||= Class.new(Runners::Processor) do
+      include Runners::Ruby
+
+      def self.ci_config_section_name
+        "rubocop"
+      end
+    end
+  end
+
+  def new_processor(workspace:, git_ssh_path: nil, config_yaml: nil)
+    processor_class.new(
+      guid: SecureRandom.uuid,
+      workspace: workspace,
+      config: config(config_yaml),
+      git_ssh_path: git_ssh_path,
+      trace_writer: trace_writer,
+    )
+  end
+
   def test_gemfile_content
     specs = [
       Spec.new(name: "rubocop", version: [], source: Source::Git.new("https://github.com/rubocop-hq/rubocop.git", branch: "master")),
@@ -37,7 +57,7 @@ class RubyTest < Minitest::Test
         shell: shell,
         specs: specs,
         home: path,
-        ci_config_path_name: "sider.yml",
+        config_path_name: "sider.yml",
         constraints: { "strong_json" => ["<= 0.8"], "rubocop" => [">= 0.55.0"] },
         trace_writer: trace_writer
       )
@@ -80,7 +100,7 @@ class RubyTest < Minitest::Test
           Spec.new(name: "rubocop-sider", version: [], source: Source::Rubygems.new("https://gems.sider.review")),
         ],
         home: path,
-        ci_config_path_name: "sider.yml",
+        config_path_name: "sider.yml",
         constraints: {},
         trace_writer: trace_writer
       )
@@ -103,7 +123,7 @@ class RubyTest < Minitest::Test
         shell: shell,
         specs: specs,
         home: path,
-        ci_config_path_name: "sider.yml",
+        config_path_name: "sider.yml",
         trace_writer: trace_writer,
         constraints: {}
       )
@@ -126,7 +146,7 @@ class RubyTest < Minitest::Test
         shell: shell,
         specs: specs,
         home: path,
-        ci_config_path_name: "sider.yml",
+        config_path_name: "sider.yml",
         trace_writer: trace_writer,
         constraints: { "strong_json" => ["<= 0.8.0"] }
       )
@@ -162,7 +182,7 @@ class RubyTest < Minitest::Test
         shell: shell,
         specs: specs,
         home: path,
-        ci_config_path_name: "sider.yml",
+        config_path_name: "sider.yml",
         trace_writer: trace_writer,
         constraints: { "strong_json" => ["> 0.6.0"] }
       )
@@ -177,11 +197,11 @@ class RubyTest < Minitest::Test
   def test_from_gems
     specs = Spec.from_gems([
       "rubocop",
-      { "name" => "strong_json", "version" => "0.7.0", "source" => "https://my.gems.org" },
-      { "name" => "rubocop-sider", "git" => { "repo" => "https://github.com/sider/rubocop-sider.git" } },
-      { "name" => "runners", "git" => { "repo" => "git@github.com:sider/runners.git", "ref" => "e66806c02849a0d0bdea66be88b5967d5eb3305d" } },
-      { "name" => "rubocop-rails", "git" => { "repo" => "https://github.com/rubocop-hq/rubocop-rails.git", "branch" => "dev" } },
-      { "name" => "rubocop-rspec", "git" => { "repo" => "https://github.com/rubocop-hq/rubocop-rspec.git", "tag" => "v1.13.0" } },
+      { name: "strong_json", version: "0.7.0", source: "https://my.gems.org" },
+      { name: "rubocop-sider", git: { repo: "https://github.com/sider/rubocop-sider.git" } },
+      { name: "runners", git: { repo: "git@github.com:sider/runners.git", ref: "e66806c02849a0d0bdea66be88b5967d5eb3305d" } },
+      { name: "rubocop-rails", git: { repo: "https://github.com/rubocop-hq/rubocop-rails.git", branch: "dev" } },
+      { name: "rubocop-rspec", git: { repo: "https://github.com/rubocop-hq/rubocop-rspec.git", tag: "v1.13.0" } },
     ])
 
     assert_equal [
@@ -477,20 +497,8 @@ EOF
   end
 
   def test_install_no_gems
-    klass = Class.new(Runners::Processor) do
-      include Runners::Ruby
-
-      def ci_section
-        { }
-      end
-    end
-
     with_workspace do |workspace|
-      processor = klass.new(guid: SecureRandom.uuid,
-                            workspace: workspace,
-                            git_ssh_path: nil,
-                            trace_writer: trace_writer)
-
+      processor = new_processor(workspace: workspace)
       processor.install_gems([Spec.new(name: "strong_json", version: ["0.5.0"])],
                          constraints: {}) do
         stdout, _ = processor.shell.capture3!("bundle", "show")
@@ -500,14 +508,6 @@ EOF
   end
 
   def test_install_gems_with_gems
-    klass = Class.new(Runners::Processor) do
-      include Runners::Ruby
-
-      def ci_section
-        { "gems" => ["strong_json"] }
-      end
-    end
-
     with_workspace do |workspace|
       (workspace.working_dir + "Gemfile").write(<<EOF)
 source "https://rubygems.org"
@@ -521,11 +521,11 @@ EOF
         end
       end
 
-      processor = klass.new(guid: SecureRandom.uuid,
-                            workspace: workspace,
-                            git_ssh_path: nil,
-                            trace_writer: trace_writer)
-
+      processor = new_processor(workspace: workspace, config_yaml: <<~YAML)
+        linter:
+          rubocop:
+            gems: ["strong_json"]
+      YAML
       processor.install_gems([Spec.new(name: "rubocop", version: ["0.63.0"])],
                              optionals: [Spec.new(name: "meowcop", version: ["1.17.1"])],
                              constraints: {}) do
@@ -538,19 +538,12 @@ EOF
   end
 
   def test_install_gems_with_gems_failure
-    klass = Class.new(Runners::Processor) do
-      include Runners::Ruby
-
-      def ci_section
-        { "gems" => ["no such gem"] }
-      end
-    end
-
     with_workspace do |workspace|
-      processor = klass.new(guid: SecureRandom.uuid,
-                            workspace: workspace,
-                            git_ssh_path: nil,
-                            trace_writer: trace_writer)
+      processor = new_processor(workspace: workspace, config_yaml: <<~YAML)
+        linter:
+          rubocop:
+            gems: ["no such gem"]
+      YAML
 
       assert_raises GemInstaller::InstallationFailure do
         processor.install_gems([Spec.new(name: "rubocop", version: ["0.63.0"])],
@@ -562,36 +555,7 @@ EOF
     end
   end
 
-  def test_install_gems_with_invalid_gem_definition
-    klass = Class.new(Runners::Processor) do
-      include Runners::Ruby
-
-      def ci_section
-        { "gems" => [{ "version" => "0.62.0" }] }
-      end
-    end
-
-    with_workspace do |workspace|
-      processor = klass.new(guid: SecureRandom.uuid,
-                            workspace: workspace,
-                            git_ssh_path: nil,
-                            trace_writer: trace_writer)
-
-      assert_raises Spec::InvalidGemDefinition do
-        processor.install_gems([Spec.new(name: "rubocop", version: ["0.63.0"])],
-                               optionals: [Spec.new(name: "meowcop", version: ["1.17.1"])],
-                               constraints: {}) do
-          # nop
-        end
-      end
-    end
-  end
-
   def test_install_gems_with_optionals
-    klass = Class.new(Runners::Processor) do
-      include Runners::Ruby
-    end
-
     with_workspace do |workspace|
       (workspace.working_dir + "Gemfile").write(<<EOF)
 source "https://rubygems.org"
@@ -605,11 +569,7 @@ EOF
         end
       end
 
-      processor = klass.new(guid: SecureRandom.uuid,
-                            workspace: workspace,
-                            git_ssh_path: nil,
-                            trace_writer: trace_writer)
-
+      processor = new_processor(workspace: workspace)
       processor.install_gems([Spec.new(name: "rubocop", version: ["0.63.0"])],
                              optionals: [Spec.new(name: "meowcop", version: ["1.17.1"])],
                              constraints: {}) do
@@ -621,19 +581,6 @@ EOF
   end
 
   def test_install_gems_with_gemfile_lock
-    klass = Class.new(Runners::Processor) do
-      include Runners::Ruby
-
-      def ci_section
-        {
-          "gems" => [
-            "strong_json",
-            { "name" => "jack_and_the_elastic_beanstalk", "version" => "0.2.2" }
-          ]
-        }
-      end
-    end
-
     with_workspace do |workspace|
       (workspace.working_dir + "Gemfile").write(<<EOF)
 source "https://rubygems.org"
@@ -651,10 +598,14 @@ EOF
         end
       end
 
-      processor = klass.new(guid: SecureRandom.uuid,
-                            workspace: workspace,
-                            git_ssh_path: nil,
-                            trace_writer: trace_writer)
+      processor = new_processor(workspace: workspace, config_yaml: <<~YAML)
+        linter:
+          rubocop:
+            gems:
+              - strong_json
+              - name: jack_and_the_elastic_beanstalk
+                version: "0.2.2"
+      YAML
 
       processor.install_gems([Spec.new(name: "rubocop", version: ["0.63.0"])],
                              optionals: [Spec.new(name: "meowcop", version: ["1.17.1"])],
@@ -671,10 +622,6 @@ EOF
 
 
   def test_install_gems_with_gemfile_lock_which_does_not_satisfy_constraints
-    klass = Class.new(Runners::Processor) do
-      include Runners::Ruby
-    end
-
     with_workspace do |workspace|
       (workspace.working_dir + "Gemfile").write(<<EOF)
 source "https://rubygems.org"
@@ -688,11 +635,7 @@ EOF
         end
       end
 
-      processor = klass.new(guid: SecureRandom.uuid,
-                            workspace: workspace,
-                            git_ssh_path: nil,
-                            trace_writer: trace_writer)
-
+      processor = new_processor(workspace: workspace)
       processor.install_gems([Spec.new(name: "rubocop", version: ["0.66.0"])],
                              constraints: { "rubocop" => ["> 0.65.0"] }) do
         assert_equal 1, processor.warnings.count
@@ -711,23 +654,14 @@ EOF
   end
 
   def test_install_gems_with_gems_which_does_not_satisfy_constraints
-    klass = Class.new(Runners::Processor) do
-      include Runners::Ruby
-
-      def ci_section
-        {
-          "gems" => [
-            { "name" => "rubocop", "version" => "0.62.0" }
-          ]
-        }
-      end
-    end
-
     with_workspace do |workspace|
-      processor = klass.new(guid: SecureRandom.uuid,
-                            workspace: workspace,
-                            git_ssh_path: nil,
-                            trace_writer: trace_writer)
+      processor = new_processor(workspace: workspace, config_yaml: <<~YAML)
+        linter:
+          rubocop:
+            gems:
+              - name: rubocop
+                version: "0.62.0"
+      YAML
 
       assert_raises GemInstaller::InstallationFailure do
         processor.install_gems([Spec.new(name: "rubocop", version: ["0.66.0"])],
@@ -739,23 +673,15 @@ EOF
   end
 
   def test_install_gems_with_other_sources
-    klass = Class.new(Runners::Processor) do
-      include Runners::Ruby
-
-      def ci_section
-        {
-          "gems" => [
-            { "name" => "rubocop-rspec", "source" => "https://rubygems.cae.me.uk" },
-          ]
-        }
-      end
-    end
-
     with_workspace do |workspace|
-      processor = klass.new(guid: SecureRandom.uuid,
-                            workspace: workspace,
-                            git_ssh_path: nil,
-                            trace_writer: trace_writer)
+      processor = new_processor(workspace: workspace, config_yaml: <<~YAML)
+        linter:
+          rubocop:
+            gems:
+              - name: rubocop-rspec
+                version: "1.28.0"
+                source: "https://rubygems.cae.me.uk"
+      YAML
 
       processor.install_gems([Spec.new(name: "rubocop", version: ["0.63.0"])],
                              optionals: [],
@@ -767,28 +693,30 @@ EOF
   end
 
   def test_install_gems_with_git_sources
-    klass = Class.new(Runners::Processor) do
-      include Runners::Ruby
-
-      def ci_section
-        {
-          "gems" => [
-            { "name" => "jack_and_the_elastic_beanstalk", "git" => { "repo" => "https://github.com/sider/jack_and_the_elastic_beanstalk.git" } },
-            { "name" => "meowcop", "git" => { "repo" => "https://github.com/sider/meowcop.git", "tag" => "v1.16.0" } },
-            { "name" => "configure", "git" => { "repo" => "https://github.com/sider/configure.git", "ref" => "9b4703aea9dee97fe0ada15812c46ecf622c352c" } },
-            { "name" => "ruby_private_gem", "git" => { "repo" => "git@github.com:sider/ruby_private_gem.git", "branch" => "gem" } }
-          ]
-        }
-      end
-    end
-
     with_workspace(head: (Pathname(__dir__) + "data/foo.tgz").to_s,
                    ssh_key: (Pathname(__dir__) + "data/ruby_private_gem_deploy_key").read) do |workspace|
       workspace.open do |git_ssh_path|
-        processor = klass.new(guid: SecureRandom.uuid,
-                              workspace: workspace,
-                              git_ssh_path: git_ssh_path&.to_s,
-                              trace_writer: workspace.trace_writer)
+        processor = new_processor(workspace: workspace, git_ssh_path: git_ssh_path.to_s, config_yaml: <<~YAML)
+          linter:
+            rubocop:
+              gems:
+                - name: jack_and_the_elastic_beanstalk
+                  git:
+                    repo: https://github.com/sider/jack_and_the_elastic_beanstalk.git
+                    branch: master
+                - name: meowcop
+                  git:
+                    repo: https://github.com/sider/meowcop.git
+                    tag: v1.16.0
+                - name: configure
+                  git:
+                    repo: https://github.com/sider/configure.git
+                    ref: 9b4703aea9dee97fe0ada15812c46ecf622c352c
+                - name: ruby_private_gem
+                  git:
+                    repo: git@github.com:sider/ruby_private_gem.git
+                    branch: gem
+        YAML
         processor.install_gems([Spec.new(name: "rubocop", version: ["0.63.0"])],
                                optionals: [],
                                constraints: {}) do
@@ -804,23 +732,16 @@ EOF
   end
 
   def test_install_gems_with_only_git_sources
-    klass = Class.new(Runners::Processor) do
-      include Runners::Ruby
-
-      def ci_section
-        {
-          "gems" => [
-            { "name" => "rubocop", "git" => { "repo" => "https://github.com/rubocop-hq/rubocop.git", "tag" => "v0.63.1" } },
-          ]
-        }
-      end
-    end
-
     with_workspace do |workspace|
-      processor = klass.new(guid: SecureRandom.uuid,
-                            workspace: workspace,
-                            git_ssh_path: nil,
-                            trace_writer: trace_writer)
+      processor = new_processor(workspace: workspace, config_yaml: <<~YAML)
+        linter:
+          rubocop:
+            gems:
+              - name: rubocop
+                git:
+                  repo: https://github.com/rubocop-hq/rubocop.git
+                  tag: v0.63.1
+      YAML
 
       processor.install_gems([], optionals: [], constraints: {}) do
         stdout, _ = processor.shell.capture3!("bundle", "show")
@@ -830,23 +751,15 @@ EOF
   end
 
   def test_install_gems_with_only_other_rubygems
-    klass = Class.new(Runners::Processor) do
-      include Runners::Ruby
-
-      def ci_section
-        {
-          "gems" => [
-            { "name" => "rack", "version" => "2.2.2", "source" => "https://rubygems.cae.me.uk" },
-          ]
-        }
-      end
-    end
-
     with_workspace do |workspace|
-      processor = klass.new(guid: SecureRandom.uuid,
-                            workspace: workspace,
-                            git_ssh_path: nil,
-                            trace_writer: trace_writer)
+      processor = new_processor(workspace: workspace, config_yaml: <<~YAML)
+        linter:
+          rubocop:
+            gems:
+              - name: rack
+                version: "2.2.2"
+                source: https://rubygems.cae.me.uk
+      YAML
 
       processor.install_gems([], optionals: [], constraints: {}) do
         stdout, _ = processor.shell.capture3!("bundle", "show")
@@ -856,14 +769,8 @@ EOF
   end
 
   def test_installed_gem_versions
-    klass = Class.new(Runners::Processor).include(Runners::Ruby)
-
     with_workspace do |workspace|
-      processor = klass.new(
-        guid: SecureRandom.uuid, workspace: workspace,
-        git_ssh_path: nil, trace_writer: trace_writer,
-      )
-
+      processor = new_processor(workspace: workspace)
       mock(processor).capture3!("gem", "list", "--quiet", "--exact", "rubocop", "meowcop") do
         <<~OUTPUT
           rubocop (0.75.1, 0.75.0)
@@ -889,20 +796,10 @@ EOF
   end
 
   def test_default_gem_specs
-    klass = Class.new(Runners::Processor) do
-      include Runners::Ruby
-
-      def analyzer_bin
-        "rubocop"
-      end
-    end
-
     with_workspace do |workspace|
-      processor = klass.new(
-        guid: SecureRandom.uuid, workspace: workspace,
-        git_ssh_path: nil, trace_writer: trace_writer,
-      )
+      processor = new_processor(workspace: workspace)
 
+      mock(processor).analyzer_bin { "rubocop" }
       mock(processor).capture3!("gem", "list", "--quiet", "--exact", "rubocop").twice do
         <<~OUTPUT
           rubocop (0.75.1, 0.75.0)

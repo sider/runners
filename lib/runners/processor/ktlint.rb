@@ -166,25 +166,23 @@ module Runners
     end
 
     def analyze(changes)
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        delete_unchanged_files changes, only: [".kt", ".kts"]
+      delete_unchanged_files changes, only: [".kt", ".kts"]
 
-        check_runner_config(config) do |checked_config|
-          @ktlint_config = checked_config
+      check_runner_config do |checked_config|
+        @ktlint_config = checked_config
 
-          issues = case
-                   when gradle_config
-                     run_gradle
-                   when maven_config
-                     run_maven
-                   else
-                     run_cli
-                   end
+        issues = case
+                 when gradle_config
+                   run_gradle
+                 when maven_config
+                   run_maven
+                 else
+                   run_cli
+                 end
 
-          Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-            issues.each do |issue|
-              result.add_issue issue
-            end
+        Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+          issues.each do |issue|
+            result.add_issue issue
           end
         end
       end
@@ -271,36 +269,36 @@ module Runners
       end
     end
 
-    def check_runner_config(config)
+    def check_runner_config
       case
-      when config[:gradle]
+      when ci_section[:gradle]
         yield(
           {
             gradle: {
-              task: config[:gradle][:task],
-              reporter: config[:gradle][:reporter],
-              output: config[:gradle][:output]
+              task: ci_section[:gradle][:task],
+              reporter: ci_section[:gradle][:reporter],
+              output: ci_section[:gradle][:output]
             }
           }
         )
-      when config[:maven]
+      when ci_section[:maven]
         yield(
           {
             maven: {
-              goal: config[:maven][:goal],
-              reporter: config[:maven][:reporter],
-              output: config[:maven][:output]
+              goal: ci_section[:maven][:goal],
+              reporter: ci_section[:maven][:reporter],
+              output: ci_section[:maven][:output]
             }
           }
         )
-      when config[:cli]
+      when ci_section[:cli]
         yield(
           {
             cli: {
-              patterns: Array(config[:cli][:patterns]),
-              ruleset: Array(config[:cli][:ruleset]),
-              disabled_rules: Array(config[:cli][:disabled_rules]),
-              experimental: config[:cli][:experimental] || false
+              patterns: Array(ci_section[:cli][:patterns]),
+              ruleset: Array(ci_section[:cli][:ruleset]),
+              disabled_rules: Array(ci_section[:cli][:disabled_rules]),
+              experimental: ci_section[:cli][:experimental] || false
             }
           }
         )

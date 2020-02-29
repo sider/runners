@@ -9,5 +9,5 @@ USER $RUNNER_USER
 RUN golangci-lint --version
 
 <%= render_erb 'images/Dockerfile.base.erb' %>
-COPY --chown=<%= ENV.fetch("RUNNER_CHOWN") %> images/golangci_lint/sider_golangci.yml ${RUNNER_USER_HOME}/
+COPY --chown=<%= chown %> images/golangci_lint/sider_golangci.yml ${RUNNER_USER_HOME}/
 <%= render_erb 'images/Dockerfile.end.erb' %>

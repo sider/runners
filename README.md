@@ -56,12 +56,13 @@ Please follow these instructions.
 - Ruby (see [`.ruby-version`](.ruby-version))
 - Bundler (see [`Gemfile.lock`](Gemfile.lock))
 - Docker (the latest version recommended)
+- EditorConfig (see [`.editorconfig`](.editorconfig), and setup your editor)
 
 ### Setup
 
 First, after checking out the source code, run the following command to install Ruby:
 
-```shell
+```shell-session
 $ rbenv insall
 ```
 
@@ -69,13 +70,19 @@ If you don't want to use [rbenv](https://github.com/rbenv/rbenv), you need to ma
 
 Next, let's install gem dependencies via [Bundler](https://bundler.io):
 
-```shell
+```shell-session
 $ bundle install
 ```
 
-Then, run the following command to show available commands in the project:
+Then, install Git hooks via [Lefthook](https://github.com/Arkweid/lefthook):
 
-```shell
+```shell-session
+$ bundle exec lefthook install
+```
+
+Last, run the following command to show available commands in the project:
+
+```shell-session
 $ bundle exec rake --tasks
 ```
 
@@ -83,7 +90,7 @@ These commands will help you develop! :wink:
 
 ### Project structure
 
-```shell
+```shell-session
 $ tree -F -L 1 -d
 .
 ├── bin
@@ -111,19 +118,19 @@ You can run unit tests via the `rake test` command as follow.
 
 All tests:
 
-```shell
+```shell-session
 $ bundle exec rake test
 ```
 
 Only a test file:
 
-```shell
+```shell-session
 $ bundle exec rake test TEST=test/cli_test.rb
 ```
 
 Only a test method:
 
-```shell
+```shell-session
 $ bundle exec rake test TEST=test/cli_test.rb TESTOPTS='--name=test_parsing_options'
 ```
 
@@ -131,7 +138,7 @@ $ bundle exec rake test TEST=test/cli_test.rb TESTOPTS='--name=test_parsing_opti
 
 You can run smoke tests via the `rake docker:smoke` command as follow:
 
-```shell
+```shell-session
 $ bundle exec rake docker:smoke ANALYZER=rubocop [ONLY=test1,test2,...] [SHOW_TRACE=true]
 ```
 
@@ -140,7 +147,7 @@ $ bundle exec rake docker:smoke ANALYZER=rubocop [ONLY=test1,test2,...] [SHOW_TR
 
 If you want to run tests right after changing code, you can run one command as follow:
 
-```shell
+```shell-session
 $ bundle exec rake docker:build docker:smoke ANALYZER=rubocop
 ```
 

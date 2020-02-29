@@ -3,7 +3,7 @@ module Runners
     class InstallGemsFailure < UserError; end
 
     def install_gems(default_specs, optionals: [], constraints:, &block)
-      user_specs = GemInstaller::Spec.from_gems(ci_section["gems"] || [])
+      user_specs = GemInstaller::Spec.from_gems(ci_section[:gems] || [])
 
       LockfileLoader.new(root_dir: root_dir, shell: shell).ensure_lockfile do |lockfile|
         default_specs = default_specs(default_specs, constraints, lockfile)
@@ -18,7 +18,7 @@ module Runners
 
         installer = GemInstaller.new(shell: shell,
                                      home: path,
-                                     ci_config_path_name: ci_config_path_name,
+                                     config_path_name: config.path_name,
                                      specs: specs,
                                      trace_writer: trace_writer,
                                      constraints: constraints)
@@ -37,7 +37,7 @@ module Runners
               Sider tried to install `#{spec.name} #{locked_version}` according to your `Gemfile.lock`, but it installs `#{spec.version.first}` instead.
               Because `#{locked_version}` does not satisfy the Sider constraints #{constraints[spec.name]}.
 
-              If you want to use a different version of `#{spec.name}`, update your `Gemfile.lock` to satisfy the constraint or specify the gem version in your `#{ci_config_path_name}`.
+              If you want to use a different version of `#{spec.name}`, update your `Gemfile.lock` to satisfy the constraint or specify the gem version in your `#{config.path_name}`.
               See https://help.sider.review/getting-started/custom-configuration#gems-option
             MESSAGE
             spec

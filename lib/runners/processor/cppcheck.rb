@@ -40,43 +40,36 @@ module Runners
     end
 
     def analyze(_changes)
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        @config = config
-        run_analyzer
-      end
+      run_analyzer
     end
 
     private
 
-    def config
-      @config or raise "Must be initialized!"
-    end
-
     def target
-      Array(config[:target] || DEFAULT_TARGET)
+      Array(ci_section[:target] || DEFAULT_TARGET)
     end
 
     def ignore
-      Array(config[:ignore] || DEFAULT_IGNORE).map { |i| ["-i", i] }.flatten
+      Array(ci_section[:ignore] || DEFAULT_IGNORE).map { |i| ["-i", i] }.flatten
     end
 
     def enable
-      id = config[:enable]
+      id = ci_section[:enable]
       Array(id ? "--enable=#{id}" : nil)
     end
 
     def std
-      id = config[:std]
+      id = ci_section[:std]
       Array(id ? "--std=#{id}" : nil)
     end
 
     def project
-      file = config[:project]
+      file = ci_section[:project]
       Array(file ? "--project=#{file}" : nil)
     end
 
     def language
-      lang = config[:language]
+      lang = ci_section[:language]
       Array(lang ? "--language=#{lang}" : nil)
     end
 

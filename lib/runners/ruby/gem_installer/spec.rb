@@ -2,8 +2,6 @@ module Runners
   module Ruby
     class GemInstaller
       class Spec
-        class InvalidGemDefinition < SystemError; end
-
         attr_reader :name, :version, :source
 
         alias versions version
@@ -35,21 +33,13 @@ module Runners
                    when Hash
                      _ = item
                    when String
-                     { "name" => item, "version" => nil }
+                     { name: item.to_s, version: nil }
                    end
 
-            name = hash["name"]
-            version = hash["version"]
+            name = hash[:name]
+            version = hash[:version]
 
-            # Schema validation is required in runner side
-            raise InvalidGemDefinition.new("Unexpected gems_item: #{hash.inspect}") unless name
-
-            spec_source =
-              begin
-                Source.create(hash)
-              rescue => exn
-                raise InvalidGemDefinition.new(exn.message)
-              end
+            spec_source = Source.create(hash)
 
             self.new(
               name: name,

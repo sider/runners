@@ -65,10 +65,8 @@ module Runners
     def setup
       add_warning_if_deprecated_options([:options], doc: "https://help.sider.review/tools/ruby/haml-lint")
 
-      ensure_runner_config_schema(Schema.runner_config) do
-        install_gems default_gem_specs, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS do |versions|
-          yield
-        end
+      install_gems default_gem_specs, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS do
+        yield
       end
     rescue InstallGemsFailure => exn
       trace_writer.error exn.message
@@ -76,11 +74,8 @@ module Runners
     end
 
     def analyze(_changes)
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        check_runner_config(config) do |targets, options|
-          run_analyzer(targets, options)
-        end
-      end
+      options = [include_linter, exclude_linter, exclude, haml_lint_config].compact
+      run_analyzer(file, options)
     end
 
     def setup_default_config
@@ -93,47 +88,33 @@ module Runners
       true
     end
 
-    def check_runner_config(config)
-      # Option which has a default value.
-      targets = file(config)
-
-      # Additional option.
-      include_linter = include_linter(config)
-      exclude_linter = exclude_linter(config)
-      exclude = exclude(config)
-      haml_lint_config = haml_lint_config(config)
-
-      options = [include_linter, exclude_linter, exclude, haml_lint_config].compact
-      yield targets, options
+    def file
+      ci_section[:file] || ci_section.dig(:options, :file) || '.'
     end
 
-    def file(config)
-      config[:file] || config.dig(:options, :file) || '.'
-    end
-
-    def include_linter(config)
-      include_linter = config[:include_linter] || config.dig(:options, :include_linter)
+    def include_linter
+      include_linter = ci_section[:include_linter] || ci_section.dig(:options, :include_linter)
       if include_linter
         "--include-linter=#{Array(include_linter).join(',')}"
       end
     end
 
-    def exclude_linter(config)
-      exclude_linter = config[:exclude_linter] || config.dig(:options, :exclude_linter)
+    def exclude_linter
+      exclude_linter = ci_section[:exclude_linter] || ci_section.dig(:options, :exclude_linter)
       if exclude_linter
         "--exclude-linter=#{Array(exclude_linter).join(',')}"
       end
     end
 
-    def exclude(config)
-      exclude = config[:exclude] || config.dig(:options, :exclude)
+    def exclude
+      exclude = ci_section[:exclude] || ci_section.dig(:options, :exclude)
       if exclude
         "--exclude=#{Array(exclude).join(',')}"
       end
     end
 
-    def haml_lint_config(config)
-      config = config[:config] || config.dig(:options, :config)
+    def haml_lint_config
+      config = ci_section[:config] || ci_section.dig(:options, :config)
       "--config=#{config}" if config
     end
 

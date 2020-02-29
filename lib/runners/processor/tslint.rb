@@ -41,18 +41,18 @@ module Runners
     end
 
     def setup
-      add_warning_if_deprecated_options([:options], doc: "https://help.sider.review/tools/javascript/tslint")
+      add_warning_for_deprecated_linter(alternative: "ESLint",
+                                        ref: "https://github.com/palantir/tslint/issues/4534",
+                                        deadline: Time.new(2020, 12, 1))
 
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        begin
-          install_nodejs_deps(DEFAULT_DEPS, constraints: CONSTRAINTS, install_option: config[:npm_install])
-        rescue UserError => exn
-          return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
-        end
-
-        analyzer # Must initialize after installation
-        yield
+      begin
+        install_nodejs_deps(DEFAULT_DEPS, constraints: CONSTRAINTS, install_option: ci_section[:npm_install])
+      rescue UserError => exn
+        return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
       end
+
+      analyzer # Must initialize after installation
+      yield
     end
 
     def analyzer_name
@@ -60,45 +60,27 @@ module Runners
     end
 
     def analyze(_changes)
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        check_runner_config(config) do |target, options|
-          run_analyzer(target, options)
-        end
-      end
+      options = [tslint_config, exclude, project, rules_dir, type_check].flatten.compact
+      run_analyzer(target_glob, options)
     end
 
     private
 
-    def check_runner_config(config)
-      # Target
-      target = target_glob(config)
-
-      # Additional Options
-      tslint_config = tslint_config(config)
-      exclude = exclude(config)
-      project = project(config)
-      rules_dir = rules_dir(config)
-      type_check = type_check(config)
-
-      additional_options = [tslint_config, exclude, project, rules_dir, type_check].flatten.compact
-      yield target, additional_options
-    end
-
-    def target_glob(config)
-      if config[:glob]
-        config[:glob]
+    def target_glob
+      if ci_section[:glob]
+        ci_section[:glob]
       else
         '**/*.ts{,x}'
       end
     end
 
-    def tslint_config(config)
-      config = config[:config] || config.dig(:options, :config)
+    def tslint_config
+      config = ci_section[:config] || ci_section.dig(:options, :config)
       ["--config", "#{config}"] if config
     end
 
-    def exclude(config)
-      exclude = config[:exclude] || config.dig(:options, :exclude)
+    def exclude
+      exclude = ci_section[:exclude] || ci_section.dig(:options, :exclude)
       if exclude
         Array(exclude).map { |v| ["--exclude", v] }.flatten
       else
@@ -106,20 +88,20 @@ module Runners
       end
     end
 
-    def project(config)
-      project = config[:project] || config.dig(:options, :project)
+    def project
+      project = ci_section[:project] || ci_section.dig(:options, :project)
       ["--project", "#{project}"] if project
     end
 
-    def rules_dir(config)
-      rules_dir = config[:'rules-dir'] || config.dig(:options, :'rules-dir')
+    def rules_dir
+      rules_dir = ci_section[:'rules-dir'] || ci_section.dig(:options, :'rules-dir')
       if rules_dir
         Array(rules_dir).map { |dir| ["--rules-dir", dir] }.flatten
       end
     end
 
-    def type_check(config)
-      type_check = config[:'type-check'] || config.dig(:options, :'type-check')
+    def type_check
+      type_check = ci_section[:'type-check'] || ci_section.dig(:options, :'type-check')
       "--type-check" if type_check
     end
 

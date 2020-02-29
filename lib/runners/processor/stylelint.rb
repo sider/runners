@@ -50,89 +50,69 @@ module Runners
       'stylelint'.freeze
     end
 
+    def analyzer_name
+      'stylelint'
+    end
+
     def setup
       add_warning_if_deprecated_options([:options], doc: "https://help.sider.review/tools/css/stylelint")
 
       prepare_ignore_file
 
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        begin
-          install_nodejs_deps(DEFAULT_DEPS, constraints: CONSTRAINTS, install_option: config[:npm_install])
-        rescue UserError => exn
-          return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
-        end
-
-        # Must do after installation
-        prepare_config_file(config)
-        analyzer
-
-        yield
+      begin
+        install_nodejs_deps(DEFAULT_DEPS, constraints: CONSTRAINTS, install_option: ci_section[:npm_install])
+      rescue UserError => exn
+        return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
       end
-    end
 
-    def analyzer_name
-      'stylelint'
+      # Must do after installation
+      prepare_config_file
+      analyzer
+
+      yield
     end
 
     def analyze(changes)
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        delete_unchanged_files(changes, only: DEFAULT_TARGET_FILE_EXTENSIONS.map { |ext| "*.#{ext}" })
+      delete_unchanged_files(changes, only: DEFAULT_TARGET_FILE_EXTENSIONS.map { |ext| "*.#{ext}" })
 
-        check_runner_config(config) do |glob, additional_options|
-          run_analyzer(config, glob, additional_options)
-        end
-      end
+      additional_options = [stylelint_config, syntax, ignore_path, ignore_disables,
+                            report_needless_disables, quiet].flatten.compact
+      run_analyzer(glob, additional_options)
     end
 
     private
 
-    def check_runner_config(config)
-      # Required Options which have default values.
-      glob = glob(config)
-
-      # Additional Options
-      stylelintrc = stylelint_config(config)
-      s = syntax(config)
-      i = ignore_path(config)
-      id = ignore_disables(config)
-      rd = report_needless_disables(config)
-      q = quiet(config)
-
-      additional_options = [stylelintrc, s, i, id, rd, q].flatten.compact
-      yield glob, additional_options
+    def glob
+      ci_section[:glob] || ci_section.dig(:options, :glob) || DEFAULT_GLOB
     end
 
-    def glob(config)
-      config[:glob] || config.dig(:options, :glob) || DEFAULT_GLOB
-    end
-
-    def stylelint_config(config)
-      stylelintrc = config[:config] || config.dig(:options, :config)
+    def stylelint_config
+      stylelintrc = ci_section[:config] || ci_section.dig(:options, :config)
       "--config=#{stylelintrc}" if stylelintrc
     end
 
-    def syntax(config)
-      syntax = config[:syntax] || config.dig(:options, :syntax)
+    def syntax
+      syntax = ci_section[:syntax] || ci_section.dig(:options, :syntax)
       "--syntax=#{syntax}" if syntax
     end
 
-    def ignore_path(config)
-      ignore_path = config[:'ignore-path'] || config.dig(:options, :'ignore-path')
+    def ignore_path
+      ignore_path = ci_section[:'ignore-path'] || ci_section.dig(:options, :'ignore-path')
       "--ignore-path=#{ignore_path}" if ignore_path
     end
 
-    def ignore_disables(config)
-      ignore_disables = config[:'ignore-disables'] || config.dig(:options, :'ignore-disables')
+    def ignore_disables
+      ignore_disables = ci_section[:'ignore-disables'] || ci_section.dig(:options, :'ignore-disables')
       "--ignore-disables" if ignore_disables
     end
 
-    def report_needless_disables(config)
-      rd = config[:'report-needless-disables'] || config.dig(:options, :'report-needless-disables')
+    def report_needless_disables
+      rd = ci_section[:'report-needless-disables'] || ci_section.dig(:options, :'report-needless-disables')
       "--report-needless-disables" if rd
     end
 
-    def quiet(config)
-      quiet = config[:quiet] || config.dig(:options, :quiet)
+    def quiet
+      quiet = ci_section[:quiet] || ci_section.dig(:options, :quiet)
       "--quiet" if quiet
     end
 
@@ -185,8 +165,8 @@ module Runners
         end
     end
 
-    def prepare_config_file(config)
-      return if config_file_path(config)
+    def prepare_config_file
+      return if config_file_path
 
       # NOTE: `stylelint-config-recommended@2` does not work with `stylelint@11`.
       src = if Gem::Version.create(analyzer_version) >= Gem::Version.create("11.0.0")
@@ -206,8 +186,8 @@ module Runners
     end
 
     # returns available config file path. If the file doesn't exist, it returns nil.
-    def config_file_path(config)
-      config_path = config[:config] || config.dig(:options, :config)
+    def config_file_path
+      config_path = ci_section[:config] || ci_section.dig(:options, :config)
       if config_path
         current_dir / config_path
       elsif package_json_path.exist? && package_json.key?(:stylelint)
@@ -240,7 +220,7 @@ module Runners
       end
     end
 
-    def run_analyzer(config, glob, additional_options)
+    def run_analyzer(glob, additional_options)
       default_options = ['--formatter=json', '--no-color']
       # stylelint v10.0.0 throws an error if glob matches no files.
       # @see https://github.com/stylelint/stylelint/releases/tag/10.0.0
@@ -272,9 +252,8 @@ module Runners
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
         parse_result(stdout).each { |v| result.add_issue(v) }
-        config_file_path = relative_path(config_file_path(config)).to_s
         @warning_set&.sort&.each do |warning|
-          add_warning(warning, file: config_file_path)
+          add_warning(warning, file: config_file_path&.to_s)
         end
       end
     end
