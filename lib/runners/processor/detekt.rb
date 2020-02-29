@@ -22,6 +22,8 @@ module Runners
       )
     end
 
+    register_config_schema(name: :detekt, schema: Schema.runner_config)
+
     def self.ci_config_section_name
       'detekt'
     end
@@ -55,26 +57,24 @@ module Runners
     end
 
     def analyze(changes)
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        delete_unchanged_files changes, only: [".kt", ".kts"]
+      delete_unchanged_files changes, only: [".kt", ".kts"]
 
-        check_runner_config(config) do |checked_config|
-          @detekt_config = checked_config
-          run_analyzer
-        end
+      check_runner_config do |checked_config|
+        @detekt_config = checked_config
+        run_analyzer
       end
     end
 
-    def check_runner_config(config)
+    def check_runner_config
       yield(
         {
-          baseline: config[:baseline],
-          config: Array(config[:config]) || [],
-          "config-resource": config[:"config-resource"] || [],
-          "disable-default-rulesets": config[:"disable-default-rulesets"] || false,
-          excludes: Array(config[:excludes]) || [],
-          includes: Array(config[:includes]) || [],
-          input: Array(config[:input]) || []
+          baseline: ci_section[:baseline],
+          config: Array(ci_section[:config]) || [],
+          "config-resource": ci_section[:"config-resource"] || [],
+          "disable-default-rulesets": ci_section[:"disable-default-rulesets"] || false,
+          excludes: Array(ci_section[:excludes]) || [],
+          includes: Array(ci_section[:includes]) || [],
+          input: Array(ci_section[:input]) || []
         }
       )
     end

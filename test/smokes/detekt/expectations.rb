@@ -7,7 +7,7 @@ Smoke.add_test(
     timestamp: :_,
     type: "failure",
     analyzer: nil,
-    message: "Invalid configuration in `sider.yml`: unknown attribute at config: `$.linter.detekt`"
+    message: "The attribute `$.linter.detekt.cli` of `sider.yml` cannot exist."
   }
 )
 
