@@ -1,6 +1,5 @@
 linter:
   detekt:
-    cli:
       baseline: "baseline.xml"
       config: "default-detekt-config.yml"
       config-resource: []

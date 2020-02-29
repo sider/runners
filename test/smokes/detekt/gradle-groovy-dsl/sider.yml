@@ -1,6 +1,0 @@
-linter:
-  detekt:
-    gradle:
-      task: detekt
-      report_id: txt
-      report_path: build/reports/detekt.txt

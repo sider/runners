@@ -6,7 +6,7 @@ package gradle
 class App {
     val greeting: String
   fun get() {
-                return "Hello world." }
+            return "Hello world." }
 }
 
 fun main(args: Array<String>) {

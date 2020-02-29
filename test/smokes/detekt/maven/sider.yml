@@ -1,7 +1,0 @@
-linter:
-  detekt:
-    maven: 
-      goal: antrun:run@detekt
-      report_id: xml
-      report_path: reports/detekt.xml
-      
