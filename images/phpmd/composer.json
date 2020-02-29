@@ -1,5 +1,5 @@
 {
   "require": {
-    "phpmd/phpmd": "2.8.1"
+    "phpmd/phpmd": "2.8.2"
   }
 }
