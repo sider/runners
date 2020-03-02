@@ -1,0 +1,3 @@
+linter:
+  phpstan:
+    configuration: 11

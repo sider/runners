@@ -1,0 +1,5 @@
+linter:
+  phpstan:
+    level: 3
+    configuration: config/phpstan.neon
+    glob: ./
