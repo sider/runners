@@ -25,6 +25,7 @@ All notable changes to this project will be documented in this file.
 - [PHP_CodeSniffer] Bump wpcs from 2.2.0 to 2.2.1 [#789](https://github.com/sider/runners/issues/789)
 - [PHPMD] Bump phpmd from 2.8.1 to 2.8.2 [#792](https://github.com/sider/runners/issues/792)
 - [stylelint] Bump stylelint from 13.0.0 to 13.2.0 [#793](https://github.com/sider/runners/issues/793)
+- Bump devon_rex images from 2.14.0 to 2.15.0 [#799](https://github.com/sider/runners/pull/799)
 
 ## 0.20.0
 
