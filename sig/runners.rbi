@@ -28,7 +28,7 @@ class Runners::TraceWriter
   def stderr: (String, ?recorded_at: Time, ?max_length: Integer) -> void
   def message: (String, ?recorded_at: Time, ?max_length: Integer, ?limit: Integer, ?omission: String) ?{ -> any } -> any
   def header: (String, ?recorded_at: Time) -> void
-  def warning: (String, ?file: any, ?recorded_at: Time) -> void
+  def warning: (String, ?file: String?, ?recorded_at: Time) -> void
   def ci_config: (Hash<any, any>, file: String, ?recorded_at: Time) -> void
   def error: (String, ?recorded_at: Time, ?max_length: Integer) -> void
   def <<: (Hash<Symbol, any>) -> void
@@ -81,8 +81,8 @@ class Runners::Results::MissingFilesFailure < Runners::Results::Base
 end
 
 class Runners::Results::Error < Runners::Results::Base
-  attr_reader exception: any
-  def initialize: (guid: String, exception: any) -> any
+  attr_reader exception: Exception
+  def initialize: (guid: String, exception: Exception) -> any
 end
 
 class Runners::Changes
@@ -105,13 +105,13 @@ class Runners::Processor
   attr_reader guid: String
   attr_reader workspace: Workspace
   attr_reader working_dir: Pathname
-  attr_reader git_ssh_path: String
+  attr_reader git_ssh_path: Pathname?
   attr_reader trace_writer: TraceWriter
   attr_reader shell: Shell
   attr_reader warnings: Array<any>
   attr_reader config: Config
 
-  def initialize: (guid: any, workspace: Workspace, config: Config, git_ssh_path: any, trace_writer: TraceWriter) -> any
+  def initialize: (guid: String, workspace: Workspace, config: Config, git_ssh_path: Pathname?, trace_writer: TraceWriter) -> any
   def relative_path: (String, ?from: Pathname) -> Pathname
   def setup: () { -> result } -> result
   def analyze: (Changes) -> result

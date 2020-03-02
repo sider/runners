@@ -36,7 +36,7 @@ module Runners
           @ci_config = config.content
           remove_ignored_files(config)
           begin
-            instance = processor_class.new(guid: guid, workspace: workspace, config: config, git_ssh_path: git_ssh_path&.to_s, trace_writer: trace_writer)
+            instance = processor_class.new(guid: guid, workspace: workspace, config: config, git_ssh_path: git_ssh_path, trace_writer: trace_writer)
 
             root_dir_not_found = instance.check_root_dir_exist
             return root_dir_not_found if root_dir_not_found

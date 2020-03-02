@@ -696,7 +696,7 @@ EOF
     with_workspace(head: (Pathname(__dir__) + "data/foo.tgz").to_s,
                    ssh_key: (Pathname(__dir__) + "data/ruby_private_gem_deploy_key").read) do |workspace|
       workspace.open do |git_ssh_path|
-        processor = new_processor(workspace: workspace, git_ssh_path: git_ssh_path.to_s, config_yaml: <<~YAML)
+        processor = new_processor(workspace: workspace, git_ssh_path: git_ssh_path, config_yaml: <<~YAML)
           linter:
             rubocop:
               gems:

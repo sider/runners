@@ -21,6 +21,7 @@ class Pathname
   def basename: -> self
   def fnmatch?: (String, Integer) -> bool
   def delete: -> void
+  def to_path: -> String
 end
 
 extension Object (Polyfill)
@@ -54,6 +55,7 @@ class Time
 end
 
 class Exception
+  def backtrace: -> Array<String>?
   def message: -> String
 end
 

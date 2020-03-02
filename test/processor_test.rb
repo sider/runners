@@ -45,7 +45,7 @@ class ProcessorTest < Minitest::Test
         ["", "", status]
       end
 
-      processor = new_processor(workspace: workspace, git_ssh_path: (workspace.working_dir / "id_rsa").to_s)
+      processor = new_processor(workspace: workspace, git_ssh_path: (workspace.working_dir / "id_rsa"))
       processor.capture3_trace("ls")
     end
   end
