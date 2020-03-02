@@ -1,11 +1,5 @@
 Smoke = Runners::Testing::Smoke
 
-# Smoke test allows testing by input and output of the analysis.
-# Following example, create "success" directory and put files, configurations, etc in this directory.
-#
-
-# Case: package.json が存在 && stylelintrc が存在
-# Analysis: package.jsonから必要なパッケージをインストールし、解析する
 Smoke.add_test(
   "success",
   {
@@ -135,12 +129,10 @@ Smoke.add_test(
   }
 )
 
-# Case: package.json が不在 && stylelintrc が不在
-# Analysis: Global にインストールされた stylelint, stylelint-config-recommended を使って解析する
 Smoke.add_test(
   "no_config",
   {
-    analyzer: { name: "stylelint", version: "13.0.0" },
+    analyzer: { name: "stylelint", version: "13.2.0" },
     guid: "test-guid",
     timestamp: :_,
     type: "success",
@@ -150,7 +142,7 @@ Smoke.add_test(
         location: { start_line: 2 },
         id: "color-no-invalid-hex",
         message: "Unexpected invalid hex color \"#100000000\"",
-        links: %w[https://github.com/stylelint/stylelint/tree/13.0.0/lib/rules/color-no-invalid-hex],
+        links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/color-no-invalid-hex],
         object: { severity: "error" },
         git_blame_info: nil
       },
@@ -159,7 +151,7 @@ Smoke.add_test(
         location: { start_line: 1 },
         id: "selector-type-no-unknown",
         message: "Unexpected unknown type selector \"foo\"",
-        links: %w[https://github.com/stylelint/stylelint/tree/13.0.0/lib/rules/selector-type-no-unknown],
+        links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/selector-type-no-unknown],
         object: { severity: "error" },
         git_blame_info: nil
       }
@@ -167,12 +159,10 @@ Smoke.add_test(
   }
 )
 
-# Case: package.json が不在 && stylelintrc が存在
-# Analysis: stylelint-config-standard が存在しないので、解析エラーになる。
 Smoke.add_test(
   "analyse-only-css",
   {
-    analyzer: { name: "stylelint", version: "13.0.0" },
+    analyzer: { name: "stylelint", version: "13.2.0" },
     guid: "test-guid",
     timestamp: :_,
     type: "failure",
@@ -180,11 +170,9 @@ Smoke.add_test(
   }
 )
 
-# Case: package.json が不在 && stylelintrc が不在
-# Analysis: Global にインストールされた stylelint, stylelint-config-recommended を使って解析する
 Smoke.add_test(
   "without-css",
-  { analyzer: { name: "stylelint", version: "13.0.0" }, guid: "test-guid", timestamp: :_, type: "success", issues: [] }
+  { analyzer: { name: "stylelint", version: "13.2.0" }, guid: "test-guid", timestamp: :_, type: "success", issues: [] }
 )
 
 Smoke.add_test(
@@ -192,9 +180,6 @@ Smoke.add_test(
   { analyzer: { name: "stylelint", version: "9.10.1" }, guid: "test-guid", timestamp: :_, type: "success", issues: [] }
 )
 
-# Case: package.json が存在 && stylelintrc が存在 && npm_install: true
-#       package.json 中に stylelint, stylelint-config-standard が記載
-# Analysis: npm でインストールした stylelint, stylelint-config-standard を使って解析する
 Smoke.add_test(
   "with_options",
   {
@@ -243,12 +228,10 @@ Smoke.add_test(
   }
 )
 
-# Case: package.json が不在 && stylelintrc が不在
-# Analysis: Global にインストールされた stylelint, stylelint-config-recommended を使って解析する
 Smoke.add_test(
   "syntax-error",
   {
-    analyzer: { name: "stylelint", version: "13.0.0" },
+    analyzer: { name: "stylelint", version: "13.2.0" },
     guid: "test-guid",
     timestamp: :_,
     type: "success",
@@ -264,7 +247,7 @@ Smoke.add_test(
       },
       {
         message: "Unexpected unknown property \"someattr\"",
-        links: %w[https://github.com/stylelint/stylelint/tree/13.0.0/lib/rules/property-no-unknown],
+        links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/property-no-unknown],
         id: "property-no-unknown",
         path: "ok.css",
         object: { severity: "error" },
@@ -275,19 +258,17 @@ Smoke.add_test(
   }
 )
 
-# Case: package.json が不在 && stylelintrc が存在
-# Analysis: Global にインストールされた stylelint, .stylelintrc の extends を元にインストールした stylelint-config-recommended を使って解析する
 Smoke.add_test(
   "only_stylelintrc",
   {
-    analyzer: { name: "stylelint", version: "13.0.0" },
+    analyzer: { name: "stylelint", version: "13.2.0" },
     guid: "test-guid",
     timestamp: :_,
     type: "success",
     issues: [
       {
         message: "Unexpected unknown property \"someattr\"",
-        links: %w[https://github.com/stylelint/stylelint/tree/13.0.0/lib/rules/property-no-unknown],
+        links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/property-no-unknown],
         id: "property-no-unknown",
         path: "test.css",
         object: { severity: "error" },
@@ -296,7 +277,7 @@ Smoke.add_test(
       },
       {
         message: "Unexpected unknown property \"font-color\"",
-        links: %w[https://github.com/stylelint/stylelint/tree/13.0.0/lib/rules/property-no-unknown],
+        links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/property-no-unknown],
         id: "property-no-unknown",
         path: "test.scss",
         object: { severity: "error" },
@@ -305,7 +286,7 @@ Smoke.add_test(
       },
       {
         message: "Unexpected unknown type selector \"hoge\"",
-        links: %w[https://github.com/stylelint/stylelint/tree/13.0.0/lib/rules/selector-type-no-unknown],
+        links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/selector-type-no-unknown],
         id: "selector-type-no-unknown",
         path: "test.less",
         object: { severity: "error" },
@@ -316,20 +297,17 @@ Smoke.add_test(
   }
 )
 
-# Case: package.json が不在 && stylelintrc が存在
-#       stylelintrc は extends や plugins などを持たず、純粋にルールのみが記載
-# Analysis: Global にインストールされた stylelint を使って解析する
 Smoke.add_test(
   "only_stylelintrc_without_packages",
   {
-    analyzer: { name: "stylelint", version: "13.0.0" },
+    analyzer: { name: "stylelint", version: "13.2.0" },
     guid: "test-guid",
     timestamp: :_,
     type: "success",
     issues: [
       {
         message: "Expected empty line before closing brace",
-        links: %w[https://github.com/stylelint/stylelint/tree/13.0.0/lib/rules/block-closing-brace-empty-line-before],
+        links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/block-closing-brace-empty-line-before],
         id: "block-closing-brace-empty-line-before",
         path: "test.scss",
         object: { severity: "error" },
@@ -338,7 +316,7 @@ Smoke.add_test(
       },
       {
         message: "Expected empty line before closing brace",
-        links: %w[https://github.com/stylelint/stylelint/tree/13.0.0/lib/rules/block-closing-brace-empty-line-before],
+        links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/block-closing-brace-empty-line-before],
         id: "block-closing-brace-empty-line-before",
         path: "test.scss",
         object: { severity: "error" },
@@ -347,7 +325,7 @@ Smoke.add_test(
       },
       {
         message: "Expected empty line before closing brace",
-        links: %w[https://github.com/stylelint/stylelint/tree/13.0.0/lib/rules/block-closing-brace-empty-line-before],
+        links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/block-closing-brace-empty-line-before],
         id: "block-closing-brace-empty-line-before",
         path: "test.scss",
         object: { severity: "error" },
@@ -356,7 +334,7 @@ Smoke.add_test(
       },
       {
         message: "Expected empty line before closing brace",
-        links: %w[https://github.com/stylelint/stylelint/tree/13.0.0/lib/rules/block-closing-brace-empty-line-before],
+        links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/block-closing-brace-empty-line-before],
         id: "block-closing-brace-empty-line-before",
         path: "test.scss",
         object: { severity: "error" },
@@ -365,7 +343,7 @@ Smoke.add_test(
       },
       {
         message: "Expected a trailing semicolon",
-        links: %w[https://github.com/stylelint/stylelint/tree/13.0.0/lib/rules/declaration-block-trailing-semicolon],
+        links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/declaration-block-trailing-semicolon],
         id: "declaration-block-trailing-semicolon",
         path: "test.scss",
         object: { severity: "error" },
@@ -374,7 +352,7 @@ Smoke.add_test(
       },
       {
         message: "Expected a trailing semicolon",
-        links: %w[https://github.com/stylelint/stylelint/tree/13.0.0/lib/rules/declaration-block-trailing-semicolon],
+        links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/declaration-block-trailing-semicolon],
         id: "declaration-block-trailing-semicolon",
         path: "test.scss",
         object: { severity: "error" },
@@ -385,8 +363,6 @@ Smoke.add_test(
   }
 )
 
-# Case: package.json が存在 && stylelintrc が存在 && npm_install: true
-# Analysis: バージョンが古すぎて、インストールエラーとなる。
 Smoke.add_test(
   "pinned_stylelint_version",
   {
@@ -398,8 +374,6 @@ Smoke.add_test(
   }
 )
 
-# Case: package.json が存在 && stylelintrc が不在 && npm_install: true
-# Analysis: npm でインストールした stylelint と Global にインストールされた stylelint-config-recommended を使って解析する
 Smoke.add_test(
   "only_stylelint_in_package_json",
   {
@@ -441,19 +415,17 @@ Smoke.add_test(
   }
 )
 
-# Case: package.json が存在 && stylelintrc が存在 && npm_install: true
-# Analysis: peer dep が存在しないので、デフォルトにフォールバックする。
 Smoke.add_test(
   "npm_install_without_stylelint",
   {
-    analyzer: { name: "stylelint", version: "13.0.0" },
+    analyzer: { name: "stylelint", version: "13.2.0" },
     guid: "test-guid",
     timestamp: :_,
     type: "success",
     issues: [
       {
         message: "Expected a trailing semicolon",
-        links: %w[https://github.com/stylelint/stylelint/tree/13.0.0/lib/rules/declaration-block-trailing-semicolon],
+        links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/declaration-block-trailing-semicolon],
         id: "declaration-block-trailing-semicolon",
         path: "test.less",
         object: { severity: "error" },
@@ -462,7 +434,7 @@ Smoke.add_test(
       },
       {
         message: "Expected indentation of 2 spaces",
-        links: %w[https://github.com/stylelint/stylelint/tree/13.0.0/lib/rules/indentation],
+        links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/indentation],
         id: "indentation",
         path: "test.scss",
         object: { severity: "error" },
@@ -471,7 +443,7 @@ Smoke.add_test(
       },
       {
         message: "Expected no more than 1 empty line",
-        links: %w[https://github.com/stylelint/stylelint/tree/13.0.0/lib/rules/max-empty-lines],
+        links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/max-empty-lines],
         id: "max-empty-lines",
         path: "test.less",
         object: { severity: "error" },
@@ -480,7 +452,7 @@ Smoke.add_test(
       },
       {
         message: "Expected no more than 1 empty line",
-        links: %w[https://github.com/stylelint/stylelint/tree/13.0.0/lib/rules/max-empty-lines],
+        links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/max-empty-lines],
         id: "max-empty-lines",
         path: "test.less",
         object: { severity: "error" },
@@ -489,7 +461,7 @@ Smoke.add_test(
       },
       {
         message: "Unexpected unknown property \"font-color\"",
-        links: %w[https://github.com/stylelint/stylelint/tree/13.0.0/lib/rules/property-no-unknown],
+        links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/property-no-unknown],
         id: "property-no-unknown",
         path: "test.scss",
         object: { severity: "error" },
@@ -498,7 +470,7 @@ Smoke.add_test(
       },
       {
         message: "Expected empty line before rule",
-        links: %w[https://github.com/stylelint/stylelint/tree/13.0.0/lib/rules/rule-empty-line-before],
+        links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/rule-empty-line-before],
         id: "rule-empty-line-before",
         path: "test.scss",
         object: { severity: "error" },
@@ -507,7 +479,7 @@ Smoke.add_test(
       },
       {
         message: "Expected empty line before rule",
-        links: %w[https://github.com/stylelint/stylelint/tree/13.0.0/lib/rules/rule-empty-line-before],
+        links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/rule-empty-line-before],
         id: "rule-empty-line-before",
         path: "test.scss",
         object: { severity: "error" },
@@ -516,7 +488,7 @@ Smoke.add_test(
       },
       {
         message: "Unexpected unknown type selector \"hoge\"",
-        links: %w[https://github.com/stylelint/stylelint/tree/13.0.0/lib/rules/selector-type-no-unknown],
+        links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/selector-type-no-unknown],
         id: "selector-type-no-unknown",
         path: "test.less",
         object: { severity: "error" },
@@ -532,16 +504,11 @@ Smoke.add_test(
   }
 )
 
-# Case: package.json が存在 && stylelintrc が存在 && npm_install: true
-#       ただし、 package.json に不正な値が入っているため、npm install 自体は失敗する
-# Analysis: インストールエラーになる。
 Smoke.add_test(
   "failed_to_npm_install",
   { analyzer: nil, guid: "test-guid", timestamp: :_, type: "failure", message: /`npm install` failed./ }
 )
 
-# Case: package.json が存在 && stylelintrc が存在 && npm_install オプションの記載なし
-# Analysis: 設定に書かれてるパッケージがインストールされないので、エラーになる。
 Smoke.add_test(
   "without_npm_install",
   {
@@ -553,7 +520,6 @@ Smoke.add_test(
   }
 )
 
-# Case: Failed to check sideci.yml schema because it has been broken.
 Smoke.add_test(
   "broken_sideci_yml",
   {
@@ -567,14 +533,7 @@ Smoke.add_test(
 
 Smoke.add_test(
   "options_is_deprecated",
-  {
-    analyzer: nil,
-    guid: "test-guid",
-    timestamp: :_,
-    type: "success",
-    issues: [],
-    analyzer: { name: "stylelint", version: "13.0.0" }
-  },
+  { analyzer: { name: "stylelint", version: "13.2.0" }, guid: "test-guid", timestamp: :_, type: "success", issues: [] },
   {
     warnings: [
       {
@@ -650,7 +609,7 @@ Smoke.add_test(
 Smoke.add_test(
   "default_glob",
   {
-    analyzer: { name: "stylelint", version: "13.0.0" },
+    analyzer: { name: "stylelint", version: "13.2.0" },
     guid: "test-guid",
     timestamp: :_,
     type: "success",
@@ -660,7 +619,7 @@ Smoke.add_test(
         id: "property-no-unknown",
         message: /Unexpected unknown property/,
         location: { start_line: 2 },
-        links: %w[https://github.com/stylelint/stylelint/tree/13.0.0/lib/rules/property-no-unknown],
+        links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/property-no-unknown],
         object: { severity: "error" },
         git_blame_info: nil
       },
@@ -669,7 +628,7 @@ Smoke.add_test(
         id: "property-no-unknown",
         message: /Unexpected unknown property/,
         location: { start_line: 2 },
-        links: %w[https://github.com/stylelint/stylelint/tree/13.0.0/lib/rules/property-no-unknown],
+        links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/property-no-unknown],
         object: { severity: "error" },
         git_blame_info: nil
       },
@@ -678,7 +637,7 @@ Smoke.add_test(
         id: "property-no-unknown",
         message: /Unexpected unknown property/,
         location: { start_line: 2 },
-        links: %w[https://github.com/stylelint/stylelint/tree/13.0.0/lib/rules/property-no-unknown],
+        links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/property-no-unknown],
         object: { severity: "error" },
         git_blame_info: nil
       },
@@ -687,7 +646,7 @@ Smoke.add_test(
         id: "property-no-unknown",
         message: /Unexpected unknown property/,
         location: { start_line: 2 },
-        links: %w[https://github.com/stylelint/stylelint/tree/13.0.0/lib/rules/property-no-unknown],
+        links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/property-no-unknown],
         object: { severity: "error" },
         git_blame_info: nil
       },
@@ -696,7 +655,7 @@ Smoke.add_test(
         id: "property-no-unknown",
         message: /Unexpected unknown property/,
         location: { start_line: 2 },
-        links: %w[https://github.com/stylelint/stylelint/tree/13.0.0/lib/rules/property-no-unknown],
+        links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/property-no-unknown],
         object: { severity: "error" },
         git_blame_info: nil
       }
