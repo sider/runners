@@ -85,38 +85,20 @@ module Runners
       config.content.dig(:linter, self.class.ci_config_section_name.to_sym) || {}
     end
 
-    def ci_section_root_dir
-      ci_section[:root_dir]
-    end
-
     def check_root_dir_exist
-      root_dir = ci_section_root_dir
-      if root_dir
-        return if (working_dir / root_dir).directory?
+      return if root_dir.directory?
 
-        message = "`#{root_dir}` directory is not found!" \
-          " Please check `linter.#{self.class.ci_config_section_name}.root_dir` in your `#{config.path_name}`"
-        trace_writer.error message
-        Results::Failure.new(guid: guid, message: message)
-      end
+      message = "`#{relative_path(root_dir.to_s)}` directory is not found! Please check `#{config_field_path("root_dir")}` in your `#{config.path_name}`"
+      trace_writer.error message
+      Results::Failure.new(guid: guid, message: message)
     end
 
     def push_root_dir(&block)
-      root_dir = ci_section_root_dir
-      if root_dir
-        push_dir(working_dir + root_dir, &block)
-      else
-        yield
-      end
+      push_dir(root_dir, &block)
     end
 
     def root_dir
-      root_dir = ci_section_root_dir
-      if root_dir
-        working_dir + root_dir
-      else
-        working_dir
-      end
+      ci_section[:root_dir]&.yield_self { |root| working_dir / root } || working_dir
     end
 
     def ensure_files(*paths)
@@ -133,8 +115,8 @@ module Runners
     end
 
     # Returns e.g. "$.linter.rubocop.gems"
-    def build_field_reference_from_path(path)
-      path.to_s.sub('$', "$.linter.#{self.class.ci_config_section_name}")
+    def config_field_path(*fields)
+      "$.linter.#{self.class.ci_config_section_name}.#{fields.join('.')}"
     end
 
     def delete_unchanged_files(changes, except: [], only: [])
@@ -162,7 +144,7 @@ module Runners
 
     def add_warning_if_deprecated_options(keys, doc:)
       deprecated_keys = ci_section.slice(*keys).compact.keys
-        .map { |k| "`" + build_field_reference_from_path("$.#{k}") + "`" }
+        .map { |k| "`#{config_field_path(k)}`" }
 
       unless deprecated_keys.empty?
         add_warning <<~MSG.strip, file: config.path_name

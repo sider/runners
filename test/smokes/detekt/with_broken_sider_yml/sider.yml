@@ -1,0 +1,8 @@
+linter:
+  detekt:
+    cli:
+      auto_correct: false
+    gradle:
+      task: "detekt"
+      reporter: "xml"
+

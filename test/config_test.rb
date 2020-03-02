@@ -39,6 +39,7 @@ class ConfigTest < Minitest::Test
           coffeelint: nil,
           cppcheck: nil,
           cpplint: nil,
+          detekt: nil,
           eslint: {
             root_dir: nil,
             npm_install: nil,

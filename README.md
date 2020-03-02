@@ -17,6 +17,7 @@ All analyzers are provided as a Docker image.
 - [CoffeeLint](https://hub.docker.com/r/sider/runner_coffeelint)
 - [Cppcheck](https://hub.docker.com/r/sider/runner_cppcheck)
 - [cpplint](https://hub.docker.com/r/sider/runner_cpplint)
+- [detekt](https://hub.docker.com/r/sider/runner_detekt)
 - [ESLint](https://hub.docker.com/r/sider/runner_eslint)
 - [Flake8](https://hub.docker.com/r/sider/runner_flake8)
 - [FxCop](https://hub.docker.com/r/sider/runner_fxcop)

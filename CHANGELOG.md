@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 - [hadolint] Exclude template files by default [#780](https://github.com/sider/runners/pull/780)
 - [TSLint] Add a deprecation warning [#783](https://github.com/sider/runners/pull/783)
 - Whole `sider.yml` schema check [#750](https://github.com/sider/runners/issues/750)
+- [detekt] New support [#749](https://github.com/sider/runners/pull/749)
 - [Checkstyle] Bump checkstyle from 8.29 to 8.30 [#788](https://github.com/sider/runners/issues/788)
 
 ## 0.20.0

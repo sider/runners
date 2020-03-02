@@ -191,7 +191,7 @@ class ProcessorTest < Minitest::Test
       YAML
       result = processor.check_root_dir_exist
       assert_instance_of Runners::Results::Failure, result
-      assert_equal "`path/to/unknown` directory is not found! Please check `linter.eslint.root_dir` in your `sider.yml`", result.message
+      assert_equal "`path/to/unknown` directory is not found! Please check `$.linter.eslint.root_dir` in your `sider.yml`", result.message
       assert_nil result.analyzer
     end
   end

@@ -1,0 +1,3 @@
+linter:
+  detekt:
+      config: "invalid-detekt-config.yml"

@@ -116,7 +116,6 @@ class Runners::Processor
   def setup: () { -> result } -> result
   def analyze: (Changes) -> result
   def ci_section: () -> Hash<any, any>
-  def ci_section_root_dir: () -> String?
   def check_root_dir_exist: () -> result?
   def push_root_dir: <'x> { -> 'x } -> 'x
   def ensure_files: (*Pathname) { (Pathname) -> result } -> result
@@ -144,7 +143,7 @@ class Runners::Processor
   def analyzer_bin: -> String
   def analyzer_version: -> String
   def extract_version!: (String | Array<String>, ?(String | Array<String>), ?pattern: Regexp) -> String
-  def build_field_reference_from_path: (StrongJSON::Type::ErrorPath | String) -> String
+  def config_field_path: (*String) -> String
   def root_dir: -> Pathname
   def directory_traversal_attack?: (String) -> bool
   def show_runtime_versions: -> void

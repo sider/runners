@@ -178,6 +178,10 @@ jobs:
     environment:
       ANALYZER: ktlint
     <<: *runner_job
+  runner_detekt:
+    environment:
+      ANALYZER: detekt
+    <<: *runner_job
   runner_shellcheck:
     environment:
       ANALYZER: shellcheck
@@ -230,6 +234,7 @@ workflows:
       - runner_swiftlint: { filters: { tags: { only: /.*/ } } }
       - runner_cppcheck: { filters: { tags: { only: /.*/ } } }
       - runner_ktlint: { filters: { tags: { only: /.*/ } } }
+      - runner_detekt: { filters: { tags: { only: /.*/ } } }
       - runner_shellcheck: { filters: { tags: { only: /.*/ } } }
       - runner_cpplint: { filters: { tags: { only: /.*/ } } }
       - runner_hadolint: { filters: { tags: { only: /.*/ } } }

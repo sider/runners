@@ -1,0 +1,4 @@
+linter:
+  detekt:
+      input: 
+        - "non/exists/dir/"
