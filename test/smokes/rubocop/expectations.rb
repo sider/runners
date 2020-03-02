@@ -9,7 +9,7 @@ Smoke.add_test(
     issues: [
       {
         message: "Literal `true` appeared as a condition.",
-        links: %w[https://github.com/rubocop-hq/rubocop/blob/v0.80.0/manual/cops_lint.md#lintliteralascondition],
+        links: %w[https://github.com/rubocop-hq/rubocop/blob/v0.80.1/manual/cops_lint.md#lintliteralascondition],
         id: "Lint/LiteralAsCondition",
         path: "app/controllers/users_controller.rb",
         object: { severity: "warning", corrected: false },
@@ -19,7 +19,7 @@ Smoke.add_test(
       {
         message: "Shadowing outer local variable - `v`.",
         links: %w[
-          https://github.com/rubocop-hq/rubocop/blob/v0.80.0/manual/cops_lint.md#lintshadowingouterlocalvariable
+          https://github.com/rubocop-hq/rubocop/blob/v0.80.1/manual/cops_lint.md#lintshadowingouterlocalvariable
         ],
         id: "Lint/ShadowingOuterLocalVariable",
         path: "app/controllers/users_controller.rb",
@@ -31,7 +31,7 @@ Smoke.add_test(
         message: "Useless assignment to variable - `v`.",
         links: %w[
           https://rubystyle.guide#underscore-unused-vars
-          https://github.com/rubocop-hq/rubocop/blob/v0.80.0/manual/cops_lint.md#lintuselessassignment
+          https://github.com/rubocop-hq/rubocop/blob/v0.80.1/manual/cops_lint.md#lintuselessassignment
         ],
         id: "Lint/UselessAssignment",
         path: "app/controllers/users_controller.rb",
@@ -43,7 +43,7 @@ Smoke.add_test(
         message: "Prefer symbols instead of strings as hash keys.",
         links: %w[
           https://rubystyle.guide#symbols-as-keys
-          https://github.com/rubocop-hq/rubocop/blob/v0.80.0/manual/cops_style.md#stylestringhashkeys
+          https://github.com/rubocop-hq/rubocop/blob/v0.80.1/manual/cops_style.md#stylestringhashkeys
         ],
         id: "Style/StringHashKeys",
         path: "config/environments/development.rb",
@@ -55,7 +55,7 @@ Smoke.add_test(
         message: "Prefer symbols instead of strings as hash keys.",
         links: %w[
           https://rubystyle.guide#symbols-as-keys
-          https://github.com/rubocop-hq/rubocop/blob/v0.80.0/manual/cops_style.md#stylestringhashkeys
+          https://github.com/rubocop-hq/rubocop/blob/v0.80.1/manual/cops_style.md#stylestringhashkeys
         ],
         id: "Style/StringHashKeys",
         path: "config/environments/test.rb",
@@ -64,7 +64,7 @@ Smoke.add_test(
         location: { start_line: 18, start_column: 5, end_line: 18, end_column: 19 }
       }
     ],
-    analyzer: { name: "RuboCop", version: "0.80.0" }
+    analyzer: { name: "RuboCop", version: "0.80.1" }
   }
 )
 
@@ -76,7 +76,7 @@ Smoke.add_test(
   issues: [
     {
       "message": "Missing top-level class documentation comment.",
-      "links": %w[https://github.com/rubocop-hq/rubocop/blob/v0.80.0/manual/cops_style.md#styledocumentation],
+      "links": %w[https://github.com/rubocop-hq/rubocop/blob/v0.80.1/manual/cops_style.md#styledocumentation],
       "id": "Style/Documentation",
       "path": "app.rb",
       "location": { "start_line": 3, "start_column": 1, "end_line": 3, "end_column": 5 },
@@ -87,7 +87,7 @@ Smoke.add_test(
       "message": "Put empty method definitions on a single line.",
       "links": %w[
         https://rubystyle.guide#no-single-line-methods
-        https://github.com/rubocop-hq/rubocop/blob/v0.80.0/manual/cops_style.md#styleemptymethod
+        https://github.com/rubocop-hq/rubocop/blob/v0.80.1/manual/cops_style.md#styleemptymethod
       ],
       "id": "Style/EmptyMethod",
       "path": "app.rb",
@@ -96,7 +96,7 @@ Smoke.add_test(
       "git_blame_info": nil
     }
   ],
-  analyzer: { name: "RuboCop", version: "0.80.0" }
+  analyzer: { name: "RuboCop", version: "0.80.1" }
 )
 
 Smoke.add_test(
@@ -191,7 +191,7 @@ Smoke.add_test(
     issues: [
       {
         message: "Use the `&&` operator to compare multiple values.",
-        links: %w[https://github.com/rubocop-hq/rubocop/blob/v0.80.0/manual/cops_lint.md#lintmultiplecomparison],
+        links: %w[https://github.com/rubocop-hq/rubocop/blob/v0.80.1/manual/cops_lint.md#lintmultiplecomparison],
         id: "Lint/MultipleComparison",
         path: "test.rb",
         object: { severity: "warning", corrected: false },
@@ -199,7 +199,7 @@ Smoke.add_test(
         location: { start_line: 2, start_column: 4, end_line: 2, end_column: 14 }
       }
     ],
-    analyzer: { name: "RuboCop", version: "0.80.0" }
+    analyzer: { name: "RuboCop", version: "0.80.1" }
   }
 )
 
@@ -210,7 +210,7 @@ Smoke.add_test(
     timestamp: :_,
     type: "failure",
     message: "Error: Cops cannot be both enabled by default and disabled by default",
-    analyzer: { name: "RuboCop", version: "0.80.0" }
+    analyzer: { name: "RuboCop", version: "0.80.1" }
   }
 )
 
@@ -234,7 +234,7 @@ Smoke.add_test(
     issues: [
       {
         message: "Empty `ensure` block detected.",
-        links: %w[https://github.com/rubocop-hq/rubocop/blob/v0.80.0/manual/cops_lint.md#lintemptyensure],
+        links: %w[https://github.com/rubocop-hq/rubocop/blob/v0.80.1/manual/cops_lint.md#lintemptyensure],
         id: "Lint/EmptyEnsure",
         path: "drink.rb",
         location: { start_line: 12, start_column: 3, end_line: 12, end_column: 8 },
@@ -243,7 +243,7 @@ Smoke.add_test(
       },
       {
         message: "Do not chain ordinary method call after safe navigation operator.",
-        links: %w[https://github.com/rubocop-hq/rubocop/blob/v0.80.0/manual/cops_lint.md#lintsafenavigationchain],
+        links: %w[https://github.com/rubocop-hq/rubocop/blob/v0.80.1/manual/cops_lint.md#lintsafenavigationchain],
         id: "Lint/SafeNavigationChain",
         path: "drink.rb",
         location: { start_line: 18, start_column: 21, end_line: 18, end_column: 27 },
@@ -251,7 +251,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "RuboCop", version: "0.80.0" }
+    analyzer: { name: "RuboCop", version: "0.80.1" }
   },
   {
     warnings: [
@@ -457,11 +457,11 @@ Smoke.add_test(
 
 Smoke.add_test(
   "old_ruocop_is_specified",
-  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "RuboCop", version: "0.80.0" } },
+  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "RuboCop", version: "0.80.1" } },
   warnings: [
     {
       message: <<~MSG,
-        Sider tried to install `rubocop 0.60.0` according to your `Gemfile.lock`, but it installs `0.80.0` instead.
+        Sider tried to install `rubocop 0.60.0` according to your `Gemfile.lock`, but it installs `0.80.1` instead.
         Because `0.60.0` does not satisfy the Sider constraints [\">= 0.61.0\", \"< 1.0.0\"].
 
         If you want to use a different version of `rubocop`, update your `Gemfile.lock` to satisfy the constraint or specify the gem version in your `sider.yml`.
