@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
 - [TSLint] Add a deprecation warning [#783](https://github.com/sider/runners/pull/783)
 - Whole `sider.yml` schema check [#750](https://github.com/sider/runners/issues/750)
 - [detekt] New support [#749](https://github.com/sider/runners/pull/749)
+- [TSLint] Bump typescript from 3.7.5 to 3.8.3 [#790](https://github.com/sider/runners/pull/790)
 - [Checkstyle] Bump checkstyle from 8.29 to 8.30 [#788](https://github.com/sider/runners/issues/788)
 
 ## 0.20.0
