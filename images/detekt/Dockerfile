@@ -1,8 +1,7 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# NOTE: DO *NOT* EDIT THIS FILE.  IT IS GENERATED.
-# PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE
+# NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
+# PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 FROM sider/devon_rex_java:2.14.0 AS builder
 
 # NOTE: Download required dependency JAR files via maven-dependency-plugin.
@@ -21,6 +20,7 @@ ENV CLASSPATH ${RUNNER_USER_HOME}/detekt/*:${CLASSPATH}
 COPY --chown=analyzer_runner:nogroup images/detekt/pom.xml ${RUNNER_USER_HOME}/detekt/pom.xml
 COPY images/detekt/detekt /usr/local/bin/
 
+
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
@@ -31,6 +31,7 @@ RUN cd ${RUNNERS_DIR} && \
     bundle config --local without development:test && \
     bundle config && \
     bundle install
+
 # Copy the main source code
 COPY --chown=analyzer_runner:nogroup bin ${RUNNERS_DIR}/bin
 COPY --chown=analyzer_runner:nogroup lib ${RUNNERS_DIR}/lib
