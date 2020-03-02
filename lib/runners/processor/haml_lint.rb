@@ -157,15 +157,10 @@ module Runners
         *options,
       )
 
-      # @see https://github.com/sds/haml-lint/blob/v0.34.2/lib/haml_lint/cli.rb#L110
+      # @see https://github.com/sds/haml-lint/blob/v0.35.0/lib/haml_lint/cli.rb#L110
+      # @see https://github.com/ged/sysexits/blob/v1.2.0/lib/sysexits.rb#L96
       unless [65, 0].include?(status.exitstatus)
-        return Results::Failure.new(guid: guid, message: <<~MESSAGE, analyzer: analyzer)
-          stdout:
-          #{stdout}
-
-          stderr:
-          #{stderr}
-        MESSAGE
+        return Results::Failure.new(guid: guid, message: "HAML-Lint raises an unexpected error", analyzer: analyzer)
       end
 
       add_rubocop_warnings_if_exists(stderr)
@@ -176,6 +171,7 @@ module Runners
     end
 
     # NOTE: HAML-Lint exits successfully even if RuboCop fails.
+    #       The version 0.35.0 fixed the issue, but we continue to support older versions.
     #
     # @see https://github.com/sds/haml-lint/issues/317
     def add_rubocop_warnings_if_exists(stderr)
