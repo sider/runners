@@ -81,8 +81,8 @@ module Runners
 
     def run_analyzer
       report_id = "xml"
-      report_path = Tempfile.new("detekt-report")
-      
+      report_path = Tempfile.new("detekt-report").path
+
       args = [
         baseline,
         config_files,
@@ -90,7 +90,7 @@ module Runners
         disable_default_rulesets,
         excludes,
         input,
-        report(report_id, report_path.path)
+        report(report_id, report_path)
       ].flatten.compact
 
       _stdout, stderr, status = capture3(analyzer_bin, *args)
@@ -116,34 +116,34 @@ module Runners
     def baseline
       detekt_config[:baseline].then { |value| value ? ["--baseline", value] : [] }
     end
-  
+
     def config_files
-      detekt_config[:config].then { |value| value.present? ? ["--config", value.join(",")] : [] }      
+      detekt_config[:config].then { |value| value.present? ? ["--config", value.join(",")] : [] }
     end
-  
+
     def config_resource
       detekt_config[:"config-resource"].then { |value| value.present? ? ["--config-resource", value.join(",")] : [] }
     end
-  
+
     def disable_default_rulesets
       detekt_config[:"disable-default-rulesets"] ? ["--disable-default-rulesets"] : []
     end
-  
+
     def excludes
       detekt_config[:excludes].then { |value| value.present? ? ["--excludes", value.join(",")] : [] }
     end
-  
+
     def includes
       detekt_config[:includes].then { |value| value.present? ? ["--includes", value.join(",")] : [] }
     end
-  
+
     def input
       detekt_config[:input].then { |value| value.present? ? ["--input", value.join(",")] : [] }
     end
-  
+
     def report(report_id, report_path)
       ["--report", "#{report_id}:#{report_path}"]
-    end  
+    end
 
     def construct_result(report_path)
       output_file_path = current_dir / report_path
