@@ -255,13 +255,13 @@ class ProcessorTest < Minitest::Test
               ext: .ts
       YAML
 
-      processor.add_warning_if_deprecated_options([:quiet, :options], doc: "https://foo/bar")
-      processor.add_warning_if_deprecated_options([:global], doc: "https://foo/bar")
+      processor.add_warning_if_deprecated_options([:quiet, :options])
+      processor.add_warning_if_deprecated_options([:global])
 
       expected_message = <<~MSG.strip
         DEPRECATION WARNING!!!
         The `$.linter.eslint.quiet`, `$.linter.eslint.options` option(s) in your `sider.yml` are deprecated and will be removed in the near future.
-        Please update to the new option(s) according to our documentation (see https://foo/bar ).
+        Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/javascript/eslint ).
       MSG
 
       assert_equal(

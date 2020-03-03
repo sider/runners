@@ -125,7 +125,7 @@ module Runners
           Please set up Phinder by following the instructions, or you can disable it in the repository settings.
 
           - https://github.com/sider/phinder
-          - https://help.sider.review/tools/php/phinder
+          - #{analyzer_doc}
         MESSAGE
         Results::Success.new(guid: guid, analyzer: analyzer)
       else

@@ -47,7 +47,7 @@ module Runners
     DEFAULT_GLOB = "**/*.{#{DEFAULT_TARGET_FILE_EXTENSIONS.join(',')}}".freeze
 
     def setup
-      add_warning_if_deprecated_options([:options], doc: "https://help.sider.review/tools/css/stylelint")
+      add_warning_if_deprecated_options([:options])
 
       prepare_ignore_file
 

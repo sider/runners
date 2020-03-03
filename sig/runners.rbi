@@ -135,12 +135,13 @@ class Runners::Processor
   def delete_unchanged_files: (Changes, ?except: Array<String>, ?only: Array<String>) -> void
   def add_warning: (String, ?file: String?) -> void
   def add_warning_if_deprecated_version: (minimum: String, ?file: String?, ?deadline: Time?) -> void
-  def add_warning_if_deprecated_options: (Array<Symbol>, doc: String) -> void
+  def add_warning_if_deprecated_options: (Array<Symbol>) -> void
   def add_warning_for_deprecated_linter: (alternative: String, ref: String, ?deadline: Time?) -> void
   def analyzer: -> Analyzer
   def analyzers: -> Analyzers
   def analyzer_id: -> String
   def analyzer_name: -> String
+  def analyzer_doc: -> String
   def analyzer_bin: -> String
   def analyzer_version: -> String
   def extract_version!: (String | Array<String>, ?(String | Array<String>), ?pattern: Regexp) -> String

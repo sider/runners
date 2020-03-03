@@ -60,6 +60,10 @@ module Runners
       analyzers.name(analyzer_id)
     end
 
+    def analyzer_doc
+      analyzers.doc(analyzer_id)
+    end
+
     def analyzer
       @analyzer ||= Analyzer.new(name: analyzer_name, version: analyzer_version)
     end
@@ -146,7 +150,7 @@ module Runners
       end
     end
 
-    def add_warning_if_deprecated_options(keys, doc:)
+    def add_warning_if_deprecated_options(keys)
       deprecated_keys = config_linter.slice(*keys).compact.keys
         .map { |k| "`#{config_field_path(k)}`" }
 
@@ -154,7 +158,7 @@ module Runners
         add_warning <<~MSG.strip, file: config.path_name
           DEPRECATION WARNING!!!
           The #{deprecated_keys.join(", ")} option(s) in your `#{config.path_name}` are deprecated and will be removed in the near future.
-          Please update to the new option(s) according to our documentation (see #{doc} ).
+          Please update to the new option(s) according to our documentation (see #{analyzer_doc} ).
         MSG
       end
     end

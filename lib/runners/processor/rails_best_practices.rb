@@ -43,7 +43,7 @@ module Runners
     }.freeze
 
     def setup
-      add_warning_if_deprecated_options([:options], doc: "https://help.sider.review/tools/ruby/rails-bestpractices")
+      add_warning_if_deprecated_options([:options])
 
       prepare_config
       install_gems default_gem_specs, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS do

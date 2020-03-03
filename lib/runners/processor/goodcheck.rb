@@ -119,7 +119,7 @@ module Runners
           Please set up Goodcheck by following the instructions, or you can disable it in the repository settings.
 
           - https://github.com/sider/goodcheck
-          - https://help.sider.review/tools/others/goodcheck
+          - #{analyzer_doc}
         MESSAGE
         Results::Success.new(guid: guid, analyzer: analyzer)
       else

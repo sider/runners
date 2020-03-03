@@ -27,7 +27,7 @@ module Runners
     register_config_schema(name: :phpmd, schema: Schema.runner_config)
 
     def setup
-      add_warning_if_deprecated_options([:options], doc: "https://help.sider.review/tools/php/phpmd")
+      add_warning_if_deprecated_options([:options])
       yield
     end
 

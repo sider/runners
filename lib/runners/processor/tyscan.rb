@@ -31,17 +31,16 @@ module Runners
       "tyscan" => Constraint.new(">= 0.2.1", "< 1.0.0")
     }.freeze
 
-    DEFAULT_CONFIG_NOT_FOUND_ERROR = <<~MESSAGE.freeze
-      `tyscan.yml` does not exist in your repository.
-
-      To start performing analysis, `tyscan.yml` is required.
-      See also: https://help.sider.review/tools/javascript/tyscan
-    MESSAGE
-
     def setup
       if !(current_dir + 'tyscan.yml').exist? && config_linter[:config].nil?
-        trace_writer.error DEFAULT_CONFIG_NOT_FOUND_ERROR
-        add_warning DEFAULT_CONFIG_NOT_FOUND_ERROR
+        msg = <<~MESSAGE.freeze
+          `tyscan.yml` does not exist in your repository.
+
+          To start performing analysis, `tyscan.yml` is required.
+          See also: #{analyzer_doc}
+        MESSAGE
+        trace_writer.error msg
+        add_warning msg
         return Results::Success.new(guid: guid, analyzer: analyzer)
       end
 

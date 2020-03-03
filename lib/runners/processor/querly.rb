@@ -41,7 +41,7 @@ module Runners
           Please set up Querly by following the instructions, or you can disable it in the repository settings.
 
           - https://github.com/soutaro/querly
-          - https://help.sider.review/tools/ruby/querly
+          - #{analyzer_doc}
         MESSAGE
         Results::Success.new(guid: guid, analyzer: analyzer)
       else

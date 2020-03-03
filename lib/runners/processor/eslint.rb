@@ -43,7 +43,7 @@ module Runners
     }.freeze
 
     def setup
-      add_warning_if_deprecated_options([:options], doc: "https://help.sider.review/tools/javascript/eslint")
+      add_warning_if_deprecated_options([:options])
 
       begin
         install_nodejs_deps(DEFAULT_DEPS, constraints: CONSTRAINTS, install_option: config_linter[:npm_install])
