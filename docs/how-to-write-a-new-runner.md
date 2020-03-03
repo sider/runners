@@ -33,6 +33,8 @@ Please follow the naming rules below:
 
 In the following examples, assume that the defined runner ID is `foolint`.
 
+After defining a ID, you should add also metadata of the runner into [`analyzers.yml`](../analyzers.yml).
+
 ### Create a runner image
 
 Next, let's create a Docker image for the runner.
