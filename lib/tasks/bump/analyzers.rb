@@ -49,6 +49,9 @@ BumpAnalyzers = Struct.new(
   ANALYZERS_UNSUPPORTED_BY_DEPENDABOT = {
     cppcheck: { name: "Cppcheck", github: "danmar/cppcheck" },
     cpplint: { name: "cpplint", github: "cpplint/cpplint" },
+    fxcop: { name: "FxCop", github: "dotnet/roslyn-analyzers" },
+    golangci_lint: { name: "GolangCI-Lint", github: "golangci/golangci-lint" },
+    hadolint: { name: "hadolint", github: "hadolint/hadolint" },
     javasee:  { name: "JavaSee", github: "sider/JavaSee" },
     misspell: { name: "Misspell", github: "client9/misspell" },
     shellcheck: { name: "ShellCheck", github: "koalaman/shellcheck" },
