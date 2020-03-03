@@ -1,0 +1,150 @@
+analyzers:
+  # In alphabetical order.
+  brakeman:
+    name: Brakeman
+    github: presidentbeef/brakeman
+    doc: tools/ruby/brakeman
+  checkstyle:
+    name: Checkstyle
+    github: checkstyle/checkstyle
+    doc: tools/java/checkstyle
+  code_sniffer:
+    name: PHP_CodeSniffer
+    github: squizlabs/PHP_CodeSniffer
+    doc: tools/php/codesniffer
+  coffeelint:
+    name: CoffeeLint
+    github: clutchski/coffeelint
+    doc: tools/javascript/coffeelint
+  cppcheck:
+    name: Cppcheck
+    github: danmar/cppcheck
+    doc: tools/cplusplus/cppcheck
+    dependabot: false
+  cpplint:
+    name: cpplint
+    github: cpplint/cpplint
+    doc: tools/cplusplus/cpplint
+    dependabot: false
+  detekt:
+    name: detekt
+    github: arturbosch/detekt
+    doc: tools/kotlin/detekt
+  eslint:
+    name: ESLint
+    github: eslint/eslint
+    doc: tools/javascript/eslint
+  flake8:
+    name: Flake8
+    github: PyCQA/flake8
+    doc: tools/python/flake8
+  fxcop:
+    name: FxCop
+    github: dotnet/roslyn-analyzers
+    doc: tools/csharp/fxcop
+    dependabot: false
+  go_vet:
+    name: go vet
+    website: https://golang.org/cmd/vet
+    doc: tools/go/govet
+    deprecated: true
+  golangci_lint:
+    name: GolangCI-Lint
+    github: golangci/golangci-lint
+    doc: tools/go/golangci-lint
+    dependabot: false
+  golint:
+    name: Golint
+    github: golang/lint
+    doc: tools/go/golint
+    deprecated: true
+  gometalinter:
+    name: Go Meta Linter
+    github: alecthomas/gometalinter
+    doc: tools/go/gometalinter
+    deprecated: true
+  goodcheck:
+    name: Goodcheck
+    github: sider/goodcheck
+    doc: tools/others/goodcheck
+  hadolint:
+    name: hadolint
+    github: hadolint/hadolint
+    doc: tools/dockerfile/hadolint
+    dependabot: false
+  haml_lint:
+    name: HAML-Lint
+    github: sds/haml-lint
+    doc: tools/ruby/haml-lint
+  javasee:
+    name: JavaSee
+    github: sider/JavaSee
+    doc: tools/java/javasee
+    dependabot: false
+  jshint:
+    name: JSHint
+    github: jshint/jshint
+    doc: tools/javascript/jshint
+  ktlint:
+    name: ktlint
+    github: pinterest/ktlint
+    doc: tools/kotlin/ktlint
+  misspell:
+    name: Misspell
+    github: client9/misspell
+    doc: tools/others/misspell
+    dependabot: false
+  phinder:
+    name: Phinder
+    github: sider/phinder
+    doc: tools/php/phinder
+  phpmd:
+    name: PHPMD
+    github: phpmd/phpmd
+    doc: tools/php/phpmd
+  pmd_java:
+    name: PMD Java
+    github: pmd/pmd
+    doc: tools/java/pmd
+  querly:
+    name: Querly
+    github: soutaro/querly
+    doc: tools/ruby/querly
+  rails_best_practices:
+    name: Rails Best Practices
+    github: flyerhzm/rails_best_practices
+    doc: tools/ruby/rails-bestpractices
+  reek:
+    name: Reek
+    github: troessner/reek
+    doc: tools/ruby/reek
+  rubocop:
+    name: RuboCop
+    github: rubocop-hq/rubocop
+    doc: tools/ruby/rubocop
+  scss_lint:
+    name: SCSS-Lint
+    github: sds/scss-lint
+    doc: tools/css/scss-lint
+  shellcheck:
+    name: ShellCheck
+    github: koalaman/shellcheck
+    doc: tools/shellscript/shellcheck
+    dependabot: false
+  stylelint:
+    name: stylelint
+    github: stylelint/stylelint
+    doc: tools/css/stylelint
+  swiftlint:
+    name: SwiftLint
+    github: realm/SwiftLint
+    doc: tools/swift/swiftlint
+    dependabot: false
+  tslint:
+    name: TSLint
+    github: palantir/tslint
+    doc: tools/javascript/tslint
+  tyscan:
+    name: TyScan
+    github: sider/TyScan
+    doc: tools/javascript/tyscan

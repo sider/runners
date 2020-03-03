@@ -1,5 +1,6 @@
 require "net/http"
 require "json"
+require "yaml"
 
 namespace :bump do
   desc "Bump analyzers and create new pull requests"
@@ -46,20 +47,9 @@ BumpAnalyzers = Struct.new(
     end
   end
 
-  ANALYZERS_UNSUPPORTED_BY_DEPENDABOT = {
-    cppcheck: { name: "Cppcheck", github: "danmar/cppcheck" },
-    cpplint: { name: "cpplint", github: "cpplint/cpplint" },
-    fxcop: { name: "FxCop", github: "dotnet/roslyn-analyzers" },
-    golangci_lint: { name: "GolangCI-Lint", github: "golangci/golangci-lint" },
-    hadolint: { name: "hadolint", github: "hadolint/hadolint" },
-    javasee:  { name: "JavaSee", github: "sider/JavaSee" },
-    misspell: { name: "Misspell", github: "client9/misspell" },
-    shellcheck: { name: "ShellCheck", github: "koalaman/shellcheck" },
-    swiftlint: { name: "SwiftLint", github: "realm/SwiftLint" },
-  }.freeze
-
   def self.each
-    ANALYZERS_UNSUPPORTED_BY_DEPENDABOT.each do |analyzer, meta|
+    analyzers = YAML.safe_load(Pathname(__dir__).join("../../../analyzers.yml").read, symbolize_names: true).fetch(:analyzers)
+    analyzers.each do |analyzer, meta|
       yield new(
         analyzer: analyzer,
         analyzer_name: meta.fetch(:name),
