@@ -33,10 +33,10 @@ module Runners
 
     def processor_class
       @processor_class ||= (Processor.subclasses.detect do |cls|
+        # NOTE: Generate an analyzer ID from filename convention.
+        #       This logic assumes that each subclass has its `#analyze` method.
         source_file, _ = cls.instance_method(:analyze).source_location
         analyzer_id_from_filename = File.basename(source_file, ".rb")
-
-        # NOTE: Define a method dynamically
         cls.define_method(:analyzer_id) { analyzer_id_from_filename }
 
         analyzer == analyzer_id_from_filename
