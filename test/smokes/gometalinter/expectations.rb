@@ -13,7 +13,7 @@ Smoke.add_test(
     {
       message: <<~MSG
         DEPRECATION WARNING!!!
-        The support for gometalinter is deprecated. Sider will drop these versions on April 30, 2020.
+        The support for Go Meta Linter is deprecated. Sider will drop these versions on April 30, 2020.
         Please consider using an alternative tool GolangCi-Lint. See https://github.com/alecthomas/gometalinter/issues/590
       MSG
         .strip,
