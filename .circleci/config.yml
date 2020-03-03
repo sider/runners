@@ -10,8 +10,9 @@ commands:
       - run:
           name: Bundle install
           command: |
-            gem install bundler
-            bundle install --jobs=4 --retry=3 --path=vendor/bundle
+            gem install bundler --no-document
+            bundle config set path vendor/bundle
+            bundle install --jobs=4 --retry=3
       - save_cache:
           paths:
             - vendor/bundle

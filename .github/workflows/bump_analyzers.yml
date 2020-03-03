@@ -8,13 +8,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-ruby@v1
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.6.x
+          ruby-version: .ruby-version
       - run: |
           gem install bundler --no-document
-          bundle install --jobs=4 --retry=3 --path=vendor/bundle
+          bundle config set path vendor/bundle
+          bundle install --jobs=4 --retry=3
       - run: |
           bundle exec rake bump:analyzers
         env:
