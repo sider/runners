@@ -49,8 +49,8 @@ class CLITest < Minitest::Test
   end
 
   class TestProcessor < Runners::Processor
-    def self.version
-      "1.0.0"
+    def analyzer_id
+      "rubocop"
     end
 
     def setup
