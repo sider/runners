@@ -36,13 +36,13 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "querly", version: "1.0.0" }
+    analyzer: { name: "Querly", version: "1.0.0" }
   }
 )
 
 Smoke.add_test(
   "no_config_file",
-  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "querly", version: "1.0.0" } },
+  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "Querly", version: "1.0.0" } },
   warnings: [
     {
       message: <<~MESSAGE,
@@ -76,7 +76,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "querly", version: "1.0.0" }
+    analyzer: { name: "Querly", version: "1.0.0" }
   },
   warnings: [{ message: "com.test.pathname:\t1st *after* example matched with some of patterns", file: "querly.yml" }]
 )
@@ -98,7 +98,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "querly", version: "1.0.0" }
+    analyzer: { name: "Querly", version: "1.0.0" }
   }
 )
 
@@ -119,7 +119,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "querly", version: "1.0.0" }
+    analyzer: { name: "Querly", version: "1.0.0" }
   }
 )
 
@@ -145,6 +145,6 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "querly", version: "0.5.0" }
+    analyzer: { name: "Querly", version: "0.5.0" }
   }
 )

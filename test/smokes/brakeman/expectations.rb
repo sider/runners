@@ -45,7 +45,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "brakeman", version: "4.3.1" }
+    analyzer: { name: "Brakeman", version: "4.3.1" }
   }
 )
 
@@ -94,13 +94,13 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "brakeman", version: "4.3.1" }
+    analyzer: { name: "Brakeman", version: "4.3.1" }
   }
 )
 
 Smoke.add_test(
   "not_rails",
-  { guid: "test-guid", timestamp: :_, type: "failure", message: :_, analyzer: { name: "brakeman", version: "4.3.1" } }
+  { guid: "test-guid", timestamp: :_, type: "failure", message: :_, analyzer: { name: "Brakeman", version: "4.3.1" } }
 )
 
 Smoke.add_test(
@@ -130,7 +130,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "brakeman", version: "4.0.0" }
+    analyzer: { name: "Brakeman", version: "4.0.0" }
   }
 )
 
@@ -163,7 +163,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "brakeman", version: "4.3.1" }
+    analyzer: { name: "Brakeman", version: "4.3.1" }
   },
   warnings: [
     {

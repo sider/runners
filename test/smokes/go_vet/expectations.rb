@@ -17,7 +17,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "go_vet", version: "3.0.0" }
+    analyzer: { name: "go vet", version: "3.0.0" }
   },
   warnings: [
     {

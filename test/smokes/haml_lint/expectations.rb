@@ -16,7 +16,7 @@ Smoke.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "haml_lint", version: "0.35.0" }
+  analyzer: { name: "HAML-Lint", version: "0.35.0" }
 )
 
 Smoke.add_test(
@@ -36,7 +36,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "haml_lint", version: "0.35.0" }
+    analyzer: { name: "HAML-Lint", version: "0.35.0" }
   },
   {
     warnings: [
@@ -69,7 +69,7 @@ Smoke.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "haml_lint", version: "0.35.0" }
+  analyzer: { name: "HAML-Lint", version: "0.35.0" }
 )
 
 Smoke.add_test(
@@ -89,7 +89,7 @@ Smoke.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "haml_lint", version: "0.34.0" }
+  analyzer: { name: "HAML-Lint", version: "0.34.0" }
 )
 
 Smoke.add_test(
@@ -117,7 +117,7 @@ Smoke.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "haml_lint", version: "0.35.0" }
+  analyzer: { name: "HAML-Lint", version: "0.35.0" }
 )
 
 Smoke.add_test(
@@ -146,7 +146,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "haml_lint", version: "0.35.0" }
+    analyzer: { name: "HAML-Lint", version: "0.35.0" }
   }
 )
 
@@ -177,7 +177,7 @@ Smoke.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "haml_lint", version: "0.26.0" }
+  analyzer: { name: "HAML-Lint", version: "0.26.0" }
 )
 
 Smoke.add_test(
@@ -204,7 +204,7 @@ Smoke.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "haml_lint", version: "0.28.0" }
+  analyzer: { name: "HAML-Lint", version: "0.28.0" }
 )
 
 # HAML-Lint v0.33.0 has supported HAML 5.1, therefore this test case checks brand-new HAML version.
@@ -226,7 +226,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "haml_lint", version: "0.32.0" }
+    analyzer: { name: "HAML-Lint", version: "0.32.0" }
   }
 )
 
@@ -237,7 +237,7 @@ Smoke.add_test(
     timestamp: :_,
     type: "failure",
     message: "HAML-Lint raises an unexpected error",
-    analyzer: { name: "haml_lint", version: "0.35.0" }
+    analyzer: { name: "HAML-Lint", version: "0.35.0" }
   }
 )
 
@@ -258,7 +258,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "haml_lint", version: "0.34.2" }
+    analyzer: { name: "HAML-Lint", version: "0.34.2" }
   },
   { warnings: [{ message: "cannot load such file -- rubocop-performance", file: nil }] }
 )

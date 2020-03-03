@@ -17,7 +17,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "goodcheck", version: "2.5.0" }
+    analyzer: { name: "Goodcheck", version: "2.5.0" }
   }
 )
 
@@ -38,13 +38,13 @@ Smoke.add_test(
         location: { start_line: 1, start_column: 0, end_line: 1, end_column: 3 }
       }
     ],
-    analyzer: { name: "goodcheck", version: "2.5.0" }
+    analyzer: { name: "Goodcheck", version: "2.5.0" }
   }
 )
 
 Smoke.add_test(
   "no_config_file",
-  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "goodcheck", version: "2.5.0" } },
+  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "Goodcheck", version: "2.5.0" } },
   warnings: [
     {
       message: <<~MESSAGE,
@@ -66,7 +66,7 @@ Smoke.add_test(
     timestamp: :_,
     type: "failure",
     message: "Invalid config: TypeError at $.rules[0]: expected=rule, value=\"id:foo\"",
-    analyzer: { name: "goodcheck", version: "2.5.0" }
+    analyzer: { name: "Goodcheck", version: "2.5.0" }
   }
 )
 
@@ -83,7 +83,7 @@ Smoke.add_test(
 
 Smoke.add_test(
   "warning_config_file",
-  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "goodcheck", version: "2.5.0" } },
+  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "Goodcheck", version: "2.5.0" } },
   warnings: [
     {
       message:
@@ -95,7 +95,7 @@ Smoke.add_test(
 
 Smoke.add_test(
   "deprecated-options",
-  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "goodcheck", version: "2.5.0" } },
+  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "Goodcheck", version: "2.5.0" } },
   warnings: [{ message: "👻 `case_insensitive` option is deprecated. Use `case_sensitive` option instead.", file: nil }]
 )
 
@@ -116,7 +116,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "goodcheck", version: "1.0.0" }
+    analyzer: { name: "Goodcheck", version: "1.0.0" }
   }
 )
 
@@ -137,7 +137,7 @@ Smoke.add_test(
         location: nil
       }
     ],
-    analyzer: { name: "goodcheck", version: "2.5.0" }
+    analyzer: { name: "Goodcheck", version: "2.5.0" }
   }
 )
 
@@ -166,6 +166,6 @@ Smoke.add_test(
         location: nil
       }
     ],
-    analyzer: { name: "goodcheck", version: "2.5.0" }
+    analyzer: { name: "Goodcheck", version: "2.5.0" }
   }
 )

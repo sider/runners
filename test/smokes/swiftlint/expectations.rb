@@ -6,7 +6,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "swiftlint", version: "0.39.1" },
+    analyzer: { name: "SwiftLint", version: "0.39.1" },
     issues: [
       {
         path: "test.swift",
@@ -27,7 +27,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "swiftlint", version: "0.39.1" },
+    analyzer: { name: "SwiftLint", version: "0.39.1" },
     issues: [
       {
         path: "test.swift",
@@ -138,7 +138,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "swiftlint", version: "0.39.1" },
+    analyzer: { name: "SwiftLint", version: "0.39.1" },
     issues: [
       {
         path: "test.swift",
@@ -155,7 +155,7 @@ Smoke.add_test(
 
 Smoke.add_test(
   "no_swift_file",
-  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "swiftlint", version: "0.39.1" } },
+  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "SwiftLint", version: "0.39.1" } },
   { warnings: [{ message: "No lintable files found.", file: nil }] }
 )
 
@@ -166,7 +166,7 @@ Smoke.add_test(
     timestamp: :_,
     type: "failure",
     message: /\ASwiftLint aborted\.\n(.+)\nCould not read configuration file at path (.+)/m,
-    analyzer: { name: "swiftlint", version: "0.39.1" }
+    analyzer: { name: "SwiftLint", version: "0.39.1" }
   },
   {
     warnings: [
@@ -202,6 +202,6 @@ Smoke.add_test(
     type: "failure",
     # TODO: The message sometimes can be "". It should be "Loading configuration from '.swiftlint.yml'".
     message: :_,
-    analyzer: { name: "swiftlint", version: "0.39.1" }
+    analyzer: { name: "SwiftLint", version: "0.39.1" }
   }
 )

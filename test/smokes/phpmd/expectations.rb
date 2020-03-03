@@ -17,7 +17,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "phpmd", version: "2.8.1" }
+    analyzer: { name: "PHPMD", version: "2.8.1" }
   }
 )
 
@@ -52,7 +52,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "phpmd", version: "2.8.1" }
+    analyzer: { name: "PHPMD", version: "2.8.1" }
   },
   {
     warnings: [
@@ -71,7 +71,7 @@ Smoke.add_test(
 
 Smoke.add_test(
   "syntax_error",
-  { guid: "test-guid", timestamp: :_, type: "failure", message: :_, analyzer: { name: "phpmd", version: "2.8.1" } }
+  { guid: "test-guid", timestamp: :_, type: "failure", message: :_, analyzer: { name: "PHPMD", version: "2.8.1" } }
 )
 
 Smoke.add_test(
@@ -91,7 +91,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "phpmd", version: "2.8.1" }
+    analyzer: { name: "PHPMD", version: "2.8.1" }
   }
 )
 
@@ -112,13 +112,13 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "phpmd", version: "2.8.1" }
+    analyzer: { name: "PHPMD", version: "2.8.1" }
   }
 )
 
 Smoke.add_test(
   "with_php_version",
-  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "phpmd", version: "2.8.1" } }
+  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "PHPMD", version: "2.8.1" } }
 )
 
 Smoke.add_test(
@@ -167,7 +167,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "phpmd", version: "2.8.1" }
+    analyzer: { name: "PHPMD", version: "2.8.1" }
   }
 )
 
@@ -178,6 +178,6 @@ Smoke.add_test(
     timestamp: :_,
     type: "failure",
     message: "Invalid XML was output. See the log for details.",
-    analyzer: { name: "phpmd", version: "2.8.1" }
+    analyzer: { name: "PHPMD", version: "2.8.1" }
   }
 )

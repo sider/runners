@@ -17,7 +17,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "golint", version: "3.0.0" }
+    analyzer: { name: "Golint", version: "3.0.0" }
   },
   warnings: [
     {

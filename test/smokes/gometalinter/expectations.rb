@@ -3,7 +3,11 @@ Smoke = Runners::Testing::Smoke
 Smoke.add_test(
   "success",
   {
-    guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "gometalinter", version: "2.0.11" }
+    guid: "test-guid",
+    timestamp: :_,
+    type: "success",
+    issues: [],
+    analyzer: { name: "Go Meta Linter", version: "2.0.11" }
   },
   warnings: [
     {
@@ -35,7 +39,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "gometalinter", version: "2.0.11" }
+    analyzer: { name: "Go Meta Linter", version: "2.0.11" }
   },
   warnings: [{ message: /The support for gometalinter is deprecated/, file: "sideci.yml" }]
 )
@@ -57,7 +61,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "gometalinter", version: "2.0.11" }
+    analyzer: { name: "Go Meta Linter", version: "2.0.11" }
   },
   warnings: [{ message: /The support for gometalinter is deprecated/, file: "sideci.yml" }]
 ) { |config| config.ssh_key = "ssh_key" }
@@ -116,7 +120,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "gometalinter", version: "2.0.11" }
+    analyzer: { name: "Go Meta Linter", version: "2.0.11" }
   },
   warnings: [{ message: /The support for gometalinter is deprecated/, file: "sideci.yml" }]
 )
@@ -124,7 +128,11 @@ Smoke.add_test(
 Smoke.add_test(
   "install_path",
   {
-    guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "gometalinter", version: "2.0.11" }
+    guid: "test-guid",
+    timestamp: :_,
+    type: "success",
+    issues: [],
+    analyzer: { name: "Go Meta Linter", version: "2.0.11" }
   },
   warnings: [
     { message: /The support for gometalinter is deprecated/, file: "sideci.yml" },
@@ -135,7 +143,11 @@ Smoke.add_test(
 Smoke.add_test(
   "import_path",
   {
-    guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "gometalinter", version: "2.0.11" }
+    guid: "test-guid",
+    timestamp: :_,
+    type: "success",
+    issues: [],
+    analyzer: { name: "Go Meta Linter", version: "2.0.11" }
   },
   warnings: [{ message: /The support for gometalinter is deprecated/, file: "sideci.yml" }]
 )
@@ -143,7 +155,11 @@ Smoke.add_test(
 Smoke.add_test(
   "import_path_and_install_path",
   {
-    guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "gometalinter", version: "2.0.11" }
+    guid: "test-guid",
+    timestamp: :_,
+    type: "success",
+    issues: [],
+    analyzer: { name: "Go Meta Linter", version: "2.0.11" }
   },
   warnings: [{ message: /The support for gometalinter is deprecated/, file: "sideci.yml" }]
 )

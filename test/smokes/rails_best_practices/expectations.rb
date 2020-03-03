@@ -43,7 +43,7 @@ Smoke.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "rails_best_practices", version: "1.19.4" }
+  analyzer: { name: "Rails Best Practices", version: "1.19.4" }
 )
 
 Smoke.add_test(
@@ -63,7 +63,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "rails_best_practices", version: "1.19.4" },
+    analyzer: { name: "Rails Best Practices", version: "1.19.4" },
     issues: [
       {
         message: "Don't rescue Exception",
@@ -97,7 +97,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "rails_best_practices", version: "1.19.1" },
+    analyzer: { name: "Rails Best Practices", version: "1.19.1" },
     issues: [
       {
         message: "simplify render in views",
@@ -136,7 +136,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "rails_best_practices", version: "1.19.1" },
+    analyzer: { name: "Rails Best Practices", version: "1.19.1" },
     issues: [
       {
         message: "Don't rescue Exception",
@@ -157,7 +157,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "rails_best_practices", version: "1.19.1" },
+    analyzer: { name: "Rails Best Practices", version: "1.19.1" },
     issues: [
       {
         message: "simplify render in views",
@@ -187,7 +187,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "rails_best_practices", version: "1.19.1" },
+    analyzer: { name: "Rails Best Practices", version: "1.19.1" },
     issues: [
       {
         message: "simplify render in views",
@@ -208,7 +208,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "rails_best_practices", version: "1.19.4" },
+    analyzer: { name: "Rails Best Practices", version: "1.19.4" },
     issues: [
       {
         message: "Don't rescue Exception",
