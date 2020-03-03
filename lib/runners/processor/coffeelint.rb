@@ -25,19 +25,11 @@ module Runners
       "coffeelint" => Constraint.new(">= 1.16.0", "< 3.0.0"),
     }.freeze
 
-    def self.ci_config_section_name
-      'coffeelint'
-    end
-
-    def analyzer_name
-      'CoffeeLint'
-    end
-
     def setup
       add_warning_if_deprecated_options([:options], doc: "https://help.sider.review/tools/javascript/coffeelint")
 
       begin
-        install_nodejs_deps(DEFAULT_DEPS, constraints: CONSTRAINTS, install_option: ci_section[:npm_install])
+        install_nodejs_deps(DEFAULT_DEPS, constraints: CONSTRAINTS, install_option: config_linter[:npm_install])
       rescue UserError => exn
         return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
       end
@@ -59,7 +51,7 @@ module Runners
     end
 
     def file
-      file = ci_section[:file] || ci_section.dig(:options, :file) || ci_section.dig(:options, :config)
+      file = config_linter[:file] || config_linter.dig(:options, :file) || config_linter.dig(:options, :config)
       ['--file', "#{file}"] if file
     end
 

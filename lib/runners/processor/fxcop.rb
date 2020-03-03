@@ -16,14 +16,6 @@ module Runners
 
     register_config_schema(name: :fxcop, schema: Schema.runner_config)
 
-    def self.ci_config_section_name
-      'fxcop'
-    end
-
-    def analyzer_name
-      'FxCop'
-    end
-
     def analyzer_version
       ENV.fetch('FXCOP_VERSION')
     end

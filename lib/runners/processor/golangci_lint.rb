@@ -32,16 +32,8 @@ module Runners
 
     DEFAULT_TARGET = "./...".freeze
 
-    def self.ci_config_section_name
-      "golangci_lint"
-    end
-
     def analyzer_bin
       "golangci-lint"
-    end
-
-    def analyzer_name
-      "GolangCI-Lint"
     end
 
     def analyze(_changes)
@@ -106,34 +98,34 @@ module Runners
         analysis_targets.each { |target| opts << target }
         opts << "--out-format=json"
         opts << "--issues-exit-code=0"
-        opts << "--tests=#{ci_section[:tests]}" unless ci_section[:tests].nil?
+        opts << "--tests=#{config_linter[:tests]}" unless config_linter[:tests].nil?
         opts << "--config=#{path_to_config}" if path_to_config
-        Array(ci_section[:disable]).each { |disable| opts << "--disable=#{disable}" }
-        Array(ci_section[:enable]).each { |enable| opts << "--enable=#{enable}" }
-        Array(ci_section[:presets]).each { |preset| opts << "--presets=#{preset}" }
-        Array(ci_section[:'skip-dirs']).each { |dir| opts << "--skip-dirs=#{dir}" }
-        Array(ci_section[:'skip-files']).each { |file| opts << "--skip-files=#{file}" }
-        opts << "--uniq-by-line=#{ci_section[:'uniq-by-line']}" unless ci_section[:'uniq-by-line'].nil?
-        opts << "--no-config=#{ci_section[:'no-config']}" unless ci_section[:'no-config'].nil?
-        unless ci_section[:'skip-dirs-use-default'].nil?
-          opts << "--skip-dirs-use-default=#{ci_section[:'skip-dirs-use-default']}"
+        Array(config_linter[:disable]).each { |disable| opts << "--disable=#{disable}" }
+        Array(config_linter[:enable]).each { |enable| opts << "--enable=#{enable}" }
+        Array(config_linter[:presets]).each { |preset| opts << "--presets=#{preset}" }
+        Array(config_linter[:'skip-dirs']).each { |dir| opts << "--skip-dirs=#{dir}" }
+        Array(config_linter[:'skip-files']).each { |file| opts << "--skip-files=#{file}" }
+        opts << "--uniq-by-line=#{config_linter[:'uniq-by-line']}" unless config_linter[:'uniq-by-line'].nil?
+        opts << "--no-config=#{config_linter[:'no-config']}" unless config_linter[:'no-config'].nil?
+        unless config_linter[:'skip-dirs-use-default'].nil?
+          opts << "--skip-dirs-use-default=#{config_linter[:'skip-dirs-use-default']}"
         end
-        opts << "--disable-all=#{ci_section[:'disable-all']}" unless ci_section[:'disable-all'].nil?
+        opts << "--disable-all=#{config_linter[:'disable-all']}" unless config_linter[:'disable-all'].nil?
       end
     end
 
     def path_to_config
-      return ci_section[:config] if ci_section[:config]
+      return config_linter[:config] if config_linter[:config]
 
       # @see https://github.com/golangci/golangci-lint#config-file
       candidates = %w[.golangci.yml .golangci.toml .golangci.json].map { |filename| current_dir / filename }
 
       return if candidates.find(&:exist?)
-      "sider_golangci.yml".tap { |file| FileUtils.cp(Pathname(Dir.home) / file, current_dir) } unless ci_section[:'disable-all'] == true
+      "sider_golangci.yml".tap { |file| FileUtils.cp(Pathname(Dir.home) / file, current_dir) } unless config_linter[:'disable-all'] == true
     end
 
     def analysis_targets
-      Array(ci_section[:target] || DEFAULT_TARGET)
+      Array(config_linter[:target] || DEFAULT_TARGET)
     end
 
     # Output format:

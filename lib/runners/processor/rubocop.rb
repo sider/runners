@@ -70,14 +70,6 @@ module Runners
       "rubocop" => [">= 0.61.0", "< 1.0.0"]
     }.freeze
 
-    def self.ci_config_section_name
-      'rubocop'
-    end
-
-    def analyzer_name
-      'RuboCop'
-    end
-
     def default_gem_specs
       super.tap do |gems|
         if setup_default_config
@@ -110,8 +102,8 @@ module Runners
     private
 
     def rails_option
-      rails = ci_section[:rails]
-      rails = ci_section.dig(:options, :rails) if rails.nil?
+      rails = config_linter[:rails]
+      rails = config_linter.dig(:options, :rails) if rails.nil?
       case
       when rails && !rails_cops_removed?
         '--rails'
@@ -131,12 +123,12 @@ module Runners
     end
 
     def config_file
-      config_path = ci_section[:config] || ci_section.dig(:options, :config)
+      config_path = config_linter[:config] || config_linter.dig(:options, :config)
       "--config=#{config_path}" if config_path
     end
 
     def safe
-      "--safe" if ci_section[:safe]
+      "--safe" if config_linter[:safe]
     end
 
     def setup_default_config

@@ -21,10 +21,6 @@ module Runners
 
     register_config_schema(name: :pmd_java, schema: Schema.runner_config)
 
-    def self.ci_config_section_name
-      'pmd_java'
-    end
-
     def pmd(dir:, rulesets:, encoding:, min_priority:)
       args = []
       args.unshift("-dir", dir)
@@ -119,7 +115,7 @@ module Runners
     end
 
     def rulesets
-      array(ci_section[:rulesets] || default_ruleset)
+      array(config_linter[:rulesets] || default_ruleset)
     end
 
     def default_ruleset
@@ -127,15 +123,15 @@ module Runners
     end
 
     def dir
-      ci_section[:dir] || "."
+      config_linter[:dir] || "."
     end
 
     def encoding
-      ci_section[:encoding]
+      config_linter[:encoding]
     end
 
     def min_priority
-      ci_section[:min_priority]
+      config_linter[:min_priority]
     end
 
     def array(value)

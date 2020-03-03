@@ -12,14 +12,6 @@ module Runners
       "reek" => [">= 4.4.0", "< 6.0"]
     }.freeze
 
-    def self.ci_config_section_name
-      'reek'
-    end
-
-    def analyzer_name
-      'Reek'
-    end
-
     def setup
       install_gems default_gem_specs, constraints: CONSTRAINTS do
         analyzer

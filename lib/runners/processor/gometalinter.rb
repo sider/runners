@@ -30,19 +30,6 @@ module Runners
 
     register_config_schema(name: :gometalinter, schema: Schema.runner_config)
 
-    def self.ci_config_section_name
-      # Section name in sideci.yml, Generally it is the name of analyzer tool.
-      "gometalinter"
-    end
-
-    def analyzer_bin
-      "gometalinter"
-    end
-
-    def analyzer_name
-      "gometalinter"
-    end
-
     def setup
       add_warning_for_deprecated_linter(alternative: "GolangCi-Lint",
                                         ref: "https://github.com/alecthomas/gometalinter/issues/590",
@@ -118,10 +105,10 @@ module Runners
     def import_path
       return @import_path if defined? @import_path
 
-      @import_path = ci_section[:import_path]
+      @import_path = config_linter[:import_path]
       return @import_path if @import_path
 
-      @import_path = ci_section[:install_path].tap do |install_path|
+      @import_path = config_linter[:install_path].tap do |install_path|
         if install_path
           msg = '`install_path` option is deprecated. Use `import_path` instead.'
           add_warning(msg, file: config.path_name)
@@ -155,7 +142,7 @@ module Runners
     end
 
     def additional_options
-      options = ci_section[:options] || {}
+      options = config_linter[:options] || {}
       options[:config] ||= (Pathname(Dir.home) / 'gometalinter.json').realpath
       options.map do |k, v|
         next unless v

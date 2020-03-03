@@ -42,19 +42,11 @@ module Runners
       "eslint" => Constraint.new(">= 5.0.0", "< 7.0.0")
     }.freeze
 
-    def self.ci_config_section_name
-      'eslint'
-    end
-
-    def analyzer_name
-      'ESLint'
-    end
-
     def setup
       add_warning_if_deprecated_options([:options], doc: "https://help.sider.review/tools/javascript/eslint")
 
       begin
-        install_nodejs_deps(DEFAULT_DEPS, constraints: CONSTRAINTS, install_option: ci_section[:npm_install])
+        install_nodejs_deps(DEFAULT_DEPS, constraints: CONSTRAINTS, install_option: config_linter[:npm_install])
       rescue UserError => exn
         return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
       end
@@ -70,7 +62,7 @@ module Runners
     private
 
     def dir
-      dir = ci_section[:dir] || ci_section.dig(:options, :dir) || '.'
+      dir = config_linter[:dir] || config_linter.dig(:options, :dir) || '.'
       Array(dir)
     end
 
@@ -80,7 +72,7 @@ module Runners
     end
 
     def user_specified_eslint_config_path
-      path = ci_section[:config] || ci_section.dig(:options, :config)
+      path = config_linter[:config] || config_linter.dig(:options, :config)
       if path && directory_traversal_attack?(path)
         path = nil
       end
@@ -88,17 +80,17 @@ module Runners
     end
 
     def ext
-      ext = ci_section[:ext] || ci_section.dig(:options, :ext)
+      ext = config_linter[:ext] || config_linter.dig(:options, :ext)
       "--ext=#{ext}" if ext
     end
 
     def ignore_path
-      ignore_path = ci_section[:'ignore-path'] || ci_section.dig(:options, :'ignore-path')
+      ignore_path = config_linter[:'ignore-path'] || config_linter.dig(:options, :'ignore-path')
       "--ignore-path=#{ignore_path}" if ignore_path
     end
 
     def ignore_pattern
-      ignore_pattern = ci_section[:'ignore-pattern'] || ci_section.dig(:options, :'ignore-pattern')
+      ignore_pattern = config_linter[:'ignore-pattern'] || config_linter.dig(:options, :'ignore-pattern')
       pattern = Array(ignore_pattern)
       unless pattern.empty?
         pattern.map { |value| "--ignore-pattern=#{value}" }
@@ -106,17 +98,17 @@ module Runners
     end
 
     def no_ignore
-      no_ignore = ci_section[:'no-ignore'] || ci_section.dig(:options, :'no-ignore')
+      no_ignore = config_linter[:'no-ignore'] || config_linter.dig(:options, :'no-ignore')
       "--no-ignore" if no_ignore
     end
 
     def global
-      global = ci_section[:global] || ci_section.dig(:options, :global)
+      global = config_linter[:global] || config_linter.dig(:options, :global)
       "--global='#{global}'" if global
     end
 
     def quiet
-      quiet = ci_section[:quiet] || ci_section.dig(:options, :quiet)
+      quiet = config_linter[:quiet] || config_linter.dig(:options, :quiet)
       "--quiet" if quiet
     end
 

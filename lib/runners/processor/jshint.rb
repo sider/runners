@@ -17,14 +17,6 @@ module Runners
 
     register_config_schema(name: :jshint, schema: Schema.runner_config)
 
-    def self.ci_config_section_name
-      'jshint'
-    end
-
-    def analyzer_name
-      'JSHint'
-    end
-
     def setup
       add_warning_if_deprecated_options([:options], doc: "https://help.sider.review/tools/javascript/jshint")
       yield
@@ -59,7 +51,7 @@ module Runners
     end
 
     def config_path
-      ci_section[:config] || ci_section.dig(:options, :config)
+      config_linter[:config] || config_linter.dig(:options, :config)
     end
 
     def parse_result(output)
@@ -80,7 +72,7 @@ module Runners
       args = []
       args << "--reporter=checkstyle"
       args << "--config=#{config_path}" if config_path
-      args << (ci_section[:dir] || "./")
+      args << (config_linter[:dir] || "./")
       stdout, stderr, status = capture3(analyzer_bin, *args)
       # If command is succeeded, status.exitstatus is 0 or 2(issues are found).
       return Results::Failure.new(guid: guid, message: stderr, analyzer: analyzer) if status.exitstatus == 1

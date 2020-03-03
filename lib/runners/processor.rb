@@ -48,8 +48,16 @@ module Runners
       raise NotImplementedError, "No implementation: #{self.class}#analyze"
     end
 
+    def analyzers
+      @analyzers ||= Analyzers.new
+    end
+
+    def analyzer_id
+      raise NotImplementedError, "`#{self.class}##{__method__}` should be defined dynamically"
+    end
+
     def analyzer_name
-      raise NotImplementedError, "No implementation: #{self.class}#{__method__}"
+      analyzers.name(analyzer_id)
     end
 
     def analyzer
@@ -57,7 +65,7 @@ module Runners
     end
 
     def analyzer_bin
-      self.class.ci_config_section_name
+      analyzer_id
     end
 
     def analyzer_version
@@ -77,12 +85,8 @@ module Runners
       raise "Not found version from '#{single_command} #{command_options.join(' ')}'"
     end
 
-    def self.ci_config_section_name
-      self.name
-    end
-
-    def ci_section
-      config.content.dig(:linter, self.class.ci_config_section_name.to_sym) || {}
+    def config_linter
+      config.linter(analyzer_id)
     end
 
     def check_root_dir_exist
@@ -98,7 +102,7 @@ module Runners
     end
 
     def root_dir
-      ci_section[:root_dir]&.yield_self { |root| working_dir / root } || working_dir
+      config_linter[:root_dir]&.yield_self { |root| working_dir / root } || working_dir
     end
 
     def ensure_files(*paths)
@@ -116,7 +120,7 @@ module Runners
 
     # Returns e.g. "$.linter.rubocop.gems"
     def config_field_path(*fields)
-      "$.linter.#{self.class.ci_config_section_name}.#{fields.join('.')}"
+      "$.linter.#{analyzer_id}.#{fields.join('.')}"
     end
 
     def delete_unchanged_files(changes, except: [], only: [])
@@ -143,7 +147,7 @@ module Runners
     end
 
     def add_warning_if_deprecated_options(keys, doc:)
-      deprecated_keys = ci_section.slice(*keys).compact.keys
+      deprecated_keys = config_linter.slice(*keys).compact.keys
         .map { |k| "`#{config_field_path(k)}`" }
 
       unless deprecated_keys.empty?

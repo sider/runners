@@ -12,14 +12,6 @@ module Runners
       "brakeman" => [">= 4.0.0", "< 4.4.0"]
     }.freeze
 
-    def self.ci_config_section_name
-      "brakeman"
-    end
-
-    def analyzer_name
-      'brakeman'
-    end
-
     def setup
       install_gems default_gem_specs, constraints: CONSTRAINTS do
         analyzer

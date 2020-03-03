@@ -18,7 +18,7 @@ module Runners
     def initialize(working_dir)
       @working_dir = working_dir
       @input_string = path&.read
-      @content = check_schema(parse_yaml)
+      @content = check_schema(parse_yaml).freeze
     end
 
     def path_name
@@ -30,7 +30,11 @@ module Runners
     end
 
     def ignore
-      Array(content[:ignore])
+      @ignore ||= Array(content[:ignore])
+    end
+
+    def linter(id)
+      content.dig(:linter, id.to_sym).freeze || {}
     end
 
     private

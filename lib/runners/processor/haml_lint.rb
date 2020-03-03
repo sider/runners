@@ -41,16 +41,8 @@ module Runners
       "haml_lint" => [">= 0.26.0", "< 1.0.0"]
     }.freeze
 
-    def self.ci_config_section_name
-      'haml_lint'
-    end
-
     def analyzer_bin
       "haml-lint"
-    end
-
-    def analyzer_name
-      'haml_lint'
     end
 
     def default_gem_specs
@@ -89,32 +81,32 @@ module Runners
     end
 
     def file
-      ci_section[:file] || ci_section.dig(:options, :file) || '.'
+      config_linter[:file] || config_linter.dig(:options, :file) || '.'
     end
 
     def include_linter
-      include_linter = ci_section[:include_linter] || ci_section.dig(:options, :include_linter)
+      include_linter = config_linter[:include_linter] || config_linter.dig(:options, :include_linter)
       if include_linter
         "--include-linter=#{Array(include_linter).join(',')}"
       end
     end
 
     def exclude_linter
-      exclude_linter = ci_section[:exclude_linter] || ci_section.dig(:options, :exclude_linter)
+      exclude_linter = config_linter[:exclude_linter] || config_linter.dig(:options, :exclude_linter)
       if exclude_linter
         "--exclude-linter=#{Array(exclude_linter).join(',')}"
       end
     end
 
     def exclude
-      exclude = ci_section[:exclude] || ci_section.dig(:options, :exclude)
+      exclude = config_linter[:exclude] || config_linter.dig(:options, :exclude)
       if exclude
         "--exclude=#{Array(exclude).join(',')}"
       end
     end
 
     def haml_lint_config
-      config = ci_section[:config] || ci_section.dig(:options, :config)
+      config = config_linter[:config] || config_linter.dig(:options, :config)
       "--config=#{config}" if config
     end
 

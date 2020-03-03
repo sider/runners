@@ -46,21 +46,13 @@ module Runners
     DEFAULT_TARGET_FILE_EXTENSIONS = ["css", "less", "sass", "scss", "sss"].freeze
     DEFAULT_GLOB = "**/*.{#{DEFAULT_TARGET_FILE_EXTENSIONS.join(',')}}".freeze
 
-    def self.ci_config_section_name
-      'stylelint'.freeze
-    end
-
-    def analyzer_name
-      'stylelint'
-    end
-
     def setup
       add_warning_if_deprecated_options([:options], doc: "https://help.sider.review/tools/css/stylelint")
 
       prepare_ignore_file
 
       begin
-        install_nodejs_deps(DEFAULT_DEPS, constraints: CONSTRAINTS, install_option: ci_section[:npm_install])
+        install_nodejs_deps(DEFAULT_DEPS, constraints: CONSTRAINTS, install_option: config_linter[:npm_install])
       rescue UserError => exn
         return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
       end
@@ -83,36 +75,36 @@ module Runners
     private
 
     def glob
-      ci_section[:glob] || ci_section.dig(:options, :glob) || DEFAULT_GLOB
+      config_linter[:glob] || config_linter.dig(:options, :glob) || DEFAULT_GLOB
     end
 
     def stylelint_config
-      stylelintrc = ci_section[:config] || ci_section.dig(:options, :config)
+      stylelintrc = config_linter[:config] || config_linter.dig(:options, :config)
       "--config=#{stylelintrc}" if stylelintrc
     end
 
     def syntax
-      syntax = ci_section[:syntax] || ci_section.dig(:options, :syntax)
+      syntax = config_linter[:syntax] || config_linter.dig(:options, :syntax)
       "--syntax=#{syntax}" if syntax
     end
 
     def ignore_path
-      ignore_path = ci_section[:'ignore-path'] || ci_section.dig(:options, :'ignore-path')
+      ignore_path = config_linter[:'ignore-path'] || config_linter.dig(:options, :'ignore-path')
       "--ignore-path=#{ignore_path}" if ignore_path
     end
 
     def ignore_disables
-      ignore_disables = ci_section[:'ignore-disables'] || ci_section.dig(:options, :'ignore-disables')
+      ignore_disables = config_linter[:'ignore-disables'] || config_linter.dig(:options, :'ignore-disables')
       "--ignore-disables" if ignore_disables
     end
 
     def report_needless_disables
-      rd = ci_section[:'report-needless-disables'] || ci_section.dig(:options, :'report-needless-disables')
+      rd = config_linter[:'report-needless-disables'] || config_linter.dig(:options, :'report-needless-disables')
       "--report-needless-disables" if rd
     end
 
     def quiet
-      quiet = ci_section[:quiet] || ci_section.dig(:options, :quiet)
+      quiet = config_linter[:quiet] || config_linter.dig(:options, :quiet)
       "--quiet" if quiet
     end
 
@@ -187,7 +179,7 @@ module Runners
 
     # returns available config file path. If the file doesn't exist, it returns nil.
     def config_file_path
-      config_path = ci_section[:config] || ci_section.dig(:options, :config)
+      config_path = config_linter[:config] || config_linter.dig(:options, :config)
       if config_path
         current_dir / config_path
       elsif package_json_path.exist? && package_json.key?(:stylelint)

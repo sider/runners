@@ -23,14 +23,6 @@ module Runners
       'scss-lint'
     end
 
-    def analyzer_name
-      "SCSS-Lint"
-    end
-
-    def self.ci_config_section_name
-      'scss_lint'
-    end
-
     def analyzer_version
       @analyzer_version ||= extract_version! analyzer_bin
     end
@@ -46,7 +38,7 @@ module Runners
     end
 
     def scss_lint_config
-      config = ci_section[:config] || ci_section.dig(:options, :config)
+      config = config_linter[:config] || config_linter.dig(:options, :config)
       "--config=#{config}" if config
     end
 

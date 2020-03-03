@@ -26,14 +26,6 @@ module Runners
     DEFAULT_TARGET = ".".freeze
     DEFAULT_IGNORE = [].freeze
 
-    def self.ci_config_section_name
-      "cppcheck"
-    end
-
-    def analyzer_name
-      "Cppcheck"
-    end
-
     def setup
       analyzer
       yield
@@ -46,30 +38,30 @@ module Runners
     private
 
     def target
-      Array(ci_section[:target] || DEFAULT_TARGET)
+      Array(config_linter[:target] || DEFAULT_TARGET)
     end
 
     def ignore
-      Array(ci_section[:ignore] || DEFAULT_IGNORE).map { |i| ["-i", i] }.flatten
+      Array(config_linter[:ignore] || DEFAULT_IGNORE).map { |i| ["-i", i] }.flatten
     end
 
     def enable
-      id = ci_section[:enable]
+      id = config_linter[:enable]
       Array(id ? "--enable=#{id}" : nil)
     end
 
     def std
-      id = ci_section[:std]
+      id = config_linter[:std]
       Array(id ? "--std=#{id}" : nil)
     end
 
     def project
-      file = ci_section[:project]
+      file = config_linter[:project]
       Array(file ? "--project=#{file}" : nil)
     end
 
     def language
-      lang = ci_section[:language]
+      lang = config_linter[:language]
       Array(lang ? "--language=#{lang}" : nil)
     end
 

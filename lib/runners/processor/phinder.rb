@@ -20,17 +20,9 @@ module Runners
 
     register_config_schema(name: :phinder, schema: Schema.runner_config)
 
-    def self.ci_config_section_name
-      "phinder"
-    end
-
-    def analyzer_name
-      "Phinder"
-    end
-
     def test_phinder_config
       args = []
-      args.push("--config", ci_section[:rule]) if ci_section[:rule]
+      args.push("--config", config_linter[:rule]) if config_linter[:rule]
 
       _, stderr, status = capture3(analyzer_bin, "test", *args)
 
@@ -44,7 +36,7 @@ module Runners
         # Skip other configuration errors.
         # These errors should be reported when running `phinder find`.
       when 2
-        add_warning(<<~MESSAGE.chomp, file: ci_section[:rule] || DEFAULT_RULE_FILE)
+        add_warning(<<~MESSAGE.chomp, file: config_linter[:rule] || DEFAULT_RULE_FILE)
           Phinder configuration validation failed.
           Check the following output by `phinder test` command.
 
@@ -61,8 +53,8 @@ module Runners
 
     def run_phinder
       args = []
-      args.push("--config", ci_section[:rule]) if ci_section[:rule]
-      args << ci_section[:php] if ci_section[:php]
+      args.push("--config", config_linter[:rule]) if config_linter[:rule]
+      args << config_linter[:php] if config_linter[:php]
 
       stdout, stderr, status = capture3(analyzer_bin, "find", "-f", "json", *args)
 
@@ -118,7 +110,7 @@ module Runners
       delete_unchanged_files(changes, except: ["*.yml", "*.yaml"])
 
       paths = []
-      paths << relative_path(ci_section[:rule]) if ci_section[:rule]
+      paths << relative_path(config_linter[:rule]) if config_linter[:rule]
       paths << relative_path(DEFAULT_RULE_FILE)
       ret = ensure_files(*paths) do
         test_phinder_config

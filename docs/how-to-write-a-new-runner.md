@@ -74,10 +74,6 @@ module Runners
       # define schemas...
     end
 
-    def self.ci_config_section_name
-      "foolint"
-    end
-
     def setup
       # write setup code if needed...
     end

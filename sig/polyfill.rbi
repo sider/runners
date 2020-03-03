@@ -26,13 +26,20 @@ end
 
 extension Object (Polyfill)
   def instance_of?: (any) -> bool
+  def then: <'a> () { (self) -> 'a } -> 'a
   def Array: (any) -> Array<any>
   def Pathname: (String) -> Pathname
+end
+
+class UnboundMethod
+  def source_location: -> [String, Integer]
 end
 
 extension Module (Polyfill)
   def private: (*any) -> void
   def name: -> String
+  def instance_method: (Symbol) -> UnboundMethod
+  def define_method: (Symbol) { () -> any } -> Symbol
 end
 
 extension String (Polyfill)
@@ -42,6 +49,11 @@ extension String (Polyfill)
   def delete: (*String) -> String
   def delete_prefix: (String) -> String
   def lines: (?chomp: bool)-> Array<String>
+  def to_sym: -> Symbol
+end
+
+extension Symbol (Polyfill)
+  def to_sym: -> Symbol
 end
 
 class Time
@@ -69,7 +81,7 @@ extension Array (Polyfill)
 end
 
 extension File (Polyfill)
-  def self.basename: (String | Pathname) -> String
+  def self.basename: (String | Pathname, ?String) -> String
   def self.write: (String, String, ?perm: Integer) -> Integer
 end
 
@@ -163,7 +175,7 @@ end
 
 extension Hash (Polyfill)
   def deep_merge: (Hash<any, any>) -> Hash<any, any>
-  def fetch: ('key) -> 'value
+  def fetch: ('key, ?'value) -> 'value
   def merge!: (*Hash<any, any>) -> Hash<any, any>
   def compact: -> self
   def dig: (*'key) -> 'value?

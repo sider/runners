@@ -205,4 +205,34 @@ class ConfigTest < Minitest::Test
       assert_equal %w[*.mp4 docs/**/*.pdf], Runners::Config.new(path).ignore
     end
   end
+
+  def test_linter
+    mktmpdir do |path|
+      (path / "sider.yml").write(<<~YAML)
+        linter:
+          eslint:
+            ext: .js
+      YAML
+      assert_equal({
+        ext: ".js",
+        root_dir: nil,
+        npm_install: nil,
+        dir: nil,
+        config: nil,
+        "ignore-path": nil,
+        "ignore-pattern": nil,
+        "no-ignore": nil,
+        global: nil,
+        quiet: nil,
+        options: nil,
+      }, Runners::Config.new(path).linter("eslint"))
+    end
+  end
+
+  def test_linter_default
+    mktmpdir do |path|
+      (path / "sider.yml").write("")
+      assert_equal({}, Runners::Config.new(path).linter("eslint"))
+    end
+  end
 end

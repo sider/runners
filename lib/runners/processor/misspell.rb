@@ -18,14 +18,6 @@ module Runners
 
     register_config_schema(name: :misspell, schema: Schema.runner_config)
 
-    def self.ci_config_section_name
-      'misspell'
-    end
-
-    def analyzer_name
-      'Misspell'
-    end
-
     def analyzer_version
       @analyzer_version ||= extract_version! analyzer_bin, '-v'
     end
@@ -73,22 +65,22 @@ module Runners
     end
 
     def locale
-      locale = ci_section[:locale] || ci_section.dig(:options, :locale)
+      locale = config_linter[:locale] || config_linter.dig(:options, :locale)
       ["-locale", "#{locale}"] if locale
     end
 
     def ignore
       # The option requires comma separeted with string when user would like to set ignore multiple targets.
-      ignore = ci_section[:ignore] || ci_section.dig(:options, :ignore)
+      ignore = config_linter[:ignore] || config_linter.dig(:options, :ignore)
       ["-i", "#{ignore}"] if ignore
     end
 
     def analysis_targets
-      Array(ci_section[:targets] || '.')
+      Array(config_linter[:targets] || '.')
     end
 
     def delete_targets
-      exclude_targets = Array(ci_section[:exclude])
+      exclude_targets = Array(config_linter[:exclude])
       return if exclude_targets.empty?
       trace_writer.message "Excluding #{exclude_targets.join(', ')} ..." do
         paths = exclude_targets.flat_map { |target| Dir.glob(working_dir + target.to_s) }.uniq

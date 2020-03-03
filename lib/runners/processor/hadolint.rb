@@ -20,14 +20,6 @@ module Runners
     DEFAULT_TARGET = "**/Dockerfile{,.*}".freeze
     DEFAULT_TARGET_EXCLUDED = "*.{erb,txt}".freeze # Exclude templates
 
-    def self.ci_config_section_name
-      "hadolint"
-    end
-
-    def analyzer_name
-      "hadolint"
-    end
-
     def analyze(_changes)
       run_analyzer
     end
@@ -37,19 +29,19 @@ module Runners
     def analyzer_options
       [].tap do |opts|
         opts << "--format=json"
-        Array(ci_section[:'trusted-registry']).each do |trusted|
+        Array(config_linter[:'trusted-registry']).each do |trusted|
           opts << "--trusted-registry=#{trusted}"
         end
-        Array(ci_section[:ignore]).each do |ignore|
+        Array(config_linter[:ignore]).each do |ignore|
           opts << "--ignore=#{ignore}"
         end
-        opts << "--config=#{ci_section[:config]}" if ci_section[:config]
+        opts << "--config=#{config_linter[:config]}" if config_linter[:config]
       end
     end
 
     def analysis_target
-      if ci_section[:target]
-        Array(ci_section[:target])
+      if config_linter[:target]
+        Array(config_linter[:target])
       else
         current_dir.glob(DEFAULT_TARGET, File::FNM_EXTGLOB)
           .reject { |path| path.fnmatch?(DEFAULT_TARGET_EXCLUDED, File::FNM_EXTGLOB) }

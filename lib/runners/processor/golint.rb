@@ -8,17 +8,8 @@ module Runners
 
     register_config_schema(name: :golint, schema: Schema.runner_config)
 
-    def self.ci_config_section_name
-      # Section name in sideci.yml, Generally it is the name of analyzer tool.
-      "golint"
-    end
-
     def analyzer_bin
       "gometalinter"
-    end
-
-    def analyzer_name
-      "golint"
     end
 
     def setup

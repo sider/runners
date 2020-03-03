@@ -24,14 +24,6 @@ module Runners
 
     register_config_schema(name: :javasee, schema: Schema.runner_config)
 
-    def self.ci_config_section_name
-      'javasee'
-    end
-
-    def analyzer_bin
-      "javasee"
-    end
-
     def javasee_check(dirs:, config_path:)
       args = ["-format", "json"]
       args.push("-config", config_path.to_s) if config_path
@@ -94,9 +86,9 @@ module Runners
     end
 
     def check_runner_config
-      dirs = Array(ci_section[:dir]).map { |dir| Pathname(dir) }
+      dirs = Array(config_linter[:dir]).map { |dir| Pathname(dir) }
 
-      config_path = ci_section[:config]
+      config_path = config_linter[:config]
       config_path = Pathname(config_path) if config_path
 
       yield dirs, config_path

@@ -31,10 +31,6 @@ module Runners
 
     register_config_schema(name: :code_sniffer, schema: Schema.runner_config)
 
-    def self.ci_config_section_name
-      "code_sniffer"
-    end
-
     def setup
       add_warning_if_deprecated_options([:options], doc: "https://help.sider.review/tools/php/codesniffer")
       yield
@@ -49,7 +45,7 @@ module Runners
     private
 
     def check_runner_config
-      if ci_section[:version].to_i == 2
+      if config_linter[:version].to_i == 2
         add_warning("Sider has no longer supported PHP_CodeSniffer v2. Sider executes v3 even if putting `2` as `version` option.", file: config.path_name)
       end
 
@@ -66,7 +62,7 @@ module Runners
 
     def additional_options
       # If a repository doesn't have `sider.yml`, use default configuration with `default_sideci_options` method.
-      if ci_section.empty?
+      if config_linter.empty?
         default_sideci_options[:options].map do |k, v|
           "--#{k}=#{v}"
         end
@@ -76,27 +72,27 @@ module Runners
     end
 
     def standard_option
-      standard = ci_section[:standard] || ci_section.dig(:options, :standard) || default_sideci_options.dig(:options, :standard)
+      standard = config_linter[:standard] || config_linter.dig(:options, :standard) || default_sideci_options.dig(:options, :standard)
       "--standard=#{standard}"
     end
 
     def extensions_option
-      extensions = ci_section[:extensions] || ci_section.dig(:options, :extensions) || default_sideci_options.dig(:options, :extensions)
+      extensions = config_linter[:extensions] || config_linter.dig(:options, :extensions) || default_sideci_options.dig(:options, :extensions)
       "--extensions=#{extensions}"
     end
 
     def encoding_option
-      encoding = ci_section[:encoding] || ci_section.dig(:options, :encoding)
+      encoding = config_linter[:encoding] || config_linter.dig(:options, :encoding)
       "--encoding=#{encoding}" if encoding
     end
 
     def ignore_option
-      ignore = ci_section[:ignore] || ci_section.dig(:options, :ignore)
+      ignore = config_linter[:ignore] || config_linter.dig(:options, :ignore)
       "--ignore=#{ignore}" if ignore
     end
 
     def directory
-      ci_section[:dir] || ci_section.dig(:options, :dir) || default_sideci_options[:dir]
+      config_linter[:dir] || config_linter.dig(:options, :dir) || default_sideci_options[:dir]
     end
 
     def default_sideci_options

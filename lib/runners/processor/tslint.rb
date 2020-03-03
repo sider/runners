@@ -36,17 +36,13 @@ module Runners
       "tslint" => Constraint.new(">= 5.0.0", "< 7.0.0"),
     }.freeze
 
-    def self.ci_config_section_name
-      'tslint'
-    end
-
     def setup
       add_warning_for_deprecated_linter(alternative: "ESLint",
                                         ref: "https://github.com/palantir/tslint/issues/4534",
                                         deadline: Time.new(2020, 12, 1))
 
       begin
-        install_nodejs_deps(DEFAULT_DEPS, constraints: CONSTRAINTS, install_option: ci_section[:npm_install])
+        install_nodejs_deps(DEFAULT_DEPS, constraints: CONSTRAINTS, install_option: config_linter[:npm_install])
       rescue UserError => exn
         return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
       end
@@ -67,20 +63,20 @@ module Runners
     private
 
     def target_glob
-      if ci_section[:glob]
-        ci_section[:glob]
+      if config_linter[:glob]
+        config_linter[:glob]
       else
         '**/*.ts{,x}'
       end
     end
 
     def tslint_config
-      config = ci_section[:config] || ci_section.dig(:options, :config)
+      config = config_linter[:config] || config_linter.dig(:options, :config)
       ["--config", "#{config}"] if config
     end
 
     def exclude
-      exclude = ci_section[:exclude] || ci_section.dig(:options, :exclude)
+      exclude = config_linter[:exclude] || config_linter.dig(:options, :exclude)
       if exclude
         Array(exclude).map { |v| ["--exclude", v] }.flatten
       else
@@ -89,19 +85,19 @@ module Runners
     end
 
     def project
-      project = ci_section[:project] || ci_section.dig(:options, :project)
+      project = config_linter[:project] || config_linter.dig(:options, :project)
       ["--project", "#{project}"] if project
     end
 
     def rules_dir
-      rules_dir = ci_section[:'rules-dir'] || ci_section.dig(:options, :'rules-dir')
+      rules_dir = config_linter[:'rules-dir'] || config_linter.dig(:options, :'rules-dir')
       if rules_dir
         Array(rules_dir).map { |dir| ["--rules-dir", dir] }.flatten
       end
     end
 
     def type_check
-      type_check = ci_section[:'type-check'] || ci_section.dig(:options, :'type-check')
+      type_check = config_linter[:'type-check'] || config_linter.dig(:options, :'type-check')
       "--type-check" if type_check
     end
 

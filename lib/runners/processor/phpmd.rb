@@ -26,21 +26,13 @@ module Runners
 
     register_config_schema(name: :phpmd, schema: Schema.runner_config)
 
-    def self.ci_config_section_name
-      "phpmd"
-    end
-
-    def analyzer_name
-      "phpmd"
-    end
-
     def setup
       add_warning_if_deprecated_options([:options], doc: "https://help.sider.review/tools/php/phpmd")
       yield
     end
 
     def analyze(changes)
-      delete_unchanged_files(changes, only: target_files, except: ci_section[:custom_rule_path] || [])
+      delete_unchanged_files(changes, only: target_files, except: config_linter[:custom_rule_path] || [])
       options = [minimumpriority, suffixes, exclude, strict].flatten.compact
       run_analyzer(changes, target_dirs, rule, options)
     end
@@ -53,7 +45,7 @@ module Runners
     end
 
     def rule
-      rules = ci_section[:rule] || ci_section.dig(:options, :rule)
+      rules = config_linter[:rule] || config_linter.dig(:options, :rule)
       if rules
         rules
       else
@@ -63,26 +55,26 @@ module Runners
     end
 
     def target_dirs
-      Array(ci_section[:target] || './').flat_map { |target| target.split(',') }.join(',')
+      Array(config_linter[:target] || './').flat_map { |target| target.split(',') }.join(',')
     end
 
     def minimumpriority
-      min_priority = ci_section[:minimumpriority] || ci_section.dig(:options, :minimumpriority)
+      min_priority = config_linter[:minimumpriority] || config_linter.dig(:options, :minimumpriority)
       ["--minimumpriority", "#{min_priority}"] if min_priority
     end
 
     def suffixes
-      suffixes = ci_section[:suffixes] || ci_section.dig(:options, :suffixes)
+      suffixes = config_linter[:suffixes] || config_linter.dig(:options, :suffixes)
       ["--suffixes", "#{suffixes}"] if suffixes
     end
 
     def exclude
-      exclude = ci_section[:exclude] || ci_section.dig(:options, :exclude)
+      exclude = config_linter[:exclude] || config_linter.dig(:options, :exclude)
       ["--exclude", "#{exclude}"] if exclude
     end
 
     def strict
-      strict = ci_section[:strict] || ci_section.dig(:options, :strict)
+      strict = config_linter[:strict] || config_linter.dig(:options, :strict)
       ["--strict"] if strict
     end
 

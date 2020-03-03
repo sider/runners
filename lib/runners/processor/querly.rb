@@ -24,14 +24,6 @@ module Runners
       "querly" => [">= 0.5.0", "< 2.0.0"]
     }.freeze
 
-    def self.ci_config_section_name
-      'querly'
-    end
-
-    def analyzer_name
-      'querly'
-    end
-
     def analyzer_version
       @analyzer_version ||= extract_version! ruby_analyzer_bin, "version"
     end

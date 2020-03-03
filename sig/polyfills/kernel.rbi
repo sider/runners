@@ -4,4 +4,5 @@ extension Kernel (Polyfill)
   def system: (*String, exception: bool) -> void
   def load: (String) -> bool
   def __method__: -> Symbol?
+  def __dir__: -> String
 end

@@ -22,16 +22,8 @@ module Runners
 
     register_config_schema(name: :swiftlint, schema: Schema.runner_config)
 
-    def self.ci_config_section_name
-      'swiftlint'
-    end
-
     def analyzer_version
       @analyzer_version ||= extract_version! analyzer_bin, 'version'
-    end
-
-    def analyzer_name
-      'swiftlint'
     end
 
     def setup
@@ -45,26 +37,26 @@ module Runners
     end
 
     def ignore_warnings
-      ci_section[:ignore_warnings] || false
+      config_linter[:ignore_warnings] || false
     end
 
     def path
-      path = ci_section[:path] || ci_section.dig(:options, :path)
+      path = config_linter[:path] || config_linter.dig(:options, :path)
       ["--path", "#{path}"] if path
     end
 
     def swiftlint_config
-      config = ci_section[:config] || ci_section.dig(:options, :config)
+      config = config_linter[:config] || config_linter.dig(:options, :config)
       ["--config", "#{config}"] if config
     end
 
     def lenient
-      lenient = ci_section[:lenient] || ci_section.dig(:options, :lenient)
+      lenient = config_linter[:lenient] || config_linter.dig(:options, :lenient)
       "--lenient" if lenient
     end
 
     def enable_all_rules
-      enable_all_rules = ci_section[:'enable-all-rules'] || ci_section.dig(:options, :'enable-all-rules')
+      enable_all_rules = config_linter[:'enable-all-rules'] || config_linter.dig(:options, :'enable-all-rules')
       "--enable-all-rules" if enable_all_rules
     end
 

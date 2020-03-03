@@ -30,6 +30,10 @@ class HarnessTest < Minitest::Test
   end
 
   class TestProcessor < Processor
+    def analyzer_id
+      "test"
+    end
+
     def analyze(changes)
       Results::Success.new(guid: guid, analyzer: Analyzer.new(name: "Test", version: "0.1.3"))
     end
@@ -72,7 +76,7 @@ class HarnessTest < Minitest::Test
 
   def test_run_filters_issues
     processor = Class.new(Processor) do
-      def self.ci_config_section_name
+      def analyzer_id
         'test'
       end
 
@@ -120,7 +124,7 @@ class HarnessTest < Minitest::Test
 
   def test_run_when_root_dir_not_found
     with_working_dir do |working_dir|
-      (working_dir / "sider.yml").write(YAML.dump({ "linter" => { TestProcessor.ci_config_section_name => { "root_dir" => "foo" } } }))
+      (working_dir / "sider.yml").write(YAML.dump({ "linter" => { "test" => { "root_dir" => "foo" } } }))
       with_options do |options|
         harness = Harness.new(guid: SecureRandom.uuid, processor_class: TestProcessor,
                               options: options, working_dir: working_dir, trace_writer: trace_writer)
@@ -182,7 +186,7 @@ class HarnessTest < Minitest::Test
 
   def test_setup_analyze
     processor = Class.new(Processor) do
-      def self.ci_config_section_name
+      def analyzer_id
         'test'
       end
 

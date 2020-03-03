@@ -50,14 +50,6 @@ module Runners
       "/env bats script",
     ).freeze
 
-    def self.ci_config_section_name
-      "shellcheck"
-    end
-
-    def analyzer_name
-      "ShellCheck"
-    end
-
     def analyze(_changes)
       run_analyzer
     end
@@ -83,7 +75,7 @@ module Runners
 
     def analyzed_files
       # Via glob
-      targets = Array(ci_section[:target] || DEFAULT_TARGET)
+      targets = Array(config_linter[:target] || DEFAULT_TARGET)
       globs = targets.select { |glob| glob.is_a? String }
       files_via_glob = Dir.glob(globs, File::FNM_EXTGLOB, base: current_dir)
 
@@ -96,7 +88,7 @@ module Runners
     end
 
     def option_values(name, sep)
-      Array(ci_section[name]).join(sep).split(sep).map(&:strip).join(sep)
+      Array(config_linter[name]).join(sep).split(sep).map(&:strip).join(sep)
     end
 
     def analyzer_options
@@ -105,9 +97,9 @@ module Runners
         option_values(:include, ",").tap { |val| opts << "--include=#{val}" unless val.empty? }
         option_values(:exclude, ",").tap { |val| opts << "--exclude=#{val}" unless val.empty? }
         option_values(:enable, ",").tap { |val| opts << "--enable=#{val}" unless val.empty? }
-        ci_section[:shell].tap { |val| opts << "--shell=#{val}" if val }
-        ci_section[:severity].tap { |val| opts << "--severity=#{val}" if val }
-        opts << "--norc" if ci_section[:norc]
+        config_linter[:shell].tap { |val| opts << "--shell=#{val}" if val }
+        config_linter[:severity].tap { |val| opts << "--severity=#{val}" if val }
+        opts << "--norc" if config_linter[:norc]
       end
     end
 

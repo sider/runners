@@ -42,14 +42,6 @@ module Runners
       "rails_best_practices" => [">= 1.19.1", "< 2.0"]
     }.freeze
 
-    def self.ci_config_section_name
-      'rails_best_practices'
-    end
-
-    def analyzer_name
-      'rails_best_practices'
-    end
-
     def setup
       add_warning_if_deprecated_options([:options], doc: "https://help.sider.review/tools/ruby/rails-bestpractices")
 
@@ -71,8 +63,8 @@ module Runners
     private
 
     def vendor
-      vendor = ci_section[:vendor]
-      vendor = ci_section.dig(:options, :vendor) if vendor.nil?
+      vendor = config_linter[:vendor]
+      vendor = config_linter.dig(:options, :vendor) if vendor.nil?
       if vendor == false
         nil
       else
@@ -81,32 +73,32 @@ module Runners
     end
 
     def spec
-      spec = ci_section[:spec] || ci_section.dig(:options, :spec)
+      spec = config_linter[:spec] || config_linter.dig(:options, :spec)
       "--spec" if spec
     end
 
     def test
-      test = ci_section[:test] || ci_section.dig(:options, :test)
+      test = config_linter[:test] || config_linter.dig(:options, :test)
       "--test" if test
     end
 
     def features
-      features = ci_section[:features] || ci_section.dig(:options, :features)
+      features = config_linter[:features] || config_linter.dig(:options, :features)
       "--features" if features
     end
 
     def exclude
-      exclude = ci_section[:exclude] || ci_section.dig(:options, :exclude)
+      exclude = config_linter[:exclude] || config_linter.dig(:options, :exclude)
       "--exclude=#{exclude}" if exclude
     end
 
     def only
-      only = ci_section[:only] || ci_section.dig(:options, :only)
+      only = config_linter[:only] || config_linter.dig(:options, :only)
       "--only=#{only}" if only
     end
 
     def config_option
-      config = ci_section[:config] || ci_section.dig(:options, :config)
+      config = config_linter[:config] || config_linter.dig(:options, :config)
       "--config=#{config}" if config
     end
 

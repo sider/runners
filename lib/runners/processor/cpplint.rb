@@ -21,14 +21,6 @@ module Runners
 
     DEFAULT_TARGET = ".".freeze
 
-    def self.ci_config_section_name
-      "cpplint"
-    end
-
-    def analyzer_name
-      "cpplint"
-    end
-
     def analyze(changes)
       run_analyzer
     end
@@ -39,14 +31,14 @@ module Runners
       [].tap do |opts|
         opts << "--output=junit"
         opts << "--recursive"
-        opts << "--extensions=#{ci_section[:extensions]}" if ci_section[:extensions]
-        opts << "--headers=#{ci_section[:headers]}" if ci_section[:headers]
-        opts << "--filter=#{ci_section[:filter]}" if ci_section[:filter]
-        opts << "--linelength=#{ci_section[:linelength]}" if ci_section[:linelength]
-        Array(ci_section[:exclude]).each do |exclude|
+        opts << "--extensions=#{config_linter[:extensions]}" if config_linter[:extensions]
+        opts << "--headers=#{config_linter[:headers]}" if config_linter[:headers]
+        opts << "--filter=#{config_linter[:filter]}" if config_linter[:filter]
+        opts << "--linelength=#{config_linter[:linelength]}" if config_linter[:linelength]
+        Array(config_linter[:exclude]).each do |exclude|
           opts << "--exclude=#{exclude}"
         end
-        Array(ci_section[:target] || DEFAULT_TARGET).each do |target|
+        Array(config_linter[:target] || DEFAULT_TARGET).each do |target|
           opts << target
         end
       end

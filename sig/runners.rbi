@@ -115,7 +115,7 @@ class Runners::Processor
   def relative_path: (String, ?from: Pathname) -> Pathname
   def setup: () { -> result } -> result
   def analyze: (Changes) -> result
-  def ci_section: () -> Hash<any, any>
+  def config_linter: () -> Hash<Symbol, any>
   def check_root_dir_exist: () -> result?
   def push_root_dir: <'x> { -> 'x } -> 'x
   def ensure_files: (*Pathname) { (Pathname) -> result } -> result
@@ -124,7 +124,6 @@ class Runners::Processor
   def current_dir: () -> Pathname
 
   def self.register_config_schema: (**any) -> void
-  def self.ci_config_section_name: () -> String
   def capture3: (String, *String, **capture3_options) -> [String, String, Process::Status]
   def capture3!: (String, *String, **capture3_options) -> [String, String]
   def capture3_with_retry!: (String, *String, ?tries: Integer) -> [String, String]
@@ -139,11 +138,13 @@ class Runners::Processor
   def add_warning_if_deprecated_options: (Array<Symbol>, doc: String) -> void
   def add_warning_for_deprecated_linter: (alternative: String, ref: String, ?deadline: Time?) -> void
   def analyzer: -> Analyzer
+  def analyzers: -> Analyzers
+  def analyzer_id: -> String
   def analyzer_name: -> String
   def analyzer_bin: -> String
   def analyzer_version: -> String
   def extract_version!: (String | Array<String>, ?(String | Array<String>), ?pattern: Regexp) -> String
-  def config_field_path: (*String) -> String
+  def config_field_path: (*_ToS) -> String
   def root_dir: -> Pathname
   def directory_traversal_attack?: (String) -> bool
   def show_runtime_versions: -> void

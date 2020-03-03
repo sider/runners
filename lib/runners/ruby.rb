@@ -3,7 +3,7 @@ module Runners
     class InstallGemsFailure < UserError; end
 
     def install_gems(default_specs, optionals: [], constraints:, &block)
-      user_specs = GemInstaller::Spec.from_gems(ci_section[:gems] || [])
+      user_specs = GemInstaller::Spec.from_gems(config_linter[:gems] || [])
 
       LockfileLoader.new(root_dir: root_dir, shell: shell).ensure_lockfile do |lockfile|
         default_specs = default_specs(default_specs, constraints, lockfile)

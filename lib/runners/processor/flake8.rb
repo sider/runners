@@ -15,14 +15,6 @@ module Runners
 
     register_config_schema(name: :flake8, schema: Schema.runner_config)
 
-    def self.ci_config_section_name
-      'flake8'
-    end
-
-    def analyzer_name
-      'Flake8'
-    end
-
     def setup
       prepare_config
       yield
@@ -49,8 +41,8 @@ module Runners
     end
 
     def prepare_plugins
-      if ci_section[:plugins]
-        plugins = Array(ci_section[:plugins]).flatten
+      if config_linter[:plugins]
+        plugins = Array(config_linter[:plugins]).flatten
         capture3!('pip', 'install', *plugins)
       end
     end
@@ -64,7 +56,7 @@ module Runners
     end
 
     def specified_python_version
-      case ci_section[:version]&.to_i
+      case config_linter[:version]&.to_i
       when 2
         python2_version
       when 3

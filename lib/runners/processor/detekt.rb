@@ -24,10 +24,6 @@ module Runners
 
     register_config_schema(name: :detekt, schema: Schema.runner_config)
 
-    def self.ci_config_section_name
-      'detekt'
-    end
-
     def analyzer_version
       unknown_version = "0.0.0"
       @analyzer_version ||= extract_detekt_version || unknown_version
@@ -68,13 +64,13 @@ module Runners
     def check_runner_config
       yield(
         {
-          baseline: ci_section[:baseline],
-          config: Array(ci_section[:config]) || [],
-          "config-resource": ci_section[:"config-resource"] || [],
-          "disable-default-rulesets": ci_section[:"disable-default-rulesets"] || false,
-          excludes: Array(ci_section[:excludes]) || [],
-          includes: Array(ci_section[:includes]) || [],
-          input: Array(ci_section[:input]) || []
+          baseline: config_linter[:baseline],
+          config: Array(config_linter[:config]) || [],
+          "config-resource": config_linter[:"config-resource"] || [],
+          "disable-default-rulesets": config_linter[:"disable-default-rulesets"] || false,
+          excludes: Array(config_linter[:excludes]) || [],
+          includes: Array(config_linter[:includes]) || [],
+          input: Array(config_linter[:input]) || []
         }
       )
     end

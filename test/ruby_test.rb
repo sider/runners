@@ -24,7 +24,7 @@ class RubyTest < Minitest::Test
     @processor_class ||= Class.new(Runners::Processor) do
       include Runners::Ruby
 
-      def self.ci_config_section_name
+      def analyzer_id
         "rubocop"
       end
     end

@@ -23,25 +23,17 @@ module Runners
       "goodcheck" => [">= 1.0.0", "< 3.0"]
     }.freeze
 
-    def self.ci_config_section_name
-      "goodcheck"
-    end
-
-    def analyzer_name
-      'goodcheck'
-    end
-
     def analyzer_version
       @analyzer_version ||= extract_version! ruby_analyzer_bin, "version"
     end
 
     def goodcheck_config_file
-      @goodcheck_config_file ||= ci_section[:config] || "goodcheck.yml"
+      @goodcheck_config_file ||= config_linter[:config] || "goodcheck.yml"
     end
 
     def cli_options(*additional_args)
       [
-        ci_section[:config]&.yield_self { |config| "--config=#{config}"},
+        config_linter[:config]&.yield_self { |config| "--config=#{config}"},
       ].compact + additional_args
     end
 
@@ -63,7 +55,7 @@ module Runners
     end
 
     def goodcheck_check
-      targets = Array(ci_section[:target]) || ["."]
+      targets = Array(config_linter[:target]) || ["."]
       stdout, stderr, _ = capture3(*ruby_analyzer_bin, "check", "--format=json", *cli_options(*targets))
 
       json = JSON.parse(stdout, symbolize_names: true)

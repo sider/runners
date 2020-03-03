@@ -27,14 +27,6 @@ module Runners
 
     register_config_schema(name: :checkstyle, schema: Schema.runner_config)
 
-    def self.ci_config_section_name
-      'checkstyle'
-    end
-
-    def analyzer_name
-      'checkstyle'
-    end
-
     def analyze(changes)
       analyzer_version
 
@@ -146,22 +138,22 @@ module Runners
     end
 
     def config_file
-      case ci_section[:config] || "google"
+      case config_linter[:config] || "google"
       when "sun"
         "/sun_checks.xml"
       when "google"
         "/google_checks.xml"
       else
-        ci_section[:config]
+        config_linter[:config]
       end
     end
 
     def check_directory
-      array(ci_section[:dir] || ".")
+      array(config_linter[:dir] || ".")
     end
 
     def excluded_directories
-      array(ci_section[:exclude]).map do |x|
+      array(config_linter[:exclude]).map do |x|
         case x
         when String
           { string: x }
@@ -172,11 +164,11 @@ module Runners
     end
 
     def properties_file
-      ci_section[:properties]
+      config_linter[:properties]
     end
 
     def ignored_severities
-      array(ci_section[:ignore])
+      array(config_linter[:ignore])
     end
 
     def array(value)

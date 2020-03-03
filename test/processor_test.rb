@@ -15,7 +15,7 @@ class ProcessorTest < Minitest::Test
 
   def processor_class
     @processor_class ||= Class.new(Runners::Processor) do
-      def self.ci_config_section_name
+      def analyzer_id
         "eslint"
       end
     end
@@ -124,61 +124,6 @@ class ProcessorTest < Minitest::Test
       processor.push_dir workspace.working_dir / "foo" do
         assert_equal Pathname("foo/bar/baz"), processor.relative_path("bar/baz")
       end
-    end
-  end
-
-  def test_ci_section
-    with_workspace do |workspace|
-      # No sider.yml
-      processor = new_processor(workspace: workspace)
-
-      assert_equal({}, processor.ci_section)
-    end
-
-    with_workspace do |workspace|
-      # With an empty sider.yml
-      processor = new_processor(workspace: workspace, config_yaml: "")
-      assert_equal({}, processor.ci_section)
-    end
-
-    with_workspace do |workspace|
-      # With sider.yml
-      processor = new_processor(workspace: workspace, config_yaml: <<~YAML)
-        linter:
-          eslint:
-            root_dir: app/bar
-            options:
-              ext: .ts
-      YAML
-      assert_instance_of Hash, processor.ci_section
-      assert_equal(
-        {
-          root_dir: "app/bar",
-          npm_install: nil,
-          dir: nil,
-          ext: nil,
-          config: nil,
-          "ignore-path": nil,
-          "ignore-pattern": nil,
-          "no-ignore": nil,
-          global: nil,
-          quiet: nil,
-          options: {
-            npm_install: nil,
-            dir: nil,
-            ext: ".ts",
-            config: nil,
-            "ignore-path": nil,
-            "no-ignore": nil,
-            "ignore-pattern": nil,
-            global: nil,
-            quiet: nil,
-          },
-        },
-        processor.ci_section,
-      )
-
-      assert(trace_writer.writer.find { |hash| hash[:trace] == :ci_config && hash[:content] })
     end
   end
 

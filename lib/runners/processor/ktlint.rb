@@ -48,10 +48,6 @@ module Runners
 
     register_config_schema(name: :ktlint, schema: Schema.runner_config)
 
-    def self.ci_config_section_name
-      'ktlint'
-    end
-
     def ktlint_config
       @ktlint_config
     end
@@ -271,34 +267,34 @@ module Runners
 
     def check_runner_config
       case
-      when ci_section[:gradle]
+      when config_linter[:gradle]
         yield(
           {
             gradle: {
-              task: ci_section[:gradle][:task],
-              reporter: ci_section[:gradle][:reporter],
-              output: ci_section[:gradle][:output]
+              task: config_linter[:gradle][:task],
+              reporter: config_linter[:gradle][:reporter],
+              output: config_linter[:gradle][:output]
             }
           }
         )
-      when ci_section[:maven]
+      when config_linter[:maven]
         yield(
           {
             maven: {
-              goal: ci_section[:maven][:goal],
-              reporter: ci_section[:maven][:reporter],
-              output: ci_section[:maven][:output]
+              goal: config_linter[:maven][:goal],
+              reporter: config_linter[:maven][:reporter],
+              output: config_linter[:maven][:output]
             }
           }
         )
-      when ci_section[:cli]
+      when config_linter[:cli]
         yield(
           {
             cli: {
-              patterns: Array(ci_section[:cli][:patterns]),
-              ruleset: Array(ci_section[:cli][:ruleset]),
-              disabled_rules: Array(ci_section[:cli][:disabled_rules]),
-              experimental: ci_section[:cli][:experimental] || false
+              patterns: Array(config_linter[:cli][:patterns]),
+              ruleset: Array(config_linter[:cli][:ruleset]),
+              disabled_rules: Array(config_linter[:cli][:disabled_rules]),
+              experimental: config_linter[:cli][:experimental] || false
             }
           }
         )
