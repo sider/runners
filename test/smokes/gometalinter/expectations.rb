@@ -41,7 +41,7 @@ Smoke.add_test(
     ],
     analyzer: { name: "Go Meta Linter", version: "2.0.11" }
   },
-  warnings: [{ message: /The support for gometalinter is deprecated/, file: "sideci.yml" }]
+  warnings: [{ message: /The support for Go Meta Linter is deprecated/, file: "sideci.yml" }]
 )
 
 Smoke.add_test(
@@ -63,7 +63,7 @@ Smoke.add_test(
     ],
     analyzer: { name: "Go Meta Linter", version: "2.0.11" }
   },
-  warnings: [{ message: /The support for gometalinter is deprecated/, file: "sideci.yml" }]
+  warnings: [{ message: /The support for Go Meta Linter is deprecated/, file: "sideci.yml" }]
 ) { |config| config.ssh_key = "ssh_key" }
 
 Smoke.add_test(
@@ -122,7 +122,7 @@ Smoke.add_test(
     ],
     analyzer: { name: "Go Meta Linter", version: "2.0.11" }
   },
-  warnings: [{ message: /The support for gometalinter is deprecated/, file: "sideci.yml" }]
+  warnings: [{ message: /The support for Go Meta Linter is deprecated/, file: "sideci.yml" }]
 )
 
 Smoke.add_test(
@@ -135,7 +135,7 @@ Smoke.add_test(
     analyzer: { name: "Go Meta Linter", version: "2.0.11" }
   },
   warnings: [
-    { message: /The support for gometalinter is deprecated/, file: "sideci.yml" },
+    { message: /The support for Go Meta Linter is deprecated/, file: "sideci.yml" },
     { message: "`install_path` option is deprecated. Use `import_path` instead.", file: "sideci.yml" }
   ]
 )
@@ -149,7 +149,7 @@ Smoke.add_test(
     issues: [],
     analyzer: { name: "Go Meta Linter", version: "2.0.11" }
   },
-  warnings: [{ message: /The support for gometalinter is deprecated/, file: "sideci.yml" }]
+  warnings: [{ message: /The support for Go Meta Linter is deprecated/, file: "sideci.yml" }]
 )
 
 Smoke.add_test(
@@ -161,5 +161,5 @@ Smoke.add_test(
     issues: [],
     analyzer: { name: "Go Meta Linter", version: "2.0.11" }
   },
-  warnings: [{ message: /The support for gometalinter is deprecated/, file: "sideci.yml" }]
+  warnings: [{ message: /The support for Go Meta Linter is deprecated/, file: "sideci.yml" }]
 )
