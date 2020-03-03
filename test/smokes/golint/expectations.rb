@@ -23,7 +23,7 @@ Smoke.add_test(
     {
       message: <<~MSG
         DEPRECATION WARNING!!!
-        The support for golint is deprecated. Sider will drop these versions on March 31, 2020.
+        The support for golint is deprecated. Sider will drop these versions on April 30, 2020.
         Please consider using an alternative tool GolangCi-Lint. See https://help.sider.review/tools/go/golint
       MSG
         .strip,

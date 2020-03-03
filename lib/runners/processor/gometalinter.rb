@@ -46,7 +46,7 @@ module Runners
     def setup
       add_warning_for_deprecated_linter(alternative: "GolangCi-Lint",
                                         ref: "https://github.com/alecthomas/gometalinter/issues/590",
-                                        deadline: Time.new(2020, 3, 31))
+                                        deadline: Time.new(2020, 4, 30))
 
       with_import_path do |path|
         if path

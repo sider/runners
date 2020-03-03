@@ -24,7 +24,7 @@ module Runners
     def setup
       add_warning_for_deprecated_linter(alternative: "GolangCi-Lint",
                                         ref: "https://help.sider.review/tools/go/govet",
-                                        deadline: Time.new(2020, 3, 31))
+                                        deadline: Time.new(2020, 4, 30))
       yield
     end
 
