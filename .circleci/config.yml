@@ -55,6 +55,7 @@ jobs:
       - run: bundle exec rake typecheck
       - run: bundle exec rake dockerfile:generate
       - run: bundle exec rake dockerfile:verify
+      - run: bundle exec rake readme:generate
   timeout_test:
     docker:
       - image: circleci/ruby:2.6.5

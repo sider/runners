@@ -5,6 +5,7 @@ require "aufgaben/bump/ruby"
 require_relative "lib/tasks/bump/analyzers"
 require_relative "lib/tasks/bump/devon_rex"
 require_relative "lib/tasks/docker/timeout_test"
+require_relative "lib/tasks/readme/generate"
 
 Aufgaben::Release.new do |t|
   t.files = ["lib/runners/version.rb"]
