@@ -10,7 +10,9 @@ class Runners::Processor::PhpmdTest < Minitest::Test
   end
 
   def subject(workspace, yaml: nil)
-    Phpmd.new(guid: SecureRandom.uuid, workspace: workspace, config: config(yaml), git_ssh_path: nil, trace_writer: trace_writer)
+    Phpmd.new(guid: SecureRandom.uuid, workspace: workspace, config: config(yaml), git_ssh_path: nil, trace_writer: trace_writer).tap do |s|
+      stub(s).analyzer_id { "phpmd" }
+    end
   end
 
   def test_target_files
