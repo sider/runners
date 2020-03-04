@@ -221,4 +221,5 @@ class Runners::CLI
   def run: () -> result
   def io: () -> Runners::IO
   def sensitive_strings: () -> Array<String>
+  def format_duration: (Float) -> String
 end

@@ -52,6 +52,7 @@ module Runners
         trace_writer = TraceWriter.new(writer: writer, sensitive_strings: sensitive_strings)
         started_at = Time.now
         trace_writer.header "Analysis started", recorded_at: started_at
+        trace_writer.message "Started at #{started_at.utc}"
         trace_writer.message "Runners version #{VERSION}"
         trace_writer.message "Build GUID #{guid}"
 
@@ -73,7 +74,9 @@ module Runners
         result.tap do
           finished_at = Time.now
           duration = finished_at - started_at
-          trace_writer.header "Analysis finished in #{duration.round(3)}s", recorded_at: finished_at
+          trace_writer.header "Analysis finished", recorded_at: finished_at
+          trace_writer.message "Finished at #{finished_at.utc}"
+          trace_writer.message "Elapsed time: #{format_duration(duration)}"
         end
       end
     ensure
@@ -92,6 +95,15 @@ module Runners
           strings << source.git_http_userinfo if source.git_http_userinfo
         end
       end
+    end
+
+    def format_duration(duration_in_sec)
+      parts = ActiveSupport::Duration.build(duration_in_sec).parts
+      res = []
+      parts[:hours].tap { |h| res << "#{h}h" if h && h > 0 }
+      parts[:minutes].tap { |m| res << "#{m}m" if m && m > 0 }
+      parts[:seconds].tap { |s| res << "#{s.round(3)}s" if s && s > 0 }
+      res.empty? ? "0.0s" : res.join(" ")
     end
   end
 end

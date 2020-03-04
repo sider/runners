@@ -158,4 +158,16 @@ class CLITest < Minitest::Test
       assert_equal "Not found processor class with 'foo'", error.message
     end
   end
+
+  def test_format_duration
+    with_runners_options_env(source: { head: 'http://example.com/head' }) do
+      cli = CLI.new(argv: %w[--analyzer=rubocop test-guid], stdout: stdout, stderr: stderr)
+      assert_equal "0.0s", cli.format_duration(0.0)
+      assert_equal "0.0s", cli.format_duration(0.000123)
+      assert_equal "0.123s", cli.format_duration(0.1234567)
+      assert_equal "10.123s", cli.format_duration(10.1234567)
+      assert_equal "16m 40.123s", cli.format_duration(1000.1234567)
+      assert_equal "3h 46m 40.123s", cli.format_duration(100000.1234567)
+    end
+  end
 end
