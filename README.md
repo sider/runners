@@ -11,40 +11,42 @@ See also another related project, called [devon_rex](https://github.com/sider/de
 <!-- AUTO-GENERATED-CONTENT:START (analyzers) -->
 All 34 analyzers are provided as a Docker image:
 
-- Brakeman ([docker](https://hub.docker.com/r/sider/runner_brakeman), [source](https://github.com/presidentbeef/brakeman), [doc](tools/ruby/brakeman))
-- Checkstyle ([docker](https://hub.docker.com/r/sider/runner_checkstyle), [source](https://github.com/checkstyle/checkstyle), [doc](tools/java/checkstyle))
-- PHP_CodeSniffer ([docker](https://hub.docker.com/r/sider/runner_code_sniffer), [source](https://github.com/squizlabs/PHP_CodeSniffer), [doc](tools/php/codesniffer))
-- CoffeeLint ([docker](https://hub.docker.com/r/sider/runner_coffeelint), [source](https://github.com/clutchski/coffeelint), [doc](tools/javascript/coffeelint))
-- Cppcheck ([docker](https://hub.docker.com/r/sider/runner_cppcheck), [source](https://github.com/danmar/cppcheck), [doc](tools/cplusplus/cppcheck))
-- cpplint ([docker](https://hub.docker.com/r/sider/runner_cpplint), [source](https://github.com/cpplint/cpplint), [doc](tools/cplusplus/cpplint))
-- detekt ([docker](https://hub.docker.com/r/sider/runner_detekt), [source](https://github.com/arturbosch/detekt), [doc](tools/kotlin/detekt))
-- ESLint ([docker](https://hub.docker.com/r/sider/runner_eslint), [source](https://github.com/eslint/eslint), [doc](tools/javascript/eslint))
-- Flake8 ([docker](https://hub.docker.com/r/sider/runner_flake8), [source](https://github.com/PyCQA/flake8), [doc](tools/python/flake8))
-- FxCop ([docker](https://hub.docker.com/r/sider/runner_fxcop), [source](https://github.com/dotnet/roslyn-analyzers), [doc](tools/csharp/fxcop))
-- go vet ([docker](https://hub.docker.com/r/sider/runner_go_vet), [website](https://golang.org/cmd/vet), [doc](tools/go/govet)) *deprecated*
-- GolangCI-Lint ([docker](https://hub.docker.com/r/sider/runner_golangci_lint), [source](https://github.com/golangci/golangci-lint), [doc](tools/go/golangci-lint))
-- Golint ([docker](https://hub.docker.com/r/sider/runner_golint), [source](https://github.com/golang/lint), [doc](tools/go/golint)) *deprecated*
-- Go Meta Linter ([docker](https://hub.docker.com/r/sider/runner_gometalinter), [source](https://github.com/alecthomas/gometalinter), [doc](tools/go/gometalinter)) *deprecated*
-- Goodcheck ([docker](https://hub.docker.com/r/sider/runner_goodcheck), [source](https://github.com/sider/goodcheck), [doc](tools/others/goodcheck))
-- hadolint ([docker](https://hub.docker.com/r/sider/runner_hadolint), [source](https://github.com/hadolint/hadolint), [doc](tools/dockerfile/hadolint))
-- HAML-Lint ([docker](https://hub.docker.com/r/sider/runner_haml_lint), [source](https://github.com/sds/haml-lint), [doc](tools/ruby/haml-lint))
-- JavaSee ([docker](https://hub.docker.com/r/sider/runner_javasee), [source](https://github.com/sider/JavaSee), [doc](tools/java/javasee))
-- JSHint ([docker](https://hub.docker.com/r/sider/runner_jshint), [source](https://github.com/jshint/jshint), [doc](tools/javascript/jshint))
-- ktlint ([docker](https://hub.docker.com/r/sider/runner_ktlint), [source](https://github.com/pinterest/ktlint), [doc](tools/kotlin/ktlint))
-- Misspell ([docker](https://hub.docker.com/r/sider/runner_misspell), [source](https://github.com/client9/misspell), [doc](tools/others/misspell))
-- Phinder ([docker](https://hub.docker.com/r/sider/runner_phinder), [source](https://github.com/sider/phinder), [doc](tools/php/phinder))
-- PHPMD ([docker](https://hub.docker.com/r/sider/runner_phpmd), [source](https://github.com/phpmd/phpmd), [doc](tools/php/phpmd))
-- PMD Java ([docker](https://hub.docker.com/r/sider/runner_pmd_java), [source](https://github.com/pmd/pmd), [doc](tools/java/pmd))
-- Querly ([docker](https://hub.docker.com/r/sider/runner_querly), [source](https://github.com/soutaro/querly), [doc](tools/ruby/querly))
-- Rails Best Practices ([docker](https://hub.docker.com/r/sider/runner_rails_best_practices), [source](https://github.com/flyerhzm/rails_best_practices), [doc](tools/ruby/rails-bestpractices))
-- Reek ([docker](https://hub.docker.com/r/sider/runner_reek), [source](https://github.com/troessner/reek), [doc](tools/ruby/reek))
-- RuboCop ([docker](https://hub.docker.com/r/sider/runner_rubocop), [source](https://github.com/rubocop-hq/rubocop), [doc](tools/ruby/rubocop))
-- SCSS-Lint ([docker](https://hub.docker.com/r/sider/runner_scss_lint), [source](https://github.com/sds/scss-lint), [doc](tools/css/scss-lint))
-- ShellCheck ([docker](https://hub.docker.com/r/sider/runner_shellcheck), [source](https://github.com/koalaman/shellcheck), [doc](tools/shellscript/shellcheck))
-- stylelint ([docker](https://hub.docker.com/r/sider/runner_stylelint), [source](https://github.com/stylelint/stylelint), [doc](tools/css/stylelint))
-- SwiftLint ([docker](https://hub.docker.com/r/sider/runner_swiftlint), [source](https://github.com/realm/SwiftLint), [doc](tools/swift/swiftlint))
-- TSLint ([docker](https://hub.docker.com/r/sider/runner_tslint), [source](https://github.com/palantir/tslint), [doc](tools/javascript/tslint))
-- TyScan ([docker](https://hub.docker.com/r/sider/runner_tyscan), [source](https://github.com/sider/TyScan), [doc](tools/javascript/tyscan))
+| Name | Links | Status |
+|:-----|:------|:------:|
+| Brakeman | [docker](https://hub.docker.com/r/sider/runner_brakeman), [source](https://github.com/presidentbeef/brakeman), [doc](https://help.sider.review/tools/ruby/brakeman) | ✅ |
+| Checkstyle | [docker](https://hub.docker.com/r/sider/runner_checkstyle), [source](https://github.com/checkstyle/checkstyle), [doc](https://help.sider.review/tools/java/checkstyle) | ✅ |
+| PHP_CodeSniffer | [docker](https://hub.docker.com/r/sider/runner_code_sniffer), [source](https://github.com/squizlabs/PHP_CodeSniffer), [doc](https://help.sider.review/tools/php/codesniffer) | ✅ |
+| CoffeeLint | [docker](https://hub.docker.com/r/sider/runner_coffeelint), [source](https://github.com/clutchski/coffeelint), [doc](https://help.sider.review/tools/javascript/coffeelint) | ✅ |
+| Cppcheck | [docker](https://hub.docker.com/r/sider/runner_cppcheck), [source](https://github.com/danmar/cppcheck), [doc](https://help.sider.review/tools/cplusplus/cppcheck) | ✅ |
+| cpplint | [docker](https://hub.docker.com/r/sider/runner_cpplint), [source](https://github.com/cpplint/cpplint), [doc](https://help.sider.review/tools/cplusplus/cpplint) | ✅ |
+| detekt | [docker](https://hub.docker.com/r/sider/runner_detekt), [source](https://github.com/arturbosch/detekt), [doc](https://help.sider.review/tools/kotlin/detekt) | ✅ |
+| ESLint | [docker](https://hub.docker.com/r/sider/runner_eslint), [source](https://github.com/eslint/eslint), [doc](https://help.sider.review/tools/javascript/eslint) | ✅ |
+| Flake8 | [docker](https://hub.docker.com/r/sider/runner_flake8), [source](https://github.com/PyCQA/flake8), [doc](https://help.sider.review/tools/python/flake8) | ✅ |
+| FxCop | [docker](https://hub.docker.com/r/sider/runner_fxcop), [source](https://github.com/dotnet/roslyn-analyzers), [doc](https://help.sider.review/tools/csharp/fxcop) | ✅ |
+| go vet | [docker](https://hub.docker.com/r/sider/runner_go_vet), [website](https://golang.org/cmd/vet), [doc](https://help.sider.review/tools/go/govet) | ⚠️ *deprecated* |
+| GolangCI-Lint | [docker](https://hub.docker.com/r/sider/runner_golangci_lint), [source](https://github.com/golangci/golangci-lint), [doc](https://help.sider.review/tools/go/golangci-lint) | ✅ |
+| Golint | [docker](https://hub.docker.com/r/sider/runner_golint), [source](https://github.com/golang/lint), [doc](https://help.sider.review/tools/go/golint) | ⚠️ *deprecated* |
+| Go Meta Linter | [docker](https://hub.docker.com/r/sider/runner_gometalinter), [source](https://github.com/alecthomas/gometalinter), [doc](https://help.sider.review/tools/go/gometalinter) | ⚠️ *deprecated* |
+| Goodcheck | [docker](https://hub.docker.com/r/sider/runner_goodcheck), [source](https://github.com/sider/goodcheck), [doc](https://help.sider.review/tools/others/goodcheck) | ✅ |
+| hadolint | [docker](https://hub.docker.com/r/sider/runner_hadolint), [source](https://github.com/hadolint/hadolint), [doc](https://help.sider.review/tools/dockerfile/hadolint) | ✅ |
+| HAML-Lint | [docker](https://hub.docker.com/r/sider/runner_haml_lint), [source](https://github.com/sds/haml-lint), [doc](https://help.sider.review/tools/ruby/haml-lint) | ✅ |
+| JavaSee | [docker](https://hub.docker.com/r/sider/runner_javasee), [source](https://github.com/sider/JavaSee), [doc](https://help.sider.review/tools/java/javasee) | ✅ |
+| JSHint | [docker](https://hub.docker.com/r/sider/runner_jshint), [source](https://github.com/jshint/jshint), [doc](https://help.sider.review/tools/javascript/jshint) | ✅ |
+| ktlint | [docker](https://hub.docker.com/r/sider/runner_ktlint), [source](https://github.com/pinterest/ktlint), [doc](https://help.sider.review/tools/kotlin/ktlint) | ✅ |
+| Misspell | [docker](https://hub.docker.com/r/sider/runner_misspell), [source](https://github.com/client9/misspell), [doc](https://help.sider.review/tools/others/misspell) | ✅ |
+| Phinder | [docker](https://hub.docker.com/r/sider/runner_phinder), [source](https://github.com/sider/phinder), [doc](https://help.sider.review/tools/php/phinder) | ✅ |
+| PHPMD | [docker](https://hub.docker.com/r/sider/runner_phpmd), [source](https://github.com/phpmd/phpmd), [doc](https://help.sider.review/tools/php/phpmd) | ✅ |
+| PMD Java | [docker](https://hub.docker.com/r/sider/runner_pmd_java), [source](https://github.com/pmd/pmd), [doc](https://help.sider.review/tools/java/pmd) | ✅ |
+| Querly | [docker](https://hub.docker.com/r/sider/runner_querly), [source](https://github.com/soutaro/querly), [doc](https://help.sider.review/tools/ruby/querly) | ✅ |
+| Rails Best Practices | [docker](https://hub.docker.com/r/sider/runner_rails_best_practices), [source](https://github.com/flyerhzm/rails_best_practices), [doc](https://help.sider.review/tools/ruby/rails-bestpractices) | ✅ |
+| Reek | [docker](https://hub.docker.com/r/sider/runner_reek), [source](https://github.com/troessner/reek), [doc](https://help.sider.review/tools/ruby/reek) | ✅ |
+| RuboCop | [docker](https://hub.docker.com/r/sider/runner_rubocop), [source](https://github.com/rubocop-hq/rubocop), [doc](https://help.sider.review/tools/ruby/rubocop) | ✅ |
+| SCSS-Lint | [docker](https://hub.docker.com/r/sider/runner_scss_lint), [source](https://github.com/sds/scss-lint), [doc](https://help.sider.review/tools/css/scss-lint) | ✅ |
+| ShellCheck | [docker](https://hub.docker.com/r/sider/runner_shellcheck), [source](https://github.com/koalaman/shellcheck), [doc](https://help.sider.review/tools/shellscript/shellcheck) | ✅ |
+| stylelint | [docker](https://hub.docker.com/r/sider/runner_stylelint), [source](https://github.com/stylelint/stylelint), [doc](https://help.sider.review/tools/css/stylelint) | ✅ |
+| SwiftLint | [docker](https://hub.docker.com/r/sider/runner_swiftlint), [source](https://github.com/realm/SwiftLint), [doc](https://help.sider.review/tools/swift/swiftlint) | ✅ |
+| TSLint | [docker](https://hub.docker.com/r/sider/runner_tslint), [source](https://github.com/palantir/tslint), [doc](https://help.sider.review/tools/javascript/tslint) | ✅ |
+| TyScan | [docker](https://hub.docker.com/r/sider/runner_tyscan), [source](https://github.com/sider/TyScan), [doc](https://help.sider.review/tools/javascript/tyscan) | ✅ |
 <!-- AUTO-GENERATED-CONTENT:END (analyzers) -->
 
 ## Developer guide

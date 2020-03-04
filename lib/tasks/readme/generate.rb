@@ -12,17 +12,20 @@ namespace :readme do
       links << "[docker](https://hub.docker.com/r/sider/runner_#{id})"
       links << "[source](https://github.com/#{analyzer.fetch(:github)})" if analyzer.key?(:github)
       links << "[website](#{analyzer.fetch(:website)})" if analyzer.key?(:website)
-      links << "[doc](#{analyzer.fetch(:doc)})" if analyzer.key?(:doc)
+      links << "[doc](https://help.sider.review/#{analyzer.fetch(:doc)})" if analyzer.key?(:doc)
 
-      item = "- #{analyzer.fetch(:name)}"
-      item += " (#{links.join(', ')})" unless links.empty?
-      item += " *deprecated*" if analyzer[:deprecated]
-      item
+      item = []
+      item << analyzer.fetch(:name)
+      item << (!links.empty? ? links.join(", ") : "-")
+      item << (analyzer[:deprecated] ? "⚠️ *deprecated*" : "✅")
+      "| #{item.join(' | ')} |"
     end
 
     generated_content = <<~MARKDOWN
       All #{analyzers.size} analyzers are provided as a Docker image:
 
+      | Name | Links | Status |
+      |:-----|:------|:------:|
       #{list.join("\n")}
     MARKDOWN
 
