@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.21.0...HEAD)
 
+- [GolangCI-Lint] Warn no Go files instead of failing [#815](https://github.com/sider/runners/pull/815)
+
 ## 0.21.0
 
 [Full diff](https://github.com/sider/runners/compare/0.20.0...0.21.0)

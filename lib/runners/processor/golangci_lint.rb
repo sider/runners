@@ -67,7 +67,8 @@ module Runners
       end
 
       if status.exitstatus == 5
-        return Results::Failure.new(guid: guid, analyzer: analyzer, message: "No go files to analyze")
+        add_warning "No Go files to analyze"
+        return Results::Success.new(guid: guid, analyzer: analyzer)
       end
 
       Results::Failure.new(guid: guid, analyzer: analyzer, message: "Running error")

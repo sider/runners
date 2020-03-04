@@ -79,10 +79,11 @@ Smoke.add_test(
   {
     guid: "test-guid",
     timestamp: :_,
-    type: "failure",
-    message: "No go files to analyze",
+    type: "success",
+    issues: [],
     analyzer: { name: "GolangCI-Lint", version: "1.23.6" }
-  }
+  },
+  { warnings: [{ message: "No Go files to analyze", file: nil }] }
 )
 
 Smoke.add_test(
