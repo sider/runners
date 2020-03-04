@@ -10,11 +10,11 @@ ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 # Install required gems first (due to slow download)
 COPY --chown=analyzer_runner:nogroup Gemfile* analyzers.yml ${RUNNERS_DIR}/
 RUN cd ${RUNNERS_DIR} && \
-    bundle config --global jobs 4 && \
-    bundle config --global retry 3 && \
-    bundle config --local without development:test && \
+    bundle config set --global jobs 4 && \
+    bundle config set --global retry 3 && \
     bundle config && \
-    bundle install
+    BUNDLE_WITHOUT=development:test bundle install && \
+    bundle list
 
 # Install the default version
 COPY --chown=analyzer_runner:nogroup images/querly/Gemfile ${RUNNER_USER_HOME}/querly_Gemfile
@@ -22,11 +22,13 @@ RUN cd ${RUNNER_USER_HOME} && \
     mkdir querly && \
     mv querly_Gemfile querly/Gemfile && \
     cd querly && \
-    bundle install --system --gemfile=Gemfile && \
+    bundle config set --local system 'true' && \
+    bundle install --gemfile=Gemfile && \
+    bundle config unset --local system && \
     rbenv rehash && \
     cd ${RUNNER_USER_HOME} && \
     rm -rf querly && \
-    gem list querly
+    gem info querly
 
 # Copy the main source code
 COPY --chown=analyzer_runner:nogroup bin ${RUNNERS_DIR}/bin

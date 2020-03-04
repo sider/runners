@@ -10,11 +10,11 @@ ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 # Install required gems first (due to slow download)
 COPY --chown=analyzer_runner:nogroup Gemfile* analyzers.yml ${RUNNERS_DIR}/
 RUN cd ${RUNNERS_DIR} && \
-    bundle config --global jobs 4 && \
-    bundle config --global retry 3 && \
-    bundle config --local without development:test && \
+    bundle config set --global jobs 4 && \
+    bundle config set --global retry 3 && \
     bundle config && \
-    bundle install
+    BUNDLE_WITHOUT=development:test bundle install && \
+    bundle list
 
 # Install the default version
 COPY --chown=analyzer_runner:nogroup images/stylelint/package.json ${RUNNER_USER_HOME}/stylelint_package.json

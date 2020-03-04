@@ -4,8 +4,10 @@ RUN cd ${RUNNER_USER_HOME} && \
     mkdir <%= analyzer %> && \
     mv <%= analyzer %>_Gemfile <%= analyzer %>/Gemfile && \
     cd <%= analyzer %> && \
-    bundle install --system --gemfile=Gemfile && \
+    bundle config set --local system 'true' && \
+    bundle install --gemfile=Gemfile && \
+    bundle config unset --local system && \
     rbenv rehash && \
     cd ${RUNNER_USER_HOME} && \
     rm -rf <%= analyzer %> && \
-    gem list <%= analyzer %>
+    gem info <%= analyzer %>

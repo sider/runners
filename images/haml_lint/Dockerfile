@@ -10,11 +10,11 @@ ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 # Install required gems first (due to slow download)
 COPY --chown=analyzer_runner:nogroup Gemfile* analyzers.yml ${RUNNERS_DIR}/
 RUN cd ${RUNNERS_DIR} && \
-    bundle config --global jobs 4 && \
-    bundle config --global retry 3 && \
-    bundle config --local without development:test && \
+    bundle config set --global jobs 4 && \
+    bundle config set --global retry 3 && \
     bundle config && \
-    bundle install
+    BUNDLE_WITHOUT=development:test bundle install && \
+    bundle list
 
 # Install the default version
 COPY --chown=analyzer_runner:nogroup images/haml_lint/Gemfile ${RUNNER_USER_HOME}/haml_lint_Gemfile
@@ -22,11 +22,13 @@ RUN cd ${RUNNER_USER_HOME} && \
     mkdir haml_lint && \
     mv haml_lint_Gemfile haml_lint/Gemfile && \
     cd haml_lint && \
-    bundle install --system --gemfile=Gemfile && \
+    bundle config set --local system 'true' && \
+    bundle install --gemfile=Gemfile && \
+    bundle config unset --local system && \
     rbenv rehash && \
     cd ${RUNNER_USER_HOME} && \
     rm -rf haml_lint && \
-    gem list haml_lint
+    gem info haml_lint
 
 COPY --chown=analyzer_runner:nogroup images/haml_lint/default_rubocop.yml ${RUNNER_USER_HOME}/
 
