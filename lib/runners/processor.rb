@@ -52,9 +52,8 @@ module Runners
       @analyzers ||= Analyzers.new
     end
 
-    def analyzer_id
-      raise NotImplementedError, "`#{self.class}##{__method__}` should be defined dynamically"
-    end
+    # NOTE: This method should be defined dynamically.
+    # def analyzer_id; end
 
     def analyzer_name
       analyzers.name(analyzer_id)

@@ -40,6 +40,7 @@ extension Module (Polyfill)
   def name: -> String
   def instance_method: (Symbol) -> UnboundMethod
   def define_method: (Symbol) { () -> any } -> Symbol
+  def method_defined?: (Symbol, ?bool) -> bool
 end
 
 extension String (Polyfill)

@@ -37,7 +37,9 @@ module Runners
         #       This logic assumes that each subclass has its `#analyze` method.
         source_file, _ = cls.instance_method(:analyze).source_location
         analyzer_id_from_filename = File.basename(source_file, ".rb")
-        cls.define_method(:analyzer_id) { analyzer_id_from_filename }
+        unless cls.method_defined?(:analyzer_id)
+          cls.define_method(:analyzer_id) { analyzer_id_from_filename }
+        end
 
         analyzer == analyzer_id_from_filename
       end or raise "Not found processor class with '#{analyzer}'")
