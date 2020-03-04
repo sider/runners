@@ -101,7 +101,7 @@ GEM
     unicode-display_width (1.6.1)
     unification_assertion (0.0.1)
       minitest (~> 5)
-    zeitwerk (2.2.2)
+    zeitwerk (2.3.0)
 
 PLATFORMS
   ruby
