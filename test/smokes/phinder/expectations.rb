@@ -126,7 +126,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "failure",
-    message: "The attribute `$.linter.phinder.format` of `sideci.yml` cannot exist.",
+    message: "The attribute `$.linter.phinder.format` in your `sideci.yml` is unsupported. Please fix and retry.",
     analyzer: nil
   }
 )

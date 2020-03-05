@@ -1,7 +1,8 @@
 module Runners
   class Config
-    class BrokenYAML < UserError; end
-    class InvalidConfiguration < UserError
+    class Error < UserError; end
+    class BrokenYAML < Error; end
+    class InvalidConfiguration < Error
       attr_reader :input_string
 
       def initialize(message, input_string)
@@ -49,17 +50,17 @@ module Runners
     def parse_yaml
       input_string&.yield_self { |s| YAML.safe_load(s, symbolize_names: true) }
     rescue Psych::SyntaxError => exn
-      message = "Your `#{path_name}` file may be broken (line #{exn.line}, column #{exn.column})."
+      message = "Your `#{path_name}` is broken at line #{exn.line} and column #{exn.column}. Please fix and retry."
       raise BrokenYAML, message
     end
 
     def check_schema(object)
       object ? Schema::Config.payload.coerce(object) : {}
     rescue StrongJSON::Type::UnexpectedAttributeError => exn
-      message = "The attribute `#{exn.path}.#{exn.attribute}` of `#{path_name}` cannot exist."
+      message = "The attribute `#{exn.path}.#{exn.attribute}` in your `#{path_name}` is unsupported. Please fix and retry."
       raise InvalidConfiguration.new(message, input_string)
     rescue StrongJSON::Type::TypeError => exn
-      message = "The value of the attribute `#{exn.path}` of `#{path_name}` is invalid."
+      message = "The value of the attribute `#{exn.path}` in your `#{path_name}` is invalid. Please fix and retry."
       raise InvalidConfiguration.new(message, input_string)
     end
   end

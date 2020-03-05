@@ -76,7 +76,8 @@ Smoke.add_test(
     timestamp: :_,
     type: "failure",
     analyzer: nil,
-    message: "The attribute `$.linter.code_sniffer.extension` of `sideci.yml` cannot exist."
+    message:
+      "The attribute `$.linter.code_sniffer.extension` in your `sideci.yml` is unsupported. Please fix and retry."
   }
 )
 

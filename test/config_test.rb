@@ -108,7 +108,7 @@ class ConfigTest < Minitest::Test
       exn = assert_raises Runners::Config::InvalidConfiguration do
         Runners::Config.new(path)
       end
-      assert_equal "The attribute `$.linter.unknown_linter` of `sider.yml` cannot exist.", exn.message
+      assert_equal "The attribute `$.linter.unknown_linter` in your `sider.yml` is unsupported. Please fix and retry.", exn.message
       assert_equal yaml, exn.input_string
     end
 
@@ -121,7 +121,7 @@ class ConfigTest < Minitest::Test
       exn = assert_raises Runners::Config::InvalidConfiguration do
         Runners::Config.new(path)
       end
-      assert_equal "The value of the attribute `$.linter` of `sider.yml` is invalid.", exn.message
+      assert_equal "The value of the attribute `$.linter` in your `sider.yml` is invalid. Please fix and retry.", exn.message
       assert_equal yaml, exn.input_string
     end
   end
@@ -160,7 +160,7 @@ class ConfigTest < Minitest::Test
       exn = assert_raises Runners::Config::BrokenYAML do
         Runners::Config.new(path)
       end
-      assert_equal "Your `sider.yml` file may be broken (line 1, column 1).", exn.message
+      assert_equal "Your `sider.yml` is broken at line 1 and column 1. Please fix and retry.", exn.message
     end
   end
 

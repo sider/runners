@@ -221,7 +221,8 @@ Smoke.add_test(
     timestamp: :_,
     type: "failure",
     analyzer: nil,
-    message: "The value of the attribute `$.linter.rubocop.gems[0]` of `sideci.yml` is invalid."
+    message:
+      "The value of the attribute `$.linter.rubocop.gems[0]` in your `sideci.yml` is invalid. Please fix and retry."
   }
 )
 

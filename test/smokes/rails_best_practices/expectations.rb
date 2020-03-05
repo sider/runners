@@ -53,7 +53,8 @@ Smoke.add_test(
     timestamp: :_,
     type: "failure",
     analyzer: nil,
-    message: "The value of the attribute `$.linter.rails_best_practices.exclude` of `sideci.yml` is invalid."
+    message:
+      "The value of the attribute `$.linter.rails_best_practices.exclude` in your `sideci.yml` is invalid. Please fix and retry."
   }
 )
 

@@ -166,6 +166,6 @@ Smoke.add_test(
     timestamp: :_,
     type: "failure",
     analyzer: nil,
-    message: "The attribute `$.linter.ktlint.gradle` of `sider.yml` cannot exist."
+    message: "The attribute `$.linter.ktlint.gradle` in your `sider.yml` is unsupported. Please fix and retry."
   }
 )

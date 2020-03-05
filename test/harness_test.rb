@@ -143,7 +143,7 @@ class HarnessTest < Minitest::Test
 
         result = harness.run
         assert_instance_of Results::Failure, result
-        assert_equal "Your `sider.yml` file may be broken (line 1, column 5).", result.message
+        assert_equal "Your `sider.yml` is broken at line 1 and column 5. Please fix and retry.", result.message
       end
     end
   end

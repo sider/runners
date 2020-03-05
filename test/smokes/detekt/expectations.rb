@@ -7,7 +7,7 @@ Smoke.add_test(
     timestamp: :_,
     type: "failure",
     analyzer: nil,
-    message: "The attribute `$.linter.detekt.cli` of `sider.yml` cannot exist."
+    message: "The attribute `$.linter.detekt.cli` in your `sider.yml` is unsupported. Please fix and retry."
   }
 )
 
@@ -30,7 +30,7 @@ Smoke.add_test(
     type: "error",
     class: "RuntimeError",
     backtrace: :_,
-    inspect: /.*\'non\/exists\/dir\/\' does not exist.*/
+    inspect: %r{.*\'non\/exists\/dir\/\' does not exist.*}
   }
 )
 
@@ -77,7 +77,7 @@ Smoke.add_test(
         links: [],
         object: { severity: "warning" },
         git_blame_info: nil
-      },
+      }
     ]
   }
 )
@@ -148,7 +148,8 @@ Smoke.add_test(
         id: "detekt.TooGenericExceptionCaught",
         path: "src/ComplexClass.kt",
         location: { start_line: 19 },
-        message: "Caught exception is too generic. Prefer catching specific exceptions to the case that is currently handled.",
+        message:
+          "Caught exception is too generic. Prefer catching specific exceptions to the case that is currently handled.",
         links: [],
         object: { severity: "error" },
         git_blame_info: nil
@@ -157,7 +158,8 @@ Smoke.add_test(
         id: "detekt.TooGenericExceptionCaught",
         path: "src/ComplexClass.kt",
         location: { start_line: 22 },
-        message: "Caught exception is too generic. Prefer catching specific exceptions to the case that is currently handled.",
+        message:
+          "Caught exception is too generic. Prefer catching specific exceptions to the case that is currently handled.",
         links: [],
         object: { severity: "error" },
         git_blame_info: nil
@@ -166,11 +168,12 @@ Smoke.add_test(
         id: "detekt.TooGenericExceptionCaught",
         path: "src/ComplexClass.kt",
         location: { start_line: 34 },
-        message: "Caught exception is too generic. Prefer catching specific exceptions to the case that is currently handled.",
+        message:
+          "Caught exception is too generic. Prefer catching specific exceptions to the case that is currently handled.",
         links: [],
         object: { severity: "error" },
         git_blame_info: nil
-      },
+      }
     ]
   }
 )

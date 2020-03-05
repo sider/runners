@@ -77,6 +77,9 @@ module Runners
             raise InvalidResult.new(result: result)
           end
         end
+      rescue Config::Error => exn
+        trace_writer.error exn.message
+        Results::Failure.new(guid: guid, message: exn.message)
       rescue UserError => exn
         Results::Failure.new(guid: guid, message: exn.message)
       rescue => exn

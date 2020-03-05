@@ -145,7 +145,8 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "failure",
-    message: "The value of the attribute `$.linter.eslint.npm_install` of `sideci.yml` is invalid.",
+    message:
+      "The value of the attribute `$.linter.eslint.npm_install` in your `sideci.yml` is invalid. Please fix and retry.",
     analyzer: nil
   }
 )

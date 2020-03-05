@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.21.1...HEAD)
 
+- More kindful error message on invalid configuration [#818](https://github.com/sider/runners/pull/818)
+
 ## 0.21.1
 
 [Full diff](https://github.com/sider/runners/compare/0.21.0...0.21.1)
