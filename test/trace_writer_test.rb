@@ -77,8 +77,8 @@ class TraceWriterTest < Minitest::Test
 
   def test_ci_config
     content = {'linter' => {'rubocop' => {'config' => 'myrubocop.yml'}}}
-    writer.ci_config(content, file: "foo.yml", recorded_at: now)
-    assert_equal [{ trace: :ci_config, content: content, file: "foo.yml", recorded_at: "2017-08-01T22:34:51.200Z" }], writer.writer
+    writer.ci_config(content, raw_content: "foo", file: "foo.yml", recorded_at: now)
+    assert_equal [{ trace: :ci_config, content: content, raw_content: "foo", file: "foo.yml", recorded_at: "2017-08-01T22:34:51.200Z" }], writer.writer
   end
 
   def test_error
