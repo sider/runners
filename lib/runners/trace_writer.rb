@@ -65,8 +65,8 @@ module Runners
       self << { trace: :warning, file: file, message: masked_string(message), recorded_at: recorded_at }
     end
 
-    def ci_config(content, file:, recorded_at: now)
-      self << { trace: :ci_config, content: content, file: file, recorded_at: recorded_at }
+    def ci_config(content, raw_content:, file:, recorded_at: now)
+      self << { trace: :ci_config, content: content, raw_content: raw_content, file: file, recorded_at: recorded_at }
     end
 
     def error(message, recorded_at: now, max_length: 4_000)

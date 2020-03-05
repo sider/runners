@@ -109,7 +109,7 @@ class ConfigTest < Minitest::Test
         Runners::Config.new(path)
       end
       assert_equal "The attribute `$.linter.unknown_linter` in your `sider.yml` is unsupported. Please fix and retry.", exn.message
-      assert_equal yaml, exn.input_string
+      assert_equal yaml, exn.raw_content
     end
 
     mktmpdir do |path|
@@ -122,7 +122,7 @@ class ConfigTest < Minitest::Test
         Runners::Config.new(path)
       end
       assert_equal "The value of the attribute `$.linter` in your `sider.yml` is invalid. Please fix and retry.", exn.message
-      assert_equal yaml, exn.input_string
+      assert_equal yaml, exn.raw_content
     end
   end
 

@@ -19,7 +19,10 @@ module Runners
       @trace_writer = trace_writer
       @warnings = []
       @config = config
-      trace_writer.ci_config(config.content, file: config.path_name) if config.path_exist?
+
+      if config.path_exist?
+        trace_writer.ci_config(config.content, raw_content: config.raw_content!, file: config.path_name)
+      end
 
       hash = {
         "RUBYOPT" => nil,

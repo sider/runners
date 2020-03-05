@@ -1,9 +1,10 @@
 class Runners::Config
   attr_reader working_dir: Pathname
-  attr_reader input_string: String?
+  attr_reader raw_content: String?
   attr_reader content: Hash<Symbol, any>
 
   def initialize: (Pathname) -> any
+  def raw_content!: () -> String
   def path_name: -> String
   def path_exist?: -> bool
   def ignore: -> Array<String>
@@ -13,13 +14,16 @@ class Runners::Config
   def check_schema: (String?) -> Hash<Symbol, any>
 end
 
-class Runners::Config::BrokenYAML < UserError
+class Runners::Config::Error < UserError
+  attr_reader raw_content: String
+
+  def initialize: (String, String) -> any
 end
 
-class Runners::Config::InvalidConfiguration < UserError
-  attr_reader input_string: String?
+class Runners::Config::BrokenYAML < Config::Error
+end
 
-  def initialize: (String, String?) -> any
+class Runners::Config::InvalidConfiguration < Config::Error
 end
 
 Runners::Config::CONFIG_FILE_NAME: String

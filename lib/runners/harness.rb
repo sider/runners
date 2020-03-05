@@ -78,7 +78,11 @@ module Runners
           end
         end
       rescue Config::Error => exn
-        trace_writer.error exn.message
+        trace_writer.error <<~MSG.strip
+          #{exn.message}
+          ---
+          #{exn.raw_content}
+        MSG
         Results::Failure.new(guid: guid, message: exn.message)
       rescue UserError => exn
         Results::Failure.new(guid: guid, message: exn.message)
