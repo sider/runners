@@ -31,7 +31,7 @@ module Runners
     register_config_schema(name: :gometalinter, schema: Schema.runner_config)
 
     def setup
-      add_warning_for_deprecated_linter(alternative: "GolangCi-Lint",
+      add_warning_for_deprecated_linter(alternative: analyzers.name(:golangci_lint),
                                         ref: "https://github.com/alecthomas/gometalinter/issues/590",
                                         deadline: Time.new(2020, 4, 30))
 

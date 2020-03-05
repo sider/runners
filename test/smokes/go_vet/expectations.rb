@@ -24,7 +24,7 @@ Smoke.add_test(
       message: <<~MSG
         DEPRECATION WARNING!!!
         The support for go vet is deprecated. Sider will drop these versions on April 30, 2020.
-        Please consider using an alternative tool GolangCi-Lint. See https://help.sider.review/tools/go/govet
+        Please consider using an alternative tool GolangCI-Lint. See https://help.sider.review/tools/go/govet
       MSG
         .strip,
       file: "sider.yml"
