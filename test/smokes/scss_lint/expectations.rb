@@ -46,13 +46,29 @@ Smoke.add_test(
       }
     ],
     analyzer: { name: "SCSS-Lint", version: "0.59.0" }
+  },
+  {
+    warnings: [
+      {
+        message: <<-MSG
+DEPRECATION WARNING!!!
+The support for SCSS-Lint is deprecated. Sider will drop these versions in the near future.
+Please consider using an alternative tool stylelint. See https://github.com/sds/scss-lint/blob/master/README.md#notice-consider-other-tools-before-adopting-scss-lint
+MSG
+          .strip,
+        file: "sider.yml"
+      }
+    ]
   }
 )
 
 Smoke.add_test(
   "no_scss_files",
   { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "SCSS-Lint", version: "0.59.0" } },
-  warnings: [{ message: "No files, paths, or patterns were specified", file: nil }]
+  warnings: [
+    { message: /SCSS-Lint is deprecated/, file: "sider.yml" },
+    { message: "No files, paths, or patterns were specified", file: nil }
+  ]
 )
 
 Smoke.add_test(
@@ -93,19 +109,7 @@ Smoke.add_test(
     ],
     analyzer: { name: "SCSS-Lint", version: "0.59.0" }
   },
-  {
-    warnings: [
-      {
-        message: <<~MSG
-    DEPRECATION WARNING!!!
-    The `$.linter.scss_lint.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
-    Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/css/scss-lint ).
-  MSG
-          .strip,
-        file: "sideci.yml"
-      }
-    ]
-  }
+  { warnings: [{ message: /SCSS-Lint is deprecated/, file: "sideci.yml" }] }
 )
 
 Smoke.add_test(
@@ -126,7 +130,8 @@ Smoke.add_test(
       }
     ],
     analyzer: { name: "SCSS-Lint", version: "0.59.0" }
-  }
+  },
+  { warnings: [{ message: /SCSS-Lint is deprecated/, file: "sider.yml" }] }
 )
 
 Smoke.add_test(
