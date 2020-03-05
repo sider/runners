@@ -77,7 +77,7 @@ Smoke.add_test(
     timestamp: :_,
     type: "failure",
     message:
-      "The value of the attribute `$.linter.goodcheck.config` in your `sideci.yml` is invalid. Please fix and retry",
+      "The value of the attribute `$.linter.goodcheck.config` in your `sideci.yml` is invalid. Please fix and retry.",
     analyzer: nil
   }
 )

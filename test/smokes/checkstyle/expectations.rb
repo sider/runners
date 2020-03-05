@@ -114,7 +114,7 @@ Smoke.add_test(
     timestamp: :_,
     type: "failure",
     message:
-      "The value of the attribute `$.linter.checkstyle.exclude` in your `sideci.yml` is invalid. Please fix and retry",
+      "The value of the attribute `$.linter.checkstyle.exclude` in your `sideci.yml` is invalid. Please fix and retry.",
     analyzer: nil
   }
 )
