@@ -1,0 +1,113 @@
+name: Test, build, and publish
+
+on: [push, pull_request]
+
+jobs:
+  check_skip:
+    runs-on: ubupntu-latest
+    if: "! contains(github.event.head_commit.message, '[skip ci]')"
+    steps:
+      - run: echo "${{ github.event.head_commit.message }}"
+
+  setup:
+    needs: check_skip
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+      - name: Install gems
+        run: |
+          gem install bundler --no-document
+          bundle config set --local path vendor/bundle
+          bundle install --jobs 4 --retry 3
+
+  test:
+    needs: setup
+    steps:
+      - run: bundle exec rake test
+      - run: bundle exec rake readme:generate
+
+  timeout_test:
+    steps:
+      - run: bundle exec rake docker:timeout_test
+
+  typecheck:
+    needs: setup
+    steps:
+      - run: bundle exec rake typecheck
+
+  build:
+    needs: setup
+    strategy:
+      matrix:
+        analyzer:
+          - brakeman
+          - checkstyle
+          - code_sniffer
+          - coffeelint
+          - cppcheck
+          - cpplint
+          - detekt
+          - eslint
+          - flake8
+          - fxcop
+          - go_vet
+          - golangci_lint
+          - golint
+          - gometalinter
+          - goodcheck
+          - hadolint
+          - haml_lint
+          - javasee
+          - jshint
+          - ktlint
+          - misspell
+          - phinder
+          - phpmd
+          - pmd_java
+          - querly
+          - rails_best_practices
+          - reek
+          - rubocop
+          - scss_lint
+          - shellcheck
+          - stylelint
+          - swiftlint
+          - tslint
+          - tyscan
+    steps:
+      - name: Define variables
+        id: define_vars
+        # See https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
+        run: |
+          echo "GITHUB_REF: ${GITHUB_REF}"
+          tag="${GITHUB_REF#refs/*/}"
+          tag="${tag///}"
+          echo "::set-output name=tag::${tag}"
+      - name: Print variables
+        run: |
+          echo "tag: ${{ steps.define_vars.outputs.tag }}"
+      - name: Build Docker image
+        run: |
+          bundle exec rake dockerfile:generate dockerfile:verify docker:build
+        env:
+          ANALYZER: ${{ matrix.analyzer }}
+          TAG: ${{ steps.define_vars.outputs.tag }}
+      - name: Run smoke test
+        run: |
+          bundle exec rake docker:smoke
+        env:
+          ANALYZER: ${{ matrix.analyzer }}
+          TAG: ${{ steps.define_vars.outputs.tag }}
+      - name: Publish Docker image
+        if: |
+          steps.define_vars.outputs.tag == 'master' || startsWith(github.ref, 'refs/tags/')
+        run: |
+          bundle exec rake docker:push
+        env:
+          ANALYZER: ${{ matrix.analyzer }}
+          TAG: ${{ steps.define_vars.outputs.tag }}
+          TAG_LATEST: ${{ startsWith(github.ref, 'refs/tags/') }}
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}

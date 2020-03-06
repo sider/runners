@@ -127,12 +127,12 @@ namespace :docker do
   end
 
   desc 'Run docker push'
-  task :push, [:tag] do |_task, args|
+  task :push do
     sh "docker", "login", "--username", docker_user, "--password", docker_password
     begin
       sh "docker", "push", image_name
-      if args.key? :tag
-        image_name_with_new_tag = image_name(args.fetch(:tag))
+      if ENV["TAG_LATEST"] == "true"
+        image_name_with_new_tag = image_name("latest")
         sh "docker", "tag", image_name, image_name_with_new_tag
         sh "docker", "push", image_name_with_new_tag
       end
