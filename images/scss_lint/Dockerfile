@@ -16,7 +16,6 @@ RUN cd ${RUNNERS_DIR} && \
     BUNDLE_WITHOUT=development:test bundle install && \
     bundle list
 
-# Install the default version
 COPY --chown=${RUNNER_USER}:nogroup images/scss_lint/Gemfile ${RUNNER_USER_HOME}/scss_lint_Gemfile
 RUN cd ${RUNNER_USER_HOME} && \
     mkdir scss_lint && \
@@ -25,7 +24,6 @@ RUN cd ${RUNNER_USER_HOME} && \
     bundle config set --local system 'true' && \
     bundle install --gemfile=Gemfile && \
     bundle config unset --local system && \
-    rbenv rehash && \
     cd ${RUNNER_USER_HOME} && \
     rm -rf scss_lint && \
     gem info scss_lint

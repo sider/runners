@@ -16,7 +16,6 @@ RUN cd ${RUNNERS_DIR} && \
     BUNDLE_WITHOUT=development:test bundle install && \
     bundle list
 
-# Install the default version
 COPY --chown=${RUNNER_USER}:nogroup images/reek/Gemfile ${RUNNER_USER_HOME}/reek_Gemfile
 RUN cd ${RUNNER_USER_HOME} && \
     mkdir reek && \
@@ -25,7 +24,6 @@ RUN cd ${RUNNER_USER_HOME} && \
     bundle config set --local system 'true' && \
     bundle install --gemfile=Gemfile && \
     bundle config unset --local system && \
-    rbenv rehash && \
     cd ${RUNNER_USER_HOME} && \
     rm -rf reek && \
     gem info reek
