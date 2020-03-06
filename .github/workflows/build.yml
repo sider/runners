@@ -4,12 +4,13 @@ on: [push, pull_request]
 
 jobs:
   check_skip:
-    runs-on: ubupntu-latest
+    runs-on: ubuntu-latest
     if: "! contains(github.event.head_commit.message, '[skip ci]')"
     steps:
       - run: echo "${{ github.event.head_commit.message }}"
 
   setup:
+    runs-on: ubuntu-latest
     needs: check_skip
     steps:
       - uses: actions/checkout@v2
@@ -23,21 +24,26 @@ jobs:
           bundle install --jobs 4 --retry 3
 
   test:
+    runs-on: ubuntu-latest
     needs: setup
     steps:
       - run: bundle exec rake test
       - run: bundle exec rake readme:generate
 
   timeout_test:
+    runs-on: ubuntu-latest
+    needs: setup
     steps:
       - run: bundle exec rake docker:timeout_test
 
   typecheck:
+    runs-on: ubuntu-latest
     needs: setup
     steps:
       - run: bundle exec rake typecheck
 
   build:
+    runs-on: ubuntu-latest
     needs: setup
     strategy:
       matrix:
