@@ -40,7 +40,12 @@ runner_job: &runner_job
     - deploy:
         command: |
           if [ -n "${CIRCLE_TAG}" ]; then
-            bundle exec rake docker:push
+            bundle exec rake docker:push "TAG=${CIRCLE_TAG}"
+            bundle exec rake docker:push TAG=latest
+          elif [ "${CIRCLE_BRANCH}" == 'master' ]; then
+            bundle exec rake docker:push "TAG=${CIRCLE_BRANCH}"
+          else
+            echo 'No push.'
           fi
 
 jobs:
