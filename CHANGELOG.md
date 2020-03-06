@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.21.3...HEAD)
 
+- Fix tagging for Docker images [#826](https://github.com/sider/runners/pull/826)
+
 ## 0.21.3
 
 [Full diff](https://github.com/sider/runners/compare/0.21.2...0.21.3)
