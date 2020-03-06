@@ -34,15 +34,23 @@ runner_job: &runner_job
     - checkout
     - install_gems
     - setup_remote_docker
-    - run: echo 'export TAG="${CIRCLE_TAG:-${CIRCLE_SHA1}}"' >> $BASH_ENV
+    # See https://circleci.com/docs/2.0/env-vars/#example-configuration-of-environment-variables
+    - run: |
+        if [[ "${CIRCLE_BRANCH}" == 'master' ]]; then
+          echo 'export TAG="master"' >> $BASH_ENV
+        elif [[ -n "${CIRCLE_TAG}" ]]; then
+          echo 'export TAG="${CIRCLE_TAG}"' >> $BASH_ENV
+        else
+          echo 'export TAG="${CIRCLE_SHA1}"' >> $BASH_ENV
+        fi
     - run: bundle exec rake docker:build
     - run: bundle exec rake docker:smoke
     - deploy:
         command: |
-          if [ -n "${CIRCLE_TAG}" ]; then
+          if [[ "${CIRCLE_BRANCH}" == 'master' ]]; then
+            bundle exec rake docker:push TAG=master
+          elif [[ -n "${CIRCLE_TAG}" ]]; then
             bundle exec rake 'docker:push[latest]' "TAG=${CIRCLE_TAG}"
-          elif [ "${CIRCLE_BRANCH}" == 'master' ]; then
-            bundle exec rake docker:push "TAG=${CIRCLE_BRANCH}"
           else
             echo 'No push.'
           fi
