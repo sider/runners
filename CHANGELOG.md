@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.21.2...HEAD)
 
+- Push Docker images with `master` tag [#825](https://github.com/sider/runners/pull/825)
+
 ## 0.21.2
 
 [Full diff](https://github.com/sider/runners/compare/0.21.1...0.21.2)
