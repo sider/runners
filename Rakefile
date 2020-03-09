@@ -14,7 +14,6 @@ end
 Aufgaben::Bump::Ruby.new do |t|
   t.files = %w[
     .ruby-version
-    .circleci/config.yml
     .github/workflows/bump_analyzers.yml
   ]
 end
