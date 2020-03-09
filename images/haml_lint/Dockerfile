@@ -16,6 +16,7 @@ RUN cd ${RUNNERS_DIR} && \
     BUNDLE_WITHOUT=development:test bundle install && \
     bundle list
 
+# Install the default version
 COPY --chown=${RUNNER_USER}:nogroup images/haml_lint/Gemfile ${RUNNER_USER_HOME}/haml_lint_Gemfile
 RUN cd ${RUNNER_USER_HOME} && \
     mkdir haml_lint && \

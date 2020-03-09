@@ -16,6 +16,7 @@ RUN cd ${RUNNERS_DIR} && \
     BUNDLE_WITHOUT=development:test bundle install && \
     bundle list
 
+# Install the default version
 COPY --chown=${RUNNER_USER}:nogroup images/rails_best_practices/Gemfile ${RUNNER_USER_HOME}/rails_best_practices_Gemfile
 RUN cd ${RUNNER_USER_HOME} && \
     mkdir rails_best_practices && \

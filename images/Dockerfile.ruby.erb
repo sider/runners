@@ -1,3 +1,4 @@
+# Install the default version
 COPY --chown=<%= chown %> images/<%= analyzer %>/Gemfile ${RUNNER_USER_HOME}/<%= analyzer %>_Gemfile
 RUN cd ${RUNNER_USER_HOME} && \
     mkdir <%= analyzer %> && \
