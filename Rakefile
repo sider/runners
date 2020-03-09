@@ -42,7 +42,7 @@ namespace :dockerfile do
   def render_erb(file, analyzer: ENV.fetch('ANALYZER'))
     locals = {
       analyzer: analyzer,
-      chown: '${RUNNER_USER}:nogroup',
+      chown: '${RUNNER_USER}:${RUNNER_GROUP}',
     }
 
     res = ERB.new(File.read(file), trim_mode: "<>").result_with_hash(locals)
