@@ -14,7 +14,7 @@ rules:
     fail: |
       COPY a_file dest/
     pass: |
-      COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} a_file dest/
+      COPY --chown=<%= chown %> a_file dest/
 
   - id: sider.runners.ruby.disallow-standard-error
     pattern:
