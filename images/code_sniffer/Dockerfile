@@ -6,7 +6,7 @@ FROM sider/devon_rex_php:2.15.0
 
 
 # Install PHP packages via Composer
-COPY --chown=analyzer_runner:nogroup images/code_sniffer/composer.json images/code_sniffer/composer.lock ${COMPOSER_HOME}/
+COPY --chown=${RUNNER_USER}:nogroup images/code_sniffer/composer.json images/code_sniffer/composer.lock ${COMPOSER_HOME}/
 RUN composer global install
 
 # Set install paths
@@ -19,7 +19,7 @@ RUN basepath=${COMPOSER_HOME}/vendor && \
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
-COPY --chown=analyzer_runner:nogroup Gemfile* analyzers.yml ${RUNNERS_DIR}/
+COPY --chown=${RUNNER_USER}:nogroup Gemfile* analyzers.yml ${RUNNERS_DIR}/
 RUN cd ${RUNNERS_DIR} && \
     bundle config set --global jobs 4 && \
     bundle config set --global retry 3 && \
@@ -28,8 +28,8 @@ RUN cd ${RUNNERS_DIR} && \
     bundle list
 
 # Copy the main source code
-COPY --chown=analyzer_runner:nogroup bin ${RUNNERS_DIR}/bin
-COPY --chown=analyzer_runner:nogroup lib ${RUNNERS_DIR}/lib
+COPY --chown=${RUNNER_USER}:nogroup bin ${RUNNERS_DIR}/bin
+COPY --chown=${RUNNER_USER}:nogroup lib ${RUNNERS_DIR}/lib
 
 ENV PATH ${RUNNERS_DIR}/bin:${PATH}
 

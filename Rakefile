@@ -42,10 +42,7 @@ namespace :dockerfile do
   def render_erb(file, analyzer: ENV.fetch('ANALYZER'))
     locals = {
       analyzer: analyzer,
-
-      # TODO: `COPY --chown=${RUNNER_USER}:${RUNNER_GROUP}` format has been available since Docker v19.03.4.
-      #       However, CircleCI does not support the Docker version...
-      chown: "analyzer_runner:nogroup",
+      chown: '${RUNNER_USER}:nogroup',
     }
 
     res = ERB.new(File.read(file), trim_mode: "<>").result_with_hash(locals)

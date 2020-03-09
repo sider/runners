@@ -8,7 +8,7 @@ FROM sider/devon_rex_ruby:2.15.0
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
-COPY --chown=analyzer_runner:nogroup Gemfile* analyzers.yml ${RUNNERS_DIR}/
+COPY --chown=${RUNNER_USER}:nogroup Gemfile* analyzers.yml ${RUNNERS_DIR}/
 RUN cd ${RUNNERS_DIR} && \
     bundle config set --global jobs 4 && \
     bundle config set --global retry 3 && \
@@ -17,7 +17,7 @@ RUN cd ${RUNNERS_DIR} && \
     bundle list
 
 # Install the default version
-COPY --chown=analyzer_runner:nogroup images/scss_lint/Gemfile ${RUNNER_USER_HOME}/scss_lint_Gemfile
+COPY --chown=${RUNNER_USER}:nogroup images/scss_lint/Gemfile ${RUNNER_USER_HOME}/scss_lint_Gemfile
 RUN cd ${RUNNER_USER_HOME} && \
     mkdir scss_lint && \
     mv scss_lint_Gemfile scss_lint/Gemfile && \
@@ -30,12 +30,12 @@ RUN cd ${RUNNER_USER_HOME} && \
     rm -rf scss_lint && \
     gem info scss_lint
 
-COPY --chown=analyzer_runner:nogroup images/scss_lint/scss-lint.default.yml ${RUNNER_USER_HOME}/.scss-lint.yml
+COPY --chown=${RUNNER_USER}:nogroup images/scss_lint/scss-lint.default.yml ${RUNNER_USER_HOME}/.scss-lint.yml
 
 
 # Copy the main source code
-COPY --chown=analyzer_runner:nogroup bin ${RUNNERS_DIR}/bin
-COPY --chown=analyzer_runner:nogroup lib ${RUNNERS_DIR}/lib
+COPY --chown=${RUNNER_USER}:nogroup bin ${RUNNERS_DIR}/bin
+COPY --chown=${RUNNER_USER}:nogroup lib ${RUNNERS_DIR}/lib
 
 ENV PATH ${RUNNERS_DIR}/bin:${PATH}
 

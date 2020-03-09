@@ -8,7 +8,7 @@ FROM sider/devon_rex_python:2.15.0
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
-COPY --chown=analyzer_runner:nogroup Gemfile* analyzers.yml ${RUNNERS_DIR}/
+COPY --chown=${RUNNER_USER}:nogroup Gemfile* analyzers.yml ${RUNNERS_DIR}/
 RUN cd ${RUNNERS_DIR} && \
     bundle config set --global jobs 4 && \
     bundle config set --global retry 3 && \
@@ -17,7 +17,7 @@ RUN cd ${RUNNERS_DIR} && \
     bundle list
 
 # Install the default version
-COPY --chown=analyzer_runner:nogroup images/cpplint/Pipfile ${RUNNER_USER_HOME}/cpplint_Pipfile
+COPY --chown=${RUNNER_USER}:nogroup images/cpplint/Pipfile ${RUNNER_USER_HOME}/cpplint_Pipfile
 RUN cd ${RUNNER_USER_HOME} && \
     mkdir cpplint && \
     mv cpplint_Pipfile cpplint/Pipfile && \
@@ -33,8 +33,8 @@ RUN cd ${RUNNER_USER_HOME} && \
     echo "The default Python runtime version is '$(python --version)'"
 
 # Copy the main source code
-COPY --chown=analyzer_runner:nogroup bin ${RUNNERS_DIR}/bin
-COPY --chown=analyzer_runner:nogroup lib ${RUNNERS_DIR}/lib
+COPY --chown=${RUNNER_USER}:nogroup bin ${RUNNERS_DIR}/bin
+COPY --chown=${RUNNER_USER}:nogroup lib ${RUNNERS_DIR}/lib
 
 ENV PATH ${RUNNERS_DIR}/bin:${PATH}
 

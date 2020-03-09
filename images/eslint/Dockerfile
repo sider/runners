@@ -8,7 +8,7 @@ FROM sider/devon_rex_npm:2.15.0
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
-COPY --chown=analyzer_runner:nogroup Gemfile* analyzers.yml ${RUNNERS_DIR}/
+COPY --chown=${RUNNER_USER}:nogroup Gemfile* analyzers.yml ${RUNNERS_DIR}/
 RUN cd ${RUNNERS_DIR} && \
     bundle config set --global jobs 4 && \
     bundle config set --global retry 3 && \
@@ -17,7 +17,7 @@ RUN cd ${RUNNERS_DIR} && \
     bundle list
 
 # Install the default version
-COPY --chown=analyzer_runner:nogroup images/eslint/package.json ${RUNNER_USER_HOME}/eslint_package.json
+COPY --chown=${RUNNER_USER}:nogroup images/eslint/package.json ${RUNNER_USER_HOME}/eslint_package.json
 RUN cd ${RUNNER_USER_HOME} && \
     mkdir eslint && \
     mv eslint_package.json eslint/package.json && \
@@ -33,14 +33,14 @@ ENV NODE_PATH ${RUNNER_USER_HOME}/eslint/node_modules:${NODE_PATH}
 
 # NOTE: ESLint uses a configuration file in the home directory if no other configuration files are found.
 #       See https://eslint.org/docs/user-guide/configuring#configuration-cascading-and-hierarchy
-COPY --chown=analyzer_runner:nogroup images/eslint/sider_eslintrc.yml ${RUNNER_USER_HOME}/.eslintrc.yml
+COPY --chown=${RUNNER_USER}:nogroup images/eslint/sider_eslintrc.yml ${RUNNER_USER_HOME}/.eslintrc.yml
 
-COPY --chown=analyzer_runner:nogroup images/eslint/custom-eslint-json-formatter.js ${RUNNER_USER_HOME}/
+COPY --chown=${RUNNER_USER}:nogroup images/eslint/custom-eslint-json-formatter.js ${RUNNER_USER_HOME}/
 
 
 # Copy the main source code
-COPY --chown=analyzer_runner:nogroup bin ${RUNNERS_DIR}/bin
-COPY --chown=analyzer_runner:nogroup lib ${RUNNERS_DIR}/lib
+COPY --chown=${RUNNER_USER}:nogroup bin ${RUNNERS_DIR}/bin
+COPY --chown=${RUNNER_USER}:nogroup lib ${RUNNERS_DIR}/lib
 
 ENV PATH ${RUNNERS_DIR}/bin:${PATH}
 
