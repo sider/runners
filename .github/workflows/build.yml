@@ -10,9 +10,19 @@ on:
 jobs:
   check_skip:
     runs-on: ubuntu-latest
-    if: "! contains(github.event.head_commit.message, '[skip ci]')"
+    # See also:
+    # - https://help.github.com/en/actions/reference/events-that-trigger-workflows#push-event-push
+    # - https://help.github.com/en/actions/reference/events-that-trigger-workflows#pull-request-event-pull_request
+    # - https://help.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions
+    if: |
+      !(github.event_name == 'push' && contains(github.event.head_commit.message, '[skip ci]')) &&
+      !(github.event_name == 'pull_request' && contains(join(github.event.pull_request.title, github.event.pull_request.body), '[skip ci]'))
     steps:
-      - run: echo "${{ github.event.head_commit.message }}"
+      - run: |
+          echo "github.event_name: '${{ github.event_name }}'"
+          echo "github.event.head_commit.message: '${{ github.event.head_commit.message }}'"
+          echo "github.event.pull_request.title: '${{ github.event.pull_request.title }}'"
+          echo "github.event.pull_request.body: '${{ github.event.pull_request.body }}'"
 
   test:
     runs-on: ubuntu-latest
