@@ -16,23 +16,26 @@ module Runners
     end
 
     def stdout(string, recorded_at: now, max_length: 4_000)
-      unless string.empty?
-        each_slice(masked_string(string), size: max_length) do |text, truncated|
-          self << { trace: :stdout, string: text, recorded_at: recorded_at, truncated: truncated }
-        end
+      string = string.strip
+      return if string.empty?
+
+      each_slice(masked_string(string), size: max_length) do |text, truncated|
+        self << { trace: :stdout, string: text, recorded_at: recorded_at, truncated: truncated }
       end
     end
 
     def stderr(string, recorded_at: now, max_length: 4_000)
-      unless string.empty?
-        each_slice(masked_string(string), size: max_length) do |text, truncated|
-          self << { trace: :stderr, string: text, recorded_at: recorded_at, truncated: truncated }
-        end
+      string = string.strip
+      return if string.empty?
+
+      each_slice(masked_string(string), size: max_length) do |text, truncated|
+        self << { trace: :stderr, string: text, recorded_at: recorded_at, truncated: truncated }
       end
     end
 
     def message(message, recorded_at: now, max_length: 4_000, limit: 40_000, omission: "...(truncated)")
-      string = masked_string(message)
+      string = masked_string(message.strip)
+
       if string.size > limit
         string = string[0, limit] + omission
         all_truncated = true
@@ -58,11 +61,11 @@ module Runners
     end
 
     def header(message, recorded_at: now)
-      self << { trace: :header, message: masked_string(message), recorded_at: recorded_at }
+      self << { trace: :header, message: masked_string(message.strip), recorded_at: recorded_at }
     end
 
     def warning(message, file: nil, recorded_at: now)
-      self << { trace: :warning, file: file, message: masked_string(message), recorded_at: recorded_at }
+      self << { trace: :warning, file: file, message: masked_string(message.strip), recorded_at: recorded_at }
     end
 
     def ci_config(content, raw_content:, file:, recorded_at: now)
@@ -70,7 +73,7 @@ module Runners
     end
 
     def error(message, recorded_at: now, max_length: 4_000)
-      each_slice(masked_string(message), size: max_length) do |text, truncated|
+      each_slice(masked_string(message.strip), size: max_length) do |text, truncated|
         self << { trace: :error, message: text, recorded_at: recorded_at, truncated: truncated }
       end
     end

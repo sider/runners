@@ -66,9 +66,7 @@ module Runners
       _, _, status = capture3(nodejs_analyzer_bin, "test", *args)
 
       if status.nil? || !status.success?
-        msg = <<~MESSAGE.chomp
-          `tyscan test` failed. It may cause an unintended match.
-        MESSAGE
+        msg = "`tyscan test` failed. It may cause an unintended match."
         add_warning(msg, file: config_linter[:config] || "tyscan.yml")
       end
     end

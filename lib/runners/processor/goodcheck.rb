@@ -41,9 +41,7 @@ module Runners
       stdout, stderr, status = capture3(*ruby_analyzer_bin, "test", *cli_options)
 
       if !status.success? && !stdout.empty?
-        msg = <<~MESSAGE.chomp
-          The validation of your Goodcheck configuration file failed. Check the output of `goodcheck test` command.
-        MESSAGE
+        msg = "The validation of your Goodcheck configuration file failed. Check the output of `goodcheck test` command."
         add_warning(msg, file: goodcheck_config_file)
       end
 

@@ -137,6 +137,7 @@ module Runners
     end
 
     def add_warning(message, file: nil)
+      message = message.strip
       trace_writer.warning(message, file: file)
       @warnings << {message: message, file: file}
     end
@@ -144,7 +145,7 @@ module Runners
     def add_warning_if_deprecated_version(minimum:, file: nil, deadline: nil)
       unless Gem::Version.create(minimum) <= Gem::Version.create(analyzer_version)
         deadline_str = deadline ? deadline.strftime('on %B %-d, %Y') : 'in the near future'
-        add_warning <<~MSG.strip, file: file
+        add_warning <<~MSG, file: file
           DEPRECATION WARNING!!!
           The #{analyzer_version} and older versions are deprecated. Sider will drop these versions #{deadline_str}.
           Please consider upgrading to #{minimum} or a newer version.
@@ -157,7 +158,7 @@ module Runners
         .map { |k| "`#{config_field_path(k)}`" }
 
       unless deprecated_keys.empty?
-        add_warning <<~MSG.strip, file: config.path_name
+        add_warning <<~MSG, file: config.path_name
           DEPRECATION WARNING!!!
           The #{deprecated_keys.join(", ")} option(s) in your `#{config.path_name}` are deprecated and will be removed in the near future.
           Please update to the new option(s) according to our documentation (see #{analyzer_doc} ).
@@ -167,7 +168,7 @@ module Runners
 
     def add_warning_for_deprecated_linter(alternative:, ref:, deadline: nil)
       deadline_str = deadline ? deadline.strftime("on %B %-d, %Y") : "in the near future"
-      add_warning <<~MSG.strip, file: config.path_name
+      add_warning <<~MSG, file: config.path_name
         DEPRECATION WARNING!!!
         The support for #{analyzer_name} is deprecated. Sider will drop these versions #{deadline_str}.
         Please consider using an alternative tool #{alternative}. See #{ref}

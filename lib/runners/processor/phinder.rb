@@ -36,7 +36,7 @@ module Runners
         # Skip other configuration errors.
         # These errors should be reported when running `phinder find`.
       when 2
-        add_warning(<<~MESSAGE.chomp, file: config_linter[:rule] || DEFAULT_RULE_FILE)
+        add_warning(<<~MESSAGE, file: config_linter[:rule] || DEFAULT_RULE_FILE)
           Phinder configuration validation failed.
           Check the following output by `phinder test` command.
 
