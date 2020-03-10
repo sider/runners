@@ -6,7 +6,7 @@ FROM sider/devon_rex_java:2.15.0 AS builder
 #       See https://maven.apache.org/plugins/maven-dependency-plugin/copy-dependencies-mojo.html
 COPY --chown=<%= chown %> images/<%= analyzer %>/pom.xml ${RUNNER_USER_HOME}/<%= analyzer %>/pom.xml
 RUN cd "${RUNNER_USER_HOME}/<%= analyzer %>" && \
-    mvn -ntp -B -T 4 dependency:copy-dependencies -DoutputDirectory=.
+    mvn --no-transfer-progress --batch-mode --threads 4 dependency:copy-dependencies -DoutputDirectory=.
 
 FROM sider/devon_rex_java:2.15.0
 

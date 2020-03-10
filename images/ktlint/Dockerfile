@@ -10,7 +10,7 @@ FROM sider/devon_rex_java:2.15.0 AS builder
 #       See https://maven.apache.org/plugins/maven-dependency-plugin/copy-dependencies-mojo.html
 COPY --chown=${RUNNER_USER}:nogroup images/ktlint/pom.xml ${RUNNER_USER_HOME}/ktlint/pom.xml
 RUN cd "${RUNNER_USER_HOME}/ktlint" && \
-    mvn -ntp -B -T 4 dependency:copy-dependencies -DoutputDirectory=.
+    mvn --no-transfer-progress --batch-mode --threads 4 dependency:copy-dependencies -DoutputDirectory=.
 
 FROM sider/devon_rex_java:2.15.0
 
