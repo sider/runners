@@ -71,10 +71,11 @@ Smoke.add_test(
   {
     warnings: [
       {
-        message: <<~MSG,
-      Configuration file javasee.yml does not look a file.
-      Specify configuration file by -config option.
-    MSG
+        message: <<~MSG
+          Configuration file javasee.yml does not look a file.
+          Specify configuration file by -config option.
+        MSG
+          .strip,
         file: nil
       }
     ]
