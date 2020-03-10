@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.21.6...HEAD)
 
+- Add Actions `on.push.tags` for `docker push` [#842](https://github.com/sider/runners/pull/842)
+
 ## 0.21.6
 
 [Full diff](https://github.com/sider/runners/compare/0.21.5...0.21.6)
