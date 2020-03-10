@@ -175,13 +175,14 @@ Smoke.add_test(
   },
   warnings: [
     {
-      message: <<~MESSAGE,
-      Sider tried to install `reek 4.0.0` according to your `Gemfile.lock`, but it installs `5.6.0` instead.
-      Because `4.0.0` does not satisfy the Sider constraints [\">= 4.4.0\", \"< 6.0\"].
+      message: <<~MESSAGE
+        Sider tried to install `reek 4.0.0` according to your `Gemfile.lock`, but it installs `5.6.0` instead.
+        Because `4.0.0` does not satisfy the Sider constraints [\">= 4.4.0\", \"< 6.0\"].
 
-      If you want to use a different version of `reek`, update your `Gemfile.lock` to satisfy the constraint or specify the gem version in your `sider.yml`.
-      See https://help.sider.review/getting-started/custom-configuration#gems-option
-    MESSAGE
+        If you want to use a different version of `reek`, update your `Gemfile.lock` to satisfy the constraint or specify the gem version in your `sider.yml`.
+        See https://help.sider.review/getting-started/custom-configuration#gems-option
+      MESSAGE
+        .strip,
       file: nil
     }
   ]

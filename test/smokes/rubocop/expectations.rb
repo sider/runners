@@ -258,10 +258,10 @@ Smoke.add_test(
     warnings: [
       {
         message: <<~MSG
-      DEPRECATION WARNING!!!
-      The `$.linter.rubocop.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
-      Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/ruby/rubocop ).
-    MSG
+          DEPRECATION WARNING!!!
+          The `$.linter.rubocop.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
+          Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/ruby/rubocop ).
+        MSG
           .strip,
         file: "sideci.yml"
       },
@@ -294,11 +294,12 @@ Smoke.add_test(
   },
   warnings: [
     {
-      message: <<~WARNING,
-    Rails cops will be removed from RuboCop 0.72. Use the `rubocop-rails` gem instead.
-    https://github.com/rubocop-hq/rubocop/blob/master/manual/migrate_rails_cops.md
-    https://help.sider.review/getting-started/custom-configuration#gems-option
-  WARNING
+      message: <<~WARNING
+        Rails cops will be removed from RuboCop 0.72. Use the `rubocop-rails` gem instead.
+        https://github.com/rubocop-hq/rubocop/blob/master/manual/migrate_rails_cops.md
+        https://help.sider.review/getting-started/custom-configuration#gems-option
+      WARNING
+        .strip,
       file: :_
     }
   ]
@@ -352,10 +353,11 @@ Smoke.add_test(
   },
   warnings: [
     {
-      message: <<~WARNING,
-      `rails` option is ignored because the option was removed from RuboCop 0.72. Use the `rubocop-rails` gem instead.
-      See https://help.sider.review/getting-started/custom-configuration#gems-option
-    WARNING
+      message: <<~WARNING
+        `rails` option is ignored because the option was removed from RuboCop 0.72. Use the `rubocop-rails` gem instead.
+        See https://help.sider.review/getting-started/custom-configuration#gems-option
+      WARNING
+        .strip,
       file: "sideci.yml"
     }
   ]
@@ -447,11 +449,12 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "failure",
-    message: <<~TEXT,
+    message: <<~MSG
       Failed to install gems. Sider automatically installs gems according to `sideci.yml` and `Gemfile.lock`.
       You can select the version of gems you want to install via `sideci.yml`.
       See https://help.sider.review/getting-started/custom-configuration#gems-option
-    TEXT
+    MSG
+      .strip,
     analyzer: nil
   }
 )
@@ -461,13 +464,14 @@ Smoke.add_test(
   { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "RuboCop", version: "0.80.1" } },
   warnings: [
     {
-      message: <<~MSG,
+      message: <<~MSG
         Sider tried to install `rubocop 0.60.0` according to your `Gemfile.lock`, but it installs `0.80.1` instead.
         Because `0.60.0` does not satisfy the Sider constraints [\">= 0.61.0\", \"< 1.0.0\"].
 
         If you want to use a different version of `rubocop`, update your `Gemfile.lock` to satisfy the constraint or specify the gem version in your `sider.yml`.
         See https://help.sider.review/getting-started/custom-configuration#gems-option
       MSG
+        .strip,
       file: nil
     }
   ]

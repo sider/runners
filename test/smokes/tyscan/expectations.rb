@@ -29,12 +29,13 @@ Smoke.add_test(
   { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "TyScan", version: "0.3.1" } },
   warnings: [
     {
-      message: <<~MESSAGE,
-    `tyscan.yml` does not exist in your repository.
+      message: <<~MESSAGE
+        `tyscan.yml` does not exist in your repository.
 
-    To start performing analysis, `tyscan.yml` is required.
-    See also: https://help.sider.review/tools/javascript/tyscan
-  MESSAGE
+        To start performing analysis, `tyscan.yml` is required.
+        See also: https://help.sider.review/tools/javascript/tyscan
+      MESSAGE
+        .strip,
       file: nil
     }
   ]
@@ -100,12 +101,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "failure",
-    message: <<~MESSAGE,
-    TyScan was failed with status 1 since an unexpected error occurred.
-
-    STDERR:
-
-  MESSAGE
+    message: "TyScan was failed with the exit status 1 since an unexpected error occurred.",
     analyzer: { name: "TyScan", version: "0.2.1" }
   },
   warnings: [{ message: "`tyscan test` failed. It may cause an unintended match.", file: "tyscan.yml" }]
