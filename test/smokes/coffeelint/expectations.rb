@@ -55,10 +55,10 @@ Smoke.add_test(
   warnings: [
     {
       message: <<~MSG
-    DEPRECATION WARNING!!!
-    The `$.linter.coffeelint.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
-    Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/javascript/coffeelint ).
-  MSG
+        DEPRECATION WARNING!!!
+        The `$.linter.coffeelint.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
+        Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/javascript/coffeelint ).
+      MSG
         .strip,
       file: "sideci.yml"
     }

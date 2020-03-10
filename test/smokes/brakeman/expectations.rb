@@ -167,13 +167,14 @@ Smoke.add_test(
   },
   warnings: [
     {
-      message: <<~MESSAGE,
-    Sider tried to install `brakeman 4.4.0` according to your `Gemfile.lock`, but it installs `4.3.1` instead.
-    Because `4.4.0` does not satisfy the Sider constraints [\">= 4.0.0\", \"< 4.4.0\"].
+      message: <<~MESSAGE
+        Sider tried to install `brakeman 4.4.0` according to your `Gemfile.lock`, but it installs `4.3.1` instead.
+        Because `4.4.0` does not satisfy the Sider constraints [\">= 4.0.0\", \"< 4.4.0\"].
 
-    If you want to use a different version of `brakeman`, update your `Gemfile.lock` to satisfy the constraint or specify the gem version in your `sider.yml`.
-    See https://help.sider.review/getting-started/custom-configuration#gems-option
-  MESSAGE
+        If you want to use a different version of `brakeman`, update your `Gemfile.lock` to satisfy the constraint or specify the gem version in your `sider.yml`.
+        See https://help.sider.review/getting-started/custom-configuration#gems-option
+      MESSAGE
+        .strip,
       file: nil
     }
   ]

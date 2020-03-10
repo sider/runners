@@ -177,7 +177,7 @@ Smoke.add_test(
           DEPRECATION WARNING!!!
           The `$.linter.eslint.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
           Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/javascript/eslint ).
-  MSG
+        MSG
           .strip,
         file: "sideci.yml"
       }

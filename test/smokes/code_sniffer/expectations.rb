@@ -43,10 +43,10 @@ Smoke.add_test(
   warnings: [
     {
       message: <<~MSG
-  DEPRECATION WARNING!!!
-  The `$.linter.code_sniffer.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
-  Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/php/codesniffer ).
-MSG
+        DEPRECATION WARNING!!!
+        The `$.linter.code_sniffer.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
+        Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/php/codesniffer ).
+      MSG
         .strip,
       file: "sideci.yml"
     }
