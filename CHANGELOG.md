@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 [Full diff](https://github.com/sider/runners/compare/0.21.5...HEAD)
 
 - Do not write the output of git-diff(1) [#837](https://github.com/sider/runners/pull/837)
+- Normalize strings written to `TraceWriter` [#838](https://github.com/sider/runners/pull/838)
 
 ## 0.21.5
 
