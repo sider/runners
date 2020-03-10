@@ -63,6 +63,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: check_skip
     strategy:
+      fail-fast: false
       matrix:
         analyzer:
           - brakeman
