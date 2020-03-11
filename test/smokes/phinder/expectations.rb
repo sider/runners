@@ -93,13 +93,14 @@ Smoke.add_test(
   },
   warnings: [
     {
-      message: <<~MESSAGE,
+      message: <<~MESSAGE
         Phinder configuration validation failed.
         Check the following output by `phinder test` command.
 
         `in_array(2, $arr, false)` does not match the rule sample.in_array_without_3rd_param but should match that rule.
         `in_array(4, $arr)` matches the rule sample.in_array_without_3rd_param but should not match that rule.
-  MESSAGE
+      MESSAGE
+        .strip,
       file: "phinder.yml"
     }
   ]
@@ -115,7 +116,7 @@ Smoke.add_test(
       1 error occurred:
 
       InvalidRule: Invalid id value found in 1st rule in phinder.yml
-  MESSAGE
+    MESSAGE
     analyzer: { name: "Phinder", version: "0.9.2" }
   }
 )
@@ -161,13 +162,14 @@ Smoke.add_test(
   { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "Phinder", version: "0.9.2" } },
   warnings: [
     {
-      message: <<~MESSAGE,
+      message: <<~MESSAGE
         Sider cannot find the required configuration file(s): `phinder.yml`.
         Please set up Phinder by following the instructions, or you can disable it in the repository settings.
 
         - https://github.com/sider/phinder
         - https://help.sider.review/tools/php/phinder
       MESSAGE
+        .strip,
       file: "phinder.yml"
     }
   ]

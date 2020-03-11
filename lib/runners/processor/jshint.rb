@@ -62,7 +62,7 @@ module Runners
             path: relative_path(file[:name]),
             location: Location.new(start_line: error[:line]),
             id: error[:source] || Digest::SHA1.hexdigest(message),
-            message: message.strip,
+            message: message,
           )
         end
       end

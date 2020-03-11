@@ -84,9 +84,7 @@ module Runners
 
     def python2_version
       @python2_version ||= capture3!('pyenv', 'versions', '--bare').first.match(/^2[0-9\.]+$/m).to_s.tap do
-        add_warning(<<~MESSAGE.chomp)
-          Python 2 is deprecated. Consider migrating to Python 3.
-        MESSAGE
+        add_warning "Python 2 is deprecated. Consider migrating to Python 3."
       end
     end
 

@@ -47,13 +47,14 @@ Smoke.add_test(
   { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "Goodcheck", version: "2.5.0" } },
   warnings: [
     {
-      message: <<~MESSAGE,
-    Sider cannot find the required configuration file `goodcheck.yml`.
-    Please set up Goodcheck by following the instructions, or you can disable it in the repository settings.
+      message: <<~MESSAGE
+        Sider cannot find the required configuration file `goodcheck.yml`.
+        Please set up Goodcheck by following the instructions, or you can disable it in the repository settings.
 
-    - https://github.com/sider/goodcheck
-    - https://help.sider.review/tools/others/goodcheck
-  MESSAGE
+        - https://github.com/sider/goodcheck
+        - https://help.sider.review/tools/others/goodcheck
+      MESSAGE
+        .strip,
       file: nil
     }
   ]
@@ -153,10 +154,10 @@ Smoke.add_test(
         object: {
           id: "com.goodcheck.without_pattern",
           message: <<~MESSAGE
-          Check the following documentation when editing this file.
-            * https://example.com/path/to/note
-        MESSAGE
-            .chomp,
+            Check the following documentation when editing this file.
+              * https://example.com/path/to/note
+          MESSAGE
+            .strip,
           justifications: []
         },
         git_blame_info: nil,
