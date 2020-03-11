@@ -50,25 +50,33 @@ module Runners
 
     # Install Node.js dependencies by using given parameters.
     def install_nodejs_deps(defaults, constraints:, install_option:)
-      install_option = INSTALL_OPTION_ALL if install_option.nil?
-
       check_nodejs_default_deps(defaults, constraints)
 
       return if install_option == INSTALL_OPTION_NONE
 
-      if package_json_path.exist?
-        if yarn_lock_path.exist?
-          if package_lock_json_path.exist?
-            add_warning "Two lock files `package-lock.json` and `yarn.lock` are found. " \
-                        "Sider uses `yarn.lock` in this case, but please consider deleting either file for more accurate analysis."
-          end
-          yarn_install(install_option)
-        else
-          npm_install(install_option)
-        end
-
-        check_installed_nodejs_deps(constraints, defaults.main)
+      if install_option && !package_json_path.exist?
+        file = package_json_path.basename.to_path
+        add_warning <<~MSG, file: file
+          The `npm_install` option is specified, but a `#{file}` file is not found. In this case, Sider does not install any npm packages.
+        MSG
+        return
       end
+
+      install_option = INSTALL_OPTION_ALL if install_option.nil?
+
+      if yarn_lock_path.exist?
+        if package_lock_json_path.exist?
+          file = yarn_lock_path.basename.to_path
+          add_warning <<~MSG, file: file
+            Two lock files `#{package_lock_json_path.basename}` and `#{file}` are found. Sider uses `#{file}` in this case, but please consider deleting either file for more accurate analysis.
+          MSG
+        end
+        yarn_install(install_option)
+      else
+        npm_install(install_option)
+      end
+
+      check_installed_nodejs_deps(constraints, defaults.main)
     end
 
     def show_runtime_versions
