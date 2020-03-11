@@ -118,4 +118,24 @@ class ShellTest < Minitest::Test
       ]
     end
   end
+
+  def test_capture3_trace_with_chdir
+    mktmpdir do |path|
+      shell = Shell.new(current_dir: path, trace_writer: trace_writer, env_hash: {})
+      (path / "1.txt").write("Number: 1")
+      (path / "foo").mkdir
+      (path / "foo" / "2.txt").write("Number: 2")
+
+      stdout, _, status = shell.capture3_trace("cat", "1.txt")
+      assert status.success?
+      assert_equal "Number: 1", stdout
+
+      _, _, status = shell.capture3_trace("cat", "2.txt")
+      refute status.success?
+
+      stdout, _, status = shell.capture3_trace("cat", "2.txt", chdir: path / "foo")
+      assert status.success?
+      assert_equal "Number: 2", stdout
+    end
+  end
 end
