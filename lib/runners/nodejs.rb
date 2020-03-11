@@ -203,14 +203,25 @@ module Runners
       end
     end
 
-    def check_installed_nodejs_deps(constraints, default_dependency)
+    def list_installed_nodejs_deps(only: [], chdir: nil)
+      opts = { trace_stdout: false, chdir: chdir&.to_s }.compact
+
       # NOTE: `npm ls` fails when any peer dependencies are missing.
       #        Also, this scans `node_modules/` without `package-lock.json`.
       #        Also, the command output can be too long.
-      stdout, _, _ = capture3 "npm", "ls", "--depth=0", "--json", "--package-lock=false", trace_stdout: false
-      installed_deps = JSON.parse(stdout)["dependencies"]
+      stdout, _, _ = capture3 "npm", "ls", *only, "--depth=0", "--json", "--package-lock=false", **opts
 
-      return unless installed_deps
+      parsed = JSON.parse(stdout).dig("dependencies") or return {}
+
+      parsed.each_with_object({}) do |(name, obj), deps|
+        deps[name] = obj["version"] || ""
+      end
+    end
+
+    def check_installed_nodejs_deps(constraints, default_dependency)
+      installed_deps = list_installed_nodejs_deps
+
+      return if installed_deps.empty?
 
       warn_about_fallback_to_default = -> {
         add_warning <<~MSG, file: "package.json"
@@ -221,15 +232,13 @@ module Runners
       all_constraints_satisfied = true
 
       constraints.each do |name, constraint|
-        installed_dep = installed_deps[name]
-
-        unless installed_dep
+        unless installed_deps.key? name
           warn_about_fallback_to_default.call
           break
         end
 
-        version = installed_dep["version"]
-        unless version
+        version = installed_deps.fetch(name)
+        if version.empty?
           add_warning "The required dependency `#{name}` may not have been correctly installed. It may be a missing peer dependency.", file: "package.json"
           next
         end

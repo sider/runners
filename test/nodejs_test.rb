@@ -534,6 +534,59 @@ class NodejsTest < Minitest::Test
     end
   end
 
+  def test_list_installed_nodejs_deps
+    with_workspace do |workspace|
+      new_processor(workspace: workspace)
+
+      processor.package_json_path.write JSON.generate(dependencies: { "is-arguments" => "1.0.0" })
+      processor.capture3! "npm", "install"
+
+      assert_equal({ "is-arguments" => "1.0.0" }, processor.send(:list_installed_nodejs_deps))
+    end
+  end
+
+  def test_list_installed_nodejs_deps_without_version
+    with_workspace do |workspace|
+      new_processor(workspace: workspace)
+
+      processor.package_json_path.write JSON.generate(dependencies: { "is-arguments" => "1.0.0" })
+
+      assert_equal({ "is-arguments" => "" }, processor.send(:list_installed_nodejs_deps))
+    end
+  end
+
+  def test_list_installed_nodejs_deps_with_only
+    with_workspace do |workspace|
+      new_processor(workspace: workspace)
+
+      processor.package_json_path.write JSON.generate(dependencies: { "is-arguments" => "1.0.0", "isarray" => "2.0.0" })
+      processor.capture3! "npm", "install"
+
+      assert_equal({ "isarray" => "2.0.0" }, processor.send(:list_installed_nodejs_deps, only: ["isarray"]))
+    end
+  end
+
+  def test_list_installed_nodejs_deps_with_chdir
+    with_workspace do |workspace|
+      new_processor(workspace: workspace)
+
+      another_dir = (workspace.working_dir / "foo").tap(&:mkdir)
+      (another_dir / "package.json").write JSON.generate(dependencies: { "isarray" => "1.0.0" })
+
+      assert_equal({ "isarray" => "" }, processor.send(:list_installed_nodejs_deps, chdir: another_dir))
+    end
+  end
+
+  def test_list_installed_nodejs_deps_without_results
+    with_workspace do |workspace|
+      new_processor(workspace: workspace)
+
+      processor.package_json_path.write JSON.generate({})
+
+      assert_equal({}, processor.send(:list_installed_nodejs_deps))
+    end
+  end
+
   def test_check_installed_nodejs_deps
     with_workspace do |workspace|
       new_processor(workspace: workspace)
