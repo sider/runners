@@ -54,12 +54,16 @@ module Runners
 
       return if install_option == INSTALL_OPTION_NONE
 
-      if install_option && !package_json_path.exist?
-        file = package_json_path.basename.to_path
-        add_warning <<~MSG, file: file
-          The `npm_install` option is specified, but a `#{file}` file is not found. In this case, Sider does not install any npm packages.
-        MSG
-        return
+      unless package_json_path.exist?
+        if install_option
+          file = package_json_path.basename.to_path
+          add_warning <<~MSG, file: file
+            The `npm_install` option is specified in your `#{config.path_name}`, but a `#{file}` file is not found in the repository.
+            In this case, any npm packages are not installed.
+          MSG
+        end
+
+        return # not install
       end
 
       install_option = INSTALL_OPTION_ALL if install_option.nil?

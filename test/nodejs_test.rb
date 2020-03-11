@@ -190,7 +190,8 @@ class NodejsTest < Minitest::Test
         processor.install_nodejs_deps(defaults, constraints: constraints, install_option: INSTALL_OPTION_ALL)
 
         assert_warnings [{ message: <<~MSG.strip, file: "package.json" }]
-          The `npm_install` option is specified, but a `package.json` file is not found. In this case, Sider does not install any npm packages.
+          The `npm_install` option is specified in your `sider.yml`, but a `package.json` file is not found in the repository.
+          In this case, any npm packages are not installed.
         MSG
       end
     end
@@ -209,6 +210,7 @@ class NodejsTest < Minitest::Test
         refute processor.package_json_path.exist?
         assert_equal "5.15.0", processor.analyzer_version
         assert_warning_count 0
+        assert_equal [], trace_writer.writer.filter { |e| e.key? :command_line }
       end
     end
   end
