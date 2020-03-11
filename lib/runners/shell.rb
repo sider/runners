@@ -96,7 +96,7 @@ module Runners
       trace_stderr = options.fetch(:trace_stderr, true)
       trace_command_line = options.fetch(:trace_command_line, true)
       raise_on_failure = options.fetch(:raise_on_failure, false)
-      chdir = options.fetch(:chdir) { current_dir }
+      chdir = options[:chdir] || current_dir
       is_success = options.fetch(:is_success) { ->(status) { status.success? } }
 
       command_line = [command] + args

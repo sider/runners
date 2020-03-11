@@ -138,4 +138,15 @@ class ShellTest < Minitest::Test
       assert_equal "Number: 2", stdout
     end
   end
+
+  def test_capture3_trace_with_chdir_nil
+    mktmpdir do |path|
+      shell = Shell.new(current_dir: path, trace_writer: trace_writer, env_hash: {})
+      (path / "1.txt").write("Number: 1")
+
+      stdout, _, status = shell.capture3_trace("cat", "1.txt", chdir: nil)
+      assert status.success?
+      assert_equal "Number: 1", stdout
+    end
+  end
 end
