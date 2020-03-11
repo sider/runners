@@ -49,11 +49,9 @@ cb1af575f65f7cc49668b891fb34a5df692d3a0e 14 8
       filename abc.txt
       \t\x8C\xE1\x94y\x82͔L\x82ł\xA0\x82邩\x82\xE0\x82\xB5\x82\xEA\x82Ȃ\xA2\r\n
     DATA
-    error = assert_raises(ArgumentError) { GitBlameInfo.parse(string_with_invalid_encoding) }
-    assert_equal "invalid byte sequence in UTF-8", error.message
     assert_equal(
       [GitBlameInfo.new(commit: "144cae9deb69339061292e9db8541701197c640d", original_line: 1, final_line: 1, line_hash: "bc52aa9adb58c1721d9d63da132bf6bdb58dcd85")],
-      GitBlameInfo.parse(string_with_invalid_encoding.force_encoding(Encoding::ASCII_8BIT))
+      GitBlameInfo.parse(string_with_invalid_encoding)
     )
   end
 
