@@ -3,7 +3,7 @@ module Runners
     def range_git_blame_info(path_string, start_line, end_line)
       shell = Shell.new(current_dir: git_directory, trace_writer: trace_writer, env_hash: {})
       stdout, _ = shell.capture3!("git", "blame", "-p", "-L", "#{start_line},#{end_line}", git_source.head, "--", path_string, trace_stdout: false, trace_stderr: true)
-      GitBlameInfo.parse(stdout)
+      GitBlameInfo.parse(stdout.force_encoding(Encoding::ASCII_8BIT))
     end
 
     private

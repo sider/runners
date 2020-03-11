@@ -82,6 +82,9 @@ class WorkspaceGitTest < Minitest::Test
   def test_git_blame_info
     with_workspace(base: "abe1cfc294c8d39de7484954bf8c3d7792fd8ad1", head: "998bc02a913e3899f3a1cd327e162dd54d489a4b",
                    git_http_url: "https://github.com", owner: "sider", repo: "runners", pull_number: 533) do |workspace|
+      any_instance_of(String) do |string|
+        mock.proxy(string).force_encoding(Encoding::ASCII_8BIT)
+      end
       info = workspace.range_git_blame_info('test/smokes/haml_lint/expectations.rb', 137, 140)
       assert_equal(
         [
