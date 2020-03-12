@@ -191,7 +191,7 @@ class Runners::Harness
   attr_reader working_dir: Pathname
   attr_reader trace_writer: TraceWriter
   attr_reader warnings: Array<String>
-  attr_reader ci_config: any
+  attr_reader config: Config
 
   def initialize: (guid: String, processor_class: Processor.class constructor, options: Options, working_dir: Pathname, trace_writer: TraceWriter) -> any
   def run: () -> result

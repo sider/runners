@@ -134,7 +134,7 @@ class HarnessTest < Minitest::Test
     end
   end
 
-  def test_run_when_ci_config_is_broken
+  def test_run_when_config_is_broken
     with_working_dir do |working_dir|
       (working_dir / "sider.yml").write('1: 1:')
       with_options do |options|
