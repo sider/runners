@@ -17,6 +17,7 @@ module Runners::Nodejs : Processor
   def check_nodejs_default_deps: (DefaultDependencies, Hash<String, Constraint>) -> void
   def npm_install: (npm_install_option) -> void
   def yarn_install: (npm_install_option) -> void
+  def list_installed_nodejs_deps: (?only: Array<String>, ?chdir: Pathname | String | nil) -> Hash<String, String>
   def check_installed_nodejs_deps: (Hash<String, Constraint>, Dependency) -> void
 end
 

@@ -19,10 +19,12 @@ jobs:
       !(github.event_name == 'pull_request' && contains(join(github.event.pull_request.title, github.event.pull_request.body), '[skip ci]'))
     steps:
       - run: |
-          echo "github.event_name: '${{ github.event_name }}'"
-          echo "github.event.head_commit.message: '${{ github.event.head_commit.message }}'"
-          echo "github.event.pull_request.title: '${{ github.event.pull_request.title }}'"
-          echo "github.event.pull_request.body: '${{ github.event.pull_request.body }}'"
+          cat <<'MESSAGE'
+            github.event_name: '${{ github.event_name }}'
+            github.event.head_commit.message: '${{ github.event.head_commit.message }}'
+            github.event.pull_request.title: '${{ github.event.pull_request.title }}'
+            github.event.pull_request.body: '${{ github.event.pull_request.body }}'
+          MESSAGE
 
   test:
     runs-on: ubuntu-latest

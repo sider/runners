@@ -50,25 +50,37 @@ module Runners
 
     # Install Node.js dependencies by using given parameters.
     def install_nodejs_deps(defaults, constraints:, install_option:)
-      install_option = INSTALL_OPTION_ALL if install_option.nil?
-
       check_nodejs_default_deps(defaults, constraints)
 
       return if install_option == INSTALL_OPTION_NONE
 
-      if package_json_path.exist?
-        if yarn_lock_path.exist?
-          if package_lock_json_path.exist?
-            add_warning "Two lock files `package-lock.json` and `yarn.lock` are found. " \
-                        "Sider uses `yarn.lock` in this case, but please consider deleting either file for more accurate analysis."
-          end
-          yarn_install(install_option)
-        else
-          npm_install(install_option)
+      unless package_json_path.exist?
+        if install_option
+          file = package_json_path.basename.to_path
+          add_warning <<~MSG, file: file
+            The `npm_install` option is specified in your `#{config.path_name}`, but a `#{file}` file is not found in the repository.
+            In this case, any npm packages are not installed.
+          MSG
         end
 
-        check_installed_nodejs_deps(constraints, defaults.main)
+        return # not install
       end
+
+      install_option = INSTALL_OPTION_ALL if install_option.nil?
+
+      if yarn_lock_path.exist?
+        if package_lock_json_path.exist?
+          file = yarn_lock_path.basename.to_path
+          add_warning <<~MSG, file: file
+            Two lock files `#{package_lock_json_path.basename}` and `#{file}` are found. Sider uses `#{file}` in this case, but please consider deleting either file for more accurate analysis.
+          MSG
+        end
+        yarn_install(install_option)
+      else
+        npm_install(install_option)
+      end
+
+      check_installed_nodejs_deps(constraints, defaults.main)
     end
 
     def show_runtime_versions
@@ -195,14 +207,25 @@ module Runners
       end
     end
 
-    def check_installed_nodejs_deps(constraints, default_dependency)
+    def list_installed_nodejs_deps(only: [], chdir: nil)
+      opts = { trace_stdout: false, chdir: chdir&.to_s }.compact
+
       # NOTE: `npm ls` fails when any peer dependencies are missing.
       #        Also, this scans `node_modules/` without `package-lock.json`.
       #        Also, the command output can be too long.
-      stdout, _, _ = capture3 "npm", "ls", "--depth=0", "--json", "--package-lock=false", trace_stdout: false
-      installed_deps = JSON.parse(stdout)["dependencies"]
+      stdout, _, _ = capture3 "npm", "ls", *only, "--depth=0", "--json", "--package-lock=false", **opts
 
-      return unless installed_deps
+      parsed = JSON.parse(stdout).dig("dependencies") or return {}
+
+      parsed.each_with_object({}) do |(name, obj), deps|
+        deps[name] = obj["version"] || ""
+      end
+    end
+
+    def check_installed_nodejs_deps(constraints, default_dependency)
+      installed_deps = list_installed_nodejs_deps
+
+      return if installed_deps.empty?
 
       warn_about_fallback_to_default = -> {
         add_warning <<~MSG, file: "package.json"
@@ -213,15 +236,13 @@ module Runners
       all_constraints_satisfied = true
 
       constraints.each do |name, constraint|
-        installed_dep = installed_deps[name]
-
-        unless installed_dep
+        unless installed_deps.key? name
           warn_about_fallback_to_default.call
           break
         end
 
-        version = installed_dep["version"]
-        unless version
+        version = installed_deps.fetch(name)
+        if version.empty?
           add_warning "The required dependency `#{name}` may not have been correctly installed. It may be a missing peer dependency.", file: "package.json"
           next
         end
