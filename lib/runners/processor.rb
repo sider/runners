@@ -33,10 +33,10 @@ module Runners
                          trace_writer: trace_writer)
     end
 
-    def relative_path(path_string, from: working_dir)
-      path = Pathname(path_string)
+    def relative_path(original, from: working_dir)
+      path = Pathname(original)
       if path.relative?
-        path = (current_dir + path).cleanpath
+        path = (current_dir / path).cleanpath
       end
 
       path.relative_path_from(from)
@@ -98,7 +98,7 @@ module Runners
     def check_root_dir_exist
       return if root_dir.directory?
 
-      message = "`#{relative_path(root_dir.to_s)}` directory is not found! Please check `#{config_field_path("root_dir")}` in your `#{config.path_name}`"
+      message = "`#{relative_path(root_dir)}` directory is not found! Please check `#{config_field_path("root_dir")}` in your `#{config.path_name}`"
       trace_writer.error message
       Results::Failure.new(guid: guid, message: message)
     end

@@ -36,17 +36,17 @@ module Runners
           remove_ignored_files(conf)
 
           begin
-            instance = processor_class.new(guid: guid, workspace: workspace, config: conf, git_ssh_path: git_ssh_path, trace_writer: trace_writer)
+            processor = processor_class.new(guid: guid, workspace: workspace, config: conf, git_ssh_path: git_ssh_path, trace_writer: trace_writer)
 
-            root_dir_not_found = instance.check_root_dir_exist
+            root_dir_not_found = processor.check_root_dir_exist
             return root_dir_not_found if root_dir_not_found
 
-            instance.push_root_dir do
+            processor.push_root_dir do
               trace_writer.header "Setting up analyzer"
-              instance.show_runtime_versions
-              result = instance.setup do
+              processor.show_runtime_versions
+              result = processor.setup do
                 trace_writer.header "Running analyzer"
-                instance.analyze(changes)
+                processor.analyze(changes)
               end
 
               case result
@@ -62,7 +62,7 @@ module Runners
               end
             end
           ensure
-            @warnings = instance&.warnings || []
+            @warnings = processor&.warnings || []
           end
         end
       end

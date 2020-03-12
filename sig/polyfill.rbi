@@ -27,8 +27,6 @@ end
 extension Object (Polyfill)
   def instance_of?: (any) -> bool
   def then: <'a> () { (self) -> 'a } -> 'a
-  def Array: (any) -> Array<any>
-  def Pathname: (String) -> Pathname
 end
 
 class UnboundMethod

@@ -112,7 +112,7 @@ class Runners::Processor
   attr_reader config: Config
 
   def initialize: (guid: String, workspace: Workspace, config: Config, git_ssh_path: Pathname?, trace_writer: TraceWriter) -> any
-  def relative_path: (String, ?from: Pathname) -> Pathname
+  def relative_path: (String | Pathname, ?from: Pathname) -> Pathname
   def setup: () { -> result } -> result
   def analyze: (Changes) -> result
   def config_linter: () -> Hash<Symbol, any>
