@@ -64,7 +64,7 @@ module Runners
         json = {
           result: result.as_json,
           warnings: warnings,
-          ci_config: config.content,
+          ci_config: config&.content,
           version: VERSION,
         }
 
