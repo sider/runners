@@ -10,8 +10,14 @@ class Runners::Processor::PhpmdTest < Minitest::Test
   end
 
   def subject(workspace, yaml: nil)
-    Phpmd.new(guid: SecureRandom.uuid, workspace: workspace, config: config(yaml), git_ssh_path: nil, trace_writer: trace_writer).tap do |s|
+    Phpmd.new(guid: SecureRandom.uuid, workspace: workspace, git_ssh_path: nil, trace_writer: trace_writer).tap do |s|
       stub(s).analyzer_id { "phpmd" }
+
+      (s.working_dir / "sider.yml").write(yaml) if yaml
+      s.register_config_schema
+      s.load_config
+
+      Runners::Schema::Config.unregister name: :phpmd
     end
   end
 
