@@ -53,6 +53,10 @@ class CLITest < Minitest::Test
       "rubocop"
     end
 
+    def config_schema
+      Runners::Schema::BaseConfig.base
+    end
+
     def setup
       yield
     end
@@ -65,6 +69,10 @@ class CLITest < Minitest::Test
 
       Runners::Results::Success.new(guid: guid, analyzer: Runners::Analyzer.new(name: "test-analyzer", version: "3.14"))
     end
+  end
+
+  def teardown
+    Runners::Schema::Config.unregister name: :rubocop
   end
 
   def test_run
@@ -106,7 +114,7 @@ class CLITest < Minitest::Test
         reader = JSONSEQ::Reader.new(io: StringIO.new(output), decoder: -> (string) { JSON.parse(string, symbolize_names: true) })
         objects = reader.each_object.to_a
 
-        assert objects.find { |hash| hash.dig(:result, :type) == 'failure' }
+        assert objects.filter { |hash| hash.dig(:result, :type) == 'failure' }
         assert objects.find { |hash| hash[:warnings] == [] }
         assert objects.find { |hash| hash[:ci_config] == nil }
       end
