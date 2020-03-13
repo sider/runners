@@ -23,10 +23,18 @@ class HarnessTest < Minitest::Test
     end
   end
 
-  class TestProcessor < Processor
+  module TestProcessorMethods
     def analyzer_id
       "test"
     end
+
+    def config_schema
+      Runners::Schema::BaseConfig.base
+    end
+  end
+
+  class TestProcessor < Processor
+    include TestProcessorMethods
 
     def analyze(changes)
       Results::Success.new(guid: guid, analyzer: Analyzer.new(name: "Test", version: "0.1.3"))
@@ -37,6 +45,10 @@ class HarnessTest < Minitest::Test
     def initialize(*args)
       raise StandardError, "broken!"
     end
+  end
+
+  def teardown
+    Runners::Schema::Config.unregister name: :test
   end
 
   def test_run
@@ -70,9 +82,7 @@ class HarnessTest < Minitest::Test
 
   def test_run_filters_issues
     processor = Class.new(Processor) do
-      def analyzer_id
-        'test'
-      end
+      include TestProcessorMethods
 
       def analyze(changes)
         Results::Success.new(guid: guid, analyzer: Analyzer.new(name: "Test", version: "0.1.3")).tap do |result|
@@ -180,9 +190,7 @@ class HarnessTest < Minitest::Test
 
   def test_setup_analyze
     processor = Class.new(Processor) do
-      def analyzer_id
-        'test'
-      end
+      include TestProcessorMethods
 
       def setup
         (current_dir + "touch").write("#setup should be called before #analyze")
