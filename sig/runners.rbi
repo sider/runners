@@ -197,8 +197,6 @@ class Runners::Harness
   def run: () -> result
   def ensure_result: { -> result } -> result
   def handle_error: (Exception) -> void
-  def remove_ignored_files: (Config) -> void
-  def with_gitignore: <'x> (Array<String>) { (Array<Pathname>) -> 'x } -> 'x
 end
 
 class Runners::Harness::InvalidResult < StandardError
