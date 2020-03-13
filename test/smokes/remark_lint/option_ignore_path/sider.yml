@@ -1,0 +1,3 @@
+linter:
+  remark_lint:
+    ignore-path: .myignore

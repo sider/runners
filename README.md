@@ -7,7 +7,7 @@ See also another related project, called [devon_rex](https://github.com/sider/de
 ## Supported analyzers
 
 <!-- AUTO-GENERATED-CONTENT:START (analyzers) -->
-All 34 analyzers are provided as a Docker image:
+All 35 analyzers are provided as a Docker image:
 
 | Name | Links | Status |
 |:-----|:------|:------:|
@@ -38,6 +38,7 @@ All 34 analyzers are provided as a Docker image:
 | Querly | [docker](https://hub.docker.com/r/sider/runner_querly), [source](https://github.com/soutaro/querly), [doc](https://help.sider.review/tools/ruby/querly) | ✅ |
 | Rails Best Practices | [docker](https://hub.docker.com/r/sider/runner_rails_best_practices), [source](https://github.com/flyerhzm/rails_best_practices), [doc](https://help.sider.review/tools/ruby/rails-bestpractices) | ✅ |
 | Reek | [docker](https://hub.docker.com/r/sider/runner_reek), [source](https://github.com/troessner/reek), [doc](https://help.sider.review/tools/ruby/reek) | ✅ |
+| remark-lint | [docker](https://hub.docker.com/r/sider/runner_remark_lint), [source](https://github.com/remarkjs/remark-lint), [doc](https://help.sider.review/tools/markdown/remark-lint) | ✅ |
 | RuboCop | [docker](https://hub.docker.com/r/sider/runner_rubocop), [source](https://github.com/rubocop-hq/rubocop), [doc](https://help.sider.review/tools/ruby/rubocop) | ✅ |
 | SCSS-Lint | [docker](https://hub.docker.com/r/sider/runner_scss_lint), [source](https://github.com/sds/scss-lint), [doc](https://help.sider.review/tools/css/scss-lint) | ✅ |
 | ShellCheck | [docker](https://hub.docker.com/r/sider/runner_shellcheck), [source](https://github.com/koalaman/shellcheck), [doc](https://help.sider.review/tools/shellscript/shellcheck) | ✅ |

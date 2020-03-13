@@ -25,8 +25,7 @@ RUN cd ${RUNNER_USER_HOME} && \
     npm config set ignore-scripts true && \
     npm config set progress false && \
     npm config set package-lock false && \
-    npm install && \
-    node_modules/.bin/stylelint --version
+    npm install
 ENV PATH ${RUNNER_USER_HOME}/stylelint/node_modules/.bin:${PATH}
 # See https://nodejs.org/api/cli.html#cli_node_path_path
 ENV NODE_PATH ${RUNNER_USER_HOME}/stylelint/node_modules:${NODE_PATH}

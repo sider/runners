@@ -1,0 +1,3 @@
+linter:
+  remark_lint:
+    ext: mdown,markdown
