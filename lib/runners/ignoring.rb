@@ -32,7 +32,7 @@ module Runners
       backup = gitignore.file? ? gitignore.read : nil
       gitignore.write(ignores.join("\n"))
 
-      all_files = working_dir.glob("**/*", File::FNM_DOTMATCH).filter { |f| f.file? }.map(&:to_path)
+      all_files = working_dir.glob("**/*", File::FNM_DOTMATCH).filter(&:file?).map(&:to_path)
 
       shell = Shell.new(current_dir: working_dir, trace_writer: trace_writer, env_hash: {})
       shell.capture3!("git", "init", trace_command_line: false, trace_stdout: false)
