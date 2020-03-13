@@ -1,0 +1,5 @@
+linter:
+  remark_lint:
+    use:
+      - remark-lint-file-extension
+      - remark-lint-no-heading-punctuation

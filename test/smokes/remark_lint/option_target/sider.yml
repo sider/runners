@@ -1,0 +1,5 @@
+linter:
+  remark_lint:
+    target:
+      - src/
+      - docs/bar*.md
