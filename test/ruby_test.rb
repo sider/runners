@@ -219,11 +219,9 @@ class RubyTest < Minitest::Test
       (path + "Gemfile").write(<<EOF)
 source "https://rubygems.org"
 
-gem 'activerecord'
 gem 'strong_json'
-gem 'rspec'
-gem 'rubocop', git: "https://github.com/rubocop-hq/rubocop.git", tag: "v0.63.0"
-gem 'jack_and_the_elastic_beanstalk', git: 'https://github.com/sider/jack_and_the_elastic_beanstalk.git'
+gem 'multi_json', git: 'https://github.com/intridea/multi_json.git', tag: 'v1.14.1'
+gem 'rspec-request_describer', git: 'https://github.com/r7kamura/rspec-request_describer.git'
 EOF
 
       shell.push_dir(path) do
@@ -237,18 +235,14 @@ EOF
       (path + "Gemfile.lock").write content
 
       LockfileLoader.new(root_dir: path, shell: shell).ensure_lockfile do |lockfile|
-        assert lockfile.spec_exists?("activerecord")
         assert lockfile.spec_exists?("strong_json")
-        assert lockfile.spec_exists?("rspec")
-        assert lockfile.spec_exists?("rubocop")
-        assert lockfile.spec_exists?("jack_and_the_elastic_beanstalk")
+        assert lockfile.spec_exists?("multi_json")
+        assert lockfile.spec_exists?("rspec-request_describer")
         refute lockfile.spec_exists?("goodcheck")
 
-        refute_nil lockfile.locked_version("activerecord")
         refute_nil lockfile.locked_version("strong_json")
-        refute_nil lockfile.locked_version("rspec")
-        refute_nil lockfile.locked_version("rubocop")
-        refute_nil lockfile.locked_version("jack_and_the_elastic_beanstalk")
+        refute_nil lockfile.locked_version("multi_json")
+        refute_nil lockfile.locked_version("rspec-request_describer")
         assert_nil lockfile.locked_version("goodcheck")
       end
     end
@@ -501,8 +495,8 @@ EOF
       processor = new_processor(workspace: workspace)
       processor.install_gems([Spec.new(name: "strong_json", version: ["0.5.0"])],
                          constraints: {}) do
-        stdout, _ = processor.shell.capture3!("bundle", "show")
-        assert_includes stdout.lines, "  * strong_json (0.5.0)\n"
+        stdout, _ = processor.shell.capture3!("bundle", "list")
+        assert_match %r{\* strong_json \(0.5.0\)}, stdout
       end
     end
   end
@@ -526,12 +520,12 @@ EOF
           rubocop:
             gems: ["strong_json"]
       YAML
-      processor.install_gems([Spec.new(name: "rubocop", version: ["0.63.0"])],
+      processor.install_gems([Spec.new(name: "public_suffix", version: ["4.0.0"])],
                              optionals: [Spec.new(name: "meowcop", version: ["1.17.1"])],
                              constraints: {}) do
-        stdout, _ = processor.shell.capture3!("bundle", "show")
-        assert_match(/\* rubocop/, stdout)
-        assert_match(/\* strong_json/, stdout)
+        stdout, _ = processor.shell.capture3!("bundle", "list")
+        assert_match(/\* public_suffix \(4.0.0\)/, stdout)
+        assert_match(/\* strong_json \(.+\)/, stdout)
         refute_match(/\* meowcop/, stdout)
       end
     end
@@ -560,7 +554,7 @@ EOF
       (workspace.working_dir + "Gemfile").write(<<EOF)
 source "https://rubygems.org"
 
-gem 'meowcop'
+gem 'strong_json', '2.1.0'
 EOF
 
       shell.push_dir(workspace.working_dir) do
@@ -570,12 +564,12 @@ EOF
       end
 
       processor = new_processor(workspace: workspace)
-      processor.install_gems([Spec.new(name: "rubocop", version: ["0.63.0"])],
-                             optionals: [Spec.new(name: "meowcop", version: ["1.17.1"])],
+      processor.install_gems([Spec.new(name: "multi_json", version: ["1.13.0"])],
+                             optionals: [Spec.new(name: "strong_json", version: ["2.0.0"])],
                              constraints: {}) do
-        stdout, _ = processor.shell.capture3!("bundle", "show")
-        assert_match(/\* rubocop/, stdout)
-        assert_match(/\* meowcop/, stdout)
+        stdout, _ = processor.shell.capture3!("bundle", "list")
+        assert_match(/\* multi_json \(1.13.0\)/, stdout)
+        assert_match(/\* strong_json \(2.1.0\)/, stdout)
       end
     end
   end
@@ -585,11 +579,11 @@ EOF
       (workspace.working_dir + "Gemfile").write(<<EOF)
 source "https://rubygems.org"
 
-gem 'rubocop', '0.62.0'
+gem 'public_suffix', '4.0.0'
 gem 'strong_json', '0.7.1'
-gem 'jack_and_the_elastic_beanstalk', '0.2.3'
+gem 'multi_json', '1.13.0'
 gem 'meowcop'
-gem 'activerecord'
+gem 'rack'
 EOF
 
       shell.push_dir(workspace.working_dir) do
@@ -603,19 +597,19 @@ EOF
           rubocop:
             gems:
               - strong_json
-              - name: jack_and_the_elastic_beanstalk
-                version: "0.2.2"
+              - name: multi_json
+                version: "1.14.1"
       YAML
 
-      processor.install_gems([Spec.new(name: "rubocop", version: ["0.63.0"])],
+      processor.install_gems([Spec.new(name: "public_suffix", version: ["4.0.3"])],
                              optionals: [Spec.new(name: "meowcop", version: ["1.17.1"])],
-                             constraints: { "rubocop" => ["> 0.60.0"] }) do
-        stdout, _ = processor.shell.capture3!("bundle", "show")
-        assert_match(/\* rubocop \(0.62.0\)/, stdout)
+                             constraints: { "rubocop" => [">= 4.0.0"] }) do
+        stdout, _ = processor.shell.capture3!("bundle", "list")
+        assert_match(/\* public_suffix \(4.0.0\)/, stdout)
         assert_match(/\* strong_json \(0.7.1\)/, stdout)
-        assert_match(/\* jack_and_the_elastic_beanstalk \(0.2.2\)/, stdout)
+        assert_match(/\* multi_json \(1.14.1\)/, stdout)
         refute_match(/\* meowcop/, stdout)
-        refute_match(/\* activerecord/, stdout)
+        refute_match(/\* rack/, stdout)
       end
     end
   end
@@ -626,7 +620,7 @@ EOF
       (workspace.working_dir + "Gemfile").write(<<EOF)
 source "https://rubygems.org"
 
-gem 'rubocop', '0.62.0'
+gem 'multi_json', '1.12.0'
 EOF
 
       shell.push_dir(workspace.working_dir) do
@@ -636,19 +630,19 @@ EOF
       end
 
       processor = new_processor(workspace: workspace)
-      processor.install_gems([Spec.new(name: "rubocop", version: ["0.66.0"])],
-                             constraints: { "rubocop" => ["> 0.65.0"] }) do
+      processor.install_gems([Spec.new(name: "multi_json", version: ["1.14.0"])],
+                             constraints: { "multi_json" => ["> 1.13.0"] }) do
         assert_equal 1, processor.warnings.count
         assert_equal <<~MESSAGE.strip, processor.warnings.first[:message]
-          Sider tried to install `rubocop 0.62.0` according to your `Gemfile.lock`, but it installs `0.66.0` instead.
-          Because `0.62.0` does not satisfy the Sider constraints ["> 0.65.0"].
+          Sider tried to install `multi_json 1.12.0` according to your `Gemfile.lock`, but it installs `1.14.0` instead.
+          Because `1.12.0` does not satisfy the Sider constraints ["> 1.13.0"].
 
-          If you want to use a different version of `rubocop`, update your `Gemfile.lock` to satisfy the constraint or specify the gem version in your `sider.yml`.
+          If you want to use a different version of `multi_json`, update your `Gemfile.lock` to satisfy the constraint or specify the gem version in your `sider.yml`.
           See https://help.sider.review/getting-started/custom-configuration#gems-option
         MESSAGE
 
-        stdout, _ = processor.shell.capture3!("bundle", "show")
-        assert_match(/\* rubocop \(0.66.0\)/, stdout)
+        stdout, _ = processor.shell.capture3!("bundle", "list")
+        assert_match(/\* multi_json \(1.14.0\)/, stdout)
       end
     end
   end
@@ -678,40 +672,40 @@ EOF
         linter:
           rubocop:
             gems:
-              - name: rubocop-rspec
-                version: "1.28.0"
+              - name: multi_json
+                version: "1.14.1"
                 source: "https://rubygems.cae.me.uk"
       YAML
 
       processor.install_gems([Spec.new(name: "rubocop", version: ["0.63.0"])],
                              optionals: [],
                              constraints: {}) do
-        stdout, _ = processor.shell.capture3!("bundle", "show")
-        assert_includes stdout, "* rubocop-rspec ("
+        stdout, _ = processor.shell.capture3!("bundle", "list")
+        assert_match %r{\* multi_json \(1.14.1\)}, stdout
       end
     end
   end
 
   def test_install_gems_with_git_sources
-    with_workspace(head: (Pathname(__dir__) + "data/foo.tgz").to_s,
-                   ssh_key: (Pathname(__dir__) + "data/ruby_private_gem_deploy_key").read) do |workspace|
+    with_workspace(head: data("foo.tgz"),
+                   ssh_key: data("ruby_private_gem_deploy_key").read) do |workspace|
       workspace.open do |git_ssh_path|
         processor = new_processor(workspace: workspace, git_ssh_path: git_ssh_path, config_yaml: <<~YAML)
           linter:
             rubocop:
               gems:
-                - name: jack_and_the_elastic_beanstalk
+                - name: rspec-request_describer
                   git:
-                    repo: https://github.com/sider/jack_and_the_elastic_beanstalk.git
+                    repo: https://github.com/r7kamura/rspec-request_describer.git
                     branch: master
-                - name: meowcop
+                - name: multi_json
                   git:
-                    repo: https://github.com/sider/meowcop.git
-                    tag: v1.16.0
-                - name: configure
+                    repo: https://github.com/intridea/multi_json.git
+                    tag: v1.14.1
+                - name: rack
                   git:
-                    repo: https://github.com/sider/configure.git
-                    ref: 9b4703aea9dee97fe0ada15812c46ecf622c352c
+                    repo: https://github.com/rack/rack.git
+                    ref: a5e80f01947954af76b14c1d1fdd8e79dd8337f3
                 - name: ruby_private_gem
                   git:
                     repo: git@github.com:sider/ruby_private_gem.git
@@ -720,11 +714,11 @@ EOF
         processor.install_gems([Spec.new(name: "rubocop", version: ["0.63.0"])],
                                optionals: [],
                                constraints: {}) do
-          stdout, _ = processor.shell.capture3!("bundle", "show")
+          stdout, _ = processor.shell.capture3!("bundle", "list")
           assert_match(/\* rubocop/, stdout)
-          assert_match(/\* jack_and_the_elastic_beanstalk/, stdout)
-          assert_match(/\* meowcop \(1.16.0 2f52514\)/, stdout)
-          assert_match(/\* configure \(0.1.0 9b4703a\)/, stdout)
+          assert_match(/\* rspec-request_describer/, stdout)
+          assert_match(/\* multi_json \(1.14.1 1a58198\)/, stdout)
+          assert_match(/\* rack \(2.2.2 a5e80f0\)/, stdout)
           assert_match(/\* ruby_private_gem/, stdout)
         end
       end
@@ -737,15 +731,15 @@ EOF
         linter:
           rubocop:
             gems:
-              - name: rubocop
+              - name: multi_json
                 git:
-                  repo: https://github.com/rubocop-hq/rubocop.git
-                  tag: v0.63.1
+                  repo: https://github.com/intridea/multi_json.git
+                  tag: v1.14.1
       YAML
 
       processor.install_gems([], optionals: [], constraints: {}) do
-        stdout, _ = processor.shell.capture3!("bundle", "show")
-        assert_match(/\* rubocop/, stdout)
+        stdout, _ = processor.shell.capture3!("bundle", "list")
+        assert_match %r{\* multi_json \(1.14.1 1a58198\)}, stdout
       end
     end
   end
@@ -762,7 +756,7 @@ EOF
       YAML
 
       processor.install_gems([], optionals: [], constraints: {}) do
-        stdout, _ = processor.shell.capture3!("bundle", "show")
+        stdout, _ = processor.shell.capture3!("bundle", "list")
         assert_match(/\* rack \(2.2.2\)/, stdout)
       end
     end

@@ -39,9 +39,10 @@ module TestHelper
 
   def with_workspace(ssh_key: nil, **source_params)
     source = {
-      head: (Pathname(__dir__) + "data/foo.tgz").to_s,
+      head: data("foo.tgz"),
       **source_params
-    }.select { |_k, v| v }
+    }.compact
+
     with_runners_options_env(source: source, ssh_key: ssh_key) do
       options = Runners::Options.new(StringIO.new, StringIO.new)
       Dir.mktmpdir do |dir|
