@@ -224,6 +224,7 @@ end
 class Runners::Schema::Types::Config < StrongJSON
   def payload: -> StrongJSON::Type::Object<config_payload>
   def register: (name: Symbol, schema: StrongJSON::Type::Object<any>) -> void
+  def unregister: (name: Symbol) -> void
 end
 
 Runners::Schema::Issue: Runners::Schema::Types::Issue

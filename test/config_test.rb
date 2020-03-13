@@ -3,6 +3,18 @@ require_relative "test_helper"
 class ConfigTest < Minitest::Test
   include TestHelper
 
+  def setup
+    schema = StrongJSON.new do
+      let :config, object(dir: string)
+    end
+
+    Runners::Schema::Config.register name: :foo, schema: schema.config
+  end
+
+  def teardown
+    Runners::Schema::Config.unregister name: :foo
+  end
+
   def test_content_without_sider_yml
     mktmpdir do |path|
       assert_equal({}, Runners::Config.new(path).content)
@@ -26,71 +38,11 @@ class ConfigTest < Minitest::Test
       (path / "sider.yml").write(<<~YAML)
         ---
         linter:
-          eslint:
-            config: abc
-            options:
-              npm_install: true
+          foo:
+            dir: src/
       YAML
       assert_equal(
-        { linter: {
-          brakeman: nil,
-          checkstyle: nil,
-          code_sniffer: nil,
-          coffeelint: nil,
-          cppcheck: nil,
-          cpplint: nil,
-          detekt: nil,
-          eslint: {
-            root_dir: nil,
-            npm_install: nil,
-            dir: nil,
-            ext: nil,
-            config: "abc",
-            "ignore-path": nil,
-            "ignore-pattern": nil,
-            "no-ignore": nil,
-            global: nil,
-            quiet: nil,
-            options: { npm_install: true,
-                       dir: nil,
-                       ext: nil,
-                       config: nil,
-                       "ignore-path": nil,
-                       "no-ignore": nil,
-                       "ignore-pattern": nil,
-                       global: nil,
-                       quiet: nil,
-            },
-          },
-          flake8: nil,
-          fxcop: nil,
-          go_vet: nil,
-          golangci_lint: nil,
-          golint: nil,
-          gometalinter: nil,
-          goodcheck: nil,
-          hadolint: nil,
-          rubocop: nil,
-          haml_lint: nil,
-          javasee: nil,
-          jshint: nil,
-          ktlint: nil,
-          misspell: nil,
-          phinder: nil,
-          phpmd: nil,
-          pmd_java: nil,
-          querly: nil,
-          rails_best_practices: nil,
-          reek: nil,
-          scss_lint: nil,
-          shellcheck: nil,
-          stylelint: nil,
-          swiftlint: nil,
-          tslint: nil,
-          tyscan: nil },
-          ignore: nil,
-          branches: nil,
-        },
+        { linter: { foo: { dir: "src/" } }, ignore: nil, branches: nil },
         Runners::Config.new(path).content,
       )
     end
@@ -210,29 +162,17 @@ class ConfigTest < Minitest::Test
     mktmpdir do |path|
       (path / "sider.yml").write(<<~YAML)
         linter:
-          eslint:
-            ext: .js
+          foo:
+            dir: src/
       YAML
-      assert_equal({
-        ext: ".js",
-        root_dir: nil,
-        npm_install: nil,
-        dir: nil,
-        config: nil,
-        "ignore-path": nil,
-        "ignore-pattern": nil,
-        "no-ignore": nil,
-        global: nil,
-        quiet: nil,
-        options: nil,
-      }, Runners::Config.new(path).linter("eslint"))
+      assert_equal({ dir: "src/" }, Runners::Config.new(path).linter("foo"))
     end
   end
 
   def test_linter_default
     mktmpdir do |path|
       (path / "sider.yml").write("")
-      assert_equal({}, Runners::Config.new(path).linter("eslint"))
+      assert_equal({}, Runners::Config.new(path).linter("foo"))
     end
   end
 end

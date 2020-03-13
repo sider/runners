@@ -50,6 +50,12 @@ module Runners
         @linter[name] = optional(schema)
         payload.fields[:linter] = optional(object(@linter))
       end
+
+      def unregister(name:)
+        if @linter.delete(name)
+          payload.fields[:linter] = optional(object(@linter))
+        end
+      end
     end
   end
 end
