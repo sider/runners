@@ -14,8 +14,6 @@ module Runners
       })
     end
 
-    register_config_schema(name: :remark_lint, schema: Schema.runner_config)
-
     DEFAULT_DEPS = DefaultDependencies.new(
       main: Dependency.new(name: "remark-lint", version: "6.0.5"),
       extras: [
@@ -35,6 +33,10 @@ module Runners
 
     DEFAULT_TARGET = ".".freeze
     DEFAULT_PRESET = "remark-preset-lint-sider".freeze
+
+    def config_schema
+      Schema.runner_config
+    end
 
     def analyzer_bin
       "remark"
