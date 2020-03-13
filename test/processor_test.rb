@@ -18,6 +18,13 @@ class ProcessorTest < Minitest::Test
       def analyzer_id
         "eslint"
       end
+
+      def config_schema
+        schema = StrongJSON.new do
+          let :config, object(root_dir: string, quiet: boolean?)
+        end
+        schema.config
+      end
     end
   end
 
@@ -29,8 +36,14 @@ class ProcessorTest < Minitest::Test
       trace_writer: trace_writer,
     ).tap do |processor|
       (workspace.working_dir / 'sider.yml').write(config_yaml) if config_yaml
+
+      processor.register_config_schema
       processor.load_config
     end
+  end
+
+  def teardown
+    Runners::Schema::Config.unregister name: :eslint
   end
 
   def test_capture3_env_setup
@@ -252,17 +265,16 @@ class ProcessorTest < Minitest::Test
       processor = new_processor(workspace: workspace, config_yaml: <<~YAML)
         linter:
           eslint:
+            root_dir: src/
             quiet: true
-            options:
-              ext: .ts
       YAML
 
-      processor.add_warning_if_deprecated_options([:quiet, :options])
+      processor.add_warning_if_deprecated_options([:root_dir, :quiet])
       processor.add_warning_if_deprecated_options([:global])
 
       expected_message = <<~MSG.strip
         DEPRECATION WARNING!!!
-        The `$.linter.eslint.quiet`, `$.linter.eslint.options` option(s) in your `sider.yml` are deprecated and will be removed in the near future.
+        The `$.linter.eslint.root_dir`, `$.linter.eslint.quiet` option(s) in your `sider.yml` are deprecated and will be removed in the near future.
         Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/javascript/eslint ).
       MSG
 
