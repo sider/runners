@@ -54,10 +54,11 @@ class NodejsTest < Minitest::Test
     @processor = processor_class.new(
       guid: SecureRandom.uuid,
       workspace: workspace,
-      config: config,
       git_ssh_path: nil,
       trace_writer: trace_writer,
-    )
+    ).tap do |processor|
+      processor.load_config
+    end
   end
 
   def stub_const(name, value)
