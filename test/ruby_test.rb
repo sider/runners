@@ -27,6 +27,10 @@ class RubyTest < Minitest::Test
       def analyzer_id
         "rubocop"
       end
+
+      def config_schema
+        Runners::Schema::BaseConfig.ruby
+      end
     end
   end
 
@@ -34,10 +38,17 @@ class RubyTest < Minitest::Test
     processor_class.new(
       guid: SecureRandom.uuid,
       workspace: workspace,
-      config: config(config_yaml),
       git_ssh_path: git_ssh_path,
       trace_writer: trace_writer,
-    )
+    ).tap do |processor|
+      (processor.working_dir / "sider.yml").write(config_yaml) if config_yaml
+      processor.register_config_schema
+      processor.load_config
+    end
+  end
+
+  def teardown
+    Runners::Schema::Config.unregister name: :rubocop
   end
 
   def test_gemfile_content
@@ -501,7 +512,7 @@ EOF
       processor = new_processor(workspace: workspace)
       processor.install_gems([Spec.new(name: "strong_json", version: ["0.5.0"])],
                          constraints: {}) do
-        stdout, _ = processor.shell.capture3!("bundle", "show")
+        stdout, _ = processor.shell.capture3!("bundle", "list")
         assert_includes stdout.lines, "  * strong_json (0.5.0)\n"
       end
     end
@@ -529,7 +540,7 @@ EOF
       processor.install_gems([Spec.new(name: "rubocop", version: ["0.63.0"])],
                              optionals: [Spec.new(name: "meowcop", version: ["1.17.1"])],
                              constraints: {}) do
-        stdout, _ = processor.shell.capture3!("bundle", "show")
+        stdout, _ = processor.shell.capture3!("bundle", "list")
         assert_match(/\* rubocop/, stdout)
         assert_match(/\* strong_json/, stdout)
         refute_match(/\* meowcop/, stdout)
@@ -573,7 +584,7 @@ EOF
       processor.install_gems([Spec.new(name: "rubocop", version: ["0.63.0"])],
                              optionals: [Spec.new(name: "meowcop", version: ["1.17.1"])],
                              constraints: {}) do
-        stdout, _ = processor.shell.capture3!("bundle", "show")
+        stdout, _ = processor.shell.capture3!("bundle", "list")
         assert_match(/\* rubocop/, stdout)
         assert_match(/\* meowcop/, stdout)
       end
@@ -610,7 +621,7 @@ EOF
       processor.install_gems([Spec.new(name: "rubocop", version: ["0.63.0"])],
                              optionals: [Spec.new(name: "meowcop", version: ["1.17.1"])],
                              constraints: { "rubocop" => ["> 0.60.0"] }) do
-        stdout, _ = processor.shell.capture3!("bundle", "show")
+        stdout, _ = processor.shell.capture3!("bundle", "list")
         assert_match(/\* rubocop \(0.62.0\)/, stdout)
         assert_match(/\* strong_json \(0.7.1\)/, stdout)
         assert_match(/\* jack_and_the_elastic_beanstalk \(0.2.2\)/, stdout)
@@ -647,7 +658,7 @@ EOF
           See https://help.sider.review/getting-started/custom-configuration#gems-option
         MESSAGE
 
-        stdout, _ = processor.shell.capture3!("bundle", "show")
+        stdout, _ = processor.shell.capture3!("bundle", "list")
         assert_match(/\* rubocop \(0.66.0\)/, stdout)
       end
     end
@@ -686,7 +697,7 @@ EOF
       processor.install_gems([Spec.new(name: "rubocop", version: ["0.63.0"])],
                              optionals: [],
                              constraints: {}) do
-        stdout, _ = processor.shell.capture3!("bundle", "show")
+        stdout, _ = processor.shell.capture3!("bundle", "list")
         assert_includes stdout, "* rubocop-rspec ("
       end
     end
@@ -720,7 +731,7 @@ EOF
         processor.install_gems([Spec.new(name: "rubocop", version: ["0.63.0"])],
                                optionals: [],
                                constraints: {}) do
-          stdout, _ = processor.shell.capture3!("bundle", "show")
+          stdout, _ = processor.shell.capture3!("bundle", "list")
           assert_match(/\* rubocop/, stdout)
           assert_match(/\* jack_and_the_elastic_beanstalk/, stdout)
           assert_match(/\* meowcop \(1.16.0 2f52514\)/, stdout)
@@ -744,7 +755,7 @@ EOF
       YAML
 
       processor.install_gems([], optionals: [], constraints: {}) do
-        stdout, _ = processor.shell.capture3!("bundle", "show")
+        stdout, _ = processor.shell.capture3!("bundle", "list")
         assert_match(/\* rubocop/, stdout)
       end
     end
@@ -762,7 +773,7 @@ EOF
       YAML
 
       processor.install_gems([], optionals: [], constraints: {}) do
-        stdout, _ = processor.shell.capture3!("bundle", "show")
+        stdout, _ = processor.shell.capture3!("bundle", "list")
         assert_match(/\* rack \(2.2.2\)/, stdout)
       end
     end
