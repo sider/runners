@@ -23,12 +23,6 @@ class HarnessTest < Minitest::Test
     end
   end
 
-  def with_working_dir
-    Dir.mktmpdir do |dir|
-      yield Pathname(dir)
-    end
-  end
-
   class TestProcessor < Processor
     def analyzer_id
       "test"
@@ -46,7 +40,7 @@ class HarnessTest < Minitest::Test
   end
 
   def test_run
-    with_working_dir do |working_dir|
+    mktmpdir do |working_dir|
       with_options do |options|
         mock.proxy(Workspace).prepare(options: options, working_dir: working_dir, trace_writer: trace_writer)
         harness = Harness.new(guid: SecureRandom.uuid, processor_class: TestProcessor,
@@ -59,7 +53,7 @@ class HarnessTest < Minitest::Test
   end
 
   def test_run_when_using_broken_processor
-    with_working_dir do |working_dir|
+    mktmpdir do |working_dir|
       with_options do |options|
         harness = Harness.new(guid: SecureRandom.uuid, processor_class: BrokenProcessor,
                               options: options, working_dir: working_dir, trace_writer: trace_writer)
@@ -104,7 +98,7 @@ class HarnessTest < Minitest::Test
       end
     end
 
-    with_working_dir do |working_dir|
+    mktmpdir do |working_dir|
       with_options do |options|
         harness = Harness.new(guid: SecureRandom.uuid, processor_class: processor,
                               options: options, working_dir: working_dir, trace_writer: trace_writer)
@@ -123,7 +117,7 @@ class HarnessTest < Minitest::Test
   end
 
   def test_run_when_root_dir_not_found
-    with_working_dir do |working_dir|
+    mktmpdir do |working_dir|
       (working_dir / "sider.yml").write(YAML.dump({ "linter" => { "test" => { "root_dir" => "foo" } } }))
       with_options do |options|
         harness = Harness.new(guid: SecureRandom.uuid, processor_class: TestProcessor,
@@ -135,7 +129,7 @@ class HarnessTest < Minitest::Test
   end
 
   def test_run_when_config_is_broken
-    with_working_dir do |working_dir|
+    mktmpdir do |working_dir|
       (working_dir / "sider.yml").write('1: 1:')
       with_options do |options|
         harness = Harness.new(guid: SecureRandom.uuid, processor_class: TestProcessor,
@@ -149,7 +143,7 @@ class HarnessTest < Minitest::Test
   end
 
   def test_ensure_result_returns_error_result_if_raised
-    with_working_dir do |working_dir|
+    mktmpdir do |working_dir|
       with_options do |options|
         harness = Harness.new(guid: SecureRandom.uuid, processor_class: TestProcessor,
                               options: options, working_dir: working_dir, trace_writer: trace_writer)
@@ -168,7 +162,7 @@ class HarnessTest < Minitest::Test
   end
 
   def test_ensure_result_checks_validity_of_issues
-    with_working_dir do |working_dir|
+    mktmpdir do |working_dir|
       with_options do |options|
         harness = Harness.new(guid: SecureRandom.uuid, processor_class: TestProcessor,
                               options: options, working_dir: working_dir, trace_writer: trace_writer)
@@ -201,7 +195,7 @@ class HarnessTest < Minitest::Test
       end
     end
 
-    with_working_dir do |working_dir|
+    mktmpdir do |working_dir|
       with_options do |options|
         harness = Harness.new(guid: SecureRandom.uuid, processor_class: processor,
                               options: options, working_dir: working_dir, trace_writer: trace_writer)
@@ -209,86 +203,6 @@ class HarnessTest < Minitest::Test
         assert_instance_of Results::Success, result
         refute trace_writer.writer.find { |record| record[:message].match(/\ADeleting specified files via the `ignore` option/) }
       end
-    end
-  end
-
-  def test_remove_ignored_files
-    with_working_dir do |working_dir|
-      (working_dir / "sider.yml").write(<<~YAML)
-        ignore:
-          - examples/**/out
-          - test/**/out*
-          - ".idea"
-          - "*.log"
-      YAML
-      (working_dir / "examples/foo/out").tap { |path| path.mkpath ; (path / "index.html").write("") }
-      (working_dir / "examples/bar/out").tap { |path| path.mkpath ; (path / "index.html").write("") }
-      (working_dir / "examples/bar/pub").tap { |path| path.mkpath; (path / "index.html").write("") }
-      (working_dir / "test/a/outA").tap { |path| path.mkpath ; (path / "index.html").write("") }
-      (working_dir / "test/b/outB").tap { |path| path.mkpath ; (path / "index.html").write("") }
-      (working_dir / "test/c").tap { |path| path.mkpath ; (path / "out.txt").write("") }
-      (working_dir / ".idea").tap { |path| path.mkpath ; (path / "workspace.xml").write("") }
-      (working_dir / "src").tap { |path| path.mkpath ; (path / "index.js").write("") }
-      (working_dir / "src/app").tap { |path| path.mkpath ; (path / "index.js").write("") }
-      (working_dir / "src/.idea").tap { |path| path.mkpath ; (path / "workspace.xml").write("") }
-      (working_dir / "npm.log").write("")
-      (working_dir / "yarn.log").write("")
-      (working_dir / "npm.log.bak").write("")
-
-      with_options do |options|
-        harness = Harness.new(guid: SecureRandom.uuid, processor_class: TestProcessor,
-                              options: options, working_dir: working_dir, trace_writer: trace_writer)
-        result = harness.run
-        assert_instance_of Results::Success, result
-        assert trace_writer.writer.find { |record| record[:message].match("Deleting ignored files...") }
-        refute (working_dir / "examples/foo/out/index.html").file?
-        refute (working_dir / "examples/bar/out/index.html").file?
-        assert (working_dir / "examples/bar/pub/index.html").file?
-        refute (working_dir / "test/a/outA/index.html").file?
-        refute (working_dir / "test/b/outB/index.html").file?
-        refute (working_dir / "test/c/out.txt").file?
-        refute (working_dir / ".idea/workspace.xml").file?
-        assert (working_dir / "src/index.js").file?
-        assert (working_dir / "src/app/index.js").file?
-        refute (working_dir / "src/.idea/workspace.xml").file?
-        refute (working_dir / "npm.log").file?
-        refute (working_dir / "yarn.log").file?
-        assert (working_dir / "npm.log.bak").file?
-      end
-    end
-  end
-
-  def test_remove_ignored_files_when_the_specified_files_do_not_exist
-    with_working_dir do |working_dir|
-      (working_dir / "sider.yml").write(<<~YAML)
-        ignore: a/b/c/d/**.txt
-      YAML
-      with_options do |options|
-        harness = Harness.new(guid: SecureRandom.uuid, processor_class: TestProcessor,
-                              options: options, working_dir: working_dir, trace_writer: trace_writer)
-        result = harness.run
-        assert_instance_of Results::Success, result
-        assert trace_writer.writer.find { |record| record[:message].match("Deleting ignored files...") }
-      end
-    end
-  end
-
-  def test_remove_ignored_files_when_users_gitignore_exists
-    with_working_dir do |working_dir|
-      ignore_file = working_dir / SecureRandom.uuid
-      ignore_file.write("")
-      (working_dir / "sider.yml").write(<<~YAML)
-        ignore: #{ignore_file.basename}
-      YAML
-
-      with_options do |options|
-        harness = Harness.new(guid: SecureRandom.uuid, processor_class: TestProcessor,
-                              options: options, working_dir: working_dir, trace_writer: trace_writer)
-        result = harness.run
-        assert_instance_of Results::Success, result
-        assert trace_writer.writer.find { |record| record[:message].match("Deleting ignored files...") }
-      end
-      refute_match Regexp.new(ignore_file.basename.to_s), (working_dir / ".gitignore").read
     end
   end
 end
