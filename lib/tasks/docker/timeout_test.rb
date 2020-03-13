@@ -18,7 +18,7 @@ namespace :docker do
     end
 
     # Change the Docker image and include "rr"
-    sh "docker", "run", "--name", container_name, "--entrypoint", "bash", image_name, "gem", "install", "rr"
+    sh "docker", "run", "--name", container_name, "--entrypoint", "gem", image_name, "install", "rr"
     sh "docker", "commit", "--change", "ENTRYPOINT #{entrypoint}", "--change", "CMD []", container_name, image_name
 
     _, stderr, status = Open3.capture3 "docker", "run", "--rm", image_name
