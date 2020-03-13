@@ -15,10 +15,12 @@ module Runners
       )
     end
 
-    register_config_schema(name: :hadolint, schema: Schema.runner_config)
-
     DEFAULT_TARGET = "**/Dockerfile{,.*}".freeze
     DEFAULT_TARGET_EXCLUDED = "*.{erb,txt}".freeze # Exclude templates
+
+    def config_schema
+      Schema.runner_config
+    end
 
     def analyze(_changes)
       run_analyzer

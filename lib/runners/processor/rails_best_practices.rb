@@ -26,8 +26,6 @@ module Runners
       }
     end
 
-    register_config_schema(name: :rails_best_practices, schema: Schema.runner_config)
-
     OPTIONAL_GEMS = [
       GemInstaller::Spec.new(name: "slim", version: []),
       GemInstaller::Spec.new(name: "haml", version: []),
@@ -41,6 +39,10 @@ module Runners
     CONSTRAINTS = {
       "rails_best_practices" => [">= 1.19.1", "< 2.0"]
     }.freeze
+
+    def config_schema
+      Schema.runner_config
+    end
 
     def setup
       add_warning_if_deprecated_options([:options])

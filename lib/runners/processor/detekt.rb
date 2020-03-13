@@ -22,7 +22,9 @@ module Runners
       )
     end
 
-    register_config_schema(name: :detekt, schema: Schema.runner_config)
+    def config_schema
+      Schema.runner_config
+    end
 
     def analyzer_version
       unknown_version = "0.0.0"

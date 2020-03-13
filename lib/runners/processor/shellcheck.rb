@@ -32,8 +32,6 @@ module Runners
       )
     end
 
-    register_config_schema(name: :shellcheck, schema: Schema.runner_config)
-
     DEFAULT_TARGET = [
       "**/*.{bash,bats,dash,ksh,sh}",
       { shebang: true },
@@ -49,6 +47,10 @@ module Runners
       "/dash script",
       "/env bats script",
     ).freeze
+
+    def config_schema
+      Schema.runner_config
+    end
 
     def analyze(_changes)
       run_analyzer

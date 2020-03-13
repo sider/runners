@@ -111,6 +111,8 @@ class Runners::Processor
   attr_reader warnings: Array<any>
 
   def initialize: (guid: String, workspace: Workspace, git_ssh_path: Pathname?, trace_writer: TraceWriter) -> any
+  def config_schema: () -> StrongJSON::Type::Object<any>
+  def register_config_schema: () -> void
   def load_config: () -> Config
   def config: () -> Config
   def delete_ignored_files!: () -> void
@@ -125,7 +127,6 @@ class Runners::Processor
   def push_dir: <'x> (Pathname) { -> 'x } -> 'x
   def current_dir: () -> Pathname
 
-  def self.register_config_schema: (**any) -> void
   def capture3: (String, *String, **capture3_options) -> [String, String, Process::Status]
   def capture3!: (String, *String, **capture3_options) -> [String, String]
   def capture3_with_retry!: (String, *String, ?tries: Integer) -> [String, String]

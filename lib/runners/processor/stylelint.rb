@@ -30,8 +30,6 @@ module Runners
       )
     end
 
-    register_config_schema(name: :stylelint, schema: Schema.runner_config)
-
     DEFAULT_DEPS = DefaultDependencies.new(
       main: Dependency.new(name: "stylelint", version: "13.2.0"),
       extras: [
@@ -45,6 +43,10 @@ module Runners
 
     DEFAULT_TARGET_FILE_EXTENSIONS = ["css", "less", "sass", "scss", "sss"].freeze
     DEFAULT_GLOB = "**/*.{#{DEFAULT_TARGET_FILE_EXTENSIONS.join(',')}}".freeze
+
+    def config_schema
+      Schema.runner_config
+    end
 
     def setup
       add_warning_if_deprecated_options([:options])

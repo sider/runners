@@ -25,7 +25,9 @@ module Runners
       )
     end
 
-    register_config_schema(name: :checkstyle, schema: Schema.runner_config)
+    def config_schema
+      Schema.runner_config
+    end
 
     def analyze(changes)
       analyzer_version

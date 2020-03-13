@@ -15,8 +15,6 @@ module Runners
       }
     end
 
-    register_config_schema(name: :coffeelint, schema: Schema.runner_config)
-
     DEFAULT_DEPS = DefaultDependencies.new(
       main: Dependency.new(name: "coffeelint", version: "1.16.0"),
     )
@@ -24,6 +22,10 @@ module Runners
     CONSTRAINTS = {
       "coffeelint" => Constraint.new(">= 1.16.0", "< 3.0.0"),
     }.freeze
+
+    def config_schema
+      Schema.runner_config
+    end
 
     def setup
       add_warning_if_deprecated_options([:options])

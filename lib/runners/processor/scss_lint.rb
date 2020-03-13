@@ -14,10 +14,12 @@ module Runners
       }
     end
 
-    register_config_schema(name: :scss_lint, schema: Schema.runner_config)
-
     # https://github.com/brigade/scss-lint#exit-status-codes
     EXIT_CODE_FILES_NOT_EXIST = 80
+
+    def config_schema
+      Schema.runner_config
+    end
 
     def analyzer_bin
       'scss-lint'

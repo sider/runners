@@ -22,8 +22,6 @@ module Runners
       )
     end
 
-    register_config_schema(name: :rubocop, schema: Schema.runner_config)
-
     # The followings are maintained by RuboCop Headquarters.
     # @see https://github.com/rubocop-hq
     OFFICIAL_RUBOCOP_PLUGINS = [
@@ -69,6 +67,10 @@ module Runners
     CONSTRAINTS = {
       "rubocop" => [">= 0.61.0", "< 1.0.0"]
     }.freeze
+
+    def config_schema
+      Schema.runner_config
+    end
 
     def default_gem_specs
       super.tap do |gems|

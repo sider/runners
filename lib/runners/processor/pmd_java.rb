@@ -19,7 +19,9 @@ module Runners
       )
     end
 
-    register_config_schema(name: :pmd_java, schema: Schema.runner_config)
+    def config_schema
+      Schema.runner_config
+    end
 
     def pmd(dir:, rulesets:, encoding:, min_priority:)
       args = []

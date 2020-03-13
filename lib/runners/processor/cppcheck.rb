@@ -21,10 +21,12 @@ module Runners
       )
     end
 
-    register_config_schema(name: :cppcheck, schema: Schema.runner_config)
-
     DEFAULT_TARGET = ".".freeze
     DEFAULT_IGNORE = [].freeze
+
+    def config_schema
+      Schema.runner_config
+    end
 
     def setup
       analyzer

@@ -28,8 +28,6 @@ module Runners
       )
     end
 
-    register_config_schema(name: :haml_lint, schema: Schema.runner_config)
-
     OPTIONAL_GEMS = [
       *Processor::RuboCop::OPTIONAL_GEMS,
       # additional gems for HAML-Lint
@@ -40,6 +38,10 @@ module Runners
     CONSTRAINTS = {
       "haml_lint" => [">= 0.26.0", "< 1.0.0"]
     }.freeze
+
+    def config_schema
+      Schema.runner_config
+    end
 
     def analyzer_bin
       "haml-lint"

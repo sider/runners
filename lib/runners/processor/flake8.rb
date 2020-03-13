@@ -13,7 +13,9 @@ module Runners
       }
     end
 
-    register_config_schema(name: :flake8, schema: Schema.runner_config)
+    def config_schema
+      Schema.runner_config
+    end
 
     def setup
       prepare_config

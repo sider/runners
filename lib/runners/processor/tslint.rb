@@ -23,8 +23,6 @@ module Runners
       }
     end
 
-    register_config_schema(name: :tslint, schema: Schema.runner_config)
-
     DEFAULT_DEPS = DefaultDependencies.new(
       main: Dependency.new(name: "tslint", version: "6.0.0"),
       extras: [
@@ -35,6 +33,10 @@ module Runners
     CONSTRAINTS = {
       "tslint" => Constraint.new(">= 5.0.0", "< 7.0.0"),
     }.freeze
+
+    def config_schema
+      Schema.runner_config
+    end
 
     def setup
       add_warning_for_deprecated_linter(alternative: "ESLint",

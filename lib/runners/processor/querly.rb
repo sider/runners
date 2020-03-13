@@ -13,8 +13,6 @@ module Runners
       )
     end
 
-    register_config_schema(name: :querly, schema: Schema.runner_config)
-
     OPTIONAL_GEMS = [
       GemInstaller::Spec.new(name: "slim", version: []),
       GemInstaller::Spec.new(name: "haml", version: []),
@@ -23,6 +21,10 @@ module Runners
     CONSTRAINTS = {
       "querly" => [">= 0.5.0", "< 2.0.0"]
     }.freeze
+
+    def config_schema
+      Schema.runner_config
+    end
 
     def analyzer_version
       @analyzer_version ||= extract_version! ruby_analyzer_bin, "version"

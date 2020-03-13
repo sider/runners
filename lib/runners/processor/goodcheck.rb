@@ -17,11 +17,13 @@ module Runners
       }.freeze
     end
 
-    register_config_schema(name: :goodcheck, schema: Schema.runner_config)
-
     CONSTRAINTS = {
       "goodcheck" => [">= 1.0.0", "< 3.0"]
     }.freeze
+
+    def config_schema
+      Schema.runner_config
+    end
 
     def analyzer_version
       @analyzer_version ||= extract_version! ruby_analyzer_bin, "version"

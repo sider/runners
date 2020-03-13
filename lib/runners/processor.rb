@@ -7,10 +7,6 @@ module Runners
     delegate :push_dir, :current_dir, :capture3, :capture3!, :capture3_trace, :capture3_with_retry!, to: :shell
     delegate :env_hash, :push_env_hash, to: :shell
 
-    def self.register_config_schema(**args)
-      Schema::Config.register(**args)
-    end
-
     def initialize(guid:, workspace:, git_ssh_path:, trace_writer:)
       @guid = guid
       @workspace = workspace
@@ -26,6 +22,14 @@ module Runners
       @shell = Shell.new(current_dir: working_dir,
                          env_hash: hash,
                          trace_writer: trace_writer)
+    end
+
+    def config_schema
+      raise NotImplementedError
+    end
+
+    def register_config_schema
+      Schema::Config.register name: analyzer_id.to_sym, schema: config_schema
     end
 
     def load_config

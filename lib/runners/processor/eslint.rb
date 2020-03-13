@@ -35,12 +35,14 @@ module Runners
       )
     end
 
-    register_config_schema(name: :eslint, schema: Schema.runner_config)
-
     DEFAULT_DEPS = DefaultDependencies.new(main: Dependency.new(name: "eslint", version: "6.8.0"))
     CONSTRAINTS = {
       "eslint" => Constraint.new(">= 5.0.0", "< 7.0.0")
     }.freeze
+
+    def config_schema
+      Schema.runner_config
+    end
 
     def setup
       add_warning_if_deprecated_options([:options])

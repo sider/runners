@@ -28,9 +28,11 @@ module Runners
         let :issue, object(severity: string?)
       end
 
-    register_config_schema(name: :golangci_lint, schema: Schema.runner_config)
-
     DEFAULT_TARGET = "./...".freeze
+
+    def config_schema
+      Schema.runner_config
+    end
 
     def analyzer_bin
       "golangci-lint"

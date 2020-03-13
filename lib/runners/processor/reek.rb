@@ -6,11 +6,13 @@ module Runners
       let :runner_config, Schema::BaseConfig.ruby
     end
 
-    register_config_schema(name: :reek, schema: Schema.runner_config)
-
     CONSTRAINTS = {
       "reek" => [">= 4.4.0", "< 6.0"]
     }.freeze
+
+    def config_schema
+      Schema.runner_config
+    end
 
     def setup
       install_gems default_gem_specs, constraints: CONSTRAINTS do

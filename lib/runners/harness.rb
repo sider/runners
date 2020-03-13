@@ -34,6 +34,7 @@ module Runners
           begin
             processor = processor_class.new(guid: guid, workspace: workspace, git_ssh_path: git_ssh_path, trace_writer: trace_writer)
 
+            processor.register_config_schema
             @config = processor.load_config
 
             processor.delete_ignored_files!

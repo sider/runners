@@ -18,8 +18,6 @@ module Runners
       )
     end
 
-    register_config_schema(name: :tyscan, schema: Schema.runner_config)
-
     DEFAULT_DEPS = DefaultDependencies.new(
       main: Dependency.new(name: "tyscan", version: "0.3.1"),
       extras: [
@@ -30,6 +28,10 @@ module Runners
     CONSTRAINTS = {
       "tyscan" => Constraint.new(">= 0.2.1", "< 1.0.0")
     }.freeze
+
+    def config_schema
+      Schema.runner_config
+    end
 
     def setup
       if !(current_dir + 'tyscan.yml').exist? && config_linter[:config].nil?

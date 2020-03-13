@@ -17,9 +17,11 @@ module Runners
       )
     end
 
-    register_config_schema(name: :cpplint, schema: Schema.runner_config)
-
     DEFAULT_TARGET = ".".freeze
+
+    def config_schema
+      Schema.runner_config
+    end
 
     def analyze(changes)
       run_analyzer
