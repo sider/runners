@@ -58,7 +58,7 @@ module Runners
       if base && head
         git_directory.yield_self do |path|
           shell = Shell.new(current_dir: path, trace_writer: trace_writer, env_hash: {})
-          stdout, _ = shell.capture3!("git", "diff", base, head)
+          stdout, _ = shell.capture3!("git", "diff", base, head, trace_stdout: false)
           GitDiffParser.parse(stdout)
         end
       else

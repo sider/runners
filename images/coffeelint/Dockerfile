@@ -2,7 +2,7 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM sider/devon_rex_npm:2.15.0
+FROM sider/devon_rex_npm:master
 
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
@@ -25,8 +25,7 @@ RUN cd ${RUNNER_USER_HOME} && \
     npm config set ignore-scripts true && \
     npm config set progress false && \
     npm config set package-lock false && \
-    npm install && \
-    node_modules/.bin/coffeelint --version
+    npm install
 ENV PATH ${RUNNER_USER_HOME}/coffeelint/node_modules/.bin:${PATH}
 # See https://nodejs.org/api/cli.html#cli_node_path_path
 ENV NODE_PATH ${RUNNER_USER_HOME}/coffeelint/node_modules:${NODE_PATH}

@@ -60,11 +60,11 @@ module Runners
 
         result = harness.run
         warnings = harness.warnings
-        ci_config = harness.ci_config
+        config = harness.config
         json = {
           result: result.as_json,
           warnings: warnings,
-          ci_config: ci_config,
+          ci_config: config&.content,
           version: VERSION,
         }
 

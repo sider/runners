@@ -58,11 +58,11 @@ class ProcessorTest < Minitest::Test
 
       # Returns status, stdout, and stderr
       assert_instance_of Process::Status, status
-      assert_match "1 2 3\n", stdout
+      assert_equal "1 2 3\n", stdout
       assert_equal "", stderr
 
-      assert trace_writer.writer.find {|hash| hash[:trace] == :command_line && hash[:command_line] == %w(/bin/echo 1 2 3) }
-      assert trace_writer.writer.find {|hash| hash[:trace] == :stdout && hash[:string] == "1 2 3\n" }
+      assert trace_writer.writer.find {|hash| hash[:trace] == :command_line && hash[:command_line] == ["/bin/echo", "1", "2", "3"] }
+      assert trace_writer.writer.find {|hash| hash[:trace] == :stdout && hash[:string] == "1 2 3" }
       refute trace_writer.writer.find {|hash| hash[:trace] == :stderr }
       assert trace_writer.writer.find {|hash| hash[:trace] == :status && hash[:status] == 0 }
     end

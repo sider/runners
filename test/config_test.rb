@@ -82,6 +82,7 @@ class ConfigTest < Minitest::Test
           querly: nil,
           rails_best_practices: nil,
           reek: nil,
+          remark_lint: nil,
           scss_lint: nil,
           shellcheck: nil,
           stylelint: nil,

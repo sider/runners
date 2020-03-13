@@ -118,6 +118,10 @@ analyzers:
     name: Reek
     github: troessner/reek
     doc: tools/ruby/reek
+  remark_lint:
+    name: remark-lint
+    github: remarkjs/remark-lint
+    doc: tools/markdown/remark-lint
   rubocop:
     name: RuboCop
     github: rubocop-hq/rubocop

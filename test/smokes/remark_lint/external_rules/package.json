@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "remark-cli": "7.0.0",
+    "remark-lint": "6.0.3",
+    "remark-lint-books-links": "2.1.0"
+  }
+}

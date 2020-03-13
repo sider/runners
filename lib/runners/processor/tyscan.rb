@@ -66,9 +66,7 @@ module Runners
       _, _, status = capture3(nodejs_analyzer_bin, "test", *args)
 
       if status.nil? || !status.success?
-        msg = <<~MESSAGE.chomp
-          `tyscan test` failed. It may cause an unintended match.
-        MESSAGE
+        msg = "`tyscan test` failed. It may cause an unintended match."
         add_warning(msg, file: config_linter[:config] || "tyscan.yml")
       end
     end
@@ -79,16 +77,12 @@ module Runners
       args.unshift("-t", config_linter[:tsconfig]) if config_linter[:tsconfig]
       args.unshift("-c", config_linter[:config]) if config_linter[:config]
 
-      stdout, stderr, status = capture3(nodejs_analyzer_bin, "scan", "--json", *args)
+      stdout, _stderr, status = capture3(nodejs_analyzer_bin, "scan", "--json", *args)
 
       # TyScan exited with 0 when finishing an analysis correctly.
       unless status.exitstatus == 0
-        return Results::Failure.new(guid: guid, message: <<~MESSAGE, analyzer: analyzer)
-          TyScan was failed with status #{status.exitstatus} since an unexpected error occurred.
-
-          STDERR:
-          #{stderr}
-        MESSAGE
+        msg = "TyScan was failed with the exit status #{status.exitstatus} since an unexpected error occurred."
+        return Results::Failure.new(guid: guid, message: msg, analyzer: analyzer)
       end
 
       json = JSON.parse(stdout, symbolize_names: true)

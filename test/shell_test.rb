@@ -27,7 +27,7 @@ class ShellTest < Minitest::Test
       assert status.success?
       assert_trace_writer [
         { trace: :command_line, command_line: ["echo", "Hello"] },
-        { trace: :stdout, string: "Hello\n", truncated: false },
+        { trace: :stdout, string: "Hello", truncated: false },
         { trace: :status, status: 0 },
       ]
     end
@@ -60,7 +60,7 @@ class ShellTest < Minitest::Test
       assert status.success?
       assert_trace_writer [
         { trace: :command_line, command_line: ["echo Hello | tee /dev/stderr"] },
-        { trace: :stdout, string: "Hello\n", truncated: false },
+        { trace: :stdout, string: "Hello", truncated: false },
         { trace: :status, status: 0 },
       ]
     end
@@ -83,8 +83,8 @@ class ShellTest < Minitest::Test
       assert_equal path, error.dir
       assert_trace_writer [
         { trace: :command_line, command_line: ["echo Error | tee /dev/stderr && exit 1"] },
-        { trace: :stdout, string: "Error\n", truncated: false },
-        { trace: :stderr, string: "Error\n", truncated: false },
+        { trace: :stdout, string: "Error", truncated: false },
+        { trace: :stderr, string: "Error", truncated: false },
         { trace: :status, status: 1 },
       ]
 
@@ -113,9 +113,40 @@ class ShellTest < Minitest::Test
       assert_equal 1, status.exitstatus
       assert_trace_writer [
         { trace: :command_line, command_line: ["echo Hello && exit 1"] },
-        { trace: :stdout, string: "Hello\n", truncated: false },
+        { trace: :stdout, string: "Hello", truncated: false },
         { trace: :status, status: 1 },
       ]
+    end
+  end
+
+  def test_capture3_trace_with_chdir
+    mktmpdir do |path|
+      shell = Shell.new(current_dir: path, trace_writer: trace_writer, env_hash: {})
+      (path / "1.txt").write("Number: 1")
+      (path / "foo").mkdir
+      (path / "foo" / "2.txt").write("Number: 2")
+
+      stdout, _, status = shell.capture3_trace("cat", "1.txt")
+      assert status.success?
+      assert_equal "Number: 1", stdout
+
+      _, _, status = shell.capture3_trace("cat", "2.txt")
+      refute status.success?
+
+      stdout, _, status = shell.capture3_trace("cat", "2.txt", chdir: path / "foo")
+      assert status.success?
+      assert_equal "Number: 2", stdout
+    end
+  end
+
+  def test_capture3_trace_with_chdir_nil
+    mktmpdir do |path|
+      shell = Shell.new(current_dir: path, trace_writer: trace_writer, env_hash: {})
+      (path / "1.txt").write("Number: 1")
+
+      stdout, _, status = shell.capture3_trace("cat", "1.txt", chdir: nil)
+      assert status.success?
+      assert_equal "Number: 1", stdout
     end
   end
 end

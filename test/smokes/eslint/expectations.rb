@@ -177,7 +177,7 @@ Smoke.add_test(
           DEPRECATION WARNING!!!
           The `$.linter.eslint.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
           Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/javascript/eslint ).
-  MSG
+        MSG
           .strip,
         file: "sideci.yml"
       }
@@ -431,5 +431,5 @@ Smoke.add_test(
 Smoke.add_test(
   "duplicate_lock_files",
   { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "ESLint", version: "5.16.0" } },
-  { warnings: [{ message: /Two lock files `package-lock.json` and `yarn.lock` are found/, file: nil }] }
+  { warnings: [{ message: /Two lock files `package-lock.json` and `yarn.lock` are found/, file: "yarn.lock" }] }
 )

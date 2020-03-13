@@ -80,7 +80,7 @@ module Runners
         end
       when EXIT_CODE_FILES_NOT_EXIST
         # NOTE: If there are no analysis target files, returns `Success` with a warning.
-        add_warning(stdout.chomp)
+        add_warning(stdout)
         Results::Success.new(guid: guid, analyzer: analyzer)
       else
         Results::Failure.new(guid: guid, message: <<~MESSAGE, analyzer: analyzer)

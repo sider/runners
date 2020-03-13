@@ -7,7 +7,6 @@ RUN cd ${RUNNER_USER_HOME} && \
     bundle config set --local system 'true' && \
     bundle install --gemfile=Gemfile && \
     bundle config unset --local system && \
-    rbenv rehash && \
     cd ${RUNNER_USER_HOME} && \
     rm -rf <%= analyzer %> && \
     gem info <%= analyzer %>
