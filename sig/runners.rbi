@@ -109,9 +109,11 @@ class Runners::Processor
   attr_reader trace_writer: TraceWriter
   attr_reader shell: Shell
   attr_reader warnings: Array<any>
-  attr_reader config: Config
 
-  def initialize: (guid: String, workspace: Workspace, config: Config, git_ssh_path: Pathname?, trace_writer: TraceWriter) -> any
+  def initialize: (guid: String, workspace: Workspace, git_ssh_path: Pathname?, trace_writer: TraceWriter) -> any
+  def load_config: () -> Config
+  def config: () -> Config
+  def delete_ignored_files!: () -> void
   def relative_path: (String | Pathname, ?from: Pathname) -> Pathname
   def setup: () { -> result } -> result
   def analyze: (Changes) -> result

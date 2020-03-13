@@ -25,10 +25,12 @@ class ProcessorTest < Minitest::Test
     processor_class.new(
       guid: SecureRandom.uuid,
       workspace: workspace,
-      config: config(config_yaml),
       git_ssh_path: git_ssh_path,
       trace_writer: trace_writer,
-    )
+    ).tap do |processor|
+      (workspace.working_dir / 'sider.yml').write(config_yaml) if config_yaml
+      processor.load_config
+    end
   end
 
   def test_capture3_env_setup
