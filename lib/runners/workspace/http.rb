@@ -65,6 +65,7 @@ module Runners
           when Net::HTTPSuccess
             response.read_body(dest)
           when Net::HTTPRedirection
+            # @see https://ruby-doc.org/stdlib-2.6.5/libdoc/net/http/rdoc/Net/HTTP.html#class-Net::HTTP-label-Following+Redirection
             download(
               URI(response["Location"]),
               dest: dest,
