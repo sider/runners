@@ -52,10 +52,13 @@ module Runners
       raise ArgumentError, "Too many HTTP redirects: #{uri}" if max_redirects == 0
 
       http_options = {
-        use_ssl: true,
+        use_ssl: uri.scheme == "https",
+
+        # @see https://ruby-doc.org/stdlib-2.6.5/libdoc/net/http/rdoc/Net/HTTP.html#method-i-max_retries-3D
         max_retries: max_retries,
       }
 
+      # @see https://ruby-doc.org/stdlib-2.6.5/libdoc/net/http/rdoc/Net/HTTP.html#method-c-start
       Net::HTTP.start(uri.hostname, uri.port, http_options) do |http|
         http.request_get(uri) do |response|
           case response
