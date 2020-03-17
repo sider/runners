@@ -19,17 +19,17 @@ module Runners
     # @param dest [Pathname]
     # @param key [String, nil]
     def provision(uri, dest, key)
-      file = download_with_retry(uri)
-
-      decrypt(file, key) do |archive_path|
-        extract(archive_path, dest)
+      download_with_retry(uri) do |file|
+        decrypt(file, key) do |archive_path|
+          extract(archive_path, dest)
+        end
       end
     end
 
     # NOTE: Some exceptions are handled by ``Net::HTTP` class.
     #
     # @see https://github.com/ruby/ruby/blob/v2_6_5/lib/net/http.rb#L1520-L1536
-    def download_with_retry(uri)
+    def download_with_retry(uri, &block)
       trace_writer.message "Downloading source code..." do
         Retryable.retryable(
           on: [
@@ -42,8 +42,10 @@ module Runners
           log_method: -> (retries, _exn) { trace_writer.message "Retrying download... (attempt: #{retries})" },
         ) do
           file = ::Tempfile.new
-          download(uri, dest: file, max_retries: 5, max_redirects: 10)
-          return Pathname(file.path)
+          download uri, dest: file, max_retries: 5, max_redirects: 10
+          block.call Pathname(file.path)
+        ensure
+          file.close! if file
         end
       end
     end
