@@ -1,0 +1,3 @@
+linter:
+  reek:
+    config: my-reek.yml

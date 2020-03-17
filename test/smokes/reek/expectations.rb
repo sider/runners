@@ -208,3 +208,63 @@ Smoke.add_test(
     analyzer: { name: "Reek", version: "5.6.0" }
   }
 )
+
+Smoke.add_test(
+  "option_target",
+  {
+    guid: "test-guid",
+    timestamp: :_,
+    type: "success",
+    issues: [
+      {
+        message: "`A` has initialize method",
+        links: %i[_],
+        id: "ModuleInitialize",
+        path: "lib/a.rb",
+        location: { start_line: 1 },
+        object: nil,
+        git_blame_info: nil
+      },
+      {
+        message: "`Sub::B` has initialize method",
+        links: %i[_],
+        id: "ModuleInitialize",
+        path: "lib/sub/b.rb",
+        location: { start_line: 1 },
+        object: nil,
+        git_blame_info: nil
+      },
+      {
+        message: "`TargetTest` has initialize method",
+        links: %i[_],
+        id: "ModuleInitialize",
+        path: "test/target_test.rb",
+        location: { start_line: 1 },
+        object: nil,
+        git_blame_info: nil
+      }
+    ],
+    analyzer: { name: "Reek", version: "5.6.0" }
+  }
+)
+
+Smoke.add_test(
+  "option_config",
+  {
+    guid: "test-guid",
+    timestamp: :_,
+    type: "success",
+    issues: [
+      {
+        message: "`nil_check` performs a nil-check",
+        links: %i[_],
+        id: "NilCheck",
+        path: "a.rb",
+        location: { start_line: 2 },
+        object: nil,
+        git_blame_info: nil
+      }
+    ],
+    analyzer: { name: "Reek", version: "5.6.0" }
+  }
+)

@@ -1,0 +1,5 @@
+linter:
+  reek:
+    target:
+      - lib/
+      - test/target_test.rb
