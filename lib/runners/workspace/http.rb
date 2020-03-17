@@ -73,7 +73,7 @@ module Runners
               max_redirects: max_redirects - 1,
             )
           else
-            raise DownloadError, "Download failed: #{response.inspect}"
+            raise DownloadError, "Download failed: #{response.code} #{response.message}"
           end
         end
       end

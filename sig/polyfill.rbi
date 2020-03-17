@@ -124,6 +124,9 @@ end
 class Net::HTTPResponse
   include Net::HTTPHeader
 
+  attr_reader code: String
+  attr_reader message: String
+
   def read_body: (::IO) -> void
 end
 
