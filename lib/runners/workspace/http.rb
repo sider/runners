@@ -26,7 +26,7 @@ module Runners
       end
     end
 
-    # NOTE: Some exceptions are handled by ``Net::HTTP` class.
+    # NOTE: Some exceptions are handled by `Net::HTTP` class.
     #
     # @see https://github.com/ruby/ruby/blob/v2_6_5/lib/net/http.rb#L1520-L1536
     def download_with_retry(uri, &block)
@@ -35,7 +35,6 @@ module Runners
           on: [
             DownloadError,
             Net::OpenTimeout,
-            Net::HTTPForbidden,
           ],
           tries: 5,
           sleep: method(:retryable_sleep),
@@ -46,7 +45,7 @@ module Runners
           file.flush
           block.call Pathname(file.path)
         ensure
-          file.close! if file
+          file.close!
         end
       end
     end
