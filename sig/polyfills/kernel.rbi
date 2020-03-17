@@ -7,4 +7,5 @@ extension Kernel (Polyfill)
   def __dir__: -> String
   def Array: (any) -> Array<any>
   def Pathname: (String | Pathname) -> Pathname
+  def URI: (any) -> URI
 end

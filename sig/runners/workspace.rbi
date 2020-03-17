@@ -23,7 +23,8 @@ class Runners::Workspace::HTTP < Workspace
   def prepare_base_source: (Pathname) -> void
   def prepare_head_source: (Pathname) -> void
   def provision: (URI, Pathname, String?) -> void
-  def download: <'a> (URI) { (any) -> 'a } -> 'a
+  def download_with_retry: (URI) -> Pathname
+  def download: (URI, dest: ::IO, max_retries: Integer, max_redirects: Integer) -> void
   def retryable_sleep: (Integer) -> Integer
 end
 

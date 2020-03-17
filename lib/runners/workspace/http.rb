@@ -19,40 +19,58 @@ module Runners
     # @param dest [Pathname]
     # @param key [String, nil]
     def provision(uri, dest, key)
-      # When OpenSSL::Cipher::CipherError, probably the downloading is failed.
-      # So retry downloading and decrypting
-      Retryable.retryable(
-        tries: 5,
-        on: [OpenSSL::Cipher::CipherError, OpenSSL::SSL::SSLError, DownloadError, Net::OpenTimeout, Errno::ECONNRESET, SocketError, Net::HTTPForbidden],
-        sleep: method(:retryable_sleep),
-        exception_cb: -> (_ex) { trace_writer.message "Retrying download..." }
-      ) do
-        ::Tempfile.open do |io|
-          trace_writer.message "Downloading source code..." do
-            download(uri) do |response|
-              response.read_body do |chunk|
-                io.write(chunk)
-              end
-            end
-            io.flush
-          end
+      file = download_with_retry(uri)
 
-          decrypt(Pathname(io.path), key) do |archive_path|
-            extract(archive_path, dest)
-          end
+      decrypt(file, key) do |archive_path|
+        extract(archive_path, dest)
+      end
+    end
+
+    # NOTE: Some exceptions are handled by ``Net::HTTP` class.
+    #
+    # @see https://github.com/ruby/ruby/blob/v2_6_5/lib/net/http.rb#L1520-L1536
+    def download_with_retry(uri)
+      trace_writer.message "Downloading source code..." do
+        Retryable.retryable(
+          on: [
+            DownloadError,
+            Net::OpenTimeout,
+            Net::HTTPForbidden,
+          ],
+          tries: 5,
+          sleep: method(:retryable_sleep),
+          log_method: -> (retries, _exn) { trace_writer.message "Retrying download... (attempt: #{retries})" },
+        ) do
+          file = ::Tempfile.new
+          download(uri, dest: file, max_retries: 5, max_redirects: 10)
+          return Pathname(file.path)
         end
       end
     end
 
-    def download(uri, &block)
-      Net::HTTP.get_response(uri) do |response|
-        case response.code
-        when /^2/
-          yield response
-        when "301", "302"
-          download(URI.parse(response['location']), &block)
-        else
-          raise DownloadError, "Download is failed. #{response.inspect}"
+    def download(uri, dest:, max_retries:, max_redirects:)
+      raise ArgumentError, "Too many HTTP redirects: #{uri}" if max_redirects == 0
+
+      http_options = {
+        use_ssl: true,
+        max_retries: max_retries,
+      }
+
+      Net::HTTP.start(uri.hostname, uri.port, http_options) do |http|
+        http.request_get(uri) do |response|
+          case response
+          when Net::HTTPSuccess
+            response.read_body(dest)
+          when Net::HTTPRedirection
+            download(
+              URI(response["Location"]),
+              dest: dest,
+              max_retries: max_retries,
+              max_redirects: max_redirects - 1,
+            )
+          else
+            raise DownloadError, "Download failed: #{response.inspect}"
+          end
         end
       end
     end

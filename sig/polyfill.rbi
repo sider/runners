@@ -111,11 +111,24 @@ class URI
   def path: -> String
   def scheme: -> String
   def host: -> String
+  def hostname: -> String
+  def port: -> Integer
   def userinfo=: (String) -> String
 end
 
 class Net::HTTP
-  def self.get_response: <'a> (URI) { (any) -> 'a } -> 'a
+  def self.start: <'a> (String, Integer, Hash<Symbol, any>) { (HTTP) -> 'a } -> 'a
+  def request_get: (URI) { (Net::HTTPResponse) -> void } -> void
+end
+
+class Net::HTTPResponse
+  include Net::HTTPHeader
+
+  def read_body: (::IO) -> void
+end
+
+module Net::HTTPHeader
+  def []: (String) -> String
 end
 
 class Open3
@@ -153,13 +166,6 @@ class OpenSSL::Cipher
   def random_key: -> String
   def reset: -> self
   def update: (String) -> String
-end
-
-class Tempfile
-  def self.open: <'a> { (File) -> 'a } -> 'a
-end
-
-class OpenSSL::Cipher::CipherError
 end
 
 class Net::OpenTimeout
