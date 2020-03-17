@@ -43,6 +43,7 @@ module Runners
         ) do
           file = ::Tempfile.new
           download uri, dest: file, max_retries: 5, max_redirects: 10
+          file.flush
           block.call Pathname(file.path)
         ensure
           file.close! if file
