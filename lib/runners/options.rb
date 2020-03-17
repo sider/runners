@@ -1,6 +1,7 @@
 module Runners
   class Options
     GitSource = Struct.new(:head, :base, :git_http_url, :owner, :repo, :git_http_userinfo, :pull_number, keyword_init: true)
+
     ArchiveSource = Struct.new(:head, :head_key, :base, :base_key, keyword_init: true) do
       def http?
         scheme = URI.parse(head).scheme
@@ -13,8 +14,8 @@ module Runners
       end
     end
 
-    attr_reader :stdout, :stderr
-    attr_reader :source, :ssh_key, :io
+    # @dynamic stdout, stderr, source, ssh_key, io
+    attr_reader :stdout, :stderr, :source, :ssh_key, :io
 
     def initialize(stdout, stderr)
       @stdout = stdout

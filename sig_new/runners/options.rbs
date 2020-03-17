@@ -1,0 +1,39 @@
+class Runners::Options
+  attr_reader stdout: ::IO
+  attr_reader stderr: ::IO
+  attr_reader source: GitSource | ArchiveSource
+  attr_reader ssh_key: String?
+  attr_reader io: Runners::IO
+
+  def initialize: (::IO stdout, ::IO stderr) -> void
+  def parse_options: () -> Hash[Symbol, untyped]
+end
+
+class Runners::Options::GitSource
+  attr_reader head: String
+  attr_reader base: String?
+  attr_reader git_http_url: String
+  attr_reader owner: String
+  attr_reader repo: String
+  attr_reader git_http_userinfo: String?
+  attr_reader pull_number: Integer?
+
+  def initialize: (head: String,
+                   ?base: String?,
+                   git_http_url: String,
+                   owner: String,
+                   repo: String,
+                   ?git_http_userinfo: String?,
+                   ?pull_number: Integer?) -> void
+end
+
+class Runners::Options::ArchiveSource
+  attr_reader head: String
+  attr_reader head_key: String?
+  attr_reader base: String?
+  attr_reader base_key: String?
+
+  def initialize: (head: String, ?head_key: String?, ?base: String?, ?base_key: String?) -> void
+  def http?: () -> bool
+  def file?: () -> bool
+end

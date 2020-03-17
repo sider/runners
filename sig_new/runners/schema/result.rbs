@@ -1,0 +1,3 @@
+class Runners::Schema::Result
+  def self.envelope: () -> untyped
+end

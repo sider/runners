@@ -2,6 +2,7 @@ require "optparse"
 
 module Runners
   class CLI
+    # @dynamic stdout, stderr, guid, analyzer, options
     attr_reader :stdout
     attr_reader :stderr
     attr_reader :guid
@@ -35,13 +36,17 @@ module Runners
       @processor_class ||= (Processor.subclasses.detect do |cls|
         # NOTE: Generate an analyzer ID from filename convention.
         #       This logic assumes that each subclass has its `#analyze` method.
-        source_file, _ = cls.instance_method(:analyze).source_location
-        analyzer_id_from_filename = File.basename(source_file, ".rb")
-        unless cls.method_defined?(:analyzer_id)
-          cls.define_method(:analyzer_id) { analyzer_id_from_filename }
+        method = cls.instance_method(:analyze)
+        if method
+          method_loc = method.source_location
+          if method_loc
+            analyzer_id_from_filename = File.basename(method_loc[0], ".rb")
+            unless cls.method_defined?(:analyzer_id)
+              cls.define_method(:analyzer_id) { analyzer_id_from_filename }
+            end
+            analyzer == analyzer_id_from_filename
+          end
         end
-
-        analyzer == analyzer_id_from_filename
       end or raise "Not found processor class with '#{analyzer}'")
     end
 
@@ -88,17 +93,22 @@ module Runners
     end
 
     def sensitive_strings
-      @sensitive_strings ||= [].tap do |strings|
+      @sensitive_strings ||= begin
+        # @type var strings: Array[String]
+        strings = []
         source = options.source
         if source.is_a?(Options::GitSource)
           # @type var source: Options::GitSource
-          strings << source.git_http_userinfo if source.git_http_userinfo
+          user_info = source.git_http_userinfo
+          strings << user_info if user_info
         end
+        strings
       end
     end
 
     def format_duration(duration_in_sec)
       parts = ActiveSupport::Duration.build(duration_in_sec).parts
+      # @type var res: Array[String]
       res = []
       parts[:hours].tap { |h| res << "#{h}h" if h && h > 0 }
       parts[:minutes].tap { |m| res << "#{m}m" if m && m > 0 }

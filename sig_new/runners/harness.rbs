@@ -1,0 +1,18 @@
+class Runners::Harness
+  attr_reader guid: String
+  attr_reader processor_class: Class
+  attr_reader options: Options
+  attr_reader working_dir: Pathname
+  attr_reader trace_writer: TraceWriter
+  attr_reader warnings: Array[String]
+  attr_reader config: Config?
+
+  def initialize: (guid: String,
+                   processor_class: Class,
+                   options: Options,
+                   working_dir: Pathname,
+                   trace_writer: TraceWriter) -> void
+  def run: () -> untyped
+  def ensure_result: () { () -> untyped } -> untyped
+  def handle_error: (Exception exn) -> void
+end

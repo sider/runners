@@ -1,0 +1,12 @@
+module ActiveSupport
+end
+
+class ActiveSupport::Duration
+  attr_reader parts: Hash[Symbol, Numeric]
+
+  def self.build: (Numeric | Float) -> instance
+end
+
+extension Class (ActiveSupport)
+  def subclasses: () -> Array[Class]
+end

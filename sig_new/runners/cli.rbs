@@ -1,0 +1,15 @@
+class Runners::CLI
+  attr_reader stdout: ::IO
+  attr_reader stderr: ::IO
+  attr_reader guid: String
+  attr_reader analyzer: String
+  attr_reader options: Options
+
+  def initialize: (argv: Array[String], stdout: ::IO, stderr: ::IO) -> void
+  def with_working_dir: [X] { (Pathname) -> X } -> X
+  def processor_class: () -> Class
+  def run: () -> untyped
+  def io: () -> Runners::IO
+  def sensitive_strings: () -> Array[String]
+  def format_duration: (Float duration_in_sec) -> String
+end

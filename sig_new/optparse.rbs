@@ -1,0 +1,5 @@
+class OptionParser
+  def initialize: { (OptionParser) -> void } -> void
+  def on: (String) { (String) -> void } -> void
+  def parse!: (Array[String]) -> void
+end
