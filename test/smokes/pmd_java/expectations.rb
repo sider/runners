@@ -6,7 +6,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "pmd_java", version: "6.21.0" },
+    analyzer: { name: "PMD Java", version: "6.21.0" },
     issues: [
       {
         message: "System.out.println is used",
@@ -74,7 +74,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "pmd_java", version: "6.21.0" },
+    analyzer: { name: "PMD Java", version: "6.21.0" },
     issues: [
       {
         message: "Parameter 'args' is not assigned and could be declared final",
@@ -157,7 +157,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "pmd_java", version: "6.21.0" },
+    analyzer: { name: "PMD Java", version: "6.21.0" },
     issues: [
       {
         message: "Parameter 'args' is not assigned and could be declared final",
@@ -187,7 +187,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "pmd_java", version: "6.21.0" },
+    analyzer: { name: "PMD Java", version: "6.21.0" },
     issues: [
       {
         message: "Comment is too large: Too many lines",
@@ -217,7 +217,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "failure",
-    analyzer: { name: "pmd_java", version: "6.21.0" },
+    analyzer: { name: "PMD Java", version: "6.21.0" },
     message: "Unexpected error occurred. Please see the analysis log."
   }
 )
@@ -228,7 +228,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "pmd_java", version: "6.21.0" },
+    analyzer: { name: "PMD Java", version: "6.21.0" },
     issues: [
       {
         message: "violation message",
@@ -267,7 +267,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "pmd_java", version: "6.21.0" },
+    analyzer: { name: "PMD Java", version: "6.21.0" },
     issues: [
       {
         message: "The String literal \"Howdy\" appears 4 times in this file; the first occurrence is on line 3",

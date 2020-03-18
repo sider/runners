@@ -157,10 +157,6 @@ module Runners
       end
     end
 
-    def analyzer_name
-      'ktlint'
-    end
-
     def analyze(changes)
       delete_unchanged_files changes, only: [".kt", ".kts"]
 

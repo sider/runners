@@ -35,10 +35,6 @@ module Runners
       @analyzer_version ||= extract_version! analyzer_bin, "version"
     end
 
-    def analyzer_name
-      'javasee'
-    end
-
     def analyze(changes)
       analyzer_version
 

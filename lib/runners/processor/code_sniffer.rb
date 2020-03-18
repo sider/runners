@@ -44,10 +44,6 @@ module Runners
 
     private
 
-    def analyzer_name
-      "code_sniffer"
-    end
-
     def analyzer_bin
       "phpcs"
     end
