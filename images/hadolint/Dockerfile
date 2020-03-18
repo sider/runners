@@ -4,7 +4,7 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM sider/devon_rex_base:master
 
-ARG HADOLINT_VERSION="1.17.4"
+ARG HADOLINT_VERSION=1.17.4
 
 USER root
 

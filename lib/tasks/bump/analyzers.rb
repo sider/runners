@@ -5,12 +5,21 @@ require "yaml"
 namespace :bump do
   desc "Bump analyzers and create new pull requests"
   task :analyzers do
+    dry_run = ENV.key?("DRY_RUN")
+
     BumpAnalyzers.each do |t|
       puts "Bumping #{t.analyzer}..."
 
-      t.update_version!
+      t.update_version! dry_run: dry_run
       if t.updated
         puts "  --> #{t.current_version} => #{t.latest_version}"
+
+        if t.latest_version.match?(/alpha|beta/i)
+          puts "  --> This is an unstable version. Skipped."
+          next
+        end
+
+        next if dry_run
       else
         puts "  --> none"
         next
@@ -24,6 +33,8 @@ namespace :bump do
         puts "  --> #{t.pull_request_url}"
       end
     end
+
+    puts "This is a dry-run mode. No changes." if dry_run
   end
 end
 
@@ -148,18 +159,27 @@ BumpAnalyzers = Struct.new(
     "master"
   end
 
-  def update_version!
+  def update_version!(dry_run: false)
     updated = false
     current_version = nil
 
     Pathname.glob("images/#{analyzer}/Dockerfile*").each do |file|
       old_content = file.read
-      new_content = old_content.sub(/ARG (\w+)=(\d+\.\d+(\.\d+)?)\b/) do |_match|
-        current_version = $2
-        "ARG #{$1}=#{latest_version}"
+      pattern = /\b(ARG|ENV) (\w+)=(\d+\.\d+(\.\d+)?)\b/
+
+      unless old_content.match? pattern
+        abort "Not found version in `#{file}`!"
       end
+
+      new_content = old_content.sub(pattern) do
+        type = $1
+        name = $2
+        current_version = $3
+        "#{type} #{name}=#{latest_version}"
+      end
+
       if old_content != new_content
-        file.write(new_content)
+        file.write(new_content) unless dry_run
         updated = true
       end
     end

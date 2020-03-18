@@ -25,7 +25,6 @@ analyzers:
     name: cpplint
     github: cpplint/cpplint
     doc: tools/cplusplus/cpplint
-    dependabot: false
   detekt:
     name: detekt
     github: arturbosch/detekt
