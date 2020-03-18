@@ -13,7 +13,6 @@ module Runners
       }
 
       let :issue, object(
-        rule: string,
         ruleset: string,
         priority: string,
       )
@@ -66,11 +65,6 @@ module Runners
           path = relative_path(element[:name])
 
           element.each_element("violation") do |violation|
-            links = array(violation[:externalInfoUrl])
-
-            message = violation.text.strip
-            id = violation[:ruleset] + "-" + violation[:rule] + "-" + Digest::SHA1.hexdigest(message)
-
             result.add_issue Issue.new(
               path: path,
               location: Location.new(
@@ -79,11 +73,10 @@ module Runners
                 end_line: violation[:endline],
                 end_column: violation[:endcolumn],
               ),
-              id: id,
-              message: message,
-              links: links,
+              id: violation[:rule],
+              message: violation.text.strip,
+              links: Array(violation[:externalInfoUrl]),
               object: {
-                rule: violation[:rule],
                 ruleset: violation[:ruleset],
                 priority: violation[:priority],
               },
