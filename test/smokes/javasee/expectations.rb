@@ -6,7 +6,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "javasee", version: "0.1.3" },
+    analyzer: { name: "JavaSee", version: "0.1.3" },
     issues: [
       {
         id: "hello",
@@ -27,7 +27,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "javasee", version: :_ },
+    analyzer: { name: "JavaSee", version: :_ },
     issues: [
       {
         id: "hello",
@@ -48,7 +48,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "failure",
-    analyzer: { name: "javasee", version: :_ },
+    analyzer: { name: "JavaSee", version: :_ },
     message: /java.lang.ClassCastException: class java.lang.Integer cannot be cast/
   }
 )
@@ -67,7 +67,7 @@ Smoke.add_test(
 
 Smoke.add_test(
   "no_config_file",
-  { guid: "test-guid", timestamp: :_, type: "success", analyzer: { name: "javasee", version: :_ }, issues: [] },
+  { guid: "test-guid", timestamp: :_, type: "success", analyzer: { name: "JavaSee", version: :_ }, issues: [] },
   {
     warnings: [
       {
@@ -84,5 +84,5 @@ Smoke.add_test(
 
 Smoke.add_test(
   "no_linting_files",
-  { guid: "test-guid", timestamp: :_, type: "success", analyzer: { name: "javasee", version: :_ }, issues: [] }
+  { guid: "test-guid", timestamp: :_, type: "success", analyzer: { name: "JavaSee", version: :_ }, issues: [] }
 )

@@ -51,10 +51,6 @@ module Runners
       yield
     end
 
-    def analyzer_name
-      'TSLint'
-    end
-
     def analyze(_changes)
       options = [tslint_config, exclude, project, rules_dir, type_check].flatten.compact
       run_analyzer(target_glob, options)

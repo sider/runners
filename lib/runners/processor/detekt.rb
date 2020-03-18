@@ -44,10 +44,6 @@ module Runners
       end
     end
 
-    def analyzer_name
-      'detekt'
-    end
-
     def detekt_config
       @detekt_config
     end

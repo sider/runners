@@ -52,10 +52,6 @@ module Runners
       yield additional_options, directory
     end
 
-    def analyzer_name
-      "code_sniffer"
-    end
-
     def analyzer_bin
       "phpcs"
     end

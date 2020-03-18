@@ -35,10 +35,6 @@ module Runners
       @analyzer_version ||= capture3!("show_pmd_version").yield_self { |stdout,| stdout.strip }
     end
 
-    def analyzer_name
-      'pmd_java'
-    end
-
     def analyzer_bin
       "pmd"
     end

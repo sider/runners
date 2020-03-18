@@ -17,7 +17,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "code_sniffer", version: "3.5.4" }
+    analyzer: { name: "PHP_CodeSniffer", version: "3.5.4" }
   }
 )
 
@@ -38,7 +38,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "code_sniffer", version: "3.5.4" }
+    analyzer: { name: "PHP_CodeSniffer", version: "3.5.4" }
   },
   warnings: [
     {
@@ -58,14 +58,22 @@ Smoke.add_test(
 Smoke.add_test(
   "sideci_php_sandbox",
   {
-    guid: "test-guid", timestamp: :_, type: "success", issues: :_, analyzer: { name: "code_sniffer", version: "3.5.4" }
+    guid: "test-guid",
+    timestamp: :_,
+    type: "success",
+    issues: :_,
+    analyzer: { name: "PHP_CodeSniffer", version: "3.5.4" }
   }
 )
 
 Smoke.add_test(
   "with_php_version",
   {
-    guid: "test-guid", timestamp: :_, type: "success", issues: :_, analyzer: { name: "code_sniffer", version: "3.5.4" }
+    guid: "test-guid",
+    timestamp: :_,
+    type: "success",
+    issues: :_,
+    analyzer: { name: "PHP_CodeSniffer", version: "3.5.4" }
   }
 )
 
@@ -98,7 +106,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "code_sniffer", version: "3.5.4" }
+    analyzer: { name: "PHP_CodeSniffer", version: "3.5.4" }
   },
   warnings: [
     {
@@ -126,7 +134,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "code_sniffer", version: "3.5.4" }
+    analyzer: { name: "PHP_CodeSniffer", version: "3.5.4" }
   }
 )
 
@@ -156,6 +164,6 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "code_sniffer", version: "3.5.4" }
+    analyzer: { name: "PHP_CodeSniffer", version: "3.5.4" }
   }
 )
