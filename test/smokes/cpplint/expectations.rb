@@ -35,28 +35,28 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "cpplint", version: "1.4.4" }
+    analyzer: { name: "cpplint", version: "1.4.5" }
   }
 )
 
 Smoke.add_test(
   "official_samples",
-  { guid: "test-guid", timestamp: :_, type: "success", issues: :_, analyzer: { name: "cpplint", version: "1.4.4" } }
+  { guid: "test-guid", timestamp: :_, type: "success", issues: :_, analyzer: { name: "cpplint", version: "1.4.5" } }
 )
 
 Smoke.add_test(
   "option_exclude",
-  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "cpplint", version: "1.4.4" } }
+  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "cpplint", version: "1.4.5" } }
 )
 
 Smoke.add_test(
   "option_exclude_multi",
-  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "cpplint", version: "1.4.4" } }
+  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "cpplint", version: "1.4.5" } }
 )
 
 Smoke.add_test(
   "option_extensions",
-  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "cpplint", version: "1.4.4" } }
+  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "cpplint", version: "1.4.5" } }
 )
 
 Smoke.add_test(
@@ -76,13 +76,13 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "cpplint", version: "1.4.4" }
+    analyzer: { name: "cpplint", version: "1.4.5" }
   }
 )
 
 Smoke.add_test(
   "option_headers",
-  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "cpplint", version: "1.4.4" } }
+  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "cpplint", version: "1.4.5" } }
 )
 
 Smoke.add_test(
@@ -111,7 +111,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "cpplint", version: "1.4.4" }
+    analyzer: { name: "cpplint", version: "1.4.5" }
   }
 )
 
@@ -132,7 +132,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "cpplint", version: "1.4.4" }
+    analyzer: { name: "cpplint", version: "1.4.5" }
   }
 )
 
@@ -162,7 +162,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "cpplint", version: "1.4.4" }
+    analyzer: { name: "cpplint", version: "1.4.5" }
   }
 )
 
@@ -192,6 +192,6 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "cpplint", version: "1.4.4" }
+    analyzer: { name: "cpplint", version: "1.4.5" }
   }
 )
