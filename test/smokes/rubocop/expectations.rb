@@ -476,3 +476,13 @@ Smoke.add_test(
     }
   ]
 )
+
+Smoke.add_test(
+  "old_bundler_via_gemspec",
+  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "RuboCop", version: "0.80.1" } }
+)
+
+Smoke.add_test(
+  "latest_bundler_via_gemspec",
+  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "RuboCop", version: "0.80.1" } }
+)
