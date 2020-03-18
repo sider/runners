@@ -3,7 +3,7 @@
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM sider/devon_rex_dotnet:master
-ENV FXCOP_VERSION=2.9.0-beta1.final
+ENV FXCOP_VERSION=2.9.8
 
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
