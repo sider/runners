@@ -4,7 +4,7 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM sider/devon_rex_go:master
 
-ARG LINT_TOOL_VERSION=1.23.6
+ARG LINT_TOOL_VERSION=1.24.0
 
 USER root
 RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b /usr/local/bin v${LINT_TOOL_VERSION}
