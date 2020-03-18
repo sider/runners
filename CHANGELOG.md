@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 - [GolangCI-Lint] Bump GolangCI-Lint from 1.23.6 to 1.24.0 [#871](https://github.com/sider/runners/pull/871)
 - [hadolint] Bump hadolint from 1.17.4 to 1.17.5 [#872](https://github.com/sider/runners/pull/872)
 - Show composer and composer packages' versions [#876](https://github.com/sider/runners/pull/876)
+- [PMD Java] Improve issues result [#880](https://github.com/sider/runners/pull/880)
 
 ## 0.21.7
 
