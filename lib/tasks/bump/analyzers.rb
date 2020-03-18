@@ -139,7 +139,6 @@ BumpAnalyzers = Struct.new(
     current_tag = tags.find { |tag| tag.include? current_version }
 
     <<~MARKDOWN
-      For details, see belows:
       - Release: https://github.com/#{github_repo}/releases/tag/#{latest_tag}
       - Compare: https://github.com/#{github_repo}/compare/#{current_tag}...#{latest_tag}
     MARKDOWN
