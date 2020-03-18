@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - Use ASCII_8BIT to avoid ArgumentError for #scan [#845](https://github.com/sider/runners/pull/845)
 - [remark-lint] New support [#813](https://github.com/sider/runners/pull/813)
 - [Reek] Support new options [#863](https://github.com/sider/runners/pull/863)
+- [cpplint] Bump cpplint from 1.4.4 to 1.4.5 [#869](https://github.com/sider/runners/pull/869)
 
 ## 0.21.7
 
