@@ -25,7 +25,7 @@ Smoke.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "hadolint", version: "1.17.4" }
+  analyzer: { name: "hadolint", version: "1.17.5" }
 )
 
 Smoke.add_test(
@@ -62,7 +62,7 @@ Smoke.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "hadolint", version: "1.17.4" }
+  analyzer: { name: "hadolint", version: "1.17.5" }
 )
 
 Smoke.add_test(
@@ -99,17 +99,17 @@ Smoke.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "hadolint", version: "1.17.4" }
+  analyzer: { name: "hadolint", version: "1.17.5" }
 )
 
 Smoke.add_test(
   "option_ignore",
-  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "hadolint", version: "1.17.4" } }
+  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "hadolint", version: "1.17.5" } }
 )
 
 Smoke.add_test(
   "option_ignore_multi",
-  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "hadolint", version: "1.17.4" } }
+  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "hadolint", version: "1.17.5" } }
 )
 
 Smoke.add_test(
@@ -119,7 +119,7 @@ Smoke.add_test(
     timestamp: :_,
     type: "failure",
     message: "No Docker files found",
-    analyzer: { name: "hadolint", version: "1.17.4" }
+    analyzer: { name: "hadolint", version: "1.17.5" }
   }
 )
 
@@ -140,7 +140,7 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "hadolint", version: "1.17.4" }
+    analyzer: { name: "hadolint", version: "1.17.5" }
   }
 )
 
@@ -161,6 +161,6 @@ Smoke.add_test(
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "hadolint", version: "1.17.4" }
+    analyzer: { name: "hadolint", version: "1.17.5" }
   }
 )
