@@ -13,12 +13,6 @@ namespace :bump do
       t.update_version! dry_run: dry_run
       if t.updated
         puts "  --> #{t.current_version} => #{t.latest_version}"
-
-        if t.latest_version.match?(/alpha|beta/i)
-          puts "  --> This is an unstable version. Skipped."
-          next
-        end
-
         next if dry_run
       else
         puts "  --> none"
