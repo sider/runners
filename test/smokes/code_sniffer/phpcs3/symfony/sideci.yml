@@ -1,4 +1,3 @@
 linter:
   code_sniffer:
-    version: 3
     standard: Symfony

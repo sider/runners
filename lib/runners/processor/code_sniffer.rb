@@ -33,24 +33,16 @@ module Runners
 
     def setup
       add_warning_if_deprecated_options([:options])
+      add_warning_if_deprecated_options([:version])
+
       yield
     end
 
     def analyze(changes)
-      check_runner_config do |options, target|
-        run_analyzer(options, target)
-      end
+      run_analyzer additional_options, directory
     end
 
     private
-
-    def check_runner_config
-      if config_linter[:version].to_i == 2
-        add_warning("Sider has no longer supported PHP_CodeSniffer v2. Sider executes v3 even if putting `2` as `version` option.", file: config.path_name)
-      end
-
-      yield additional_options, directory
-    end
 
     def analyzer_bin
       "phpcs"

@@ -110,8 +110,7 @@ Smoke.add_test(
   },
   warnings: [
     {
-      message:
-        "Sider has no longer supported PHP_CodeSniffer v2. Sider executes v3 even if putting `2` as `version` option.",
+      message: /The `\$\.linter\.code_sniffer\.version` option\(s\) in your `sider\.yml` are deprecated/,
       file: "sider.yml"
     }
   ]
