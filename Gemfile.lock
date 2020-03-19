@@ -85,12 +85,12 @@ GEM
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 1.7)
     ruby-progressbar (1.10.1)
-    steep (0.14.0)
+    steep (0.11.1)
       activesupport (>= 5.1)
       ast_utils (~> 0.3.0)
-      language_server-protocol (~> 3.14.0.1)
+      language_server-protocol (~> 3.14.0)
       listen (~> 3.1)
-      parser (~> 2.7.0)
+      parser (~> 2.4)
       pry (~> 0.12.2)
       rainbow (>= 2.2.2, < 4.0)
     strong_json (2.1.0)
@@ -126,7 +126,7 @@ DEPENDENCIES
   rexml (>= 3.2, < 4.0)
   rr
   rubocop
-  steep
+  steep (= 0.11.1)
   strong_json
   unification_assertion
 

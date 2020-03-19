@@ -18,7 +18,7 @@ group :development, :test do
   gem 'minitest'
   gem 'rr'
   gem 'querly'
-  gem 'steep'
+  gem 'steep', "0.11.1"
   gem 'rubocop', require: false
   gem 'meowcop', require: false
   gem 'aufgaben', git: 'https://github.com/ybiquitous/aufgaben.git', tag: '0.4.1'
