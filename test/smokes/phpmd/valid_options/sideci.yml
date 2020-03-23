@@ -2,5 +2,6 @@ linter:
   phpmd:
     exclude: app/Controller/
     strict: true
+    rule: cleancode,codesize,controversial,design,naming,unusedcode
     options:
       suffixes: php,phtml

@@ -19,4 +19,8 @@ class Main {
     function __construct(){
         $hoge = "hoge";
     }
+
+    function bar($flag = true) {
+        return $flag;
+    }
 }

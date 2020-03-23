@@ -79,22 +79,34 @@ module Runners
     end
 
     def run_analyzer(changes, targets, rule, options)
-      report_file = working_dir / "phpmd-report-#{Time.now.to_i}.xml"
+      report_file = Pathname(Tempfile.new("phpmd-report-").path)
 
       # PHPMD exits 1 when some violations are found.
       # The `--ignore-violation-on-exit` will exit with a zero code, even if any violations are found.
       # See https://phpmd.org/documentation/index.html
-      command_line = [
-        analyzer_bin, targets, "xml", rule, "--ignore-violations-on-exit",
-        "--report-file", report_file.to_s, *options,
-      ]
-      capture3!(*command_line)
+      _stdout, stderr, status = capture3(
+        analyzer_bin,
+        targets,
+        "xml",
+        rule,
+        "--ignore-violations-on-exit",
+        "--report-file", report_file.to_path,
+        *options
+      )
+
+      unless status.success?
+        if stderr.include? "Cannot find specified rule-set"
+          return Results::Failure.new(guid: guid, analyzer: analyzer, message: "Invalid rule: #{rule.inspect}")
+        else
+          raise stderr
+        end
+      end
 
       output_xml =
         if report_file.exist?
           report_file.read
         else
-          raise "Failed to output a report file via the command: #{command_line.join(' ')}"
+          raise "Failed to output a report file"
         end
 
       trace_writer.message output_xml
@@ -119,20 +131,15 @@ module Runners
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
         xml_doc.root.each_element('file') do |file|
-          file.each_element('violation') do |violation|
-            loc = Location.new(
-              start_line: violation[:beginline],
-              start_column: nil,
-              end_line: violation[:endline],
-              end_column: nil
-            )
+          path = relative_path(file[:name])
 
+          file.each_element('violation') do |violation|
             result.add_issue Issue.new(
-              path: relative_path(file[:name]),
-              location: loc,
+              path: path,
+              location: Location.new(start_line: violation[:beginline], end_line: violation[:endline]),
               id: violation[:rule],
               message: violation.text.strip,
-              links: [violation[:externalInfoUrl]].compact,
+              links: Array(violation[:externalInfoUrl]),
             )
           end
         end
