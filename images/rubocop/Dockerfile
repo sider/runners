@@ -2,7 +2,7 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM sider/devon_rex_ruby:master
+FROM sider/devon_rex_ruby:2.16.0
 
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
