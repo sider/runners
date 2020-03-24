@@ -17,7 +17,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "failure",
-    analyzer: { name: "detekt", version: "1.6.0" },
+    analyzer: { name: "detekt", version: "1.7.0" },
     message: "Your detekt configuration is invalid"
   }
 )
@@ -40,7 +40,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "detekt", version: "1.6.0" },
+    analyzer: { name: "detekt", version: "1.7.0" },
     issues: [
       {
         id: "detekt.EmptyClassBlock",
@@ -88,7 +88,7 @@ Smoke.add_test(
     guid: "test-guid",
     timestamp: :_,
     type: "success",
-    analyzer: { name: "detekt", version: "1.6.0" },
+    analyzer: { name: "detekt", version: "1.7.0" },
     issues: [
       {
         id: "detekt.EmptyClassBlock",
