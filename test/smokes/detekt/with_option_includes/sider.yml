@@ -1,0 +1,4 @@
+linter:
+  detekt:
+    includes:
+      - "**/src/main/**"

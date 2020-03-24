@@ -24,51 +24,30 @@ module Runners
 
     register_config_schema(name: :detekt, schema: Schema.runner_config)
 
-    def detekt_config
-      @detekt_config
-    end
-
     def analyze(changes)
       delete_unchanged_files changes, only: [".kt", ".kts"]
-
-      check_runner_config do |checked_config|
-        @detekt_config = checked_config
-        run_analyzer
-      end
+      run_analyzer
     end
 
-    def check_runner_config
-      yield(
-        {
-          baseline: config_linter[:baseline],
-          config: Array(config_linter[:config]) || [],
-          "config-resource": config_linter[:"config-resource"] || [],
-          "disable-default-rulesets": config_linter[:"disable-default-rulesets"] || false,
-          excludes: Array(config_linter[:excludes]) || [],
-          includes: Array(config_linter[:includes]) || [],
-          input: Array(config_linter[:input]) || []
-        }
-      )
-    end
+    private
 
     def run_analyzer
-      report_id = "xml"
-      report_path = Tempfile.new("detekt-report").path
+      report_path = Pathname(Tempfile.new("detekt-report-").path)
 
-      args = [
-        baseline,
-        config_files,
-        config_resource,
-        disable_default_rulesets,
-        excludes,
-        input,
-        report(report_id, report_path)
-      ].flatten.compact
-
-      _stdout, stderr, status = capture3(analyzer_bin, *args)
+      _stdout, stderr, status = capture3(
+        analyzer_bin,
+        *cli_baseline,
+        *cli_config,
+        *cli_config_resource,
+        *cli_disable_default_rulesets,
+        *cli_excludes,
+        *cli_includes,
+        *cli_input,
+        *cli_report(report_path),
+      )
 
       # detekt has some exit codes.
-      # @see https://github.com/arturbosch/detekt/blob/1.6.0/docs/pages/gettingstarted/cli.md
+      # @see https://github.com/arturbosch/detekt/blob/1.7.0/docs/pages/gettingstarted/cli.md
       case status.exitstatus
       when 0, 2
         issues = construct_result(report_path)
@@ -85,51 +64,49 @@ module Runners
       end
     end
 
-    def baseline
-      detekt_config[:baseline].then { |value| value ? ["--baseline", value] : [] }
+    def cli_baseline
+      config_linter[:baseline].then { |value| value ? ["--baseline", value] : [] }
     end
 
-    def config_files
-      detekt_config[:config].then { |value| value.present? ? ["--config", value.join(",")] : [] }
+    def cli_config
+      Array(config_linter[:config]).then { |arr| arr.present? ? ["--config", arr.join(",")] : [] }
     end
 
-    def config_resource
-      detekt_config[:"config-resource"].then { |value| value.present? ? ["--config-resource", value.join(",")] : [] }
+    def cli_config_resource
+      Array(config_linter[:"config-resource"]).then { |arr| arr.present? ? ["--config-resource", arr.join(",")] : [] }
     end
 
-    def disable_default_rulesets
-      detekt_config[:"disable-default-rulesets"] ? ["--disable-default-rulesets"] : []
+    def cli_disable_default_rulesets
+      config_linter[:"disable-default-rulesets"] ? ["--disable-default-rulesets"] : []
     end
 
-    def excludes
-      detekt_config[:excludes].then { |value| value.present? ? ["--excludes", value.join(",")] : [] }
+    def cli_excludes
+      Array(config_linter[:excludes]).then { |arr| arr.present? ? ["--excludes", arr.join(",")] : [] }
     end
 
-    def includes
-      detekt_config[:includes].then { |value| value.present? ? ["--includes", value.join(",")] : [] }
+    def cli_includes
+      Array(config_linter[:includes]).then { |arr| arr.present? ? ["--includes", arr.join(",")] : [] }
     end
 
-    def input
-      detekt_config[:input].then { |value| value.present? ? ["--input", value.join(",")] : [] }
+    def cli_input
+      Array(config_linter[:input]).then { |arr| arr.present? ? ["--input", arr.join(",")] : [] }
     end
 
-    def report(report_id, report_path)
-      ["--report", "#{report_id}:#{report_path}"]
+    def cli_report(report_path)
+      ["--report", "xml:#{report_path}"]
     end
 
     def construct_result(report_path)
-      output_file_path = current_dir / report_path
-      if output_file_path.exist?
+      if report_path.exist?
         trace_writer.message "Reading output from #{report_path}..."
-        output = output_file_path.read
+        output = report_path.read
         trace_writer.message output
+        parse_output(output)
       else
         msg = "#{report_path} does not exist. Unexpected error occurred, processing cannot continue."
         trace_writer.error msg
         raise msg
       end
-
-      parse_output(output)
     end
 
     def parse_output(output)
@@ -171,6 +148,5 @@ module Runners
         schema: Schema.issue
       )
     end
-
   end
 end

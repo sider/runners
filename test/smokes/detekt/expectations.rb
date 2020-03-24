@@ -177,3 +177,24 @@ Smoke.add_test(
     ]
   }
 )
+
+Smoke.add_test(
+  "with_option_includes",
+  {
+    guid: "test-guid",
+    timestamp: :_,
+    type: "success",
+    analyzer: { name: "detekt", version: "1.7.0" },
+    issues: [
+      {
+        id: "detekt.EmptyClassBlock",
+        path: "src/main/App.kt",
+        location: { start_line: 1 },
+        message: "The class or object App is empty.",
+        links: [],
+        object: { severity: "info" },
+        git_blame_info: nil
+      }
+    ]
+  }
+)
