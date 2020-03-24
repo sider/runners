@@ -24,26 +24,6 @@ module Runners
 
     register_config_schema(name: :detekt, schema: Schema.runner_config)
 
-    def analyzer_version
-      unknown_version = "0.0.0"
-      @analyzer_version ||= extract_detekt_version || unknown_version
-    end
-
-    def extract_detekt_version
-      pom_file = Pathname(Dir.home) / analyzer_name / "pom.xml"
-      return unless pom_file.exist?
-
-      group_id = "io.gitlab.arturbosch.detekt"
-      artifact_id = "detekt-cli"
-      pom = REXML::Document.new(pom_file.read)
-      pom.root.each_element("//dependency/groupId[text()='#{group_id}']") do |element|
-        dependency = element.parent
-        if dependency.elements["artifactId"].text == artifact_id
-          return dependency.elements["version"].text
-        end
-      end
-    end
-
     def detekt_config
       @detekt_config
     end
