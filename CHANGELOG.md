@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
 - Show composer and composer packages' versions [#876](https://github.com/sider/runners/pull/876)
 - [PHP_CodeSniffer] Deprecate `version` option [#878](https://github.com/sider/runners/pull/878)
 - [PMD Java] Improve issues result [#880](https://github.com/sider/runners/pull/880)
+- [detekt] Bump detekt-cli from 1.6.0 to 1.7.0 [#890](https://github.com/sider/runners/pull/890)
 
 ## 0.21.7
 
