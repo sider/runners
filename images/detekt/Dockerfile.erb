@@ -1,6 +1,6 @@
 <%= render_erb 'images/Dockerfile.java.erb' %>
 
-COPY --chown=analyzer_runner:nogroup images/detekt/pom.xml ${RUNNER_USER_HOME}/detekt/pom.xml
+COPY --chown=<%= chown %> images/detekt/pom.xml ${RUNNER_USER_HOME}/detekt/pom.xml
 COPY images/detekt/detekt /usr/local/bin/
 
 <%= render_erb 'images/Dockerfile.base.erb' %>

@@ -17,7 +17,7 @@ FROM sider/devon_rex_java:master
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=builder ${RUNNER_USER_HOME}/detekt/*.jar ${RUNNER_USER_HOME}/detekt/
 ENV CLASSPATH ${RUNNER_USER_HOME}/detekt/*:${CLASSPATH}
 
-COPY --chown=analyzer_runner:nogroup images/detekt/pom.xml ${RUNNER_USER_HOME}/detekt/pom.xml
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/detekt/pom.xml ${RUNNER_USER_HOME}/detekt/pom.xml
 COPY images/detekt/detekt /usr/local/bin/
 
 
