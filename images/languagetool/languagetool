@@ -1,0 +1,3 @@
+#!/bin/bash
+
+exec java org.languagetool.commandline.Main "$@"
