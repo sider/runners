@@ -22,23 +22,6 @@ module Runners
     DEFAULT_TARGET = ".".freeze
     DEFAULT_LANGUAGE = "en-US".freeze
 
-    def config
-      @config or raise "Must be initialized!"
-    end
-
-    def self.ci_config_section_name
-      # Section name in sideci.yml, Generally it is the name of analyzer tool.
-      "languagetool"
-    end
-
-    def analyzer_bin
-      ["java", "-jar", "/usr/local/bin/languagetool-commandline.jar"]
-    end
-
-    def analyzer_name
-      "languagetool"
-    end
-
     # Output format:
     #
     #      [{:message=>
@@ -57,20 +40,19 @@ module Runners
     #      "ignoreForIncompleteSentence":false,"contextForSureMatch":1}]}",
     # {"message"=>"Use \"a\" instead of 'an' if the following word doesn't start with a vowel sound, e.g. 'a sentence', 'a university'", "shortMessage"=>"Wrong article", "replacements"=>[{"value"=>"a"}], "offset"=>192, "length"=>2, "context"=>{"text"=>"...on potential errors. or use this text to see an few of the problems that LanguageTool can de...", "offset"=>48, "length"=>2}, "sentence"=>"or use this text to see an few of the problems that LanguageTool can detecd.", "type"=>{"typeName"=>"Other"}, "rule"=>{"id"=>"EN_A_VS_AN", "description"=>"Use of 'a' vs. 'an'", "issueType"=>"misspelling", "category"=>{"id"=>"MISC", "name"=>"Miscellaneous"}}#
     def analyze(changes)
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        @config = config
-        run_analyzer
-      end
+      run_analyzer
     end
 
+    private
+
     def target_language
-      language = config[:language] || DEFAULT_LANGUAGE
+      language = config_linter[:language] || DEFAULT_LANGUAGE
       ["--language", language]
     end
 
     def check_target
-      return config[:target_file] unless config[:target_file].nil?
-      dir = config[:target_dir] || DEFAULT_TARGET
+      return config_linter[:target_file] unless config_linter[:target_file].nil?
+      dir = config_linter[:target_dir] || DEFAULT_TARGET
       ["--recursive", dir]
     end
 
@@ -78,7 +60,7 @@ module Runners
       # todo somehow, target file will be extracted from stderr
       # "Expected text language: English (GB)\nWorking on sample.txt...\n"
       stdout, stderr, status = capture3(
-        *analyzer_bin,
+        analyzer_bin,
         ## TODO --recursive can be used only if directory is specified
         "--json",
         *target_language,
