@@ -89,7 +89,7 @@ analyzers:
     github: pinterest/ktlint
     doc: tools/kotlin/ktlint
   languagetool:
-    name: languagetool
+    name: LanguageTool
     github: languagetool-org/languagetool
     doc: tools/others/languagetool
   misspell:
