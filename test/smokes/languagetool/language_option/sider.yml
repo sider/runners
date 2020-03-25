@@ -1,0 +1,4 @@
+linter:
+  languagetool:
+    language: 'ja-JP'
+    target_dir: 'japanese'

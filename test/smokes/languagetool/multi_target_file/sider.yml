@@ -1,0 +1,5 @@
+linter:
+  languagetool:
+    target_file:
+      - 'correct.txt'
+      - 'wrong.txt'

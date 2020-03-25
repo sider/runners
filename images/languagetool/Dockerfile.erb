@@ -1,0 +1,15 @@
+FROM sider/devon_rex_java:2.14.0
+
+ARG LANGUAGETOOL_VERSION=4.8
+
+USER root
+RUN curl -L https://raw.githubusercontent.com/languagetool-org/languagetool/master/install.sh --output install.sh && \
+    sh install.sh
+RUN cp -pR LanguageTool-${LANGUAGETOOL_VERSION}-stable/* /usr/local/bin
+RUN chmod +x /usr/local/bin/languagetool-commandline.jar
+
+USER $RUNNER_USER
+
+<%= render_erb 'images/Dockerfile.base.erb' %>
+RUN java -jar /usr/local/bin/languagetool-commandline.jar --version
+<%= render_erb 'images/Dockerfile.end.erb' %>
