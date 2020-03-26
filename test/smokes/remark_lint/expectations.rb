@@ -32,13 +32,7 @@ Smoke.add_test(
 
 Smoke.add_test(
   "no_files",
-  {
-    guid: "test-guid",
-    timestamp: :_,
-    type: "success",
-    issues: [],
-    analyzer: { name: "remark-lint", version: "6.0.5" }
-  }
+  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "remark-lint", version: "6.0.5" } }
 )
 
 Smoke.add_test(
@@ -154,7 +148,7 @@ Smoke.add_test(
         path: "readme.markdown",
         location: nil,
         id: "file-extension",
-        message: "Invalid extension: use `md`",
+        message: "Incorrect extension: use `md`",
         links: [],
         object: nil,
         git_blame_info: nil
@@ -167,7 +161,7 @@ Smoke.add_test(
         links: [],
         object: nil,
         git_blame_info: nil
-      },
+      }
     ],
     analyzer: { name: "remark-lint", version: "6.0.5" }
   }
