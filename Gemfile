@@ -18,7 +18,6 @@ group :development, :test do
   gem 'minitest'
   gem 'rr'
   gem 'steep', "0.11.1"
-  gem 'meowcop', require: false
   gem 'aufgaben', git: 'https://github.com/ybiquitous/aufgaben.git', tag: '0.4.1'
   gem 'lefthook', require: false
   gem 'prettier', require: false
