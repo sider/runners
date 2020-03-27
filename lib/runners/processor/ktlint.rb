@@ -87,7 +87,7 @@ module Runners
 
       output_file = gradle_config[:output]
       output = if output_file
-                 read_output_file(output_file)
+                 read_output_file(current_dir / output_file)
                else
                  stdout
                end
@@ -102,7 +102,7 @@ module Runners
       capture3("mvn", maven_config[:goal], *mvn_options)
 
       output_file = maven_config[:output]
-      read_output_file(current_dir / output_file)
+      output = read_output_file(current_dir / output_file)
 
       construct_result(maven_config[:reporter], output)
     end
