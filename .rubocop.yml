@@ -1,5 +1,4 @@
 require:
-  - rubocop-md
   - rubocop-minitest
   - rubocop-performance
   - rubocop-rake

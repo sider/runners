@@ -1,7 +1,6 @@
 linter:
   rubocop:
     gems:
-      - rubocop-md
       - rubocop-minitest
       - rubocop-performance
       - rubocop-rake
