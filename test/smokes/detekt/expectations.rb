@@ -198,3 +198,8 @@ Smoke.add_test(
     ]
   }
 )
+
+Smoke.add_test(
+  "no_files",
+  { guid: "test-guid", timestamp: :_, type: "success", analyzer: { name: "detekt", version: "1.7.0" }, issues: [] }
+)

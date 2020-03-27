@@ -32,7 +32,7 @@ module Runners
     private
 
     def run_analyzer
-      report_path = Pathname(Tempfile.new("detekt-report-").path)
+      report_path = Pathname(Tempfile.new(["detekt-report-", ".xml"]).path)
 
       _stdout, stderr, status = capture3(
         analyzer_bin,
@@ -97,7 +97,7 @@ module Runners
     end
 
     def construct_result(report_path)
-      if report_path.exist?
+      if report_path.file?
         trace_writer.message "Reading output from #{report_path}..."
         output = report_path.read
         trace_writer.message output
