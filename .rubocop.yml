@@ -1,3 +1,10 @@
+require:
+  - rubocop-md
+  - rubocop-minitest
+  - rubocop-performance
+  - rubocop-rake
+  - rubocop-rubycw
+
 inherit_gem:
   meowcop:
     - config/rubocop.yml
