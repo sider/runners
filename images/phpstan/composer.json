@@ -1,5 +1,13 @@
 {
+  "repositories": [
+    {
+      "type": "path",
+      "url": "./phpstan-sider-formatter"
+    }
+  ],
   "require": {
-    "phpstan/phpstan": "^0.12.18"
+    "phpstan/phpstan": "0.12.18",
+    "sider/phpstan-sider-formatter": "@dev",
+    "phpstan/extension-installer": "^1.0"
   }
 }

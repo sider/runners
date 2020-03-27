@@ -1,0 +1,3 @@
+services:
+	errorFormatter.sider:
+		class: Sider\PHPStan\ErrorFormatter\SiderErrorFormatter

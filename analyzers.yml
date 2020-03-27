@@ -101,6 +101,10 @@ analyzers:
     name: PHPMD
     github: phpmd/phpmd
     doc: tools/php/phpmd
+  phpstan:
+    name: PHPStan
+    github: phpstan/phpstan
+    doc: tools/php/phpstan
   pmd_java:
     name: PMD Java
     github: pmd/pmd

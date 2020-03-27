@@ -1,0 +1,22 @@
+{
+    "name": "sider/phpstan-sider-formatter",
+    "description": "PHPStan Custom Formatter for Sider",
+    "type": "phpstan-extension",
+    "extra": {
+      "phpstan": {
+        "includes": [
+          "extension.neon"
+        ]
+      }
+    },
+    "require": {
+        "phpstan/phpstan": "*",
+        "nette/utils": "*"
+    },
+    "autoload": {
+        "psr-4": {
+          "Sider\\PHPStan\\ErrorFormatter\\": "src/"
+        }
+    },
+    "license": "MIT"
+}
