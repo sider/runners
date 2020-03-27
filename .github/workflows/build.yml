@@ -120,6 +120,7 @@ jobs:
           - misspell
           - phinder
           - phpmd
+          - phpstan
           - pmd_java
           - querly
           - rails_best_practices

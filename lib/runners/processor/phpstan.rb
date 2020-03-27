@@ -2,104 +2,79 @@ module Runners
   class Processor::Phpstan < Processor
     include PHP
 
-    DEFAULT_LEVEL = 4.freeze
-
     Schema = StrongJSON.new do
-      let :runner_config, Schema::RunnerConfig.base.update_fields { |fields|
-        fields.merge!({
-                        glob: string?,
-                        configuration: string?,
-                        level: numeric?,
-                        "autoload-file": string?,
-                        # DO NOT ADD ANY OPTIONS in `options` option.
-                        options: optional(object(
-                                          configuration: string?,
-                                          level: numeric?,
-                                          "autoload-file": string?,
-                                          ))
-                      })
+      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
+        fields.merge!(
+          target: enum?(string, array(string)),
+          configuration: string?,
+          level: enum?(numeric, literal("max")),
+          "autoload-file": string?,
+        )
+
+        let :issue, object(
+          ignorable: boolean,
+          tip: string?,
+        )
       }
     end
 
-    def self.ci_config_section_name
-      "phpstan"
-    end
+    register_config_schema(name: :phpstan, schema: Schema.runner_config)
 
-    def analyzer_name
-      "phpstan"
-    end
+    DEFAULT_TARGET = ".".freeze
 
-    def setup
-      # add_warning_if_deprecated_options([:options], doc: "https://help.sider.review/tools/php/phpstan")
-      yield
-    end
-
-    def analyze changes
-      ensure_runner_config_schema(Schema.runner_config) do |config|
-        check_runner_config(config) do |targets, options|
-          run_analyzer(changes, targets, options)
-        end
-      end
+    def analyze
+      run_analyzer
     end
 
     private
 
-    def check_runner_config config
-      target = target_glob config
-      # Additional options.
-      level = level config
-      configuration = configuration config
-      autoload_file = autoload_file config
-
-      options = [level, configuration, autoload_file].flatten.compact
-      yield target, options
+    def analysis_targets
+      targets = Array(config_linter[:target])
+      targets.empty? ? [DEFAULT_TARGET] : targets
     end
 
-    def target_glob config
-      config[:glob] || "src"
+    def option_configuration
+      config_linter[:configuration].then { |v| v ? ["--configuration", v] : [] }
     end
 
-    def level config
-      level = config[:level] || config.dig(:options, :level) || DEFAULT_LEVEL
-      ["--level", level.to_s]
+    def option_level
+      config_linter[:level].then { |v| v ? ["--level", l] : [] }
     end
 
-    def configuration config
-      configuration = config[:configuration] || config.dig(:options, :configuration)
-      ["--configuration", configuration] if configuration
+    def option_autoload_file
+      config_linter[:"autoload-file"].then { |v| v ? ["autoload-file", v] : [] }
     end
 
-    def autoload_file config
-      autoload_file = config[:"autoload-file"] || config.dig(:options, :"autoload-file")
-      ["--autoload-file", "#{autoload_file}"] if autoload_file
-    end
-
-    def run_analyzer changes, targets, options
-      stdout, stderr, status = capture3(
+    def run_analyzer
+      stdout, stderr, _status = capture3(
         analyzer_bin,
         "analyse",
-        "--error-format",
-        "json",
-        *options,
-        targets,
+        "--error-format=sider",
+        "--no-progress",
+        "--no-ansi",
+        *option_configuration,
+        *option_level,
+        *option_autoload_file,
+        *analysis_targets,
       )
 
-      if stdout.blank?
-        return Results::Failure.new(guid: guid, message: stderr, analyzer: analyzer)
-      end
+      raise stderr if stderr.present?
 
-      result_parse = JSON.parse(stdout, symbolize_names: true)
+      errors = JSON.parse(stdout, symbolize_names: true)
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        result_parse[:files].each do |key, value|
-          value[:messages].each do |message|
-            loc = Location.new(start_line: message[:line])
-            result.add_issue Issue.new(
-              path: relative_path(key.to_s),
-              location: loc,
-              id: message[:message],
-              message: message[:message],
-            )
-          end
+        errors.each do |error|
+          result.add_issue Issue.new(
+            id: error[:message],
+            location: Location.new(start_line: error[:line]),
+            path: relative_path(error[:file]),
+            message: error[:message],
+            links: [],
+            object: {
+              ignorable: error[:canBeIgnored],
+              tip: error[:tip],
+            },
+            schema: Schema.issue,
+          )
         end
       end
     end
