@@ -2,6 +2,7 @@ require "minitest"
 require "unification_assertion"
 require "pp"
 require 'parallel'
+require "rainbow"
 
 module Runners
   module Testing
@@ -71,7 +72,7 @@ module Runners
         traces = reader.each_object.to_a
         if ENV['SHOW_TRACE']
           traces.each do |trace|
-            out.puts trace.pretty_inspect
+            out.puts colored_pretty_inspect(trace)
           end
         end
         result = traces.find { |object|
@@ -99,7 +100,7 @@ module Runners
             end
           end
         end
-        out.puts result.pretty_inspect unless ok
+        out.puts colored_pretty_inspect(result) unless ok
 
         ok
       end
@@ -128,6 +129,13 @@ module Runners
 
       def system!(*command_args)
         system(*command_args, exception: true)
+      end
+
+      def colored_pretty_inspect(hash)
+        hash.pretty_inspect
+          .gsub(/(:\w+)=>/, Rainbow('\1').yellow + "=>")
+          .gsub(/(nil|false|true)/, Rainbow('\1').cyan)
+          .gsub(/("[^"]+")/, Rainbow('\1').green)
       end
 
       @tests = {}
