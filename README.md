@@ -7,7 +7,7 @@ See also another related project, called [devon_rex](https://github.com/sider/de
 ## Supported analyzers
 
 <!-- AUTO-GENERATED-CONTENT:START (analyzers) -->
-All 35 analyzers are provided as a Docker image:
+All 36 analyzers are provided as a Docker image:
 
 | Name | Links | Status |
 |:-----|:------|:------:|
