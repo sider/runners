@@ -79,7 +79,7 @@ module Runners
     end
 
     def run_analyzer(changes, targets, rule, options)
-      report_file = Tempfile.new(["phpmd-", ".xml"]).path
+      report_file = Tempfile.create(["phpmd-", ".xml"]).path
 
       # PHPMD exits 1 when some violations are found.
       # The `--ignore-violation-on-exit` will exit with a zero code, even if any violations are found.

@@ -213,10 +213,10 @@ module Runners
       end
     end
 
-    def read_output_json(file_path, &block)
+    def read_output_json(file_path)
       output = read_output_file(file_path)
       if output.empty? && block_given?
-        block.call
+        yield
       else
         JSON.parse(output, symbolize_names: true)
       end
