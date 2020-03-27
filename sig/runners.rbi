@@ -149,7 +149,9 @@ class Runners::Processor
   def root_dir: -> Pathname
   def directory_traversal_attack?: (String) -> bool
   def show_runtime_versions: -> void
-  def git_blame_info: (String, Integer, Integer) -> Array<GitBlameInfo>
+  def read_output_file: (_ToS) -> String
+  def read_output_xml: (_ToS) -> REXML::Document
+  def read_output_json: <'x> (_ToS) { () -> 'x } -> (Hash<Symbol, any> | 'x)
 end
 
 type capture3_options = bool | Proc

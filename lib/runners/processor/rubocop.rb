@@ -169,7 +169,7 @@ module Runners
     end
 
     def run_analyzer(options)
-      output_file = Pathname(Tempfile.new(["rubocop-", ".json"]).path)
+      output_file = Tempfile.create(["rubocop-", ".json"]).path
 
       # NOTE: `--out` option must be after `--format` option.
       #
@@ -191,18 +191,12 @@ module Runners
         return Results::Failure.new(guid: guid, message: error_message, analyzer: analyzer)
       end
 
-      trace_writer.message "Reading output from #{output_file}..."
-      output_json = output_file.read
-      if output_json.empty?
-        trace_writer.message "No output."
-      else
-        trace_writer.message output_json
-      end
+      output_json = read_output_json(output_file) { nil }
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        break result if output_json.empty? # No offenses
+        break result unless output_json # No offenses
 
-        JSON.parse(output_json, symbolize_names: true)[:files].reject { |v| v[:offenses].empty? }.each do |hash|
+        output_json[:files].reject { |v| v[:offenses].empty? }.each do |hash|
           hash[:offenses].each do |offense|
             loc = Location.new(
               start_line: offense[:location][:line],
