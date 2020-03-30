@@ -3,6 +3,7 @@ target :lib do
   signature "sig_new"
 
   check "lib/runners.rb"
+  check "lib/runners/analyzer.rb"
   check "lib/runners/cli.rb"
   check "lib/runners/config.rb"
   check "lib/runners/errors.rb"
