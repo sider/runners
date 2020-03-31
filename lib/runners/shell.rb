@@ -1,6 +1,7 @@
 module Runners
   class Shell
     class ExecError < SystemError
+      # @dynamic type, args, stdout_str, stderr_str, status, dir
       attr_reader :type
       attr_reader :args
       attr_reader :stdout_str
@@ -35,6 +36,7 @@ module Runners
       end
     end
 
+    # @dynamic trace_writer, dir_stack, env_hash_stack
     attr_reader :trace_writer
     attr_reader :dir_stack
     attr_reader :env_hash_stack
@@ -65,7 +67,7 @@ module Runners
 
     def env_hash
       env_hash_stack.inject({}) do |acc, env|
-        # @type var acc: Hash<String, String?>
+        # @type var acc: Hash[String, String?]
         acc.merge(env)
       end
     end
@@ -90,8 +92,9 @@ module Runners
       end
     end
 
+    # TODO: After migrating to Steep (>= 0.14), use keyword arguments like `trace_stdout: true, ...`
     def capture3_trace(command, *args, **options)
-      # @type var options: any
+      # @type var options: untyped
       trace_stdout = options.fetch(:trace_stdout, true)
       trace_stderr = options.fetch(:trace_stderr, true)
       trace_command_line = options.fetch(:trace_command_line, true)

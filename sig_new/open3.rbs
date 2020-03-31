@@ -1,0 +1,3 @@
+class Open3
+  def self.capture3: (*untyped) -> [String, String, Process::Status]
+end

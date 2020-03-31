@@ -1,0 +1,6 @@
+module FileUtils
+  def self.rm_rf: (String | Pathname | Array[String] | Array[Pathname] list,
+                   ?noop: bool,
+                   ?verbose: bool,
+                   ?secure: bool) -> void
+end

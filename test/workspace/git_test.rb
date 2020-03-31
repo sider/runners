@@ -51,14 +51,14 @@ class WorkspaceGitTest < Minitest::Test
     with_workspace(head: "998bc02a913e3899f3a1cd327e162dd54d489a4b",
                    git_http_url: "https://github.com", owner: "sider", repo: "runners", pull_number: 533) do |workspace|
       assert_instance_of Runners::Workspace::Git, workspace
-      assert_equal %w[fetch --no-tags --no-recurse-submodules origin
+      assert_equal %w[--quiet --no-tags --no-recurse-submodules origin
                           +refs/heads/*:refs/remotes/origin/* +refs/pull/533/head:refs/remotes/pull/533/head], workspace.send(:git_fetch_args)
     end
 
     with_workspace(head: "998bc02a913e3899f3a1cd327e162dd54d489a4b",
                    git_http_url: "https://github.com", owner: "sider", repo: "runners") do |workspace|
       assert_instance_of Runners::Workspace::Git, workspace
-      assert_equal %w[fetch --no-tags --no-recurse-submodules origin
+      assert_equal %w[--quiet --no-tags --no-recurse-submodules origin
                           +refs/heads/*:refs/remotes/origin/*], workspace.send(:git_fetch_args)
     end
   end

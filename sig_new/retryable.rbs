@@ -1,0 +1,3 @@
+module Retryable
+  def self.retryable: [X] (*untyped) { () -> X } -> X
+end
