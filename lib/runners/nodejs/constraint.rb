@@ -14,10 +14,6 @@ module Runners
         version = Gem::Version.create(dependency.version)
         @requirements.all? { |requirement| requirement.satisfied_by? version }
       end
-
-      def unsatisfied_by?(dependency)
-        !satisfied_by?(dependency)
-      end
     end
   end
 end

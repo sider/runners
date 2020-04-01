@@ -321,8 +321,10 @@ class NodejsTest < Minitest::Test
       )
 
       processor.stub :nodejs_analyzer_global_version, "5.15.0" do
-        processor.send(:check_nodejs_default_deps, defaults, {})
-        pass "with an empty constraint"
+        error = assert_raises InvalidDefaultDependencies do
+          processor.send(:check_nodejs_default_deps, defaults, {})
+        end
+        assert_equal "The default dependency `eslint@5.15.0` must have a constraint", error.message
 
         constraints = { "eslint" => Constraint.new(">= 5.0.0", "< 7.0.0") }
         processor.send(:check_nodejs_default_deps, defaults, constraints)

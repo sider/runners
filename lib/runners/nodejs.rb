@@ -106,8 +106,12 @@ module Runners
     def check_nodejs_default_deps(defaults, constraints)
       defaults.all.each do |dependency|
         constraint = constraints[dependency.name]
-        if constraint&.unsatisfied_by?(dependency)
-          raise InvalidDefaultDependencies, "The default dependency `#{dependency}` must satisfy the constraint `#{constraint}`"
+        if constraint
+          unless constraint.satisfied_by?(dependency)
+            raise InvalidDefaultDependencies, "The default dependency `#{dependency}` must satisfy the constraint `#{constraint}`"
+          end
+        else
+          raise InvalidDefaultDependencies, "The default dependency `#{dependency}` must have a constraint"
         end
       end
 

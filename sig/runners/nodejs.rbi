@@ -45,5 +45,4 @@ end
 class Runners::Nodejs::Constraint
   def initialize: (String, *String) -> any
   def satisfied_by?: (Dependency) -> bool
-  def unsatisfied_by?: (Dependency) -> bool
 end
