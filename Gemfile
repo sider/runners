@@ -19,7 +19,7 @@ group :development, :test do
   gem 'parallel'
   gem 'rainbow'
   gem 'steep', "0.11.1"
-  gem 'aufgaben', git: 'https://github.com/ybiquitous/aufgaben.git', tag: '0.4.1'
+  gem 'aufgaben', git: 'https://github.com/ybiquitous/aufgaben.git', tag: '0.4.2'
   gem 'lefthook', require: false
   gem 'prettier', require: false
 end
