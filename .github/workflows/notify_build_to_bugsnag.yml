@@ -1,0 +1,26 @@
+# See https://docs.bugsnag.com/build-integrations
+name: Notify build to Bugsnag
+
+on:
+  push:
+    tags: ["**"]
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          curl https://build.bugsnag.com/ \
+            --header "Content-Type: application/json" \
+            --data '{
+              "apiKey": "${{ secrets.BUGSNAG_API_KEY }}",
+              "appVersion": "${{ github.ref.replace(/\/refs\/tags\//, '') }}",
+              "releaseStage": "production",
+              "builderName": "GitHub Actions",
+              "sourceControl": {
+                "provider": "github",
+                "repository": "https://github.com/sider/runners",
+                "revision": "${{ github.sha }}"
+              }
+            }"
