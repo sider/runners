@@ -118,20 +118,17 @@ module Runners
 
     def run_analyzer
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        output = Dir.mktmpdir do |tmpdir|
-          output_path = Pathname(tmpdir) + 'output.txt'
-          capture3!(
-            analyzer_bin,
-            '--exit-zero',
-            "--output-file=#{output_path}",
-            "--format=#{FLAKE8_OUTPUT_FORMAT}",
-            "--append-config=#{ignored_config_path}",
-            './'
-          )
-          output_path.read
-        end
+        output_path = Tempfile.create(["flake8-", ".txt"]).path
+        capture3!(
+          analyzer_bin,
+          '--exit-zero',
+          "--output-file=#{output_path}",
+          "--format=#{FLAKE8_OUTPUT_FORMAT}",
+          "--append-config=#{ignored_config_path}",
+          './'
+        )
+        output = read_output_file(output_path)
         break result if output.empty?
-        trace_writer.message output
         parse_result(output).each { |v| result.add_issue(v) }
       end
     end

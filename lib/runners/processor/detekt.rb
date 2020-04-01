@@ -32,7 +32,7 @@ module Runners
     private
 
     def run_analyzer
-      report_path = Pathname(Tempfile.new(["detekt-report-", ".xml"]).path)
+      report_path = Tempfile.create(["detekt-report-", ".xml"]).path
 
       _stdout, stderr, status = capture3(
         analyzer_bin,
@@ -50,7 +50,7 @@ module Runners
       # @see https://github.com/arturbosch/detekt/blob/1.7.0/docs/pages/gettingstarted/cli.md
       case status.exitstatus
       when 0, 2
-        issues = construct_result(report_path)
+        issues = parse_output(report_path)
         return Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
           issues.each do |issue|
             result.add_issue issue
@@ -96,29 +96,10 @@ module Runners
       ["--report", "xml:#{report_path}"]
     end
 
-    def construct_result(report_path)
-      if report_path.file?
-        trace_writer.message "Reading output from #{report_path}..."
-        output = report_path.read
-        trace_writer.message output
-        parse_output(output)
-      else
-        msg = "#{report_path} does not exist. Unexpected error occurred, processing cannot continue."
-        trace_writer.error msg
-        raise msg
-      end
-    end
-
-    def parse_output(output)
-      document = REXML::Document.new(output)
-      unless document.root
-        msg = "Invalid XML output!"
-        trace_writer.error msg
-        raise msg
-      end
-
+    def parse_output(output_path)
       issues = []
-      document.root.each_element("file") do |file|
+
+      read_output_xml(output_path).root.each_element("file") do |file|
         file.each_element do |error|
           case error.name
           when "error"

@@ -40,12 +40,13 @@ module Runners
 
     def analyze(changes)
       # run 'dotnet build' with static analysis module
-      output_file = Tempfile.new("fxcop-")
-      capture3!('dotnet', 'build', '--no-incremental', "-property:errorlog=#{output_file.path}")
+      output_file = Tempfile.create(["fxcop-", ""]).path
+      capture3!('dotnet', 'build', '--no-incremental', "-property:errorlog=#{output_file}")
+      output_json = read_output_json(output_file)
 
       # generate a result instance
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        parse_result(output_file.read) do |issue|
+        parse_result(output_json) do |issue|
           result.add_issue(issue)
         end
       end
@@ -54,9 +55,7 @@ module Runners
     # parse static analysis log from .NET Core Compilers and generate Issue instance
     # Output format is SARIF format 1.0
     # @see http://json.schemastore.org/sarif-1.0.0
-    def parse_result(result_json)
-      json = JSON.parse(result_json, symbolize_names: true)
-
+    def parse_result(json)
       # parse rule information
       rules = json[:runs].each_with_object({}){|i,v| v.merge!(i[:rules])}
 
