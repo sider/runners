@@ -15,7 +15,8 @@ Smoke.add_test(
         DEPRECATION WARNING!!!
         The support for Go Meta Linter is deprecated. Sider will drop these versions on April 30, 2020.
         Please consider using an alternative tool GolangCI-Lint. See https://github.com/alecthomas/gometalinter/issues/590
-      MSG.strip,
+      MSG
+        .strip,
       file: "sider.yml"
     }
   ]
