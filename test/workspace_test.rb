@@ -94,10 +94,10 @@ class WorkspaceTest < Minitest::Test
 
         Open3.capture3(
           { "GIT_SSH" => git_ssh_path.to_s },
-          "git", "clone", "--depth=1", "git@github.com:sideci/go_private_library.git",
+          "git", "clone", "--depth=1", "git@github.com:sider/runners.git",
           { chdir: workspace.working_dir.to_s }
         )
-        assert (workspace.working_dir / "go_private_library/main.go").file?
+        assert (workspace.working_dir / "runners/sider.yml").file?
       end
     end
   end
