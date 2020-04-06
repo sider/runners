@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 [Full diff](https://github.com/sider/runners/compare/0.22.1...HEAD)
 
 - Fix Ignoring to support many files in the `ignore` configuration [#936](https://github.com/sider/runners/pull/936)
-- [remark-lint] More relax constraints [#943](https://github.com/sider/runners/pull/943)
+- \[remark-lint] More relax constraints [#943](https://github.com/sider/runners/pull/943)
 
 ## 0.22.1
 
