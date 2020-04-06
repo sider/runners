@@ -14,4 +14,4 @@ json_fmt='
     "revision": "%s"
 }'
 json=$(printf "$json_fmt" "$BUGSNAG_API_KEY" "$APP_VERSION" "$SOURCE_REVISION")
-echo curl https://build.bugsnag.com/ --header 'Content-Type: application/json' --data "$json"
+curl https://build.bugsnag.com/ --header 'Content-Type: application/json' --data "$json"
