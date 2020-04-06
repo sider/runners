@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - Fix Ignoring to support many files in the `ignore` configuration [#936](https://github.com/sider/runners/pull/936)
 - \[remark-lint] More relax constraints [#943](https://github.com/sider/runners/pull/943)
+- Bump devon_rex images from 2.16.0 to 2.16.1 [#945](https://github.com/sider/runners/pull/945)
 
 ## 0.22.1
 
