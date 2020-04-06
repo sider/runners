@@ -3,6 +3,8 @@ name: Notify build to Bugsnag
 on:
   push:
     tags: ["**"]
+  pull_request:
+    branches: ["**"]
 
 jobs:
   upload:
