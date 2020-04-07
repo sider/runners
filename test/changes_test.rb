@@ -4,6 +4,34 @@ class ChangesTest < Minitest::Test
   include TestHelper
 
   Changes = Runners::Changes
+  Issue = Runners::Issue
+  Location = Runners::Location
+
+  def patches
+    GitDiffParser.parse(<<-PATCH)
+diff --git a/group.rb b/group.rb
+index f1bdf42..5c56bf0 100644
+--- a/group.rb
++++ b/group.rb
+@@ -1,2 +1,4 @@
+ class Group
++  def a
++  end
+ end
+diff --git a/user.rb b/user.rb
+index 740c016..cc737a5 100644
+--- a/user.rb
++++ b/user.rb
+@@ -1,6 +1,4 @@
+ class User
+-
+-
+-  def ok
++  def foo
+   end
+ end
+    PATCH
+  end
 
   def test_changed_paths
     mktmpdir do |base_path|
@@ -115,6 +143,41 @@ class ChangesTest < Minitest::Test
           assert changes.untracked_paths.include?(Pathname("foo"))
           assert changes.untracked_paths.include?(Pathname("baz"))
           refute changes.untracked_paths.include?(Pathname("link"))
+        end
+      end
+    end
+  end
+
+  def test_include
+    mktmpdir do |base_path|
+      mktmpdir do |head_path|
+        mktmpdir do |working_path|
+          (working_path / "group.rb").write(<<~GROUP)
+            class Group
+              def a
+              end
+            end
+          GROUP
+          (working_path / "user.rb").write(<<~USER)
+            class User
+              def foo
+              end
+            end
+          USER
+
+          changes = Changes.calculate(base_dir: base_path, head_dir: head_path, working_dir: working_path, patches: patches)
+
+          refute changes.include?(Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 1), id: "a", message: "a", links: []))
+          assert changes.include?(Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 2), id: "a", message: "a", links: []))
+          assert changes.include?(Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 3), id: "a", message: "a", links: []))
+          refute changes.include?(Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 4), id: "a", message: "a", links: []))
+          assert changes.include?(Issue.new(path: Pathname("user.rb"), location: nil, id: "a", message: "a", links: []))
+          refute changes.include?(Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 1), id: "a", message: "a", links: []))
+          assert changes.include?(Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 2), id: "a", message: "a", links: []))
+          refute changes.include?(Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 3), id: "a", message: "a", links: []))
+          refute changes.include?(Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 4), id: "a", message: "a", links: []))
+          refute changes.include?(Issue.new(path: Pathname("foo.rb"), location: nil, id: "a", message: "a", links: []))
+          refute changes.include?(Issue.new(path: Pathname("foo.rb"), location: Location.new(start_line: 2), id: "a", message: "a", links: []))
         end
       end
     end
