@@ -91,8 +91,7 @@ Smoke.add_test(
       }
     ],
     analyzer: { name: "TyScan", version: "0.3.1" }
-  },
-  { warnings: [{ message: /No required dependencies for analysis were installed/, file: "package.json" }] }
+  }
 )
 
 Smoke.add_test(

@@ -319,23 +319,13 @@ Smoke.add_test(
 Smoke.add_test(
   "without-tslint-in-package-json",
   { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "TSLint", version: "6.0.0" } },
-  {
-    warnings: [
-      { message: /The support for TSLint is deprecated/, file: "sider.yml" },
-      { message: /No required dependencies for analysis were installed/, file: "package.json" }
-    ]
-  }
+  { warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }] }
 )
 
 Smoke.add_test(
   "without-tslint-and-with-typescript-in-package-json",
   { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "TSLint", version: "6.0.0" } },
-  {
-    warnings: [
-      { message: /The support for TSLint is deprecated/, file: "sider.yml" },
-      { message: /No required dependencies for analysis were installed/, file: "package.json" }
-    ]
-  }
+  { warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }] }
 )
 
 Smoke.add_test(

@@ -627,14 +627,12 @@ class NodejsTest < Minitest::Test
       ### assert warnings output
 
       expected_warnings = [
-        "No required dependencies for analysis were installed. Instead, the pre-installed `eslint@5.1.0` will be used.",
         "The required dependency `eslint` may not have been correctly installed. It may be a missing peer dependency."
       ]
       actual_warnings = trace_writer.writer.select { |e| e[:trace] == :warning }.map { |e| e[:message] }
       assert_equal expected_warnings, actual_warnings
       assert_equal [
         { message: expected_warnings[0], file: "package.json" },
-        { message: expected_warnings[1], file: "package.json" },
       ], processor.warnings
 
       expected_errors = [

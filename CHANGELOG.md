@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - Fix #patches and use ... for git-diff(1) [#955](https://github.com/sider/runners/pull/955)
 - Fix Changes#include? to return false for unchanged files [#954](https://github.com/sider/runners/pull/954)
+- Delete noisy warning on `npm install` [#957](https://github.com/sider/runners/pull/957)
 
 ## 0.22.3
 
