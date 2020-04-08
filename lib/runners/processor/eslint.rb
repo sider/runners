@@ -138,8 +138,8 @@ module Runners
     end
 
     # @see https://eslint.org/docs/developer-guide/working-with-custom-formatters#the-results-object
-    def parse_result(stdout)
-      JSON.parse(stdout, symbolize_names: true).each do |issue|
+    def parse_result(result)
+      result.each do |issue|
         path = relative_path(issue[:filePath])
         # ESLint informs errors as an array if ESLint detects errors in a file.
         issue[:messages].each do |details|
@@ -180,7 +180,7 @@ module Runners
       # NOTE: We must use the `--output-file` option because some plugins may output a non-JSON text to STDOUT.
       #
       # @see https://github.com/typescript-eslint/typescript-eslint/blob/v2.6.0/packages/typescript-estree/src/parser.ts#L237-L247
-      output_file = working_dir / "eslint-output-#{Time.now.to_i}.json"
+      output_file = Tempfile.create(["eslint-", ".json"]).path
 
       _stdout, stderr, status = capture3(
         nodejs_analyzer_bin,
@@ -191,12 +191,7 @@ module Runners
         *target_dir
       )
 
-      output_json =
-        if output_file.exist?
-          output_file.read.tap { |json| trace_writer.message json }
-        else
-          nil
-        end
+      output_json = File.file?(output_file) ? read_output_json(output_file) { nil } : nil
 
       if [0, 1].include?(status.exitstatus) && output_json
         Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|

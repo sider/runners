@@ -35,7 +35,7 @@ class ProcessorTest < Minitest::Test
     with_workspace do |workspace|
       mock(Open3).capture3({"RUBYOPT" => nil, "GIT_SSH" => (workspace.working_dir / "id_rsa").to_s},
                            "ls",
-                           { chdir: workspace.working_dir.to_s }) do
+                           chdir: workspace.working_dir.to_s, stdin_data: nil) do
         status = Process::Status.allocate
 
         def status.success?; false end
@@ -379,6 +379,75 @@ class ProcessorTest < Minitest::Test
       mock(processor).capture3!("foo", "-v") { ["no version", ""] }
       error = assert_raises { processor.extract_version!("foo", "-v") }
       assert_equal "Not found version from 'foo -v'", error.message
+    end
+  end
+
+  def test_read_output_file
+    with_workspace do |workspace|
+      file = (workspace.working_dir / "a_file").tap { |f| f.write "foo" }
+
+      processor = new_processor(workspace: workspace)
+      assert_equal "foo", processor.read_output_file(file)
+      assert_equal "foo", processor.read_output_file(file.to_path)
+    end
+  end
+
+  def test_read_output_file_failed
+    with_workspace do |workspace|
+      processor = new_processor(workspace: workspace)
+      assert_raises(Errno::ENOENT) { processor.read_output_file("not_found") }
+    end
+  end
+
+  def test_read_output_xml
+    with_workspace do |workspace|
+      file = (workspace.working_dir / "a_file.xml").tap { |f| f.write "<foo></foo>" }
+
+      processor = new_processor(workspace: workspace)
+      assert_instance_of REXML::Document, processor.read_output_xml(file)
+      assert_instance_of REXML::Document, processor.read_output_xml(file.to_path)
+    end
+  end
+
+  def test_read_output_xml_failed
+    with_workspace do |workspace|
+      file = (workspace.working_dir / "a_file.xml").tap { |f| f.write "" }
+
+      processor = new_processor(workspace: workspace)
+      error = assert_raises(Processor::InvalidXML) { processor.read_output_xml(file) }
+      assert_equal "Output XML is invalid from #{file}", error.message
+
+      file.write "<foo"
+      assert_raises(REXML::ParseException) { processor.read_output_xml(file) }
+    end
+  end
+
+  def test_read_output_json
+    with_workspace do |workspace|
+      file = (workspace.working_dir / "a_file.json").tap { |f| f.write '{"a":1}' }
+
+      processor = new_processor(workspace: workspace)
+      assert_equal({ a: 1 }, processor.read_output_json(file))
+    end
+  end
+
+  def test_read_output_json_empty
+    with_workspace do |workspace|
+      file = (workspace.working_dir / "a_file.json").tap { |f| f.write '' }
+
+      processor = new_processor(workspace: workspace)
+      assert_raises(JSON::ParserError) { processor.read_output_json(file) }
+      assert_nil processor.read_output_json(file) { nil }
+      assert_equal [], processor.read_output_json(file) { [] }
+    end
+  end
+
+  def test_read_output_json_failed
+    with_workspace do |workspace|
+      file = (workspace.working_dir / "a_file.json").tap { |f| f.write '{' }
+
+      processor = new_processor(workspace: workspace)
+      assert_raises(JSON::ParserError) { processor.read_output_json(file) }
     end
   end
 end

@@ -169,13 +169,13 @@ module Runners
     end
 
     def run_analyzer(options)
-      output_file = Tempfile.new("rubocop-")
+      output_file = Tempfile.create(["rubocop-", ".json"]).path
 
       # NOTE: `--out` option must be after `--format` option.
       #
       # @see https://docs.rubocop.org/en/stable/formatters
       options << "--format=json"
-      options << "--out=#{output_file.path}"
+      options << "--out=#{output_file}"
 
       _, stderr, status = capture3(*ruby_analyzer_bin, *options)
       check_rubocop_yml_warning(stderr)
@@ -191,15 +191,12 @@ module Runners
         return Results::Failure.new(guid: guid, message: error_message, analyzer: analyzer)
       end
 
-      output_json = output_file.read
-      unless output_json.empty?
-        trace_writer.message "Output JSON: #{output_json}"
-      end
+      output_json = read_output_json(output_file) { nil }
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        break result if output_json == '' # No offenses
+        break result unless output_json # No offenses
 
-        JSON.parse(output_json, symbolize_names: true)[:files].reject { |v| v[:offenses].empty? }.each do |hash|
+        output_json[:files].reject { |v| v[:offenses].empty? }.each do |hash|
           hash[:offenses].each do |offense|
             loc = Location.new(
               start_line: offense[:location][:line],

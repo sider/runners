@@ -4,7 +4,27 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.22.1...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.22.4...HEAD)
+
+## 0.22.4
+
+[Full diff](https://github.com/sider/runners/compare/0.22.3...0.22.4)
+
+- Fix #patches and use ... for git-diff(1) [#955](https://github.com/sider/runners/pull/955)
+- Fix Changes#include? to return false for unchanged files [#954](https://github.com/sider/runners/pull/954)
+- Delete noisy warning on `npm install` [#957](https://github.com/sider/runners/pull/957)
+
+## 0.22.3
+
+[Full diff](https://github.com/sider/runners/compare/0.22.2...0.22.3)
+
+## 0.22.2
+
+[Full diff](https://github.com/sider/runners/compare/0.22.1...0.22.2)
+
+- Fix Ignoring to support many files in the `ignore` configuration [#936](https://github.com/sider/runners/pull/936)
+- \[remark-lint] More relax constraints [#943](https://github.com/sider/runners/pull/943)
+- Bump devon_rex images from 2.16.0 to 2.16.1 [#945](https://github.com/sider/runners/pull/945)
 
 - [LanguageTool] New support [#787](https://github.com/sider/runners/pull/787)
 

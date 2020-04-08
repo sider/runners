@@ -87,10 +87,7 @@ module Runners
 
       output_file = gradle_config[:output]
       output = if output_file
-                 trace_writer.message "Reading output from #{output_file}..."
-                 (current_dir + output_file).read.tap do |out|
-                   trace_writer.message out
-                 end
+                 read_output_file(current_dir / output_file)
                else
                  stdout
                end
@@ -105,16 +102,7 @@ module Runners
       capture3("mvn", maven_config[:goal], *mvn_options)
 
       output_file = maven_config[:output]
-      output_file_path = current_dir / output_file
-      if output_file_path.exist?
-        trace_writer.message "Reading output from #{output_file}..."
-        output = output_file_path.read
-        trace_writer.message output
-      else
-        msg = "#{output_file} does not exist because an unexpected error occurred!"
-        trace_writer.error msg
-        raise msg
-      end
+      output = read_output_file(current_dir / output_file)
 
       construct_result(maven_config[:reporter], output)
     end

@@ -138,8 +138,8 @@ namespace :docker do
   end
 
   desc 'Run interactive shell in the specified Docker container'
-  task :shell, [:extra_args] do |_task, args|
-    run_args = (args[:extra_args] || "").split(/\s+/)
-    sh "docker", "run", "-it", "--rm", "--entrypoint=bash", *run_args, image_name
+  task :shell, [:bash_extra_args] do |_task, args|
+    run_args = (args[:bash_extra_args] || "").split(/\s+/)
+    sh "docker", "run", "-it", "--rm", "--entrypoint=bash", "--volume=#{Dir.pwd}:/workdir", *run_args, image_name
   end
 end

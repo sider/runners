@@ -200,3 +200,7 @@ class YAML
   def self.load_file: (String, fallback: any) -> any
   def self.safe_load: (String, symbolize_names: bool) -> any
 end
+
+# HACK: To avoid receiving the error message `Unknown alias: untyped`,
+#       define `untyped` alias here. Such a hack is required until the migration to Steep 0.14 or later completes.
+type untyped = any

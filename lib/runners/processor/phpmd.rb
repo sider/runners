@@ -79,7 +79,7 @@ module Runners
     end
 
     def run_analyzer(changes, targets, rule, options)
-      report_file = Pathname(Tempfile.new("phpmd-report-").path)
+      report_file = Tempfile.create(["phpmd-", ".xml"]).path
 
       # PHPMD exits 1 when some violations are found.
       # The `--ignore-violation-on-exit` will exit with a zero code, even if any violations are found.
@@ -90,7 +90,7 @@ module Runners
         "xml",
         rule,
         "--ignore-violations-on-exit",
-        "--report-file", report_file.to_path,
+        "--report-file", report_file,
         *options
       )
 
@@ -102,17 +102,8 @@ module Runners
         end
       end
 
-      output_xml =
-        if report_file.exist?
-          report_file.read
-        else
-          raise "Failed to output a report file"
-        end
-
-      trace_writer.message output_xml
-
       begin
-        xml_doc = REXML::Document.new(output_xml)
+        xml_doc = read_output_xml(report_file)
       rescue REXML::ParseException => exn
         trace_writer.error exn.message
         return Results::Failure.new(guid: guid, analyzer: analyzer,

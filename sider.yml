@@ -1,6 +1,10 @@
 linter:
   rubocop:
     gems:
+      - rubocop-minitest
+      - rubocop-performance
+      - rubocop-rake
+      - rubocop-rubycw
       - meowcop
 
 ignore:

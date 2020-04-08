@@ -123,7 +123,7 @@ module Runners
     end
 
     def run_analyzer(options, target)
-      output_file = working_dir / "phpcs-output-#{Time.now.to_i}.json"
+      output_file = Tempfile.create(["phpcs-", ".json"]).path
 
       capture3!(
         analyzer_bin,
@@ -136,17 +136,10 @@ module Runners
         target
       )
 
-      unless output_file.exist?
-        return Results::Failure.new(guid: guid, analyzer: analyzer, message: "No JSON output.")
-      end
-
-      output = output_file.read
-      trace_writer.message output, limit: 24_000 # Avoid timeout
-
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
         issues = []
 
-        JSON.parse(output, symbolize_names: true)[:files].each do |path, suggests|
+        read_output_json(output_file)[:files].each do |path, suggests|
           suggests[:messages].each do |suggest|
             issues << Issue.new(
               path: relative_path(path.to_s),

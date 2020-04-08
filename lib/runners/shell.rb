@@ -1,6 +1,7 @@
 module Runners
   class Shell
     class ExecError < SystemError
+      # @dynamic type, args, stdout_str, stderr_str, status, dir
       attr_reader :type
       attr_reader :args
       attr_reader :stdout_str
@@ -35,6 +36,7 @@ module Runners
       end
     end
 
+    # @dynamic trace_writer, dir_stack, env_hash_stack
     attr_reader :trace_writer
     attr_reader :dir_stack
     attr_reader :env_hash_stack
@@ -65,7 +67,7 @@ module Runners
 
     def env_hash
       env_hash_stack.inject({}) do |acc, env|
-        # @type var acc: Hash<String, String?>
+        # @type var acc: Hash[String, String?]
         acc.merge(env)
       end
     end
@@ -90,19 +92,21 @@ module Runners
       end
     end
 
+    # TODO: After migrating to Steep (>= 0.14), use keyword arguments like `trace_stdout: true, ...`
     def capture3_trace(command, *args, **options)
-      # @type var options: any
+      # @type var options: untyped
       trace_stdout = options.fetch(:trace_stdout, true)
       trace_stderr = options.fetch(:trace_stderr, true)
       trace_command_line = options.fetch(:trace_command_line, true)
       raise_on_failure = options.fetch(:raise_on_failure, false)
       chdir = options[:chdir] || current_dir
       is_success = options.fetch(:is_success) { ->(status) { status.success? } }
+      stdin_data = options.fetch(:stdin_data, nil)
 
       command_line = [command] + args
       trace_writer.command_line(command_line) if trace_command_line
 
-      Open3.capture3(env_hash, command, *args, { chdir: chdir.to_s }).tap do |stdout_str, stderr_str, status|
+      Open3.capture3(env_hash, command, *args, chdir: chdir.to_s, stdin_data: stdin_data).tap do |stdout_str, stderr_str, status|
         trace_writer.stdout stdout_str if trace_stdout
         trace_writer.stderr stderr_str if trace_stderr
 

@@ -34,7 +34,7 @@ module Runners
         shell.capture3!("git", "init")
         shell.capture3!("git", "config", "gc.auto", "0")
         shell.capture3!("git", "remote", "add", "origin", remote_url.to_s)
-        shell.capture3!("git", *git_fetch_args)
+        shell.capture3!("git", "fetch", *git_fetch_args)
       end
     end
 
@@ -46,7 +46,7 @@ module Runners
     end
 
     def git_fetch_args
-      @git_fetch_args ||= %w[fetch --no-tags --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/*].tap do |command|
+      @git_fetch_args ||= %w[--quiet --no-tags --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/*].tap do |command|
         pull_number = git_source.pull_number
         command << "+refs/pull/#{pull_number}/head:refs/remotes/pull/#{pull_number}/head" if pull_number
       end
@@ -58,7 +58,8 @@ module Runners
       if base && head
         git_directory.yield_self do |path|
           shell = Shell.new(current_dir: path, trace_writer: trace_writer, env_hash: {})
-          stdout, _ = shell.capture3!("git", "diff", base, head, trace_stdout: false)
+          # NOTE: We should use `...` (triple-dot) instead of `..` (double-dot). See https://git-scm.com/docs/git-diff
+          stdout, _ = shell.capture3!("git", "diff", "#{base}...#{head}", trace_stdout: false)
           GitDiffParser.parse(stdout)
         end
       else

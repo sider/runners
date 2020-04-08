@@ -54,3 +54,17 @@ rules:
           output_file = Pathname(Dir.tmpdir) / "output.json"
       - after: |
           output_file = working_dir / "output.json"
+  - id: sider.runners.tempfile_new
+    pattern: Tempfile.new
+    message: |
+      Consider using `Tempfile.create` instead of `Tempfile.new`.
+
+      `Tempfile.create` does **not** automatically remove the created file.
+      On the other hand, since `Tempfile.new` removes automatically the file, smoke tests can sometimes fail.
+
+      See https://ruby-doc.org/stdlib-2.7.0/libdoc/tempfile/rdoc/Tempfile.html
+    examples:
+      - before: |
+          Tempfile.new(["rubocop-", ".json"])
+      - after: |
+          Tempfile.create(["rubocop-", ".json"])

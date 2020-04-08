@@ -29,8 +29,8 @@ module Runners
     )
 
     CONSTRAINTS = {
-      "remark-lint" => Constraint.new(">= 6.0.0", "< 7.0.0"),
-      "remark-cli" => Constraint.new(">= 7.0.0", "< 8.0.0"),
+      "remark-lint" => Constraint.new(">= 6.0.0", "< 8.0.0"),
+      "remark-cli" => Constraint.new(">= 7.0.0", "< 9.0.0"),
     }.freeze
 
     DEFAULT_TARGET = ".".freeze

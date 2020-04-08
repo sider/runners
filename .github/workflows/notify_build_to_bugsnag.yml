@@ -1,0 +1,18 @@
+name: Notify build to Bugsnag
+
+on:
+  push:
+    tags: ["**"]
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: olegtarasov/get-tag@v2
+        id: getTag
+      - run: ./.github/workflows/notify_build_to_bugsnag.sh
+        env:
+          BUGSNAG_API_KEY: ${{ secrets.BUGSNAG_API_KEY }}
+          APP_VERSION: ${{ steps.getTag.outputs.tag }}
+          SOURCE_REVISION: ${{ github.sha }}

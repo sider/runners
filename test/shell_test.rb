@@ -119,6 +119,21 @@ class ShellTest < Minitest::Test
     end
   end
 
+  def test_capture3_trace_with_stdin_data
+    mktmpdir do |path|
+      shell = Shell.new(current_dir: path, trace_writer: trace_writer, env_hash: {})
+
+      stdout, = shell.capture3_trace("cat", stdin_data: "foo!")
+
+      assert_equal "foo!", stdout
+      assert_trace_writer [
+                            { trace: :command_line, command_line: ["cat"] },
+                            { trace: :stdout, string: "foo!", truncated: false },
+                            { trace: :status, status: 0 },
+                          ]
+    end
+  end
+
   def test_capture3_trace_with_chdir
     mktmpdir do |path|
       shell = Shell.new(current_dir: path, trace_writer: trace_writer, env_hash: {})
