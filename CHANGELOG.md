@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.22.3...HEAD)
 
+- Fix #patches and use ... for git-diff(1) [#955](https://github.com/sider/runners/pull/955)
+
 ## 0.22.3
 
 [Full diff](https://github.com/sider/runners/compare/0.22.2...0.22.3)
