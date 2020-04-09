@@ -19,8 +19,9 @@ module Runners
     end
 
     def deletable?(dir, file, except, only)
-      if only.empty? || only.any? { |pattern| file.fnmatch?(pattern, File::FNM_DOTMATCH) }
-        if except.none? { |pattern| file.fnmatch?(pattern, File::FNM_DOTMATCH) }
+      flags = File::FNM_DOTMATCH | File::FNM_EXTGLOB
+      if only.empty? || only.any? { |pattern| file.fnmatch?(pattern, flags) }
+        if except.none? { |pattern| file.fnmatch?(pattern, flags) }
           return dir.join(file).file?
         end
       end

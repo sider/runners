@@ -43,8 +43,8 @@ module Runners
       "stylelint" => Constraint.new(">= 8.3.0", "< 14.0.0"),
     }.freeze
 
-    DEFAULT_TARGET_FILE_EXTENSIONS = ["css", "less", "sass", "scss", "sss"].freeze
-    DEFAULT_GLOB = "**/*.{#{DEFAULT_TARGET_FILE_EXTENSIONS.join(',')}}".freeze
+    DEFAULT_TARGET_FILES = "*.{css,less,sass,scss,sss}".freeze
+    DEFAULT_GLOB = "**/#{DEFAULT_TARGET_FILES}".freeze
 
     def setup
       add_warning_if_deprecated_options([:options])
@@ -65,7 +65,7 @@ module Runners
     end
 
     def analyze(changes)
-      delete_unchanged_files(changes, only: DEFAULT_TARGET_FILE_EXTENSIONS.map { |ext| "*.#{ext}" })
+      delete_unchanged_files(changes, only: [DEFAULT_TARGET_FILES])
 
       additional_options = [stylelint_config, syntax, ignore_path, ignore_disables,
                             report_needless_disables, quiet].flatten.compact

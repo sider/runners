@@ -146,7 +146,7 @@ module Runners
     end
 
     def analyze(changes)
-      delete_unchanged_files changes, only: [".kt", ".kts"]
+      delete_unchanged_files changes, only: ["*.kt", "*.kts"]
 
       check_runner_config do |checked_config|
         @ktlint_config = checked_config

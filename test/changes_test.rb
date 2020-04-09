@@ -115,17 +115,29 @@ index 740c016..cc737a5 100644
 
   def test_delete_unchanged_with_pattern
     mktmpdir do |dir|
-      dir.join("file1").write("foo")
-      dir.join("file2").write("foo")
-      dir.join("file3").write("foo")
+      files = Dir.chdir(dir) do
+        Pathname("some").mkdir
+        [
+          Pathname("file1"),
+          Pathname("file2"),
+          Pathname("file3"),
+          Pathname("some") / "foo.rb",
+          Pathname("some") / "bar.py",
+          Pathname("some") / "baz.js",
+          Pathname("some") / "xyz.md",
+        ].each { |f| f.write("") }
+      end
 
-      changes = Changes.new(changed_paths: [], unchanged_paths: [Pathname("file1"), Pathname("file2"), Pathname("file3")], untracked_paths: [], patches: nil)
-
-      changes.delete_unchanged(dir: dir, only: ["file[2-3]"], except: ["file3"])
+      changes = Changes.new(changed_paths: [], unchanged_paths: files, untracked_paths: [], patches: nil)
+      changes.delete_unchanged(dir: dir, only: ["file[2-3]", "*.{rb,py}"], except: ["file3", "*.{py,md}"])
 
       assert dir.join("file1").file?
       refute dir.join("file2").file?
       assert dir.join("file3").file?
+      refute dir.join("some", "foo.rb").file?
+      assert dir.join("some", "bar.py").file?
+      assert dir.join("some", "baz.js").file?
+      assert dir.join("some", "xyz.md").file?
     end
   end
 
