@@ -111,7 +111,7 @@ module Runners
       Open3.public_send(method, env_hash, command, *args, chdir: chdir.to_s, stdin_data: stdin_data).then do |stdout_str, stderr_str, status|
         if merge_output
           status = stderr_str
-          stderr_str = nil
+          stderr_str = ""
         end
 
         trace_writer.stdout stdout_str if trace_stdout

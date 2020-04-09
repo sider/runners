@@ -173,7 +173,7 @@ class ShellTest < Minitest::Test
       stdout_and_stderr, stderr, status = shell.capture3_trace(output_to_both, merge_output: true)
 
       assert_equal "stdout\nstderr\n", stdout_and_stderr
-      assert_nil stderr
+      assert_equal "", stderr
       assert status.success?
       assert_equal [
         { trace: :command_line, command_line: ["echo 'stdout' ; echo 'stderr' >&2"] },
@@ -194,7 +194,7 @@ class ShellTest < Minitest::Test
       assert_equal :capture2e, error.type
       assert_equal ["echo 'Hello' ; exit 1"], error.args
       assert_equal "Hello\n", error.stdout_str
-      assert_nil error.stderr_str
+      assert_equal "", error.stderr_str
       assert_equal 1, error.status.exitstatus
       assert_equal path, error.dir
     end
