@@ -135,7 +135,7 @@ module Runners
         hash.pretty_inspect
           .gsub(/(:\w+)=>/, Rainbow('\1').yellow + "=>")
           .gsub(/(nil|false|true)/, Rainbow('\1').cyan)
-          .gsub(/("[^"]+")/, Rainbow('\1').green)
+          .gsub(/("(?:[^\\"]|\\.)*")/, Rainbow('\1').green)
       end
 
       @tests = {}
