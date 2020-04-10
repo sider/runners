@@ -27,6 +27,7 @@ end
 extension Object (Polyfill)
   def instance_of?: (any) -> bool
   def then: <'a> () { (self) -> 'a } -> 'a
+  def public_send: (String | Symbol, *any) -> any
 end
 
 class UnboundMethod

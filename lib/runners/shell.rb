@@ -102,11 +102,18 @@ module Runners
       chdir = options[:chdir] || current_dir
       is_success = options.fetch(:is_success) { ->(status) { status.success? } }
       stdin_data = options.fetch(:stdin_data, nil)
+      merge_output = options.fetch(:merge_output, false)
 
       command_line = [command] + args
       trace_writer.command_line(command_line) if trace_command_line
 
-      Open3.capture3(env_hash, command, *args, chdir: chdir.to_s, stdin_data: stdin_data).tap do |stdout_str, stderr_str, status|
+      method = merge_output ? :capture2e : :capture3
+      Open3.public_send(method, env_hash, command, *args, chdir: chdir.to_s, stdin_data: stdin_data).then do |stdout_str, stderr_str, status|
+        if merge_output
+          status = stderr_str
+          stderr_str = ""
+        end
+
         trace_writer.stdout stdout_str if trace_stdout
         trace_writer.stderr stderr_str if trace_stderr
 
@@ -118,7 +125,7 @@ module Runners
 
         unless is_success.call(status)
           if raise_on_failure
-            raise ExecError.new(type: :capture3,
+            raise ExecError.new(type: method,
                                 args: command_line,
                                 stdout_str: stdout_str,
                                 stderr_str: stderr_str,
@@ -126,6 +133,8 @@ module Runners
                                 dir: current_dir)
           end
         end
+
+        [stdout_str, stderr_str, status]
       end
     end
   end
