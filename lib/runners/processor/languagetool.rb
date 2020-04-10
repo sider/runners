@@ -6,6 +6,7 @@ module Runners
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!(
           target: string?,
+          ext: array?(string),
           language: string?,
           encoding: string?,
         )
@@ -20,13 +21,20 @@ module Runners
 
     register_config_schema(name: :languagetool, schema: Schema.runner_config)
 
-    DEFAULT_FILE_PATTERN = "*.{txt,md,markdown}".freeze
     DEFAULT_TARGET = ".".freeze
+    DEFAULT_EXT = [
+      "html",                # HTML
+      "md", "markdown",      # Markdown
+      "rst",                 # reStructuredText
+      "tex",                 # TeX
+      "txt",                 # Plain text
+    ].freeze
     DEFAULT_LANGUAGE = "en-US".freeze # NOTE: Specify a variant for spell checking
     DEFAULT_ENCODING = "UTF-8".freeze
 
     def analyze(changes)
-      delete_all_files_except(DEFAULT_FILE_PATTERN)
+      delete_all_files_except(target_pattern)
+      delete_unchanged_files(changes)
       run_analyzer
     end
 
@@ -43,6 +51,16 @@ module Runners
       end
     end
 
+    def target_pattern
+      (config_linter[:ext] || DEFAULT_EXT).then do |extensions|
+        "*.{#{extensions.join(',')}}"
+      end
+    end
+
+    def config_target
+      config_linter[:target] || DEFAULT_TARGET
+    end
+
     def config_language
       config_linter[:language] || DEFAULT_LANGUAGE
     end
@@ -57,7 +75,7 @@ module Runners
         "--recursive",
         "--language", config_language,
         "--encoding", config_encoding.to_s,
-        config_linter[:target] || DEFAULT_TARGET,
+        config_target,
       ]
     end
 
