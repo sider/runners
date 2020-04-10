@@ -32,6 +32,7 @@ require "active_support/duration"
 require "aws-sdk-s3"
 require "bugsnag"
 require "git_diff_parser"
+require "strscan"
 
 require "runners/version"
 require "runners/errors"

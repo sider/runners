@@ -9,32 +9,59 @@ Smoke.add_test(
     issues: [
       {
         id: "EN_A_VS_AN",
-        links: [],
         path: "sample.txt",
-        location: nil,
+        location: { start_line: 3 },
         message:
-          "Use \"a\" instead of 'an' if the following word doesn't start with a vowel sound, e.g. 'a sentence', 'a university' -> or use this text to see an few of the problems that LanguageTool can detecd.",
-        object: nil,
+          "Use \"a\" instead of 'an' if the following word doesn't start with a vowel sound, e.g. 'a sentence', 'a university'",
+        links: [],
+        object: {
+          sentence: "to see an few of the problems that LanguageTool can detecd.",
+          type: "misspelling",
+          category: "Miscellaneous",
+          replacements: %w[a]
+        },
         git_blame_info: nil
       },
       {
         id: "MORFOLOGIK_RULE_EN_US",
+        path: "dir/foo.md",
+        location: { start_line: 3 },
+        message: "Possible spelling mistake found.",
         links: [],
+        object: {
+          sentence: "See [heree](https://example.com/document).",
+          type: "misspelling",
+          category: "Possible Typo",
+          replacements: :_
+        },
+        git_blame_info: nil
+      },
+      {
+        id: "MORFOLOGIK_RULE_EN_US",
         path: "sample.txt",
-        location: nil,
-        message:
-          "Possible spelling mistake found -> or use this text to see an few of the problems that LanguageTool can detecd.",
-        object: nil,
+        location: { start_line: 3 },
+        message: "Possible spelling mistake found.",
+        links: [],
+        object: {
+          sentence: "to see an few of the problems that LanguageTool can detecd.",
+          type: "misspelling",
+          category: "Possible Typo",
+          replacements: %w[detect]
+        },
         git_blame_info: nil
       },
       {
         id: "UPPERCASE_SENTENCE_START",
-        links: [],
         path: "sample.txt",
-        location: nil,
-        message:
-          "This sentence does not start with an uppercase letter -> or use this text to see an few of the problems that LanguageTool can detecd.",
-        object: nil,
+        location: { start_line: 3 },
+        message: "This sentence does not start with an uppercase letter",
+        links: [],
+        object: {
+          sentence: "to see an few of the problems that LanguageTool can detecd.",
+          type: "typographical",
+          category: "Capitalization",
+          replacements: %w[To]
+        },
         git_blame_info: nil
       }
     ],
