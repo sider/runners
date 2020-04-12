@@ -2,15 +2,35 @@ module Runners
   class Processor::LanguageTool < Processor
     include Java
 
+    # NOTE: See `pandoc --list-input-formats`
+    SUPPORTED_FILES = {
+      # Plain text
+      "txt" => { pandoc: "plain" },
+
+      # Markdown
+      "md" => { pandoc: "commonmark" },
+      "markdown" => { pandoc: "commonmark" },
+
+      # reStructuredText
+      "rst" => { pandoc: "rst" },
+
+      # TeX
+      "tex" => { pandoc: "latex" },
+
+      # HTML
+      "html" => { pandoc: "html" },
+    }.freeze
+
     Schema = StrongJSON.new do
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!(
           target: string?,
-          ext: array?(string),
+          ext: array?(enum(SUPPORTED_FILES.keys.map { |ext| literal(ext) })),
           language: string?,
           encoding: string?,
         )
       }
+
       let :issue, object(
         sentence: string,
         type: string,
@@ -22,28 +42,26 @@ module Runners
     register_config_schema(name: :languagetool, schema: Schema.runner_config)
 
     DEFAULT_TARGET = ".".freeze
-    DEFAULT_EXT = [
-      "html",                # HTML
-      "md", "markdown",      # Markdown
-      "rst",                 # reStructuredText
-      "tex",                 # TeX
-      "txt",                 # Plain text
-    ].freeze
+    DEFAULT_EXT = SUPPORTED_FILES.keys.freeze
     DEFAULT_LANGUAGE = "en-US".freeze # NOTE: Specify a variant for spell checking
     DEFAULT_ENCODING = "UTF-8".freeze
 
     def analyze(changes)
-      delete_all_files_except(target_pattern)
+      delete_all_files_except("*.{#{config_ext.join(',')}}")
       delete_unchanged_files(changes)
+      convert_to_plain_text(config_ext - ["txt"])
       run_analyzer
     end
 
     private
 
+    def all_files
+      @all_files ||= current_dir.glob("**/*", File::FNM_DOTMATCH).filter(&:file?)
+    end
+
     def delete_all_files_except(pattern)
       trace_writer.message "Deleting all files except #{pattern}..." do
-        count = current_dir.glob("**/*", File::FNM_DOTMATCH)
-          .filter(&:file?)
+        count = all_files
           .reject { |path| path.fnmatch?(pattern, File::FNM_EXTGLOB) }
           .each(&:delete)
           .count
@@ -51,14 +69,26 @@ module Runners
       end
     end
 
-    def target_pattern
-      (config_linter[:ext] || DEFAULT_EXT).then do |extensions|
-        "*.{#{extensions.join(',')}}"
+    def convert_to_plain_text(extensions)
+      trace_writer.message "Converting \"#{extensions.join(',')}\" files to plain text..." do
+        extensions.each do |ext|
+          input_format = SUPPORTED_FILES.fetch(ext).fetch(:pandoc)
+          all_files.filter { |path| path.extname == ".#{ext}" }.each do |path|
+            file = path.to_path
+            # @see https://pandoc.org/MANUAL.html
+            capture3! "pandoc", "--from", input_format, "--to", "plain", "--output", file, file
+          end
+        end
       end
     end
 
     def config_target
       config_linter[:target] || DEFAULT_TARGET
+    end
+
+    def config_ext
+      config_linter[:ext] || DEFAULT_EXT
+      ["md"]
     end
 
     def config_language
