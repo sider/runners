@@ -2,7 +2,7 @@ require "minitest"
 require "unification_assertion"
 require "pp"
 require 'parallel'
-require "rainbow"
+require "amazing_print"
 
 module Runners
   module Testing
@@ -132,10 +132,7 @@ module Runners
       end
 
       def colored_pretty_inspect(hash)
-        hash.pretty_inspect
-          .gsub(/(:\w+)=>/, Rainbow('\1').yellow + "=>")
-          .gsub(/(nil|false|true)/, Rainbow('\1').cyan)
-          .gsub(/("(?:[^\\"]|\\.)*")/, Rainbow('\1').green)
+        hash.awesome_inspect(indent: 2, index: false)
       end
 
       @tests = {}

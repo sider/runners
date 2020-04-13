@@ -14,6 +14,7 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.2)
+    amazing_print (1.0.0)
     ast (2.4.0)
     ast_utils (0.3.0)
       parser (~> 2.4)
@@ -89,6 +90,7 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport
+  amazing_print
   aufgaben!
   aws-sdk-s3
   bugsnag
@@ -100,7 +102,6 @@ DEPENDENCIES
   minitest
   parallel
   prettier
-  rainbow
   rake
   retryable
   rexml (>= 3.2, < 4.0)
