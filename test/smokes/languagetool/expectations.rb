@@ -24,20 +24,6 @@ Smoke.add_test(
       },
       {
         id: "MORFOLOGIK_RULE_EN_US",
-        path: "dir/foo.md",
-        location: { start_line: 3 },
-        message: "Possible spelling mistake found.",
-        links: [],
-        object: {
-          sentence: "See [heree](https://example.com/document).",
-          type: "misspelling",
-          category: "Possible Typo",
-          replacements: :_
-        },
-        git_blame_info: nil
-      },
-      {
-        id: "MORFOLOGIK_RULE_EN_US",
         path: "sample.txt",
         location: { start_line: 3 },
         message: "Possible spelling mistake found.",
@@ -48,6 +34,15 @@ Smoke.add_test(
           category: "Possible Typo",
           replacements: %w[detect]
         },
+        git_blame_info: nil
+      },
+      {
+        id: "THE_SENT_END",
+        path: "dir/foo.txt",
+        location: { start_line: 1 },
+        message: "Did you forget something after 'a'?",
+        links: [],
+        object: { sentence: "This is a.", type: "grammar", category: "Grammar", replacements: [] },
         git_blame_info: nil
       },
       {
