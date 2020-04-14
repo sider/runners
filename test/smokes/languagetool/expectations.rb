@@ -65,7 +65,7 @@ Smoke.add_test(
 )
 
 Smoke.add_test(
-  "language_option",
+  "option_language",
   {
     guid: "test-guid",
     timestamp: :_,
@@ -73,26 +73,34 @@ Smoke.add_test(
     issues: [
       {
         id: "DOUSI_KOTOGADEKIRU",
+        path: "sample.txt",
+        location: { start_line: 1 },
+        message: "省略が可能です。暮\"らせる\"",
         links: [],
-        path: "japanese/sample.txt",
-        location: nil,
-        message:
-          "省略が可能です。暮\"らせる\" -> これわ文章を入力して'CheckText'をクリックすると、誤記を探すことができる。",
-        object: nil,
+        object: {
+          sentence: "これわ文章を入力して'CheckText'をクリックすると、誤記を探すことができる。",
+          type: "uncategorized",
+          category: "文法",
+          replacements: %w[らせる]
+        },
         git_blame_info: nil
       },
       {
         id: "KOREWA",
+        path: "sample.txt",
+        location: { start_line: 1 },
+        message: "文法ミスがあります。\"これは\"の間違いです。",
         links: [],
-        path: "japanese/sample.txt",
-        location: nil,
-        message:
-          "文法ミスがあります。\"これは\"の間違いです。 -> これわ文章を入力して'CheckText'をクリックすると、誤記を探すことができる。",
-        object: nil,
+        object: {
+          sentence: "これわ文章を入力して'CheckText'をクリックすると、誤記を探すことができる。",
+          type: "uncategorized",
+          category: "文法",
+          replacements: %w[これは]
+        },
         git_blame_info: nil
       }
     ],
-    analyzer: { name: "languagetool", version: "4.9" }
+    analyzer: { name: "LanguageTool", version: "4.9" }
   }
 )
 
