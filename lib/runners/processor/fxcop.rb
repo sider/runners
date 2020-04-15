@@ -20,7 +20,11 @@ module Runners
       output_file = Tempfile.create(["fxcop-", ""]).path
       _, err, status = capture3('Sider.RoslynAnalyzersRunner',
         '--outputfile', output_file,
-        *changes.changed_paths.select{|p| p.extname.eql?(".cs")}.map(&:to_s))
+        *changes
+          .changed_paths
+          .select{|p| p.extname.eql?(".cs")}
+          .map{|p| relative_path(working_dir / p, from: current_dir)}
+          .map(&:to_s))
 
       if status.exited? && status.exitstatus == 0
         Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|

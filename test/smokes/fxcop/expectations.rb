@@ -74,7 +74,34 @@ Smoke.add_test(
     guid: 'test-guid',
     timestamp: :_,
     type: 'success',
-    issues: ISSUES_PROGRAM_CS,
+    issues: [
+      {
+        path: 'src/Program.cs',
+        location: { start_line: 7, start_column: 35, end_line:7, end_column:39 },
+        id: 'CA1801',
+        message: 'Parameter args of method Main is never used. Remove the parameter or use it in the method body.',
+        object: {
+          category: "Usage",
+          description: "Avoid unused paramereters in your code. If the parameter cannot be removed, then change its name so it starts with an underscore and is optionally followed by an integer, such as '_', '_1', '_2', etc. These are treated as special discard symbol names.",
+          severity: 2,
+        },
+        git_blame_info: nil,
+        links: ["https://docs.microsoft.com/visualstudio/code-quality/ca1801-review-unused-parameters"]
+      },
+      {
+        path: 'src/Program.cs',
+        location: { start_line: 5, start_column: 11, end_line: 5, end_column: 18 },
+        id: 'CA1812',
+        message: "Program is an internal class that is apparently never instantiated. If so, remove the code from the assembly. If this class is intended to contain only static members, make it static (Shared in Visual Basic).",
+        object: {
+          category: "Performance",
+          description: "An instance of an assembly-level type is not created by code in the assembly.",
+          severity: 2,
+        },
+        git_blame_info: nil,
+        links: ["https://docs.microsoft.com/visualstudio/code-quality/ca1812-avoid-uninstantiated-internal-classes"]
+      },
+    ],
     analyzer: ANALYZER
   }
 )
