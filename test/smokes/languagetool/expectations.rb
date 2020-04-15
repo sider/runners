@@ -124,14 +124,3 @@ Smoke.add_test(
     analyzer: { name: "LanguageTool", version: "4.9" }
   }
 )
-
-# Smoke.add_test(
-#   "multi_target_file",
-#   {
-#     guid: "test-guid",
-#     timestamp: :_,
-#     type: "success",
-#     issues: [],
-#     analyzer: { name: "LanguageTool", version: "4.9" }
-#   }
-# )
