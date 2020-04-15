@@ -1,5 +1,36 @@
 Smoke = Runners::Testing::Smoke
 
+ANALYZER = { name: 'FxCop', version: '2.9.8' }.freeze
+
+ISSUES_PROGRAM_CS = [
+  {
+    path: 'Program.cs',
+    location: { start_line: 7, start_column: 35, end_line:7, end_column:39 },
+    id: 'CA1801',
+    message: 'Parameter args of method Main is never used. Remove the parameter or use it in the method body.',
+    object: {
+      category: "Usage",
+      description: "Avoid unused paramereters in your code. If the parameter cannot be removed, then change its name so it starts with an underscore and is optionally followed by an integer, such as '_', '_1', '_2', etc. These are treated as special discard symbol names.",
+      severity: 2,
+    },
+    git_blame_info: nil,
+    links: ["https://docs.microsoft.com/visualstudio/code-quality/ca1801-review-unused-parameters"]
+  },
+  {
+    path: 'Program.cs',
+    location: { start_line: 5, start_column: 11, end_line: 5, end_column: 18 },
+    id: 'CA1812',
+    message: "Program is an internal class that is apparently never instantiated. If so, remove the code from the assembly. If this class is intended to contain only static members, make it static (Shared in Visual Basic).",
+    object: {
+      category: "Performance",
+      description: "An instance of an assembly-level type is not created by code in the assembly.",
+      severity: 2,
+    },
+    git_blame_info: nil,
+    links: ["https://docs.microsoft.com/visualstudio/code-quality/ca1812-avoid-uninstantiated-internal-classes"]
+  },
+].freeze
+
 # a normal case
 Smoke.add_test(
   'success',
@@ -7,31 +38,8 @@ Smoke.add_test(
     guid: 'test-guid',
     timestamp: :_,
     type: 'success',
-    issues: [
-      {
-        path: 'Program.cs',
-        location: { start_line: 9, start_column: 31, end_line:9, end_column:45 },
-        id: 'CA1303',
-        message: "Method 'void Program.Main(string[] args)' passes a literal string as parameter 'value' of a call to 'void Console.WriteLine(string value)'. Retrieve the following string(s) from a resource table instead: \"Hello World!\".",
-        object: {
-          severity: 'warning'
-        },
-        git_blame_info: nil,
-        links: ["https://docs.microsoft.com/visualstudio/code-quality/ca1303-do-not-pass-literals-as-localized-parameters"]
-      },
-      {
-        path: 'Program.cs',
-        location: { start_line: 7, start_column: 35, end_line:7, end_column:39 },
-        id: 'CA1801',
-        message: 'Parameter args of method Main is never used. Remove the parameter or use it in the method body.',
-        object: {
-          severity: 'warning'
-        },
-        git_blame_info: nil,
-        links: ["https://docs.microsoft.com/visualstudio/code-quality/ca1801-review-unused-parameters"]
-      }
-    ],
-    analyzer: { name: 'FxCop', version: '2.9.8' }
+    issues: ISSUES_PROGRAM_CS,
+    analyzer: ANALYZER
   }
 )
 
@@ -42,31 +50,8 @@ Smoke.add_test(
     guid: 'test-guid',
     timestamp: :_,
     type: 'success',
-    issues: [
-      {
-        path: 'Program.cs',
-        location: { start_line: 9, start_column: 31, end_line:9, end_column:45 },
-        id: 'CA1303',
-        message: "Method 'void Program.Main(string[] args)' passes a literal string as parameter 'value' of a call to 'void Console.WriteLine(string value)'. Retrieve the following string(s) from a resource table instead: \"Hello World!\".",
-        object: {
-          severity: 'warning'
-        },
-        git_blame_info: nil,
-        links: ["https://docs.microsoft.com/visualstudio/code-quality/ca1303-do-not-pass-literals-as-localized-parameters"]
-      },
-      {
-        path: 'Program.cs',
-        location: { start_line: 7, start_column: 35, end_line:7, end_column:39 },
-        id: 'CA1801',
-        message: 'Parameter args of method Main is never used. Remove the parameter or use it in the method body.',
-        object: {
-          severity: 'warning'
-        },
-        git_blame_info: nil,
-        links: ["https://docs.microsoft.com/visualstudio/code-quality/ca1801-review-unused-parameters"]
-      }
-    ],
-    analyzer: { name: 'FxCop', version: '2.9.8' }
+    issues: ISSUES_PROGRAM_CS,
+    analyzer: ANALYZER
   }
 )
 
@@ -77,31 +62,8 @@ Smoke.add_test(
     guid: 'test-guid',
     timestamp: :_,
     type: 'success',
-    issues: [
-      {
-        path: 'Program.cs',
-        location: { start_line: 9, start_column: 31, end_line:9, end_column:45 },
-        id: 'CA1303',
-        message: "Method 'void Program.Main(string[] args)' passes a literal string as parameter 'value' of a call to 'void Console.WriteLine(string value)'. Retrieve the following string(s) from a resource table instead: \"Hello World!\".",
-        object: {
-          severity: 'warning'
-        },
-        git_blame_info: nil,
-        links: ["https://docs.microsoft.com/visualstudio/code-quality/ca1303-do-not-pass-literals-as-localized-parameters"]
-      },
-      {
-        path: 'Program.cs',
-        location: { start_line: 7, start_column: 35, end_line:7, end_column:39 },
-        id: 'CA1801',
-        message: 'Parameter args of method Main is never used. Remove the parameter or use it in the method body.',
-        object: {
-          severity: 'warning'
-        },
-        git_blame_info: nil,
-        links: ["https://docs.microsoft.com/visualstudio/code-quality/ca1801-review-unused-parameters"]
-      }
-    ],
-    analyzer: { name: 'FxCop', version: '2.9.8' }
+    issues: ISSUES_PROGRAM_CS,
+    analyzer: ANALYZER
   }
 )
 
@@ -112,34 +74,10 @@ Smoke.add_test(
     guid: 'test-guid',
     timestamp: :_,
     type: 'success',
-    issues: [
-      {
-        path: 'src/Program.cs',
-        location: { start_line: 9, start_column: 31, end_line:9, end_column:45 },
-        id: 'CA1303',
-        message: "Method 'void Program.Main(string[] args)' passes a literal string as parameter 'value' of a call to 'void Console.WriteLine(string value)'. Retrieve the following string(s) from a resource table instead: \"Hello World!\".",
-        object: {
-          severity: 'warning'
-        },
-        git_blame_info: nil,
-        links: ["https://docs.microsoft.com/visualstudio/code-quality/ca1303-do-not-pass-literals-as-localized-parameters"]
-      },
-      {
-        path: 'src/Program.cs',
-        location: { start_line: 7, start_column: 35, end_line:7, end_column:39 },
-        id: 'CA1801',
-        message: 'Parameter args of method Main is never used. Remove the parameter or use it in the method body.',
-        object: {
-          severity: 'warning'
-        },
-        git_blame_info: nil,
-        links: ["https://docs.microsoft.com/visualstudio/code-quality/ca1801-review-unused-parameters"]
-      }
-    ],
-    analyzer: { name: 'FxCop', version: '2.9.8' }
+    issues: ISSUES_PROGRAM_CS,
+    analyzer: ANALYZER
   }
 )
-
 
 # a project don't have .NET Core Project file (csproj)
 Smoke.add_test(
@@ -147,9 +85,23 @@ Smoke.add_test(
   {
     guid: 'test-guid',
     timestamp: :_,
-    type: 'failure',
-    message: :_,
-    analyzer: :_,
+    type: 'success',
+    issues: [
+      {
+        path: 'Program.cs',
+        location: { start_line: 3, start_column: 11, end_line: 3, end_column: 20 },
+        id: 'CA1707',
+        message: 'Remove the underscores from namespace name \'no_csproj\'.',
+        object: {
+          category: "Naming",
+          description: "By convention, identifier names do not contain the underscore (_) character. This rule checks namespaces, types, members, and parameters.",
+          severity: 2,
+        },
+        git_blame_info: nil,
+        links: ["https://docs.microsoft.com/visualstudio/code-quality/ca1707-identifiers-should-not-contain-underscores"]
+      },
+    ] + ISSUES_PROGRAM_CS,
+    analyzer: ANALYZER
   }
 )
 
@@ -159,43 +111,8 @@ Smoke.add_test(
   {
     guid: 'test-guid',
     timestamp: :_,
-    type: 'failure',
-    message: :_,
-    analyzer: :_,
-  }
-)
-
-# a project have .csproj file in non analysis root
-Smoke.add_test(
-  'success',
-  {
-    guid: 'test-guid',
-    timestamp: :_,
     type: 'success',
-    issues: [
-      {
-        path: 'Program.cs',
-        location: { start_line: 9, start_column: 31, end_line:9, end_column:45 },
-        id: 'CA1303',
-        message: "Method 'void Program.Main(string[] args)' passes a literal string as parameter 'value' of a call to 'void Console.WriteLine(string value)'. Retrieve the following string(s) from a resource table instead: \"Hello World!\".",
-        object: {
-          severity: 'warning'
-        },
-        git_blame_info: nil,
-        links: ["https://docs.microsoft.com/visualstudio/code-quality/ca1303-do-not-pass-literals-as-localized-parameters"]
-      },
-      {
-        path: 'Program.cs',
-        location: { start_line: 7, start_column: 35, end_line:7, end_column:39 },
-        id: 'CA1801',
-        message: 'Parameter args of method Main is never used. Remove the parameter or use it in the method body.',
-        object: {
-          severity: 'warning'
-        },
-        git_blame_info: nil,
-        links: ["https://docs.microsoft.com/visualstudio/code-quality/ca1801-review-unused-parameters"]
-      }
-    ],
-    analyzer: { name: 'FxCop', version: '2.9.8' }
+    issues: ISSUES_PROGRAM_CS,
+    analyzer: ANALYZER
   }
 )
