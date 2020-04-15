@@ -288,3 +288,8 @@ Smoke.add_test(
     analyzer: { name: "LanguageTool", version: "4.9" }
   }
 )
+
+Smoke.add_test(
+  "no_files",
+  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "LanguageTool", version: "4.9" } }
+)

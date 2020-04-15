@@ -6,7 +6,7 @@ FROM sider/devon_rex_java:2.16.1
 
 ARG LANGUAGETOOL_VERSION=4.9
 
-RUN cd ${RUNNER_USER_HOME} && \
+RUN cd "${RUNNER_USER_HOME}" && \
     curl -sSLO --compressed https://languagetool.org/download/LanguageTool-${LANGUAGETOOL_VERSION}.zip && \
     unzip -q LanguageTool-${LANGUAGETOOL_VERSION}.zip && \
     rm LanguageTool-${LANGUAGETOOL_VERSION}.zip && \

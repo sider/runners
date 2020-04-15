@@ -164,7 +164,7 @@ module Runners
     def parse_output(output)
       s = StringScanner.new(output)
       until s.eos?
-        s.scan_until(/Working on (.+)\.\.\./)
+        s.scan_until(/Working on (.+)\.\.\./) or return # no target files
         file = s.captures.first
         json = s.scan_until(/\{.+\}/)
         data = JSON.parse(json, symbolize_names: true)
