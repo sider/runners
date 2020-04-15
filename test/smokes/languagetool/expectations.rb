@@ -222,3 +222,8 @@ Smoke.add_test(
     analyzer: { name: "LanguageTool", version: "4.9" }
   }
 )
+
+Smoke.add_test(
+  "option_disable",
+  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "LanguageTool", version: "4.9" } }
+)

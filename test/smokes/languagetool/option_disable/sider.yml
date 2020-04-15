@@ -1,0 +1,5 @@
+linter:
+  languagetool:
+    disable:
+      - UPPERCASE_SENTENCE_START
+      - THE_SENT_END
