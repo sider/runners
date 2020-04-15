@@ -6,7 +6,7 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-ARG SHELLCHECK_VERSION=0.7.0
+ARG SHELLCHECK_VERSION=0.7.1
 
 # NOTE: Compiling via Cabal is too slow. See #296.
 RUN cd /tmp && \
