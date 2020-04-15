@@ -267,3 +267,24 @@ Smoke.add_test(
     analyzer: { name: "LanguageTool", version: "4.9" }
   }
 )
+
+Smoke.add_test(
+  "option_enable_categories",
+  {
+    guid: "test-guid",
+    timestamp: :_,
+    type: "success",
+    issues: [
+      {
+        id: "UPPERCASE_SENTENCE_START",
+        path: "sample.txt",
+        location: { start_line: 1 },
+        message: "This sentence does not start with an uppercase letter",
+        links: [],
+        object: { sentence: "this is a.", type: "typographical", category: "CASING", replacements: %w[This] },
+        git_blame_info: nil
+      }
+    ],
+    analyzer: { name: "LanguageTool", version: "4.9" }
+  }
+)
