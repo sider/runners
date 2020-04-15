@@ -1,0 +1,3 @@
+linter:
+  languagetool:
+    ext: [".md", ".html"]

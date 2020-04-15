@@ -124,3 +124,57 @@ Smoke.add_test(
     analyzer: { name: "LanguageTool", version: "4.9" }
   }
 )
+
+Smoke.add_test(
+  "option_ext",
+  {
+    guid: "test-guid",
+    timestamp: :_,
+    type: "success",
+    issues: [
+      {
+        id: "EN_QUOTES",
+        path: "target.html",
+        location: { start_line: 3 },
+        message: "Use a smart closing quote here: \"”\".",
+        links: [],
+        object: {
+          sentence: "<p class=\"normal\">This is a sample <em>HTML</em> file.</p>",
+          type: "typographical",
+          category: "Typography",
+          replacements: %w[”]
+        },
+        git_blame_info: nil
+      },
+      {
+        id: "EN_QUOTES",
+        path: "target.html",
+        location: { start_line: 3 },
+        message: "Use a smart closing quote here: \"”\".",
+        links: [],
+        object: {
+          sentence: "<p class=\"normal\">This is a sample <em>HTML</em> file.</p>",
+          type: "typographical",
+          category: "Typography",
+          replacements: %w[”]
+        },
+        git_blame_info: nil
+      },
+      {
+        id: "MORFOLOGIK_RULE_EN_US",
+        path: "target.md",
+        location: { start_line: 3 },
+        message: "Possible spelling mistake found.",
+        links: [],
+        object: {
+          sentence: "This is a sample [markdow](https://en.wikipedia.org/wiki/Markdown) file.",
+          type: "misspelling",
+          category: "Possible Typo",
+          replacements: %w[markdown]
+        },
+        git_blame_info: nil
+      }
+    ],
+    analyzer: { name: "LanguageTool", version: "4.9" }
+  }
+)
