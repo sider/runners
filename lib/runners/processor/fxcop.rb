@@ -20,7 +20,7 @@ module Runners
       output_file = Tempfile.create(["fxcop-", ""]).path
       _, err, status = capture3('Sider.RoslynAnalyzersRunner',
         '--outputfile', output_file,
-        *changes.changed_paths.map(&:to_s))
+        *changes.changed_paths.select{|p| p.extname.eql?(".cs")}.map(&:to_s))
 
       if status.exited? && status.exitstatus == 0
         Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
@@ -35,10 +35,10 @@ module Runners
       json.each do |hash|
         path = relative_path(hash[:SourceCodeFilePath])
         hash[:Diagnostics].each do |diag|
-          location = Location.new(start_line: diag.dig(:Location, :Start, :Line),
-                            start_column: diag.dig(:Location, :Start, :Character),
-                            end_line: diag.dig(:Location, :End, :Line),
-                            end_column: diag.dig(:Location, :End, :Character))
+          location = Location.new(start_line: diag.dig(:Location, :Start, :Line) + 1,
+                            start_column: diag.dig(:Location, :Start, :Character) + 1,
+                            end_line: diag.dig(:Location, :End, :Line) + 1,
+                            end_column: diag.dig(:Location, :End, :Character) + 1)
 
           result.add_issue Issue.new(
             path: path,
