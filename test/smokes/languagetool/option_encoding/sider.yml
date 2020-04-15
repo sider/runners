@@ -1,0 +1,4 @@
+linter:
+  languagetool:
+    encoding: EUC-JP
+    language: ja-JP

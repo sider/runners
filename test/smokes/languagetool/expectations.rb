@@ -201,3 +201,24 @@ Smoke.add_test(
     analyzer: { name: "LanguageTool", version: "4.9" }
   }
 )
+
+Smoke.add_test(
+  "option_encoding",
+  {
+    guid: "test-guid",
+    timestamp: :_,
+    type: "success",
+    issues: [
+      {
+        id: "KOREWA",
+        path: "sample.txt",
+        location: { start_line: 1 },
+        message: "文法ミスがあります。\"これは\"の間違いです。",
+        links: [],
+        object: { sentence: "これわペンです。", type: "uncategorized", category: "文法", replacements: %w[これは] },
+        git_blame_info: nil
+      }
+    ],
+    analyzer: { name: "LanguageTool", version: "4.9" }
+  }
+)
