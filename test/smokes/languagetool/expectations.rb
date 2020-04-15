@@ -105,8 +105,24 @@ Smoke.add_test(
 )
 
 Smoke.add_test(
-  "target_file",
-  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "LanguageTool", version: "4.9" } }
+  "option_target",
+  {
+    guid: "test-guid",
+    timestamp: :_,
+    type: "success",
+    issues: [
+      {
+        id: "MORFOLOGIK_RULE_EN_US",
+        path: "dir/incorrect.txt",
+        location: { start_line: 1 },
+        message: "Possible spelling mistake found.",
+        links: [],
+        object: { sentence: "Thes is correct text.", type: "misspelling", category: "Possible Typo", replacements: :_ },
+        git_blame_info: nil
+      }
+    ],
+    analyzer: { name: "LanguageTool", version: "4.9" }
+  }
 )
 
 # Smoke.add_test(
