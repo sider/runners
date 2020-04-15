@@ -13,8 +13,8 @@ module Runners
           disable: array?(string),
           enable: array?(string),
           enabled_only: boolean?,
-          enable_categories: array?(string),
           disable_categories: array?(string),
+          enable_categories: array?(string),
         )
       }
 
@@ -33,6 +33,10 @@ module Runners
     DEFAULT_EXCLUDE = ["**/{requirements,robots}.txt"].freeze
     DEFAULT_LANGUAGE = "en-US".freeze # NOTE: Need a variant for spell checking
     DEFAULT_ENCODING = "UTF-8".freeze
+    DEFAULT_DISABLE = [].freeze
+    DEFAULT_ENABLE = [].freeze
+    DEFAULT_DISABLE_CATEGORIES = [].freeze
+    DEFAULT_ENABLE_CATEGORIES = [].freeze
 
     def analyze(changes)
       delete_files_except_targets
@@ -82,28 +86,29 @@ module Runners
       Encoding.find(config_linter[:encoding] || DEFAULT_ENCODING)
     end
 
-    def cli_comma_separated_list(values, cli_option)
+    def cli_comma_separated_list(config_option, default_value, cli_option)
+      values = config_linter[config_option] || default_value
       values.empty? ? [] : [cli_option, values.join(",")]
     end
 
     def cli_disable
-      cli_comma_separated_list(config_linter[:disable] || [], "--disable")
+      cli_comma_separated_list :disable, DEFAULT_DISABLE, "--disable"
     end
 
     def cli_enable
-      cli_comma_separated_list(config_linter[:enable] || [], "--enable")
+      cli_comma_separated_list :enable, DEFAULT_ENABLE, "--enable"
     end
 
     def cli_enabled_only
       config_linter[:enabled_only] ? ["--enabledonly"] : []
     end
 
-    def cli_enable_categories
-      cli_comma_separated_list(config_linter[:enable_categories] || [], "--enablecategories")
+    def cli_disable_categories
+      cli_comma_separated_list :disable_categories, DEFAULT_DISABLE_CATEGORIES, "--disablecategories"
     end
 
-    def cli_disable_categories
-      cli_comma_separated_list(config_linter[:disable_categories] || [], "--disablecategories")
+    def cli_enable_categories
+      cli_comma_separated_list :enable_categories, DEFAULT_ENABLE_CATEGORIES, "--enablecategories"
     end
 
     def cli_args
@@ -115,8 +120,8 @@ module Runners
         *cli_disable,
         *cli_enable,
         *cli_enabled_only,
-        *cli_enable_categories,
         *cli_disable_categories,
+        *cli_enable_categories,
         config_target,
       ]
     end
@@ -146,7 +151,7 @@ module Runners
               object: {
                 sentence: match[:sentence],
                 type: match.dig(:rule, :issueType),
-                category: match.dig(:rule, :category, :name),
+                category: match.dig(:rule, :category, :id),
                 replacements: match[:replacements]&.map { |r| r[:value] },
               },
               schema: Schema.issue,

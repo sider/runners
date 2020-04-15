@@ -17,7 +17,7 @@ Smoke.add_test(
         object: {
           sentence: "to see an few of the problems that LanguageTool can detecd.",
           type: "misspelling",
-          category: "Miscellaneous",
+          category: "MISC",
           replacements: %w[a]
         },
         git_blame_info: nil
@@ -31,7 +31,7 @@ Smoke.add_test(
         object: {
           sentence: "to see an few of the problems that LanguageTool can detecd.",
           type: "misspelling",
-          category: "Possible Typo",
+          category: "TYPOS",
           replacements: %w[detect]
         },
         git_blame_info: nil
@@ -42,7 +42,7 @@ Smoke.add_test(
         location: { start_line: 1 },
         message: "Did you forget something after 'a'?",
         links: [],
-        object: { sentence: "This is a.", type: "grammar", category: "Grammar", replacements: [] },
+        object: { sentence: "This is a.", type: "grammar", category: "GRAMMAR", replacements: [] },
         git_blame_info: nil
       },
       {
@@ -54,7 +54,7 @@ Smoke.add_test(
         object: {
           sentence: "to see an few of the problems that LanguageTool can detecd.",
           type: "typographical",
-          category: "Capitalization",
+          category: "CASING",
           replacements: %w[To]
         },
         git_blame_info: nil
@@ -80,7 +80,7 @@ Smoke.add_test(
         object: {
           sentence: "これわ文章を入力して'CheckText'をクリックすると、誤記を探すことができる。",
           type: "uncategorized",
-          category: "文法",
+          category: "CAT1",
           replacements: %w[らせる]
         },
         git_blame_info: nil
@@ -94,7 +94,7 @@ Smoke.add_test(
         object: {
           sentence: "これわ文章を入力して'CheckText'をクリックすると、誤記を探すことができる。",
           type: "uncategorized",
-          category: "文法",
+          category: "CAT1",
           replacements: %w[これは]
         },
         git_blame_info: nil
@@ -117,7 +117,7 @@ Smoke.add_test(
         location: { start_line: 1 },
         message: "Possible spelling mistake found.",
         links: [],
-        object: { sentence: "Thes is correct text.", type: "misspelling", category: "Possible Typo", replacements: :_ },
+        object: { sentence: "Thes is correct text.", type: "misspelling", category: "TYPOS", replacements: :_ },
         git_blame_info: nil
       }
     ],
@@ -141,7 +141,7 @@ Smoke.add_test(
         object: {
           sentence: "<p class=\"normal\">This is a sample <em>HTML</em> file.</p>",
           type: "typographical",
-          category: "Typography",
+          category: "TYPOGRAPHY",
           replacements: %w[”]
         },
         git_blame_info: nil
@@ -155,7 +155,7 @@ Smoke.add_test(
         object: {
           sentence: "<p class=\"normal\">This is a sample <em>HTML</em> file.</p>",
           type: "typographical",
-          category: "Typography",
+          category: "TYPOGRAPHY",
           replacements: %w[”]
         },
         git_blame_info: nil
@@ -169,7 +169,7 @@ Smoke.add_test(
         object: {
           sentence: "This is a sample [markdow](https://en.wikipedia.org/wiki/Markdown) file.",
           type: "misspelling",
-          category: "Possible Typo",
+          category: "TYPOS",
           replacements: %w[markdown]
         },
         git_blame_info: nil
@@ -192,9 +192,7 @@ Smoke.add_test(
         location: { start_line: 1 },
         message: "This sentence does not start with an uppercase letter",
         links: [],
-        object: {
-          sentence: "this is a pen.", type: "typographical", category: "Capitalization", replacements: %w[This]
-        },
+        object: { sentence: "this is a pen.", type: "typographical", category: "CASING", replacements: %w[This] },
         git_blame_info: nil
       }
     ],
@@ -215,7 +213,7 @@ Smoke.add_test(
         location: { start_line: 1 },
         message: "文法ミスがあります。\"これは\"の間違いです。",
         links: [],
-        object: { sentence: "これわペンです。", type: "uncategorized", category: "文法", replacements: %w[これは] },
+        object: { sentence: "これわペンです。", type: "uncategorized", category: "CAT1", replacements: %w[これは] },
         git_blame_info: nil
       }
     ],
@@ -241,7 +239,28 @@ Smoke.add_test(
         location: { start_line: 1 },
         message: "This sentence does not start with an uppercase letter",
         links: [],
-        object: { sentence: "this is a.", type: "typographical", category: "Capitalization", replacements: %w[This] },
+        object: { sentence: "this is a.", type: "typographical", category: "CASING", replacements: %w[This] },
+        git_blame_info: nil
+      }
+    ],
+    analyzer: { name: "LanguageTool", version: "4.9" }
+  }
+)
+
+Smoke.add_test(
+  "option_disable_categories",
+  {
+    guid: "test-guid",
+    timestamp: :_,
+    type: "success",
+    issues: [
+      {
+        id: "THE_SENT_END",
+        path: "sample.txt",
+        location: { start_line: 1 },
+        message: "Did you forget something after 'a'?",
+        links: [],
+        object: { sentence: "this is a.", type: "grammar", category: "GRAMMAR", replacements: [] },
         git_blame_info: nil
       }
     ],
