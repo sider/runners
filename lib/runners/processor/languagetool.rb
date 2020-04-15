@@ -95,7 +95,7 @@ module Runners
     end
 
     def cli_enabled_only
-      config_linter[:enabledonly] ? ["--enabledonly"] : []
+      config_linter[:enabled_only] ? ["--enabledonly"] : []
     end
 
     def cli_enable_categories
