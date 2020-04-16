@@ -26,7 +26,7 @@ module Runners
           .map{|p| relative_path(working_dir / p, from: current_dir)}
           .map(&:to_s))
 
-      if status.exited? && status.exitstatus == 0
+      if status.success?
         Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
           construct_result(result, read_output_json(output_file))
         end

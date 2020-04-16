@@ -134,3 +134,32 @@ Smoke.add_test(
     analyzer: ANALYZER
   }
 )
+
+# pass invalid command line argument to return error code
+Smoke.add_test(
+  'invalid_arg',
+  {
+    guid: 'test-guid',
+    timestamp: :_,
+    type: 'failure',
+    message: <<"EOS",
+Sider.RoslynAnalyzersRunner 0.1.2
+Copyright (C) 2020 Sider.RoslynAnalyzersRunner
+
+ERROR(S):
+  Option 'dummy.cs' is unknown.
+
+  --language           (Default: CSharp)
+
+  --outputfile         (Default: -)
+
+  --help               Display this help screen.
+
+  --version            Display version information.
+
+  file ... (pos. 0)    
+
+EOS
+    analyzer: ANALYZER
+  }
+)
