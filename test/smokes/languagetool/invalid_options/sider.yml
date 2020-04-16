@@ -1,4 +1,4 @@
 linter:
   languagetool:
     disable: [THE_SENT_END]
-    enabled_only: true
+    enabledonly: true

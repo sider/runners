@@ -12,9 +12,9 @@ module Runners
           encoding: string?,
           disable: array?(string),
           enable: array?(string),
-          enabled_only: boolean?,
-          disable_categories: array?(string),
-          enable_categories: array?(string),
+          enabledonly: boolean?,
+          disablecategories: array?(string),
+          enablecategories: array?(string),
         )
       }
 
@@ -35,8 +35,8 @@ module Runners
     DEFAULT_ENCODING = "UTF-8".freeze
     DEFAULT_DISABLE = [].freeze
     DEFAULT_ENABLE = [].freeze
-    DEFAULT_DISABLE_CATEGORIES = [].freeze
-    DEFAULT_ENABLE_CATEGORIES = [].freeze
+    DEFAULT_DISABLECATEGORIES = [].freeze
+    DEFAULT_ENABLECATEGORIES = [].freeze
 
     def analyze(changes)
       delete_files_except_targets
@@ -99,16 +99,16 @@ module Runners
       cli_comma_separated_list :enable, DEFAULT_ENABLE, "--enable"
     end
 
-    def cli_enabled_only
-      config_linter[:enabled_only] ? ["--enabledonly"] : []
+    def cli_enabledonly
+      config_linter[:enabledonly] ? ["--enabledonly"] : []
     end
 
-    def cli_disable_categories
-      cli_comma_separated_list :disable_categories, DEFAULT_DISABLE_CATEGORIES, "--disablecategories"
+    def cli_disablecategories
+      cli_comma_separated_list :disablecategories, DEFAULT_DISABLECATEGORIES, "--disablecategories"
     end
 
-    def cli_enable_categories
-      cli_comma_separated_list :enable_categories, DEFAULT_ENABLE_CATEGORIES, "--enablecategories"
+    def cli_enablecategories
+      cli_comma_separated_list :enablecategories, DEFAULT_ENABLECATEGORIES, "--enablecategories"
     end
 
     def cli_args
@@ -119,9 +119,9 @@ module Runners
         "--encoding", config_encoding.to_s,
         *cli_disable,
         *cli_enable,
-        *cli_enabled_only,
-        *cli_disable_categories,
-        *cli_enable_categories,
+        *cli_enabledonly,
+        *cli_disablecategories,
+        *cli_enablecategories,
         config_target,
       ]
     end

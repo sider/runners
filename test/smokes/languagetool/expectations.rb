@@ -248,7 +248,7 @@ Smoke.add_test(
 )
 
 Smoke.add_test(
-  "option_disable_categories",
+  "option_disablecategories",
   {
     guid: "test-guid",
     timestamp: :_,
@@ -269,7 +269,7 @@ Smoke.add_test(
 )
 
 Smoke.add_test(
-  "option_enable_categories",
+  "option_enablecategories",
   {
     guid: "test-guid",
     timestamp: :_,

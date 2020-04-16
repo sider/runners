@@ -1,4 +1,4 @@
 linter:
   languagetool:
-    disable_categories:
+    disablecategories:
       - CASING

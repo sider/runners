@@ -1,5 +1,5 @@
 linter:
   languagetool:
-    enable:
-      - UPPERCASE_SENTENCE_START
+    enablecategories:
+      - CASING
     enabledonly: true
