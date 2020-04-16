@@ -5,9 +5,22 @@ ANALYZER = { name: 'FxCop', version: '2.9.8' }.freeze
 ISSUES_PROGRAM_CS = [
   {
     path: 'Program.cs',
-    location: { start_line: 7, start_column: 35, end_line:7, end_column:39 },
-    id: 'CA1801',
-    message: 'Parameter args of method Main is never used. Remove the parameter or use it in the method body.',
+    location: { start_line: 7, start_column: 35, end_line: 7, end_column: 39 },
+    id: "CA1801",
+    message: "Parameter args of method Main is never used. Remove the parameter or use it in the method body.",
+    object: {
+      category: "Usage",
+      description: "Avoid unused paramereters in your code. If the parameter cannot be removed, then change its name so it starts with an underscore and is optionally followed by an integer, such as '_', '_1', '_2', etc. These are treated as special discard symbol names.",
+      severity: 2,
+    },
+    git_blame_info: nil,
+    links: ["https://docs.microsoft.com/visualstudio/code-quality/ca1801-review-unused-parameters"]
+  },
+  {
+    path: 'bar/Hello.cs',
+    location: { start_line: 7, start_column: 41, end_line: 7, end_column: 45 },
+    id: "CA1801",
+    message: "Parameter text of method Print is never used. Remove the parameter or use it in the method body.",
     object: {
       category: "Usage",
       description: "Avoid unused paramereters in your code. If the parameter cannot be removed, then change its name so it starts with an underscore and is optionally followed by an integer, such as '_', '_1', '_2', etc. These are treated as special discard symbol names.",
@@ -19,7 +32,7 @@ ISSUES_PROGRAM_CS = [
   {
     path: 'Program.cs',
     location: { start_line: 5, start_column: 11, end_line: 5, end_column: 18 },
-    id: 'CA1812',
+    id: "CA1812",
     message: "Program is an internal class that is apparently never instantiated. If so, remove the code from the assembly. If this class is intended to contain only static members, make it static (Shared in Visual Basic).",
     object: {
       category: "Performance",
@@ -30,6 +43,11 @@ ISSUES_PROGRAM_CS = [
     links: ["https://docs.microsoft.com/visualstudio/code-quality/ca1812-avoid-uninstantiated-internal-classes"]
   },
 ].freeze
+
+ISSUES_SRC_PROGRAM_CS = Marshal.load(Marshal.dump(ISSUES_PROGRAM_CS))
+ISSUES_SRC_PROGRAM_CS[0][:path] = 'src/Program.cs'
+ISSUES_SRC_PROGRAM_CS[1][:path] = 'src/bar/Hello.cs'
+ISSUES_SRC_PROGRAM_CS[2][:path] = 'src/Program.cs'
 
 # a normal case
 Smoke.add_test(
@@ -74,34 +92,7 @@ Smoke.add_test(
     guid: 'test-guid',
     timestamp: :_,
     type: 'success',
-    issues: [
-      {
-        path: 'src/Program.cs',
-        location: { start_line: 7, start_column: 35, end_line:7, end_column:39 },
-        id: 'CA1801',
-        message: 'Parameter args of method Main is never used. Remove the parameter or use it in the method body.',
-        object: {
-          category: "Usage",
-          description: "Avoid unused paramereters in your code. If the parameter cannot be removed, then change its name so it starts with an underscore and is optionally followed by an integer, such as '_', '_1', '_2', etc. These are treated as special discard symbol names.",
-          severity: 2,
-        },
-        git_blame_info: nil,
-        links: ["https://docs.microsoft.com/visualstudio/code-quality/ca1801-review-unused-parameters"]
-      },
-      {
-        path: 'src/Program.cs',
-        location: { start_line: 5, start_column: 11, end_line: 5, end_column: 18 },
-        id: 'CA1812',
-        message: "Program is an internal class that is apparently never instantiated. If so, remove the code from the assembly. If this class is intended to contain only static members, make it static (Shared in Visual Basic).",
-        object: {
-          category: "Performance",
-          description: "An instance of an assembly-level type is not created by code in the assembly.",
-          severity: 2,
-        },
-        git_blame_info: nil,
-        links: ["https://docs.microsoft.com/visualstudio/code-quality/ca1812-avoid-uninstantiated-internal-classes"]
-      },
-    ],
+    issues: ISSUES_SRC_PROGRAM_CS,
     analyzer: ANALYZER
   }
 )
