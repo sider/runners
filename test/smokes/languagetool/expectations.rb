@@ -293,3 +293,14 @@ Smoke.add_test(
   "no_files",
   { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "LanguageTool", version: "4.9" } }
 )
+
+Smoke.add_test(
+  "invalid_options",
+  {
+    guid: "test-guid",
+    timestamp: :_,
+    type: "failure",
+    message: "You cannot specify both disabled rules and enabledonly\nPlease check your `sider.yml`",
+    analyzer: { name: "LanguageTool", version: "4.9" }
+  }
+)

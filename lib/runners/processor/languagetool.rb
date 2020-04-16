@@ -127,7 +127,17 @@ module Runners
     end
 
     def run_analyzer
-      stdout_and_stderr, = capture3!(analyzer_bin, *cli_args, merge_output: true)
+      begin
+        stdout_and_stderr, = capture3!(analyzer_bin, *cli_args, merge_output: true)
+      rescue Shell::ExecError => error
+        error.stdout_str.match(/\bjava\.lang\.IllegalArgumentException: (.+)$/) do |m|
+          msg = m.captures.first
+          msg << "\nPlease check your `#{config.path_name}`" if config.path_name
+          return Results::Failure.new(guid: guid, analyzer: analyzer, message: msg)
+        end
+
+        raise
+      end
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
         parse_output(stdout_and_stderr) do |filepath, data|
