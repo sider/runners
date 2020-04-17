@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.22.4...HEAD)
 
+- [LanguageTool] New support [#787](https://github.com/sider/runners/pull/787)
 - [FxCop] [roslyn-analyzers-runner](https://github.com/sider/roslyn-analyzers-runner) provides a static code analysis without running build [#971](https://github.com/sider/runners/pull/971)
 
 ## 0.22.4

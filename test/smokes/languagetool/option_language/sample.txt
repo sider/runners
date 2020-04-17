@@ -1,0 +1,3 @@
+これわ文章を入力して'Check Text'をクリックすると、誤記を探すことができる。
+
+例: this is English text.

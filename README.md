@@ -7,7 +7,7 @@ See also another related project, called [devon_rex](https://github.com/sider/de
 ## Supported analyzers
 
 <!-- AUTO-GENERATED-CONTENT:START (analyzers) -->
-All 35 analyzers are provided as a Docker image:
+All 36 analyzers are provided as a Docker image:
 
 | Name | Links | Status |
 |:-----|:------|:------:|
@@ -31,6 +31,7 @@ All 35 analyzers are provided as a Docker image:
 | JavaSee | [docker](https://hub.docker.com/r/sider/runner_javasee), [source](https://github.com/sider/JavaSee), [doc](https://help.sider.review/tools/java/javasee) | ✅ |
 | JSHint | [docker](https://hub.docker.com/r/sider/runner_jshint), [source](https://github.com/jshint/jshint), [doc](https://help.sider.review/tools/javascript/jshint) | ✅ |
 | ktlint | [docker](https://hub.docker.com/r/sider/runner_ktlint), [source](https://github.com/pinterest/ktlint), [doc](https://help.sider.review/tools/kotlin/ktlint) | ✅ |
+| LanguageTool | [docker](https://hub.docker.com/r/sider/runner_languagetool), [source](https://github.com/languagetool-org/languagetool), [doc](https://help.sider.review/tools/others/languagetool) | ✅ |
 | Misspell | [docker](https://hub.docker.com/r/sider/runner_misspell), [source](https://github.com/client9/misspell), [doc](https://help.sider.review/tools/others/misspell) | ✅ |
 | Phinder | [docker](https://hub.docker.com/r/sider/runner_phinder), [source](https://github.com/sider/phinder), [doc](https://help.sider.review/tools/php/phinder) | ✅ |
 | PHPMD | [docker](https://hub.docker.com/r/sider/runner_phpmd), [source](https://github.com/phpmd/phpmd), [doc](https://help.sider.review/tools/php/phpmd) | ✅ |

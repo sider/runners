@@ -1,0 +1,19 @@
+FROM sider/devon_rex_java:2.16.1
+
+ARG LANGUAGETOOL_VERSION=4.9
+
+RUN cd "${RUNNER_USER_HOME}" && \
+    curl -sSLO --compressed https://languagetool.org/download/LanguageTool-${LANGUAGETOOL_VERSION}.zip && \
+    unzip -q LanguageTool-${LANGUAGETOOL_VERSION}.zip && \
+    rm LanguageTool-${LANGUAGETOOL_VERSION}.zip && \
+    mv LanguageTool-${LANGUAGETOOL_VERSION} LanguageTool
+
+ARG LANGUAGETOOL_HOME=${RUNNER_USER_HOME}/LanguageTool
+
+COPY --chown=<%= chown %> images/languagetool/languagetool ${LANGUAGETOOL_HOME}/
+
+ENV CLASSPATH ${LANGUAGETOOL_HOME}/*:${CLASSPATH}
+ENV PATH ${LANGUAGETOOL_HOME}:${PATH}
+
+<%= render_erb 'images/Dockerfile.base.erb' %>
+<%= render_erb 'images/Dockerfile.end.erb' %>

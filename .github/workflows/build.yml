@@ -117,6 +117,7 @@ jobs:
           - javasee
           - jshint
           - ktlint
+          - languagetool
           - misspell
           - phinder
           - phpmd
