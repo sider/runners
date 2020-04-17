@@ -9,6 +9,7 @@ module Runners
     class Smoke
       include Minitest::Assertions
       include UnificationAssertion
+      include Tmpdir
 
       ROOT_DATA_DIR = Pathname('/data')
 
@@ -116,8 +117,8 @@ module Runners
       def command_line(name, config)
         dir = data_smoke_path / name
         ssh_key = config.ssh_key&.yield_self do |file|
-          Dir.mktmpdir do |tmp_dir|
-            tmp_ssh_key_path = Pathname(tmp_dir) / 'ssh_key'
+          mktmpdir do |tmp_dir|
+            tmp_ssh_key_path = tmp_dir / 'ssh_key'
             system! "docker cp #{data_container}:#{dir.expand_path / file} #{tmp_ssh_key_path}"
             tmp_ssh_key_path.read
           end

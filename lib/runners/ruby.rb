@@ -13,9 +13,7 @@ module Runners
 
       specs = GemInstaller::Spec.merge(default_specs, user_specs.size > 0 ? user_specs : optionals)
 
-      Dir.mktmpdir do |dir|
-        path = Pathname(dir)
-
+      mktmpdir do |path|
         installer = GemInstaller.new(shell: shell,
                                      home: path,
                                      config_path_name: config.path_name,

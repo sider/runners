@@ -1,5 +1,6 @@
 class Pathname
   def self.glob: (String | Pathname | Array<Pathname> | Array<String>, ?Integer) -> Array<Pathname>
+  def initialize: (_ToS) -> void
   def glob: (String | Pathname | Array<Pathname> | Array<String>, ?Integer) -> Array<Pathname>
   def +: (Pathname | String) -> Pathname
   alias / +

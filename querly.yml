@@ -54,6 +54,12 @@ rules:
           output_file = Pathname(Dir.tmpdir) / "output.json"
       - after: |
           output_file = working_dir / "output.json"
+  - id: sider.runners.mktmpdir
+    pattern: Dir.mktmpdir
+    message: The code probably may be more simple if using `Runners::Tmpdir` instead.
+    examples:
+      - before: Dir.mktmpdir { |dir| puts Pathname(dir) }
+        after: mktmpdir { |dir| puts dir }
   - id: sider.runners.tempfile_new
     pattern: Tempfile.new
     message: |

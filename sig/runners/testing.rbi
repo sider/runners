@@ -1,6 +1,7 @@
 class Runners::Testing::Smoke
   include Minitest::Assertions
   include UnificationAssertion
+  include Tmpdir
 
   attr_reader argv: Array<String>
   attr_reader data_container: String

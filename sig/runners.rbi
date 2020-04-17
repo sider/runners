@@ -102,6 +102,8 @@ class Runners::Changes
 end
 
 class Runners::Processor
+  include Tmpdir
+
   attr_reader guid: String
   attr_reader workspace: Workspace
   attr_reader working_dir: Pathname
@@ -207,6 +209,8 @@ class Runners::Harness::InvalidResult < StandardError
 end
 
 class Runners::CLI
+  include Tmpdir
+
   attr_reader stdout: ::IO
   attr_reader stderr: ::IO
   attr_reader guid: String
