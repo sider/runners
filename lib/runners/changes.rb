@@ -16,6 +16,7 @@ module Runners
       unchanged_paths
         .filter { |file| deletable?(dir, file, except, only) }
         .each { |file| dir.join(file).delete }
+        .to_a
     end
 
     def deletable?(dir, file, except, only)

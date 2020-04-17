@@ -86,9 +86,9 @@ class Runners::Results::Error < Runners::Results::Base
 end
 
 class Runners::Changes
-  attr_reader changed_paths: Array<Pathname>
-  attr_reader unchanged_paths: Array<Pathname>
-  attr_reader untracked_paths: Array<Pathname>
+  attr_reader changed_paths: Set<Pathname>
+  attr_reader unchanged_paths: Set<Pathname>
+  attr_reader untracked_paths: Set<Pathname>
   attr_reader patches: GitDiffParser::Patches | nil
 
   def initialize: (changed_paths: Array<Pathname>,
