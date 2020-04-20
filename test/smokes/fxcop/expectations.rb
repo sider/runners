@@ -16,7 +16,7 @@ Smoke.add_test(
         object: {
           category: "Usage",
           description: "Avoid unused paramereters in your code. If the parameter cannot be removed, then change its name so it starts with an underscore and is optionally followed by an integer, such as '_', '_1', '_2', etc. These are treated as special discard symbol names.",
-          severity: 2,
+          severity: "Warning",
         },
         git_blame_info: nil,
         links: ["https://docs.microsoft.com/visualstudio/code-quality/ca1801-review-unused-parameters"]
@@ -29,7 +29,7 @@ Smoke.add_test(
         object: {
           category: "Usage",
           description: "Avoid unused paramereters in your code. If the parameter cannot be removed, then change its name so it starts with an underscore and is optionally followed by an integer, such as '_', '_1', '_2', etc. These are treated as special discard symbol names.",
-          severity: 2,
+          severity: "Warning",
         },
         git_blame_info: nil,
         links: ["https://docs.microsoft.com/visualstudio/code-quality/ca1801-review-unused-parameters"]
@@ -42,7 +42,7 @@ Smoke.add_test(
         object: {
           category: "Performance",
           description: "An instance of an assembly-level type is not created by code in the assembly.",
-          severity: 2,
+          severity: "Warning",
         },
         git_blame_info: nil,
         links: ["https://docs.microsoft.com/visualstudio/code-quality/ca1812-avoid-uninstantiated-internal-classes"]
@@ -68,7 +68,7 @@ Smoke.add_test(
         object: {
           category: "Usage",
           description: "Avoid unused paramereters in your code. If the parameter cannot be removed, then change its name so it starts with an underscore and is optionally followed by an integer, such as '_', '_1', '_2', etc. These are treated as special discard symbol names.",
-          severity: 2,
+          severity: "Warning",
         },
         git_blame_info: nil,
         links: ["https://docs.microsoft.com/visualstudio/code-quality/ca1801-review-unused-parameters"]
@@ -81,7 +81,7 @@ Smoke.add_test(
         object: {
           category: "Usage",
           description: "Avoid unused paramereters in your code. If the parameter cannot be removed, then change its name so it starts with an underscore and is optionally followed by an integer, such as '_', '_1', '_2', etc. These are treated as special discard symbol names.",
-          severity: 2,
+          severity: "Warning",
         },
         git_blame_info: nil,
         links: ["https://docs.microsoft.com/visualstudio/code-quality/ca1801-review-unused-parameters"]
@@ -94,7 +94,7 @@ Smoke.add_test(
         object: {
           category: "Performance",
           description: "An instance of an assembly-level type is not created by code in the assembly.",
-          severity: 2,
+          severity: "Warning",
         },
         git_blame_info: nil,
         links: ["https://docs.microsoft.com/visualstudio/code-quality/ca1812-avoid-uninstantiated-internal-classes"]

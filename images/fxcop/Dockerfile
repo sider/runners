@@ -18,14 +18,14 @@ RUN cd ${RUNNERS_DIR} && \
 
 ENV FXCOP_VERSION=2.9.8
 
-ARG ROSLYN_ANALYZERS_RUNNER_VERSION=0.1.2
+ARG ROSLYN_ANALYZERS_RUNNER_VERSION=0.1.3
 ARG ROSLYN_ANALYZERS_RUNNER_HOME=${RUNNER_USER_HOME}/roslyn-analyzers-runner
 ENV PATH ${ROSLYN_ANALYZERS_RUNNER_HOME}:$PATH
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/fxcop/analyzers.json ${RUNNER_USER_HOME}/
 
 RUN mkdir -p ${ROSLYN_ANALYZERS_RUNNER_HOME} && \
-    curl -SL https://github.com/sider/roslyn-analyzers-runner/releases/download/v${ROSLYN_ANALYZERS_RUNNER_VERSION}/Sider.RoslynAnalyzersRunner.${ROSLYN_ANALYZERS_RUNNER_VERSION}.linux-x64.tar.gz \
+    curl -SL https://github.com/sider/roslyn-analyzers-runner/releases/download/v${ROSLYN_ANALYZERS_RUNNER_VERSION}/Sider.RoslynAnalyzersRunner.${ROSLYN_ANALYZERS_RUNNER_VERSION}.tar.gz \
     | tar -zxC ${ROSLYN_ANALYZERS_RUNNER_HOME} && \
     mv ${RUNNER_USER_HOME}/analyzers.json ${ROSLYN_ANALYZERS_RUNNER_HOME}/ && \
     sed -i -e"s/\${FXCOP_VERSION}/${FXCOP_VERSION}/" ${ROSLYN_ANALYZERS_RUNNER_HOME}/analyzers.json && \

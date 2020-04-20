@@ -6,7 +6,7 @@ module Runners
       let :issue, object(
         category: string,
         description: string,
-        severity: integer,
+        severity: string,
         )
     end
 
