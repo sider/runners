@@ -141,25 +141,9 @@ Smoke.add_test(
   {
     guid: 'test-guid',
     timestamp: :_,
-    type: 'failure',
-    message: <<"EOS",
-Sider.RoslynAnalyzersRunner 0.1.2
-Copyright (C) 2020 Sider.RoslynAnalyzersRunner
-
-ERROR(S):
-  Option 'dummy.cs' is unknown.
-
-  --language           (Default: CSharp)
-
-  --outputfile         (Default: -)
-
-  --help               Display this help screen.
-
-  --version            Display version information.
-
-  file ... (pos. 0)    
-
-EOS
-    analyzer: ANALYZER
+    type: 'error',
+    class: "RuntimeError",
+    backtrace: :_,
+    inspect: "#<RuntimeError: Sider.RoslynAnalyzersRunner 0.1.2\nCopyright (C) 2020 Sider.RoslynAnalyzersRunner\n\nERROR(S):\n  Option 'dummy.cs' is unknown.\n\n  --language           (Default: CSharp)\n\n  --outputfile         (Default: -)\n\n  --help               Display this help screen.\n\n  --version            Display version information.\n\n  file ... (pos. 0)    \n\n>"
   }
 )

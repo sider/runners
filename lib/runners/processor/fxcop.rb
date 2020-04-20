@@ -31,7 +31,7 @@ module Runners
           construct_result(result, read_output_json(output_file))
         end
       else
-        Results::Failure.new(guid: guid, analyzer: analyzer, message: err)
+        raise err
       end
     end
 
