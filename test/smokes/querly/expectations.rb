@@ -44,13 +44,13 @@ s.add_test(
   analyzer: { name: "Querly", version: "1.0.0" },
   warnings: [
     {
-      message: <<~MESSAGE,
-        Sider cannot find the required configuration file `querly.yml`.
-        Please set up Querly by following the instructions, or you can disable it in the repository settings.
+      message: <<~MESSAGE.strip,
+Sider cannot find the required configuration file `querly.yml`.
+Please set up Querly by following the instructions, or you can disable it in the repository settings.
 
-        - https://github.com/soutaro/querly
-        - https://help.sider.review/tools/ruby/querly
-      MESSAGE
+- https://github.com/soutaro/querly
+- https://help.sider.review/tools/ruby/querly
+MESSAGE
       file: nil
     }
   ]

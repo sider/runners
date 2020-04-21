@@ -69,11 +69,11 @@ s.add_test(
   ],
   warnings: [
     {
-      message: <<~MSG,
-        DEPRECATION WARNING!!!
-        The `$.linter.rails_best_practices.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
-        Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/ruby/rails-bestpractices ).
-      MSG
+      message: <<~MSG.strip,
+DEPRECATION WARNING!!!
+The `$.linter.rails_best_practices.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
+Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/ruby/rails-bestpractices ).
+MSG
       file: "sideci.yml"
     }
   ]
@@ -191,13 +191,13 @@ s.add_test(
   ],
   warnings: [
     {
-      message: <<~MESSAGE,
-        Sider tried to install `rails_best_practices 1.16.0` according to your `Gemfile.lock`, but it installs `1.19.4` instead.
-        Because `1.16.0` does not satisfy the Sider constraints [">= 1.19.1", "< 2.0"].
+      message: <<~MESSAGE.strip,
+Sider tried to install `rails_best_practices 1.16.0` according to your `Gemfile.lock`, but it installs `1.19.4` instead.
+Because `1.16.0` does not satisfy the Sider constraints [">= 1.19.1", "< 2.0"].
 
-        If you want to use a different version of `rails_best_practices`, update your `Gemfile.lock` to satisfy the constraint or specify the gem version in your `sider.yml`.
-        See https://help.sider.review/getting-started/custom-configuration#gems-option
-      MESSAGE
+If you want to use a different version of `rails_best_practices`, update your `Gemfile.lock` to satisfy the constraint or specify the gem version in your `sider.yml`.
+See https://help.sider.review/getting-started/custom-configuration#gems-option
+MESSAGE
       file: nil
     }
   ]

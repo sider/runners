@@ -33,7 +33,6 @@ class Runners::Testing::Smoke
                       ?ci_config: Hash<Symbol, any> | Symbol,
                       ?version: String | Symbol) -> void
   def self.tests: -> Hash<String, any>
-  def self.strip_message!: (any) -> void
 end
 
 Runners::Testing::Smoke::PROJECT_PATH: String

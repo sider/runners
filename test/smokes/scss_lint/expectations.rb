@@ -45,7 +45,7 @@ s.add_test(
   analyzer: { name: "SCSS-Lint", version: "0.59.0" },
   warnings: [
     {
-      message: <<-MSG,
+      message: <<~MSG.strip,
 DEPRECATION WARNING!!!
 The support for SCSS-Lint is deprecated. Sider will drop these versions in the near future.
 Please consider using an alternative tool stylelint. See https://github.com/sds/scss-lint/blob/master/README.md#notice-consider-other-tools-before-adopting-scss-lint

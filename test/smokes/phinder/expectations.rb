@@ -81,13 +81,13 @@ s.add_test(
   analyzer: { name: "Phinder", version: "0.9.2" },
   warnings: [
     {
-      message: <<~MESSAGE,
-        Phinder configuration validation failed.
-        Check the following output by `phinder test` command.
+      message: <<~MESSAGE.strip,
+Phinder configuration validation failed.
+Check the following output by `phinder test` command.
 
-        `in_array(2, $arr, false)` does not match the rule sample.in_array_without_3rd_param but should match that rule.
-        `in_array(4, $arr)` matches the rule sample.in_array_without_3rd_param but should not match that rule.
-      MESSAGE
+`in_array(2, $arr, false)` does not match the rule sample.in_array_without_3rd_param but should match that rule.
+`in_array(4, $arr)` matches the rule sample.in_array_without_3rd_param but should not match that rule.
+MESSAGE
       file: "phinder.yml"
     }
   ]
@@ -97,10 +97,10 @@ s.add_test(
   "analyzer_failed",
   type: "failure",
   message: <<~MESSAGE,
-    1 error occurred:
+1 error occurred:
 
-    InvalidRule: Invalid id value found in 1st rule in phinder.yml
-  MESSAGE
+InvalidRule: Invalid id value found in 1st rule in phinder.yml
+MESSAGE
   analyzer: { name: "Phinder", version: "0.9.2" }
 )
 
@@ -139,13 +139,13 @@ s.add_test(
   analyzer: { name: "Phinder", version: "0.9.2" },
   warnings: [
     {
-      message: <<~MESSAGE,
-        Sider cannot find the required configuration file(s): `phinder.yml`.
-        Please set up Phinder by following the instructions, or you can disable it in the repository settings.
+      message: <<~MESSAGE.strip,
+Sider cannot find the required configuration file(s): `phinder.yml`.
+Please set up Phinder by following the instructions, or you can disable it in the repository settings.
 
-        - https://github.com/sider/phinder
-        - https://help.sider.review/tools/php/phinder
-      MESSAGE
+- https://github.com/sider/phinder
+- https://help.sider.review/tools/php/phinder
+MESSAGE
       file: "phinder.yml"
     }
   ]

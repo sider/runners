@@ -36,11 +36,11 @@ s.add_test(
   analyzer: { name: "PHP_CodeSniffer", version: "3.5.4" },
   warnings: [
     {
-      message: <<~MSG,
-        DEPRECATION WARNING!!!
-        The `$.linter.code_sniffer.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
-        Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/php/codesniffer ).
-      MSG
+     message: <<~MSG.strip,
+DEPRECATION WARNING!!!
+The `$.linter.code_sniffer.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
+Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/php/codesniffer ).
+MSG
       file: "sideci.yml"
     }
   ]

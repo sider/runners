@@ -224,11 +224,11 @@ s.add_test(
   analyzer: { name: "RuboCop", version: "0.80.1" },
   warnings: [
     {
-      message: <<~MSG,
-        DEPRECATION WARNING!!!
-        The `$.linter.rubocop.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
-        Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/ruby/rubocop ).
-      MSG
+      message: <<~MSG.strip,
+DEPRECATION WARNING!!!
+The `$.linter.rubocop.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
+Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/ruby/rubocop ).
+MSG
       file: "sideci.yml"
     },
     { message: "Metrics/LineLength has the wrong namespace - should be Layout", file: "my.rubocop.yml" }
@@ -255,11 +255,11 @@ s.add_test(
   analyzer: { name: "RuboCop", version: "0.71.0" },
   warnings: [
     {
-      message: <<~WARNING,
-        Rails cops will be removed from RuboCop 0.72. Use the `rubocop-rails` gem instead.
-        https://github.com/rubocop-hq/rubocop/blob/master/manual/migrate_rails_cops.md
-        https://help.sider.review/getting-started/custom-configuration#gems-option
-      WARNING
+      message: <<~WARNING.strip,
+Rails cops will be removed from RuboCop 0.72. Use the `rubocop-rails` gem instead.
+https://github.com/rubocop-hq/rubocop/blob/master/manual/migrate_rails_cops.md
+https://help.sider.review/getting-started/custom-configuration#gems-option
+WARNING
       file: :_
     }
   ]
@@ -305,10 +305,10 @@ s.add_test(
   analyzer: { name: "RuboCop", version: "0.72.0" },
   warnings: [
     {
-      message: <<~WARNING,
-        `rails` option is ignored because the option was removed from RuboCop 0.72. Use the `rubocop-rails` gem instead.
-        See https://help.sider.review/getting-started/custom-configuration#gems-option
-      WARNING
+      message: <<~WARNING.strip,
+`rails` option is ignored because the option was removed from RuboCop 0.72. Use the `rubocop-rails` gem instead.
+See https://help.sider.review/getting-started/custom-configuration#gems-option
+WARNING
       file: "sideci.yml"
     }
   ]
@@ -389,11 +389,11 @@ s.add_test(
 s.add_test(
   "install_from_sideci.yml_when_installing_old_version_gems",
   type: "failure",
-  message: <<~MSG,
-    Failed to install gems. Sider automatically installs gems according to `sideci.yml` and `Gemfile.lock`.
-    You can select the version of gems you want to install via `sideci.yml`.
-    See https://help.sider.review/getting-started/custom-configuration#gems-option
-  MSG
+  message: <<~MSG.strip,
+Failed to install gems. Sider automatically installs gems according to `sideci.yml` and `Gemfile.lock`.
+You can select the version of gems you want to install via `sideci.yml`.
+See https://help.sider.review/getting-started/custom-configuration#gems-option
+MSG
   analyzer: :_
 )
 
@@ -404,13 +404,13 @@ s.add_test(
   analyzer: { name: "RuboCop", version: "0.80.1" },
   warnings: [
     {
-      message: <<~MSG,
-        Sider tried to install `rubocop 0.60.0` according to your `Gemfile.lock`, but it installs `0.80.1` instead.
-        Because `0.60.0` does not satisfy the Sider constraints [\">= 0.61.0\", \"< 1.0.0\"].
+      message: <<~MSG.strip,
+Sider tried to install `rubocop 0.60.0` according to your `Gemfile.lock`, but it installs `0.80.1` instead.
+Because `0.60.0` does not satisfy the Sider constraints [\">= 0.61.0\", \"< 1.0.0\"].
 
-        If you want to use a different version of `rubocop`, update your `Gemfile.lock` to satisfy the constraint or specify the gem version in your `sider.yml`.
-        See https://help.sider.review/getting-started/custom-configuration#gems-option
-      MSG
+If you want to use a different version of `rubocop`, update your `Gemfile.lock` to satisfy the constraint or specify the gem version in your `sider.yml`.
+See https://help.sider.review/getting-started/custom-configuration#gems-option
+MSG
       file: nil
     }
   ]

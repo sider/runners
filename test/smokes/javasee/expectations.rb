@@ -55,10 +55,9 @@ s.add_test(
   issues: [],
   warnings: [
     {
-      message: <<~MSG,
-        Configuration file javasee.yml does not look a file.
-        Specify configuration file by -config option.
-      MSG
+      message:
+        "Configuration file javasee.yml does not look a file.\n" \
+          "Specify configuration file by -config option.",
       file: nil
     }
   ]

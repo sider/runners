@@ -7,11 +7,11 @@ s.add_test(
   analyzer: { name: "Go Meta Linter", version: "2.0.11" },
   warnings: [
     {
-      message: <<~MSG,
-        DEPRECATION WARNING!!!
-        The support for Go Meta Linter is deprecated. Sider will drop these versions on April 30, 2020.
-        Please consider using an alternative tool GolangCI-Lint. See https://github.com/alecthomas/gometalinter/issues/590
-      MSG
+      message: <<~MSG.strip,
+DEPRECATION WARNING!!!
+The support for Go Meta Linter is deprecated. Sider will drop these versions on April 30, 2020.
+Please consider using an alternative tool GolangCI-Lint. See https://github.com/alecthomas/gometalinter/issues/590
+MSG
       file: "sider.yml"
     }
   ]

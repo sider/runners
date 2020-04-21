@@ -27,12 +27,12 @@ s.add_test(
   analyzer: { name: "TyScan", version: "0.3.1" },
   warnings: [
     {
-      message: <<~MESSAGE,
-        `tyscan.yml` does not exist in your repository.
+      message: <<~MESSAGE.strip,
+`tyscan.yml` does not exist in your repository.
 
-        To start performing analysis, `tyscan.yml` is required.
-        See also: https://help.sider.review/tools/javascript/tyscan
-      MESSAGE
+To start performing analysis, `tyscan.yml` is required.
+See also: https://help.sider.review/tools/javascript/tyscan
+MESSAGE
       file: nil
     }
   ]

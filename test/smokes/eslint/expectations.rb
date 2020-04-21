@@ -30,25 +30,16 @@ s.add_test(
 s.add_test(
   "only_eslintrc",
   type: "failure",
-  message:
-    Regexp.new(
-      Regexp.quote(<<-MESSAGE)
-Oops! Something went wrong! :(
-
-ESLint: 6.8.0.
-
-ESLint couldn't find the plugin "eslint-plugin-filenames".
-MESSAGE
-    ),
+  message: /ESLint couldn't find the plugin "eslint-plugin-filenames"/,
   analyzer: { name: "ESLint", version: "6.8.0" }
 )
 
 s.add_test(
   "pinned_old_eslint",
   type: "failure",
-  message: <<~MSG,
-    Your `eslint` settings could not satisfy the required constraints. Please check your `package.json` again.
-    If you want to analyze via the Sider default settings, please configure your `sideci.yml`. For details, see the documentation.
+  message: <<~MSG.strip,
+Your `eslint` settings could not satisfy the required constraints. Please check your `package.json` again.
+If you want to analyze via the Sider default settings, please configure your `sideci.yml`. For details, see the documentation.
   MSG
   analyzer: :_
 )
@@ -140,11 +131,11 @@ s.add_test(
   analyzer: { name: "ESLint", version: "6.8.0" },
   warnings: [
     {
-      message: <<~MSG,
-        DEPRECATION WARNING!!!
-        The `$.linter.eslint.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
-        Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/javascript/eslint ).
-      MSG
+      message: <<~MSG.strip,
+DEPRECATION WARNING!!!
+The `$.linter.eslint.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
+Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/javascript/eslint ).
+MSG
       file: "sideci.yml"
     }
   ]
@@ -286,16 +277,16 @@ s.add_test(
   type: "success",
   issues: [
     {
-      message: <<~MESSAGE,
-        Parsing error: Unexpected token, expected ";"
+      message: <<~MESSAGE.strip,
+Parsing error: Unexpected token, expected ";"
 
-          1 | function bar() {
-        > 2 |   var x = foo:
-            |              ^
-          3 |   for (;;) {
-          4 |     break x;
-          5 |   }
-      MESSAGE
+  1 | function bar() {
+> 2 |   var x = foo:
+    |              ^
+  3 |   for (;;) {
+  4 |     break x;
+  5 |   }
+MESSAGE
       links: [],
       id: "d91b54561db04524f183f5f8dee752dcf1d4fcb0",
       path: "index.js",
