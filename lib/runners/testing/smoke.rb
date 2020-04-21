@@ -11,11 +11,9 @@ module Runners
       include UnificationAssertion
       include Tmpdir
 
-      ROOT_DATA_DIR = Pathname('/data')
+      PROJECT_PATH = "/project".freeze
 
-      attr_reader :argv, :data_container, :data_smoke_path
-
-      Configuration = Struct.new(:ssh_key)
+      attr_reader :argv
 
       def docker_image
         argv[0]
@@ -31,21 +29,17 @@ module Runners
 
       def initialize(argv)
         @argv = argv
-        @data_container = SecureRandom.uuid
-        @data_smoke_path = ROOT_DATA_DIR / expectations.parent.basename
       end
 
       def run
         load expectations.to_s
 
         threads = ENV["JOBS"]&.to_i || Parallel.processor_count * 2
-        results = with_data_container do
-          Parallel.map(self.class.tests, in_threads: threads) do |name, pattern|
-            out = StringIO.new(''.dup)
-            result = run_test(name, pattern, out)
-            print out.string
-            [result, name]
-          end
+        results = Parallel.map(self.class.tests, in_threads: threads) do |name, pattern|
+          out = StringIO.new(''.dup)
+          result = run_test(name, pattern, out)
+          print out.string
+          [result, name]
         end
 
         abort "❌ No smoke tests!" if results.empty?
@@ -67,7 +61,7 @@ module Runners
       end
 
       def run_test(name, pattern, out)
-        commandline = command_line(name, self.class.configs.fetch(name))
+        commandline = command_line(name)
         out.puts "$ #{commandline}"
         reader = JSONSEQ::Reader.new(io: StringIO.new(`#{commandline}`), decoder: -> (json) { JSON.parse(json, symbolize_names: true) })
         traces = reader.each_object.to_a
@@ -106,25 +100,10 @@ module Runners
         ok
       end
 
-      def with_data_container
-        system! "docker run --name #{data_container} -v #{ROOT_DATA_DIR} alpine:latest true"
-        system! "docker cp #{expectations.parent} #{data_container}:#{ROOT_DATA_DIR}"
-        yield
-      ensure
-        system! "docker rm --force #{data_container}" unless ENV["KEEP_DATA_CONTAINER"]
-      end
-
-      def command_line(name, config)
-        dir = data_smoke_path / name
-        ssh_key = config.ssh_key&.yield_self do |file|
-          mktmpdir do |tmp_dir|
-            tmp_ssh_key_path = tmp_dir / 'ssh_key'
-            system! "docker cp #{data_container}:#{dir.expand_path / file} #{tmp_ssh_key_path}"
-            tmp_ssh_key_path.read
-          end
-        end
-        runners_options = JSON.dump(source: { head: dir.expand_path }, ssh_key: ssh_key)
-        commands = %W[docker run --rm --volumes-from #{data_container} --env RUNNERS_OPTIONS='#{runners_options}' #{docker_image} test-guid]
+      def command_line(name)
+        smoke_target = (expectations.parent / name).realpath
+        runners_options = JSON.dump(source: { head: PROJECT_PATH })
+        commands = %W[docker run --rm --mount type=bind,source=#{smoke_target},target=#{PROJECT_PATH} --env RUNNERS_OPTIONS='#{runners_options}' #{docker_image} test-guid]
         commands.join(" ")
       end
 
@@ -137,7 +116,6 @@ module Runners
       end
 
       @tests = {}
-      @configs = {}
 
       # Comma-separated value is also available.
       def self.only?(name)
@@ -160,17 +138,10 @@ module Runners
           result: result,
           **others,
         }
-        @configs[name] = Configuration.new
-
-        yield @configs[name] if block_given?
       end
 
       def self.tests
         @tests
-      end
-
-      def self.configs
-        @configs
       end
     end
   end
