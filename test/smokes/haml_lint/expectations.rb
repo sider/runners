@@ -158,7 +158,7 @@ s.add_test(
 
 s.add_test(
   "incompatible_rubocop",
-  guid: "test-guid", timestamp: :_, type: "failure", message: /Failed to install gems/, analyzer: nil
+  guid: "test-guid", timestamp: :_, type: "failure", message: /Failed to install gems/, analyzer: :_
 )
 
 # This test case, `incompatible_haml`, will be failed if updating HAML-Lint version,

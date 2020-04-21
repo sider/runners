@@ -3,7 +3,7 @@ s = Runners::Testing::Smoke
 s.add_test(
   "with_broken_sider_yml",
   type: "failure",
-  analyzer: nil,
+  analyzer: :_,
   message: "The attribute `$.linter.detekt.cli` in your `sider.yml` is unsupported. Please fix and retry."
 )
 

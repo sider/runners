@@ -137,28 +137,34 @@ module Runners
                         warnings: [], ci_config: :_, version: :_)
         return unless only? name
 
+        if issues.is_a? Array
+          # HACK: Steep does not work here...
+          _  = issues
+          _.each { |i| strip_message! i[:message] }
+        end
+
         optional = {
           issues: issues,
-          message: message.tap { |m|
-            if m.is_a? String
-              # @type var m: String
-              m.strip!
-            end
-          },
+          message: message.tap { |msg| strip_message! msg },
           analyzer: analyzer,
           class: binding.local_variable_get(:class),
           backtrace: backtrace,
           inspect: inspect,
         }.compact
 
-        warnings.each { |w| w[:message].strip! if w[:message].is_a? String }
-
         tests[name] = {
           result: { guid: guid, timestamp: timestamp, type: type, **optional },
-          warnings: warnings,
+          warnings: warnings.each { |w| strip_message! w[:message] },
           ci_config: ci_config,
           version: version,
         }
+      end
+
+      def self.strip_message!(msg)
+        if msg.is_a? String
+          # @type var msg: String
+          msg.strip!
+        end
       end
     end
   end

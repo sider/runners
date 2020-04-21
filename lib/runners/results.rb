@@ -90,7 +90,7 @@ module Runners
       def as_json
         super.tap do |json|
           json[:type] = 'failure'
-          json[:message] = message
+          json[:message] = message&.strip
           json[:analyzer] = analyzer&.as_json
         end
       end
