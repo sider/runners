@@ -105,23 +105,19 @@ Smoke = Runners::Testing::Smoke
 
 Smoke.add_test(
   "success",
-  {
-    guid: "test-guid",
-    timestamp: :_,
-    type: "success",
-    issues: [
-      {
-        path: "foo.rb",
-        location: { start_line: 81 },
-        id: "foo-rule-1",
-        message: "A violation is detected",
-        links: [],
-        object: nil,
-        git_blame_info: nil
-      }
-    ],
-    analyzer: { name: "foolint", version: "1.2.3" }
-  }
+  type: "success",
+  issues: [
+    {
+      path: "foo.rb",
+      location: { start_line: 81 },
+      id: "foo-rule-1",
+      message: "A violation is detected",
+      links: [],
+      object: nil,
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "foolint", version: "1.2.3" }
 )
 ```
 

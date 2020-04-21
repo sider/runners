@@ -20,7 +20,18 @@ class Runners::Testing::Smoke
   def colored_pretty_inspect: (any) -> String
 
   def self.only?: (String) -> bool
-  def self.add_test: (String, Hash, **any) -> void
+  def self.add_test: (String, type: String,
+                      ?guid: String | Symbol,
+                      ?timestamp: String | Symbol,
+                      ?issues: Array<Hash<Symbol, any>> | Symbol | nil,
+                      ?message: String | Symbol | Regexp | nil,
+                      ?analyzer: Hash<Symbol, any> | Symbol | nil,
+                      ?class: String | Symbol | nil,
+                      ?backtrace: Array<String> | Symbol | nil,
+                      ?inspect: String | Regexp | Symbol | nil,
+                      ?warnings: Array<Hash<Symbol, any>>,
+                      ?ci_config: Hash<Symbol, any> | Symbol,
+                      ?version: String | Symbol) -> void
   def self.tests: -> Hash<String, any>
 end
 

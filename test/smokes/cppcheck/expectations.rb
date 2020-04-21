@@ -1,9 +1,7 @@
-Smoke = Runners::Testing::Smoke
+s = Runners::Testing::Smoke
 
-Smoke.add_test(
+s.add_test(
   "default",
-  guid: "test-guid",
-  timestamp: :_,
   type: "success",
   issues: [
     {
@@ -214,16 +212,16 @@ Smoke.add_test(
   analyzer: { name: "Cppcheck", version: "1.90" }
 )
 
-Smoke.add_test(
+s.add_test(
   "no_target",
-  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "Cppcheck", version: :_ } },
-  { warnings: [{ message: "No linting files.", file: nil }] }
+  type: "success",
+  issues: [],
+  analyzer: { name: "Cppcheck", version: :_ },
+  warnings: [{ message: "No linting files.", file: nil }]
 )
 
-Smoke.add_test(
+s.add_test(
   "single_target",
-  guid: "test-guid",
-  timestamp: :_,
   type: "success",
   issues: [
     {
@@ -241,10 +239,8 @@ Smoke.add_test(
   analyzer: { name: "Cppcheck", version: "1.90" }
 )
 
-Smoke.add_test(
+s.add_test(
   "multiple_target",
-  guid: "test-guid",
-  timestamp: :_,
   type: "success",
   issues: [
     {
@@ -273,10 +269,8 @@ Smoke.add_test(
   analyzer: { name: "Cppcheck", version: "1.90" }
 )
 
-Smoke.add_test(
+s.add_test(
   "single_ignore",
-  guid: "test-guid",
-  timestamp: :_,
   type: "success",
   issues: [
     {
@@ -294,10 +288,8 @@ Smoke.add_test(
   analyzer: { name: "Cppcheck", version: "1.90" }
 )
 
-Smoke.add_test(
+s.add_test(
   "multiple_ignore",
-  guid: "test-guid",
-  timestamp: :_,
   type: "success",
   issues: [
     {
@@ -313,10 +305,8 @@ Smoke.add_test(
   analyzer: { name: "Cppcheck", version: "1.90" }
 )
 
-Smoke.add_test(
+s.add_test(
   "enable",
-  guid: "test-guid",
-  timestamp: :_,
   type: "success",
   issues: [
     {
@@ -350,10 +340,8 @@ Smoke.add_test(
   analyzer: { name: "Cppcheck", version: "1.90" }
 )
 
-Smoke.add_test(
+s.add_test(
   "std",
-  guid: "test-guid",
-  timestamp: :_,
   type: "success",
   issues: [
     {
@@ -376,10 +364,8 @@ Smoke.add_test(
   analyzer: { name: "Cppcheck", version: "1.90" }
 )
 
-Smoke.add_test(
+s.add_test(
   "project",
-  guid: "test-guid",
-  timestamp: :_,
   type: "success",
   issues: [
     {
@@ -395,10 +381,8 @@ Smoke.add_test(
   analyzer: { name: "Cppcheck", version: "1.90" }
 )
 
-Smoke.add_test(
+s.add_test(
   "language",
-  guid: "test-guid",
-  timestamp: :_,
   type: "success",
   issues: [
     {
@@ -425,11 +409,7 @@ Smoke.add_test(
   analyzer: { name: "Cppcheck", version: "1.90" }
 )
 
-Smoke.add_test(
+s.add_test(
   "unexpected_error",
-  guid: "test-guid",
-  timestamp: :_,
-  type: "failure",
-  message: "cppcheck: Unknown language 'foo' enforced.",
-  analyzer: { name: "Cppcheck", version: :_ }
+  type: "failure", message: "cppcheck: Unknown language 'foo' enforced.", analyzer: { name: "Cppcheck", version: :_ }
 )
