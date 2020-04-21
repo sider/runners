@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - [LanguageTool] New support [#787](https://github.com/sider/runners/pull/787)
 - Bump devon_rex images from 2.16.1 to master [#978](https://github.com/sider/runners/pull/978)
 - [Goodcheck] Update goodcheck requirement from 2.5.0 to 2.5.1 [#916](https://github.com/sider/runners/pull/916)
+- Bump Ruby 2.6.6 to 2.7.1 [#985](https://github.com/sider/runners/pull/985)
 
 ## 0.22.4
 
