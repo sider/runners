@@ -129,14 +129,14 @@ s.add_test(
 s.add_test(
   "raise-deprecated",
   type: "failure",
-  message: <<~MESSAGE
+  message: <<~MESSAGE,
     --type-check is deprecated. You only need --project to enable rules which need type information.
     Error at range.ts:2:18: Property 'min' does not exist on type 'string'.
     Error at range.ts:2:31: Property 'middle' does not exist on type 'string'.
     Error at range.ts:2:47: Property 'middle' does not exist on type 'string'.
     Error at range.ts:2:63: Property 'max' does not exist on type 'string'.
     Error at range.ts:11:24: Argument of type '{ min: number; middle: number; max: number; }' is not assignable to parameter of type 'string'.
-  MESSAGE,
+  MESSAGE
   analyzer: { name: "TSLint", version: "6.0.0" },
   warnings: [
     {

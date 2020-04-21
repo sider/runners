@@ -389,12 +389,12 @@ s.add_test(
 s.add_test(
   "install_from_sideci.yml_when_installing_old_version_gems",
   type: "failure",
-  message: <<~MSG
+  message: <<~MSG,
     Failed to install gems. Sider automatically installs gems according to `sideci.yml` and `Gemfile.lock`.
     You can select the version of gems you want to install via `sideci.yml`.
     See https://help.sider.review/getting-started/custom-configuration#gems-option
-  MSG,
-  analyzer: nil
+  MSG
+  analyzer: :_
 )
 
 s.add_test(

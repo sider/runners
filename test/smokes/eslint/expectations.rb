@@ -46,10 +46,10 @@ MESSAGE
 s.add_test(
   "pinned_old_eslint",
   type: "failure",
-  message: <<~MSG
+  message: <<~MSG,
     Your `eslint` settings could not satisfy the required constraints. Please check your `package.json` again.
     If you want to analyze via the Sider default settings, please configure your `sideci.yml`. For details, see the documentation.
-  MSG,
+  MSG
   analyzer: :_
 )
 

@@ -96,11 +96,11 @@ s.add_test(
 s.add_test(
   "analyzer_failed",
   type: "failure",
-  message: <<~MESSAGE
+  message: <<~MESSAGE,
     1 error occurred:
 
     InvalidRule: Invalid id value found in 1st rule in phinder.yml
-  MESSAGE,
+  MESSAGE
   analyzer: { name: "Phinder", version: "0.9.2" }
 )
 
