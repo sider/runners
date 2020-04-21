@@ -47,7 +47,7 @@ module Runners
     end
 
     def as_json
-      Schema::Issue.issue.coerce(
+      Schema::Issue.issue.coerce({
         path: path.to_s,
         location: location&.as_json,
         id: id,
@@ -55,7 +55,7 @@ module Runners
         links: links,
         object: object,
         git_blame_info: git_blame_info&.to_h,
-      )
+      })
     end
 
     def add_git_blame_info(workspace)
