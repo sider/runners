@@ -101,9 +101,9 @@ For example, you need to create a `test/smokes/foolint/expectations.rb` and add 
 
 ```ruby
 # test/smokes/foolint/expectations.rb
-Smoke = Runners::Testing::Smoke
+s = Runners::Testing::Smoke
 
-Smoke.add_test(
+s.add_test(
   "success",
   type: "success",
   issues: [
