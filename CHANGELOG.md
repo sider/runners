@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - [Goodcheck] Update goodcheck requirement from 2.5.0 to 2.5.1 [#916](https://github.com/sider/runners/pull/916)
 - Bump Ruby 2.6.6 to 2.7.1 [#985](https://github.com/sider/runners/pull/985)
 - [Reek] Update reek requirement from 5.6.0 to 6.0.0 [#919](https://github.com/sider/runners/pull/919)
+- [Checkstyle] Bump checkstyle from 8.30 to 8.31 [#920](https://github.com/sider/runners/pull/920)
 
 ## 0.22.4
 
