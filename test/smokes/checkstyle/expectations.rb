@@ -3,7 +3,7 @@ s = Runners::Testing::Smoke
 s.add_test(
   "success",
   type: "success",
-  analyzer: { name: "Checkstyle", version: "8.30" },
+  analyzer: { name: "Checkstyle", version: "8.31" },
   issues: [
     {
       message: "The name of the outer type and the file do not match.",
@@ -47,7 +47,7 @@ s.add_test(
 s.add_test(
   "config",
   type: "success",
-  analyzer: { name: "Checkstyle", version: "8.30" },
+  analyzer: { name: "Checkstyle", version: "8.31" },
   issues: [
     {
       message: "Parameter args should be final.",
@@ -92,7 +92,7 @@ s.add_test(
   "failure",
   type: "failure",
   message: "Could not find config XML file 'custom.xml'.",
-  analyzer: { name: "Checkstyle", version: "8.30" }
+  analyzer: { name: "Checkstyle", version: "8.31" }
 )
 
 s.add_test(
@@ -144,12 +144,12 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Checkstyle", version: "8.30" }
+  analyzer: { name: "Checkstyle", version: "8.31" }
 )
 
 s.add_test(
   "syntax_error",
   type: "failure",
   message: "com.puppycrawl.tools.checkstyle.api.CheckstyleException: Exception was thrown while processing ./Foo.java",
-  analyzer: { name: "Checkstyle", version: "8.30" }
+  analyzer: { name: "Checkstyle", version: "8.31" }
 )
