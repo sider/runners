@@ -36,6 +36,7 @@ require "strscan"
 
 require "runners/version"
 require "runners/errors"
+require "runners/tmpdir"
 require "runners/config"
 require "runners/options"
 require "runners/git_blame_info"

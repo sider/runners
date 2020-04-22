@@ -1,4 +1,6 @@
 class Runners::CLI
+  include Tmpdir
+
   attr_reader stdout: ::IO
   attr_reader stderr: ::IO
   attr_reader guid: String

@@ -1,88 +1,66 @@
-Smoke = Runners::Testing::Smoke
+s = Runners::Testing::Smoke
 
-Smoke.add_test(
+s.add_test(
   "success",
-  {
-    guid: "test-guid",
-    timestamp: :_,
-    type: "success",
-    analyzer: { name: "JavaSee", version: "0.1.3" },
-    issues: [
-      {
-        id: "hello",
-        path: "src/Hello.java",
-        location: { start_line: 6, start_column: 9, end_line: 6, end_column: 48 },
-        message: "Hello world\n",
-        links: [],
-        object: { id: "hello", message: "Hello world\n", justifications: [] },
-        git_blame_info: nil
-      }
-    ]
-  }
+  type: "success",
+  analyzer: { name: "JavaSee", version: "0.1.3" },
+  issues: [
+    {
+      id: "hello",
+      path: "src/Hello.java",
+      location: { start_line: 6, start_column: 9, end_line: 6, end_column: 48 },
+      message: "Hello world\n",
+      links: [],
+      object: { id: "hello", message: "Hello world\n", justifications: [] },
+      git_blame_info: nil
+    }
+  ]
 )
 
-Smoke.add_test(
+s.add_test(
   "config",
-  {
-    guid: "test-guid",
-    timestamp: :_,
-    type: "success",
-    analyzer: { name: "JavaSee", version: :_ },
-    issues: [
-      {
-        id: "hello",
-        path: "src/Main.java",
-        location: { start_line: 6, start_column: 9, end_line: 6, end_column: 48 },
-        message: "Hello world\n",
-        links: [],
-        object: { id: "hello", message: "Hello world\n", justifications: [] },
-        git_blame_info: nil
-      }
-    ]
-  }
+  type: "success",
+  analyzer: { name: "JavaSee", version: :_ },
+  issues: [
+    {
+      id: "hello",
+      path: "src/Main.java",
+      location: { start_line: 6, start_column: 9, end_line: 6, end_column: 48 },
+      message: "Hello world\n",
+      links: [],
+      object: { id: "hello", message: "Hello world\n", justifications: [] },
+      git_blame_info: nil
+    }
+  ]
 )
 
-Smoke.add_test(
+s.add_test(
   "failure",
-  {
-    guid: "test-guid",
-    timestamp: :_,
-    type: "failure",
-    analyzer: { name: "JavaSee", version: :_ },
-    message: /java.lang.ClassCastException: class java.lang.Integer cannot be cast/
-  }
+  type: "failure",
+  analyzer: { name: "JavaSee", version: :_ },
+  message: /java.lang.ClassCastException: class java.lang.Integer cannot be cast/
 )
 
-Smoke.add_test(
+s.add_test(
   "broken_sider_yml",
-  {
-    guid: "test-guid",
-    timestamp: :_,
-    type: "failure",
-    analyzer: nil,
-    message:
-      "The value of the attribute `$.linter.javasee.dir[2]` in your `sider.yml` is invalid. Please fix and retry."
-  }
+  type: "failure",
+  analyzer: :_,
+  message: "The value of the attribute `$.linter.javasee.dir[2]` in your `sider.yml` is invalid. Please fix and retry."
 )
 
-Smoke.add_test(
+s.add_test(
   "no_config_file",
-  { guid: "test-guid", timestamp: :_, type: "success", analyzer: { name: "JavaSee", version: :_ }, issues: [] },
-  {
-    warnings: [
-      {
-        message: <<~MSG
-          Configuration file javasee.yml does not look a file.
-          Specify configuration file by -config option.
-        MSG
-          .strip,
-        file: nil
-      }
-    ]
-  }
+  type: "success",
+  analyzer: { name: "JavaSee", version: :_ },
+  issues: [],
+  warnings: [
+    {
+      message:
+        "Configuration file javasee.yml does not look a file.\n" \
+          "Specify configuration file by -config option.",
+      file: nil
+    }
+  ]
 )
 
-Smoke.add_test(
-  "no_linting_files",
-  { guid: "test-guid", timestamp: :_, type: "success", analyzer: { name: "JavaSee", version: :_ }, issues: [] }
-)
+s.add_test("no_linting_files", type: "success", analyzer: { name: "JavaSee", version: :_ }, issues: [])

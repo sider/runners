@@ -1,5 +1,7 @@
 module Runners
   class Processor
+    include Tmpdir
+
     class CIConfigBroken < UserError; end
 
     attr_reader :guid, :workspace, :working_dir, :git_ssh_path, :trace_writer, :warnings, :config, :shell

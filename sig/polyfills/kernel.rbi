@@ -3,6 +3,7 @@ extension Kernel (Polyfill)
   def exit: (Integer) -> void
   def system: (*String, exception: bool) -> void
   def load: (String) -> bool
+  def binding: -> Binding
   def __method__: -> Symbol?
   def __dir__: -> String
   def Array: (any) -> Array<any>

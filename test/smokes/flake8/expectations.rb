@@ -1,9 +1,7 @@
-Smoke = Runners::Testing::Smoke
+s = Runners::Testing::Smoke
 
-Smoke.add_test(
+s.add_test(
   "sandbox_django",
-  guid: "test-guid",
-  timestamp: :_,
   type: "success",
   issues: [
     {
@@ -82,10 +80,8 @@ Smoke.add_test(
   analyzer: { name: "Flake8", version: "3.7.9" }
 )
 
-Smoke.add_test(
+s.add_test(
   "user_config_enabled",
-  guid: "test-guid",
-  timestamp: :_,
   type: "success",
   issues: [
     {
@@ -110,10 +106,8 @@ Smoke.add_test(
   analyzer: { name: "Flake8", version: "3.7.9" }
 )
 
-Smoke.add_test(
+s.add_test(
   "no_user_config_enabled",
-  guid: "test-guid",
-  timestamp: :_,
   type: "success",
   issues: [],
   analyzer: {
@@ -123,10 +117,8 @@ Smoke.add_test(
   }
 )
 
-Smoke.add_test(
+s.add_test(
   "with_plugins",
-  guid: "test-guid",
-  timestamp: :_,
   type: "success",
   issues: [
     {
@@ -142,10 +134,8 @@ Smoke.add_test(
   analyzer: { name: "Flake8", version: "3.7.9" }
 )
 
-Smoke.add_test(
+s.add_test(
   "with_output_options",
-  guid: "test-guid",
-  timestamp: :_,
   type: "success",
   issues: [
     {
@@ -188,31 +178,28 @@ Smoke.add_test(
   analyzer: { name: "Flake8", version: "3.7.9" }
 )
 
-Smoke.add_test(
+s.add_test(
   "broken_sideci_yml",
-  {
-    guid: "test-guid",
-    timestamp: :_,
-    type: "failure",
-    message:
-      "The value of the attribute `$.linter.flake8.plugins` in your `sideci.yml` is invalid. Please fix and retry.",
-    analyzer: nil
-  }
+  type: "failure",
+  message:
+    "The value of the attribute `$.linter.flake8.plugins` in your `sideci.yml` is invalid. Please fix and retry.",
+  analyzer: :_
 )
 
-Smoke.add_test(
+s.add_test(
   "python2",
-  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "Flake8", version: "3.7.9" } },
-  { warnings: [{ message: "Python 2 is deprecated. Consider migrating to Python 3.", file: nil }] }
+  type: "success",
+  issues: [],
+  analyzer: { name: "Flake8", version: "3.7.9" },
+  warnings: [{ message: "Python 2 is deprecated. Consider migrating to Python 3.", file: nil }]
 )
 
-Smoke.add_test(
-  "dot_python_version",
-  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "Flake8", version: "3.7.9" } }
-)
+s.add_test("dot_python_version", type: "success", issues: [], analyzer: { name: "Flake8", version: "3.7.9" })
 
-Smoke.add_test(
+s.add_test(
   "dot_python_version_2",
-  { guid: "test-guid", timestamp: :_, type: "success", issues: [], analyzer: { name: "Flake8", version: "3.7.9" } },
-  { warnings: [{ message: "Python 2 is deprecated. Consider migrating to Python 3.", file: nil }] }
+  type: "success",
+  issues: [],
+  analyzer: { name: "Flake8", version: "3.7.9" },
+  warnings: [{ message: "Python 2 is deprecated. Consider migrating to Python 3.", file: nil }]
 )

@@ -1,4 +1,6 @@
 class Runners::Workspace
+  include Tmpdir
+
   attr_reader options: Options
   attr_reader working_dir: Pathname
   attr_reader trace_writer: TraceWriter

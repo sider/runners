@@ -8,12 +8,7 @@ require "rr"
 
 module TestHelper
   include UnificationAssertion
-
-  def mktmpdir
-    Dir.mktmpdir do |dir|
-      yield Pathname(dir)
-    end
-  end
+  include Runners::Tmpdir
 
   def data(file)
     Pathname(__dir__).join("data", file)
@@ -45,9 +40,8 @@ module TestHelper
 
     with_runners_options_env(source: source, ssh_key: ssh_key) do
       options = Runners::Options.new(StringIO.new, StringIO.new)
-      Dir.mktmpdir do |dir|
-        workspace = Runners::Workspace.prepare(options: options, working_dir: Pathname(dir), trace_writer: Runners::TraceWriter.new(writer: []))
-        yield workspace
+      mktmpdir do |dir|
+        yield Runners::Workspace.prepare(options: options, working_dir: dir, trace_writer: Runners::TraceWriter.new(writer: []))
       end
     end
   end

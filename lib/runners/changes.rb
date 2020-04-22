@@ -6,9 +6,9 @@ module Runners
     attr_reader :patches
 
     def initialize(changed_paths:, unchanged_paths:, untracked_paths:, patches:)
-      @changed_paths = changed_paths
-      @unchanged_paths = unchanged_paths
-      @untracked_paths = untracked_paths
+      @changed_paths = Set.new(changed_paths).freeze
+      @unchanged_paths = Set.new(unchanged_paths).freeze
+      @untracked_paths = Set.new(untracked_paths).freeze
       @patches = patches
     end
 
@@ -16,6 +16,7 @@ module Runners
       unchanged_paths
         .filter { |file| deletable?(dir, file, except, only) }
         .each { |file| dir.join(file).delete }
+        .to_a
     end
 
     def deletable?(dir, file, except, only)
@@ -42,7 +43,7 @@ module Runners
           false
         end
       else
-        Set.new(changed_paths).member?(issue.path)
+        changed_paths.member?(issue.path)
       end
     end
 

@@ -1,6 +1,8 @@
 module Runners
   module Ruby
     class LockfileLoader
+      include Tmpdir
+
       class InvalidGemfileLock < InstallGemsFailure; end
 
       attr_reader :root_dir
@@ -18,8 +20,8 @@ module Runners
             shell.trace_writer.message "Gemfile and Gemfile.lock detected"
             gemfile_lock_path.read
           when gemfile_path.file?
-            Dir.mktmpdir do |dir|
-              generate_lockfile(Pathname(dir) / "Gemfile.lock")
+            mktmpdir do |dir|
+              generate_lockfile(dir / "Gemfile.lock")
             end
           end
 

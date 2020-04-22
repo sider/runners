@@ -86,9 +86,9 @@ class Runners::Results::Error < Runners::Results::Base
 end
 
 class Runners::Changes
-  attr_reader changed_paths: Array<Pathname>
-  attr_reader unchanged_paths: Array<Pathname>
-  attr_reader untracked_paths: Array<Pathname>
+  attr_reader changed_paths: Set<Pathname>
+  attr_reader unchanged_paths: Set<Pathname>
+  attr_reader untracked_paths: Set<Pathname>
   attr_reader patches: GitDiffParser::Patches | nil
 
   def initialize: (changed_paths: Array<Pathname>,
@@ -102,6 +102,8 @@ class Runners::Changes
 end
 
 class Runners::Processor
+  include Tmpdir
+
   attr_reader guid: String
   attr_reader workspace: Workspace
   attr_reader working_dir: Pathname
@@ -207,6 +209,8 @@ class Runners::Harness::InvalidResult < StandardError
 end
 
 class Runners::CLI
+  include Tmpdir
+
   attr_reader stdout: ::IO
   attr_reader stderr: ::IO
   attr_reader guid: String

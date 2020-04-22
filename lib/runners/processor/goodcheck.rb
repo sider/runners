@@ -38,7 +38,11 @@ module Runners
     end
 
     def goodcheck_test
-      stdout, stderr, status = capture3(*ruby_analyzer_bin, "test", *cli_options)
+      # NOTE: Suppress Ruby 2.7 warning to prevent `stderr` from getting dirty.
+      #       See https://www.ruby-lang.org/en/news/2019/12/25/ruby-2-7-0-released
+      stdout, stderr, status = push_env_hash({ "RUBYOPT" => "-W:no-deprecated" }) do
+        capture3(*ruby_analyzer_bin, "test", *cli_options)
+      end
 
       if !status.success? && !stdout.empty?
         msg = "The validation of your Goodcheck configuration file failed. Check the output of `goodcheck test` command."
