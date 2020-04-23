@@ -6,15 +6,16 @@ FROM sider/devon_rex_swift:master
 
 ARG SWIFTLINT_VERSION=0.39.2
 
+ENV PATH ${RUNNER_USER_HOME}/bin:${PATH}
+
 # Build SwiftLint
-USER root
-RUN SWIFTLINT_BUILD_DIR=/tmp/swiftlint_build && \
-    git clone --branch ${SWIFTLINT_VERSION} --single-branch https://github.com/realm/SwiftLint.git ${SWIFTLINT_BUILD_DIR} && \
-    cd ${SWIFTLINT_BUILD_DIR} && \
-    make install && \
-    swiftlint version && \
-    rm -rf ${SWIFTLINT_BUILD_DIR}
-USER $RUNNER_USER
+RUN cd /tmp && \
+    curl -sSL --compressed https://github.com/realm/SwiftLint/archive/${SWIFTLINT_VERSION}.tar.gz | tar -xz && \
+    cd SwiftLint-${SWIFTLINT_VERSION} && \
+    make install BINARIES_FOLDER=${RUNNER_USER_HOME}/bin && \
+    cd .. && \
+    rm -rf SwiftLint-${SWIFTLINT_VERSION} && \
+    swiftlint version
 
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
