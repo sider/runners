@@ -1,16 +1,27 @@
 FROM sider/devon_rex_dotnet:master
-ENV FXCOP_VERSION=2.9.8
 
 <%= render_erb 'images/Dockerfile.base.erb' %>
 
-# cache target analyzer
-USER $RUNNER_USER
-RUN cd && \
+ENV FXCOP_VERSION=2.9.8
+
+ARG ROSLYN_ANALYZERS_RUNNER_VERSION=0.1.3
+ARG ROSLYN_ANALYZERS_RUNNER_HOME=${RUNNER_USER_HOME}/roslyn-analyzers-runner
+ENV PATH ${ROSLYN_ANALYZERS_RUNNER_HOME}:$PATH
+
+COPY --chown=<%= chown %> images/fxcop/analyzers.json ${RUNNER_USER_HOME}/
+
+RUN mkdir -p ${ROSLYN_ANALYZERS_RUNNER_HOME} && \
+    curl -SL https://github.com/sider/roslyn-analyzers-runner/releases/download/v${ROSLYN_ANALYZERS_RUNNER_VERSION}/Sider.RoslynAnalyzersRunner.${ROSLYN_ANALYZERS_RUNNER_VERSION}.tar.gz \
+    | tar -zxC ${ROSLYN_ANALYZERS_RUNNER_HOME} && \
+    mv ${RUNNER_USER_HOME}/analyzers.json ${ROSLYN_ANALYZERS_RUNNER_HOME}/ && \
+    sed -i -e"s/\${FXCOP_VERSION}/${FXCOP_VERSION}/" ${ROSLYN_ANALYZERS_RUNNER_HOME}/analyzers.json && \
+    cd ${RUNNER_USER_HOME} && \
     mkdir dummy_project && \
     cd dummy_project && \
     dotnet new console && \
+    dotnet add package Microsoft.CodeAnalysis.Analyzers --version ${FXCOP_VERSION} && \
     dotnet add package Microsoft.CodeAnalysis.FxCopAnalyzers --version ${FXCOP_VERSION} && \
-    cd && \
+    cd .. && \
     rm -rf dummy_project
 
 <%= render_erb 'images/Dockerfile.end.erb' %>
