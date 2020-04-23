@@ -3,7 +3,7 @@ s = Runners::Testing::Smoke
 s.add_test(
   "success",
   type: "success",
-  analyzer: { name: "SwiftLint", version: "0.39.1" },
+  analyzer: { name: "SwiftLint", version: "0.39.2" },
   issues: [
     {
       path: "test.swift",
@@ -20,7 +20,7 @@ s.add_test(
 s.add_test(
   "sideciyml",
   type: "success",
-  analyzer: { name: "SwiftLint", version: "0.39.1" },
+  analyzer: { name: "SwiftLint", version: "0.39.2" },
   issues: [
     {
       path: "test.swift",
@@ -127,7 +127,7 @@ s.add_test(
 s.add_test(
   "ignore_warnings",
   type: "success",
-  analyzer: { name: "SwiftLint", version: "0.39.1" },
+  analyzer: { name: "SwiftLint", version: "0.39.2" },
   issues: [
     {
       path: "test.swift",
@@ -145,7 +145,7 @@ s.add_test(
   "no_swift_file",
   type: "success",
   issues: [],
-  analyzer: { name: "SwiftLint", version: "0.39.1" },
+  analyzer: { name: "SwiftLint", version: "0.39.2" },
   warnings: [{ message: "No lintable files found.", file: nil }]
 )
 
@@ -153,7 +153,7 @@ s.add_test(
   "no_config_file",
   type: "failure",
   message: /\ASwiftLint aborted\.\n(.+)\nCould not read configuration file at path (.+)/m,
-  analyzer: { name: "SwiftLint", version: "0.39.1" },
+  analyzer: { name: "SwiftLint", version: "0.39.2" },
   warnings: [
     {
       message: <<~MSG.strip,
@@ -179,5 +179,5 @@ s.add_test(
   type: "failure",
   # TODO: The message sometimes can be "". It should be "Loading configuration from '.swiftlint.yml'".
   message: :_,
-  analyzer: { name: "SwiftLint", version: "0.39.1" }
+  analyzer: { name: "SwiftLint", version: "0.39.2" }
 )
