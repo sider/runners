@@ -89,6 +89,8 @@ class Runners::Ruby::GemInstaller::Source::Git < Runners::Ruby::GemInstaller::So
 end
 
 class Runners::Ruby::LockfileLoader
+  include Tmpdir
+
   attr_reader root_dir: Pathname
   attr_reader shell: Shell
 

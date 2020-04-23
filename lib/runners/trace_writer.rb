@@ -16,6 +16,8 @@ module Runners
     end
 
     def stdout(string, recorded_at: now, max_length: 4_000)
+      return unless string
+
       string = string.strip
       return if string.empty?
 
@@ -25,6 +27,8 @@ module Runners
     end
 
     def stderr(string, recorded_at: now, max_length: 4_000)
+      return unless string
+
       string = string.strip
       return if string.empty?
 

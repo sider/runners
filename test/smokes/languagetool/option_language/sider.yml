@@ -1,0 +1,3 @@
+linter:
+  languagetool:
+    language: ja-JP

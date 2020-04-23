@@ -27,6 +27,7 @@ end
 extension Object (Polyfill)
   def instance_of?: (any) -> bool
   def then: <'a> () { (self) -> 'a } -> 'a
+  def public_send: (String | Symbol, *any) -> any
 end
 
 class UnboundMethod
@@ -204,3 +205,7 @@ end
 # HACK: To avoid receiving the error message `Unknown alias: untyped`,
 #       define `untyped` alias here. Such a hack is required until the migration to Steep 0.14 or later completes.
 type untyped = any
+
+extension Set<'a> (Polyfill)
+  def filter: { ('a) -> any } -> Set<'a>
+end

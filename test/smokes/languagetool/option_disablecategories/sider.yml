@@ -1,0 +1,4 @@
+linter:
+  languagetool:
+    disablecategories:
+      - CASING

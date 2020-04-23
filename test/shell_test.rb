@@ -119,6 +119,21 @@ class ShellTest < Minitest::Test
     end
   end
 
+  def test_capture3_trace_with_stdin_data
+    mktmpdir do |path|
+      shell = Shell.new(current_dir: path, trace_writer: trace_writer, env_hash: {})
+
+      stdout, = shell.capture3_trace("cat", stdin_data: "foo!")
+
+      assert_equal "foo!", stdout
+      assert_trace_writer [
+                            { trace: :command_line, command_line: ["cat"] },
+                            { trace: :stdout, string: "foo!", truncated: false },
+                            { trace: :status, status: 0 },
+                          ]
+    end
+  end
+
   def test_capture3_trace_with_chdir
     mktmpdir do |path|
       shell = Shell.new(current_dir: path, trace_writer: trace_writer, env_hash: {})
@@ -147,6 +162,41 @@ class ShellTest < Minitest::Test
       stdout, _, status = shell.capture3_trace("cat", "1.txt", chdir: nil)
       assert status.success?
       assert_equal "Number: 1", stdout
+    end
+  end
+
+  def test_capture3_trace_with_merge_output
+    mktmpdir do |path|
+      shell = Shell.new(current_dir: path, trace_writer: trace_writer, env_hash: {})
+
+      output_to_both = "echo 'stdout' ; echo 'stderr' >&2"
+      stdout_and_stderr, stderr, status = shell.capture3_trace(output_to_both, merge_output: true)
+
+      assert_equal "stdout\nstderr\n", stdout_and_stderr
+      assert_equal "", stderr
+      assert status.success?
+      assert_equal [
+        { trace: :command_line, command_line: ["echo 'stdout' ; echo 'stderr' >&2"] },
+        { trace: :stdout, string: "stdout\n" + "stderr", truncated: false },
+        { trace: :status, status: 0 },
+      ], trace_writer.writer.each { |entry| entry.delete(:recorded_at) }
+    end
+  end
+
+  def test_capture3_trace_with_merge_output_and_errored
+    mktmpdir do |path|
+      shell = Shell.new(current_dir: path, trace_writer: trace_writer, env_hash: {})
+
+      error = assert_raises Shell::ExecError do
+        shell.capture3_trace("echo 'Hello' ; exit 1", merge_output: true, raise_on_failure: true)
+      end
+
+      assert_equal :capture2e, error.type
+      assert_equal ["echo 'Hello' ; exit 1"], error.args
+      assert_equal "Hello\n", error.stdout_str
+      assert_equal "", error.stderr_str
+      assert_equal 1, error.status.exitstatus
+      assert_equal path, error.dir
     end
   end
 end

@@ -4,6 +4,34 @@ class ChangesTest < Minitest::Test
   include TestHelper
 
   Changes = Runners::Changes
+  Issue = Runners::Issue
+  Location = Runners::Location
+
+  def patches
+    GitDiffParser.parse(<<-PATCH)
+diff --git a/group.rb b/group.rb
+index f1bdf42..5c56bf0 100644
+--- a/group.rb
++++ b/group.rb
+@@ -1,2 +1,4 @@
+ class Group
++  def a
++  end
+ end
+diff --git a/user.rb b/user.rb
+index 740c016..cc737a5 100644
+--- a/user.rb
++++ b/user.rb
+@@ -1,6 +1,4 @@
+ class User
+-
+-
+-  def ok
++  def foo
+   end
+ end
+    PATCH
+  end
 
   def test_changed_paths
     mktmpdir do |base_path|
@@ -30,9 +58,9 @@ class ChangesTest < Minitest::Test
 
           changes = Changes.calculate(base_dir: base_path, head_dir: head_path, working_dir: working_path, patches: nil)
 
-          assert_equal [Pathname("changed1.rb"), Pathname("changed2.rb")], changes.changed_paths
-          assert_equal [Pathname("unchanged.rb")], changes.unchanged_paths
-          assert_equal [Pathname("built1.rb"), Pathname("built2.rb")], changes.untracked_paths
+          assert_equal Set[Pathname("changed1.rb"), Pathname("changed2.rb")], changes.changed_paths
+          assert_equal Set[Pathname("unchanged.rb")], changes.unchanged_paths
+          assert_equal Set[Pathname("built1.rb"), Pathname("built2.rb")], changes.untracked_paths
         end
       end
     end
@@ -61,9 +89,9 @@ class ChangesTest < Minitest::Test
 
           changes = Changes.calculate(base_dir: base_path, head_dir: head_path, working_dir: working_path, patches: nil)
 
-          assert_equal [Pathname("changed1.rb"), Pathname("changed2.rb"), Pathname("unchanged.rb")], changes.changed_paths
-          assert_equal [], changes.unchanged_paths
-          assert_equal [Pathname("built1.rb"), Pathname("built2.rb")], changes.untracked_paths
+          assert_equal Set[Pathname("changed1.rb"), Pathname("changed2.rb"), Pathname("unchanged.rb")], changes.changed_paths
+          assert_equal Set[], changes.unchanged_paths
+          assert_equal Set[Pathname("built1.rb"), Pathname("built2.rb")], changes.untracked_paths
         end
       end
     end
@@ -87,17 +115,29 @@ class ChangesTest < Minitest::Test
 
   def test_delete_unchanged_with_pattern
     mktmpdir do |dir|
-      dir.join("file1").write("foo")
-      dir.join("file2").write("foo")
-      dir.join("file3").write("foo")
+      files = Dir.chdir(dir) do
+        Pathname("some").mkdir
+        [
+          Pathname("file1"),
+          Pathname("file2"),
+          Pathname("file3"),
+          Pathname("some") / "foo.rb",
+          Pathname("some") / "bar.py",
+          Pathname("some") / "baz.js",
+          Pathname("some") / "xyz.md",
+        ].each { |f| f.write("") }
+      end
 
-      changes = Changes.new(changed_paths: [], unchanged_paths: [Pathname("file1"), Pathname("file2"), Pathname("file3")], untracked_paths: [], patches: nil)
-
-      changes.delete_unchanged(dir: dir, only: ["file[2-3]"], except: ["file3"])
+      changes = Changes.new(changed_paths: [], unchanged_paths: files, untracked_paths: [], patches: nil)
+      changes.delete_unchanged(dir: dir, only: ["file[2-3]", "*.{rb,py}"], except: ["file3", "*.{py,md}"])
 
       assert dir.join("file1").file?
       refute dir.join("file2").file?
       assert dir.join("file3").file?
+      refute dir.join("some", "foo.rb").file?
+      assert dir.join("some", "bar.py").file?
+      assert dir.join("some", "baz.js").file?
+      assert dir.join("some", "xyz.md").file?
     end
   end
 
@@ -115,6 +155,41 @@ class ChangesTest < Minitest::Test
           assert changes.untracked_paths.include?(Pathname("foo"))
           assert changes.untracked_paths.include?(Pathname("baz"))
           refute changes.untracked_paths.include?(Pathname("link"))
+        end
+      end
+    end
+  end
+
+  def test_include
+    mktmpdir do |base_path|
+      mktmpdir do |head_path|
+        mktmpdir do |working_path|
+          (working_path / "group.rb").write(<<~GROUP)
+            class Group
+              def a
+              end
+            end
+          GROUP
+          (working_path / "user.rb").write(<<~USER)
+            class User
+              def foo
+              end
+            end
+          USER
+
+          changes = Changes.calculate(base_dir: base_path, head_dir: head_path, working_dir: working_path, patches: patches)
+
+          refute changes.include?(Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 1), id: "a", message: "a", links: []))
+          assert changes.include?(Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 2), id: "a", message: "a", links: []))
+          assert changes.include?(Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 3), id: "a", message: "a", links: []))
+          refute changes.include?(Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 4), id: "a", message: "a", links: []))
+          assert changes.include?(Issue.new(path: Pathname("user.rb"), location: nil, id: "a", message: "a", links: []))
+          refute changes.include?(Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 1), id: "a", message: "a", links: []))
+          assert changes.include?(Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 2), id: "a", message: "a", links: []))
+          refute changes.include?(Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 3), id: "a", message: "a", links: []))
+          refute changes.include?(Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 4), id: "a", message: "a", links: []))
+          refute changes.include?(Issue.new(path: Pathname("foo.rb"), location: nil, id: "a", message: "a", links: []))
+          refute changes.include?(Issue.new(path: Pathname("foo.rb"), location: Location.new(start_line: 2), id: "a", message: "a", links: []))
         end
       end
     end

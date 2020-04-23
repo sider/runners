@@ -4,7 +4,36 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.22.1...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.22.4...HEAD)
+
+- [LanguageTool] New support [#787](https://github.com/sider/runners/pull/787)
+- Bump devon_rex images from 2.16.1 to master [#978](https://github.com/sider/runners/pull/978)
+- [Goodcheck] Update goodcheck requirement from 2.5.0 to 2.5.1 [#916](https://github.com/sider/runners/pull/916)
+- Bump Ruby 2.6.6 to 2.7.1 [#985](https://github.com/sider/runners/pull/985)
+- [Reek] Update reek requirement from 5.6.0 to 6.0.0 [#919](https://github.com/sider/runners/pull/919)
+- [Checkstyle] Bump checkstyle from 8.30 to 8.31 [#920](https://github.com/sider/runners/pull/920)
+- [FxCop] [roslyn-analyzers-runner](https://github.com/sider/roslyn-analyzers-runner) provides a static code analysis without running build [#971](https://github.com/sider/runners/pull/971)
+- [PMD Java] Bump pmd-java from 6.21.0 to 6.22.0 [#922](https://github.com/sider/runners/pull/922)
+
+## 0.22.4
+
+[Full diff](https://github.com/sider/runners/compare/0.22.3...0.22.4)
+
+- Fix #patches and use ... for git-diff(1) [#955](https://github.com/sider/runners/pull/955)
+- Fix Changes#include? to return false for unchanged files [#954](https://github.com/sider/runners/pull/954)
+- Delete noisy warning on `npm install` [#957](https://github.com/sider/runners/pull/957)
+
+## 0.22.3
+
+[Full diff](https://github.com/sider/runners/compare/0.22.2...0.22.3)
+
+## 0.22.2
+
+[Full diff](https://github.com/sider/runners/compare/0.22.1...0.22.2)
+
+- Fix Ignoring to support many files in the `ignore` configuration [#936](https://github.com/sider/runners/pull/936)
+- \[remark-lint] More relax constraints [#943](https://github.com/sider/runners/pull/943)
+- Bump devon_rex images from 2.16.0 to 2.16.1 [#945](https://github.com/sider/runners/pull/945)
 
 ## 0.22.1
 

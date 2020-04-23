@@ -227,17 +227,11 @@ module Runners
 
       return if installed_deps.empty?
 
-      warn_about_fallback_to_default = -> {
-        add_warning <<~MSG, file: "package.json"
-          No required dependencies for analysis were installed. Instead, the pre-installed `#{default_dependency}` will be used.
-        MSG
-      }
-
       all_constraints_satisfied = true
 
       constraints.each do |name, constraint|
         unless installed_deps.key? name
-          warn_about_fallback_to_default.call
+          # NOTE: No required dependencies. Instead, use the default version.
           break
         end
 

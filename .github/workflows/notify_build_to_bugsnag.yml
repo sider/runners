@@ -1,4 +1,3 @@
-# See https://docs.bugsnag.com/build-integrations
 name: Notify build to Bugsnag
 
 on:
@@ -10,17 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: |
-          curl https://build.bugsnag.com/ \
-            --header "Content-Type: application/json" \
-            --data '{
-              "apiKey": "${{ secrets.BUGSNAG_API_KEY }}",
-              "appVersion": "${{ github.ref.replace(/\/refs\/tags\//, '') }}",
-              "releaseStage": "production",
-              "builderName": "GitHub Actions",
-              "sourceControl": {
-                "provider": "github",
-                "repository": "https://github.com/sider/runners",
-                "revision": "${{ github.sha }}"
-              }
-            }"
+      - uses: olegtarasov/get-tag@v2
+        id: getTag
+      - run: ./.github/workflows/notify_build_to_bugsnag.sh
+        env:
+          BUGSNAG_API_KEY: ${{ secrets.BUGSNAG_API_KEY }}
+          APP_VERSION: ${{ steps.getTag.outputs.tag }}
+          SOURCE_REVISION: ${{ github.sha }}

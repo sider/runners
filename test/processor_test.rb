@@ -35,7 +35,7 @@ class ProcessorTest < Minitest::Test
     with_workspace do |workspace|
       mock(Open3).capture3({"RUBYOPT" => nil, "GIT_SSH" => (workspace.working_dir / "id_rsa").to_s},
                            "ls",
-                           { chdir: workspace.working_dir.to_s }) do
+                           chdir: workspace.working_dir.to_s, stdin_data: nil) do
         status = Process::Status.allocate
 
         def status.success?; false end

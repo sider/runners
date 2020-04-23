@@ -1,0 +1,5 @@
+linter:
+  languagetool:
+    enable:
+      - UPPERCASE_SENTENCE_START
+    enabledonly: true

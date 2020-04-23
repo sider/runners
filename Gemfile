@@ -17,9 +17,9 @@ group :development, :test do
   gem 'rr'
   gem 'unification_assertion'
   gem 'parallel'
-  gem 'rainbow'
+  gem 'amazing_print'
   gem 'steep', "0.11.1"
-  gem 'aufgaben', git: 'https://github.com/ybiquitous/aufgaben.git', tag: '0.4.2'
+  gem 'aufgaben', git: 'https://github.com/ybiquitous/aufgaben.git', tag: '0.5.0'
   gem 'lefthook', require: false
   gem 'prettier', require: false
 end

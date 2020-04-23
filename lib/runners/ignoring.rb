@@ -39,13 +39,14 @@ module Runners
 
       # @see https://git-scm.com/docs/git-check-ignore#_exit_status
       stdout, = shell.capture3!(
-        "git", "check-ignore", *all_files,
+        "git", "check-ignore", "--stdin", "-z",
         trace_command_line: false,
         trace_stdout: false,
         is_success: -> (s) { s.exitstatus != 128 },
+        stdin_data: all_files.join("\0"),
       )
 
-      yield stdout.lines(chomp: true).map { |f| Pathname(f) }
+      yield stdout.split("\0").map { |f| Pathname(f) }
     ensure
       FileUtils.rm_rf(working_dir / ".git") # NOTE: working_dir is not a Git directory.
       gitignore.write(backup) if backup

@@ -88,6 +88,10 @@ analyzers:
     name: ktlint
     github: pinterest/ktlint
     doc: tools/kotlin/ktlint
+  languagetool:
+    name: LanguageTool
+    github: languagetool-org/languagetool
+    doc: tools/others/languagetool
   misspell:
     name: Misspell
     github: client9/misspell

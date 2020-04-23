@@ -39,7 +39,7 @@ module Runners
     end
 
     def analyze(changes)
-      delete_unchanged_files changes, only: [".java"]
+      delete_unchanged_files changes, only: ["*.java"]
 
       run_analyzer(dir, rulesets, encoding, min_priority)
     end

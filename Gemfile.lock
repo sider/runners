@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/ybiquitous/aufgaben.git
-  revision: d8b9fe176944d745679bd2386f50e8b10a72d52e
-  tag: 0.4.2
+  revision: 1bddd85665a93b4436dbaf4b2e5d2810a0eae63a
+  tag: 0.5.0
   specs:
-    aufgaben (0.4.2)
+    aufgaben (0.5.0)
 
 GEM
   remote: https://rubygems.org/
@@ -14,25 +14,26 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.2)
+    amazing_print (1.0.0)
     ast (2.4.0)
     ast_utils (0.3.0)
       parser (~> 2.4)
       thor (>= 0.19)
-    aws-eventstream (1.0.3)
-    aws-partitions (1.292.0)
-    aws-sdk-core (3.92.0)
-      aws-eventstream (~> 1.0, >= 1.0.2)
+    aws-eventstream (1.1.0)
+    aws-partitions (1.300.0)
+    aws-sdk-core (3.94.0)
+      aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.239.0)
       aws-sigv4 (~> 1.1)
       jmespath (~> 1.0)
     aws-sdk-kms (1.30.0)
       aws-sdk-core (~> 3, >= 3.71.0)
       aws-sigv4 (~> 1.1)
-    aws-sdk-s3 (1.61.1)
+    aws-sdk-s3 (1.62.0)
       aws-sdk-core (~> 3, >= 3.83.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.1)
-    aws-sigv4 (1.1.1)
+    aws-sigv4 (1.1.2)
       aws-eventstream (~> 1.0, >= 1.0.2)
     bugsnag (6.13.0)
       concurrent-ruby (~> 1.0)
@@ -53,9 +54,9 @@ GEM
     method_source (0.9.2)
     minitest (5.14.0)
     parallel (1.19.1)
-    parser (2.7.0.5)
+    parser (2.7.1.1)
       ast (~> 2.4.0)
-    prettier (0.18.0)
+    prettier (0.18.1)
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -89,6 +90,7 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport
+  amazing_print
   aufgaben!
   aws-sdk-s3
   bugsnag
@@ -100,7 +102,6 @@ DEPENDENCIES
   minitest
   parallel
   prettier
-  rainbow
   rake
   retryable
   rexml (>= 3.2, < 4.0)

@@ -25,7 +25,7 @@ module Runners
     register_config_schema(name: :detekt, schema: Schema.runner_config)
 
     def analyze(changes)
-      delete_unchanged_files changes, only: [".kt", ".kts"]
+      delete_unchanged_files changes, only: ["*.kt", "*.kts"]
       run_analyzer
     end
 

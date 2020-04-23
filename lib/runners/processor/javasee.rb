@@ -38,7 +38,7 @@ module Runners
     def analyze(changes)
       analyzer_version
 
-      delete_unchanged_files changes, only: [".java"]
+      delete_unchanged_files changes, only: ["*.java"]
 
       check_runner_config do |dirs, config_path|
         stdout, stderr, status = javasee_check dirs: dirs, config_path: config_path
