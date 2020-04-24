@@ -188,6 +188,15 @@ s.add_test(
     },
     {
       path: "sample.go",
+      location: { start_line: 18 },
+      id: "golint",
+      message: "don't use underscores in Go names; func redundant_append should be redundantAppend",
+      links: [],
+      object: nil,
+      git_blame_info: nil
+    },
+    {
+      path: "sample.go",
       location: { start_line: 13 },
       id: "gosec:G401",
       message: "G401: Use of weak cryptographic primitive",
@@ -218,15 +227,6 @@ s.add_test(
       location: { start_line: 10 },
       id: "staticcheck:SA9003",
       message: "SA9003: empty branch",
-      links: [],
-      object: nil,
-      git_blame_info: nil
-    },
-    {
-      path: "sample.go",
-      location: { start_line: 18 },
-      id: "stylecheck:ST1003",
-      message: "ST1003: should not use underscores in Go names; func redundant_append should be redundantAppend",
       links: [],
       object: nil,
       git_blame_info: nil
