@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 - [FxCop] [roslyn-analyzers-runner](https://github.com/sider/roslyn-analyzers-runner) provides a static code analysis without running build [#971](https://github.com/sider/runners/pull/971)
 - [PMD Java] Bump pmd-java from 6.21.0 to 6.22.0 [#922](https://github.com/sider/runners/pull/922)
 - [SwiftLint] Bump SwiftLint from 0.39.1 to 0.39.2 [#938](https://github.com/sider/runners/pull/938)
+- Extend the deadline for deprecated Go tools [#1002](https://github.com/sider/runners/pull/1002)
 
 ## 0.22.4
 
