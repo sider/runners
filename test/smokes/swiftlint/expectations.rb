@@ -10,9 +10,9 @@ s.add_test(
       location: { start_line: 1 },
       id: "identifier_name",
       message: "Function name should start with a lowercase character: 'Hello田()'",
-      object: nil,
-      git_blame_info: nil,
-      links: []
+      links: %w[https://realm.github.io/SwiftLint/identifier_name.html],
+      object: { severity: "Error" },
+      git_blame_info: nil
     }
   ]
 )
@@ -27,8 +27,8 @@ s.add_test(
       location: { start_line: 1 },
       id: "class_delegate_protocol",
       message: "Delegate protocols should be class-only so they can be weakly referenced.",
-      links: [],
-      object: nil,
+      links: %w[https://realm.github.io/SwiftLint/class_delegate_protocol.html],
+      object: { severity: "Warning" },
       git_blame_info: nil
     },
     {
@@ -36,8 +36,8 @@ s.add_test(
       location: { start_line: 6 },
       id: "closure_parameter_position",
       message: "Closure parameters should be on the same line as opening brace.",
-      links: [],
-      object: nil,
+      links: %w[https://realm.github.io/SwiftLint/closure_parameter_position.html],
+      object: { severity: "Warning" },
       git_blame_info: nil
     },
     {
@@ -45,8 +45,8 @@ s.add_test(
       location: { start_line: 1 },
       id: "explicit_acl",
       message: "All declarations should specify Access Control Level keywords explicitly.",
-      links: [],
-      object: nil,
+      links: %w[https://realm.github.io/SwiftLint/explicit_acl.html],
+      object: { severity: "Warning" },
       git_blame_info: nil
     },
     {
@@ -54,8 +54,8 @@ s.add_test(
       location: { start_line: 1 },
       id: "explicit_top_level_acl",
       message: "Top-level declarations should specify Access Control Level keywords explicitly.",
-      links: [],
-      object: nil,
+      links: %w[https://realm.github.io/SwiftLint/explicit_top_level_acl.html],
+      object: { severity: "Warning" },
       git_blame_info: nil
     },
     {
@@ -63,8 +63,8 @@ s.add_test(
       location: { start_line: 1 },
       id: "file_name",
       message: "File name should match a type or extension declared in the file (if any).",
-      links: [],
-      object: nil,
+      links: %w[https://realm.github.io/SwiftLint/file_name.html],
+      object: { severity: "Warning" },
       git_blame_info: nil
     },
     {
@@ -72,8 +72,8 @@ s.add_test(
       location: { start_line: 6 },
       id: "indentation_width",
       message: "Code should be indented using one tab or 4 spaces.",
-      links: [],
-      object: nil,
+      links: %w[https://realm.github.io/SwiftLint/indentation_width.html],
+      object: { severity: "Warning" },
       git_blame_info: nil
     },
     {
@@ -81,8 +81,8 @@ s.add_test(
       location: { start_line: 8 },
       id: "multiline_arguments_brackets",
       message: "Multiline arguments should have their surrounding brackets in a new line.",
-      links: [],
-      object: nil,
+      links: %w[https://realm.github.io/SwiftLint/multiline_arguments_brackets.html],
+      object: { severity: "Warning" },
       git_blame_info: nil
     },
     {
@@ -90,8 +90,8 @@ s.add_test(
       location: { start_line: 5 },
       id: "trailing_closure",
       message: "Trailing closure syntax should be used whenever possible.",
-      links: [],
-      object: nil,
+      links: %w[https://realm.github.io/SwiftLint/trailing_closure.html],
+      object: { severity: "Warning" },
       git_blame_info: nil
     },
     {
@@ -99,8 +99,8 @@ s.add_test(
       location: { start_line: 2 },
       id: "trailing_whitespace",
       message: "Lines should not have trailing whitespace.",
-      links: [],
-      object: nil,
+      links: %w[https://realm.github.io/SwiftLint/trailing_whitespace.html],
+      object: { severity: "Warning" },
       git_blame_info: nil
     },
     {
@@ -108,8 +108,8 @@ s.add_test(
       location: { start_line: 2 },
       id: "vertical_whitespace_closing_braces",
       message: "Don't include vertical whitespace (empty line) before closing braces.",
-      links: [],
-      object: nil,
+      links: %w[https://realm.github.io/SwiftLint/vertical_whitespace_closing_braces.html],
+      object: { severity: "Warning" },
       git_blame_info: nil
     },
     {
@@ -117,8 +117,8 @@ s.add_test(
       location: { start_line: 2 },
       id: "vertical_whitespace_opening_braces",
       message: "Don't include vertical whitespace (empty line) after opening braces.",
-      links: [],
-      object: nil,
+      links: %w[https://realm.github.io/SwiftLint/vertical_whitespace_opening_braces.html],
+      object: { severity: "Warning" },
       git_blame_info: nil
     }
   ]
@@ -134,25 +134,19 @@ s.add_test(
       location: { start_line: 3 },
       id: "force_cast",
       message: "Force casts should be avoided.",
-      object: nil,
-      git_blame_info: nil,
-      links: []
+      links: %w[https://realm.github.io/SwiftLint/force_cast.html],
+      object: { severity: "Error" },
+      git_blame_info: nil
     }
   ]
 )
 
-s.add_test(
-  "no_swift_file",
-  type: "success",
-  issues: [],
-  analyzer: { name: "SwiftLint", version: "0.39.2" },
-  warnings: [{ message: "No lintable files found.", file: nil }]
-)
+s.add_test("no_swift_file", type: "success", issues: [], analyzer: { name: "SwiftLint", version: "0.39.2" })
 
 s.add_test(
   "no_config_file",
   type: "failure",
-  message: /\ASwiftLint aborted\.\n(.+)\nCould not read configuration file at path (.+)/m,
+  message: "SwiftLint unexpectedly failed. Please see the log for details.",
   analyzer: { name: "SwiftLint", version: "0.39.2" },
   warnings: [
     {
@@ -174,10 +168,10 @@ s.add_test(
   analyzer: :_
 )
 
+# @see https://github.com/realm/SwiftLint/pull/2491
 s.add_test(
   "wrong_swiftlint_version_set",
   type: "failure",
-  # TODO: The message sometimes can be "". It should be "Loading configuration from '.swiftlint.yml'".
-  message: :_,
+  message: "SwiftLint unexpectedly failed. Please see the log for details.",
   analyzer: { name: "SwiftLint", version: "0.39.2" }
 )

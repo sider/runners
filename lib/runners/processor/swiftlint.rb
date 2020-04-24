@@ -18,6 +18,10 @@ module Runners
                         )
                       })
       }
+
+      let :issue, object(
+        severity: string,
+      )
     end
 
     register_config_schema(name: :swiftlint, schema: Schema.runner_config)
@@ -32,101 +36,75 @@ module Runners
     end
 
     def analyze(_changes)
-      options = [path, swiftlint_config, lenient, enable_all_rules].compact.flatten
-      run_analyzer(ignore_warnings, options)
+      run_analyzer
     end
 
-    def ignore_warnings
-      config_linter[:ignore_warnings] || false
+    private
+
+    def ignore_warnings?
+      config_linter[:ignore_warnings]
     end
 
-    def path
+    def cli_path
       path = config_linter[:path] || config_linter.dig(:options, :path)
-      ["--path", "#{path}"] if path
+      path ? ["--path", "#{path}"] : []
     end
 
-    def swiftlint_config
+    def cli_config
       config = config_linter[:config] || config_linter.dig(:options, :config)
-      ["--config", "#{config}"] if config
+      config ? ["--config", "#{config}"] : []
     end
 
-    def lenient
+    def cli_lenient
       lenient = config_linter[:lenient] || config_linter.dig(:options, :lenient)
-      "--lenient" if lenient
+      lenient ? ["--lenient"] : []
     end
 
-    def enable_all_rules
+    def cli_enable_all_rules
       enable_all_rules = config_linter[:'enable-all-rules'] || config_linter.dig(:options, :'enable-all-rules')
-      "--enable-all-rules" if enable_all_rules
+      enable_all_rules ? ["--enable-all-rules"] : []
     end
 
-    def parse_result(stdout, ignore_warnings)
-      JSON.parse(stdout).map do |error|
-        start_line = error['line']
-        message = error['reason']
-        id = error['rule_id']
-        fname = error['file']
+    def parse_result(output)
+      JSON.parse(output, symbolize_names: true).filter_map do |error|
+        next if ignore_warnings? && error[:severity] == 'Warning'
 
-        next if ignore_warnings && error['severity'] == 'Warning'
-
-        loc = Location.new(
-          start_line: start_line,
-          start_column: nil,
-          end_line: nil,
-          end_column: nil
-        )
         Issue.new(
-          path: relative_path(fname),
-          location: loc,
-          id: id,
-          message: message,
+          path: relative_path(error[:file]),
+          location: Location.new(start_line: error[:line]),
+          id: error[:rule_id],
+          message: error[:reason],
+          links: ["https://realm.github.io/SwiftLint/#{error[:rule_id]}.html"],
+          object: {
+            severity: error[:severity],
+          },
+          schema: Schema.issue,
         )
-      end.compact
+      end
     end
 
-    def run_analyzer(ignore_warnings, options)
+    def run_analyzer
       stdout, stderr, status = capture3(
         analyzer_bin,
         'lint',
         '--reporter', 'json',
-        *options,
+        '--no-cache',
+        *cli_path,
+        *cli_config,
+        *cli_lenient,
+        *cli_enable_all_rules,
       )
 
-      # https://github.com/realm/SwiftLint/pull/584
-      # 0: No errors, maybe warnings in non-strict mode
-      # 1: Usage or system error
-      # 2: Style violations of severity "Error"
-      # 3: No style violations of severity "Error", but violations of severity "warning" with --strict
-      #
-      # Otherwise it may be aborted.
-      exitstatus = status.exitstatus
-
       # HACK: SwiftLint sometimes exits with no output, so we need to check also the existence of `*.swift` files.
-      if exitstatus == 1 && (stderr.include?("No lintable files found at paths:") || Dir.glob("**/*.swift").empty?)
-        add_warning "No lintable files found."
+      if status.exitstatus == 1 && (stderr.include?("No lintable files found at paths:") || working_dir.glob("**/*.swift").empty?)
         return Results::Success.new(guid: guid, analyzer: analyzer)
       end
 
-      unless [0, 2, 3].include?(exitstatus)
-        summary = if exitstatus
-                    "SwiftLint exited with unexpected status #{exitstatus}."
-                  else
-                    "SwiftLint aborted."
-                  end
-        return Results::Failure.new(guid: guid, message: <<~TEXT.strip, analyzer: analyzer)
-          #{summary}
-
-          #{stderr}
-        TEXT
-      end
-
       begin
-        json_result = parse_result(stdout, ignore_warnings)
+        json_result = parse_result(stdout)
       rescue JSON::ParserError
-        # For example, when setting wrong `swiftlint_version` in `.swiftlint.yml`.
-        #
-        # @see https://github.com/realm/SwiftLint/pull/2491
-        return Results::Failure.new(guid: guid, message: stderr.strip, analyzer: analyzer)
+        message = "SwiftLint unexpectedly failed. Please see the log for details."
+        return Results::Failure.new(guid: guid, message: message, analyzer: analyzer)
       end
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
