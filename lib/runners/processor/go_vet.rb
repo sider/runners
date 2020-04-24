@@ -15,7 +15,7 @@ module Runners
     def setup
       add_warning_for_deprecated_linter(alternative: analyzers.name(:golangci_lint),
                                         ref: analyzer_doc,
-                                        deadline: Time.new(2020, 4, 30))
+                                        deadline: Time.new(2020, 5, 31))
       yield
     end
 
