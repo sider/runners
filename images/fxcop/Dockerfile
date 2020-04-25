@@ -16,7 +16,7 @@ RUN cd ${RUNNERS_DIR} && \
     BUNDLE_WITHOUT=development:test bundle install && \
     bundle list
 
-ENV FXCOP_VERSION=2.9.8
+ENV FXCOP_VERSION=2.9.0-beta1.final
 
 ARG ROSLYN_ANALYZERS_RUNNER_VERSION=0.1.3
 ARG ROSLYN_ANALYZERS_RUNNER_HOME=${RUNNER_USER_HOME}/roslyn-analyzers-runner
