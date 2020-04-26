@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
 - [PMD Java] Bump pmd-java from 6.21.0 to 6.22.0 [#922](https://github.com/sider/runners/pull/922)
 - [SwiftLint] Bump SwiftLint from 0.39.1 to 0.39.2 [#938](https://github.com/sider/runners/pull/938)
 - [GolangCI-Lint] Change default linters [#1001](https://github.com/sider/runners/pull/1001)
+- Extend the deadline for deprecated Go tools [#1002](https://github.com/sider/runners/pull/1002)
 
 ## 0.22.4
 

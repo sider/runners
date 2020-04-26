@@ -9,7 +9,7 @@ s.add_test(
     {
       message: <<~MSG.strip,
 DEPRECATION WARNING!!!
-The support for Go Meta Linter is deprecated. Sider will drop these versions on April 30, 2020.
+The support for Go Meta Linter is deprecated. Sider will drop these versions on May 31, 2020.
 Please consider using an alternative tool GolangCI-Lint. See https://github.com/alecthomas/gometalinter/issues/590
 MSG
       file: "sider.yml"

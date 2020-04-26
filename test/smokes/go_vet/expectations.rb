@@ -19,7 +19,7 @@ s.add_test(
     {
       message: <<~MSG.strip,
 DEPRECATION WARNING!!!
-The support for go vet is deprecated. Sider will drop these versions on April 30, 2020.
+The support for go vet is deprecated. Sider will drop these versions on May 31, 2020.
 Please consider using an alternative tool GolangCI-Lint. See https://help.sider.review/tools/go/govet
 MSG
       file: "sider.yml"
