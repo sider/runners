@@ -33,7 +33,7 @@ module Runners
     register_config_schema(name: :stylelint, schema: Schema.runner_config)
 
     DEFAULT_DEPS = DefaultDependencies.new(
-      main: Dependency.new(name: "stylelint", version: "13.2.0"),
+      main: Dependency.new(name: "stylelint", version: "13.3.3"),
       extras: [
         Dependency.new(name: "stylelint-config-recommended", version: "3.0.0"),
       ],
