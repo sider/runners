@@ -4,7 +4,7 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM sider/devon_rex_base:master
 
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=hadolint/hadolint:v1.17.5-debian /bin/hadolint ${RUNNER_USER_HOME}/bin/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=hadolint/hadolint:v1.17.6-debian /bin/hadolint ${RUNNER_USER_HOME}/bin/
 
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
