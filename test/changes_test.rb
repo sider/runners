@@ -58,9 +58,9 @@ index 740c016..cc737a5 100644
 
           changes = Changes.calculate(base_dir: base_path, head_dir: head_path, working_dir: working_path, patches: nil)
 
-          assert_equal [Pathname("changed1.rb"), Pathname("changed2.rb")], changes.changed_paths
-          assert_equal [Pathname("unchanged.rb")], changes.unchanged_paths
-          assert_equal [Pathname("built1.rb"), Pathname("built2.rb")], changes.untracked_paths
+          assert_equal Set[Pathname("changed1.rb"), Pathname("changed2.rb")], changes.changed_paths
+          assert_equal Set[Pathname("unchanged.rb")], changes.unchanged_paths
+          assert_equal Set[Pathname("built1.rb"), Pathname("built2.rb")], changes.untracked_paths
         end
       end
     end
@@ -89,9 +89,9 @@ index 740c016..cc737a5 100644
 
           changes = Changes.calculate(base_dir: base_path, head_dir: head_path, working_dir: working_path, patches: nil)
 
-          assert_equal [Pathname("changed1.rb"), Pathname("changed2.rb"), Pathname("unchanged.rb")], changes.changed_paths
-          assert_equal [], changes.unchanged_paths
-          assert_equal [Pathname("built1.rb"), Pathname("built2.rb")], changes.untracked_paths
+          assert_equal Set[Pathname("changed1.rb"), Pathname("changed2.rb"), Pathname("unchanged.rb")], changes.changed_paths
+          assert_equal Set[], changes.unchanged_paths
+          assert_equal Set[Pathname("built1.rb"), Pathname("built2.rb")], changes.untracked_paths
         end
       end
     end

@@ -1,0 +1,5 @@
+linter:
+  languagetool:
+    enablecategories:
+      - CASING
+    enabledonly: true

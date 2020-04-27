@@ -1,0 +1,10 @@
+[
+  "%global-packages%/microsoft.codeanalysis.analyzers/${FXCOP_VERSION}/analyzers/dotnet/cs/Microsoft.CodeAnalysis.Analyzers.dll",
+  "%global-packages%/microsoft.codeanalysis.analyzers/${FXCOP_VERSION}/analyzers/dotnet/cs/Microsoft.CodeAnalysis.CSharp.Analyzers.dll",
+  "%global-packages%/microsoft.codequality.analyzers/${FXCOP_VERSION}/analyzers/dotnet/cs/Microsoft.CodeQuality.Analyzers.dll",
+  "%global-packages%/microsoft.codequality.analyzers/${FXCOP_VERSION}/analyzers/dotnet/cs/Microsoft.CodeQuality.CSharp.Analyzers.dll",
+  "%global-packages%/microsoft.netcore.analyzers/${FXCOP_VERSION}/analyzers/dotnet/cs/Microsoft.NetCore.Analyzers.dll",
+  "%global-packages%/microsoft.netcore.analyzers/${FXCOP_VERSION}/analyzers/dotnet/cs/Microsoft.NetCore.CSharp.Analyzers.dll",
+  "%global-packages%/microsoft.netframework.analyzers/${FXCOP_VERSION}/analyzers/dotnet/cs/Microsoft.NetFramework.Analyzers.dll",
+  "%global-packages%/microsoft.netframework.analyzers/${FXCOP_VERSION}/analyzers/dotnet/cs/Microsoft.NetFramework.CSharp.Analyzers.dll"
+]

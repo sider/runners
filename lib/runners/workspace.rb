@@ -1,5 +1,7 @@
 module Runners
   class Workspace
+    include Tmpdir
+
     class DownloadError < SystemError; end
 
     def self.prepare(options:, working_dir:, trace_writer:)
@@ -34,11 +36,8 @@ module Runners
     # @yieldparam changes [Runners::Changes]
     def open
       prepare_ssh do |git_ssh_path|
-        Dir.mktmpdir do |base_dir|
-          base_path = Pathname(base_dir)
-          Dir.mktmpdir do |head_dir|
-            head_path = Pathname(head_dir)
-
+        mktmpdir do |base_path|
+          mktmpdir do |head_path|
             trace_writer.header "Setting up source code"
             if options.source.base
               trace_writer.message "Preparing base commit tree..."
@@ -64,7 +63,7 @@ module Runners
     end
 
     def root_tmp_dir
-      @root_tmp_dir ||= Pathname(Dir.mktmpdir)
+      @root_tmp_dir ||= mktmpdir_as_pathname
     end
 
     def range_git_blame_info(path_string, start_line, end_line)
@@ -100,13 +99,13 @@ module Runners
     def prepare_ssh
       ssh_key = options.ssh_key
       if ssh_key
-        Dir.mktmpdir do |dir|
+        mktmpdir do |dir|
           trace_writer.message "Preparing SSH config..."
 
-          config_path = Pathname(dir) / 'config'
-          key_path = Pathname(dir) / 'key'
-          script_path = Pathname(dir) / 'run.sh'
-          known_hosts_path = Pathname(dir) / 'known_hosts'
+          config_path = dir / 'config'
+          key_path = dir / 'key'
+          script_path = dir / 'run.sh'
+          known_hosts_path = dir / 'known_hosts'
 
           config_path.write(<<~SSH_CONFIG, perm: 0600)
             Host *
@@ -139,9 +138,7 @@ module Runners
     end
 
     def decrypt(archive, key)
-      Dir.mktmpdir do |tmpdir|
-        tmppath = Pathname(tmpdir)
-
+      mktmpdir do |tmppath|
         if key
           decrypted_path = tmppath.join(SecureRandom.uuid)
 

@@ -4,9 +4,10 @@ linters-settings:
       - diagnostic
       - performance
       - style
+
 linters:
   enable:
     - bodyclose
-    - gocyclo
-    - stylecheck
     - gocritic
+    - gocyclo
+    - golint

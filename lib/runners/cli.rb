@@ -2,6 +2,8 @@ require "optparse"
 
 module Runners
   class CLI
+    include Tmpdir
+
     # @dynamic stdout, stderr, guid, analyzer, options
     attr_reader :stdout
     attr_reader :stderr
@@ -26,10 +28,8 @@ module Runners
       @options = Options.new(stdout, stderr)
     end
 
-    def with_working_dir
-      Dir.mktmpdir do |dir|
-        yield Pathname(dir)
-      end
+    def with_working_dir(&block)
+      mktmpdir(&block)
     end
 
     def processor_class

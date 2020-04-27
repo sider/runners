@@ -14,7 +14,7 @@ module Runners
     register_config_schema(name: :reek, schema: Schema.runner_config)
 
     CONSTRAINTS = {
-      "reek" => [">= 4.4.0", "< 6.0"]
+      "reek" => [">= 4.4.0", "< 7.0.0"]
     }.freeze
 
     DEFAULT_TARGET = ".".freeze

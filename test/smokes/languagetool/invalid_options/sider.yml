@@ -1,0 +1,4 @@
+linter:
+  languagetool:
+    disable: [THE_SENT_END]
+    enabledonly: true
