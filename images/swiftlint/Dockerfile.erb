@@ -2,8 +2,6 @@ FROM sider/devon_rex_swift:master
 
 ARG SWIFTLINT_VERSION=0.39.2
 
-ENV PATH ${RUNNER_USER_HOME}/bin:${PATH}
-
 # Build SwiftLint
 RUN cd /tmp && \
     curl -sSL --compressed https://github.com/realm/SwiftLint/archive/${SWIFTLINT_VERSION}.tar.gz | tar -xz && \
