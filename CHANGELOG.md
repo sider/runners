@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
 - [SwiftLint] Some improvements [#1005](https://github.com/sider/runners/pull/1005)
 - [ShellCheck] Bump ShellCheck from 0.7.0 to 0.7.1 [#968](https://github.com/sider/runners/pull/968)
 - [RuboCop] Update rubocop requirement from 0.80.1 to 0.82.0 [#972](https://github.com/sider/runners/pull/972)
+- [detekt] Bump detekt-cli from 1.7.0 to 1.8.0 [#986](https://github.com/sider/runners/pull/986)
 
 ## 0.22.4
 
