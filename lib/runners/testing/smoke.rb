@@ -34,8 +34,7 @@ module Runners
       def run
         load expectations.to_s
 
-        threads = ENV["JOBS"]&.to_i || Parallel.processor_count * 2
-        results = Parallel.map(self.class.tests, in_threads: threads) do |name, pattern|
+        results = Parallel.map(self.class.tests, in_processes: ENV["JOBS"]&.to_i) do |name, pattern|
           out = StringIO.new(''.dup)
           result = run_test(name, pattern, out)
           print out.string

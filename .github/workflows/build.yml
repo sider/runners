@@ -162,6 +162,7 @@ jobs:
           TAG: ${{ steps.define_vars.outputs.tag }}
       - name: Run smoke test
         run: |
+          if [[ $ANALYZER == 'swiftlint' ]]; then export JOBS=1 ; fi
           bundle exec rake docker:smoke
         env:
           ANALYZER: ${{ matrix.analyzer }}
