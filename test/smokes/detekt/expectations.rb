@@ -9,7 +9,7 @@ s.add_test(
 
 s.add_test(
   "with_invalid_detekt_config",
-  type: "failure", analyzer: { name: "detekt", version: "1.7.0" }, message: "Your detekt configuration is invalid"
+  type: "failure", analyzer: { name: "detekt", version: "1.8.0" }, message: "Your detekt configuration is invalid"
 )
 
 s.add_test(
@@ -20,7 +20,7 @@ s.add_test(
 s.add_test(
   "with_options",
   type: "success",
-  analyzer: { name: "detekt", version: "1.7.0" },
+  analyzer: { name: "detekt", version: "1.8.0" },
   issues: [
     {
       id: "detekt.EmptyClassBlock",
@@ -64,7 +64,7 @@ s.add_test(
 s.add_test(
   "without_options",
   type: "success",
-  analyzer: { name: "detekt", version: "1.7.0" },
+  analyzer: { name: "detekt", version: "1.8.0" },
   issues: [
     {
       id: "detekt.EmptyClassBlock",
@@ -156,7 +156,7 @@ s.add_test(
 s.add_test(
   "with_option_includes",
   type: "success",
-  analyzer: { name: "detekt", version: "1.7.0" },
+  analyzer: { name: "detekt", version: "1.8.0" },
   issues: [
     {
       id: "detekt.EmptyClassBlock",
@@ -170,4 +170,4 @@ s.add_test(
   ]
 )
 
-s.add_test("no_files", type: "success", analyzer: { name: "detekt", version: "1.7.0" }, issues: [])
+s.add_test("no_files", type: "success", analyzer: { name: "detekt", version: "1.8.0" }, issues: [])
