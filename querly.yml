@@ -3,12 +3,16 @@ rules:
     pattern:
       - _.exitstatus()
     message: |
-      Process#exitstatus may be nil
+      Note that `Process#exitstatus` can return `nil`.
 
-      Process#exitstatus is nil when the process does not exit.
-      This means the process is abort(2)-ed or coredumped.
+      `Process#exitstatus` returns `nil` when the process does not exit normally.
+      This means the process may be abort(2)-ed or core-dumped.
+      If you want to know if it is aborted, consider using also `Process#exited?`.
 
-      Check Process#exited? to make sure exitstatus is a Integer.
+      See also:
+      * https://ruby-doc.org/core-2.7.1/Process/Status.html#method-i-exitstatus
+    justification:
+      - When you are not interested in aborted or core-dumped.
   - id: sider.runners.trace_writer_status
     pattern:
       - status(_, ...)
