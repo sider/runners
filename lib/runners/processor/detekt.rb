@@ -50,16 +50,14 @@ module Runners
       # @see https://detekt.github.io/detekt/cli.html
       case status.exitstatus
       when 0, 2
-        issues = parse_output(report_path)
-        return Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-          issues.each do |issue|
+        Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+          parse_output(report_path) do |issue|
             result.add_issue issue
           end
         end
       when 3 # invalid configuration
-        return Results::Failure.new(guid: guid, message: "Your detekt configuration is invalid", analyzer: analyzer)
+        Results::Failure.new(guid: guid, message: "Your detekt configuration is invalid", analyzer: analyzer)
       else
-        trace_writer.error stderr.strip
         raise stderr
       end
     end
@@ -97,37 +95,23 @@ module Runners
     end
 
     def parse_output(output_path)
-      issues = []
-
       read_output_xml(output_path).root.each_element("file") do |file|
         file.each_element do |error|
           case error.name
           when "error"
-            issues << construct_issue(
-              file: file[:name],
-              line: error[:line],
+            yield Issue.new(
+              path: relative_path(file[:name]),
+              location: Location.new(start_line: error[:line]),
+              id: error[:source],
               message: error[:message],
-              rule: error[:source],
-              severity: error[:severity]
+              object: { severity: error[:severity] },
+              schema: Schema.issue
             )
           else
-            add_warning error.text.strip, file: file[:name]
+            add_warning error.text, file: file[:name]
           end
         end
       end
-
-      issues
-    end
-
-    def construct_issue(file:, line:, message:, rule:, severity:)
-      Issue.new(
-        path: relative_path(file),
-        location: Location.new(start_line: line),
-        id: rule,
-        message: message,
-        object: { severity: severity },
-        schema: Schema.issue
-      )
     end
   end
 end
