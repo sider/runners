@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
 - Extend the deadline for deprecated Go tools [#1002](https://github.com/sider/runners/pull/1002)
 - [SwiftLint] Some improvements [#1005](https://github.com/sider/runners/pull/1005)
 - [ShellCheck] Bump ShellCheck from 0.7.0 to 0.7.1 [#968](https://github.com/sider/runners/pull/968)
+- [RuboCop] Update rubocop requirement from 0.80.1 to 0.82.0 [#972](https://github.com/sider/runners/pull/972)
 
 ## 0.22.4
 
