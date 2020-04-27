@@ -102,7 +102,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "ShellCheck", version: "0.7.0" }
+  analyzer: { name: "ShellCheck", version: "0.7.1" }
 )
 
 s.add_test(
@@ -128,10 +128,10 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "ShellCheck", version: "0.7.0" }
+  analyzer: { name: "ShellCheck", version: "0.7.1" }
 )
 
-s.add_test("no_files", type: "success", issues: [], analyzer: { name: "ShellCheck", version: "0.7.0" })
+s.add_test("no_files", type: "success", issues: [], analyzer: { name: "ShellCheck", version: "0.7.1" })
 
 s.add_test(
   "option_target",
@@ -156,7 +156,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "ShellCheck", version: "0.7.0" }
+  analyzer: { name: "ShellCheck", version: "0.7.1" }
 )
 
 s.add_test(
@@ -173,7 +173,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "ShellCheck", version: "0.7.0" }
+  analyzer: { name: "ShellCheck", version: "0.7.1" }
 )
 
 s.add_test(
@@ -199,7 +199,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "ShellCheck", version: "0.7.0" }
+  analyzer: { name: "ShellCheck", version: "0.7.1" }
 )
 
 s.add_test(
@@ -216,7 +216,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "ShellCheck", version: "0.7.0" }
+  analyzer: { name: "ShellCheck", version: "0.7.1" }
 )
 
 s.add_test(
@@ -242,7 +242,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "ShellCheck", version: "0.7.0" }
+  analyzer: { name: "ShellCheck", version: "0.7.1" }
 )
 
 s.add_test(
@@ -277,7 +277,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "ShellCheck", version: "0.7.0" }
+  analyzer: { name: "ShellCheck", version: "0.7.1" }
 )
 
 s.add_test(
@@ -303,7 +303,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "ShellCheck", version: "0.7.0" }
+  analyzer: { name: "ShellCheck", version: "0.7.1" }
 )
 
 s.add_test(
@@ -320,10 +320,10 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "ShellCheck", version: "0.7.0" }
+  analyzer: { name: "ShellCheck", version: "0.7.1" }
 )
 
-s.add_test("option_norc", type: "success", issues: [], analyzer: { name: "ShellCheck", version: "0.7.0" })
+s.add_test("option_norc", type: "success", issues: [], analyzer: { name: "ShellCheck", version: "0.7.1" })
 
 # Test specified files with the `ignore` options will be ignored.
 s.add_test(
@@ -349,5 +349,5 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "ShellCheck", version: "0.7.0" }
+  analyzer: { name: "ShellCheck", version: "0.7.1" }
 )
