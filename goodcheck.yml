@@ -37,5 +37,16 @@ rules:
       - When the passed value is not sensitive
       - When your change is irrelevant to `:writer`
 
+  - id: sider.runners.root_user_in_dockerfile
+    pattern: "USER root"
+    glob: images/**/Dockerfile
+    message: |
+      Try to avoid using the `root` user as much as possible.
+
+      Each runner is executed by the non-root user for security reasons.
+      Using the `USER` command leads to more layers and bigger image size.
+    justification:
+      - When you need to use system-wide commands such as `apt-get`.
+
 import:
   - https://raw.githubusercontent.com/sider/goodcheck-rules/master/rules/typo.yml
