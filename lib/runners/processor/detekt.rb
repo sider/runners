@@ -47,7 +47,7 @@ module Runners
       )
 
       # detekt has some exit codes.
-      # @see https://github.com/arturbosch/detekt/blob/1.7.0/docs/pages/gettingstarted/cli.md
+      # @see https://detekt.github.io/detekt/cli.html
       case status.exitstatus
       when 0, 2
         issues = parse_output(report_path)

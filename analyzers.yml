@@ -27,7 +27,7 @@ analyzers:
     doc: tools/cplusplus/cpplint
   detekt:
     name: detekt
-    github: arturbosch/detekt
+    github: detekt/detekt
     doc: tools/kotlin/detekt
   eslint:
     name: ESLint
