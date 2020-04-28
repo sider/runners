@@ -1,0 +1,56 @@
+version: 1
+update_configs:
+  # Main
+  - package_manager: "ruby:bundler"
+    directory: "/"
+    update_schedule: "weekly"
+    version_requirement_updates: "increase_versions"
+    automerged_updates:
+      - match:
+          dependency_type: "production"
+          update_type: "semver:patch"
+      - match:
+          dependency_type: "development"
+          update_type: "all"
+
+  # Docker
+  - { package_manager: "docker", update_schedule: "weekly", directory: "/images/golangci_lint" }
+  - { package_manager: "docker", update_schedule: "weekly", directory: "/images/hadolint" }
+  - { package_manager: "docker", update_schedule: "weekly", directory: "/images/shellcheck" }
+
+  # Java
+  - { package_manager: "java:maven", update_schedule: "weekly", directory: "/images/checkstyle" }
+  - { package_manager: "java:maven", update_schedule: "weekly", directory: "/images/pmd_java" }
+
+  # Java (Kotlin)
+  - { package_manager: "java:maven", update_schedule: "weekly", directory: "/images/detekt" }
+  - { package_manager: "java:maven", update_schedule: "weekly", directory: "/images/ktlint" }
+
+  # JavaScript
+  # TODO: CoffeeLint's package name seems moved. See https://github.com/sider/runners/issues/821
+  # - { package_manager: "javascript", update_schedule: "weekly", directory: "/images/coffeelint" }
+  - { package_manager: "javascript", update_schedule: "weekly", directory: "/images/eslint" }
+  - { package_manager: "javascript", update_schedule: "weekly", directory: "/images/jshint" }
+  - { package_manager: "javascript", update_schedule: "weekly", directory: "/images/remark_lint" }
+  - { package_manager: "javascript", update_schedule: "weekly", directory: "/images/stylelint" }
+  - { package_manager: "javascript", update_schedule: "weekly", directory: "/images/tslint" }
+  - { package_manager: "javascript", update_schedule: "weekly", directory: "/images/tyscan" }
+
+  # PHP
+  - { package_manager: "php:composer", update_schedule: "weekly", directory: "/images/code_sniffer" }
+  - { package_manager: "php:composer", update_schedule: "weekly", directory: "/images/phinder" }
+  - { package_manager: "php:composer", update_schedule: "weekly", directory: "/images/phpmd" }
+
+  # Python
+  - { package_manager: "python", update_schedule: "weekly", directory: "/images/cpplint" }
+  - { package_manager: "python", update_schedule: "weekly", directory: "/images/flake8" }
+
+  # Ruby
+  - { package_manager: "ruby:bundler", update_schedule: "weekly", directory: "/images/brakeman" }
+  - { package_manager: "ruby:bundler", update_schedule: "weekly", directory: "/images/goodcheck" }
+  - { package_manager: "ruby:bundler", update_schedule: "weekly", directory: "/images/haml_lint" }
+  - { package_manager: "ruby:bundler", update_schedule: "weekly", directory: "/images/querly" }
+  - { package_manager: "ruby:bundler", update_schedule: "weekly", directory: "/images/rails_best_practices" }
+  - { package_manager: "ruby:bundler", update_schedule: "weekly", directory: "/images/reek" }
+  - { package_manager: "ruby:bundler", update_schedule: "weekly", directory: "/images/rubocop" }
+  - { package_manager: "ruby:bundler", update_schedule: "weekly", directory: "/images/scss_lint" }

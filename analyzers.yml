@@ -90,6 +90,7 @@ analyzers:
     name: LanguageTool
     github: languagetool-org/languagetool
     doc: tools/others/languagetool
+    dependabot: false
   misspell:
     name: Misspell
     github: client9/misspell
