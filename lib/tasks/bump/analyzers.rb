@@ -95,6 +95,7 @@ BumpAnalyzers = Struct.new(
   # @see https://developer.github.com/v3/git/refs/#list-matching-references
   def tags
     @tags ||= call_github_api(:get, "/repos/#{github_repo}/git/refs/tags")
+      .reject { |tag| tag.fetch(:ref).include?("beta") }
       .map { |tag| tag.fetch(:ref).delete_prefix("refs/tags/") }
   end
 
@@ -158,19 +159,22 @@ BumpAnalyzers = Struct.new(
 
     Pathname.glob("images/#{analyzer}/Dockerfile*").each do |file|
       old_content = file.read
-      pattern = /\b(ARG|ENV) (\w+)=(\d+\.\d+(\.\d+)?)\b/
 
-      unless old_content.match? pattern
-        abort "Not found version in `#{file}`!"
-      end
-
-      new_content = old_content.sub(pattern) do
+      new_content = old_content.sub(/\b(ARG|ENV) (\w+)=(\d+\.\d+(\.\d+)?)\b/) do
         type = $1
         name = $2
         current_version = $3
         "#{type} #{name}=#{latest_version}"
       end
+      if old_content != new_content
+        file.write(new_content) unless dry_run
+        updated = true
+      end
 
+      new_content = old_content.sub(/ --from=(.+):v(\d+\.\d+\.\d+)/) do
+        current_version = $2
+        " --from=#{$1}:v#{latest_version}"
+      end
       if old_content != new_content
         file.write(new_content) unless dry_run
         updated = true

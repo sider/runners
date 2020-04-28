@@ -127,7 +127,7 @@ s.add_test(
 
 s.add_test(
   "no_config",
-  analyzer: { name: "stylelint", version: "13.2.0" },
+  analyzer: { name: "stylelint", version: "13.3.3" },
   type: "success",
   issues: [
     {
@@ -135,7 +135,7 @@ s.add_test(
       location: { start_line: 2 },
       id: "color-no-invalid-hex",
       message: "Unexpected invalid hex color \"#100000000\"",
-      links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/color-no-invalid-hex],
+      links: %w[https://github.com/stylelint/stylelint/tree/13.3.3/lib/rules/color-no-invalid-hex],
       object: { severity: "error" },
       git_blame_info: nil
     },
@@ -144,7 +144,7 @@ s.add_test(
       location: { start_line: 1 },
       id: "selector-type-no-unknown",
       message: "Unexpected unknown type selector \"foo\"",
-      links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/selector-type-no-unknown],
+      links: %w[https://github.com/stylelint/stylelint/tree/13.3.3/lib/rules/selector-type-no-unknown],
       object: { severity: "error" },
       git_blame_info: nil
     }
@@ -153,12 +153,12 @@ s.add_test(
 
 s.add_test(
   "analyse-only-css",
-  analyzer: { name: "stylelint", version: "13.2.0" },
+  analyzer: { name: "stylelint", version: "13.3.3" },
   type: "failure",
   message: /Error: Could not find "stylelint-config-standard"/
 )
 
-s.add_test("without-css", analyzer: { name: "stylelint", version: "13.2.0" }, type: "success", issues: [])
+s.add_test("without-css", analyzer: { name: "stylelint", version: "13.3.3" }, type: "success", issues: [])
 
 s.add_test("without-css-v9", analyzer: { name: "stylelint", version: "9.10.1" }, type: "success", issues: [])
 
@@ -208,7 +208,7 @@ s.add_test(
 
 s.add_test(
   "syntax-error",
-  analyzer: { name: "stylelint", version: "13.2.0" },
+  analyzer: { name: "stylelint", version: "13.3.3" },
   type: "success",
   issues: [
     {
@@ -222,7 +222,7 @@ s.add_test(
     },
     {
       message: "Unexpected unknown property \"someattr\"",
-      links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/property-no-unknown],
+      links: %w[https://github.com/stylelint/stylelint/tree/13.3.3/lib/rules/property-no-unknown],
       id: "property-no-unknown",
       path: "ok.css",
       object: { severity: "error" },
@@ -234,12 +234,12 @@ s.add_test(
 
 s.add_test(
   "only_stylelintrc",
-  analyzer: { name: "stylelint", version: "13.2.0" },
+  analyzer: { name: "stylelint", version: "13.3.3" },
   type: "success",
   issues: [
     {
       message: "Unexpected unknown property \"someattr\"",
-      links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/property-no-unknown],
+      links: %w[https://github.com/stylelint/stylelint/tree/13.3.3/lib/rules/property-no-unknown],
       id: "property-no-unknown",
       path: "test.css",
       object: { severity: "error" },
@@ -248,7 +248,7 @@ s.add_test(
     },
     {
       message: "Unexpected unknown property \"font-color\"",
-      links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/property-no-unknown],
+      links: %w[https://github.com/stylelint/stylelint/tree/13.3.3/lib/rules/property-no-unknown],
       id: "property-no-unknown",
       path: "test.scss",
       object: { severity: "error" },
@@ -257,7 +257,7 @@ s.add_test(
     },
     {
       message: "Unexpected unknown type selector \"hoge\"",
-      links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/selector-type-no-unknown],
+      links: %w[https://github.com/stylelint/stylelint/tree/13.3.3/lib/rules/selector-type-no-unknown],
       id: "selector-type-no-unknown",
       path: "test.less",
       object: { severity: "error" },
@@ -269,12 +269,12 @@ s.add_test(
 
 s.add_test(
   "only_stylelintrc_without_packages",
-  analyzer: { name: "stylelint", version: "13.2.0" },
+  analyzer: { name: "stylelint", version: "13.3.3" },
   type: "success",
   issues: [
     {
       message: "Expected empty line before closing brace",
-      links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/block-closing-brace-empty-line-before],
+      links: %w[https://github.com/stylelint/stylelint/tree/13.3.3/lib/rules/block-closing-brace-empty-line-before],
       id: "block-closing-brace-empty-line-before",
       path: "test.scss",
       object: { severity: "error" },
@@ -283,7 +283,7 @@ s.add_test(
     },
     {
       message: "Expected empty line before closing brace",
-      links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/block-closing-brace-empty-line-before],
+      links: %w[https://github.com/stylelint/stylelint/tree/13.3.3/lib/rules/block-closing-brace-empty-line-before],
       id: "block-closing-brace-empty-line-before",
       path: "test.scss",
       object: { severity: "error" },
@@ -292,7 +292,7 @@ s.add_test(
     },
     {
       message: "Expected empty line before closing brace",
-      links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/block-closing-brace-empty-line-before],
+      links: %w[https://github.com/stylelint/stylelint/tree/13.3.3/lib/rules/block-closing-brace-empty-line-before],
       id: "block-closing-brace-empty-line-before",
       path: "test.scss",
       object: { severity: "error" },
@@ -301,7 +301,7 @@ s.add_test(
     },
     {
       message: "Expected empty line before closing brace",
-      links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/block-closing-brace-empty-line-before],
+      links: %w[https://github.com/stylelint/stylelint/tree/13.3.3/lib/rules/block-closing-brace-empty-line-before],
       id: "block-closing-brace-empty-line-before",
       path: "test.scss",
       object: { severity: "error" },
@@ -310,7 +310,7 @@ s.add_test(
     },
     {
       message: "Expected a trailing semicolon",
-      links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/declaration-block-trailing-semicolon],
+      links: %w[https://github.com/stylelint/stylelint/tree/13.3.3/lib/rules/declaration-block-trailing-semicolon],
       id: "declaration-block-trailing-semicolon",
       path: "test.scss",
       object: { severity: "error" },
@@ -319,7 +319,7 @@ s.add_test(
     },
     {
       message: "Expected a trailing semicolon",
-      links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/declaration-block-trailing-semicolon],
+      links: %w[https://github.com/stylelint/stylelint/tree/13.3.3/lib/rules/declaration-block-trailing-semicolon],
       id: "declaration-block-trailing-semicolon",
       path: "test.scss",
       object: { severity: "error" },
@@ -373,12 +373,12 @@ s.add_test(
 
 s.add_test(
   "npm_install_without_stylelint",
-  analyzer: { name: "stylelint", version: "13.2.0" },
+  analyzer: { name: "stylelint", version: "13.3.3" },
   type: "success",
   issues: [
     {
       message: "Expected a trailing semicolon",
-      links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/declaration-block-trailing-semicolon],
+      links: %w[https://github.com/stylelint/stylelint/tree/13.3.3/lib/rules/declaration-block-trailing-semicolon],
       id: "declaration-block-trailing-semicolon",
       path: "test.less",
       object: { severity: "error" },
@@ -387,7 +387,7 @@ s.add_test(
     },
     {
       message: "Expected indentation of 2 spaces",
-      links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/indentation],
+      links: %w[https://github.com/stylelint/stylelint/tree/13.3.3/lib/rules/indentation],
       id: "indentation",
       path: "test.scss",
       object: { severity: "error" },
@@ -396,7 +396,7 @@ s.add_test(
     },
     {
       message: "Expected no more than 1 empty line",
-      links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/max-empty-lines],
+      links: %w[https://github.com/stylelint/stylelint/tree/13.3.3/lib/rules/max-empty-lines],
       id: "max-empty-lines",
       path: "test.less",
       object: { severity: "error" },
@@ -405,7 +405,7 @@ s.add_test(
     },
     {
       message: "Expected no more than 1 empty line",
-      links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/max-empty-lines],
+      links: %w[https://github.com/stylelint/stylelint/tree/13.3.3/lib/rules/max-empty-lines],
       id: "max-empty-lines",
       path: "test.less",
       object: { severity: "error" },
@@ -414,7 +414,7 @@ s.add_test(
     },
     {
       message: "Unexpected unknown property \"font-color\"",
-      links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/property-no-unknown],
+      links: %w[https://github.com/stylelint/stylelint/tree/13.3.3/lib/rules/property-no-unknown],
       id: "property-no-unknown",
       path: "test.scss",
       object: { severity: "error" },
@@ -423,7 +423,7 @@ s.add_test(
     },
     {
       message: "Expected empty line before rule",
-      links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/rule-empty-line-before],
+      links: %w[https://github.com/stylelint/stylelint/tree/13.3.3/lib/rules/rule-empty-line-before],
       id: "rule-empty-line-before",
       path: "test.scss",
       object: { severity: "error" },
@@ -432,7 +432,7 @@ s.add_test(
     },
     {
       message: "Expected empty line before rule",
-      links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/rule-empty-line-before],
+      links: %w[https://github.com/stylelint/stylelint/tree/13.3.3/lib/rules/rule-empty-line-before],
       id: "rule-empty-line-before",
       path: "test.scss",
       object: { severity: "error" },
@@ -441,7 +441,7 @@ s.add_test(
     },
     {
       message: "Unexpected unknown type selector \"hoge\"",
-      links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/selector-type-no-unknown],
+      links: %w[https://github.com/stylelint/stylelint/tree/13.3.3/lib/rules/selector-type-no-unknown],
       id: "selector-type-no-unknown",
       path: "test.less",
       object: { severity: "error" },
@@ -473,7 +473,7 @@ s.add_test(
 
 s.add_test(
   "options_is_deprecated",
-  analyzer: { name: "stylelint", version: "13.2.0" },
+  analyzer: { name: "stylelint", version: "13.3.3" },
   type: "success",
   issues: [],
   warnings: [
@@ -537,7 +537,7 @@ s.add_test(
 
 s.add_test(
   "default_glob",
-  analyzer: { name: "stylelint", version: "13.2.0" },
+  analyzer: { name: "stylelint", version: "13.3.3" },
   type: "success",
   issues: [
     {
@@ -545,7 +545,7 @@ s.add_test(
       id: "property-no-unknown",
       message: /Unexpected unknown property/,
       location: { start_line: 2 },
-      links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/property-no-unknown],
+      links: %w[https://github.com/stylelint/stylelint/tree/13.3.3/lib/rules/property-no-unknown],
       object: { severity: "error" },
       git_blame_info: nil
     },
@@ -554,7 +554,7 @@ s.add_test(
       id: "property-no-unknown",
       message: /Unexpected unknown property/,
       location: { start_line: 2 },
-      links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/property-no-unknown],
+      links: %w[https://github.com/stylelint/stylelint/tree/13.3.3/lib/rules/property-no-unknown],
       object: { severity: "error" },
       git_blame_info: nil
     },
@@ -563,7 +563,7 @@ s.add_test(
       id: "property-no-unknown",
       message: /Unexpected unknown property/,
       location: { start_line: 2 },
-      links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/property-no-unknown],
+      links: %w[https://github.com/stylelint/stylelint/tree/13.3.3/lib/rules/property-no-unknown],
       object: { severity: "error" },
       git_blame_info: nil
     },
@@ -572,7 +572,7 @@ s.add_test(
       id: "property-no-unknown",
       message: /Unexpected unknown property/,
       location: { start_line: 2 },
-      links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/property-no-unknown],
+      links: %w[https://github.com/stylelint/stylelint/tree/13.3.3/lib/rules/property-no-unknown],
       object: { severity: "error" },
       git_blame_info: nil
     },
@@ -581,7 +581,7 @@ s.add_test(
       id: "property-no-unknown",
       message: /Unexpected unknown property/,
       location: { start_line: 2 },
-      links: %w[https://github.com/stylelint/stylelint/tree/13.2.0/lib/rules/property-no-unknown],
+      links: %w[https://github.com/stylelint/stylelint/tree/13.3.3/lib/rules/property-no-unknown],
       object: { severity: "error" },
       git_blame_info: nil
     }

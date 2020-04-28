@@ -9,8 +9,8 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends file && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+USER $RUNNER_USER
 
-ENV PATH ${RUNNER_USER_HOME}/bin:${PATH}
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=koalaman/shellcheck:v0.7.1 /bin/shellcheck ${RUNNER_USER_HOME}/bin/
 
 

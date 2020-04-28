@@ -1,11 +1,8 @@
 FROM sider/devon_rex_base:master
 
-USER root
 ARG MISSPELL_VERSION=0.3.4
-RUN curl -sSL https://git.io/misspell -o install-misspell && \
-    chmod +x install-misspell && \
-    ./install-misspell -b /usr/local/bin "v${MISSPELL_VERSION}" && \
-    rm install-misspell && \
+
+RUN curl -fsSL https://git.io/misspell | bash -s -- -b "${RUNNER_USER_HOME}/bin" "v${MISSPELL_VERSION}" && \
     misspell -v
 
 <%= render_erb 'images/Dockerfile.base.erb' %>

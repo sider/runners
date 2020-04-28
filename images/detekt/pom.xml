@@ -8,11 +8,11 @@
     <dependency>
       <groupId>io.gitlab.arturbosch.detekt</groupId>
       <artifactId>detekt-cli</artifactId>
-      <version>1.7.0</version>
+      <version>1.8.0</version>
     </dependency>
   </dependencies>
   <repositories>
-    <!-- NOTE: "kotlinx-html" is not hosted on the Maven central. See https://github.com/arturbosch/detekt/issues/2146 -->
+    <!-- NOTE: "kotlinx-html" is not hosted on the Maven central. See https://github.com/detekt/detekt/issues/2146 -->
     <repository>
       <id>jcenter</id>
       <name>jcenter</name>

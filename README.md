@@ -17,7 +17,7 @@ All 36 analyzers are provided as a Docker image:
 | CoffeeLint | [docker](https://hub.docker.com/r/sider/runner_coffeelint), [source](https://github.com/clutchski/coffeelint), [doc](https://help.sider.review/tools/javascript/coffeelint) | ✅ |
 | Cppcheck | [docker](https://hub.docker.com/r/sider/runner_cppcheck), [source](https://github.com/danmar/cppcheck), [doc](https://help.sider.review/tools/cplusplus/cppcheck) | ✅ |
 | cpplint | [docker](https://hub.docker.com/r/sider/runner_cpplint), [source](https://github.com/cpplint/cpplint), [doc](https://help.sider.review/tools/cplusplus/cpplint) | ✅ |
-| detekt | [docker](https://hub.docker.com/r/sider/runner_detekt), [source](https://github.com/arturbosch/detekt), [doc](https://help.sider.review/tools/kotlin/detekt) | ✅ |
+| detekt | [docker](https://hub.docker.com/r/sider/runner_detekt), [source](https://github.com/detekt/detekt), [doc](https://help.sider.review/tools/kotlin/detekt) | ✅ |
 | ESLint | [docker](https://hub.docker.com/r/sider/runner_eslint), [source](https://github.com/eslint/eslint), [doc](https://help.sider.review/tools/javascript/eslint) | ✅ |
 | Flake8 | [docker](https://hub.docker.com/r/sider/runner_flake8), [source](https://github.com/PyCQA/flake8), [doc](https://help.sider.review/tools/python/flake8) | ✅ |
 | FxCop | [docker](https://hub.docker.com/r/sider/runner_fxcop), [source](https://github.com/dotnet/roslyn-analyzers), [doc](https://help.sider.review/tools/csharp/fxcop) | ✅ |
