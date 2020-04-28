@@ -9,7 +9,3 @@ linter:
 
 ignore:
   - test/smokes/
-
-branches:
-  exclude:
-    - /^dependabot/
