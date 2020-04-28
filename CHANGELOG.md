@@ -22,6 +22,7 @@ All notable changes to this project will be documented in this file.
 - [RuboCop] Update rubocop requirement from 0.80.1 to 0.82.0 [#972](https://github.com/sider/runners/pull/972)
 - [detekt] Bump detekt-cli from 1.7.0 to 1.8.0 [#986](https://github.com/sider/runners/pull/986)
 - [stylelint] Bump stylelint from 13.2.0 to 13.3.3 [#990](https://github.com/sider/runners/pull/990)
+- [TSLint] Bump tslint from 6.0.0 to 6.1.2 [#1008](https://github.com/sider/runners/pull/1008)
 
 ## 0.22.4
 
