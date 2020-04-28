@@ -48,7 +48,7 @@ s.add_test(
       links: %w[https://docs.microsoft.com/visualstudio/code-quality/ca1812-avoid-uninstantiated-internal-classes]
     }
   ],
-  analyzer: { name: "FxCop", version: "2.9.8" }
+  analyzer: { name: "FxCop", version: "3.0.0" }
 )
 
 # a project have .csproj file in non analysis root
@@ -99,5 +99,5 @@ s.add_test(
       links: %w[https://docs.microsoft.com/visualstudio/code-quality/ca1812-avoid-uninstantiated-internal-classes]
     }
   ],
-  analyzer: { name: "FxCop", version: "2.9.8" }
+  analyzer: { name: "FxCop", version: "3.0.0" }
 )
