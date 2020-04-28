@@ -40,24 +40,28 @@ module Runners
     end
 
     def analysis_target
-      if config_linter[:target]
-        Array(config_linter[:target])
-      else
-        current_dir.glob(DEFAULT_TARGET, File::FNM_EXTGLOB)
-          .reject { |path| path.fnmatch?(DEFAULT_TARGET_EXCLUDED, File::FNM_EXTGLOB) }
-          .map { |path| relative_path(path).to_path }
-      end
+      @analysis_target ||=
+        begin
+          if config_linter[:target]
+            Array(config_linter[:target])
+          else
+            current_dir.glob(DEFAULT_TARGET, File::FNM_EXTGLOB)
+              .reject { |path| path.fnmatch?(DEFAULT_TARGET_EXCLUDED, File::FNM_EXTGLOB) }
+              .map { |path| relative_path(path).to_path }
+          end
+        end
     end
 
     def run_analyzer
-      stdout, stderr, status = capture3 analyzer_bin, *analyzer_options, *analysis_target
-      if status.exitstatus == 1 && stdout.strip == "Please provide a Dockerfile"
-        add_warning "No Docker file provided"
+      if analysis_target.empty?
+        trace_writer.message "Dockerfile not found."
         return Results::Success.new(guid: guid, analyzer: analyzer)
       end
 
+      stdout, stderr, status = capture3(analyzer_bin, *analyzer_options, *analysis_target)
+
       if status.exitstatus == 1 && stderr.include?("openBinaryFile: does not exist (No such file or directory)")
-        return Results::Failure.new(guid: guid, analyzer: analyzer, message: "No Docker files found")
+        return Results::Failure.new(guid: guid, analyzer: analyzer, message: "Invalid Dockerfile(s) specified.")
       end
 
       begin

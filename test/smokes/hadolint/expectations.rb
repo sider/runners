@@ -100,9 +100,11 @@ s.add_test("option_ignore", type: "success", issues: [], analyzer: { name: "hado
 
 s.add_test("option_ignore_multi", type: "success", issues: [], analyzer: { name: "hadolint", version: "1.17.6" })
 
+s.add_test("no_dockerfile", type: "success", issues: [], analyzer: { name: "hadolint", version: "1.17.6" })
+
 s.add_test(
-  "no_dockerfile",
-  type: "failure", message: "No Docker files found", analyzer: { name: "hadolint", version: "1.17.6" }
+  "invalid_option_target",
+  type: "failure", message: "Invalid Dockerfile(s) specified.", analyzer: { name: "hadolint", version: "1.17.6" }
 )
 
 s.add_test(
