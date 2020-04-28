@@ -69,7 +69,7 @@ module Runners
         return Results::Success.new(guid: guid, analyzer: analyzer)
       end
 
-      raise "Analysis failed unexpectedly with the exit status #{status.exitstatus.inspect}."
+      raise "Analysis errored with the exit status #{status.exitstatus.inspect}."
     end
 
     def analyzer_options
