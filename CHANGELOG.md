@@ -22,6 +22,7 @@ All notable changes to this project will be documented in this file.
 - [RuboCop] Update rubocop requirement from 0.80.1 to 0.82.0 [#972](https://github.com/sider/runners/pull/972)
 - [detekt] Bump detekt-cli from 1.7.0 to 1.8.0 [#986](https://github.com/sider/runners/pull/986)
 - [stylelint] Bump stylelint from 13.2.0 to 13.3.3 [#990](https://github.com/sider/runners/pull/990)
+- [GolangCI-Lint] Bump golangci/golangci-lint from v1.24.0 to v1.25.1 [#1023](https://github.com/sider/runners/pull/1023)
 
 ## 0.22.4
 
