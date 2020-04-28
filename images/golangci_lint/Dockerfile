@@ -4,7 +4,7 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM sider/devon_rex_go:master
 
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=golangci/golangci-lint:v1.24.0 /usr/bin/golangci-lint ${RUNNER_USER_HOME}/bin/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=golangci/golangci-lint:v1.25.1 /usr/bin/golangci-lint ${RUNNER_USER_HOME}/bin/
 
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
