@@ -26,9 +26,9 @@ module Runners
     register_config_schema(name: :tslint, schema: Schema.runner_config)
 
     DEFAULT_DEPS = DefaultDependencies.new(
-      main: Dependency.new(name: "tslint", version: "6.0.0"),
+      main: Dependency.new(name: "tslint", version: "6.1.2"),
       extras: [
-        Dependency.new(name: "typescript", version: "3.7.5"),
+        Dependency.new(name: "typescript", version: "3.8.3"),
       ],
     )
 

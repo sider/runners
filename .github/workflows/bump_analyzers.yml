@@ -2,7 +2,7 @@ name: Bump analyzers
 
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "0 0 1,5,15,25 * *"
 
 jobs:
   build:

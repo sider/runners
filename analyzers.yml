@@ -51,7 +51,6 @@ analyzers:
     name: GolangCI-Lint
     github: golangci/golangci-lint
     doc: tools/go/golangci-lint
-    dependabot: false
   golint:
     name: Golint
     github: golang/lint
@@ -70,7 +69,6 @@ analyzers:
     name: hadolint
     github: hadolint/hadolint
     doc: tools/dockerfile/hadolint
-    dependabot: false
   haml_lint:
     name: HAML-Lint
     github: sds/haml-lint
@@ -137,7 +135,6 @@ analyzers:
     name: ShellCheck
     github: koalaman/shellcheck
     doc: tools/shellscript/shellcheck
-    dependabot: false
   stylelint:
     name: stylelint
     github: stylelint/stylelint

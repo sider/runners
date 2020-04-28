@@ -2,9 +2,11 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+FROM hadolint/hadolint:v1.17.5-debian as hadolint
+
 FROM sider/devon_rex_base:master
 
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=hadolint/hadolint:v1.17.5-debian /bin/hadolint ${RUNNER_USER_HOME}/bin/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=hadolint /bin/hadolint ${RUNNER_USER_HOME}/bin/
 
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
