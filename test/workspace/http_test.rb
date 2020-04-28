@@ -4,7 +4,7 @@ class WorkspaceHTTPTest < Minitest::Test
   include TestHelper
 
   def remote_file
-    "http://ftp.jaist.ac.jp/pub/Linux/ArchLinux/core/os/x86_64/core.db.tar.gz"
+    "https://raw.githubusercontent.com/sider/runners/master/test/data/foo.tgz"
   end
 
   def test_prepare_source
