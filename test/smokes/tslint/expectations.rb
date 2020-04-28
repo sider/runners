@@ -23,7 +23,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "TSLint", version: "6.0.0" },
+  analyzer: { name: "TSLint", version: "6.1.2" },
   warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }]
 )
 
@@ -41,7 +41,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "TSLint", version: "6.0.0" },
+  analyzer: { name: "TSLint", version: "6.1.2" },
   warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }]
 )
 
@@ -122,7 +122,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "TSLint", version: "6.0.0" },
+  analyzer: { name: "TSLint", version: "6.1.2" },
   warnings: [{ message: /The support for TSLint is deprecated/, file: "sideci.yml" }]
 )
 
@@ -137,7 +137,7 @@ Error at range.ts:2:47: Property 'middle' does not exist on type 'string'.
 Error at range.ts:2:63: Property 'max' does not exist on type 'string'.
 Error at range.ts:11:24: Argument of type '{ min: number; middle: number; max: number; }' is not assignable to parameter of type 'string'.
 MESSAGE
-  analyzer: { name: "TSLint", version: "6.0.0" },
+  analyzer: { name: "TSLint", version: "6.1.2" },
   warnings: [
     {
       message: <<~MSG.strip,
@@ -268,7 +268,7 @@ s.add_test(
   "without-tslint-in-package-json",
   type: "success",
   issues: [],
-  analyzer: { name: "TSLint", version: "6.0.0" },
+  analyzer: { name: "TSLint", version: "6.1.2" },
   warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }]
 )
 
@@ -276,7 +276,7 @@ s.add_test(
   "without-tslint-and-with-typescript-in-package-json",
   type: "success",
   issues: [],
-  analyzer: { name: "TSLint", version: "6.0.0" },
+  analyzer: { name: "TSLint", version: "6.1.2" },
   warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }]
 )
 
