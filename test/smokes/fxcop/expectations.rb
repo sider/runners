@@ -17,7 +17,7 @@ s.add_test(
         severity: "Warning"
       },
       git_blame_info: nil,
-      links: %w[https://docs.microsoft.com/visualstudio/code-quality/ca1801-review-unused-parameters]
+      links: %w[https://docs.microsoft.com/visualstudio/code-quality/ca1801]
     },
     {
       path: "bar/Hello.cs",
@@ -31,7 +31,7 @@ s.add_test(
         severity: "Warning"
       },
       git_blame_info: nil,
-      links: %w[https://docs.microsoft.com/visualstudio/code-quality/ca1801-review-unused-parameters]
+      links: %w[https://docs.microsoft.com/visualstudio/code-quality/ca1801]
     },
     {
       path: "Program.cs",
@@ -45,10 +45,10 @@ s.add_test(
         severity: "Warning"
       },
       git_blame_info: nil,
-      links: %w[https://docs.microsoft.com/visualstudio/code-quality/ca1812-avoid-uninstantiated-internal-classes]
+      links: %w[https://docs.microsoft.com/visualstudio/code-quality/ca1812]
     }
   ],
-  analyzer: { name: "FxCop", version: "2.9.8" }
+  analyzer: { name: "FxCop", version: "3.0.0" }
 )
 
 # a project have .csproj file in non analysis root
@@ -68,7 +68,7 @@ s.add_test(
         severity: "Warning"
       },
       git_blame_info: nil,
-      links: %w[https://docs.microsoft.com/visualstudio/code-quality/ca1801-review-unused-parameters]
+      links: %w[https://docs.microsoft.com/visualstudio/code-quality/ca1801]
     },
     {
       path: "src/bar/Hello.cs",
@@ -82,7 +82,7 @@ s.add_test(
         severity: "Warning"
       },
       git_blame_info: nil,
-      links: %w[https://docs.microsoft.com/visualstudio/code-quality/ca1801-review-unused-parameters]
+      links: %w[https://docs.microsoft.com/visualstudio/code-quality/ca1801]
     },
     {
       path: "src/Program.cs",
@@ -96,8 +96,8 @@ s.add_test(
         severity: "Warning"
       },
       git_blame_info: nil,
-      links: %w[https://docs.microsoft.com/visualstudio/code-quality/ca1812-avoid-uninstantiated-internal-classes]
+      links: %w[https://docs.microsoft.com/visualstudio/code-quality/ca1812]
     }
   ],
-  analyzer: { name: "FxCop", version: "2.9.8" }
+  analyzer: { name: "FxCop", version: "3.0.0" }
 )

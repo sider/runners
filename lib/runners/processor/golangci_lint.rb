@@ -42,7 +42,7 @@ module Runners
 
     private
 
-    # @see https://github.com/golangci/golangci-lint/blob/v1.23.1/pkg/exitcodes/exitcodes.go
+    # @see https://github.com/golangci/golangci-lint/blob/v1.25.1/pkg/exitcodes/exitcodes.go
     #     Success              = 0
     #     IssuesFound          = 1
     #     WarningInTest        = 2
@@ -54,51 +54,33 @@ module Runners
 
     def run_analyzer
       stdout, stderr, status = capture3(analyzer_bin, "run", *analyzer_options)
-      if (status.exitstatus == 0 || status.exitstatus == 1) && stdout && stderr.empty?
-        return(
-          Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-            parse_result(stdout).each { |v| result.add_issue(v) }
-          end
-        )
+      if (status.exitstatus == 0 || status.exitstatus == 1) && !stdout.empty? && stderr.empty?
+        return Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+          parse_result(stdout) { |v| result.add_issue(v) }
+        end
       end
 
       if status.exitstatus == 3
-        return Results::Failure.new(guid: guid, analyzer: analyzer, message: handle_respective_message(stderr))
+        message = "Analysis failed. See the log for details."
+        return Results::Failure.new(guid: guid, analyzer: analyzer, message: message)
       end
 
       if status.exitstatus == 5
-        add_warning "No Go files to analyze"
         return Results::Success.new(guid: guid, analyzer: analyzer)
       end
 
-      Results::Failure.new(guid: guid, analyzer: analyzer, message: "Running error")
-    end
-
-    def handle_respective_message(stderr)
-      case stderr
-      when /must enable at least one/
-        "Must enable at least one linter"
-      when /can't be disabled and enabled at one moment/
-        "Can't be disabled and enabled at one moment"
-      when /can't combine options --disable-all and --disable/
-        "Can't combine options --disable-all and --disable"
-      when /only next presets exist/
-        "Only next presets exist: (bugs|complexity|format|performance|style|unused)"
-      when /no such linter/
-        "No such linter"
-      when /can't combine option --config and --no-config/
-        "Can't combine option --config and --no-config"
-      else
-        msg = stderr.match(/level=error msg=.+\[(.+)\]/)
-        msg && msg[1] ? msg[1] : "Running Error"
-      end
+      raise "Analysis errored with the exit status #{status.exitstatus.inspect}."
     end
 
     def analyzer_options
       [].tap do |opts|
         analysis_targets.each { |target| opts << target }
         opts << "--out-format=json"
+        opts << "--print-issued-lines"
+        opts << "--print-linter-name"
         opts << "--issues-exit-code=0"
+        opts << "--color=never"
+        opts << "--concurrency=2"
         opts << "--tests=#{config_linter[:tests]}" unless config_linter[:tests].nil?
         opts << "--config=#{path_to_config}" if path_to_config
         Array(config_linter[:disable]).each { |disable| opts << "--disable=#{disable}" }
@@ -119,10 +101,12 @@ module Runners
       return config_linter[:config] if config_linter[:config]
 
       # @see https://github.com/golangci/golangci-lint#config-file
-      candidates = %w[.golangci.yml .golangci.toml .golangci.json].map { |filename| current_dir / filename }
+      default_config_file_is_found = %w[.golangci.yml .golangci.toml .golangci.json].find { |f| (current_dir / f).exist? }
+      return if default_config_file_is_found
 
-      return if candidates.find(&:exist?)
-      "sider_golangci.yml".tap { |file| FileUtils.cp(Pathname(Dir.home) / file, current_dir) } unless config_linter[:'disable-all'] == true
+      return if config_linter[:'disable-all'] == true
+
+      Pathname(Dir.home).join("sider_golangci.yml").to_path
     end
 
     def analysis_targets
@@ -143,27 +127,23 @@ module Runners
     #     :SourceLines=>["\tfmt.Printf(\"text\", awesome_text)"], :Replacement=>nil,
     #     :Pos=>{:Filename=>"test/smokes/golangci_lint/success/main.go", :Offset=>85, :Line=>7, :Column=>12}}
     #
-    # @param stdout [String]
-    def parse_result(stdout)
-      json = JSON.parse(stdout, symbolize_names: true)
-      return [] unless json[:Issues]
+    def parse_result(output)
+      json = JSON.parse(output, symbolize_names: true)
 
-      json[:Issues].map do |file|
-        path = relative_path(file[:Pos][:Filename])
+      (json[:Issues] || []).each do |issue|
+        linter = issue[:FromLinter]
+        message = issue[:Text]
 
-        line = file[:Pos][:Line]
-        id = generate_issue_id(file[:FromLinter], file[:Text])
+        # Extract ID
+        id = message.match(/\A([^:]+): .+/) { |m| m.captures.first }
+        id = id ? "#{linter}:#{id}" : linter
 
-        Issue.new(path: path, location: Location.new(start_line: line), id: id, message: file[:Text], links: [])
-      end
-    end
-
-    def generate_issue_id(linter_name, message)
-      case linter_name
-      when "govet", "staticcheck", "gosimple", "gocritic", "gosec", "stylecheck"
-        message.match(/\A(?<rule>[^:]+): .+/) { |m| "#{linter_name}:#{m.named_captures["rule"]}" } || linter_name
-      else
-        linter_name
+        yield Issue.new(
+          path: relative_path(issue.dig(:Pos, :Filename)),
+          location: Location.new(start_line: issue.dig(:Pos, :Line)),
+          id: id,
+          message: message,
+        )
       end
     end
   end
