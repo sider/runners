@@ -1,3 +1,5 @@
+FROM koalaman/shellcheck:v0.7.1 as shellcheck
+
 FROM sider/devon_rex_base:master
 
 USER root
@@ -7,7 +9,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 USER $RUNNER_USER
 
-COPY --chown=<%= chown %> --from=koalaman/shellcheck:v0.7.1 /bin/shellcheck ${RUNNER_USER_HOME}/bin/
+COPY --chown=<%= chown %> --from=shellcheck /bin/shellcheck ${RUNNER_USER_HOME}/bin/
 
 <%= render_erb 'images/Dockerfile.base.erb' %>
 <%= render_erb 'images/Dockerfile.end.erb' %>

@@ -2,6 +2,8 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+FROM koalaman/shellcheck:v0.7.1 as shellcheck
+
 FROM sider/devon_rex_base:master
 
 USER root
@@ -11,7 +13,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 USER $RUNNER_USER
 
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=koalaman/shellcheck:v0.7.1 /bin/shellcheck ${RUNNER_USER_HOME}/bin/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=shellcheck /bin/shellcheck ${RUNNER_USER_HOME}/bin/
 
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
