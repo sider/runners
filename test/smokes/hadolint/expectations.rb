@@ -23,7 +23,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "hadolint", version: "1.17.5" }
+  analyzer: { name: "hadolint", version: "1.17.6" }
 )
 
 s.add_test(
@@ -58,7 +58,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "hadolint", version: "1.17.5" }
+  analyzer: { name: "hadolint", version: "1.17.6" }
 )
 
 s.add_test(
@@ -93,16 +93,16 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "hadolint", version: "1.17.5" }
+  analyzer: { name: "hadolint", version: "1.17.6" }
 )
 
-s.add_test("option_ignore", type: "success", issues: [], analyzer: { name: "hadolint", version: "1.17.5" })
+s.add_test("option_ignore", type: "success", issues: [], analyzer: { name: "hadolint", version: "1.17.6" })
 
-s.add_test("option_ignore_multi", type: "success", issues: [], analyzer: { name: "hadolint", version: "1.17.5" })
+s.add_test("option_ignore_multi", type: "success", issues: [], analyzer: { name: "hadolint", version: "1.17.6" })
 
 s.add_test(
   "no_dockerfile",
-  type: "failure", message: "No Docker files found", analyzer: { name: "hadolint", version: "1.17.5" }
+  type: "failure", message: "No Docker files found", analyzer: { name: "hadolint", version: "1.17.6" }
 )
 
 s.add_test(
@@ -119,7 +119,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "hadolint", version: "1.17.5" }
+  analyzer: { name: "hadolint", version: "1.17.6" }
 )
 
 s.add_test(
@@ -136,5 +136,5 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "hadolint", version: "1.17.5" }
+  analyzer: { name: "hadolint", version: "1.17.6" }
 )
