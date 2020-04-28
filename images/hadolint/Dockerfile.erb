@@ -1,6 +1,8 @@
+FROM hadolint/hadolint:v1.17.5-debian as hadolint
+
 FROM sider/devon_rex_base:master
 
-COPY --chown=<%= chown %> --from=hadolint/hadolint:v1.17.5-debian /bin/hadolint ${RUNNER_USER_HOME}/bin/
+COPY --chown=<%= chown %> --from=hadolint /bin/hadolint ${RUNNER_USER_HOME}/bin/
 
 <%= render_erb 'images/Dockerfile.base.erb' %>
 <%= render_erb 'images/Dockerfile.end.erb' %>
