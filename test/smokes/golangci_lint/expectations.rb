@@ -23,7 +23,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.24.0" }
+  analyzer: { name: "GolangCI-Lint", version: "1.25.1" }
 )
 
 s.add_test(
@@ -40,24 +40,24 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.24.0" }
+  analyzer: { name: "GolangCI-Lint", version: "1.25.1" }
 )
 
-s.add_test("no_error", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: "1.24.0" })
+s.add_test("no_error", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: "1.25.1" })
 
 s.add_test(
   "failure",
   type: "failure",
   # Error message will change randomly
   message: %r{\/tmp\/.+\/sample.go:4:3: undeclared name: fmt|Running Error},
-  analyzer: { name: "GolangCI-Lint", version: "1.24.0" }
+  analyzer: { name: "GolangCI-Lint", version: "1.25.1" }
 )
 
 s.add_test(
   "no_go_file",
   type: "success",
   issues: [],
-  analyzer: { name: "GolangCI-Lint", version: "1.24.0" },
+  analyzer: { name: "GolangCI-Lint", version: "1.25.1" },
   warnings: [{ message: "No Go files to analyze", file: nil }]
 )
 
@@ -84,7 +84,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.24.0" }
+  analyzer: { name: "GolangCI-Lint", version: "1.25.1" }
 )
 
 s.add_test(
@@ -101,7 +101,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.24.0" }
+  analyzer: { name: "GolangCI-Lint", version: "1.25.1" }
 )
 
 s.add_test(
@@ -118,7 +118,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.24.0" }
+  analyzer: { name: "GolangCI-Lint", version: "1.25.1" }
 )
 
 s.add_test(
@@ -135,33 +135,33 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.24.0" }
+  analyzer: { name: "GolangCI-Lint", version: "1.25.1" }
 )
 
 s.add_test(
   "disable_default_linter_in_yml",
   type: "failure",
   message: "Can't be disabled and enabled at one moment",
-  analyzer: { name: "GolangCI-Lint", version: "1.24.0" }
+  analyzer: { name: "GolangCI-Lint", version: "1.25.1" }
 )
 
 s.add_test(
   "disable_only",
-  type: "failure", message: "Must enable at least one linter", analyzer: { name: "GolangCI-Lint", version: "1.24.0" }
+  type: "failure", message: "Must enable at least one linter", analyzer: { name: "GolangCI-Lint", version: "1.25.1" }
 )
 
 s.add_test(
   "enable_disable_same_linter",
   type: "failure",
   message: "Can't be disabled and enabled at one moment",
-  analyzer: { name: "GolangCI-Lint", version: "1.24.0" }
+  analyzer: { name: "GolangCI-Lint", version: "1.25.1" }
 )
 
 s.add_test(
   "duplicate_disable",
   type: "failure",
   message: "Can't combine options --disable-all and --disable",
-  analyzer: { name: "GolangCI-Lint", version: "1.24.0" }
+  analyzer: { name: "GolangCI-Lint", version: "1.25.1" }
 )
 
 s.add_test(
@@ -232,10 +232,10 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.24.0" }
+  analyzer: { name: "GolangCI-Lint", version: "1.25.1" }
 )
 
-s.add_test("tests", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: "1.24.0" })
+s.add_test("tests", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: "1.25.1" })
 
 s.add_test(
   "no-lint",
@@ -251,7 +251,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.24.0" }
+  analyzer: { name: "GolangCI-Lint", version: "1.25.1" }
 )
 
 s.add_test(
@@ -268,22 +268,22 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.24.0" }
+  analyzer: { name: "GolangCI-Lint", version: "1.25.1" }
 )
 
 s.add_test(
   "presets_validate",
   type: "failure",
   message: "Only next presets exist: (bugs|complexity|format|performance|style|unused)",
-  analyzer: { name: "GolangCI-Lint", version: "1.24.0" }
+  analyzer: { name: "GolangCI-Lint", version: "1.25.1" }
 )
 
 s.add_test(
   "no_such_linter",
-  type: "failure", message: "No such linter", analyzer: { name: "GolangCI-Lint", version: "1.24.0" }
+  type: "failure", message: "No such linter", analyzer: { name: "GolangCI-Lint", version: "1.25.1" }
 )
 
-s.add_test("no-config", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: "1.24.0" })
+s.add_test("no-config", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: "1.25.1" })
 
 s.add_test(
   "skip-dirs-use-default",
@@ -299,10 +299,10 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.24.0" }
+  analyzer: { name: "GolangCI-Lint", version: "1.25.1" }
 )
 
-s.add_test("skip-files", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: "1.24.0" })
+s.add_test("skip-files", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: "1.25.1" })
 
 s.add_test(
   "skip-dirs",
@@ -318,5 +318,5 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.24.0" }
+  analyzer: { name: "GolangCI-Lint", version: "1.25.1" }
 )
