@@ -26,6 +26,7 @@ All notable changes to this project will be documented in this file.
 - [GolangCI-Lint] Bump golangci/golangci-lint from v1.24.0 to v1.25.1 [#1023](https://github.com/sider/runners/pull/1023)
 - [FxCop] Bump FxCop from 2.9.8 to 3.0.0 [#1020](https://github.com/sider/runners/pull/1020)
 - [hadolint] Bump hadolint/hadolint from v1.17.5-debian to v1.17.6-debian [#1025](https://github.com/sider/runners/pull/1025)
+- [PHP_CodeSniffer] Bump squizlabs/php_codesniffer from 3.5.4 to 3.5.5 [#1032](https://github.com/sider/runners/pull/1032)
 
 ## 0.22.4
 
