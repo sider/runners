@@ -6,30 +6,39 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.22.4...HEAD)
 
-- [LanguageTool] New support [#787](https://github.com/sider/runners/pull/787)
-- Bump devon_rex images from 2.16.1 to master [#978](https://github.com/sider/runners/pull/978)
-- [Goodcheck] Update goodcheck requirement from 2.5.0 to 2.5.1 [#916](https://github.com/sider/runners/pull/916)
-- Bump Ruby 2.6.6 to 2.7.1 [#985](https://github.com/sider/runners/pull/985)
-- [Reek] Update reek requirement from 5.6.0 to 6.0.0 [#919](https://github.com/sider/runners/pull/919)
-- [Checkstyle] Bump checkstyle from 8.30 to 8.31 [#920](https://github.com/sider/runners/pull/920)
-- [Checkstyle] Bump checkstyle from 8.31 to 8.32 [#1028](https://github.com/sider/runners/pull/1028)
-- [FxCop] [roslyn-analyzers-runner](https://github.com/sider/roslyn-analyzers-runner) provides a static code analysis without running build [#971](https://github.com/sider/runners/pull/971)
-- [PMD Java] Bump pmd-java from 6.21.0 to 6.22.0 [#922](https://github.com/sider/runners/pull/922)
-- [PMD Java] Bump pmd-java from 6.22.0 to 6.23.0 [#1029](https://github.com/sider/runners/pull/1029)
-- [SwiftLint] Bump SwiftLint from 0.39.1 to 0.39.2 [#938](https://github.com/sider/runners/pull/938)
-- [GolangCI-Lint] Change default linters [#1001](https://github.com/sider/runners/pull/1001)
+New supported:
+
+- **LanguageTool** [#787](https://github.com/sider/runners/pull/787)
+
+Bump-up environments:
+
+- **Ruby** 2.6.6 -> 2.7.1 [#985](https://github.com/sider/runners/pull/985)
+- **devon_rex** 2.16.1 -> master [#978](https://github.com/sider/runners/pull/978)
+
+Bump-up tools:
+
+- **Checkstyle** 8.30 -> 8.32 [#920](https://github.com/sider/runners/pull/920) [#1028](https://github.com/sider/runners/pull/1028)
+- **detekt** 1.7.0 -> 1.8.0 [#986](https://github.com/sider/runners/pull/986)
+- **FxCop** 2.9.8 -> 3.0.0 [#1020](https://github.com/sider/runners/pull/1020)
+- **GolangCI-Lint** 1.24.0 -> 1.25.1 [#1023](https://github.com/sider/runners/pull/1023)
+- **Goodcheck** 2.5.0 -> 2.5.1 [#916](https://github.com/sider/runners/pull/916)
+- **hadolint** 1.17.5 -> 1.17.6 [#1025](https://github.com/sider/runners/pull/1025)
+- **PHP_CodeSniffer** 3.5.4 -> 3.5.5 [#1032](https://github.com/sider/runners/pull/1032)
+- **PMD Java** 6.21.0 -> 6.22.0 [#922](https://github.com/sider/runners/pull/922) [#1029](https://github.com/sider/runners/pull/1029)
+- **Reek** 5.6.0 -> 6.0.0 [#919](https://github.com/sider/runners/pull/919)
+- **RuboCop** 0.80.1 -> 0.82.0 [#972](https://github.com/sider/runners/pull/972)
+- **ShellCheck** 0.7.0 -> 0.7.1 [#968](https://github.com/sider/runners/pull/968)
+- **stylelint** 13.2.0 -> 13.3.3 [#990](https://github.com/sider/runners/pull/990)
+- **SwiftLint** 0.39.1 -> 0.39.2 [#938](https://github.com/sider/runners/pull/938)
+- **TSLint** 6.0.0 -> 6.1.2 [#1008](https://github.com/sider/runners/pull/1008)
+
+Others:
+
 - Extend the deadline for deprecated Go tools [#1002](https://github.com/sider/runners/pull/1002)
-- [SwiftLint] Some improvements [#1005](https://github.com/sider/runners/pull/1005)
-- [ShellCheck] Bump ShellCheck from 0.7.0 to 0.7.1 [#968](https://github.com/sider/runners/pull/968)
-- [RuboCop] Update rubocop requirement from 0.80.1 to 0.82.0 [#972](https://github.com/sider/runners/pull/972)
-- [detekt] Bump detekt-cli from 1.7.0 to 1.8.0 [#986](https://github.com/sider/runners/pull/986)
-- [stylelint] Bump stylelint from 13.2.0 to 13.3.3 [#990](https://github.com/sider/runners/pull/990)
-- [TSLint] Bump tslint from 6.0.0 to 6.1.2 [#1008](https://github.com/sider/runners/pull/1008)
-- [GolangCI-Lint] Bump golangci/golangci-lint from v1.24.0 to v1.25.1 [#1023](https://github.com/sider/runners/pull/1023)
-- [FxCop] Bump FxCop from 2.9.8 to 3.0.0 [#1020](https://github.com/sider/runners/pull/1020)
-- [hadolint] Bump hadolint/hadolint from v1.17.5-debian to v1.17.6-debian [#1025](https://github.com/sider/runners/pull/1025)
-- [PHP_CodeSniffer] Bump squizlabs/php_codesniffer from 3.5.4 to 3.5.5 [#1032](https://github.com/sider/runners/pull/1032)
-- [Checkstyle] Shorten official issue ID [#1035](https://github.com/sider/runners/pull/1035)
+- **Checkstyle** Shorten official issue ID [#1035](https://github.com/sider/runners/pull/1035)
+- **FxCop** [roslyn-analyzers-runner](https://github.com/sider/roslyn-analyzers-runner) provides a static code analysis without running build [#971](https://github.com/sider/runners/pull/971)
+- **GolangCI-Lint** Change default linters [#1001](https://github.com/sider/runners/pull/1001)
+- **SwiftLint** Some improvements [#1005](https://github.com/sider/runners/pull/1005)
 
 ## 0.22.4
 
