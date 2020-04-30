@@ -5,8 +5,6 @@ class NodejsTest < Minitest::Test
 
   Constraint = Runners::Nodejs::Constraint
   Dependency = Runners::Nodejs::Dependency
-  DefaultDependencies = Runners::Nodejs::DefaultDependencies
-  InvalidDefaultDependencies = Runners::Nodejs::InvalidDefaultDependencies
   ConstraintsNotSatisfied = Runners::Nodejs::ConstraintsNotSatisfied
   NpmInstallFailed = Runners::Nodejs::NpmInstallFailed
   YarnInstallFailed = Runners::Nodejs::YarnInstallFailed
@@ -158,19 +156,13 @@ class NodejsTest < Minitest::Test
       processor.package_json_path.write(JSON.generate(devDependencies: {
         "eslint" => "5.0.0", "eslint-plugin-react" => "7.10.0"
       }))
-      defaults = DefaultDependencies.new(
-        main: Dependency.new(name: "eslint", version: "5.15.0"),
-        extras: [
-          Dependency.new(name: "eslint-plugin-react", version: "7.14.2"),
-        ],
-      )
       constraints = {
         "eslint" => Constraint.new(">= 5.0.0", "< 7.0.0"),
         "eslint-plugin-react" => Constraint.new(">= 4.2.1", "< 8.0.0"),
       }
 
       processor.stub :nodejs_analyzer_global_version, "5.15.0" do
-        processor.install_nodejs_deps(defaults, constraints: constraints, install_option: INSTALL_OPTION_ALL)
+        processor.install_nodejs_deps(constraints: constraints, install_option: INSTALL_OPTION_ALL)
 
         stdout, _ = processor.capture3!(processor.nodejs_analyzer_bin, "-v")
         assert_equal "v5.0.0\n", stdout
@@ -183,11 +175,10 @@ class NodejsTest < Minitest::Test
     with_workspace do |workspace|
       new_processor(workspace: workspace)
 
-      defaults = DefaultDependencies.new(main: Dependency.new(name: "eslint", version: "5.15.0"))
       constraints = { "eslint" => Constraint.new(">= 5.0.0", "< 7.0.0") }
 
-      processor.stub :nodejs_analyzer_global_version, defaults.main.version do
-        processor.install_nodejs_deps(defaults, constraints: constraints, install_option: INSTALL_OPTION_ALL)
+      processor.stub :nodejs_analyzer_global_version, "5.15.0" do
+        processor.install_nodejs_deps(constraints: constraints, install_option: INSTALL_OPTION_ALL)
 
         assert_warnings [{ message: <<~MSG.strip, file: "package.json" }]
           The `npm_install` option is specified in your `sider.yml`, but a `package.json` file is not found in the repository.
@@ -201,11 +192,10 @@ class NodejsTest < Minitest::Test
     with_workspace do |workspace|
       new_processor(workspace: workspace)
 
-      defaults = DefaultDependencies.new(main: Dependency.new(name: "eslint", version: "5.15.0"))
       constraints = { "eslint" => Constraint.new(">= 5.0.0", "< 7.0.0") }
 
       processor.stub :nodejs_analyzer_global_version, "5.15.0" do
-        processor.install_nodejs_deps(defaults, constraints: constraints, install_option: nil)
+        processor.install_nodejs_deps(constraints: constraints, install_option: nil)
 
         refute processor.package_json_path.exist?
         assert_equal "5.15.0", processor.analyzer_version
@@ -220,11 +210,10 @@ class NodejsTest < Minitest::Test
       new_processor(workspace: workspace)
 
       processor.package_json_path.write(JSON.generate(dependencies: { "eslint" => "6.0.0" }))
-      defaults = DefaultDependencies.new(main: Dependency.new(name: "eslint", version: "5.15.0"))
       constraints = { "eslint" => Constraint.new(">= 5.0.0", "< 7.0.0") }
 
       processor.stub :nodejs_analyzer_global_version, "5.15.0" do
-        processor.install_nodejs_deps(defaults, constraints: constraints, install_option: nil)
+        processor.install_nodejs_deps(constraints: constraints, install_option: nil)
 
         assert processor.package_json_path.exist?
         assert_equal "6.0.0", processor.analyzer_version
@@ -237,11 +226,10 @@ class NodejsTest < Minitest::Test
     with_workspace do |workspace|
       new_processor(workspace: workspace)
 
-      defaults = DefaultDependencies.new(main: Dependency.new(name: "eslint", version: "5.15.0"))
       constraints = { "eslint" => Constraint.new(">= 5.0.0", "< 7.0.0") }
 
       processor.stub :nodejs_analyzer_global_version, "5.15.0" do
-        processor.install_nodejs_deps(defaults, constraints: constraints, install_option: INSTALL_OPTION_NONE)
+        processor.install_nodejs_deps(constraints: constraints, install_option: INSTALL_OPTION_NONE)
 
         refute processor.package_json_path.exist?
         assert_equal "5.15.0", processor.analyzer_version
@@ -255,11 +243,10 @@ class NodejsTest < Minitest::Test
       new_processor(workspace: workspace)
 
       processor.package_json_path.write(JSON.generate(dependencies: { "eslint" => "6.0.0" }))
-      defaults = DefaultDependencies.new(main: Dependency.new(name: "eslint", version: "5.15.0"))
       constraints = { "eslint" => Constraint.new(">= 5.0.0", "< 7.0.0") }
 
       processor.stub :nodejs_analyzer_global_version, "5.15.0" do
-        processor.install_nodejs_deps(defaults, constraints: constraints, install_option: INSTALL_OPTION_NONE)
+        processor.install_nodejs_deps(constraints: constraints, install_option: INSTALL_OPTION_NONE)
 
         assert processor.package_json_path.exist?
         assert_equal "5.15.0", processor.analyzer_version
@@ -275,11 +262,10 @@ class NodejsTest < Minitest::Test
       processor.package_json_path.write(JSON.generate(dependencies: { "eslint" => "6.0.1" }))
       FileUtils.cp data("yarn.lock"), processor.yarn_lock_path
 
-      defaults = DefaultDependencies.new(main: Dependency.new(name: "eslint", version: "5.15.0"))
       constraints = { "eslint" => Constraint.new(">= 5.0.0", "< 7.0.0") }
 
       processor.stub :nodejs_analyzer_global_version, "5.15.0" do
-        processor.install_nodejs_deps(defaults, constraints: constraints, install_option: INSTALL_OPTION_ALL)
+        processor.install_nodejs_deps(constraints: constraints, install_option: INSTALL_OPTION_ALL)
 
         stdout, _ = processor.capture3!(processor.nodejs_analyzer_bin, "-v")
         assert_equal "v6.0.1\n", stdout
@@ -296,11 +282,10 @@ class NodejsTest < Minitest::Test
       FileUtils.cp data("yarn.lock"), processor.yarn_lock_path
       FileUtils.cp data("package-lock.json"), processor.package_lock_json_path
 
-      defaults = DefaultDependencies.new(main: Dependency.new(name: "eslint", version: "5.15.0"))
       constraints = { "eslint" => Constraint.new(">= 5.0.0", "< 7.0.0") }
 
       processor.stub :nodejs_analyzer_global_version, "5.15.0" do
-        processor.install_nodejs_deps(defaults, constraints: constraints, install_option: INSTALL_OPTION_ALL)
+        processor.install_nodejs_deps(constraints: constraints, install_option: INSTALL_OPTION_ALL)
 
         stdout, _ = processor.capture3!(processor.nodejs_analyzer_bin, "-v")
         assert_equal "v6.0.1\n", stdout
@@ -308,56 +293,6 @@ class NodejsTest < Minitest::Test
         assert_warnings [{ message: <<~MSG.strip, file: "yarn.lock" }]
           Two lock files `package-lock.json` and `yarn.lock` are found. Sider uses `yarn.lock` in this case, but please consider deleting either file for more accurate analysis.
         MSG
-      end
-    end
-  end
-
-  def test_check_nodejs_default_deps
-    with_workspace do |workspace|
-      new_processor(workspace: workspace)
-
-      defaults = DefaultDependencies.new(
-        main: Dependency.new(name: "eslint", version: "5.15.0"),
-      )
-
-      processor.stub :nodejs_analyzer_global_version, "5.15.0" do
-        processor.send(:check_nodejs_default_deps, defaults, {})
-        pass "with an empty constraint"
-
-        constraints = { "eslint" => Constraint.new(">= 5.0.0", "< 7.0.0") }
-        processor.send(:check_nodejs_default_deps, defaults, constraints)
-        pass "with a range constraint"
-
-        constraints = { "eslint" => Constraint.new(">= 5.15.0") }
-        processor.send(:check_nodejs_default_deps, defaults, constraints)
-        pass "with a minimum constraint"
-
-        constraints = { "eslint" => Constraint.new("<= 5.15.0") }
-        processor.send(:check_nodejs_default_deps, defaults, constraints)
-        pass "with a maximum constraint"
-
-        constraints = { "eslint" => Constraint.new("= 5.15.0") }
-        processor.send(:check_nodejs_default_deps, defaults, constraints)
-        pass "with a equal constraint"
-
-        constraints = { "eslint" => Constraint.new("> 5.15.0") }
-        error = assert_raises InvalidDefaultDependencies do
-          processor.send(:check_nodejs_default_deps, defaults, constraints)
-        end
-        assert_equal "The default dependency `eslint@5.15.0` must satisfy the constraint `> 5.15.0`", error.message
-
-        constraints = { "eslint" => Constraint.new(">= 5.0.0", "< 5.15.0") }
-        error = assert_raises InvalidDefaultDependencies do
-          processor.send(:check_nodejs_default_deps, defaults, constraints)
-        end
-        assert_equal "The default dependency `eslint@5.15.0` must satisfy the constraint `>= 5.0.0, < 5.15.0`", error.message
-      end
-
-      processor.stub :nodejs_analyzer_global_version, "1.0.0" do
-        error = assert_raises InvalidDefaultDependencies do
-          processor.send(:check_nodejs_default_deps, defaults, { "eslint" => Constraint.new("= 5.15.0") })
-        end
-        assert_equal "The default dependency `eslint` version must be `5.15.0`, but actually `1.0.0`", error.message
       end
     end
   end
@@ -598,15 +533,14 @@ class NodejsTest < Minitest::Test
         processor.send(:npm_install, INSTALL_OPTION_ALL)
       }
 
-      default = Dependency.new(name: "eslint", version: "5.1.0")
       constraints = { "eslint" => Constraint.new(">= 5.0.0") }
 
       npm_install.call(dependencies: {})
-      processor.send(:check_installed_nodejs_deps, constraints, default)
+      processor.send(:check_installed_nodejs_deps, constraints)
       pass "when no dependencies"
 
       npm_install.call(dependencies: { "ci-info" => "2.0.0" })
-      processor.send(:check_installed_nodejs_deps, constraints, default)
+      processor.send(:check_installed_nodejs_deps, constraints)
       pass "when no dependencies satisfying constraints"
 
       expected_error_message = <<~MSG.strip
@@ -615,12 +549,12 @@ class NodejsTest < Minitest::Test
       MSG
 
       npm_install.call(dependencies: { "eslint-config-standard" => "10.0.0" })
-      processor.send(:check_installed_nodejs_deps, constraints, default)
+      processor.send(:check_installed_nodejs_deps, constraints)
       pass expected_error_message
 
       npm_install.call(dependencies: { "eslint" => "4.0.0" })
       error = assert_raises ConstraintsNotSatisfied do
-        processor.send(:check_installed_nodejs_deps, constraints, default)
+        processor.send(:check_installed_nodejs_deps, constraints)
       end
       assert_equal expected_error_message, error.message
 

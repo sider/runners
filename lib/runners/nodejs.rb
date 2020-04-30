@@ -1,6 +1,5 @@
 module Runners
   module Nodejs
-    class InvalidDefaultDependencies < SystemError; end
     class InvalidNodeVersion < SystemError; end
     class InvalidNpmVersion < SystemError; end
     class InvalidYarnVersion < SystemError; end
@@ -49,9 +48,7 @@ module Runners
     end
 
     # Install Node.js dependencies by using given parameters.
-    def install_nodejs_deps(defaults, constraints:, install_option:)
-      check_nodejs_default_deps(defaults, constraints)
-
+    def install_nodejs_deps(constraints:, install_option:)
       return if install_option == INSTALL_OPTION_NONE
 
       unless package_json_path.exist?
@@ -80,7 +77,7 @@ module Runners
         npm_install(install_option)
       end
 
-      check_installed_nodejs_deps(constraints, defaults.main)
+      check_installed_nodejs_deps(constraints)
     end
 
     def show_runtime_versions
@@ -101,21 +98,6 @@ module Runners
 
     def nodejs_analyzer_local_version
       @nodejs_analyzer_local_version ||= extract_version!(nodejs_analyzer_local_command)
-    end
-
-    def check_nodejs_default_deps(defaults, constraints)
-      defaults.all.each do |dependency|
-        constraint = constraints[dependency.name]
-        if constraint&.unsatisfied_by?(dependency)
-          raise InvalidDefaultDependencies, "The default dependency `#{dependency}` must satisfy the constraint `#{constraint}`"
-        end
-      end
-
-      default = defaults.main
-      actual_default_version = nodejs_analyzer_global_version
-      unless default.version == actual_default_version
-        raise InvalidDefaultDependencies, "The default dependency `#{default.name}` version must be `#{default.version}`, but actually `#{actual_default_version}`"
-      end
     end
 
     # @see https://docs.npmjs.com/cli/install
@@ -222,7 +204,7 @@ module Runners
       end
     end
 
-    def check_installed_nodejs_deps(constraints, default_dependency)
+    def check_installed_nodejs_deps(constraints)
       installed_deps = list_installed_nodejs_deps
 
       return if installed_deps.empty?

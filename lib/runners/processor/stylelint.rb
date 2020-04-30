@@ -32,13 +32,6 @@ module Runners
 
     register_config_schema(name: :stylelint, schema: Schema.runner_config)
 
-    DEFAULT_DEPS = DefaultDependencies.new(
-      main: Dependency.new(name: "stylelint", version: "13.3.3"),
-      extras: [
-        Dependency.new(name: "stylelint-config-recommended", version: "3.0.0"),
-      ],
-    )
-
     CONSTRAINTS = {
       "stylelint" => Constraint.new(">= 8.3.0", "< 14.0.0"),
     }.freeze
@@ -52,7 +45,7 @@ module Runners
       prepare_ignore_file
 
       begin
-        install_nodejs_deps(DEFAULT_DEPS, constraints: CONSTRAINTS, install_option: config_linter[:npm_install])
+        install_nodejs_deps(constraints: CONSTRAINTS, install_option: config_linter[:npm_install])
       rescue UserError => exn
         return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
       end

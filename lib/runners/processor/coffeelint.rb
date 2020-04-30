@@ -17,10 +17,6 @@ module Runners
 
     register_config_schema(name: :coffeelint, schema: Schema.runner_config)
 
-    DEFAULT_DEPS = DefaultDependencies.new(
-      main: Dependency.new(name: "coffeelint", version: "1.16.0"),
-    )
-
     CONSTRAINTS = {
       "coffeelint" => Constraint.new(">= 1.16.0", "< 3.0.0"),
     }.freeze
@@ -29,7 +25,7 @@ module Runners
       add_warning_if_deprecated_options([:options])
 
       begin
-        install_nodejs_deps(DEFAULT_DEPS, constraints: CONSTRAINTS, install_option: config_linter[:npm_install])
+        install_nodejs_deps(constraints: CONSTRAINTS, install_option: config_linter[:npm_install])
       rescue UserError => exn
         return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
       end

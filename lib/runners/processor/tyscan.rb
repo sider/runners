@@ -20,13 +20,6 @@ module Runners
 
     register_config_schema(name: :tyscan, schema: Schema.runner_config)
 
-    DEFAULT_DEPS = DefaultDependencies.new(
-      main: Dependency.new(name: "tyscan", version: "0.3.1"),
-      extras: [
-        Dependency.new(name: "typescript", version: "3.7.2"),
-      ],
-    ).freeze
-
     CONSTRAINTS = {
       "tyscan" => Constraint.new(">= 0.2.1", "< 1.0.0")
     }.freeze
@@ -45,7 +38,7 @@ module Runners
       end
 
       begin
-        install_nodejs_deps(DEFAULT_DEPS, constraints: CONSTRAINTS, install_option: config_linter[:npm_install])
+        install_nodejs_deps(constraints: CONSTRAINTS, install_option: config_linter[:npm_install])
       rescue UserError => exn
         return Results::Failure.new(guid: guid, message: exn.message)
       end

@@ -37,7 +37,6 @@ module Runners
 
     register_config_schema(name: :eslint, schema: Schema.runner_config)
 
-    DEFAULT_DEPS = DefaultDependencies.new(main: Dependency.new(name: "eslint", version: "6.8.0"))
     CONSTRAINTS = {
       "eslint" => Constraint.new(">= 5.0.0", "< 7.0.0")
     }.freeze
@@ -46,7 +45,7 @@ module Runners
       add_warning_if_deprecated_options([:options])
 
       begin
-        install_nodejs_deps(DEFAULT_DEPS, constraints: CONSTRAINTS, install_option: config_linter[:npm_install])
+        install_nodejs_deps(constraints: CONSTRAINTS, install_option: config_linter[:npm_install])
       rescue UserError => exn
         return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
       end

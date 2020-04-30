@@ -25,13 +25,6 @@ module Runners
 
     register_config_schema(name: :tslint, schema: Schema.runner_config)
 
-    DEFAULT_DEPS = DefaultDependencies.new(
-      main: Dependency.new(name: "tslint", version: "6.1.2"),
-      extras: [
-        Dependency.new(name: "typescript", version: "3.8.3"),
-      ],
-    )
-
     CONSTRAINTS = {
       "tslint" => Constraint.new(">= 5.0.0", "< 7.0.0"),
     }.freeze
@@ -42,7 +35,7 @@ module Runners
                                         deadline: Time.new(2020, 12, 1))
 
       begin
-        install_nodejs_deps(DEFAULT_DEPS, constraints: CONSTRAINTS, install_option: config_linter[:npm_install])
+        install_nodejs_deps(constraints: CONSTRAINTS, install_option: config_linter[:npm_install])
       rescue UserError => exn
         return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
       end

@@ -16,12 +16,6 @@ module Runners
 
     register_config_schema(name: :remark_lint, schema: Schema.runner_config)
 
-    # NOTE: The `remark-lint` package is not always necessary,
-    #       and only the `remark-cli` package is enough.
-    DEFAULT_DEPS = DefaultDependencies.new(
-      main: Dependency.new(name: "remark-cli", version: "8.0.0"),
-    )
-
     CONSTRAINTS = {
       "remark-cli" => Constraint.new(">= 7.0.0", "< 9.0.0"),
     }.freeze
@@ -39,7 +33,7 @@ module Runners
 
     def setup
       begin
-        install_nodejs_deps(DEFAULT_DEPS, constraints: CONSTRAINTS, install_option: config_linter[:npm_install])
+        install_nodejs_deps(constraints: CONSTRAINTS, install_option: config_linter[:npm_install])
       rescue UserError => exn
         return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
       end

@@ -7,18 +7,17 @@ module Runners::Nodejs : Processor
   def package_json: -> Hash<Symbol, any>
   def package_lock_json_path: -> Pathname
   def yarn_lock_path: -> Pathname
-  def install_nodejs_deps: (DefaultDependencies, constraints: Hash<String, Constraint>,
+  def install_nodejs_deps: (constraints: Hash<String, Constraint>,
                             install_option: npm_install_option | nil) -> void
 
   # private
   def nodejs_analyzer_locally_installed?: -> bool
   def nodejs_analyzer_global_version: -> String
   def nodejs_analyzer_local_version: -> String
-  def check_nodejs_default_deps: (DefaultDependencies, Hash<String, Constraint>) -> void
   def npm_install: (npm_install_option) -> void
   def yarn_install: (npm_install_option) -> void
   def list_installed_nodejs_deps: (?only: Array<String>, ?chdir: Pathname | String | nil) -> Hash<String, String>
-  def check_installed_nodejs_deps: (Hash<String, Constraint>, Dependency) -> void
+  def check_installed_nodejs_deps: (Hash<String, Constraint>) -> void
 end
 
 Runners::Nodejs::REQUIRED_NODE_VERSIONS: Array<String>
@@ -33,13 +32,6 @@ class Runners::Nodejs::Dependency
   attr_reader name: String
   attr_reader version: String
   def initialize: (name: String, version: String) -> any
-end
-
-class Runners::Nodejs::DefaultDependencies
-  attr_reader main: Dependency
-  attr_reader extras: Array<Dependency>
-  def initialize: (main: Dependency, ?extras: Array<Dependency>) -> any
-  def all: -> Array<Dependency>
 end
 
 class Runners::Nodejs::Constraint
