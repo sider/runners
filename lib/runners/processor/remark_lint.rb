@@ -17,7 +17,7 @@ module Runners
     register_config_schema(name: :remark_lint, schema: Schema.runner_config)
 
     DEFAULT_DEPS = DefaultDependencies.new(
-      main: Dependency.new(name: "remark-lint", version: "6.0.5"),
+      main: Dependency.new(name: "remark-lint", version: "7.0.0"),
       extras: [
         Dependency.new(name: "remark-cli", version: "7.0.1"),
         Dependency.new(name: "remark-preset-lint-consistent", version: "2.0.3"),

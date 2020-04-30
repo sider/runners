@@ -23,10 +23,10 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "remark-lint", version: "6.0.5" }
+  analyzer: { name: "remark-lint", version: "7.0.0" }
 )
 
-s.add_test("no_files", type: "success", issues: [], analyzer: { name: "remark-lint", version: "6.0.5" })
+s.add_test("no_files", type: "success", issues: [], analyzer: { name: "remark-lint", version: "7.0.0" })
 
 s.add_test(
   "option_target",
@@ -51,7 +51,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "remark-lint", version: "6.0.5" }
+  analyzer: { name: "remark-lint", version: "7.0.0" }
 )
 
 s.add_test(
@@ -77,7 +77,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "remark-lint", version: "6.0.5" }
+  analyzer: { name: "remark-lint", version: "7.0.0" }
 )
 
 s.add_test(
@@ -94,7 +94,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "remark-lint", version: "6.0.5" }
+  analyzer: { name: "remark-lint", version: "7.0.0" }
 )
 
 s.add_test(
@@ -111,7 +111,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "remark-lint", version: "6.0.5" }
+  analyzer: { name: "remark-lint", version: "7.0.0" }
 )
 
 s.add_test(
@@ -137,7 +137,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "remark-lint", version: "6.0.5" }
+  analyzer: { name: "remark-lint", version: "7.0.0" }
 )
 
 s.add_test(
@@ -187,5 +187,5 @@ s.add_test(
   "broken_remarkrc",
   type: "failure",
   message: "2 errors reported. See the log for details.",
-  analyzer: { name: "remark-lint", version: "6.0.5" }
+  analyzer: { name: "remark-lint", version: "7.0.0" }
 )
