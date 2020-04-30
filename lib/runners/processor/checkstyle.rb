@@ -28,66 +28,49 @@ module Runners
     register_config_schema(name: :checkstyle, schema: Schema.runner_config)
 
     def analyze(changes)
-      analyzer_version
-
       delete_unchanged_files(changes, only: ["*.java"])
 
-      config_file = config_file()
-      trace_writer.message("Using configuration: #{config_file}")
+      output_file = Tempfile.create(["checkstyle-output-", ".xml"]).path
 
-      dir = check_directory()
-      trace_writer.message("Checking directory: #{dir}")
-
-      excludes = excluded_directories()
-      trace_writer.message("Excluded directories: #{excludes.map { |x|
-        case
-        when x[:string]
-          "string(#{x[:string]})"
-        when x[:pattern]
-          "pattern(#{x[:pattern]})"
-        end
-      }.join(", ")}") unless excludes.empty?
-
-      properties = properties_file()
-      trace_writer.message("Properties file: #{properties}") if properties
-
-      stdout, stderr, _ = capture3(analyzer_bin, *dir, *checkstyle_args(config: config_file, excludes: excludes, properties: properties))
+      capture3(analyzer_bin, *check_directory, *checkstyle_args(output: output_file))
 
       begin
-        xml_root = REXML::Document.new(stdout).root
-      rescue REXML::ParseException => exn
-        message = exn.message
-        trace_writer.error "Invalid XML output: #{message}"
+        xml_root = read_output_xml(output_file).root
+      rescue InvalidXML
+        message = "Analysis failed. See the log for details."
         return Results::Failure.new(guid: guid, analyzer: analyzer, message: message)
       end
 
-      if xml_root
-        Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-          construct_result(xml_root) do |issue|
-            result.add_issue(issue)
-          end
+      Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+        construct_result(xml_root) do |issue|
+          result.add_issue(issue)
         end
-      else
-        message = stdout.empty? ? stderr.lines.first : stdout
-        Results::Failure.new(guid: guid, analyzer: analyzer, message: message.strip)
       end
     end
 
     private
 
-    def checkstyle_args(config:, excludes:, properties:)
+    def checkstyle_args(output:)
       [].tap do |args|
         args << "-f" << "xml"
-        args << "-c" << config if config
-        excludes.each do |exclude|
+        args << "-o" << output
+
+        config_file&.tap do |config|
+          args << "-c" << config
+        end
+
+        excluded_directories.each do |exclude|
           case
           when exclude.key?(:string)
-            args << "-e"<< exclude[:string]
+            args << "--exclude" << exclude[:string]
           when exclude.key?(:pattern)
-            args << "-x" << exclude[:pattern]
+            args << "--exclude-regexp" << exclude[:pattern]
           end
         end
-        args << "-p" << properties if properties
+
+        config_linter[:properties]&.tap do |properties|
+          args << "-p" << properties
+        end
       end
     end
 
@@ -103,14 +86,14 @@ module Runners
 
             line = error[:line]
             message = error[:message]
-            id = error[:source] + "#" + Digest::SHA2.hexdigest(message)[0, 6]
+            id = error[:source]
 
             yield Issue.new(
               path: path,
               location: line == "0" || line.nil? ? nil : Location.new(start_line: line),
-              id: id,
+              id: normalize_id(id),
               message: message,
-              links: build_links(error[:source]),
+              links: build_links(id),
               object: { severity: severity },
               schema: Schema.issue,
             )
@@ -121,8 +104,18 @@ module Runners
       end
     end
 
+    OFFICIAL_RULE_NAMESPACE = "com.puppycrawl.tools.checkstyle.checks."
+
+    def normalize_id(rule_id)
+      if rule_id.start_with?(OFFICIAL_RULE_NAMESPACE)
+        rule_id.split(".").last
+      else
+        rule_id
+      end
+    end
+
     def build_links(rule_id)
-      prefix = "com.puppycrawl.tools.checkstyle.checks."
+      prefix = OFFICIAL_RULE_NAMESPACE
       return [] unless rule_id.start_with?(prefix)
 
       category, id = rule_id.delete_prefix(prefix).split(".")
@@ -138,13 +131,14 @@ module Runners
     end
 
     def config_file
-      case config_linter[:config] || "google"
+      file = config_linter[:config] || "google"
+      case file
       when "sun"
         "/sun_checks.xml"
       when "google"
         "/google_checks.xml"
       else
-        config_linter[:config]
+        file
       end
     end
 
@@ -161,10 +155,6 @@ module Runners
           x
         end
       end
-    end
-
-    def properties_file
-      config_linter[:properties]
     end
 
     def ignored_severities

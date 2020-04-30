@@ -16,7 +16,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "PHP_CodeSniffer", version: "3.5.4" }
+  analyzer: { name: "PHP_CodeSniffer", version: "3.5.5" }
 )
 
 s.add_test(
@@ -33,7 +33,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "PHP_CodeSniffer", version: "3.5.4" },
+  analyzer: { name: "PHP_CodeSniffer", version: "3.5.5" },
   warnings: [
     {
      message: <<~MSG.strip,
@@ -48,9 +48,9 @@ MSG
 
 # Regression test for large output
 # See https://github.com/sideci/runner_code_sniffer/pull/27
-s.add_test("sideci_php_sandbox", type: "success", issues: :_, analyzer: { name: "PHP_CodeSniffer", version: "3.5.4" })
+s.add_test("sideci_php_sandbox", type: "success", issues: :_, analyzer: { name: "PHP_CodeSniffer", version: "3.5.5" })
 
-s.add_test("with_php_version", type: "success", issues: :_, analyzer: { name: "PHP_CodeSniffer", version: "3.5.4" })
+s.add_test("with_php_version", type: "success", issues: :_, analyzer: { name: "PHP_CodeSniffer", version: "3.5.5" })
 
 s.add_test(
   "broken_sideci_yml",
@@ -73,7 +73,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "PHP_CodeSniffer", version: "3.5.4" },
+  analyzer: { name: "PHP_CodeSniffer", version: "3.5.5" },
   warnings: [
     {
       message: /The `\$\.linter\.code_sniffer\.version` option\(s\) in your `sider\.yml` are deprecated/,
@@ -96,7 +96,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "PHP_CodeSniffer", version: "3.5.4" }
+  analyzer: { name: "PHP_CodeSniffer", version: "3.5.5" }
 )
 
 s.add_test(
@@ -122,5 +122,5 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "PHP_CodeSniffer", version: "3.5.4" }
+  analyzer: { name: "PHP_CodeSniffer", version: "3.5.5" }
 )
