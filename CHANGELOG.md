@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - Bump Ruby 2.6.6 to 2.7.1 [#985](https://github.com/sider/runners/pull/985)
 - [Reek] Update reek requirement from 5.6.0 to 6.0.0 [#919](https://github.com/sider/runners/pull/919)
 - [Checkstyle] Bump checkstyle from 8.30 to 8.31 [#920](https://github.com/sider/runners/pull/920)
+- [Checkstyle] Bump checkstyle from 8.31 to 8.32 [#1028](https://github.com/sider/runners/pull/1028)
 - [FxCop] [roslyn-analyzers-runner](https://github.com/sider/roslyn-analyzers-runner) provides a static code analysis without running build [#971](https://github.com/sider/runners/pull/971)
 - [PMD Java] Bump pmd-java from 6.21.0 to 6.22.0 [#922](https://github.com/sider/runners/pull/922)
 - [SwiftLint] Bump SwiftLint from 0.39.1 to 0.39.2 [#938](https://github.com/sider/runners/pull/938)
