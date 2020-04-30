@@ -86,14 +86,14 @@ module Runners
 
             line = error[:line]
             message = error[:message]
-            id = error[:source] + "#" + Digest::SHA2.hexdigest(message)[0, 6]
+            id = error[:source]
 
             yield Issue.new(
               path: path,
               location: line == "0" || line.nil? ? nil : Location.new(start_line: line),
-              id: id,
+              id: normalize_id(id),
               message: message,
-              links: build_links(error[:source]),
+              links: build_links(id),
               object: { severity: severity },
               schema: Schema.issue,
             )
@@ -104,8 +104,18 @@ module Runners
       end
     end
 
+    OFFICIAL_RULE_NAMESPACE = "com.puppycrawl.tools.checkstyle.checks."
+
+    def normalize_id(rule_id)
+      if rule_id.start_with?(OFFICIAL_RULE_NAMESPACE)
+        rule_id.split(".").last
+      else
+        rule_id
+      end
+    end
+
     def build_links(rule_id)
-      prefix = "com.puppycrawl.tools.checkstyle.checks."
+      prefix = OFFICIAL_RULE_NAMESPACE
       return [] unless rule_id.start_with?(prefix)
 
       category, id = rule_id.delete_prefix(prefix).split(".")
