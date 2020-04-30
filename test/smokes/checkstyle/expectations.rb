@@ -91,7 +91,7 @@ s.add_test(
 s.add_test(
   "failure",
   type: "failure",
-  message: "Could not find config XML file 'custom.xml'.",
+  message: "Analysis failed. See the log for details.",
   analyzer: { name: "Checkstyle", version: "8.32" }
 )
 
@@ -150,6 +150,6 @@ s.add_test(
 s.add_test(
   "syntax_error",
   type: "failure",
-  message: "com.puppycrawl.tools.checkstyle.api.CheckstyleException: Exception was thrown while processing ./Foo.java",
+  message: "Analysis failed. See the log for details.",
   analyzer: { name: "Checkstyle", version: "8.32" }
 )
