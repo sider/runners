@@ -39,6 +39,7 @@ module Runners
     def cli_args(report_file)
       [].tap do |args|
         args << "-language" << "java"
+        args << "-threads" << "2"
         args << "-format" << "xml"
         args << "-reportfile" << report_file
         args << "-dir" << dir
