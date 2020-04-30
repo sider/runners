@@ -28,18 +28,15 @@ RUN cd ${RUNNERS_DIR} && \
     BUNDLE_WITHOUT=development:test bundle install && \
     bundle list
 
-COPY images/pmd_java/pmd /usr/local/bin/
-
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/pmd ${RUNNER_USER_HOME}/bin/
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/default-ruleset.xml ${RUNNER_USER_HOME}/
 
 # NOTE: PMD does not have a CLI option to show its version.
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/ShowPMDVersion.java ${RUNNER_USER_HOME}/work/
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/show_pmd_version ${RUNNER_USER_HOME}/work/
-ENV PATH ${RUNNER_USER_HOME}/work:${PATH}
-RUN cd "${RUNNER_USER_HOME}/work" && \
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/ShowPMDVersion.java ${RUNNER_USER_HOME}/bin/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/show_pmd_version ${RUNNER_USER_HOME}/bin/
+RUN cd "${RUNNER_USER_HOME}/bin" && \
     javac ShowPMDVersion.java && \
-    cd .. && \
-    show_pmd_version
+    rm -v ShowPMDVersion.java
 
 
 # Copy the main source code

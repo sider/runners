@@ -1,17 +1,14 @@
 <%= render_erb 'images/Dockerfile.java.erb' %>
 <%= render_erb 'images/Dockerfile.base.erb' %>
 
-COPY images/pmd_java/pmd /usr/local/bin/
-
+COPY --chown=<%= chown %> images/pmd_java/pmd ${RUNNER_USER_HOME}/bin/
 COPY --chown=<%= chown %> images/pmd_java/default-ruleset.xml ${RUNNER_USER_HOME}/
 
 # NOTE: PMD does not have a CLI option to show its version.
-COPY --chown=<%= chown %> images/pmd_java/ShowPMDVersion.java ${RUNNER_USER_HOME}/work/
-COPY --chown=<%= chown %> images/pmd_java/show_pmd_version ${RUNNER_USER_HOME}/work/
-ENV PATH ${RUNNER_USER_HOME}/work:${PATH}
-RUN cd "${RUNNER_USER_HOME}/work" && \
+COPY --chown=<%= chown %> images/pmd_java/ShowPMDVersion.java ${RUNNER_USER_HOME}/bin/
+COPY --chown=<%= chown %> images/pmd_java/show_pmd_version ${RUNNER_USER_HOME}/bin/
+RUN cd "${RUNNER_USER_HOME}/bin" && \
     javac ShowPMDVersion.java && \
-    cd .. && \
-    show_pmd_version
+    rm ShowPMDVersion.java
 
 <%= render_erb 'images/Dockerfile.end.erb' %>
