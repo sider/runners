@@ -104,7 +104,7 @@ module Runners
     end
 
     def rulesets
-      array(config_linter[:rulesets] || default_ruleset)
+      Array(config_linter[:rulesets] || default_ruleset)
     end
 
     def default_ruleset
@@ -121,15 +121,6 @@ module Runners
 
     def min_priority
       config_linter[:min_priority]
-    end
-
-    def array(value)
-      case value
-      when Hash
-        [value]
-      else
-        Array(value)
-      end
     end
   end
 end

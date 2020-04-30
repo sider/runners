@@ -36,7 +36,7 @@ COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/ShowPMDVersion.java 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/show_pmd_version ${RUNNER_USER_HOME}/bin/
 RUN cd "${RUNNER_USER_HOME}/bin" && \
     javac ShowPMDVersion.java && \
-    rm -v ShowPMDVersion.java
+    rm ShowPMDVersion.java
 
 
 # Copy the main source code
