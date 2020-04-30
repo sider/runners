@@ -37,7 +37,7 @@ module Runners
       end
     end
 
-    def message(message, recorded_at: now, max_length: 4_000, limit: 40_000, omission: "...(truncated)")
+    def message(message, recorded_at: now, max_length: 4_000, limit: 100_000, omission: "...(truncated)")
       string = masked_string(message.strip)
 
       if string.size > limit

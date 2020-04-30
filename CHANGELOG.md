@@ -534,6 +534,7 @@ All notable changes to this project will be documented in this file.
 - Bump default eslint from 6.4.0 to 6.5.1 [#235](https://github.com/sider/runners/pull/235)
 - Bump devon_rex images to 2.3.1 [#244](https://github.com/sider/runners/pull/244)
 - Bump rubocop from 0.74.0 to 0.75.0 [#229](https://github.com/sider/runners/pull/229)
+- Extend `limit` option of `TraceWriter#message` [#1036](https://github.com/sider/runners/pull/1036)
 
 ## 0.3.1
 
