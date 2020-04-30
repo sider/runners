@@ -20,16 +20,6 @@ module Runners
 
     register_config_schema(name: :pmd_java, schema: Schema.runner_config)
 
-    def pmd(dir:, rulesets:, encoding:, min_priority:)
-      args = []
-      args.unshift("-dir", dir)
-      args.unshift("-rulesets", rulesets.join(","))
-      args.unshift("-minimumpriority", min_priority.to_s) if min_priority
-      args.unshift("-encoding", encoding) if encoding
-
-      capture3(analyzer_bin, "-language", "java", "-format", "xml", *args)
-    end
-
     def analyzer_version
       @analyzer_version ||= capture3!("show_pmd_version").yield_self { |stdout,| stdout.strip }
     end
@@ -41,11 +31,24 @@ module Runners
     def analyze(changes)
       delete_unchanged_files changes, only: ["*.java"]
 
-      run_analyzer(dir, rulesets, encoding, min_priority)
+      run_analyzer
     end
 
-    def run_analyzer(dir, rulesets, encoding, min_priority)
-      stdout, stderr, status = pmd(dir: dir, rulesets: rulesets, encoding: encoding, min_priority: min_priority)
+    private
+
+    def cli_args
+      [].tap do |args|
+        args << "-language" << "java"
+        args << "-format" << "xml"
+        args << "-dir" << dir
+        args << "-rulesets" << rulesets.join(",")
+        min_priority&.tap { args << "-minimumpriority" << _1.to_s }
+        encoding&.tap { args << "-encoding" << _1 }
+      end
+    end
+
+    def run_analyzer
+      stdout, stderr, status = capture3(analyzer_bin, *cli_args)
 
       if status.success? || status.exitstatus == 4
         Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
