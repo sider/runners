@@ -16,20 +16,13 @@ module Runners
 
     register_config_schema(name: :remark_lint, schema: Schema.runner_config)
 
+    # NOTE: The `remark-lint` package is not always necessary,
+    #       and only the `remark-cli` package is enough.
     DEFAULT_DEPS = DefaultDependencies.new(
-      main: Dependency.new(name: "remark-lint", version: "7.0.0"),
-      extras: [
-        Dependency.new(name: "remark-cli", version: "7.0.1"),
-        Dependency.new(name: "remark-preset-lint-consistent", version: "2.0.3"),
-        Dependency.new(name: "remark-preset-lint-markdown-style-guide", version: "2.1.3"),
-        Dependency.new(name: "remark-preset-lint-recommended", version: "3.0.3"),
-        Dependency.new(name: "remark-preset-lint-sider", version: "0.2.0"),
-        Dependency.new(name: "vfile-reporter-json", version: "2.0.1"),
-      ],
+      main: Dependency.new(name: "remark-cli", version: "8.0.0"),
     )
 
     CONSTRAINTS = {
-      "remark-lint" => Constraint.new(">= 6.0.0", "< 8.0.0"),
       "remark-cli" => Constraint.new(">= 7.0.0", "< 9.0.0"),
     }.freeze
 
@@ -40,12 +33,8 @@ module Runners
       "remark"
     end
 
-    def nodejs_analyzer_global_version
-      @nodejs_analyzer_global_version ||= remark_lint_version!(global: true)
-    end
-
-    def nodejs_analyzer_local_version
-      @nodejs_analyzer_local_version ||= remark_lint_version!
+    def extract_version!(command, version_option = "--version", pattern: /remark-cli: (\d+\.\d+\.\d+)/)
+      super
     end
 
     def setup

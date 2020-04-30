@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "remark-lint": "7.0.0",
+    "remark-lint-first-heading-level": "2.0.0"
+  },
+  "remarkConfig": {
+    "plugins": [
+      "remark-lint",
+      "remark-lint-first-heading-level"
+    ]
+  }
+}

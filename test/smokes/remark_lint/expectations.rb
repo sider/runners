@@ -23,10 +23,10 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "remark-lint", version: "7.0.0" }
+  analyzer: { name: "remark-lint", version: "8.0.0" }
 )
 
-s.add_test("no_files", type: "success", issues: [], analyzer: { name: "remark-lint", version: "7.0.0" })
+s.add_test("no_files", type: "success", issues: [], analyzer: { name: "remark-lint", version: "8.0.0" })
 
 s.add_test(
   "option_target",
@@ -51,7 +51,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "remark-lint", version: "7.0.0" }
+  analyzer: { name: "remark-lint", version: "8.0.0" }
 )
 
 s.add_test(
@@ -77,7 +77,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "remark-lint", version: "7.0.0" }
+  analyzer: { name: "remark-lint", version: "8.0.0" }
 )
 
 s.add_test(
@@ -94,7 +94,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "remark-lint", version: "7.0.0" }
+  analyzer: { name: "remark-lint", version: "8.0.0" }
 )
 
 s.add_test(
@@ -111,7 +111,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "remark-lint", version: "7.0.0" }
+  analyzer: { name: "remark-lint", version: "8.0.0" }
 )
 
 s.add_test(
@@ -137,7 +137,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "remark-lint", version: "7.0.0" }
+  analyzer: { name: "remark-lint", version: "8.0.0" }
 )
 
 s.add_test(
@@ -172,7 +172,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "remark-lint", version: "6.0.3" }
+  analyzer: { name: "remark-lint", version: "7.0.0" }
 )
 
 s.add_test(
@@ -187,5 +187,24 @@ s.add_test(
   "broken_remarkrc",
   type: "failure",
   message: "2 errors reported. See the log for details.",
-  analyzer: { name: "remark-lint", version: "7.0.0" }
+  analyzer: { name: "remark-lint", version: "8.0.0" }
+)
+
+s.add_test("with_remark_lint_package", type: "success", issues: [], analyzer: { name: "remark-lint", version: "8.0.0" })
+
+s.add_test(
+  "without_remark_lint_package",
+  type: "success",
+  issues: [
+    {
+      path: "foo.md",
+      location: { start_line: 1 },
+      id: "first-heading-level",
+      message: "First heading level should be `1`",
+      links: [],
+      object: nil,
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "remark-lint", version: "8.0.0" }
 )
