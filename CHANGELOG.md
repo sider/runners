@@ -13,7 +13,7 @@ New supported:
 Bump-up environments:
 
 - **Ruby** 2.6.6 -> 2.7.1 [#985](https://github.com/sider/runners/pull/985)
-- **devon_rex** 2.16.1 -> master [#978](https://github.com/sider/runners/pull/978)
+- **devon_rex** 2.16.1 -> 2.17.0 [#978](https://github.com/sider/runners/pull/978) [#1038](https://github.com/sider/runners/pull/1038)
 
 Bump-up tools:
 
