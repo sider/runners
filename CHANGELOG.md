@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 - [Checkstyle] Bump checkstyle from 8.30 to 8.31 [#920](https://github.com/sider/runners/pull/920)
 - [FxCop] [roslyn-analyzers-runner](https://github.com/sider/roslyn-analyzers-runner) provides a static code analysis without running build [#971](https://github.com/sider/runners/pull/971)
 - [PMD Java] Bump pmd-java from 6.21.0 to 6.22.0 [#922](https://github.com/sider/runners/pull/922)
+- [PMD Java] Bump pmd-java from 6.22.0 to 6.23.0 [#1029](https://github.com/sider/runners/pull/1029)
 - [SwiftLint] Bump SwiftLint from 0.39.1 to 0.39.2 [#938](https://github.com/sider/runners/pull/938)
 - [GolangCI-Lint] Change default linters [#1001](https://github.com/sider/runners/pull/1001)
 - Extend the deadline for deprecated Go tools [#1002](https://github.com/sider/runners/pull/1002)
