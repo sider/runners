@@ -20,7 +20,7 @@ Updated tools:
 - **Checkstyle** 8.30 -> 8.32 [#920](https://github.com/sider/runners/pull/920) [#1028](https://github.com/sider/runners/pull/1028)
 - **detekt** 1.7.0 -> 1.8.0 [#986](https://github.com/sider/runners/pull/986)
 - **FxCop** 2.9.8 -> 3.0.0 [#1020](https://github.com/sider/runners/pull/1020)
-- **GolangCI-Lint** 1.24.0 -> 1.25.1 [#1023](https://github.com/sider/runners/pull/1023)
+- **GolangCI-Lint** 1.24.0 -> 1.26.0 [#1023](https://github.com/sider/runners/pull/1023) [#1044](https://github.com/sider/runners/pull/1044)
 - **Goodcheck** 2.5.0 -> 2.5.1 [#916](https://github.com/sider/runners/pull/916)
 - **hadolint** 1.17.5 -> 1.17.6 [#1025](https://github.com/sider/runners/pull/1025)
 - **PHP_CodeSniffer** 3.5.4 -> 3.5.5 [#1032](https://github.com/sider/runners/pull/1032)
