@@ -102,6 +102,7 @@ class Runners::Changes
 end
 
 class Runners::Processor
+  extend Forwardable
   include Tmpdir
 
   attr_reader guid: String
