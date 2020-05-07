@@ -29,15 +29,14 @@ module Runners
 
     def analyze(_changes)
       delete_targets
-      options = [locale, ignore].flatten.compact
-      run_analyzer(options, analysis_targets)
+      run_analyzer
     end
 
     private
 
-    def run_analyzer(options, targets)
+    def run_analyzer
       # NOTE: Prevent command injection with `'--'`.
-      stdout, _stderr, _status = capture3!(analyzer_bin, *options, '--', *targets)
+      stdout, _stderr, _status = capture3!(analyzer_bin, *locale, *ignore, '--', *analysis_targets)
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
         stdout.split("\n").each do |line|
@@ -66,13 +65,13 @@ module Runners
 
     def locale
       locale = config_linter[:locale] || config_linter.dig(:options, :locale)
-      ["-locale", "#{locale}"] if locale
+      locale ? ["-locale", "#{locale}"] : []
     end
 
     def ignore
-      # The option requires comma separeted with string when user would like to set ignore multiple targets.
+      # The option requires comma separated with string when user would like to set ignore multiple targets.
       ignore = config_linter[:ignore] || config_linter.dig(:options, :ignore)
-      ["-i", "#{ignore}"] if ignore
+      ignore ? ["-i", "#{ignore}"] : []
     end
 
     def analysis_targets
