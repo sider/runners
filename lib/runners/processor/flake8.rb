@@ -118,16 +118,15 @@ module Runners
 
     def run_analyzer
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        output_path = Tempfile.create(["flake8-", ".txt"]).path
         capture3!(
           analyzer_bin,
           '--exit-zero',
-          "--output-file=#{output_path}",
+          "--output-file=#{report_file}",
           "--format=#{FLAKE8_OUTPUT_FORMAT}",
           "--append-config=#{ignored_config_path}",
           './'
         )
-        output = read_output_file(output_path)
+        output = read_report_file
         break result if output.empty?
         parse_result(output).each { |v| result.add_issue(v) }
       end

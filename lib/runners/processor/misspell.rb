@@ -45,7 +45,7 @@ module Runners
       capture3!(analyzer_bin, *cli_args, '--', *analysis_targets)
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        read_output_file(report_file).each_line do |line|
+        read_report_file.each_line do |line|
           match = line.match(/^(?<file>.+):(?<line>\d+):(?<col>\d+): (?<message>"(?<incorrect>.+)" is a misspelling of "(?<correct>.+)")$/)
           lineno = Integer(match[:line])
           col = Integer(match[:col])
@@ -71,10 +71,6 @@ module Runners
 
     def cli_args
       ["-o", report_file, *locale, *ignore]
-    end
-
-    def report_file
-      @report_file ||= Tempfile.create(["misspell-report-", ".txt"]).path
     end
 
     def locale

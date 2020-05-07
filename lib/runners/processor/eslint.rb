@@ -179,18 +179,17 @@ module Runners
       # NOTE: We must use the `--output-file` option because some plugins may output a non-JSON text to STDOUT.
       #
       # @see https://github.com/typescript-eslint/typescript-eslint/blob/v2.6.0/packages/typescript-estree/src/parser.ts#L237-L247
-      output_file = Tempfile.create(["eslint-", ".json"]).path
 
       _stdout, stderr, status = capture3(
         nodejs_analyzer_bin,
         "--format=#{custom_formatter}",
-        "--output-file=#{output_file}",
-        '--no-color',
+        "--output-file=#{report_file}",
+        "--no-color",
         *additional_options,
         *target_dir
       )
 
-      output_json = File.file?(output_file) ? read_output_json(output_file) { nil } : nil
+      output_json = report_file_exist? ? read_report_json { nil } : nil
 
       if [0, 1].include?(status.exitstatus) && output_json
         Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|

@@ -190,22 +190,29 @@ module Runners
       # noop by default
     end
 
-    def read_output_file(file_path)
-      file_path_s = file_path.to_s
-      trace_writer.message "Reading output from #{file_path_s}..."
-      File.read(file_path_s).tap do |output|
+    def report_file
+      @report_file ||= Tempfile.create(["#{analyzer_id}_report_", ".txt"]).path
+    end
+
+    def report_file_exist?
+      File.file? report_file
+    end
+
+    def read_report_file(file_path = report_file)
+      trace_writer.message "Reading output from #{file_path}..."
+      File.read(file_path).tap do |output|
         if output.empty?
           trace_writer.message "No output"
         else
-          trace_writer.message output, limit: 24_000 # Prevent timeout
+          trace_writer.message output
         end
       end
     end
 
     class InvalidXML < SystemError; end
 
-    def read_output_xml(file_path)
-      output = read_output_file(file_path)
+    def read_report_xml(file_path = report_file)
+      output = read_report_file(file_path)
       REXML::Document.new(output).tap do |document|
         unless document.root
           message = "Output XML is invalid from #{file_path}"
@@ -215,8 +222,8 @@ module Runners
       end
     end
 
-    def read_output_json(file_path)
-      output = read_output_file(file_path)
+    def read_report_json(file_path = report_file)
+      output = read_report_file(file_path)
       if output.empty? && block_given?
         yield
       else

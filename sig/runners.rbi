@@ -151,9 +151,11 @@ class Runners::Processor
   def root_dir: -> Pathname
   def directory_traversal_attack?: (String) -> bool
   def show_runtime_versions: -> void
-  def read_output_file: (_ToS) -> String
-  def read_output_xml: (_ToS) -> REXML::Document
-  def read_output_json: <'x> (_ToS) { () -> 'x } -> (Hash<Symbol, any> | 'x)
+  def report_file: -> String
+  def report_file_exist?: -> bool
+  def read_report_file: (?String) -> String
+  def read_report_xml: (?String) -> REXML::Document
+  def read_report_json: <'x> (?String) { () -> 'x } -> (Hash<Symbol, any> | 'x)
 end
 
 type capture3_options = bool | Proc

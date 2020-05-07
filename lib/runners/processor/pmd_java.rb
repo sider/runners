@@ -36,7 +36,7 @@ module Runners
 
     private
 
-    def cli_args(report_file)
+    def cli_args
       [].tap do |args|
         args << "-language" << "java"
         args << "-threads" << "2"
@@ -50,9 +50,7 @@ module Runners
     end
 
     def run_analyzer
-      report_file = Tempfile.create(["pmd-report-", ".xml"]).path
-
-      _, stderr, status = capture3(analyzer_bin, *cli_args(report_file))
+      _, stderr, status = capture3(analyzer_bin, *cli_args)
 
       if status.success? || status.exitstatus == 4
         stderr.each_line do |line|
@@ -65,7 +63,7 @@ module Runners
         end
 
         Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-          xml = read_output_xml(report_file)
+          xml = read_report_xml
           construct_result(xml) { result.add_issue _1 }
         end
       else

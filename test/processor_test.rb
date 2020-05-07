@@ -382,72 +382,87 @@ class ProcessorTest < Minitest::Test
     end
   end
 
-  def test_read_output_file
+  def test_report_file
     with_workspace do |workspace|
-      file = (workspace.working_dir / "a_file").tap { |f| f.write "foo" }
-
       processor = new_processor(workspace: workspace)
-      assert_equal "foo", processor.read_output_file(file)
-      assert_equal "foo", processor.read_output_file(file.to_path)
+      assert_match(%r{/eslint_report_.+\.txt$}, processor.report_file)
+      assert_equal processor.report_file, processor.report_file
     end
   end
 
-  def test_read_output_file_failed
+  def test_report_file_exist
     with_workspace do |workspace|
       processor = new_processor(workspace: workspace)
-      assert_raises(Errno::ENOENT) { processor.read_output_file("not_found") }
+      assert processor.report_file_exist?
+      FileUtils.remove_file processor.report_file
+      refute processor.report_file_exist?
     end
   end
 
-  def test_read_output_xml
+  def test_read_report_file
     with_workspace do |workspace|
-      file = (workspace.working_dir / "a_file.xml").tap { |f| f.write "<foo></foo>" }
+      file = (workspace.working_dir / "a_file").tap { |f| f.write "foo" }.then(&:to_path)
 
       processor = new_processor(workspace: workspace)
-      assert_instance_of REXML::Document, processor.read_output_xml(file)
-      assert_instance_of REXML::Document, processor.read_output_xml(file.to_path)
+      assert_equal "foo", processor.read_report_file(file)
     end
   end
 
-  def test_read_output_xml_failed
+  def test_read_report_file_failed
     with_workspace do |workspace|
-      file = (workspace.working_dir / "a_file.xml").tap { |f| f.write "" }
+      processor = new_processor(workspace: workspace)
+      assert_raises(Errno::ENOENT) { processor.read_report_file("not_found") }
+    end
+  end
+
+  def test_read_report_xml
+    with_workspace do |workspace|
+      file = (workspace.working_dir / "a_file.xml").tap { |f| f.write "<foo></foo>" }.then(&:to_path)
 
       processor = new_processor(workspace: workspace)
-      error = assert_raises(Processor::InvalidXML) { processor.read_output_xml(file) }
+      assert_instance_of REXML::Document, processor.read_report_xml(file)
+    end
+  end
+
+  def test_read_report_xml_failed
+    with_workspace do |workspace|
+      file = (workspace.working_dir / "a_file.xml").tap { |f| f.write "" }.then(&:to_path)
+
+      processor = new_processor(workspace: workspace)
+      error = assert_raises(Processor::InvalidXML) { processor.read_report_xml(file) }
       assert_equal "Output XML is invalid from #{file}", error.message
 
-      file.write "<foo"
-      assert_raises(REXML::ParseException) { processor.read_output_xml(file) }
+      File.write file, "<foo"
+      assert_raises(REXML::ParseException) { processor.read_report_xml(file) }
     end
   end
 
-  def test_read_output_json
+  def test_read_report_json
     with_workspace do |workspace|
-      file = (workspace.working_dir / "a_file.json").tap { |f| f.write '{"a":1}' }
+      file = (workspace.working_dir / "a_file.json").tap { |f| f.write '{"a":1}' }.then(&:to_path)
 
       processor = new_processor(workspace: workspace)
-      assert_equal({ a: 1 }, processor.read_output_json(file))
+      assert_equal({ a: 1 }, processor.read_report_json(file))
     end
   end
 
-  def test_read_output_json_empty
+  def test_read_report_json_empty
     with_workspace do |workspace|
-      file = (workspace.working_dir / "a_file.json").tap { |f| f.write '' }
+      file = (workspace.working_dir / "a_file.json").tap { |f| f.write '' }.then(&:to_path)
 
       processor = new_processor(workspace: workspace)
-      assert_raises(JSON::ParserError) { processor.read_output_json(file) }
-      assert_nil processor.read_output_json(file) { nil }
-      assert_equal [], processor.read_output_json(file) { [] }
+      assert_raises(JSON::ParserError) { processor.read_report_json(file) }
+      assert_nil processor.read_report_json(file) { nil }
+      assert_equal [], processor.read_report_json(file) { [] }
     end
   end
 
-  def test_read_output_json_failed
+  def test_read_report_json_failed
     with_workspace do |workspace|
-      file = (workspace.working_dir / "a_file.json").tap { |f| f.write '{' }
+      file = (workspace.working_dir / "a_file.json").tap { |f| f.write '{' }.then(&:to_path)
 
       processor = new_processor(workspace: workspace)
-      assert_raises(JSON::ParserError) { processor.read_output_json(file) }
+      assert_raises(JSON::ParserError) { processor.read_report_json(file) }
     end
   end
 end

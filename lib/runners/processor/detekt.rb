@@ -32,8 +32,6 @@ module Runners
     private
 
     def run_analyzer
-      report_path = Tempfile.create(["detekt-report-", ".xml"]).path
-
       _stdout, stderr, status = capture3(
         analyzer_bin,
         *cli_baseline,
@@ -43,7 +41,7 @@ module Runners
         *cli_excludes,
         *cli_includes,
         *cli_input,
-        *cli_report(report_path),
+        *cli_report,
       )
 
       # detekt has some exit codes.
@@ -51,7 +49,7 @@ module Runners
       case status.exitstatus
       when 0, 2
         Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-          parse_output(report_path) do |issue|
+          parse_output do |issue|
             result.add_issue issue
           end
         end
@@ -90,12 +88,12 @@ module Runners
       Array(config_linter[:input]).then { |arr| arr.present? ? ["--input", arr.join(",")] : [] }
     end
 
-    def cli_report(report_path)
-      ["--report", "xml:#{report_path}"]
+    def cli_report
+      ["--report", "xml:#{report_file}"]
     end
 
-    def parse_output(output_path)
-      read_output_xml(output_path).root.each_element("file") do |file|
+    def parse_output
+      read_report_xml.root.each_element("file") do |file|
         file.each_element do |error|
           case error.name
           when "error"

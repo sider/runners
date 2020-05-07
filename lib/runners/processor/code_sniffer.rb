@@ -123,12 +123,10 @@ module Runners
     end
 
     def run_analyzer(options, target)
-      output_file = Tempfile.create(["phpcs-", ".json"]).path
-
       capture3!(
         analyzer_bin,
-        '--report=json',
-        "--report-json=#{output_file}",
+        "--report=json",
+        "--report-json=#{report_file}",
         "-q", # Enable quiet mode. See https://github.com/squizlabs/PHP_CodeSniffer/wiki/Advanced-Usage#quieting-output
         "--runtime-set", "ignore_errors_on_exit", "1", # See https://github.com/squizlabs/PHP_CodeSniffer/wiki/Configuration-Options#ignoring-errors-when-generating-the-exit-code
         "--runtime-set", "ignore_warnings_on_exit", "1", # See https://github.com/squizlabs/PHP_CodeSniffer/wiki/Configuration-Options#ignoring-warnings-when-generating-the-exit-code
@@ -139,7 +137,7 @@ module Runners
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
         issues = []
 
-        read_output_json(output_file)[:files].each do |path, suggests|
+        read_report_json[:files].each do |path, suggests|
           suggests[:messages].each do |suggest|
             issues << Issue.new(
               path: relative_path(path.to_s),

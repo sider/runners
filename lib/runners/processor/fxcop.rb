@@ -17,9 +17,8 @@ module Runners
     end
 
     def analyze(changes)
-      output_file = Tempfile.create(["fxcop-", ""]).path
       capture3!('Sider.RoslynAnalyzersRunner',
-        '--outputfile', output_file,
+        '--outputfile', report_file,
         *changes
           .changed_paths
           .select{|p| p.extname.eql?(".cs")}
@@ -27,7 +26,7 @@ module Runners
           .map(&:to_s))
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        construct_result(result, read_output_json(output_file))
+        construct_result(result, read_report_json)
       end
     end
 

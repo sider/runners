@@ -30,12 +30,10 @@ module Runners
     def analyze(changes)
       delete_unchanged_files(changes, only: ["*.java"])
 
-      output_file = Tempfile.create(["checkstyle-output-", ".xml"]).path
-
-      capture3(analyzer_bin, *check_directory, *checkstyle_args(output: output_file))
+      capture3(analyzer_bin, *check_directory, *checkstyle_args)
 
       begin
-        xml_root = read_output_xml(output_file).root
+        xml_root = read_report_xml.root
       rescue InvalidXML
         message = "Analysis failed. See the log for details."
         return Results::Failure.new(guid: guid, analyzer: analyzer, message: message)
@@ -50,10 +48,10 @@ module Runners
 
     private
 
-    def checkstyle_args(output:)
+    def checkstyle_args
       [].tap do |args|
         args << "-f" << "xml"
-        args << "-o" << output
+        args << "-o" << report_file
 
         config_file&.tap do |config|
           args << "-c" << config
