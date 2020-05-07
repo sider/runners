@@ -1,0 +1,27 @@
+# https://gist.github.com/ybiquitous/580d1cc2c53fa3a4bb393fc346b4dec4
+
+name: Steep
+
+on:
+  push:
+    branches: ["master"]
+    tags: ["**"]
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    env:
+      BUNDLE_GEMFILE: Gemfile.steep
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+      - run: |
+          gem install bundler --no-document
+          bundle config set --local path vendor/bundle
+          bundle install --jobs 4 --retry 3
+      - run: |
+          bundle exec steep check | ruby -pe 'sub(/^(.+):(\d+):(\d+): (.+)$/, %q{::error file=\1,line=\2,col=\3::\4})'

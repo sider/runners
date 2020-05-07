@@ -52,39 +52,6 @@ jobs:
           bundle install --jobs 4 --retry 3
       - run: bundle exec rake docker:timeout_test
 
-  typecheck:
-    runs-on: ubuntu-latest
-    needs: check_skip
-    steps:
-      - uses: actions/checkout@v2
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-      - name: Install gems
-        run: |
-          gem install bundler --no-document
-          bundle config set --local path vendor/bundle
-          bundle install --jobs 4 --retry 3
-      - run: bundle exec rake typecheck
-
-  # TODO: Rename to `typecheck` when the migration will complete.
-  typecheck_new:
-    runs-on: ubuntu-latest
-    needs: check_skip
-    env:
-      BUNDLE_GEMFILE: Gemfile.steep
-    steps:
-      - uses: actions/checkout@v2
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-      - name: Install gems
-        run: |
-          gem install bundler --no-document
-          bundle config set --local path vendor/bundle
-          bundle install --jobs 4 --retry 3
-      - run: bundle exec steep check
-
   build:
     runs-on: ubuntu-latest
     needs: check_skip
