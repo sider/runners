@@ -15,6 +15,11 @@ module Runners
                                           ))
                       })
       }
+
+      let :issue, object(
+        correct: string,
+        incorrect: string,
+      )
     end
 
     register_config_schema(name: :misspell, schema: Schema.runner_config)
@@ -37,31 +42,39 @@ module Runners
 
     def run_analyzer
       # NOTE: Prevent command injection with `'--'`.
-      stdout, _stderr, _status = capture3!(analyzer_bin, *locale, *ignore, '--', *analysis_targets)
+      capture3!(analyzer_bin, *cli_args, '--', *analysis_targets)
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        stdout.split("\n").each do |line|
-          match = line.match(/^(?<file>.+):(?<line>\d+):(?<col>\d+): (?<message>"(?<misspell>.+)" is a misspelling of ".+")$/)
-          lineno = match[:line].to_i
-          col = match[:col].to_i
-          misspell = match[:misspell]
-          message = match[:message]
+        read_output_file(report_file).each_line do |line|
+          match = line.match(/^(?<file>.+):(?<line>\d+):(?<col>\d+): (?<message>"(?<incorrect>.+)" is a misspelling of "(?<correct>.+)")$/)
+          lineno = Integer(match[:line])
+          col = Integer(match[:col])
+          correct = match[:correct]
+          incorrect = match[:incorrect]
 
-          file = match[:file]
-          loc = Location.new(
-            start_line: lineno,
-            start_column: col,
-            end_line: lineno,
-            end_column: col + misspell.size,
-          )
           result.add_issue Issue.new(
-            path: relative_path(file),
-            location: loc,
-            id: message,
-            message: message,
+            path: relative_path(match[:file]),
+            location: Location.new(
+              start_line: lineno,
+              start_column: col,
+              end_line: lineno,
+              end_column: col + incorrect.size,
+            ),
+            id: correct,
+            message: match[:message],
+            object: { correct: correct, incorrect: incorrect },
+            schema: Schema.issue,
           )
         end
       end
+    end
+
+    def cli_args
+      ["-o", report_file, *locale, *ignore]
+    end
+
+    def report_file
+      @report_file ||= Tempfile.create(["misspell-report-", ".txt"]).path
     end
 
     def locale

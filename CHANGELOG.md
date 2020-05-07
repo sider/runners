@@ -42,6 +42,7 @@ Misc:
 - **GolangCI-Lint** Change default linters [#1001](https://github.com/sider/runners/pull/1001)
 - **SwiftLint** Some improvements [#1005](https://github.com/sider/runners/pull/1005)
 - **Misspell** Deprecate `targets` option [#1046](https://github.com/sider/runners/pull/1046)
+- **Misspell** Some improvements [#1050](https://github.com/sider/runners/pull/1050)
 
 ## 0.22.4
 

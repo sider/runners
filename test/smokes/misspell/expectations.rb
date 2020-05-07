@@ -7,10 +7,10 @@ s.add_test(
     {
       message: "\"infomation\" is a misspelling of \"information\"",
       links: [],
-      id: "\"infomation\" is a misspelling of \"information\"",
+      id: "information",
       path: "badspell.rb",
       location: { start_line: 2, start_column: 2, end_line: 2, end_column: 12 },
-      object: nil,
+      object: { correct: "information", incorrect: "infomation" },
       git_blame_info: nil
     }
   ],
@@ -24,19 +24,19 @@ s.add_test(
     {
       message: "\"infomation\" is a misspelling of \"information\"",
       links: [],
-      id: "\"infomation\" is a misspelling of \"information\"",
+      id: "information",
       path: "badspell.rb",
       location: { start_line: 4, start_column: 2, end_line: 4, end_column: 12 },
-      object: nil,
+      object: { correct: "information", incorrect: "infomation" },
       git_blame_info: nil
     },
     {
       message: "\"offense\" is a misspelling of \"offence\"",
       links: [],
-      id: "\"offense\" is a misspelling of \"offence\"",
+      id: "offence",
       path: "badspell.rb",
       location: { start_line: 3, start_column: 2, end_line: 3, end_column: 9 },
-      object: nil,
+      object: { correct: "offence", incorrect: "offense" },
       git_blame_info: nil
     }
   ],
@@ -60,10 +60,10 @@ s.add_test(
     {
       message: "\"recieve\" is a misspelling of \"receive\"",
       links: [],
-      id: "\"recieve\" is a misspelling of \"receive\"",
+      id: "receive",
       path: "badspell.rb",
       location: { start_line: 3, start_column: 2, end_line: 3, end_column: 9 },
-      object: nil,
+      object: { correct: "receive", incorrect: "recieve" },
       git_blame_info: nil
     }
   ],
@@ -77,55 +77,55 @@ s.add_test(
     {
       message: "\"acknowleges\" is a misspelling of \"acknowledges\"",
       links: [],
-      id: "\"acknowleges\" is a misspelling of \"acknowledges\"",
+      id: "acknowledges",
       path: "target_dir/bar.rb",
       location: { start_line: 2, start_column: 2, end_line: 2, end_column: 13 },
-      object: nil,
+      object: { correct: "acknowledges", incorrect: "acknowleges" },
       git_blame_info: nil
     },
     {
       message: "\"comminucation\" is a misspelling of \"communications\"",
       links: [],
-      id: "\"comminucation\" is a misspelling of \"communications\"",
+      id: "communications",
       path: "target_dir/foo.rb",
       location: { start_line: 3, start_column: 2, end_line: 3, end_column: 15 },
-      object: nil,
+      object: { correct: "communications", incorrect: "comminucation" },
       git_blame_info: nil
     },
     {
       message: "\"comminucation\" is a misspelling of \"communications\"",
       links: [],
-      id: "\"comminucation\" is a misspelling of \"communications\"",
+      id: "communications",
       path: "target_file.rb",
       location: { start_line: 3, start_column: 2, end_line: 3, end_column: 15 },
-      object: nil,
+      object: { correct: "communications", incorrect: "comminucation" },
       git_blame_info: nil
     },
     {
       message: "\"infomation\" is a misspelling of \"information\"",
       links: [],
-      id: "\"infomation\" is a misspelling of \"information\"",
+      id: "information",
       path: "target_dir/bar.rb",
       location: { start_line: 3, start_column: 2, end_line: 3, end_column: 12 },
-      object: nil,
+      object: { correct: "information", incorrect: "infomation" },
       git_blame_info: nil
     },
     {
       message: "\"recieve\" is a misspelling of \"receive\"",
       links: [],
-      id: "\"recieve\" is a misspelling of \"receive\"",
+      id: "receive",
       path: "target_dir/foo.rb",
       location: { start_line: 2, start_column: 2, end_line: 2, end_column: 9 },
-      object: nil,
+      object: { correct: "receive", incorrect: "recieve" },
       git_blame_info: nil
     },
     {
       message: "\"recieve\" is a misspelling of \"receive\"",
       links: [],
-      id: "\"recieve\" is a misspelling of \"receive\"",
+      id: "receive",
       path: "target_file.rb",
       location: { start_line: 2, start_column: 2, end_line: 2, end_column: 9 },
-      object: nil,
+      object: { correct: "receive", incorrect: "recieve" },
       git_blame_info: nil
     }
   ],
@@ -140,73 +140,73 @@ s.add_test(
     {
       message: "\"acknowleges\" is a misspelling of \"acknowledges\"",
       links: [],
-      id: "\"acknowleges\" is a misspelling of \"acknowledges\"",
+      id: "acknowledges",
       path: "target.rb",
       location: { start_line: 2, start_column: 2, end_line: 2, end_column: 13 },
-      object: nil,
+      object: { correct: "acknowledges", incorrect: "acknowleges" },
       git_blame_info: nil
     },
     {
       message: "\"communiaction\" is a misspelling of \"communications\"",
       links: [],
-      id: "\"communiaction\" is a misspelling of \"communications\"",
+      id: "communications",
       path: "partial_exclude_dir/target.html",
       location: { start_line: 1, start_column: 5, end_line: 1, end_column: 18 },
-      object: nil,
+      object: { correct: "communications", incorrect: "communiaction" },
       git_blame_info: nil
     },
     {
       message: "\"internelized\" is a misspelling of \"internalized\"",
       links: [],
-      id: "\"internelized\" is a misspelling of \"internalized\"",
+      id: "internalized",
       path: "partial_exclude_dir/bar_dir/target.html",
       location: { start_line: 1, start_column: 4, end_line: 1, end_column: 16 },
-      object: nil,
+      object: { correct: "internalized", incorrect: "internelized" },
       git_blame_info: nil
     },
     {
       message: "\"optimizacion\" is a misspelling of \"optimization\"",
       links: [],
-      id: "\"optimizacion\" is a misspelling of \"optimization\"",
+      id: "optimization",
       path: "partial_exclude_dir/bar_dir/target.js",
       location: { start_line: 1, start_column: 9, end_line: 1, end_column: 21 },
-      object: nil,
+      object: { correct: "optimization", incorrect: "optimizacion" },
       git_blame_info: nil
     },
     {
       message: "\"profissional\" is a misspelling of \"professional\"",
       links: [],
-      id: "\"profissional\" is a misspelling of \"professional\"",
+      id: "professional",
       path: "foo_dir/target.rb",
       location: { start_line: 2, start_column: 2, end_line: 2, end_column: 14 },
-      object: nil,
+      object: { correct: "professional", incorrect: "profissional" },
       git_blame_info: nil
     },
     {
       message: "\"requeriments\" is a misspelling of \"requirements\"",
       links: [],
-      id: "\"requeriments\" is a misspelling of \"requirements\"",
+      id: "requirements",
       path: "foo_dir/another_dir/target.html",
       location: { start_line: 1, start_column: 4, end_line: 1, end_column: 16 },
-      object: nil,
+      object: { correct: "requirements", incorrect: "requeriments" },
       git_blame_info: nil
     },
     {
       message: "\"scholarhsips\" is a misspelling of \"scholarships\"",
       links: [],
-      id: "\"scholarhsips\" is a misspelling of \"scholarships\"",
+      id: "scholarships",
       path: "foo_dir/another_dir/target.rb",
       location: { start_line: 2, start_column: 2, end_line: 2, end_column: 14 },
-      object: nil,
+      object: { correct: "scholarships", incorrect: "scholarhsips" },
       git_blame_info: nil
     },
     {
       message: "\"trasnmission\" is a misspelling of \"transmissions\"",
       links: [],
-      id: "\"trasnmission\" is a misspelling of \"transmissions\"",
+      id: "transmissions",
       path: "partial_exclude_dir/foo_dir/target.py",
       location: { start_line: 2, start_column: 4, end_line: 2, end_column: 16 },
-      object: nil,
+      object: { correct: "transmissions", incorrect: "trasnmission" },
       git_blame_info: nil
     }
   ],
@@ -228,19 +228,19 @@ s.add_test(
     {
       message: "\"infomation\" is a misspelling of \"information\"",
       links: [],
-      id: "\"infomation\" is a misspelling of \"information\"",
+      id: "information",
       path: "dir1/file.rb",
       location: { start_line: 1, start_column: 4, end_line: 1, end_column: 14 },
-      object: nil,
+      object: { correct: "information", incorrect: "infomation" },
       git_blame_info: nil
     },
     {
       message: "\"infomation\" is a misspelling of \"information\"",
       links: [],
-      id: "\"infomation\" is a misspelling of \"information\"",
+      id: "information",
       path: "file1.rb",
       location: { start_line: 1, start_column: 4, end_line: 1, end_column: 14 },
-      object: nil,
+      object: { correct: "information", incorrect: "infomation" },
       git_blame_info: nil
     }
   ],
