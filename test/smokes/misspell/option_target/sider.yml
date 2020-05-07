@@ -1,0 +1,5 @@
+linter:
+  misspell:
+    target:
+      - dir1/
+      - file1.rb

@@ -129,7 +129,8 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Misspell", version: "0.3.4" }
+  analyzer: { name: "Misspell", version: "0.3.4" },
+  warnings: [{ message: /DEPRECATION WARNING!!!\nThe `\$\.linter\.misspell\.targets` option/, file: "sideci.yml" }]
 )
 
 s.add_test(
@@ -218,4 +219,30 @@ s.add_test(
   message:
     "The value of the attribute `$.linter.misspell.locale` in your `sideci.yml` is invalid. Please fix and retry.",
   analyzer: :_
+)
+
+s.add_test(
+  "option_target",
+  type: "success",
+  issues: [
+    {
+      message: "\"infomation\" is a misspelling of \"information\"",
+      links: [],
+      id: "\"infomation\" is a misspelling of \"information\"",
+      path: "dir1/file.rb",
+      location: { start_line: 1, start_column: 4, end_line: 1, end_column: 14 },
+      object: nil,
+      git_blame_info: nil
+    },
+    {
+      message: "\"infomation\" is a misspelling of \"information\"",
+      links: [],
+      id: "\"infomation\" is a misspelling of \"information\"",
+      path: "file1.rb",
+      location: { start_line: 1, start_column: 4, end_line: 1, end_column: 14 },
+      object: nil,
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "Misspell", version: "0.3.4" }
 )

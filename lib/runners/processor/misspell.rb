@@ -5,6 +5,7 @@ module Runners
         fields.merge!({
                         exclude: array?(string),
                         targets: array?(string),
+                        target: array?(string),
                         locale: enum?(literal('US'), literal('UK')),
                         ignore: string?,
                         # DO NOT ADD ANY OPTIONS under `options`.
@@ -23,7 +24,7 @@ module Runners
     end
 
     def setup
-      add_warning_if_deprecated_options([:options])
+      add_warning_if_deprecated_options([:options, :targets])
       yield
     end
 
@@ -76,7 +77,7 @@ module Runners
     end
 
     def analysis_targets
-      Array(config_linter[:targets] || '.')
+      Array(config_linter[:target] || config_linter[:targets] || '.')
     end
 
     def delete_targets
