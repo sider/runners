@@ -67,11 +67,11 @@ module Runners
     end
 
     def cli_config
-      Array(config_linter[:config]).then { |arr| arr.present? ? ["--config", arr.join(",")] : [] }
+      Array(config_linter[:config]).then { |arr| arr.empty? ? [] : ["--config", arr.join(",")] }
     end
 
     def cli_config_resource
-      Array(config_linter[:"config-resource"]).then { |arr| arr.present? ? ["--config-resource", arr.join(",")] : [] }
+      Array(config_linter[:"config-resource"]).then { |arr| arr.empty? ? [] : ["--config-resource", arr.join(",")] }
     end
 
     def cli_disable_default_rulesets
@@ -79,15 +79,15 @@ module Runners
     end
 
     def cli_excludes
-      Array(config_linter[:excludes]).then { |arr| arr.present? ? ["--excludes", arr.join(",")] : [] }
+      Array(config_linter[:excludes]).then { |arr| arr.empty? ? [] : ["--excludes", arr.join(",")] }
     end
 
     def cli_includes
-      Array(config_linter[:includes]).then { |arr| arr.present? ? ["--includes", arr.join(",")] : [] }
+      Array(config_linter[:includes]).then { |arr| arr.empty? ? [] : ["--includes", arr.join(",")] }
     end
 
     def cli_input
-      Array(config_linter[:input]).then { |arr| arr.present? ? ["--input", arr.join(",")] : [] }
+      Array(config_linter[:input]).then { |arr| arr.empty? ? [] : ["--input", arr.join(",")] }
     end
 
     def cli_report(report_path)

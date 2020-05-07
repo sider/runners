@@ -33,7 +33,7 @@ module Runners
     end
 
     def processor_class
-      @processor_class ||= (Processor.subclasses.detect do |cls|
+      @processor_class ||= (ObjectSpace.each_object(Class).filter { _1 < Processor }.detect do |cls|
         # NOTE: Generate an analyzer ID from filename convention.
         #       This logic assumes that each subclass has its `#analyze` method.
         method = cls.instance_method(:analyze)
@@ -107,12 +107,22 @@ module Runners
     end
 
     def format_duration(duration_in_sec)
-      parts = ActiveSupport::Duration.build(duration_in_sec).parts
-      # @type var res: Array[String]
+      value = duration_in_sec
+
+      seconds_per_hour = 3600.0
+      h = value.div(seconds_per_hour)
+      value -= h * seconds_per_hour
+
+      seconds_per_minute = 60.0
+      m = value.div(seconds_per_minute)
+      value -= m * seconds_per_minute
+
+      s = value.round(value > 1 ? 0 : 3)
+
       res = []
-      parts[:hours].tap { |h| res << "#{h}h" if h && h > 0 }
-      parts[:minutes].tap { |m| res << "#{m}m" if m && m > 0 }
-      parts[:seconds].tap { |s| res << "#{s.round(3)}s" if s && s > 0 }
+      res << "#{h}h" if h > 0
+      res << "#{m}m" if m > 0
+      res << "#{s}s" if s > 0
       res.empty? ? "0.0s" : res.join(" ")
     end
   end

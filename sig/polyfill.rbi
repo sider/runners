@@ -183,7 +183,6 @@ module Retryable
 end
 
 extension Hash (Polyfill)
-  def deep_merge: (Hash<any, any>) -> Hash<any, any>
   def fetch: ('key, ?'value) -> 'value
   def merge!: (*Hash<any, any>) -> Hash<any, any>
   def compact: -> self
@@ -208,4 +207,8 @@ type untyped = any
 
 extension Set<'a> (Polyfill)
   def filter: { ('a) -> any } -> Set<'a>
+end
+
+extension Numeric (Polyfill)
+  def div: (Numeric) -> Integer
 end

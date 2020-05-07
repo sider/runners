@@ -63,7 +63,7 @@ module Runners
               lines << gem(spec, gem_constraints(spec, source))
             end
           else
-            lines << "" if lines.last.present?
+            lines << "" if !lines.last&.empty?
             lines << "#{source} do"
             specs.each do |spec|
               lines << "  #{gem(spec, gem_constraints(spec, source))}"

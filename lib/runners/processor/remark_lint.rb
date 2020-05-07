@@ -124,7 +124,7 @@ module Runners
       else
         errors.each { |e| trace_writer.error(e) }
 
-        msg = "#{errors.size} #{'error'.pluralize(errors.size)} reported. See the log for details."
+        msg = "#{errors.size} error(s) reported. See the log for details."
         Results::Failure.new(guid: guid, analyzer: analyzer, message: msg)
       end
     end

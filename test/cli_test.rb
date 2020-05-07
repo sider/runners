@@ -165,9 +165,12 @@ class CLITest < Minitest::Test
       assert_equal "0.0s", cli.format_duration(0.0)
       assert_equal "0.0s", cli.format_duration(0.000123)
       assert_equal "0.123s", cli.format_duration(0.1234567)
-      assert_equal "10.123s", cli.format_duration(10.1234567)
-      assert_equal "16m 40.123s", cli.format_duration(1000.1234567)
-      assert_equal "3h 46m 40.123s", cli.format_duration(100000.1234567)
+      assert_equal "1s", cli.format_duration(1.1234567)
+      assert_equal "10s", cli.format_duration(10.1234567)
+      assert_equal "16m 40s", cli.format_duration(1000.1234567)
+      assert_equal "2h 46m 40s", cli.format_duration(10000.1234567)
+      assert_equal "27h 46m 40s", cli.format_duration(100000.1234567)
+      assert_equal "27h 46m 40s", cli.format_duration(100000)
     end
   end
 end

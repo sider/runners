@@ -89,7 +89,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activesupport
   amazing_print
   aufgaben!
   aws-sdk-s3

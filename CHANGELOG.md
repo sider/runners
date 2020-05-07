@@ -43,6 +43,7 @@ Misc:
 - **SwiftLint** Some improvements [#1005](https://github.com/sider/runners/pull/1005)
 - **Misspell** Deprecate `targets` option [#1046](https://github.com/sider/runners/pull/1046)
 - **Misspell** Some improvements [#1050](https://github.com/sider/runners/pull/1050)
+- Remove ActiveSupport [#1054](https://github.com/sider/runners/pull/1054)
 
 ## 0.22.4
 

@@ -8,8 +8,8 @@ module Runners
 
     def self.parse_s3_uri!(s3_uri)
       uri = URI.parse(s3_uri)
-      bucket = uri.host.presence
-      object = uri.path.presence
+      bucket = uri.host&.then { |s| s.empty? ? nil : s }
+      object = uri.path&.then { |s| s.empty? ? nil : s }
       if uri.scheme == "s3" && bucket && object
         [bucket, object.delete_prefix("/")]
       else

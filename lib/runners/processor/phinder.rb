@@ -93,7 +93,7 @@ module Runners
         json = JSON.parse(stdout, symbolize_names: true)
         # TODO: Handling violations?
         Results::Failure.new(guid: guid, message: <<~MESSAGE, analyzer: analyzer)
-          #{json[:errors].size} #{"error".pluralize(json[:errors].size)} occurred:
+          #{json[:errors].size} error(s) occurred:
 
           #{json[:errors].map { |error| "#{error[:type]}: #{error[:message]}" }.join("\n")}
         MESSAGE

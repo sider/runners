@@ -186,7 +186,7 @@ s.add_test(
 s.add_test(
   "broken_remarkrc",
   type: "failure",
-  message: "2 errors reported. See the log for details.",
+  message: "2 error(s) reported. See the log for details.",
   analyzer: { name: "remark-lint", version: "8.0.0" }
 )
 
