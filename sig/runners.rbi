@@ -1,7 +1,7 @@
 module Runners
 end
 
-Runners::VERSION: Integer
+Runners::VERSION: String
 
 interface Runners::_Writer
   def <<: (Schema::Types::any_trace) -> void
