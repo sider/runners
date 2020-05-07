@@ -10,7 +10,7 @@ class Runners::CLI
   def initialize: (argv: Array[String], stdout: ::IO, stderr: ::IO) -> void
   def with_working_dir: [X] { (Pathname) -> X } -> X
   def processor_class: () -> Class
-  def run: (String) -> untyped
+  def run: () -> untyped
   def io: () -> Runners::IO
   def sensitive_strings: () -> Array[String]
   def format_duration: (Float duration_in_sec) -> String
