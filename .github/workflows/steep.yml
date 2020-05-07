@@ -25,3 +25,4 @@ jobs:
           bundle install --jobs 4 --retry 3
       - run: |
           bundle exec steep check | ruby -pe 'sub(/^(.+):(\d+):(\d+): (.+)$/, %q{::error file=\1,line=\2,col=\3::\4})'
+        shell: bash
