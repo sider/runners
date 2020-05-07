@@ -33,7 +33,7 @@ module Runners
     end
 
     def processor_class
-      @processor_class ||= (ObjectSpace.each_object(Class).filter { _1 < Processor }.detect do |cls|
+      @processor_class ||= (ObjectSpace.each_object(Class).filter { |cls| cls < Processor }.detect do |cls|
         # NOTE: Generate an analyzer ID from filename convention.
         #       This logic assumes that each subclass has its `#analyze` method.
         method = cls.instance_method(:analyze)
@@ -117,12 +117,13 @@ module Runners
       m = value.div(seconds_per_minute)
       value -= m * seconds_per_minute
 
-      s = value.round(value > 1 ? 0 : 3)
+      s = value.round(value.to_i == 0 ? 3 : 0)
 
+      # @type var res: Array[String]
       res = []
-      res << "#{h}h" if h > 0
-      res << "#{m}m" if m > 0
-      res << "#{s}s" if s > 0
+      res << "#{h}h" if h.positive?
+      res << "#{m}m" if m.positive?
+      res << "#{s}s" if s.positive?
       res.empty? ? "0.0s" : res.join(" ")
     end
   end

@@ -1,0 +1,4 @@
+extension Float (Polyfill)
+  def div: (Float | Integer) -> Integer
+  def -: (Float | Integer) -> Float
+end

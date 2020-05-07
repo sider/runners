@@ -211,4 +211,9 @@ end
 
 extension Numeric (Polyfill)
   def div: (Numeric) -> Integer
+  def positive?: () -> bool
+end
+
+extension Float (Polyfill)
+  def to_i: () -> Integer
 end

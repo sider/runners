@@ -1,0 +1,3 @@
+module ObjectSpace
+  def self.each_object: (untyped) -> Enumerator[untyped, untyped]
+end
