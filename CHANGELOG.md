@@ -41,6 +41,7 @@ Misc:
 - **FxCop** [roslyn-analyzers-runner](https://github.com/sider/roslyn-analyzers-runner) provides a static code analysis without running build [#971](https://github.com/sider/runners/pull/971)
 - **GolangCI-Lint** Change default linters [#1001](https://github.com/sider/runners/pull/1001)
 - **SwiftLint** Some improvements [#1005](https://github.com/sider/runners/pull/1005)
+- **Misspell** Remove excluding files safely [#1045](https://github.com/sider/runners/pull/1045)
 
 ## 0.22.4
 

@@ -82,9 +82,13 @@ module Runners
     def delete_targets
       exclude_targets = Array(config_linter[:exclude])
       return if exclude_targets.empty?
+
       trace_writer.message "Excluding #{exclude_targets.join(', ')} ..." do
-        paths = exclude_targets.flat_map { |target| Dir.glob(working_dir + target.to_s) }.uniq
-        FileUtils.rm_r(paths, secure: true)
+        exclude_targets.each do |target|
+          current_dir.glob(target) do |path|
+            FileUtils.remove_entry_secure(path, true)
+          end
+        end
       end
     end
   end
