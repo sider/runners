@@ -2,7 +2,7 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM sider/devon_rex_java:master AS builder
+FROM sider/devon_rex_java:2.18.0 AS builder
 
 # NOTE: Download required dependency JAR files via maven-dependency-plugin.
 #       Also, this image uses a build layer because Maven downloads too many files to `~/.m2` directory.
@@ -12,7 +12,7 @@ COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/pom.xml ${RUNNER_USE
 RUN cd "${RUNNER_USER_HOME}/pmd_java" && \
     mvn --no-transfer-progress --batch-mode --threads 4 dependency:copy-dependencies -DoutputDirectory=.
 
-FROM sider/devon_rex_java:master
+FROM sider/devon_rex_java:2.18.0
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=builder ${RUNNER_USER_HOME}/pmd_java/*.jar ${RUNNER_USER_HOME}/pmd_java/
 ENV CLASSPATH ${RUNNER_USER_HOME}/pmd_java/*:${CLASSPATH}

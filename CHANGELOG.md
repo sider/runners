@@ -13,7 +13,7 @@ New supported:
 Updated environments:
 
 - **Ruby** 2.6.6 -> 2.7.1 [#985](https://github.com/sider/runners/pull/985)
-- **devon_rex** 2.16.1 -> 2.17.0 [#978](https://github.com/sider/runners/pull/978) [#1038](https://github.com/sider/runners/pull/1038)
+- **devon_rex** 2.16.1 -> 2.18.0 [#978](https://github.com/sider/runners/pull/978) [#1038](https://github.com/sider/runners/pull/1038) [#1057](https://github.com/sider/runners/pull/1057)
 
 Updated tools:
 
