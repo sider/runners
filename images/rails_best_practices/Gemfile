@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails_best_practices', '1.19.4'
-gem 'slim', '4.0.1'
+gem 'slim', '4.1.0'
 gem 'haml', '5.1.2'
 gem 'sass', '3.7.4'
 gem 'sassc', '2.3.0'
