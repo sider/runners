@@ -26,11 +26,6 @@ module Runners
     DEFAULT_TARGET = ".".freeze
     DEFAULT_IGNORE = [].freeze
 
-    def setup
-      analyzer
-      yield
-    end
-
     def analyze(_changes)
       run_analyzer
     end

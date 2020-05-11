@@ -86,7 +86,6 @@ module Runners
       add_warning_if_deprecated_options([:options])
 
       install_gems default_gem_specs, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS do
-        analyzer
         yield
       end
     rescue InstallGemsFailure => exn

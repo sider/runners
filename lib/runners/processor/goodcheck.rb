@@ -109,7 +109,6 @@ module Runners
 
     def setup
       ret = install_gems default_gem_specs, constraints: CONSTRAINTS do
-        analyzer
         yield
       end
 

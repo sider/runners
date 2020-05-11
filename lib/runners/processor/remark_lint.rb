@@ -37,7 +37,7 @@ module Runners
       rescue UserError => exn
         return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
       end
-      analyzer # Must initialize after installation
+
       yield
     end
 

@@ -52,7 +52,6 @@ module Runners
 
       # Must do after installation
       prepare_config_file
-      analyzer
 
       yield
     end

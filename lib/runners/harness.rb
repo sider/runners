@@ -46,6 +46,7 @@ module Runners
               processor.show_runtime_versions
               result = processor.setup do
                 trace_writer.header "Running analyzer"
+                processor.analyzer # initialize analyzer
                 processor.analyze(changes)
               end
 

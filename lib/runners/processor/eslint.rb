@@ -49,7 +49,7 @@ module Runners
       rescue UserError => exn
         return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
       end
-      analyzer
+
       yield
     end
 

@@ -21,7 +21,6 @@ module Runners
 
     def setup
       install_gems default_gem_specs, constraints: CONSTRAINTS do
-        analyzer
         yield
       end
     rescue InstallGemsFailure => exn
