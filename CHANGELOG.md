@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.23.0...HEAD)
 
+- **SwiftLint** Improve error handling [#1063](https://github.com/sider/runners/pull/1063)
+
 ## 0.23.0
 
 [Full diff](https://github.com/sider/runners/compare/0.22.4...0.23.0)
