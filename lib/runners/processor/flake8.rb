@@ -17,13 +17,13 @@ module Runners
 
     def setup
       prepare_config
+      capture3! 'pyenv', 'global', detected_python_version
+      capture3! "python", "--version" # NOTE: `show_runtime_versions` does not work...
+      capture3! "pip", "--version"
       yield
     end
 
     def analyze(changes)
-      capture3! 'pyenv', 'global', detected_python_version
-      capture3! "python", "--version" # NOTE: `show_runtime_versions` does not work...
-      capture3! "pip", "--version"
       prepare_plugins
       run_analyzer
     end

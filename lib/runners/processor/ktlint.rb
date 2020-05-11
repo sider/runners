@@ -145,25 +145,28 @@ module Runners
       end
     end
 
+    def setup
+      check_runner_config do |checked_config|
+        @ktlint_config = checked_config
+        yield
+      end
+    end
+
     def analyze(changes)
       delete_unchanged_files changes, only: ["*.kt", "*.kts"]
 
-      check_runner_config do |checked_config|
-        @ktlint_config = checked_config
+      issues = case
+               when gradle_config
+                 run_gradle
+               when maven_config
+                 run_maven
+               else
+                 run_cli
+               end
 
-        issues = case
-                 when gradle_config
-                   run_gradle
-                 when maven_config
-                   run_maven
-                 else
-                   run_cli
-                 end
-
-        Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-          issues.each do |issue|
-            result.add_issue issue
-          end
+      Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+        issues.each do |issue|
+          result.add_issue issue
         end
       end
     end
