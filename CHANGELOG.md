@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 
 - **SwiftLint** Improve error handling [#1063](https://github.com/sider/runners/pull/1063)
 - Log issues count [#1064](https://github.com/sider/runners/pull/1064)
+- Ensure `Processor#analyzer` initialization [#1067](https://github.com/sider/runners/pull/1067)
 
 ## 0.23.0
 
