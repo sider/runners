@@ -76,12 +76,18 @@ module Runners
         trace_writer.message "Writing result..." do
           writer << Schema::Result.envelope.coerce(json)
         end
+
         result.tap do
           finished_at = Time.now
-          duration = finished_at - started_at
           trace_writer.header "Analysis finished", recorded_at: finished_at
+
+          if result.is_a? Results::Success
+            # @type var result: Results::Success
+            trace_writer.message "#{result.issues.size} issue(s) found."
+          end
+
           trace_writer.message "Finished at #{finished_at.utc}"
-          trace_writer.message "Elapsed time: #{format_duration(duration)}"
+          trace_writer.message "Elapsed time: #{format_duration(finished_at - started_at)}"
         end
       end
     ensure
