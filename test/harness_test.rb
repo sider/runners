@@ -28,8 +28,16 @@ class HarnessTest < Minitest::Test
       "test"
     end
 
+    def analyzer_name
+      "Test"
+    end
+
+    def analyzer_version
+      "0.1.3"
+    end
+
     def analyze(changes)
-      Results::Success.new(guid: guid, analyzer: Analyzer.new(name: "Test", version: "0.1.3"))
+      Results::Success.new(guid: guid, analyzer: analyzer)
     end
   end
 
@@ -74,8 +82,16 @@ class HarnessTest < Minitest::Test
         'test'
       end
 
+      def analyzer_name
+        "Test"
+      end
+
+      def analyzer_version
+        "0.1.3"
+      end
+
       def analyze(changes)
-        Results::Success.new(guid: guid, analyzer: Analyzer.new(name: "Test", version: "0.1.3")).tap do |result|
+        Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
           result.add_issue Issue.new(
             path: Pathname("test/cli/test_test.rb"),
             location: Location.new(start_line: 0),
@@ -184,6 +200,14 @@ class HarnessTest < Minitest::Test
         'test'
       end
 
+      def analyzer_name
+        'Test'
+      end
+
+      def analyzer_version
+        '0.1.3'
+      end
+
       def setup
         (current_dir + "touch").write("#setup should be called before #analyze")
         yield
@@ -191,7 +215,7 @@ class HarnessTest < Minitest::Test
 
       def analyze(changes)
         (current_dir + "touch").file? or raise
-        Results::Success.new(guid: guid, analyzer: Analyzer.new(name: "Test", version: "0.1.3"))
+        Results::Success.new(guid: guid, analyzer: analyzer)
       end
     end
 

@@ -53,6 +53,10 @@ class CLITest < Minitest::Test
       "rubocop"
     end
 
+    def analyzer_version
+      "1.2.3"
+    end
+
     def setup
       yield
     end
@@ -63,7 +67,7 @@ class CLITest < Minitest::Test
 
       add_warning('hogehogewarn')
 
-      Runners::Results::Success.new(guid: guid, analyzer: Runners::Analyzer.new(name: "test-analyzer", version: "3.14"))
+      Runners::Results::Success.new(guid: guid, analyzer: analyzer)
     end
   end
 
