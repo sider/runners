@@ -100,15 +100,17 @@ module Runners
         return Results::Success.new(guid: guid, analyzer: analyzer)
       end
 
-      begin
-        json_result = parse_result(stdout)
-      rescue JSON::ParserError
-        message = "SwiftLint unexpectedly failed. Please see the log for details."
+      stderr.match(/Could not read configuration file at path '(.+)'/) do |m|
+        message = "Could not read configuration file at path '#{relative_path(m[1])}'."
         return Results::Failure.new(guid: guid, message: message, analyzer: analyzer)
       end
 
+      stderr.match(/Currently running SwiftLint .+ but configuration specified version .+\./) do |m|
+        return Results::Failure.new(guid: guid, message: m[0], analyzer: analyzer)
+      end
+
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        json_result.each { |v| result.add_issue(v) }
+        parse_result(stdout).each { |v| result.add_issue(v) }
       end
     end
   end

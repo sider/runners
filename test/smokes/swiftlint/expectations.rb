@@ -146,15 +146,15 @@ s.add_test("no_swift_file", type: "success", issues: [], analyzer: { name: "Swif
 s.add_test(
   "no_config_file",
   type: "failure",
-  message: "SwiftLint unexpectedly failed. Please see the log for details.",
+  message: "Could not read configuration file at path 'not_found.yml'.",
   analyzer: { name: "SwiftLint", version: "0.39.2" },
   warnings: [
     {
-      message: <<~MSG.strip,
-DEPRECATION WARNING!!!
+      message: <<~MSG.strip
+      DEPRECATION WARNING!!!
 The `$.linter.swiftlint.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
 Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/swift/swiftlint ).
-MSG
+MSG,
       file: "sideci.yml"
     }
   ]
@@ -172,6 +172,6 @@ s.add_test(
 s.add_test(
   "wrong_swiftlint_version_set",
   type: "failure",
-  message: "SwiftLint unexpectedly failed. Please see the log for details.",
+  message: "Currently running SwiftLint 0.39.2 but configuration specified version 0.0.0.",
   analyzer: { name: "SwiftLint", version: "0.39.2" }
 )
