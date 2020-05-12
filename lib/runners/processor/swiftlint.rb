@@ -36,7 +36,13 @@ module Runners
     end
 
     def analyze(changes)
+      # NOTE: This makes it impossible using rules like `unused_import`.
+      #       But the `unused_import` rule is for the `swiftlint analyze` command, not `swiftlint lint`.
+      #       So, it seems there should not be a big inconvenience.
+      #
+      # @see https://realm.github.io/SwiftLint/unused_import.html
       delete_unchanged_files changes, only: ["*.swift"]
+
       run_analyzer
     end
 

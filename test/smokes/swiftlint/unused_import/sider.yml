@@ -1,0 +1,3 @@
+linter:
+  swiftlint:
+    enable-all-rules: true

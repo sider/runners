@@ -175,3 +175,8 @@ s.add_test(
   message: "Currently running SwiftLint 0.39.2 but configuration specified version 0.0.0.",
   analyzer: { name: "SwiftLint", version: "0.39.2" }
 )
+
+# NOTE: `unused_import` rule is for `swiftlint analyze` and is not reported with `swiftlint lint`
+#
+# @see https://realm.github.io/SwiftLint/unused_import.html
+s.add_test("unused_import", type: "success", issues: [], analyzer: { name: "SwiftLint", version: "0.39.2" })
