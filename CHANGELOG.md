@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 [Full diff](https://github.com/sider/runners/compare/0.23.0...0.23.1)
 
 - **SwiftLint** Improve error handling [#1063](https://github.com/sider/runners/pull/1063)
+- **SwiftLint** Delete unchanged files [#1069](https://github.com/sider/runners/pull/1069)
 - Log issues count [#1064](https://github.com/sider/runners/pull/1064)
 - Ensure `Processor#analyzer` initialization [#1067](https://github.com/sider/runners/pull/1067)
 
