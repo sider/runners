@@ -35,7 +35,8 @@ module Runners
       yield
     end
 
-    def analyze(_changes)
+    def analyze(changes)
+      delete_unchanged_files changes, only: ["*.swift"]
       run_analyzer
     end
 
