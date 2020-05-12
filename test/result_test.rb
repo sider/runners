@@ -302,7 +302,8 @@ class ResultTest < Minitest::Test
   end
 
   def test_error_result
-    result = Results::Error.new(guid: SecureRandom.uuid, exception: RuntimeError.new("some error!"))
+    result = Results::Error.new(guid: SecureRandom.uuid, exception: RuntimeError.new("some error!"),
+                                analyzer: Analyzer.new(name: "Foo", version: "1.2.3"))
 
     assert result.valid?
 
@@ -313,7 +314,8 @@ class ResultTest < Minitest::Test
                        type: "error",
                        class: "RuntimeError",
                        backtrace: nil,
-                       inspect: "#<RuntimeError: some error!>"
+                       inspect: "#<RuntimeError: some error!>",
+                       analyzer: { name: "Foo", version: "1.2.3" },
                      })
   end
 

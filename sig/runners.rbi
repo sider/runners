@@ -82,7 +82,8 @@ end
 
 class Runners::Results::Error < Runners::Results::Base
   attr_reader exception: Exception
-  def initialize: (guid: String, exception: Exception) -> any
+  attr_reader analyzer: Analyzer?
+  def initialize: (guid: String, exception: Exception, analyzer: Analyzer?) -> any
 end
 
 class Runners::Changes

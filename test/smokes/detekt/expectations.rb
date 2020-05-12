@@ -14,7 +14,11 @@ s.add_test(
 
 s.add_test(
   "with_invalid_sider_option",
-  type: "error", class: "RuntimeError", backtrace: :_, inspect: %r{.*\'non\/exists\/dir\/\' does not exist.*}
+  type: "error",
+  class: "RuntimeError",
+  backtrace: :_,
+  inspect: %r{.*\'non\/exists\/dir\/\' does not exist.*},
+  analyzer: { name: "detekt", version: "1.8.0" }
 )
 
 s.add_test(

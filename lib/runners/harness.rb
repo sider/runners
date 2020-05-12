@@ -25,6 +25,7 @@ module Runners
       @working_dir = working_dir
       @trace_writer = trace_writer
       @warnings = []
+      @analyzer = nil
     end
 
     def run
@@ -46,7 +47,7 @@ module Runners
               processor.show_runtime_versions
               result = processor.setup do
                 trace_writer.header "Running analyzer"
-                processor.analyzer # initialize analyzer
+                @analyzer = processor.analyzer # initialize analyzer
                 processor.analyze(changes)
               end
 
@@ -84,13 +85,13 @@ module Runners
           ---
           #{exn.raw_content}
         MSG
-        Results::Failure.new(guid: guid, message: exn.message)
+        Results::Failure.new(guid: guid, message: exn.message, analyzer: @analyzer)
       rescue UserError => exn
-        Results::Failure.new(guid: guid, message: exn.message)
+        Results::Failure.new(guid: guid, message: exn.message, analyzer: @analyzer)
       rescue => exn
         Bugsnag.notify(exn)
         handle_error(exn)
-        Results::Error.new(guid: guid, exception: exn)
+        Results::Error.new(guid: guid, exception: exn, analyzer: @analyzer)
       end
     end
 

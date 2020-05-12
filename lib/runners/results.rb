@@ -127,12 +127,13 @@ module Runners
     # Result to indicate that processor raises an exception.
     # Client programs should not return this result.
     class Error < Base
-      # @dynamic exception
-      attr_reader :exception
+      # @dynamic exception, analyzer
+      attr_reader :exception, :analyzer
 
-      def initialize(guid:, exception:)
+      def initialize(guid:, exception:, analyzer:)
         super(guid: guid)
         @exception = exception
+        @analyzer = analyzer
       end
 
       def as_json
@@ -141,6 +142,7 @@ module Runners
           json[:class] = exception.class.name
           json[:backtrace] = exception.backtrace
           json[:inspect] = exception.inspect
+          json[:analyzer] = analyzer&.as_json
         end
       end
 

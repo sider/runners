@@ -96,9 +96,23 @@ s.add_test(
   analyzer: { name: "Reek", version: "6.0.0" }
 )
 
-s.add_test("renamed_rule", type: "error", class: "Runners::Shell::ExecError", backtrace: :_, inspect: :_)
+s.add_test(
+  "renamed_rule",
+  type: "error",
+  class: "Runners::Shell::ExecError",
+  backtrace: :_,
+  inspect: :_,
+  analyzer: { name: "Reek", version: "6.0.0" }
+)
 
-s.add_test("v4_config_style", type: "error", class: "Runners::Shell::ExecError", backtrace: :_, inspect: :_)
+s.add_test(
+  "v4_config_style",
+  type: "error",
+  class: "Runners::Shell::ExecError",
+  backtrace: :_,
+  inspect: :_,
+  analyzer: { name: "Reek", version: "6.0.0" }
+)
 
 s.add_test(
   "v4_config_file_exists",
