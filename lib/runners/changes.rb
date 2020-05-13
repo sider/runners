@@ -34,6 +34,7 @@ module Runners
       gdp = patches # NOTE: This assignment is required for typecheck by Steep
       if gdp
         location = issue.location
+        # NOTE: #find_patch_by_file omits just renamed files.
         patch = gdp.find_patch_by_file(issue.path.to_s)
         if patch && location
           patch.changed_lines.one? { |line| location.start_line == line.number }
