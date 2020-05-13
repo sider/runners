@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.23.2...HEAD)
 
+- **ESLint** Support v7 [#1072](https://github.com/sider/runners/pull/1072)
+
 ## 0.23.2
 
 [Full diff](https://github.com/sider/runners/compare/0.23.1...0.23.2)
