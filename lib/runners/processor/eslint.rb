@@ -38,7 +38,7 @@ module Runners
     register_config_schema(name: :eslint, schema: Schema.runner_config)
 
     CONSTRAINTS = {
-      "eslint" => Constraint.new(">= 5.0.0", "< 7.0.0")
+      "eslint" => Constraint.new(">= 5.0.0", "< 8.0.0")
     }.freeze
 
     def setup

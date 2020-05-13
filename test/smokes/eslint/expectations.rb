@@ -353,3 +353,20 @@ s.add_test(
   analyzer: { name: "ESLint", version: "5.16.0" },
   warnings: [{ message: /Two lock files `package-lock.json` and `yarn.lock` are found/, file: "yarn.lock" }]
 )
+
+s.add_test(
+  "v7",
+  type: "success",
+  issues: [
+    {
+      id: "no-constant-condition",
+      message: "Unexpected constant condition.",
+      links: %w[https://eslint.org/docs/rules/no-constant-condition],
+      path: "test.js",
+      location: { start_line: 1, start_column: 5, end_line: 1, end_column: 16 },
+      object: { severity: "error", category: "Possible Errors", recommended: true },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "ESLint", version: "7.0.0" }
+)
