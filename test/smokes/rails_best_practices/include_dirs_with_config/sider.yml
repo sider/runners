@@ -1,0 +1,6 @@
+linter:
+  rails_best_practices:
+    vendor: false
+    spec: true
+    test: true
+    features: true

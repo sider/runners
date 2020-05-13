@@ -202,3 +202,72 @@ MESSAGE
     }
   ]
 )
+
+s.add_test(
+  "include_dirs_by_default",
+  type: "success",
+  analyzer: { name: "Rails Best Practices", version: "1.19.4" },
+  issues: [
+    {
+      message: "Don't rescue Exception",
+      links: %w[https://rails-bestpractices.com/posts/2012/11/01/don-t-rescue-exception-rescue-standarderror/],
+      id: "RailsBestPractices::Reviews::NotRescueExceptionReview",
+      path: "vendor/a.rb",
+      location: { start_line: 3, start_column: 0, end_line: 3, end_column: 0 },
+      object: nil,
+      git_blame_info: nil
+    }
+  ]
+)
+
+s.add_test(
+  "include_dirs_with_config",
+  type: "success",
+  analyzer: { name: "Rails Best Practices", version: "1.19.4" },
+  issues: [
+    {
+      message: "Don't rescue Exception",
+      links: %w[https://rails-bestpractices.com/posts/2012/11/01/don-t-rescue-exception-rescue-standarderror/],
+      id: "RailsBestPractices::Reviews::NotRescueExceptionReview",
+      path: "features/a.rb",
+      location: { start_line: 3, start_column: 0, end_line: 3, end_column: 0 },
+      object: nil,
+      git_blame_info: nil
+    },
+    {
+      message: "Don't rescue Exception",
+      links: %w[https://rails-bestpractices.com/posts/2012/11/01/don-t-rescue-exception-rescue-standarderror/],
+      id: "RailsBestPractices::Reviews::NotRescueExceptionReview",
+      path: "spec/a.rb",
+      location: { start_line: 3, start_column: 0, end_line: 3, end_column: 0 },
+      object: nil,
+      git_blame_info: nil
+    },
+    {
+      message: "Don't rescue Exception",
+      links: %w[https://rails-bestpractices.com/posts/2012/11/01/don-t-rescue-exception-rescue-standarderror/],
+      id: "RailsBestPractices::Reviews::NotRescueExceptionReview",
+      path: "test/a.rb",
+      location: { start_line: 3, start_column: 0, end_line: 3, end_column: 0 },
+      object: nil,
+      git_blame_info: nil
+    }
+  ]
+)
+
+s.add_test(
+  "exclude_multiple",
+  type: "success",
+  analyzer: { name: "Rails Best Practices", version: "1.19.4" },
+  issues: [
+    {
+      message: "Don't rescue Exception",
+      links: %w[https://rails-bestpractices.com/posts/2012/11/01/don-t-rescue-exception-rescue-standarderror/],
+      id: "RailsBestPractices::Reviews::NotRescueExceptionReview",
+      path: "foo.rb",
+      location: { start_line: 3, start_column: 0, end_line: 3, end_column: 0 },
+      object: nil,
+      git_blame_info: nil
+    }
+  ]
+)
