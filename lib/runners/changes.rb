@@ -35,6 +35,7 @@ module Runners
       if gdp
         location = issue.location
         # NOTE: #find_patch_by_file omits just renamed files.
+        # @see https://github.com/packsaddle/ruby-git_diff_parser/issues/272
         patch = gdp.find_patch_by_file(issue.path.to_s)
         if patch && location
           patch.changed_lines.one? { |line| location.start_line == line.number }
