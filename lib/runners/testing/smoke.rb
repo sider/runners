@@ -13,6 +13,8 @@ module Runners
 
       PROJECT_PATH = "/project".freeze
 
+      TestSet = Struct.new(:name, :pattern, :options, keyword_init: true)
+
       attr_reader :argv
 
       def docker_image
@@ -34,11 +36,11 @@ module Runners
       def run
         load expectations.to_s
 
-        results = Parallel.map(self.class.tests, in_processes: ENV["JOBS"]&.to_i) do |name, pattern|
+        results = Parallel.map(self.class.tests, in_processes: ENV["JOBS"]&.to_i) do |test_set|
           out = StringIO.new(''.dup)
-          result = run_test(name, pattern, out)
+          result = run_test(test_set, out)
           print out.string
-          [result, name]
+          [result, test_set.name]
         end
 
         abort "❌ No smoke tests!" if results.empty?
@@ -59,8 +61,8 @@ module Runners
         end
       end
 
-      def run_test(name, pattern, out)
-        commandline = command_line(name)
+      def run_test(test_set, out)
+        commandline = command_line(test_set)
         out.puts "$ #{commandline}"
         reader = JSONSEQ::Reader.new(io: StringIO.new(`#{commandline}`), decoder: -> (json) { JSON.parse(json, symbolize_names: true) })
         traces = reader.each_object.to_a
@@ -73,7 +75,7 @@ module Runners
           Schema::Result.envelope =~ object
         }
 
-        unify_result(result, pattern, out) ? :passed : :failed
+        unify_result(result, test_set.pattern, out) ? :passed : :failed
       end
 
       def unify_result(result, pattern, out)
@@ -99,10 +101,11 @@ module Runners
         ok
       end
 
-      def command_line(name)
-        smoke_target = (expectations.parent / name).realpath
+      def command_line(test_set)
+        smoke_target = (expectations.parent / test_set.name).realpath
         runners_options = JSON.dump(source: { head: PROJECT_PATH })
         commands = %W[docker run --rm --mount type=bind,source=#{smoke_target},target=#{PROJECT_PATH} --env RUNNERS_OPTIONS='#{runners_options}' #{docker_image} test-guid]
+        commands << "--network=none" if test_set.options[:offline]
         commands.join(" ")
       end
 
@@ -114,7 +117,7 @@ module Runners
         hash.awesome_inspect(indent: 2, index: false)
       end
 
-      @tests = {}
+      @tests = []
 
       def self.tests
         @tests
@@ -133,7 +136,8 @@ module Runners
       def self.add_test(name, type:, guid: "test-guid", timestamp: :_,
                         issues: nil, message: nil, analyzer: nil,
                         class: nil, backtrace: nil, inspect: nil,
-                        warnings: [], ci_config: :_, version: :_)
+                        warnings: [], ci_config: :_, version: :_,
+                        options: { offline: false })
         return unless only? name
 
         optional = {
@@ -145,12 +149,14 @@ module Runners
           inspect: inspect,
         }.compact
 
-        tests[name] = {
+        pattern = {
           result: { guid: guid, timestamp: timestamp, type: type, **optional },
           warnings: warnings,
           ci_config: ci_config,
           version: version,
         }
+
+        tests << TestSet.new(name: name, pattern: pattern, options: options)
       end
     end
   end
