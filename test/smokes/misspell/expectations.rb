@@ -14,7 +14,8 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Misspell", version: "0.3.4" }
+  analyzer: { name: "Misspell", version: "0.3.4" },
+  options: { offline: true }
 )
 
 s.add_test(
@@ -43,14 +44,15 @@ s.add_test(
   analyzer: { name: "Misspell", version: "0.3.4" },
   warnings: [
     {
-      message: <<~MSG.strip,
-DEPRECATION WARNING!!!
+      message: <<~MSG.strip
+      DEPRECATION WARNING!!!
 The `$.linter.misspell.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
 Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/others/misspell ).
-MSG
+MSG,
       file: "sideci.yml"
     }
-  ]
+  ],
+  options: { offline: true }
 )
 
 s.add_test(
@@ -67,7 +69,8 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Misspell", version: "0.3.4" }
+  analyzer: { name: "Misspell", version: "0.3.4" },
+  options: { offline: true }
 )
 
 s.add_test(
@@ -130,7 +133,8 @@ s.add_test(
     }
   ],
   analyzer: { name: "Misspell", version: "0.3.4" },
-  warnings: [{ message: /DEPRECATION WARNING!!!\nThe `\$\.linter\.misspell\.targets` option/, file: "sideci.yml" }]
+  warnings: [{ message: /DEPRECATION WARNING!!!\nThe `\$\.linter\.misspell\.targets` option/, file: "sideci.yml" }],
+  options: { offline: true }
 )
 
 s.add_test(
@@ -210,7 +214,8 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Misspell", version: "0.3.4" }
+  analyzer: { name: "Misspell", version: "0.3.4" },
+  options: { offline: true }
 )
 
 s.add_test(
@@ -218,7 +223,8 @@ s.add_test(
   type: "failure",
   message:
     "The value of the attribute `$.linter.misspell.locale` in your `sideci.yml` is invalid. Please fix and retry.",
-  analyzer: :_
+  analyzer: :_,
+  options: { offline: true }
 )
 
 s.add_test(
@@ -244,5 +250,6 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Misspell", version: "0.3.4" }
+  analyzer: { name: "Misspell", version: "0.3.4" },
+  options: { offline: true }
 )
