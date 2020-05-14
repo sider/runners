@@ -12,10 +12,10 @@ class Runners::Testing::Smoke
   def expectations: -> Pathname
   def initialize: (Array<String>) -> any
   def run: () -> void
-  def run_test: (TestSet, IO) -> Symbol
+  def run_test: (TestParams, IO) -> Symbol
   def unify_result: (any, any, IO) -> bool
   def with_data_container: <'x> { () -> 'x } -> 'x
-  def command_line: (TestSet) -> String
+  def command_line: (TestParams) -> String
   def system!: (*String) -> void
   def colored_pretty_inspect: (any) -> String
 
@@ -45,12 +45,12 @@ class Runners::Testing::Smoke
                               ?ci_config: Hash<Symbol, any> | Symbol,
                               ?version: String | Symbol) -> void
   def self.build_pattern: (**any) -> Hash<Symbol, any>
-  def self.tests: -> Array<TestSet>
+  def self.tests: -> Array<TestParams>
 end
 
 Runners::Testing::Smoke::PROJECT_PATH: String
 
-class Runners::Testing::Smoke::TestSet
+class Runners::Testing::Smoke::TestParams
   attr_accessor name: String
   attr_accessor pattern: Hash<Symbol, any>
   attr_accessor options: Hash<Symbol, any>

@@ -13,7 +13,7 @@ module Runners
 
       PROJECT_PATH = "/project".freeze
 
-      TestSet = Struct.new(:name, :pattern, :options, keyword_init: true)
+      TestParams = Struct.new(:name, :pattern, :options, keyword_init: true)
 
       attr_reader :argv
 
@@ -147,7 +147,7 @@ module Runners
           warnings: warnings, ci_config: ci_config, version: version
         )
 
-        tests << TestSet.new(name: name, pattern: pattern, options: {  offline: false  })
+        tests << TestParams.new(name: name, pattern: pattern, options: {  offline: false  })
       end
 
       def self.add_offline_test(name, type:, guid: "test-guid", timestamp: :_,
@@ -163,7 +163,7 @@ module Runners
           warnings: warnings, ci_config: ci_config, version: version
         )
 
-        tests << TestSet.new(name: name, pattern: pattern, options: { offline: true })
+        tests << TestParams.new(name: name, pattern: pattern, options: { offline: true })
       end
 
       def self.build_pattern(**fields)
