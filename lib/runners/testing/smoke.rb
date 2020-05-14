@@ -136,27 +136,50 @@ module Runners
       def self.add_test(name, type:, guid: "test-guid", timestamp: :_,
                         issues: nil, message: nil, analyzer: nil,
                         class: nil, backtrace: nil, inspect: nil,
-                        warnings: [], ci_config: :_, version: :_,
-                        options: { offline: false })
+                        warnings: [], ci_config: :_, version: :_)
         return unless only? name
 
+        pattern = build_pattern(type: type, guid: guid, timestamp: timestamp,
+          issues: issues, message: message, analyzer: analyzer,
+          class: binding.local_variable_get(:class), backtrace: backtrace, inspect: inspect,
+          warnings: warnings, ci_config: ci_config, version: version
+        )
+
+        tests << TestSet.new(name: name, pattern: pattern, options: {  offline: false  })
+      end
+
+      def self.add_offline_test(name, type:, guid: "test-guid", timestamp: :_,
+                                issues: nil, message: nil, analyzer: nil,
+                                class: nil, backtrace: nil, inspect: nil,
+                                warnings: [], ci_config: :_, version: :_)
+        return unless only? name
+
+        pattern = build_pattern(
+          type: type, guid: guid, timestamp: timestamp,
+          issues: issues, message: message, analyzer: analyzer,
+          class: binding.local_variable_get(:class), backtrace: backtrace, inspect: inspect,
+          warnings: warnings, ci_config: ci_config, version: version
+        )
+
+        tests << TestSet.new(name: name, pattern: pattern, options: { offline: true })
+      end
+
+      def self.build_pattern(**fields)
         optional = {
-          issues: issues,
-          message: message,
-          analyzer: analyzer,
-          class: binding.local_variable_get(:class),
-          backtrace: backtrace,
-          inspect: inspect,
+          issues: fields.fetch(:issues),
+          message: fields.fetch(:message),
+          analyzer: fields.fetch(:analyzer),
+          class: fields.fetch(:class),
+          backtrace: fields.fetch(:backtrace),
+          inspect: fields.fetch(:inspect),
         }.compact
 
-        pattern = {
-          result: { guid: guid, timestamp: timestamp, type: type, **optional },
-          warnings: warnings,
-          ci_config: ci_config,
-          version: version,
+        {
+          result: { guid: fields.fetch(:guid), timestamp: fields.fetch(:timestamp), type: fields.fetch(:type), **optional },
+          warnings: fields.fetch(:warnings),
+          ci_config: fields.fetch(:ci_config),
+          version: fields.fetch(:version),
         }
-
-        tests << TestSet.new(name: name, pattern: pattern, options: options)
       end
     end
   end
