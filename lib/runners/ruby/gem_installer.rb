@@ -5,15 +5,16 @@ module Runners
 
       DEFAULT_SOURCE = "https://rubygems.org"
 
-      attr_reader :gem_home, :specs, :trace_writer, :shell, :constraints, :config_path_name
+      attr_reader :gem_home, :specs, :trace_writer, :shell, :constraints, :config_path_name, :use_local
 
-      def initialize(shell:, home:, config_path_name:, specs:, constraints:, trace_writer:)
+      def initialize(shell:, home:, config_path_name:, specs:, constraints:, trace_writer:, use_local:)
         @gem_home = home
         @specs = specs
         @shell = shell
         @config_path_name = config_path_name
         @constraints = constraints
         @trace_writer = trace_writer
+        @use_local = use_local
       end
 
       def gemfile_path
@@ -31,7 +32,8 @@ module Runners
 
         Bundler.with_unbundled_env do
           shell.push_dir gem_home do
-            shell.capture3!("bundle", "install")
+            install_args = use_local ? %w[--local] : []
+            shell.capture3!("bundle", "install", *install_args)
             shell.capture3!("bundle", "list")
           rescue Shell::ExecError
             raise InstallationFailure.new(<<~MESSAGE.strip)

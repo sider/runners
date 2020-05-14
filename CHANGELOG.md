@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.23.3...HEAD)
 
+- Add :use_local not to attempt to fetch gems remotely [#1078](https://github.com/sider/runners/pull/1078)
+
 ## 0.23.3
 
 [Full diff](https://github.com/sider/runners/compare/0.23.2...0.23.3)
