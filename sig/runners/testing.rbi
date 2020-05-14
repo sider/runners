@@ -53,7 +53,7 @@ Runners::Testing::Smoke::PROJECT_PATH: String
 class Runners::Testing::Smoke::TestParams
   attr_accessor name: String
   attr_accessor pattern: Hash<Symbol, any>
-  attr_accessor options: Hash<Symbol, any>
+  attr_accessor offline: bool
 
-  def initialize: (name: String, pattern: Hash<Symbol, any>, options: Hash<Symbol, any>) -> any
+  def initialize: (name: String, pattern: Hash<Symbol, any>, offline: bool) -> any
 end

@@ -13,7 +13,7 @@ module Runners
 
       PROJECT_PATH = "/project".freeze
 
-      TestParams = Struct.new(:name, :pattern, :options, keyword_init: true)
+      TestParams = Struct.new(:name, :pattern, :offline, keyword_init: true)
 
       attr_reader :argv
 
@@ -105,7 +105,7 @@ module Runners
         smoke_target = (expectations.parent / test_set.name).realpath
         runners_options = JSON.dump(source: { head: PROJECT_PATH })
         commands = %W[docker run --rm --mount type=bind,source=#{smoke_target},target=#{PROJECT_PATH} --env RUNNERS_OPTIONS='#{runners_options}']
-        commands << "--network=none" if test_set.options[:offline]
+        commands << "--network=none" if test_set.offline
         commands << docker_image
         commands << test_set.pattern.dig(:result, :guid)
         commands.join(" ")
@@ -147,7 +147,7 @@ module Runners
           warnings: warnings, ci_config: ci_config, version: version
         )
 
-        tests << TestParams.new(name: name, pattern: pattern, options: {  offline: false  })
+        tests << TestParams.new(name: name, pattern: pattern, offline: false)
       end
 
       def self.add_offline_test(name, type:, guid: "test-guid", timestamp: :_,
@@ -163,7 +163,7 @@ module Runners
           warnings: warnings, ci_config: ci_config, version: version
         )
 
-        tests << TestParams.new(name: name, pattern: pattern, options: { offline: true })
+        tests << TestParams.new(name: name, pattern: pattern, offline: true)
       end
 
       def self.build_pattern(**fields)
