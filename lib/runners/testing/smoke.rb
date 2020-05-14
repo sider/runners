@@ -104,8 +104,10 @@ module Runners
       def command_line(test_set)
         smoke_target = (expectations.parent / test_set.name).realpath
         runners_options = JSON.dump(source: { head: PROJECT_PATH })
-        commands = %W[docker run --rm --mount type=bind,source=#{smoke_target},target=#{PROJECT_PATH} --env RUNNERS_OPTIONS='#{runners_options}' #{docker_image} test-guid]
+        commands = %W[docker run --rm --mount type=bind,source=#{smoke_target},target=#{PROJECT_PATH} --env RUNNERS_OPTIONS='#{runners_options}']
         commands << "--network=none" if test_set.options[:offline]
+        commands << docker_image
+        commands << test_set.pattern[:guid]
         commands.join(" ")
       end
 
