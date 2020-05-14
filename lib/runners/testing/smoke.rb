@@ -34,6 +34,7 @@ module Runners
       end
 
       def run
+        puts "Running smoke tests..."
         load expectations.to_s
 
         results = Parallel.map(self.class.tests, in_processes: ENV["JOBS"]&.to_i) do |params|
@@ -50,7 +51,7 @@ module Runners
         total = results.count
         summary = "#{passed} passed, #{failed} failed, #{total} total"
 
-        puts "-" * 30
+        puts
         if failed == 0
           puts "❤️  Smoke tests passed! -- #{summary}"
         else
@@ -62,9 +63,10 @@ module Runners
       end
 
       def run_test(params, out)
-        commandline = command_line(params)
-        out.puts "$ #{commandline}"
-        reader = JSONSEQ::Reader.new(io: StringIO.new(`#{commandline}`), decoder: -> (json) { JSON.parse(json, symbolize_names: true) })
+        cmd = command_line(params)
+        out.puts
+        out.puts "$ #{cmd}"
+        reader = JSONSEQ::Reader.new(io: StringIO.new(`#{cmd}`), decoder: -> (json) { JSON.parse(json, symbolize_names: true) })
         traces = reader.each_object.to_a
         if ENV['SHOW_TRACE']
           traces.each do |trace|
@@ -103,16 +105,14 @@ module Runners
 
       def command_line(params)
         smoke_target = (expectations.parent / params.name).realpath
-        runners_options = JSON.dump(source: { head: PROJECT_PATH })
-        commands = %W[docker run --rm --mount type=bind,source=#{smoke_target},target=#{PROJECT_PATH} --env RUNNERS_OPTIONS='#{runners_options}']
+        runners_options = JSON.dump({ source: { head: PROJECT_PATH } })
+        commands = %w[docker run --rm]
+        commands << "--mount" << "type=bind,source=#{smoke_target},target=#{PROJECT_PATH}"
+        commands << "--env" << "RUNNERS_OPTIONS='#{runners_options}'"
         commands << "--network=none" if params.offline
         commands << docker_image
         commands << params.pattern.dig(:result, :guid)
         commands.join(" ")
-      end
-
-      def system!(*command_args)
-        system(*command_args, exception: true)
       end
 
       def colored_pretty_inspect(hash)
@@ -141,6 +141,8 @@ module Runners
                         warnings: [], ci_config: :_, version: :_)
         return unless only? name
 
+        check_duplicate name
+
         pattern = build_pattern(type: type, guid: guid, timestamp: timestamp,
           issues: issues, message: message, analyzer: analyzer,
           class: binding.local_variable_get(:class), backtrace: backtrace, inspect: inspect,
@@ -156,6 +158,8 @@ module Runners
                                 warnings: [], ci_config: :_, version: :_)
         return unless only? name
 
+        check_duplicate name
+
         pattern = build_pattern(
           type: type, guid: guid, timestamp: timestamp,
           issues: issues, message: message, analyzer: analyzer,
@@ -164,6 +168,12 @@ module Runners
         )
 
         tests << TestParams.new(name: name, pattern: pattern, offline: true)
+      end
+
+      def self.check_duplicate(name)
+        if tests.find { |t| t.name === name }
+          raise ArgumentError, "Smoke test #{name.inspect} is duplicate"
+        end
       end
 
       def self.build_pattern(**fields)

@@ -16,7 +16,6 @@ class Runners::Testing::Smoke
   def unify_result: (any, any, IO) -> bool
   def with_data_container: <'x> { () -> 'x } -> 'x
   def command_line: (TestParams) -> String
-  def system!: (*String) -> void
   def colored_pretty_inspect: (any) -> String
 
   def self.only?: (String) -> bool
@@ -44,6 +43,7 @@ class Runners::Testing::Smoke
                               ?warnings: Array<Hash<Symbol, any>>,
                               ?ci_config: Hash<Symbol, any> | Symbol,
                               ?version: String | Symbol) -> void
+  def self.check_duplicate: (String) -> void
   def self.build_pattern: (**any) -> Hash<Symbol, any>
   def self.tests: -> Array<TestParams>
 end
