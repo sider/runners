@@ -36,11 +36,11 @@ module Runners
       def run
         load expectations.to_s
 
-        results = Parallel.map(self.class.tests, in_processes: ENV["JOBS"]&.to_i) do |test_set|
+        results = Parallel.map(self.class.tests, in_processes: ENV["JOBS"]&.to_i) do |params|
           out = StringIO.new(''.dup)
-          result = run_test(test_set, out)
+          result = run_test(params, out)
           print out.string
-          [result, test_set.name]
+          [result, params.name]
         end
 
         abort "❌ No smoke tests!" if results.empty?
@@ -61,8 +61,8 @@ module Runners
         end
       end
 
-      def run_test(test_set, out)
-        commandline = command_line(test_set)
+      def run_test(params, out)
+        commandline = command_line(params)
         out.puts "$ #{commandline}"
         reader = JSONSEQ::Reader.new(io: StringIO.new(`#{commandline}`), decoder: -> (json) { JSON.parse(json, symbolize_names: true) })
         traces = reader.each_object.to_a
@@ -75,7 +75,7 @@ module Runners
           Schema::Result.envelope =~ object
         }
 
-        unify_result(result, test_set.pattern, out) ? :passed : :failed
+        unify_result(result, params.pattern, out) ? :passed : :failed
       end
 
       def unify_result(result, pattern, out)
@@ -101,13 +101,13 @@ module Runners
         ok
       end
 
-      def command_line(test_set)
-        smoke_target = (expectations.parent / test_set.name).realpath
+      def command_line(params)
+        smoke_target = (expectations.parent / params.name).realpath
         runners_options = JSON.dump(source: { head: PROJECT_PATH })
         commands = %W[docker run --rm --mount type=bind,source=#{smoke_target},target=#{PROJECT_PATH} --env RUNNERS_OPTIONS='#{runners_options}']
-        commands << "--network=none" if test_set.offline
+        commands << "--network=none" if params.offline
         commands << docker_image
-        commands << test_set.pattern.dig(:result, :guid)
+        commands << params.pattern.dig(:result, :guid)
         commands.join(" ")
       end
 
