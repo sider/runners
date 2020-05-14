@@ -13,7 +13,6 @@ All 36 analyzers are provided as a Docker image:
 |:-----|:------|:------:|
 | Brakeman | [docker](https://hub.docker.com/r/sider/runner_brakeman), [source](https://github.com/presidentbeef/brakeman), [doc](https://help.sider.review/tools/ruby/brakeman) | ✅ |
 | Checkstyle | [docker](https://hub.docker.com/r/sider/runner_checkstyle), [source](https://github.com/checkstyle/checkstyle), [doc](https://help.sider.review/tools/java/checkstyle) | ✅ |
-| PHP_CodeSniffer | [docker](https://hub.docker.com/r/sider/runner_code_sniffer), [source](https://github.com/squizlabs/PHP_CodeSniffer), [doc](https://help.sider.review/tools/php/codesniffer) | ✅ |
 | CoffeeLint | [docker](https://hub.docker.com/r/sider/runner_coffeelint), [source](https://github.com/clutchski/coffeelint), [doc](https://help.sider.review/tools/javascript/coffeelint) | ✅ |
 | Cppcheck | [docker](https://hub.docker.com/r/sider/runner_cppcheck), [source](https://github.com/danmar/cppcheck), [doc](https://help.sider.review/tools/cplusplus/cppcheck) | ✅ |
 | cpplint | [docker](https://hub.docker.com/r/sider/runner_cpplint), [source](https://github.com/cpplint/cpplint), [doc](https://help.sider.review/tools/cplusplus/cpplint) | ✅ |
@@ -21,10 +20,10 @@ All 36 analyzers are provided as a Docker image:
 | ESLint | [docker](https://hub.docker.com/r/sider/runner_eslint), [source](https://github.com/eslint/eslint), [doc](https://help.sider.review/tools/javascript/eslint) | ✅ |
 | Flake8 | [docker](https://hub.docker.com/r/sider/runner_flake8), [source](https://github.com/PyCQA/flake8), [doc](https://help.sider.review/tools/python/flake8) | ✅ |
 | FxCop | [docker](https://hub.docker.com/r/sider/runner_fxcop), [source](https://github.com/dotnet/roslyn-analyzers), [doc](https://help.sider.review/tools/csharp/fxcop) | ✅ |
+| Go Meta Linter | [docker](https://hub.docker.com/r/sider/runner_gometalinter), [source](https://github.com/alecthomas/gometalinter), [doc](https://help.sider.review/tools/go/gometalinter) | ⚠️ *deprecated* |
 | go vet | [docker](https://hub.docker.com/r/sider/runner_go_vet), [website](https://golang.org/cmd/vet), [doc](https://help.sider.review/tools/go/govet) | ⚠️ *deprecated* |
 | GolangCI-Lint | [docker](https://hub.docker.com/r/sider/runner_golangci_lint), [source](https://github.com/golangci/golangci-lint), [doc](https://help.sider.review/tools/go/golangci-lint) | ✅ |
 | Golint | [docker](https://hub.docker.com/r/sider/runner_golint), [source](https://github.com/golang/lint), [doc](https://help.sider.review/tools/go/golint) | ⚠️ *deprecated* |
-| Go Meta Linter | [docker](https://hub.docker.com/r/sider/runner_gometalinter), [source](https://github.com/alecthomas/gometalinter), [doc](https://help.sider.review/tools/go/gometalinter) | ⚠️ *deprecated* |
 | Goodcheck | [docker](https://hub.docker.com/r/sider/runner_goodcheck), [source](https://github.com/sider/goodcheck), [doc](https://help.sider.review/tools/others/goodcheck) | ✅ |
 | hadolint | [docker](https://hub.docker.com/r/sider/runner_hadolint), [source](https://github.com/hadolint/hadolint), [doc](https://help.sider.review/tools/dockerfile/hadolint) | ✅ |
 | HAML-Lint | [docker](https://hub.docker.com/r/sider/runner_haml_lint), [source](https://github.com/sds/haml-lint), [doc](https://help.sider.review/tools/ruby/haml-lint) | ✅ |
@@ -34,6 +33,7 @@ All 36 analyzers are provided as a Docker image:
 | LanguageTool | [docker](https://hub.docker.com/r/sider/runner_languagetool), [source](https://github.com/languagetool-org/languagetool), [doc](https://help.sider.review/tools/others/languagetool) | ✅ |
 | Misspell | [docker](https://hub.docker.com/r/sider/runner_misspell), [source](https://github.com/client9/misspell), [doc](https://help.sider.review/tools/others/misspell) | ✅ |
 | Phinder | [docker](https://hub.docker.com/r/sider/runner_phinder), [source](https://github.com/sider/phinder), [doc](https://help.sider.review/tools/php/phinder) | ✅ |
+| PHP_CodeSniffer | [docker](https://hub.docker.com/r/sider/runner_code_sniffer), [source](https://github.com/squizlabs/PHP_CodeSniffer), [doc](https://help.sider.review/tools/php/codesniffer) | ✅ |
 | PHPMD | [docker](https://hub.docker.com/r/sider/runner_phpmd), [source](https://github.com/phpmd/phpmd), [doc](https://help.sider.review/tools/php/phpmd) | ✅ |
 | PMD Java | [docker](https://hub.docker.com/r/sider/runner_pmd_java), [source](https://github.com/pmd/pmd), [doc](https://help.sider.review/tools/java/pmd) | ✅ |
 | Querly | [docker](https://hub.docker.com/r/sider/runner_querly), [source](https://github.com/soutaro/querly), [doc](https://help.sider.review/tools/ruby/querly) | ✅ |

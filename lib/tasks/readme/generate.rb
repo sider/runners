@@ -7,6 +7,8 @@ namespace :readme do
 
     analyzers = YAML.safe_load(root.join("analyzers.yml").read, symbolize_names: true).fetch(:analyzers)
 
+    analyzers = analyzers.sort_by { |_, analyzer| analyzer.fetch(:name).downcase }
+
     list = analyzers.map do |id, analyzer|
       links = []
       links << "[docker](https://hub.docker.com/r/sider/runner_#{id})"
