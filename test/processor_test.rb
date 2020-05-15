@@ -121,7 +121,7 @@ class ProcessorTest < Minitest::Test
       assert_equal Pathname("bar/baz"), processor.relative_path((workspace.working_dir / "foo/bar/baz").to_s, from: workspace.working_dir / "foo")
 
       # If relative path is given, interpreted from current_dir
-      processor.push_dir workspace.working_dir / "foo" do
+      processor.chdir workspace.working_dir / "foo" do
         assert_equal Pathname("foo/bar/baz"), processor.relative_path("bar/baz")
       end
     end
@@ -154,7 +154,7 @@ class ProcessorTest < Minitest::Test
     end
   end
 
-  def test_push_root_dir_with_config
+  def test_in_root_dir_with_config
     # when root_dir is given, run is invoked within the dir
     with_workspace do |workspace|
       (workspace.working_dir / "app/bar").mkpath
@@ -165,28 +165,22 @@ class ProcessorTest < Minitest::Test
             root_dir: app/bar
       YAML
 
-      run_path = nil
-      processor.push_root_dir do
-        run_path = processor.current_dir
+      processor.in_root_dir do |dir|
+        assert_equal workspace.working_dir / "app/bar", dir
       end
-
-      assert_equal workspace.working_dir / "app/bar", run_path
     end
   end
 
-  def test_push_root_dir_without_config
+  def test_in_root_dir_without_config
     # when root_dir is not given, run is invoked within the working_dir
     with_workspace do |workspace|
       (workspace.working_dir / "app/bar").mkpath
 
       processor = new_processor(workspace: workspace)
 
-      run_path = nil
-      processor.push_root_dir do
-        run_path = processor.current_dir
+      processor.in_root_dir do |dir|
+        assert_equal workspace.working_dir, dir
       end
-
-      assert_equal workspace.working_dir, run_path
     end
   end
 

@@ -119,7 +119,7 @@ module Runners
     def push_import_path_dir
       with_import_path do |path|
         if path
-          push_dir path do
+          chdir path do
             yield
           end
         else

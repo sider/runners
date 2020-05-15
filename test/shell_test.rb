@@ -16,6 +16,20 @@ class ShellTest < Minitest::Test
     assert_equal expected, actual
   end
 
+  def test_chdir
+    shell = Shell.new(current_dir: Pathname("foo"), trace_writer: trace_writer, env_hash: {})
+    assert_equal Pathname("foo"), shell.current_dir
+
+    ret = shell.chdir(Pathname("bar")) do |dir|
+      assert_equal Pathname("bar"), dir
+      assert_equal Pathname("bar"), shell.current_dir
+      "Hi."
+    end
+    assert_equal "Hi.", ret
+
+    assert_equal Pathname("foo"), shell.current_dir
+  end
+
   def test_capture3_trace
     mktmpdir do |path|
       shell = Shell.new(current_dir: path, trace_writer: trace_writer, env_hash: {})

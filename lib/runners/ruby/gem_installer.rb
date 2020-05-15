@@ -30,7 +30,7 @@ module Runners
         trace_writer.header "Installing gems..."
 
         Bundler.with_unbundled_env do
-          shell.push_dir gem_home do
+          shell.chdir gem_home do
             shell.capture3!("bundle", "install")
             shell.capture3!("bundle", "list")
           rescue Shell::ExecError

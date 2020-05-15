@@ -224,7 +224,7 @@ gem 'multi_json', git: 'https://github.com/intridea/multi_json.git', tag: 'v1.14
 gem 'rspec-request_describer', git: 'https://github.com/r7kamura/rspec-request_describer.git'
 EOF
 
-      shell.push_dir(path) do
+      shell.chdir(path) do
         Bundler.with_unbundled_env do
           shell.capture3!("bundle", "lock")
         end
@@ -509,7 +509,7 @@ source "https://rubygems.org"
 gem 'meowcop'
 EOF
 
-      shell.push_dir(workspace.working_dir) do
+      shell.chdir(workspace.working_dir) do
         Bundler.with_unbundled_env do
           shell.capture3!("bundle", "lock")
         end
@@ -557,7 +557,7 @@ source "https://rubygems.org"
 gem 'strong_json', '2.1.0'
 EOF
 
-      shell.push_dir(workspace.working_dir) do
+      shell.chdir(workspace.working_dir) do
         Bundler.with_unbundled_env do
           shell.capture3!("bundle", "lock")
         end
@@ -586,7 +586,7 @@ gem 'meowcop'
 gem 'rack'
 EOF
 
-      shell.push_dir(workspace.working_dir) do
+      shell.chdir(workspace.working_dir) do
         Bundler.with_unbundled_env do
           shell.capture3!("bundle", "lock")
         end
@@ -623,7 +623,7 @@ source "https://rubygems.org"
 gem 'multi_json', '1.12.0'
 EOF
 
-      shell.push_dir(workspace.working_dir) do
+      shell.chdir(workspace.working_dir) do
         Bundler.with_unbundled_env do
           shell.capture3!("bundle", "lock")
         end

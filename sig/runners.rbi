@@ -121,10 +121,10 @@ class Runners::Processor
   def analyze: (Changes) -> result
   def config_linter: () -> Hash<Symbol, any>
   def check_root_dir_exist: () -> result?
-  def push_root_dir: <'x> { -> 'x } -> 'x
+  def in_root_dir: <'x> { (Pathname) -> 'x } -> 'x
   def ensure_files: (*Pathname) { (Pathname) -> result } -> result
   def ensure_runner_config_schema: (any) { (any) -> result } -> result
-  def push_dir: <'x> (Pathname) { -> 'x } -> 'x
+  def chdir: <'x> (Pathname) { (Pathname) -> 'x } -> 'x
   def current_dir: () -> Pathname
 
   def self.register_config_schema: (**any) -> void
@@ -165,7 +165,6 @@ type capture3_options = bool | Proc
 class Runners::Shell
   attr_reader trace_writer: TraceWriter
   attr_reader env_hash_stack: Array<Hash<String, String?>>
-  attr_reader dir_stack: Array<Pathname>
 
   def initialize: (current_dir: Pathname, env_hash: Hash<String, String?>, trace_writer: TraceWriter) -> any
 
@@ -174,7 +173,7 @@ class Runners::Shell
   def capture3_with_retry!: (String, *String, ?tries: Integer) -> [String, String]
   def capture3_trace: (String, *String, **capture3_options) -> [String, String, Process::Status]
 
-  def push_dir: <'x> (Pathname) { -> 'x } -> 'x
+  def chdir: <'x> (Pathname) { (Pathname) -> 'x } -> 'x
   def current_dir: () -> Pathname
 
   def push_env_hash: <'x> (Hash<String, String?>) { -> 'x } -> 'x

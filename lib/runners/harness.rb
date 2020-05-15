@@ -42,7 +42,7 @@ module Runners
             root_dir_not_found = processor.check_root_dir_exist
             return root_dir_not_found if root_dir_not_found
 
-            processor.push_root_dir do
+            processor.in_root_dir do
               trace_writer.header "Setting up analyzer"
               processor.show_runtime_versions
               result = processor.setup do

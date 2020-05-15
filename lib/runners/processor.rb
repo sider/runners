@@ -8,7 +8,7 @@ module Runners
     attr_reader :guid, :workspace, :working_dir, :git_ssh_path, :trace_writer, :warnings, :config, :shell
 
     def_delegators :@shell,
-      :push_dir, :current_dir,
+      :chdir, :current_dir,
       :capture3, :capture3!, :capture3_trace, :capture3_with_retry!,
       :env_hash, :push_env_hash
 
@@ -108,8 +108,8 @@ module Runners
       Results::Failure.new(guid: guid, message: message)
     end
 
-    def push_root_dir(&block)
-      push_dir(root_dir, &block)
+    def in_root_dir(&block)
+      chdir(root_dir, &block)
     end
 
     def root_dir
