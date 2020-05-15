@@ -41,13 +41,13 @@ s.add_offline_test(
   analyzer: { name: "Goodcheck", version: "2.5.1" },
   warnings: [
     {
-      message: <<~MESSAGE.strip
-      Sider cannot find the required configuration file `goodcheck.yml`.
+      message: <<~MESSAGE.strip,
+Sider cannot find the required configuration file `goodcheck.yml`.
 Please set up Goodcheck by following the instructions, or you can disable it in the repository settings.
 
 - https://github.com/sider/goodcheck
 - https://help.sider.review/tools/others/goodcheck
-MESSAGE,
+MESSAGE
       file: nil
     }
   ]
