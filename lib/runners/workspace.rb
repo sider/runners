@@ -21,7 +21,7 @@ module Runners
       end
     end
 
-    attr_reader :options, :working_dir, :trace_writer
+    attr_reader :options, :working_dir, :trace_writer, :shell
 
     # @param options [Options]
     # @param working_dir [Pathname]
@@ -30,6 +30,7 @@ module Runners
       @options = options
       @working_dir = working_dir
       @trace_writer = trace_writer
+      @shell = Shell.new(current_dir: working_dir, trace_writer: trace_writer, env_hash: {})
     end
 
     # @yieldparam git_ssh_path [Pathname, nil]
@@ -171,8 +172,7 @@ module Runners
 
     def extract(archive, dir)
       trace_writer.message "Extracting archive to directory..." do
-        out, status = Open3.capture2e("tar", "xf", archive.to_s, chdir: dir)
-        raise "Extracting archive failed - #{out}" unless status.success?
+        shell.capture3! "tar", "-xf", archive.to_path, "-C", dir.to_path
       end
     end
 

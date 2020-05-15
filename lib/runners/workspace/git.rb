@@ -1,8 +1,8 @@
 module Runners
   class Workspace::Git < Workspace
     def range_git_blame_info(path_string, start_line, end_line)
-      shell = Shell.new(current_dir: git_directory, trace_writer: trace_writer, env_hash: {})
-      stdout, _ = shell.capture3!("git", "blame", "-p", "-L", "#{start_line},#{end_line}", git_source.head, "--", path_string, trace_stdout: false, trace_stderr: true)
+      stdout, _ = shell.capture3!("git", "blame", "-p", "-L", "#{start_line},#{end_line}", git_source.head, "--", path_string,
+                                  trace_stdout: false, trace_stderr: true, chdir: git_directory)
       GitBlameInfo.parse(stdout)
     end
 
@@ -22,19 +22,19 @@ module Runners
     end
 
     def provision(commit_hash, dest)
-      shell = Shell.new(current_dir: git_directory, trace_writer: trace_writer, env_hash: {})
-      shell.capture3!("git", "checkout", commit_hash)
+      shell.capture3!("git", "checkout", commit_hash, chdir: git_directory)
       FileUtils.copy_entry(git_directory, dest)
       FileUtils.remove_entry(dest / ".git")
     end
 
     def git_directory
       @git_directory ||= root_tmp_dir.tap do |path|
-        shell = Shell.new(current_dir: path, trace_writer: trace_writer, env_hash: {})
-        shell.capture3!("git", "init")
-        shell.capture3!("git", "config", "gc.auto", "0")
-        shell.capture3!("git", "remote", "add", "origin", remote_url.to_s)
-        shell.capture3!("git", "fetch", *git_fetch_args)
+        shell.chdir(path) do
+          shell.capture3!("git", "init")
+          shell.capture3!("git", "config", "gc.auto", "0")
+          shell.capture3!("git", "remote", "add", "origin", remote_url.to_s)
+          shell.capture3!("git", "fetch", *git_fetch_args)
+        end
       end
     end
 
@@ -56,12 +56,9 @@ module Runners
       base = git_source.base
       head = git_source.head
       if base && head
-        git_directory.yield_self do |path|
-          shell = Shell.new(current_dir: path, trace_writer: trace_writer, env_hash: {})
-          # NOTE: We should use `...` (triple-dot) instead of `..` (double-dot). See https://git-scm.com/docs/git-diff
-          stdout, _ = shell.capture3!("git", "diff", "#{base}...#{head}", trace_stdout: false)
-          GitDiffParser.parse(stdout)
-        end
+        # NOTE: We should use `...` (triple-dot) instead of `..` (double-dot). See https://git-scm.com/docs/git-diff
+        stdout, _ = shell.capture3!("git", "diff", "#{base}...#{head}", trace_stdout: false, chdir: git_directory)
+        GitDiffParser.parse(stdout)
       else
         nil
       end

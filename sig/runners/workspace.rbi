@@ -4,6 +4,7 @@ class Runners::Workspace
   attr_reader options: Options
   attr_reader working_dir: Pathname
   attr_reader trace_writer: TraceWriter
+  attr_reader shell: Shell
 
   def self.prepare: (options: Options, working_dir: Pathname, trace_writer: TraceWriter) -> instance
   def initialize: (options: Options, working_dir: Pathname, trace_writer: TraceWriter) -> any
