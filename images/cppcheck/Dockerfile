@@ -8,7 +8,7 @@ FROM sider/devon_rex_python:2.18.0 AS builder
 #
 # See https://github.com/danmar/cppcheck#gnu-make
 
-ARG CPPCHECK_VERSION=1.90
+ARG CPPCHECK_VERSION=2.0
 USER root
 RUN cd /tmp && \
     curl -sSL https://github.com/danmar/cppcheck/archive/${CPPCHECK_VERSION}.tar.gz | tar -xz && \
