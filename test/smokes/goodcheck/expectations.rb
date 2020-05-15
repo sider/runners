@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-s.add_test(
+s.add_offline_test(
   "success",
   type: "success",
   issues: [
@@ -17,7 +17,7 @@ s.add_test(
   analyzer: { name: "Goodcheck", version: "2.5.1" }
 )
 
-s.add_test(
+s.add_offline_test(
   "with_ci_config",
   type: "success",
   issues: [
@@ -34,33 +34,33 @@ s.add_test(
   analyzer: { name: "Goodcheck", version: "2.5.1" }
 )
 
-s.add_test(
+s.add_offline_test(
   "no_config_file",
   type: "success",
   issues: [],
   analyzer: { name: "Goodcheck", version: "2.5.1" },
   warnings: [
     {
-      message: <<~MESSAGE.strip,
-Sider cannot find the required configuration file `goodcheck.yml`.
+      message: <<~MESSAGE.strip
+      Sider cannot find the required configuration file `goodcheck.yml`.
 Please set up Goodcheck by following the instructions, or you can disable it in the repository settings.
 
 - https://github.com/sider/goodcheck
 - https://help.sider.review/tools/others/goodcheck
-MESSAGE
+MESSAGE,
       file: nil
     }
   ]
 )
 
-s.add_test(
+s.add_offline_test(
   "invalid_config_file",
   type: "failure",
   message: "Invalid config: TypeError at $.rules[0]: expected=rule, value=\"id:foo\"",
   analyzer: { name: "Goodcheck", version: "2.5.1" }
 )
 
-s.add_test(
+s.add_offline_test(
   "with_invalid_ci_config",
   type: "failure",
   message:
@@ -68,7 +68,7 @@ s.add_test(
   analyzer: :_
 )
 
-s.add_test(
+s.add_offline_test(
   "warning_config_file",
   type: "success",
   issues: [],
@@ -82,7 +82,7 @@ s.add_test(
   ]
 )
 
-s.add_test(
+s.add_offline_test(
   "deprecated-options",
   type: "success",
   issues: [],
@@ -107,7 +107,7 @@ s.add_test(
   analyzer: { name: "Goodcheck", version: "1.0.0" }
 )
 
-s.add_test(
+s.add_offline_test(
   "detect_there_is_no_content",
   type: "success",
   issues: [
@@ -124,7 +124,7 @@ s.add_test(
   analyzer: { name: "Goodcheck", version: "2.5.1" }
 )
 
-s.add_test(
+s.add_offline_test(
   "rules_without_pattern",
   type: "success",
   issues: [
