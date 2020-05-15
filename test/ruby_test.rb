@@ -59,7 +59,8 @@ class RubyTest < Minitest::Test
         home: path,
         config_path_name: "sider.yml",
         constraints: { "strong_json" => ["<= 0.8"], "rubocop" => [">= 0.55.0"] },
-        trace_writer: trace_writer
+        trace_writer: trace_writer,
+        use_local: false,
       )
 
       assert_equal <<~CONTENT, installer.gemfile_content
@@ -102,7 +103,8 @@ class RubyTest < Minitest::Test
         home: path,
         config_path_name: "sider.yml",
         constraints: {},
-        trace_writer: trace_writer
+        trace_writer: trace_writer,
+        use_local: false,
       )
 
       assert_equal <<~CONTENT, installer.gemfile_content
@@ -125,11 +127,13 @@ class RubyTest < Minitest::Test
         home: path,
         config_path_name: "sider.yml",
         trace_writer: trace_writer,
-        constraints: {}
+        constraints: {},
+        use_local: false,
       )
 
       installer.install! do
-        shell.capture3!("bundle", "exec", "gem", "list")
+        stdout, = shell.capture3!("bundle", "exec", "gem", "list")
+        assert_empty stdout.lines[1..]
       end
     end
   end
@@ -148,7 +152,8 @@ class RubyTest < Minitest::Test
         home: path,
         config_path_name: "sider.yml",
         trace_writer: trace_writer,
-        constraints: { "strong_json" => ["<= 0.8.0"] }
+        constraints: { "strong_json" => ["<= 0.8.0"] },
+        use_local: false,
       )
 
       installer.install! do |hash|
@@ -184,7 +189,8 @@ class RubyTest < Minitest::Test
         home: path,
         config_path_name: "sider.yml",
         trace_writer: trace_writer,
-        constraints: { "strong_json" => ["> 0.6.0"] }
+        constraints: { "strong_json" => ["> 0.6.0"] },
+        use_local: false,
       )
 
       assert_raises GemInstaller::InstallationFailure do
@@ -493,10 +499,10 @@ EOF
   def test_install_no_gems
     with_workspace do |workspace|
       processor = new_processor(workspace: workspace)
-      processor.install_gems([Spec.new(name: "strong_json", version: ["0.5.0"])],
-                         constraints: {}) do
+      processor.install_gems([], constraints: {}) do
         stdout, _ = processor.shell.capture3!("bundle", "list")
-        assert_match %r{\* strong_json \(0.5.0\)}, stdout
+        assert_empty stdout.lines[1..]
+        assert trace_writer.writer.find { |m| m[:trace] == :command_line && m[:command_line] == %w[bundle install --local] }
       end
     end
   end
@@ -527,6 +533,7 @@ EOF
         assert_match(/\* public_suffix \(4.0.0\)/, stdout)
         assert_match(/\* strong_json \(.+\)/, stdout)
         refute_match(/\* meowcop/, stdout)
+        assert trace_writer.writer.find { |m| m[:trace] == :command_line && m[:command_line] == %w[bundle install] }
       end
     end
   end
@@ -546,6 +553,7 @@ EOF
           # nop
         end
       end
+      assert trace_writer.writer.find { |m| m[:trace] == :command_line && m[:command_line] == %w[bundle install] }
     end
   end
 
@@ -570,6 +578,7 @@ EOF
         stdout, _ = processor.shell.capture3!("bundle", "list")
         assert_match(/\* multi_json \(1.13.0\)/, stdout)
         assert_match(/\* strong_json \(2.1.0\)/, stdout)
+        assert trace_writer.writer.find { |m| m[:trace] == :command_line && m[:command_line] == %w[bundle install] }
       end
     end
   end
@@ -610,6 +619,7 @@ EOF
         assert_match(/\* multi_json \(1.14.1\)/, stdout)
         refute_match(/\* meowcop/, stdout)
         refute_match(/\* rack/, stdout)
+        assert trace_writer.writer.find { |m| m[:trace] == :command_line && m[:command_line] == %w[bundle install] }
       end
     end
   end
@@ -629,10 +639,17 @@ EOF
         end
       end
 
-      processor = new_processor(workspace: workspace)
+      processor = new_processor(workspace: workspace, config_yaml: <<~YAML)
+        linter:
+          rubocop:
+            gems:
+              - rack
+      YAML
+
       processor.install_gems([Spec.new(name: "multi_json", version: ["1.14.0"])],
                              constraints: { "multi_json" => ["> 1.13.0"] }) do
         assert_equal 1, processor.warnings.count
+        assert trace_writer.writer.find { |m| m[:trace] == :command_line && m[:command_line] == %w[bundle install] }
         assert_equal <<~MESSAGE.strip, processor.warnings.first[:message]
           Sider tried to install `multi_json 1.12.0` according to your `Gemfile.lock`, but it installs `1.14.0` instead.
           Because `1.12.0` does not satisfy the Sider constraints ["> 1.13.0"].
@@ -663,6 +680,7 @@ EOF
           # noop
         end
       end
+      assert trace_writer.writer.find { |m| m[:trace] == :command_line && m[:command_line] == %w[bundle install] }
     end
   end
 
@@ -682,6 +700,7 @@ EOF
                              constraints: {}) do
         stdout, _ = processor.shell.capture3!("bundle", "list")
         assert_match %r{\* multi_json \(1.14.1\)}, stdout
+        assert trace_writer.writer.find { |m| m[:trace] == :command_line && m[:command_line] == %w[bundle install] }
       end
     end
   end
@@ -720,6 +739,7 @@ EOF
           assert_match(/\* multi_json \(1.14.1 1a58198\)/, stdout)
           assert_match(/\* rack \(2.2.2 a5e80f0\)/, stdout)
           assert_match(/\* ruby_private_gem/, stdout)
+          assert trace_writer.writer.find { |m| m[:trace] == :command_line && m[:command_line] == %w[bundle install] }
         end
       end
     end
@@ -740,6 +760,7 @@ EOF
       processor.install_gems([], optionals: [], constraints: {}) do
         stdout, _ = processor.shell.capture3!("bundle", "list")
         assert_match %r{\* multi_json \(1.14.1 1a58198\)}, stdout
+        assert trace_writer.writer.find { |m| m[:trace] == :command_line && m[:command_line] == %w[bundle install] }
       end
     end
   end
@@ -758,6 +779,38 @@ EOF
       processor.install_gems([], optionals: [], constraints: {}) do
         stdout, _ = processor.shell.capture3!("bundle", "list")
         assert_match(/\* rack \(2.2.2\)/, stdout)
+        assert trace_writer.writer.find { |m| m[:trace] == :command_line && m[:command_line] == %w[bundle install] }
+      end
+    end
+  end
+
+  def test_install_gems_without_user_specified_gems
+    with_workspace do |workspace|
+      processor = new_processor(workspace: workspace)
+
+      processor.install_gems([], optionals: [], constraints: {}) do
+        stdout, _ = processor.shell.capture3!("bundle", "list")
+        assert_empty stdout.lines[1..]
+        assert trace_writer.writer.find { |m| m[:trace] == :command_line && m[:command_line] == %w[bundle install --local] }
+      end
+    end
+  end
+
+  def test_install_gems_with_overrided_gems
+    with_workspace do |workspace|
+      (workspace.working_dir + "Gemfile").write(<<EOF)
+source "https://rubygems.org"
+
+gem "rack", "2.2.0"
+EOF
+
+      processor = new_processor(workspace: workspace)
+
+      processor.install_gems([Spec.new(name: "rack", version: ["2.2.2"])],
+                             constraints: {}) do
+        stdout, _ = processor.shell.capture3!("bundle", "list")
+        assert_match %r{\* rack \(2.2.0\)}, stdout
+        assert trace_writer.writer.find { |m| m[:trace] == :command_line && m[:command_line] == %w[bundle install] }, "`bundle install` should be called without `--local`"
       end
     end
   end

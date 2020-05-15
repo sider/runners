@@ -37,7 +37,8 @@ class Runners::Ruby::GemInstaller
                    config_path_name: String,
                    specs: Array<Spec>,
                    constraints: Hash<String, Array<String>>,
-                   trace_writer: TraceWriter) -> void
+                   trace_writer: TraceWriter,
+                   use_local: bool) -> void
   def install!: <'x> { (Hash<String, String>) -> 'x } -> 'x
   def gemfile_path: -> Pathname
   def gemfile_content: -> String

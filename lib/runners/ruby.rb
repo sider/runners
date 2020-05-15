@@ -3,6 +3,7 @@ module Runners
     class InstallGemsFailure < UserError; end
 
     def install_gems(default_specs, optionals: [], constraints:, &block)
+      original_default_specs = default_specs.dup
       user_specs = GemInstaller::Spec.from_gems(config_linter[:gems] || [])
 
       LockfileLoader.new(root_dir: root_dir, shell: shell).ensure_lockfile do |lockfile|
@@ -10,7 +11,7 @@ module Runners
         optionals = optional_specs(optionals, lockfile)
         user_specs = user_specs(user_specs, lockfile)
       end
-
+      use_local = (user_specs + optionals).empty? && original_default_specs == default_specs
       specs = GemInstaller::Spec.merge(default_specs, user_specs.size > 0 ? user_specs : optionals)
 
       mktmpdir do |path|
@@ -19,7 +20,8 @@ module Runners
                                      config_path_name: config.path_name,
                                      specs: specs,
                                      trace_writer: trace_writer,
-                                     constraints: constraints)
+                                     constraints: constraints,
+                                     use_local: use_local)
         installer.install!(&block)
       end
     end
