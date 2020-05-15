@@ -1,5 +1,5 @@
 class Runners::Shell
-  @dir_stack: Array[Pathname]
+  @current_dir: Pathname
 
   attr_reader trace_writer: TraceWriter
   attr_reader env_hash_stack: Array[Hash[String, String?]]

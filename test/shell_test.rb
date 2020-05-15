@@ -17,17 +17,20 @@ class ShellTest < Minitest::Test
   end
 
   def test_chdir
-    shell = Shell.new(current_dir: Pathname("foo"), trace_writer: trace_writer, env_hash: {})
-    assert_equal Pathname("foo"), shell.current_dir
+    mktmpdir do |path|
+      shell = Shell.new(current_dir: path, trace_writer: trace_writer, env_hash: {})
+      assert_equal path, shell.current_dir
 
-    ret = shell.chdir(Pathname("bar")) do |dir|
-      assert_equal Pathname("bar"), dir
-      assert_equal Pathname("bar"), shell.current_dir
-      "Hi."
+      another_dir = (path / "foo").tap { |d| d.mkpath }
+      ret = shell.chdir(another_dir) do |dir|
+        assert_equal another_dir, dir
+        assert_equal another_dir, shell.current_dir
+        "Hi."
+      end
+      assert_equal "Hi.", ret
+
+      assert_equal path, shell.current_dir
     end
-    assert_equal "Hi.", ret
-
-    assert_equal Pathname("foo"), shell.current_dir
   end
 
   def test_capture3_trace

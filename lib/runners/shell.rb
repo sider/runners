@@ -42,19 +42,22 @@ module Runners
 
     def initialize(current_dir:, trace_writer:, env_hash:)
       @trace_writer = trace_writer
-      @dir_stack = [current_dir]
+      @current_dir = current_dir
       @env_hash_stack = [env_hash]
     end
 
     def current_dir
-      @dir_stack.last or raise "Empty dir stack"
+      @current_dir
     end
 
     def chdir(dir)
-      @dir_stack.push dir
-      yield dir
+      backup = @current_dir
+      Dir.chdir(dir) do |path|
+        @current_dir = Pathname(path)
+        yield @current_dir
+      end
     ensure
-      @dir_stack.pop
+      @current_dir = backup
     end
 
     def push_env_hash(env)
