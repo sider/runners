@@ -225,7 +225,7 @@ class HarnessTest < Minitest::Test
                               options: options, working_dir: working_dir, trace_writer: trace_writer)
         result = harness.run
         assert_instance_of Results::Success, result
-        refute trace_writer.writer.find { |record| record[:message].match(/\ADeleting specified files via the `ignore` option/) }
+        refute trace_writer.writer.find { |record| record[:message]&.match(/\ADeleting specified files via the `ignore` option/) }
       end
     end
   end
