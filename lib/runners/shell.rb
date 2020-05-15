@@ -36,18 +36,15 @@ module Runners
       end
     end
 
-    # @dynamic trace_writer, env_hash_stack
+    # @dynamic trace_writer, current_dir, env_hash_stack
     attr_reader :trace_writer
+    attr_reader :current_dir
     attr_reader :env_hash_stack
 
     def initialize(current_dir:, trace_writer:, env_hash:)
       @trace_writer = trace_writer
       @current_dir = current_dir
       @env_hash_stack = [env_hash]
-    end
-
-    def current_dir
-      @current_dir
     end
 
     def chdir(dir)
