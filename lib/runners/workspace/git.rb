@@ -29,7 +29,7 @@ module Runners
 
     def git_directory
       @git_directory ||= root_tmp_dir.tap do |path|
-        shell.chdir(path) do
+        shell.push_dir(path) do
           shell.capture3!("git", "init")
           shell.capture3!("git", "config", "gc.auto", "0")
           shell.capture3!("git", "remote", "add", "origin", remote_url.to_s)

@@ -57,7 +57,6 @@ module Runners
     ensure
       dir_stack.pop
     end
-    alias chdir push_dir
 
     def push_env_hash(env)
       env_hash_stack.push(env)

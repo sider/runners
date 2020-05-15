@@ -175,7 +175,6 @@ class Runners::Shell
   def capture3_trace: (String, *String, **capture3_options) -> [String, String, Process::Status]
 
   def push_dir: <'x> (Pathname) { -> 'x } -> 'x
-  alias chdir push_dir
   def current_dir: () -> Pathname
 
   def push_env_hash: <'x> (Hash<String, String?>) { -> 'x } -> 'x
