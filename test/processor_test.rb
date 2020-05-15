@@ -121,7 +121,8 @@ class ProcessorTest < Minitest::Test
       assert_equal Pathname("bar/baz"), processor.relative_path((workspace.working_dir / "foo/bar/baz").to_s, from: workspace.working_dir / "foo")
 
       # If relative path is given, interpreted from current_dir
-      processor.chdir workspace.working_dir / "foo" do
+      dir = (workspace.working_dir / "foo").tap(&:mkpath)
+      processor.chdir(dir) do
         assert_equal Pathname("foo/bar/baz"), processor.relative_path("bar/baz")
       end
     end
