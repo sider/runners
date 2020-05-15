@@ -21,10 +21,19 @@ class ShellTest < Minitest::Test
       shell = Shell.new(current_dir: path, trace_writer: trace_writer, env_hash: {})
       assert_equal path, shell.current_dir
 
-      another_dir = (path / "foo").tap { |d| d.mkpath }
-      ret = shell.chdir(another_dir) do |dir|
-        assert_equal another_dir, dir
-        assert_equal another_dir, shell.current_dir
+      (path / "foo").tap(&:mkpath)
+      ret = shell.chdir(path / "foo") do |dir|
+        assert_equal(path / "foo", dir)
+        assert_equal(path / "foo", shell.current_dir)
+
+        # Nested
+        (dir / "bar").tap(&:mkpath)
+        shell.chdir(dir / "bar") do |dir2|
+          assert_equal(dir / "bar", dir2)
+          assert_equal(dir / "bar", shell.current_dir)
+        end
+
+        assert_equal(path / "foo", shell.current_dir)
         "Hi."
       end
       assert_equal "Hi.", ret
