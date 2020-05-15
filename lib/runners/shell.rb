@@ -52,7 +52,7 @@ module Runners
 
     def chdir(dir)
       backup = @current_dir
-      Dir.chdir(dir) do |path|
+      Dir.chdir(dir.to_path) do |path|
         @current_dir = Pathname(path)
         yield @current_dir
       end
