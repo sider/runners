@@ -11,7 +11,7 @@ class RunnersTimeoutError < StandardError; end
 
 EXIT_STATUS_FOR_SIGTERM = 126
 
-# @see https://docs.bugsnag.com/platforms/ruby/rails/configuration-options
+# @see https://docs.bugsnag.com/platforms/ruby/configuration-options
 Bugsnag.configure do |config|
   config.app_version = ENV["RUNNERS_VERSION"]
   config.release_stage = ENV["BUGSNAG_RELEASE_STAGE"]
@@ -32,4 +32,9 @@ trap('SIGUSR2') do
   Bugsnag.notify(RunnersTimeoutError.new)
 end
 
-Runners::CLI.new(argv: ARGV.dup, stdout: STDOUT, stderr: STDERR).run
+begin
+  Runners::CLI.new(argv: ARGV.dup, stdout: STDOUT, stderr: STDERR).run
+rescue => exn
+  Bugsnag.notify(exn)
+  raise
+end

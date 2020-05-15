@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 [Full diff](https://github.com/sider/runners/compare/0.23.3...HEAD)
 
 - Add :use_local not to attempt to fetch gems remotely [#1078](https://github.com/sider/runners/pull/1078)
+- Add top-level `Bugsnag.notify` [#1086](https://github.com/sider/runners/pull/1086)
 
 ## 0.23.3
 
