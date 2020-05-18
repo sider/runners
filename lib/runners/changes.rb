@@ -47,36 +47,26 @@ module Runners
       end
     end
 
-    def self.calculate(base_dir:, head_dir:, working_dir:, patches:)
-      return calculate_by_patches(working_dir, patches) if patches
+    def self.calculate(base_dir:, head_dir:, patches:)
+      return calculate_by_patches(head_dir, patches) if patches
 
       changed_paths = []
       unchanged_paths = []
 
-      Pathname.glob(working_dir + "**/*", File::FNM_DOTMATCH).each do |working_path|
-        next unless working_path.file?
+      head_dir.glob("**/*", File::FNM_DOTMATCH).filter(&:file?).each do |head_path|
+        relative_path = head_path.relative_path_from(head_dir)
+        base_path = base_dir / relative_path
 
-        relative_path = working_path.relative_path_from(working_dir)
-        head_path = head_dir + relative_path
-        base_path = base_dir + relative_path
-
-        working_digest = Digest::SHA1.new.file(working_path.to_s)
-        if head_path.file?
+        if base_path.file?
           head_digest = Digest::SHA1.new.file(head_path.to_s)
-
-          if head_digest == working_digest
-            if base_path.file?
-              base_digest = Digest::SHA1.new.file(base_path.to_s)
-
-              if head_digest == base_digest
-                unchanged_paths << relative_path
-              else
-                changed_paths << relative_path
-              end
-            else
-              changed_paths << relative_path
-            end
+          base_digest = Digest::SHA1.new.file(base_path.to_s)
+          if head_digest == base_digest
+            unchanged_paths << relative_path
+          else
+            changed_paths << relative_path
           end
+        else
+          changed_paths << relative_path
         end
       end
 

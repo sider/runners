@@ -34,63 +34,45 @@ index 740c016..cc737a5 100644
   end
 
   def test_changed_paths
-    mktmpdir do |base_path|
-      mktmpdir do |head_path|
-        mktmpdir do |working_path|
-          base_path.join("unchanged.rb").write("hello world")
-          head_path.join("unchanged.rb").write("hello world")
-          working_path.join("unchanged.rb").write("hello world")
+    mktmpdir do |base|
+      mktmpdir do |head|
+        (base / "unchanged_2.rb").write("hello world")
+        (head / "unchanged_2.rb").write("hello world")
 
-          base_path.join("changed1.rb").write("Hello World")
-          head_path.join("changed1.rb").write("Open sesame")
-          working_path.join("changed1.rb").write("Open sesame")
+        (base / "unchanged_1.rb").write("hello world")
+        (head / "unchanged_1.rb").write("hello world")
 
-          head_path.join("changed2.rb").write("Review less, merge faster")
-          working_path.join("changed2.rb").write("Review less, merge faster")
+        (base / "changed_1.rb").write("Hello World")
+        (head / "changed_1.rb").write("Open sesame")
 
-          working_path.join("built1.rb").write("Build apps with confidence")
+        (head / ".added_1.rb").write("")
 
-          head_path.join("built2.rb").write("Built for developers")
-          working_path.join("built2.rb").write("Healthy code ships faster.")
+        (head / ".github").mkpath
+        (head / ".github" / ".added_2.rb").write("")
 
-          base_path.join("ignored.rb").write("Read, write, and share stories that matter")
-          head_path.join("ignored.rb").write("Reinventing teamwork")
+        (base / "empty_dir").mkpath
+        (head / "empty_dir").mkpath
 
-          changes = Changes.calculate(base_dir: base_path, head_dir: head_path, working_dir: working_path, patches: nil)
+        changes = Changes.calculate(base_dir: base, head_dir: head, patches: nil)
 
-          assert_equal Set[Pathname("changed1.rb"), Pathname("changed2.rb")], changes.changed_paths
-          assert_equal Set[Pathname("unchanged.rb")], changes.unchanged_paths
-        end
+        assert_equal Set[Pathname(".added_1.rb"), Pathname(".github") / ".added_2.rb", Pathname("changed_1.rb")], changes.changed_paths
+        assert_equal Set[Pathname("unchanged_1.rb"), Pathname("unchanged_2.rb")], changes.unchanged_paths
       end
     end
   end
 
   def test_changed_paths_with_empty_base
-    # This is simulation for diff disabled mode, put everything to changed_paths
-    mktmpdir do |base_path|
-      mktmpdir do |head_path|
-        mktmpdir do |working_path|
-          head_path.join("unchanged.rb").write("hello world")
-          working_path.join("unchanged.rb").write("hello world")
+    mktmpdir do |base|
+      mktmpdir do |head|
+        (head / "hello.rb").write("hello world")
+        (head / ".github").mkpath
+        (head / ".github" / "hi.rb").write("hi")
+        (head / "empty_dir").mkpath
 
-          head_path.join("changed1.rb").write("Open sesame")
-          working_path.join("changed1.rb").write("Open sesame")
+        changes = Changes.calculate(base_dir: base, head_dir: head, patches: nil)
 
-          head_path.join("changed2.rb").write("Review less, merge faster")
-          working_path.join("changed2.rb").write("Review less, merge faster")
-
-          working_path.join("built1.rb").write("Build apps with confidence")
-
-          head_path.join("built2.rb").write("Built for developers")
-          working_path.join("built2.rb").write("Healthy code ships faster.")
-
-          head_path.join("ignored.rb").write("Reinventing teamwork")
-
-          changes = Changes.calculate(base_dir: base_path, head_dir: head_path, working_dir: working_path, patches: nil)
-
-          assert_equal Set[Pathname("changed1.rb"), Pathname("changed2.rb"), Pathname("unchanged.rb")], changes.changed_paths
-          assert_equal Set[], changes.unchanged_paths
-        end
+        assert_equal Set[Pathname(".github") / "hi.rb", Pathname("hello.rb")], changes.changed_paths
+        assert_equal Set[], changes.unchanged_paths
       end
     end
   end
@@ -140,36 +122,34 @@ index 740c016..cc737a5 100644
   end
 
   def test_include
-    mktmpdir do |base_path|
-      mktmpdir do |head_path|
-        mktmpdir do |working_path|
-          (working_path / "group.rb").write(<<~GROUP)
-            class Group
-              def a
-              end
+    mktmpdir do |base|
+      mktmpdir do |head|
+        (head / "group.rb").write(<<~GROUP)
+          class Group
+            def a
             end
-          GROUP
-          (working_path / "user.rb").write(<<~USER)
-            class User
-              def foo
-              end
+          end
+        GROUP
+        (head / "user.rb").write(<<~USER)
+          class User
+            def foo
             end
-          USER
+          end
+        USER
 
-          changes = Changes.calculate(base_dir: base_path, head_dir: head_path, working_dir: working_path, patches: patches)
+        changes = Changes.calculate(base_dir: base, head_dir: head, patches: patches)
 
-          refute changes.include?(Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 1), id: "a", message: "a", links: []))
-          assert changes.include?(Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 2), id: "a", message: "a", links: []))
-          assert changes.include?(Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 3), id: "a", message: "a", links: []))
-          refute changes.include?(Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 4), id: "a", message: "a", links: []))
-          assert changes.include?(Issue.new(path: Pathname("user.rb"), location: nil, id: "a", message: "a", links: []))
-          refute changes.include?(Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 1), id: "a", message: "a", links: []))
-          assert changes.include?(Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 2), id: "a", message: "a", links: []))
-          refute changes.include?(Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 3), id: "a", message: "a", links: []))
-          refute changes.include?(Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 4), id: "a", message: "a", links: []))
-          refute changes.include?(Issue.new(path: Pathname("foo.rb"), location: nil, id: "a", message: "a", links: []))
-          refute changes.include?(Issue.new(path: Pathname("foo.rb"), location: Location.new(start_line: 2), id: "a", message: "a", links: []))
-        end
+        refute changes.include?(Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 1), id: "a", message: "a", links: []))
+        assert changes.include?(Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 2), id: "a", message: "a", links: []))
+        assert changes.include?(Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 3), id: "a", message: "a", links: []))
+        refute changes.include?(Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 4), id: "a", message: "a", links: []))
+        assert changes.include?(Issue.new(path: Pathname("user.rb"), location: nil, id: "a", message: "a", links: []))
+        refute changes.include?(Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 1), id: "a", message: "a", links: []))
+        assert changes.include?(Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 2), id: "a", message: "a", links: []))
+        refute changes.include?(Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 3), id: "a", message: "a", links: []))
+        refute changes.include?(Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 4), id: "a", message: "a", links: []))
+        refute changes.include?(Issue.new(path: Pathname("foo.rb"), location: nil, id: "a", message: "a", links: []))
+        refute changes.include?(Issue.new(path: Pathname("foo.rb"), location: Location.new(start_line: 2), id: "a", message: "a", links: []))
       end
     end
   end
