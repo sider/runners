@@ -10,6 +10,7 @@ Updated environments:
 
 Updated tools:
 
+- **Flake8** 3.7.9 -> 3.8.1 [#1090](https://github.com/sider/runners/pull/1090)
 - **RuboCop** 0.82.0 -> 0.83.0 [#1089](https://github.com/sider/runners/pull/1089)
 
 Misc:
