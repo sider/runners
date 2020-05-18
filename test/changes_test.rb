@@ -139,17 +139,17 @@ index 740c016..cc737a5 100644
 
         changes = Changes.calculate(base_dir: base, head_dir: head, patches: patches)
 
-        refute changes.include?(Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 1), id: "a", message: "a", links: []))
-        assert changes.include?(Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 2), id: "a", message: "a", links: []))
-        assert changes.include?(Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 3), id: "a", message: "a", links: []))
-        refute changes.include?(Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 4), id: "a", message: "a", links: []))
-        assert changes.include?(Issue.new(path: Pathname("user.rb"), location: nil, id: "a", message: "a", links: []))
-        refute changes.include?(Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 1), id: "a", message: "a", links: []))
-        assert changes.include?(Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 2), id: "a", message: "a", links: []))
-        refute changes.include?(Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 3), id: "a", message: "a", links: []))
-        refute changes.include?(Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 4), id: "a", message: "a", links: []))
-        refute changes.include?(Issue.new(path: Pathname("foo.rb"), location: nil, id: "a", message: "a", links: []))
-        refute changes.include?(Issue.new(path: Pathname("foo.rb"), location: Location.new(start_line: 2), id: "a", message: "a", links: []))
+        refute_includes changes, Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 1), id: "a", message: "a", links: [])
+        assert_includes changes, Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 2), id: "a", message: "a", links: [])
+        assert_includes changes, Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 3), id: "a", message: "a", links: [])
+        refute_includes changes, Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 4), id: "a", message: "a", links: [])
+        assert_includes changes, Issue.new(path: Pathname("user.rb"), location: nil, id: "a", message: "a", links: [])
+        refute_includes changes, Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 1), id: "a", message: "a", links: [])
+        assert_includes changes, Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 2), id: "a", message: "a", links: [])
+        refute_includes changes, Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 3), id: "a", message: "a", links: [])
+        refute_includes changes, Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 4), id: "a", message: "a", links: [])
+        refute_includes changes, Issue.new(path: Pathname("foo.rb"), location: nil, id: "a", message: "a", links: [])
+        refute_includes changes, Issue.new(path: Pathname("foo.rb"), location: Location.new(start_line: 2), id: "a", message: "a", links: [])
       end
     end
   end
