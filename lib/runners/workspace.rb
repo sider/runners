@@ -37,26 +37,23 @@ module Runners
     # @yieldparam changes [Runners::Changes]
     def open
       prepare_ssh do |git_ssh_path|
+        trace_writer.header "Setting up source code"
+
         mktmpdir do |base_path|
-          mktmpdir do |head_path|
-            trace_writer.header "Setting up source code"
-            if options.source.base
-              trace_writer.message "Preparing base commit tree..."
-              prepare_base_source(base_path)
-            end
-            trace_writer.message "Preparing head commit tree..."
-            prepare_head_source(head_path)
-
-            trace_writer.message "Copying head to working dir..." do
-              FileUtils.copy_entry(head_path, working_dir)
-            end
-
-            changes = trace_writer.message "Calculating changes between head and base..." do
-              Changes.calculate(base_dir: base_path, head_dir: head_path, patches: patches)
-            end
-
-            yield git_ssh_path, changes
+          if options.source.base
+            trace_writer.message "Preparing base commit tree..."
+            prepare_base_source(base_path)
           end
+
+          trace_writer.message "Preparing head commit tree..."
+          prepare_head_source(working_dir)
+
+          msg = options.source.base ? "Calculating changes between head and base..." : "Calculating changes..."
+          changes = trace_writer.message msg do
+            Changes.calculate(base_dir: base_path, head_dir: working_dir, patches: patches)
+          end
+
+          yield git_ssh_path, changes
         end
       end
     ensure
