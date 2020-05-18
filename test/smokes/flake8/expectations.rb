@@ -77,7 +77,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Flake8", version: "3.7.9" }
+  analyzer: { name: "Flake8", version: "3.8.1" }
 )
 
 s.add_test(
@@ -103,7 +103,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Flake8", version: "3.7.9" }
+  analyzer: { name: "Flake8", version: "3.8.1" }
 )
 
 s.add_test(
@@ -113,7 +113,7 @@ s.add_test(
   analyzer: {
     # W191 is not issued.
     name: "Flake8",
-    version: "3.7.9"
+    version: "3.8.1"
   }
 )
 
@@ -131,7 +131,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Flake8", version: "3.7.9" }
+  analyzer: { name: "Flake8", version: "3.8.1" }
 )
 
 s.add_test(
@@ -175,7 +175,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Flake8", version: "3.7.9" }
+  analyzer: { name: "Flake8", version: "3.8.1" }
 )
 
 s.add_test(
@@ -190,16 +190,16 @@ s.add_test(
   "python2",
   type: "success",
   issues: [],
-  analyzer: { name: "Flake8", version: "3.7.9" },
+  analyzer: { name: "Flake8", version: "3.8.1" },
   warnings: [{ message: "Python 2 is deprecated. Consider migrating to Python 3.", file: nil }]
 )
 
-s.add_test("dot_python_version", type: "success", issues: [], analyzer: { name: "Flake8", version: "3.7.9" })
+s.add_test("dot_python_version", type: "success", issues: [], analyzer: { name: "Flake8", version: "3.8.1" })
 
 s.add_test(
   "dot_python_version_2",
   type: "success",
   issues: [],
-  analyzer: { name: "Flake8", version: "3.7.9" },
+  analyzer: { name: "Flake8", version: "3.8.1" },
   warnings: [{ message: "Python 2 is deprecated. Consider migrating to Python 3.", file: nil }]
 )
