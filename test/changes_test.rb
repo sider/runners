@@ -60,7 +60,6 @@ index 740c016..cc737a5 100644
 
           assert_equal Set[Pathname("changed1.rb"), Pathname("changed2.rb")], changes.changed_paths
           assert_equal Set[Pathname("unchanged.rb")], changes.unchanged_paths
-          assert_equal Set[Pathname("built1.rb"), Pathname("built2.rb")], changes.untracked_paths
         end
       end
     end
@@ -91,7 +90,6 @@ index 740c016..cc737a5 100644
 
           assert_equal Set[Pathname("changed1.rb"), Pathname("changed2.rb"), Pathname("unchanged.rb")], changes.changed_paths
           assert_equal Set[], changes.unchanged_paths
-          assert_equal Set[Pathname("built1.rb"), Pathname("built2.rb")], changes.untracked_paths
         end
       end
     end
@@ -103,7 +101,7 @@ index 740c016..cc737a5 100644
       dir.join("file2").write("foo")
       dir.join("file3").write("foo")
 
-      changes = Changes.new(changed_paths: [], unchanged_paths: [Pathname("file1"), Pathname("file2"), Pathname("file3")], untracked_paths: [], patches: nil)
+      changes = Changes.new(changed_paths: [], unchanged_paths: [Pathname("file1"), Pathname("file2"), Pathname("file3")], patches: nil)
 
       changes.delete_unchanged(dir: dir)
 
@@ -128,7 +126,7 @@ index 740c016..cc737a5 100644
         ].each { |f| f.write("") }
       end
 
-      changes = Changes.new(changed_paths: [], unchanged_paths: files, untracked_paths: [], patches: nil)
+      changes = Changes.new(changed_paths: [], unchanged_paths: files, patches: nil)
       changes.delete_unchanged(dir: dir, only: ["file[2-3]", "*.{rb,py}"], except: ["file3", "*.{py,md}"])
 
       assert dir.join("file1").file?
@@ -138,25 +136,6 @@ index 740c016..cc737a5 100644
       assert dir.join("some", "bar.py").file?
       assert dir.join("some", "baz.js").file?
       assert dir.join("some", "xyz.md").file?
-    end
-  end
-
-  def test_symlink
-    mktmpdir do |base_path|
-      mktmpdir do |head_path|
-        mktmpdir do |working_path|
-          working_path.join("dir").mkdir
-          working_path.join("foo").write("bar")
-          working_path.join("baz").make_symlink(Pathname("foo"))
-          working_path.join("link").make_symlink(Pathname("../aaaaa"))
-
-          changes = Changes.calculate(base_dir: base_path, head_dir: head_path, working_dir: working_path, patches: nil)
-
-          assert changes.untracked_paths.include?(Pathname("foo"))
-          assert changes.untracked_paths.include?(Pathname("baz"))
-          refute changes.untracked_paths.include?(Pathname("link"))
-        end
-      end
     end
   end
 

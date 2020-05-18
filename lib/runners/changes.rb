@@ -2,13 +2,11 @@ module Runners
   class Changes
     attr_reader :changed_paths
     attr_reader :unchanged_paths
-    attr_reader :untracked_paths
     attr_reader :patches
 
-    def initialize(changed_paths:, unchanged_paths:, untracked_paths:, patches:)
+    def initialize(changed_paths:, unchanged_paths:, patches:)
       @changed_paths = Set.new(changed_paths).freeze
       @unchanged_paths = Set.new(unchanged_paths).freeze
-      @untracked_paths = Set.new(untracked_paths).freeze
       @patches = patches
     end
 
@@ -52,7 +50,6 @@ module Runners
     def self.calculate(base_dir:, head_dir:, working_dir:, patches:)
       changed_paths = []
       unchanged_paths = []
-      untracked_paths = []
 
       Pathname.glob(working_dir + "**/*", File::FNM_DOTMATCH).each do |working_path|
         next unless working_path.file?
@@ -77,17 +74,12 @@ module Runners
             else
               changed_paths << relative_path
             end
-          else
-            untracked_paths << relative_path
           end
-        else
-          untracked_paths << relative_path
         end
       end
 
       new(changed_paths: changed_paths.sort!,
           unchanged_paths: unchanged_paths.sort!,
-          untracked_paths: untracked_paths.sort!,
           patches: patches)
     end
   end

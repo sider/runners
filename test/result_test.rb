@@ -84,7 +84,7 @@ class ResultTest < Minitest::Test
       schema: nil
     )
 
-    changes = Changes.new(changed_paths: [Pathname("foo/bar/xxx.rb")], unchanged_paths: [Pathname("foo/bar/baz.rb")], untracked_paths: [], patches: nil)
+    changes = Changes.new(changed_paths: [Pathname("foo/bar/xxx.rb")], unchanged_paths: [Pathname("foo/bar/baz.rb")], patches: nil)
     result.filter_issues(changes)
 
     assert result.valid?
@@ -145,7 +145,7 @@ class ResultTest < Minitest::Test
     )
 
 
-    changes = Changes.new(changed_paths: [Pathname("a.py")], unchanged_paths: [Pathname("b.py")], untracked_paths: [], patches: GitDiffParser.parse(<<~DIFF))
+    changes = Changes.new(changed_paths: [Pathname("a.py")], unchanged_paths: [Pathname("b.py")], patches: GitDiffParser.parse(<<~DIFF))
       diff --git a/a.py b/a.py
       index 23038dd..19bbab7 100644
       --- a/a.py

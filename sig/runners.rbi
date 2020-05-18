@@ -89,12 +89,10 @@ end
 class Runners::Changes
   attr_reader changed_paths: Set<Pathname>
   attr_reader unchanged_paths: Set<Pathname>
-  attr_reader untracked_paths: Set<Pathname>
   attr_reader patches: GitDiffParser::Patches | nil
 
   def initialize: (changed_paths: Array<Pathname>,
                    unchanged_paths: Array<Pathname>,
-                   untracked_paths: Array<Pathname>,
                    patches: GitDiffParser::Patches | nil) -> any
   def delete_unchanged: (dir: Pathname, ?except: Array<String>, ?only: Array<String>) -> Array<Pathname>
   def deletable?: (Pathname, Pathname, Array<String>, Array<String>) -> bool

@@ -44,7 +44,6 @@ class WorkspaceTest < Minitest::Test
 
         refute changes.changed_paths.empty?
         refute changes.unchanged_paths.empty?
-        assert changes.untracked_paths.empty?
       end
     end
   end
@@ -58,7 +57,6 @@ class WorkspaceTest < Minitest::Test
 
         refute changes.changed_paths.empty?
         refute changes.unchanged_paths.empty?
-        assert changes.untracked_paths.empty?
 
         refute workspace.root_tmp_dir.empty?
       end
@@ -74,7 +72,6 @@ class WorkspaceTest < Minitest::Test
 
         refute changes.changed_paths.empty?
         assert changes.unchanged_paths.empty?
-        assert changes.untracked_paths.empty?
       end
     end
   end
