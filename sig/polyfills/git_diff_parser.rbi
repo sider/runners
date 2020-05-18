@@ -1,5 +1,6 @@
 class GitDiffParser::Patches
   def find_patch_by_file: (String) -> GitDiffParser::Patch?
+  def files: () -> Array<String>
 end
 
 class GitDiffParser::Patch

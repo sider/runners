@@ -48,6 +48,8 @@ module Runners
     end
 
     def self.calculate(base_dir:, head_dir:, working_dir:, patches:)
+      return calculate_by_patches(working_dir, patches) if patches
+
       changed_paths = []
       unchanged_paths = []
 
@@ -80,6 +82,18 @@ module Runners
 
       new(changed_paths: changed_paths.sort!,
           unchanged_paths: unchanged_paths.sort!,
+          patches: patches)
+    end
+
+    def self.calculate_by_patches(working_dir, patches)
+      all_files = working_dir
+        .glob("**/*", File::FNM_DOTMATCH)
+        .filter_map { |f| f.relative_path_from(working_dir) if f.file? }
+
+      changed_paths = patches.files.map { |f| Pathname(f) }
+
+      new(changed_paths: changed_paths.sort!,
+          unchanged_paths: (all_files - changed_paths).sort!,
           patches: patches)
     end
   end

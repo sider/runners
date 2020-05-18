@@ -78,6 +78,7 @@ extension Array (Polyfill)
   def +: <'x> (Array<'x>) -> Array<'a | 'x>
        | (self) -> self
   def filter: { ('a) -> bool } -> self
+  def filter_map: <'x> { ('a) -> 'x } -> Array<'x>
 end
 
 extension File (Polyfill)
