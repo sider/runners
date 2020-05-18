@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'strong_json'
+gem 'strong_json', '2.1.0'
 gem 'jsonseq'
 gem 'retryable'
 gem 'bundler', '>= 1.12', '< 3.0'

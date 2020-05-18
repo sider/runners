@@ -76,7 +76,7 @@ GEM
       parser (~> 2.4)
       pry (~> 0.12.2)
       rainbow (>= 2.2.2, < 4.0)
-    strong_json (2.1.1)
+    strong_json (2.1.0)
     thor (1.0.1)
     thread_safe (0.3.6)
     tzinfo (1.2.7)
@@ -106,7 +106,7 @@ DEPENDENCIES
   rexml (>= 3.2, < 4.0)
   rr
   steep (= 0.11.1)
-  strong_json
+  strong_json (= 2.1.0)
   unification_assertion
 
 BUNDLED WITH
