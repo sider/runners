@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.24.0...HEAD)
 
+- Fix "No space left" error on Git workspace [#1112](https://github.com/sider/runners/pull/1112)
+
 ## 0.24.0
 
 [Full diff](https://github.com/sider/runners/compare/0.23.3...0.24.0)
