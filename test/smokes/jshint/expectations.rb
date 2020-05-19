@@ -14,7 +14,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "JSHint", version: "2.11.0" }
+  analyzer: { name: "JSHint", version: "2.11.1" }
 )
 
 s.add_test(
@@ -49,7 +49,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "JSHint", version: "2.11.0" }
+  analyzer: { name: "JSHint", version: "2.11.1" }
 )
 
 s.add_test(
@@ -66,7 +66,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "JSHint", version: "2.11.0" }
+  analyzer: { name: "JSHint", version: "2.11.1" }
 )
 
 s.add_test(
@@ -90,7 +90,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "JSHint", version: "2.11.0" },
+  analyzer: { name: "JSHint", version: "2.11.1" },
   warnings: [
     {
       message: <<~MSG.strip,
@@ -107,7 +107,7 @@ s.add_test(
   "broken_package_json",
   type: "success",
   issues: [],
-  analyzer: { name: "JSHint", version: "2.11.0" },
+  analyzer: { name: "JSHint", version: "2.11.1" },
   warnings: [{ message: /`package.json` is broken: \d+: unexpected token at/, file: "package.json" }]
 )
 
@@ -115,5 +115,5 @@ s.add_test(
   "invalid_output_xml",
   type: "failure",
   message: 'The output XML is invalid: Illegal character "\\u0000" in raw string "Unexpected &apos;\\u0000&apos;."',
-  analyzer: { name: "JSHint", version: "2.11.0" }
+  analyzer: { name: "JSHint", version: "2.11.1" }
 )
