@@ -54,15 +54,17 @@ module Runners
     end
 
     def patches
+      return @patches if defined? @patches
+
       base = git_source.base
       head = git_source.head
-      if base && head
-        # NOTE: We should use `...` (triple-dot) instead of `..` (double-dot). See https://git-scm.com/docs/git-diff
-        stdout, _ = shell.capture3!("git", "diff", "#{base}...#{head}", trace_stdout: false, chdir: git_directory)
-        GitDiffParser.parse(stdout)
-      else
-        nil
-      end
+
+      @patches =
+        if base && head
+          # NOTE: We should use `...` (triple-dot) instead of `..` (double-dot). See https://git-scm.com/docs/git-diff
+          stdout, _ = shell.capture3!("git", "diff", "#{base}...#{head}", trace_stdout: false, chdir: git_directory)
+          GitDiffParser.parse(stdout)
+        end
     end
   end
 end

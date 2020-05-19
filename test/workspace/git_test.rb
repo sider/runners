@@ -79,6 +79,16 @@ class WorkspaceGitTest < Minitest::Test
     end
   end
 
+  def test_patches_not_calling_git_diff_twice
+    with_workspace(base: "abe1cfc294c8d39de7484954bf8c3d7792fd8ad1", head: "998bc02a913e3899f3a1cd327e162dd54d489a4b",
+                   git_http_url: "https://github.com", owner: "sider", repo: "runners", pull_number: 533) do |workspace|
+      p1 = workspace.send(:patches)
+      p2 = workspace.send(:patches)
+      assert_same p1, p2
+      assert_equal 1, workspace.trace_writer.writer.count { |e| e[:command_line]&.slice(0, 2) == %w[git diff] }
+    end
+  end
+
   def test_git_blame_info
     with_workspace(base: "abe1cfc294c8d39de7484954bf8c3d7792fd8ad1", head: "998bc02a913e3899f3a1cd327e162dd54d489a4b",
                    git_http_url: "https://github.com", owner: "sider", repo: "runners", pull_number: 533) do |workspace|
