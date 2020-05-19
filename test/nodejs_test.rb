@@ -51,7 +51,7 @@ class NodejsTest < Minitest::Test
   def new_processor(workspace:)
     @processor = processor_class.new(
       guid: SecureRandom.uuid,
-      workspace: workspace,
+      working_dir: workspace.working_dir,
       config: config,
       git_ssh_path: nil,
       trace_writer: trace_writer,
