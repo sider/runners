@@ -8,7 +8,7 @@ s.add_test(
       path: "src/index.js",
       location: { start_line: 3 },
       id: "jshint.W067",
-      message: "Bad invocation.",
+      message: "Unorthodox function invocation.",
       links: [],
       object: nil,
       git_blame_info: nil
@@ -60,7 +60,7 @@ s.add_test(
       path: "src/app.js",
       location: { start_line: 3 },
       id: "jshint.W067",
-      message: "Bad invocation.",
+      message: "Unorthodox function invocation.",
       links: [],
       object: nil,
       git_blame_info: nil
@@ -81,7 +81,7 @@ s.add_test(
   type: "success",
   issues: [
     {
-      message: "Bad invocation.",
+      message: "Unorthodox function invocation.",
       links: [],
       id: "jshint.W067",
       path: "src/index.js",
