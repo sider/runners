@@ -22,7 +22,7 @@ module Runners
     end
 
     def provision(commit_hash, dest)
-      shell.capture3!("git", "checkout", commit_hash, chdir: git_directory)
+      shell.capture3!("git", "checkout", "--quiet", commit_hash, chdir: git_directory)
       FileUtils.copy_entry(git_directory, dest)
       FileUtils.remove_entry(dest / ".git")
     end
