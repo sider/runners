@@ -15,6 +15,7 @@ Updated tools:
 
 Misc:
 
+- [TyScan] Bump typescript from 3.8.3 to 3.9.2 [#1093](https://github.com/sider/runners/pull/1093)
 - Add :use_local not to attempt to fetch gems remotely [#1078](https://github.com/sider/runners/pull/1078)
 - Add top-level `Bugsnag.notify` [#1086](https://github.com/sider/runners/pull/1086)
 
