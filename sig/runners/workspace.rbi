@@ -17,7 +17,6 @@ class Runners::Workspace
   def extract: (Pathname, Pathname) -> void
   def archive_source: () -> Options::ArchiveSource
   def git_source: () -> Options::GitSource
-  def root_tmp_dir: () -> Pathname
   def patches: () -> GitDiffParser::Patches?
   def range_git_blame_info: (String, Integer, Integer) -> Array<GitBlameInfo>
 end
@@ -40,8 +39,6 @@ end
 class Runners::Workspace::Git < Workspace
   def prepare_base_source: (Pathname) -> void
   def prepare_head_source: (Pathname) -> void
-  def provision: (String, Pathname) -> void
-  def git_directory: () -> Pathname
   def remote_url: () -> URI
   def git_fetch_args: () -> Array<String>
 end

@@ -56,12 +56,6 @@ module Runners
           yield git_ssh_path, changes
         end
       end
-    ensure
-      FileUtils.remove_entry root_tmp_dir
-    end
-
-    def root_tmp_dir
-      @root_tmp_dir ||= mktmpdir_as_pathname
     end
 
     def range_git_blame_info(path_string, start_line, end_line)

@@ -54,14 +54,11 @@ class WorkspaceTest < Minitest::Test
                    git_http_url: "https://github.com", owner: "sider", repo: "runners", pull_number: 533) do |workspace|
       workspace.open do |_git_ssh_path, changes|
         assert_path_exists workspace.working_dir / "README.md"
-        refute_path_exists workspace.working_dir / ".git"
+        assert_path_exists workspace.working_dir / ".git"
 
         refute_empty changes.changed_paths
         refute_empty changes.unchanged_paths
-
-        refute_empty workspace.root_tmp_dir
       end
-      refute_path_exists workspace.root_tmp_dir
     end
   end
 
