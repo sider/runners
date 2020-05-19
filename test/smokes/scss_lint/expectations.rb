@@ -46,10 +46,10 @@ s.add_test(
   warnings: [
     {
       message: <<~MSG.strip,
-DEPRECATION WARNING!!!
-The support for SCSS-Lint is deprecated. Sider will drop these versions in the near future.
-Please consider using an alternative tool stylelint. See https://github.com/sds/scss-lint/blob/master/README.md#notice-consider-other-tools-before-adopting-scss-lint
-MSG
+        DEPRECATION WARNING!!!
+        The support for SCSS-Lint is deprecated. Sider will drop these versions in the near future.
+        Please consider using an alternative tool stylelint. See https://github.com/sds/scss-lint/blob/master/README.md#notice-consider-other-tools-before-adopting-scss-lint
+      MSG
       file: "sider.yml"
     }
   ]
@@ -108,7 +108,7 @@ s.add_test(
   type: "success",
   issues: [
     {
-      message: "Syntax Error: Invalid CSS after \"  color: black;\": expected \"}\", was \"\"",
+      message: 'Syntax Error: Invalid CSS after "  color: black;": expected "}", was ""',
       links: [],
       id: "Syntax",
       path: "err.scss",

@@ -239,7 +239,7 @@ s.add_test(
   analyzer: { name: "PMD Java", version: "6.23.0" },
   issues: [
     {
-      message: "The String literal \"Howdy\" appears 4 times in this file; the first occurrence is on line 3",
+      message: 'The String literal "Howdy" appears 4 times in this file; the first occurrence is on line 3',
       links: %w[https://pmd.github.io/pmd-6.23.0/pmd_rules_java_errorprone.html#avoidduplicateliterals],
       id: "AvoidDuplicateLiterals",
       path: "AvoidDupliatedLiterals.java",

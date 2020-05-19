@@ -38,8 +38,8 @@ s.add_test(
   "pinned_old_eslint",
   type: "failure",
   message: <<~MSG.strip,
-Your `eslint` settings could not satisfy the required constraints. Please check your `package.json` again.
-If you want to analyze via the Sider default settings, please configure your `sideci.yml`. For details, see the documentation.
+    Your `eslint` settings could not satisfy the required constraints. Please check your `package.json` again.
+    If you want to analyze via the Sider default settings, please configure your `sideci.yml`. For details, see the documentation.
   MSG
   analyzer: :_
 )
@@ -132,10 +132,10 @@ s.add_test(
   warnings: [
     {
       message: <<~MSG.strip,
-DEPRECATION WARNING!!!
-The `$.linter.eslint.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
-Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/javascript/eslint ).
-MSG
+        DEPRECATION WARNING!!!
+        The `$.linter.eslint.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
+        Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/javascript/eslint ).
+      MSG
       file: "sideci.yml"
     }
   ]
@@ -278,15 +278,15 @@ s.add_test(
   issues: [
     {
       message: <<~MESSAGE.strip,
-Parsing error: Unexpected token, expected ";"
-
-  1 | function bar() {
-> 2 |   var x = foo:
-    |              ^
-  3 |   for (;;) {
-  4 |     break x;
-  5 |   }
-MESSAGE
+        Parsing error: Unexpected token, expected ";"
+        
+          1 | function bar() {
+        > 2 |   var x = foo:
+            |              ^
+          3 |   for (;;) {
+          4 |     break x;
+          5 |   }
+      MESSAGE
       links: [],
       id: "d91b54561db04524f183f5f8dee752dcf1d4fcb0",
       path: "index.js",

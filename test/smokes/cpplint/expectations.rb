@@ -8,7 +8,7 @@ s.add_test(
       id: "legal/copyright",
       path: "src/test.cpp",
       location: nil,
-      message: "No copyright message found.  You should have a line: \"Copyright [year] <Copyright Owner>\"",
+      message: 'No copyright message found.  You should have a line: "Copyright [year] <Copyright Owner>"',
       links: [],
       object: { confidence: "5" },
       git_blame_info: nil

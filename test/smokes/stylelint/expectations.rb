@@ -9,7 +9,7 @@ s.add_test(
       path: "test.sss",
       location: { start_line: 2 },
       id: "block-closing-brace-newline-before",
-      message: "Expected newline before \"}\" of a multi-line block",
+      message: 'Expected newline before "}" of a multi-line block',
       object: { severity: "error" },
       git_blame_info: nil,
       links: %w[https://github.com/stylelint/stylelint/tree/10.0.1/lib/rules/block-closing-brace-newline-before]
@@ -18,7 +18,7 @@ s.add_test(
       path: "test.sss",
       location: { start_line: 1 },
       id: "block-opening-brace-space-before",
-      message: "Expected single space before \"{\"",
+      message: 'Expected single space before "{"',
       object: { severity: "error" },
       git_blame_info: nil,
       links: %w[https://github.com/stylelint/stylelint/tree/10.0.1/lib/rules/block-opening-brace-space-before]
@@ -72,7 +72,7 @@ s.add_test(
       path: "test.css",
       location: { start_line: 2 },
       id: "property-no-unknown",
-      message: "Unexpected unknown property \"someattr\"",
+      message: 'Unexpected unknown property "someattr"',
       object: { severity: "error" },
       git_blame_info: nil,
       links: %w[https://github.com/stylelint/stylelint/tree/10.0.1/lib/rules/property-no-unknown]
@@ -81,7 +81,7 @@ s.add_test(
       path: "test.scss",
       location: { start_line: 6 },
       id: "property-no-unknown",
-      message: "Unexpected unknown property \"font-color\"",
+      message: 'Unexpected unknown property "font-color"',
       object: { severity: "error" },
       git_blame_info: nil,
       links: %w[https://github.com/stylelint/stylelint/tree/10.0.1/lib/rules/property-no-unknown]
@@ -117,7 +117,7 @@ s.add_test(
       path: "test.less",
       location: { start_line: 13 },
       id: "selector-type-no-unknown",
-      message: "Unexpected unknown type selector \"hoge\"",
+      message: 'Unexpected unknown type selector "hoge"',
       object: { severity: "error" },
       git_blame_info: nil,
       links: %w[https://github.com/stylelint/stylelint/tree/10.0.1/lib/rules/selector-type-no-unknown]
@@ -134,7 +134,7 @@ s.add_test(
       path: "test.css",
       location: { start_line: 2 },
       id: "color-no-invalid-hex",
-      message: "Unexpected invalid hex color \"#100000000\"",
+      message: 'Unexpected invalid hex color "#100000000"',
       links: %w[https://github.com/stylelint/stylelint/tree/13.4.1/lib/rules/color-no-invalid-hex],
       object: { severity: "error" },
       git_blame_info: nil
@@ -143,7 +143,7 @@ s.add_test(
       path: "test.css",
       location: { start_line: 1 },
       id: "selector-type-no-unknown",
-      message: "Unexpected unknown type selector \"foo\"",
+      message: 'Unexpected unknown type selector "foo"',
       links: %w[https://github.com/stylelint/stylelint/tree/13.4.1/lib/rules/selector-type-no-unknown],
       object: { severity: "error" },
       git_blame_info: nil
@@ -177,7 +177,7 @@ s.add_test(
       location: { start_line: 1 }
     },
     {
-      message: "Expected newline before \"}\" of a multi-line block",
+      message: 'Expected newline before "}" of a multi-line block',
       links: %w[https://github.com/stylelint/stylelint/tree/8.4.0/lib/rules/block-closing-brace-newline-before],
       id: "block-closing-brace-newline-before",
       path: "test.sss",
@@ -186,7 +186,7 @@ s.add_test(
       location: { start_line: 2 }
     },
     {
-      message: "Expected single space before \"{\"",
+      message: 'Expected single space before "{"',
       links: %w[https://github.com/stylelint/stylelint/tree/8.4.0/lib/rules/block-opening-brace-space-before],
       id: "block-opening-brace-space-before",
       path: "test.sss",
@@ -221,7 +221,7 @@ s.add_test(
       location: { start_line: 1 }
     },
     {
-      message: "Unexpected unknown property \"someattr\"",
+      message: 'Unexpected unknown property "someattr"',
       links: %w[https://github.com/stylelint/stylelint/tree/13.4.1/lib/rules/property-no-unknown],
       id: "property-no-unknown",
       path: "ok.css",
@@ -238,7 +238,7 @@ s.add_test(
   type: "success",
   issues: [
     {
-      message: "Unexpected unknown property \"someattr\"",
+      message: 'Unexpected unknown property "someattr"',
       links: %w[https://github.com/stylelint/stylelint/tree/13.4.1/lib/rules/property-no-unknown],
       id: "property-no-unknown",
       path: "test.css",
@@ -247,7 +247,7 @@ s.add_test(
       location: { start_line: 2 }
     },
     {
-      message: "Unexpected unknown property \"font-color\"",
+      message: 'Unexpected unknown property "font-color"',
       links: %w[https://github.com/stylelint/stylelint/tree/13.4.1/lib/rules/property-no-unknown],
       id: "property-no-unknown",
       path: "test.scss",
@@ -256,7 +256,7 @@ s.add_test(
       location: { start_line: 6 }
     },
     {
-      message: "Unexpected unknown type selector \"hoge\"",
+      message: 'Unexpected unknown type selector "hoge"',
       links: %w[https://github.com/stylelint/stylelint/tree/13.4.1/lib/rules/selector-type-no-unknown],
       id: "selector-type-no-unknown",
       path: "test.less",
@@ -351,7 +351,7 @@ s.add_test(
       location: { start_line: 6 }
     },
     {
-      message: "Unexpected unknown property \"someattr\"",
+      message: 'Unexpected unknown property "someattr"',
       links: %w[https://github.com/stylelint/stylelint/tree/8.4.0/lib/rules/property-no-unknown],
       id: "property-no-unknown",
       path: "test.css",
@@ -360,7 +360,7 @@ s.add_test(
       location: { start_line: 2 }
     },
     {
-      message: "Unexpected unknown type selector \"hoge\"",
+      message: 'Unexpected unknown type selector "hoge"',
       links: %w[https://github.com/stylelint/stylelint/tree/8.4.0/lib/rules/selector-type-no-unknown],
       id: "selector-type-no-unknown",
       path: "test.less",
@@ -413,7 +413,7 @@ s.add_test(
       location: { start_line: 12 }
     },
     {
-      message: "Unexpected unknown property \"font-color\"",
+      message: 'Unexpected unknown property "font-color"',
       links: %w[https://github.com/stylelint/stylelint/tree/13.4.1/lib/rules/property-no-unknown],
       id: "property-no-unknown",
       path: "test.scss",
@@ -440,7 +440,7 @@ s.add_test(
       location: { start_line: 5 }
     },
     {
-      message: "Unexpected unknown type selector \"hoge\"",
+      message: 'Unexpected unknown type selector "hoge"',
       links: %w[https://github.com/stylelint/stylelint/tree/13.4.1/lib/rules/selector-type-no-unknown],
       id: "selector-type-no-unknown",
       path: "test.less",
@@ -479,10 +479,10 @@ s.add_test(
   warnings: [
     {
       message: <<~MSG.strip,
-DEPRECATION WARNING!!!
-The `$.linter.stylelint.options` option(s) in your `sider.yml` are deprecated and will be removed in the near future.
-Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/css/stylelint ).
-MSG
+        DEPRECATION WARNING!!!
+        The `$.linter.stylelint.options` option(s) in your `sider.yml` are deprecated and will be removed in the near future.
+        Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/css/stylelint ).
+      MSG
       file: "sider.yml"
     }
   ]
@@ -494,7 +494,7 @@ s.add_test(
   type: "success",
   issues: [
     {
-      message: "Expected newline before \"}\" of a multi-line block",
+      message: 'Expected newline before "}" of a multi-line block',
       links: %w[https://github.com/stylelint/stylelint/tree/9.10.1/lib/rules/block-closing-brace-newline-before],
       id: "block-closing-brace-newline-before",
       path: "test.sss",
@@ -503,7 +503,7 @@ s.add_test(
       location: { start_line: 2 }
     },
     {
-      message: "Expected single space before \"{\"",
+      message: 'Expected single space before "{"',
       links: %w[https://github.com/stylelint/stylelint/tree/9.10.1/lib/rules/block-opening-brace-space-before],
       id: "block-opening-brace-space-before",
       path: "test.sss",

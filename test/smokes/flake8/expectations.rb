@@ -125,7 +125,7 @@ s.add_test(
       path: "foo.py",
       location: { start_line: 2 },
       id: "A001",
-      message: "\"id\" is a python builtin and is being shadowed, consider renaming the variable",
+      message: '"id" is a python builtin and is being shadowed, consider renaming the variable',
       links: [],
       object: nil,
       git_blame_info: nil

@@ -42,12 +42,12 @@ s.add_offline_test(
   warnings: [
     {
       message: <<~MESSAGE.strip,
-Sider cannot find the required configuration file `goodcheck.yml`.
-Please set up Goodcheck by following the instructions, or you can disable it in the repository settings.
-
-- https://github.com/sider/goodcheck
-- https://help.sider.review/tools/others/goodcheck
-MESSAGE
+        Sider cannot find the required configuration file `goodcheck.yml`.
+        Please set up Goodcheck by following the instructions, or you can disable it in the repository settings.
+        
+        - https://github.com/sider/goodcheck
+        - https://help.sider.review/tools/others/goodcheck
+      MESSAGE
       file: nil
     }
   ]
@@ -56,7 +56,7 @@ MESSAGE
 s.add_offline_test(
   "invalid_config_file",
   type: "failure",
-  message: "Invalid config: TypeError at $.rules[0]: expected=rule, value=\"id:foo\"",
+  message: 'Invalid config: TypeError at $.rules[0]: expected=rule, value="id:foo"',
   analyzer: { name: "Goodcheck", version: "2.5.1" }
 )
 

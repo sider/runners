@@ -148,7 +148,7 @@ s.add_test(
       path: "app.php",
       location: { start_line: 5 },
       id: "Squiz.Functions.GlobalFunction.Found",
-      message: "Consider putting global function \"test\" in a static class",
+      message: 'Consider putting global function "test" in a static class',
       links: [],
       object: { type: "WARNING", severity: 5, fixable: false },
       git_blame_info: nil
@@ -157,7 +157,7 @@ s.add_test(
       path: "app.php",
       location: { start_line: 14 },
       id: "Squiz.Functions.GlobalFunction.Found",
-      message: "Consider putting global function \"test\" in a static class",
+      message: 'Consider putting global function "test" in a static class',
       links: [],
       object: { type: "WARNING", severity: 5, fixable: false },
       git_blame_info: nil
@@ -166,7 +166,7 @@ s.add_test(
       path: "app.php",
       location: { start_line: 21 },
       id: "Squiz.Functions.GlobalFunction.Found",
-      message: "Consider putting global function \"testWithCallBack\" in a static class",
+      message: 'Consider putting global function "testWithCallBack" in a static class',
       links: [],
       object: { type: "WARNING", severity: 5, fixable: false },
       git_blame_info: nil

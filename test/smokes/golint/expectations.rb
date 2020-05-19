@@ -18,10 +18,10 @@ s.add_test(
   warnings: [
     {
       message: <<~MSG.strip,
-DEPRECATION WARNING!!!
-The support for Golint is deprecated. Sider will drop these versions on May 31, 2020.
-Please consider using an alternative tool GolangCI-Lint. See https://help.sider.review/tools/go/golint
-MSG
+        DEPRECATION WARNING!!!
+        The support for Golint is deprecated. Sider will drop these versions on May 31, 2020.
+        Please consider using an alternative tool GolangCI-Lint. See https://help.sider.review/tools/go/golint
+      MSG
       file: "sider.yml"
     }
   ]

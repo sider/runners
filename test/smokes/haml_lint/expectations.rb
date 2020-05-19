@@ -35,10 +35,10 @@ s.add_test(
   warnings: [
     {
       message: <<~MSG.strip,
-DEPRECATION WARNING!!!
-The `$.linter.haml_lint.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
-Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/ruby/haml-lint ).
-MSG
+        DEPRECATION WARNING!!!
+        The `$.linter.haml_lint.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
+        Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/ruby/haml-lint ).
+      MSG
       file: "sideci.yml"
     }
   ]
