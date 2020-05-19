@@ -34,14 +34,14 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Querly", version: "1.0.0" }
+  analyzer: { name: "Querly", version: "1.1.0" }
 )
 
 s.add_test(
   "no_config_file",
   type: "success",
   issues: [],
-  analyzer: { name: "Querly", version: "1.0.0" },
+  analyzer: { name: "Querly", version: "1.1.0" },
   warnings: [
     {
       message: <<~MESSAGE.strip,
@@ -70,7 +70,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Querly", version: "1.0.0" },
+  analyzer: { name: "Querly", version: "1.1.0" },
   warnings: [{ message: "com.test.pathname:\t1st *after* example matched with some of patterns", file: "querly.yml" }]
 )
 
@@ -88,7 +88,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Querly", version: "1.0.0" }
+  analyzer: { name: "Querly", version: "1.1.0" }
 )
 
 s.add_test(
@@ -105,7 +105,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Querly", version: "1.0.0" }
+  analyzer: { name: "Querly", version: "1.1.0" }
 )
 
 s.add_test(
