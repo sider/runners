@@ -317,3 +317,12 @@ s.add_test(
   ],
   analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
 )
+
+# NOTE: Monorepo is unsupported by GolangCI-Lint.
+#       See https://github.com/golangci/golangci-lint/issues/828
+s.add_test(
+  "monorepo",
+  type: "failure",
+  message: "Analysis failed. See the log for details.",
+  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+)
