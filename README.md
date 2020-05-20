@@ -65,7 +65,7 @@ Please follow these instructions.
 First, after checking out the source code, run the following command to install Ruby:
 
 ```shell-session
-$ rbenv insall
+$ rbenv install
 ```
 
 If you don't want to use [rbenv](https://github.com/rbenv/rbenv), you need to manually install Ruby with the version in the [`.ruby-version`](.ruby-version) file.
