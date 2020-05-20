@@ -14,7 +14,7 @@ class Runners::Processor::RemarkLintTest < Minitest::Test
   def setup_subject(workspace)
     @subject = Runners::Processor::RemarkLint.new(
       guid: SecureRandom.uuid,
-      workspace: workspace,
+      working_dir: workspace.working_dir,
       config: config,
       trace_writer: trace_writer,
       git_ssh_path: nil
