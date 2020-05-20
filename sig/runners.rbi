@@ -191,6 +191,8 @@ class Runners::Shell::ExecError < Runners::SystemError
 end
 
 class Runners::Harness
+  include Tmpdir
+
   attr_reader guid: String
   attr_reader processor_class: Processor.class constructor
   attr_reader options: Options
@@ -203,6 +205,7 @@ class Runners::Harness
   def run: () -> result
   def ensure_result: { -> result } -> result
   def handle_error: (Exception) -> void
+  def exclude_special_dirs: <'x> { -> 'x } -> 'x
 end
 
 class Runners::Harness::InvalidResult < StandardError

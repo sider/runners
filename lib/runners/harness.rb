@@ -1,5 +1,7 @@
 module Runners
   class Harness
+    include Tmpdir
+
     class InvalidResult < SystemError
       attr_reader :result
 
@@ -48,7 +50,7 @@ module Runners
               result = processor.setup do
                 trace_writer.header "Running analyzer"
                 @analyzer = processor.analyzer # initialize analyzer
-                processor.analyze(changes)
+                exclude_special_dirs { processor.analyze(changes) }
               end
 
               case result
@@ -101,6 +103,26 @@ module Runners
         # Do nothing because this is an internal logic error.
       else
         trace_writer.error "#{exn.message} (#{exn.class})"
+      end
+    end
+
+    def exclude_special_dirs
+      # @type var saved: Hash<Pathname, Pathname>
+      saved = [".git"].filter_map do |dir|
+        src = working_dir / dir
+        if src.exist?
+          dest = mktmpdir_as_pathname / dir
+          src.rename(dest)
+          [src, dest]
+        end
+      end.to_h
+
+      yield
+    ensure
+      # restore
+      saved.each do |src, dest|
+        dest.rename(src)
+        dest.parent.rmdir
       end
     end
   end

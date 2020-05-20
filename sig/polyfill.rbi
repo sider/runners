@@ -22,6 +22,9 @@ class Pathname
   def fnmatch?: (String, Integer) -> bool
   def delete: -> void
   def to_path: -> String
+  def rename: (Pathname) -> 0
+  def parent: -> Pathname
+  def rmdir: -> 0
 end
 
 extension Object (Polyfill)

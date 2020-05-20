@@ -1,4 +1,6 @@
 class Runners::Harness
+  include Tmpdir
+
   attr_reader guid: String
   attr_reader processor_class: Class
   attr_reader options: Options
@@ -15,4 +17,5 @@ class Runners::Harness
   def run: () -> untyped
   def ensure_result: () { () -> untyped } -> untyped
   def handle_error: (Exception exn) -> void
+  def exclude_special_dirs: [X] { () -> X } -> X
 end

@@ -17,7 +17,7 @@ class HarnessTest < Minitest::Test
     @trace_writer ||= TraceWriter.new(writer: [])
   end
 
-  def with_options(head: Pathname(__dir__).join("data/foo.tgz"))
+  def with_options(head: data("foo.tgz"))
     with_runners_options_env(source: { head: head }) do
       yield Runners::Options.new(StringIO.new, StringIO.new)
     end
@@ -226,6 +226,32 @@ class HarnessTest < Minitest::Test
         result = harness.run
         assert_instance_of Results::Success, result
         refute trace_writer.writer.find { |record| record[:message]&.match(/\ADeleting specified files via the `ignore` option/) }
+      end
+    end
+  end
+
+  def test_exclude_special_dirs
+    processor_class = Class.new(TestProcessor) do
+      def analyze(_)
+        if (working_dir / ".git").exist?
+          raise
+        else
+          super
+        end
+      end
+    end
+
+    mktmpdir do |working_dir|
+      with_options do |options|
+        (working_dir / ".git").mkpath
+        (working_dir / ".git" / "config").write("...")
+
+        harness = Harness.new(guid: SecureRandom.uuid, processor_class: processor_class,
+                              options: options, working_dir: working_dir, trace_writer: trace_writer)
+        result = harness.run
+
+        assert_instance_of Results::Success, result
+        assert_path_exists working_dir / ".git" / "config"
       end
     end
   end
