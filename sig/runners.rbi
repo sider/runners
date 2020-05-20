@@ -106,7 +106,6 @@ class Runners::Processor
   include Tmpdir
 
   attr_reader guid: String
-  attr_reader workspace: Workspace
   attr_reader working_dir: Pathname
   attr_reader git_ssh_path: Pathname?
   attr_reader trace_writer: TraceWriter
@@ -114,7 +113,7 @@ class Runners::Processor
   attr_reader warnings: Array<any>
   attr_reader config: Config
 
-  def initialize: (guid: String, workspace: Workspace, config: Config, git_ssh_path: Pathname?, trace_writer: TraceWriter) -> any
+  def initialize: (guid: String, working_dir: Pathname, config: Config, git_ssh_path: Pathname?, trace_writer: TraceWriter) -> any
   def relative_path: (String | Pathname, ?from: Pathname) -> Pathname
   def setup: () { -> result } -> result
   def analyze: (Changes) -> result

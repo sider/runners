@@ -130,21 +130,21 @@ s.add_test(
   "raise-deprecated",
   type: "failure",
   message: <<~MESSAGE,
---type-check is deprecated. You only need --project to enable rules which need type information.
-Error at range.ts:2:18: Property 'min' does not exist on type 'string'.
-Error at range.ts:2:31: Property 'middle' does not exist on type 'string'.
-Error at range.ts:2:47: Property 'middle' does not exist on type 'string'.
-Error at range.ts:2:63: Property 'max' does not exist on type 'string'.
-Error at range.ts:11:24: Argument of type '{ min: number; middle: number; max: number; }' is not assignable to parameter of type 'string'.
-MESSAGE
+    --type-check is deprecated. You only need --project to enable rules which need type information.
+    Error at range.ts:2:18: Property 'min' does not exist on type 'string'.
+    Error at range.ts:2:31: Property 'middle' does not exist on type 'string'.
+    Error at range.ts:2:47: Property 'middle' does not exist on type 'string'.
+    Error at range.ts:2:63: Property 'max' does not exist on type 'string'.
+    Error at range.ts:11:24: Argument of type '{ min: number; middle: number; max: number; }' is not assignable to parameter of type 'string'.
+  MESSAGE
   analyzer: { name: "TSLint", version: "6.1.2" },
   warnings: [
     {
       message: <<~MSG.strip,
-DEPRECATION WARNING!!!
-The support for TSLint is deprecated. Sider will drop these versions on December 1, 2020.
-Please consider using an alternative tool ESLint. See https://github.com/palantir/tslint/issues/4534
-MSG
+        DEPRECATION WARNING!!!
+        The support for TSLint is deprecated. Sider will drop these versions on December 1, 2020.
+        Please consider using an alternative tool ESLint. See https://github.com/palantir/tslint/issues/4534
+      MSG
       file: "sideci.yml"
     }
   ]

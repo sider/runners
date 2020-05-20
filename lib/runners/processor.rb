@@ -5,7 +5,7 @@ module Runners
 
     class CIConfigBroken < UserError; end
 
-    attr_reader :guid, :workspace, :working_dir, :git_ssh_path, :trace_writer, :warnings, :config, :shell
+    attr_reader :guid, :working_dir, :git_ssh_path, :trace_writer, :warnings, :config, :shell
 
     def_delegators :@shell,
       :chdir, :current_dir,
@@ -16,10 +16,9 @@ module Runners
       Schema::Config.register(**args)
     end
 
-    def initialize(guid:, workspace:, config:, git_ssh_path:, trace_writer:)
+    def initialize(guid:, working_dir:, config:, git_ssh_path:, trace_writer:)
       @guid = guid
-      @workspace = workspace
-      @working_dir = workspace.working_dir
+      @working_dir = working_dir
       @git_ssh_path = git_ssh_path
       @trace_writer = trace_writer
       @warnings = []

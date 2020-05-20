@@ -36,11 +36,11 @@ s.add_test(
   analyzer: { name: "PHP_CodeSniffer", version: "3.5.5" },
   warnings: [
     {
-     message: <<~MSG.strip,
-DEPRECATION WARNING!!!
-The `$.linter.code_sniffer.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
-Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/php/codesniffer ).
-MSG
+      message: <<~MSG.strip,
+        DEPRECATION WARNING!!!
+        The `$.linter.code_sniffer.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
+        Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/php/codesniffer ).
+      MSG
       file: "sideci.yml"
     }
   ]
@@ -107,7 +107,7 @@ s.add_test(
       path: "src/test.php",
       location: { start_line: 2 },
       id: "Squiz.Functions.GlobalFunction.Found",
-      message: "Consider putting global function \"foo\" in a static class",
+      message: 'Consider putting global function "foo" in a static class',
       links: [],
       object: { type: "WARNING", severity: 5, fixable: false },
       git_blame_info: nil

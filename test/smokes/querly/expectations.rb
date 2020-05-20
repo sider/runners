@@ -29,7 +29,7 @@ s.add_test(
         id: "com.test.pathname",
         messages: ["Use Pathname method instead"],
         justifications: ["Want to write this code."],
-        examples: [{ before: "Pathname.new(\"path\")", after: "Pathname(\"path\")" }]
+        examples: [{ before: 'Pathname.new("path")', after: 'Pathname("path")' }]
       },
       git_blame_info: nil
     }
@@ -45,12 +45,12 @@ s.add_test(
   warnings: [
     {
       message: <<~MESSAGE.strip,
-Sider cannot find the required configuration file `querly.yml`.
-Please set up Querly by following the instructions, or you can disable it in the repository settings.
-
-- https://github.com/soutaro/querly
-- https://help.sider.review/tools/ruby/querly
-MESSAGE
+        Sider cannot find the required configuration file `querly.yml`.
+        Please set up Querly by following the instructions, or you can disable it in the repository settings.
+        
+        - https://github.com/soutaro/querly
+        - https://help.sider.review/tools/ruby/querly
+      MESSAGE
       file: nil
     }
   ]
@@ -122,7 +122,7 @@ s.add_test(
         id: "com.test.pathname",
         messages: ["Use Pathname method instead"],
         justifications: ["Want to write this code."],
-        examples: [{ before: "Pathname.new(\"path\")", after: "Pathname(\"path\")" }]
+        examples: [{ before: 'Pathname.new("path")', after: 'Pathname("path")' }]
       },
       git_blame_info: nil
     }

@@ -8,10 +8,10 @@ s.add_test(
   warnings: [
     {
       message: <<~MSG.strip,
-DEPRECATION WARNING!!!
-The support for Go Meta Linter is deprecated. Sider will drop these versions on May 31, 2020.
-Please consider using an alternative tool GolangCI-Lint. See https://github.com/alecthomas/gometalinter/issues/590
-MSG
+        DEPRECATION WARNING!!!
+        The support for Go Meta Linter is deprecated. Sider will drop these versions on May 31, 2020.
+        Please consider using an alternative tool GolangCI-Lint. See https://github.com/alecthomas/gometalinter/issues/590
+      MSG
       file: "sider.yml"
     }
   ]
@@ -49,7 +49,7 @@ s.add_test(
       git_blame_info: nil
     },
     {
-      message: "[golint] comment on exported const Id should be of the form \"Id ...\"",
+      message: '[golint] comment on exported const Id should be of the form "Id ..."',
       links: [],
       id: "5058a11cfd937cc5547f20ededd3629ff875a2ca",
       path: "main.go",
@@ -58,7 +58,7 @@ s.add_test(
       git_blame_info: nil
     },
     {
-      message: "[golint] comment on exported function NoDocFunc should be of the form \"NoDocFunc ...\"",
+      message: '[golint] comment on exported function NoDocFunc should be of the form "NoDocFunc ..."',
       links: [],
       id: "54b8e33e5e4f35fef5654c7280e6e3b24be91de0",
       path: "main.go",
@@ -67,7 +67,7 @@ s.add_test(
       git_blame_info: nil
     },
     {
-      message: Regexp.new(Regexp.escape("[gotype] could not import os/exec (type-checking package \"os/exec\" failed")),
+      message: Regexp.new(Regexp.escape('[gotype] could not import os/exec (type-checking package "os/exec" failed')),
       links: [],
       id: "6a64372708d696ef4a6634706e74b3d9b69a813c",
       path: "main.go",
@@ -76,7 +76,7 @@ s.add_test(
       git_blame_info: nil
     },
     {
-      message: Regexp.new(Regexp.escape("[gotype] could not import fmt (type-checking package \"fmt\" failed")),
+      message: Regexp.new(Regexp.escape('[gotype] could not import fmt (type-checking package "fmt" failed')),
       links: [],
       id: "873e123509f57e9ea64859ad99cf4aa3688949cb",
       path: "main.go",

@@ -24,7 +24,7 @@ class ProcessorTest < Minitest::Test
   def new_processor(workspace:, git_ssh_path: nil, config_yaml: nil)
     processor_class.new(
       guid: SecureRandom.uuid,
-      workspace: workspace,
+      working_dir: workspace.working_dir,
       config: config(config_yaml),
       git_ssh_path: git_ssh_path,
       trace_writer: trace_writer,

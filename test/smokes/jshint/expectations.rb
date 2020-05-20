@@ -25,7 +25,7 @@ s.add_test(
       path: "index.js",
       location: { start_line: 1 },
       id: "jshint.W097",
-      message: "Use the function form of \"use strict\".",
+      message: 'Use the function form of "use strict".',
       links: [],
       object: nil,
       git_blame_info: nil
@@ -94,10 +94,10 @@ s.add_test(
   warnings: [
     {
       message: <<~MSG.strip,
-DEPRECATION WARNING!!!
-The `$.linter.jshint.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
-Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/javascript/jshint ).
-MSG
+        DEPRECATION WARNING!!!
+        The `$.linter.jshint.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
+        Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/javascript/jshint ).
+      MSG
       file: "sideci.yml"
     }
   ]

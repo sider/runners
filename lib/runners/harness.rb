@@ -37,7 +37,7 @@ module Runners
           Ignoring.new(working_dir: working_dir, trace_writer: trace_writer, config: conf).delete_ignored_files!
 
           begin
-            processor = processor_class.new(guid: guid, workspace: workspace, config: conf, git_ssh_path: git_ssh_path, trace_writer: trace_writer)
+            processor = processor_class.new(guid: guid, working_dir: working_dir, config: conf, git_ssh_path: git_ssh_path, trace_writer: trace_writer)
 
             root_dir_not_found = processor.check_root_dir_exist
             return root_dir_not_found if root_dir_not_found

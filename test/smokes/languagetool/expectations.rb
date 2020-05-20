@@ -68,7 +68,7 @@ s.add_test(
       id: "DOUSI_KOTOGADEKIRU",
       path: "sample.txt",
       location: { start_line: 1 },
-      message: "省略が可能です。暮\"らせる\"",
+      message: '省略が可能です。暮"らせる"',
       links: [],
       object: {
         sentence: "これわ文章を入力して'CheckText'をクリックすると、誤記を探すことができる。",
@@ -82,7 +82,7 @@ s.add_test(
       id: "KOREWA",
       path: "sample.txt",
       location: { start_line: 1 },
-      message: "文法ミスがあります。\"これは\"の間違いです。",
+      message: '文法ミスがあります。"これは"の間違いです。',
       links: [],
       object: {
         sentence: "これわ文章を入力して'CheckText'をクリックすると、誤記を探すことができる。",
@@ -121,10 +121,10 @@ s.add_test(
       id: "EN_QUOTES",
       path: "target.html",
       location: { start_line: 3 },
-      message: "Use a smart closing quote here: \"”\".",
+      message: 'Use a smart closing quote here: "”".',
       links: [],
       object: {
-        sentence: "<p class=\"normal\">This is a sample <em>HTML</em> file.</p>",
+        sentence: '<p class="normal">This is a sample <em>HTML</em> file.</p>',
         type: "typographical",
         category: "TYPOGRAPHY",
         replacements: %w[”]
@@ -135,10 +135,10 @@ s.add_test(
       id: "EN_QUOTES",
       path: "target.html",
       location: { start_line: 3 },
-      message: "Use a smart closing quote here: \"”\".",
+      message: 'Use a smart closing quote here: "”".',
       links: [],
       object: {
-        sentence: "<p class=\"normal\">This is a sample <em>HTML</em> file.</p>",
+        sentence: '<p class="normal">This is a sample <em>HTML</em> file.</p>',
         type: "typographical",
         category: "TYPOGRAPHY",
         replacements: %w[”]
@@ -188,7 +188,7 @@ s.add_test(
       id: "KOREWA",
       path: "sample.txt",
       location: { start_line: 1 },
-      message: "文法ミスがあります。\"これは\"の間違いです。",
+      message: '文法ミスがあります。"これは"の間違いです。',
       links: [],
       object: { sentence: "これわペンです。", type: "uncategorized", category: "CAT1", replacements: %w[これは] },
       git_blame_info: nil

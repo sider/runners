@@ -5,7 +5,7 @@ s.add_offline_test(
   type: "success",
   issues: [
     {
-      message: "\"infomation\" is a misspelling of \"information\"",
+      message: '"infomation" is a misspelling of "information"',
       links: [],
       id: "information",
       path: "badspell.rb",
@@ -22,7 +22,7 @@ s.add_offline_test(
   type: "success",
   issues: [
     {
-      message: "\"infomation\" is a misspelling of \"information\"",
+      message: '"infomation" is a misspelling of "information"',
       links: [],
       id: "information",
       path: "badspell.rb",
@@ -31,7 +31,7 @@ s.add_offline_test(
       git_blame_info: nil
     },
     {
-      message: "\"offense\" is a misspelling of \"offence\"",
+      message: '"offense" is a misspelling of "offence"',
       links: [],
       id: "offence",
       path: "badspell.rb",
@@ -44,10 +44,10 @@ s.add_offline_test(
   warnings: [
     {
       message: <<~MSG.strip,
-DEPRECATION WARNING!!!
-The `$.linter.misspell.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
-Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/others/misspell ).
-MSG
+        DEPRECATION WARNING!!!
+        The `$.linter.misspell.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
+        Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/others/misspell ).
+      MSG
       file: "sideci.yml"
     }
   ]
@@ -58,7 +58,7 @@ s.add_offline_test(
   type: "success",
   issues: [
     {
-      message: "\"recieve\" is a misspelling of \"receive\"",
+      message: '"recieve" is a misspelling of "receive"',
       links: [],
       id: "receive",
       path: "badspell.rb",
@@ -75,7 +75,7 @@ s.add_offline_test(
   type: "success",
   issues: [
     {
-      message: "\"acknowleges\" is a misspelling of \"acknowledges\"",
+      message: '"acknowleges" is a misspelling of "acknowledges"',
       links: [],
       id: "acknowledges",
       path: "target_dir/bar.rb",
@@ -84,7 +84,7 @@ s.add_offline_test(
       git_blame_info: nil
     },
     {
-      message: "\"comminucation\" is a misspelling of \"communications\"",
+      message: '"comminucation" is a misspelling of "communications"',
       links: [],
       id: "communications",
       path: "target_dir/foo.rb",
@@ -93,7 +93,7 @@ s.add_offline_test(
       git_blame_info: nil
     },
     {
-      message: "\"comminucation\" is a misspelling of \"communications\"",
+      message: '"comminucation" is a misspelling of "communications"',
       links: [],
       id: "communications",
       path: "target_file.rb",
@@ -102,7 +102,7 @@ s.add_offline_test(
       git_blame_info: nil
     },
     {
-      message: "\"infomation\" is a misspelling of \"information\"",
+      message: '"infomation" is a misspelling of "information"',
       links: [],
       id: "information",
       path: "target_dir/bar.rb",
@@ -111,7 +111,7 @@ s.add_offline_test(
       git_blame_info: nil
     },
     {
-      message: "\"recieve\" is a misspelling of \"receive\"",
+      message: '"recieve" is a misspelling of "receive"',
       links: [],
       id: "receive",
       path: "target_dir/foo.rb",
@@ -120,7 +120,7 @@ s.add_offline_test(
       git_blame_info: nil
     },
     {
-      message: "\"recieve\" is a misspelling of \"receive\"",
+      message: '"recieve" is a misspelling of "receive"',
       links: [],
       id: "receive",
       path: "target_file.rb",
@@ -138,7 +138,7 @@ s.add_offline_test(
   type: "success",
   issues: [
     {
-      message: "\"acknowleges\" is a misspelling of \"acknowledges\"",
+      message: '"acknowleges" is a misspelling of "acknowledges"',
       links: [],
       id: "acknowledges",
       path: "target.rb",
@@ -147,7 +147,7 @@ s.add_offline_test(
       git_blame_info: nil
     },
     {
-      message: "\"communiaction\" is a misspelling of \"communications\"",
+      message: '"communiaction" is a misspelling of "communications"',
       links: [],
       id: "communications",
       path: "partial_exclude_dir/target.html",
@@ -156,7 +156,7 @@ s.add_offline_test(
       git_blame_info: nil
     },
     {
-      message: "\"internelized\" is a misspelling of \"internalized\"",
+      message: '"internelized" is a misspelling of "internalized"',
       links: [],
       id: "internalized",
       path: "partial_exclude_dir/bar_dir/target.html",
@@ -165,7 +165,7 @@ s.add_offline_test(
       git_blame_info: nil
     },
     {
-      message: "\"optimizacion\" is a misspelling of \"optimization\"",
+      message: '"optimizacion" is a misspelling of "optimization"',
       links: [],
       id: "optimization",
       path: "partial_exclude_dir/bar_dir/target.js",
@@ -174,7 +174,7 @@ s.add_offline_test(
       git_blame_info: nil
     },
     {
-      message: "\"profissional\" is a misspelling of \"professional\"",
+      message: '"profissional" is a misspelling of "professional"',
       links: [],
       id: "professional",
       path: "foo_dir/target.rb",
@@ -183,7 +183,7 @@ s.add_offline_test(
       git_blame_info: nil
     },
     {
-      message: "\"requeriments\" is a misspelling of \"requirements\"",
+      message: '"requeriments" is a misspelling of "requirements"',
       links: [],
       id: "requirements",
       path: "foo_dir/another_dir/target.html",
@@ -192,7 +192,7 @@ s.add_offline_test(
       git_blame_info: nil
     },
     {
-      message: "\"scholarhsips\" is a misspelling of \"scholarships\"",
+      message: '"scholarhsips" is a misspelling of "scholarships"',
       links: [],
       id: "scholarships",
       path: "foo_dir/another_dir/target.rb",
@@ -201,7 +201,7 @@ s.add_offline_test(
       git_blame_info: nil
     },
     {
-      message: "\"trasnmission\" is a misspelling of \"transmissions\"",
+      message: '"trasnmission" is a misspelling of "transmissions"',
       links: [],
       id: "transmissions",
       path: "partial_exclude_dir/foo_dir/target.py",
@@ -226,7 +226,7 @@ s.add_offline_test(
   type: "success",
   issues: [
     {
-      message: "\"infomation\" is a misspelling of \"information\"",
+      message: '"infomation" is a misspelling of "information"',
       links: [],
       id: "information",
       path: "dir1/file.rb",
@@ -235,7 +235,7 @@ s.add_offline_test(
       git_blame_info: nil
     },
     {
-      message: "\"infomation\" is a misspelling of \"information\"",
+      message: '"infomation" is a misspelling of "information"',
       links: [],
       id: "information",
       path: "file1.rb",

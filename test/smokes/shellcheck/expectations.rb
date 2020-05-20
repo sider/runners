@@ -76,7 +76,7 @@ s.add_test(
               endColumn: 5,
               precedence: 12,
               insertionPoint: "afterEnd",
-              replacement: "\""
+              replacement: '"'
             },
             {
               line: 5,
@@ -85,7 +85,7 @@ s.add_test(
               endColumn: 12,
               precedence: 12,
               insertionPoint: "beforeStart",
-              replacement: "\""
+              replacement: '"'
             }
           ]
         }
