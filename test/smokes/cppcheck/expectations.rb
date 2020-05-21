@@ -419,6 +419,105 @@ s.add_test(
   type: "success",
   issues: [
     {
+      id: "misra-c2012-14.4",
+      path: "misra-test.c",
+      location: { start_line: 24 },
+      message: "misra violation (use --rule-texts=<file> to get proper output)",
+      links: [],
+      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "misra-c2012-14.4",
+      path: "misra-test.c",
+      location: { start_line: 30 },
+      message: "misra violation (use --rule-texts=<file> to get proper output)",
+      links: [],
+      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "misra-c2012-16.4",
+      path: "misra-test.c",
+      location: { start_line: 16 },
+      message: "misra violation (use --rule-texts=<file> to get proper output)",
+      links: [],
+      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "misra-c2012-2.7",
+      path: "y2038-test.c",
+      location: { start_line: 12 },
+      message: "misra violation (use --rule-texts=<file> to get proper output)",
+      links: [],
+      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "misra-c2012-21.1",
+      path: "y2038-inc.h",
+      location: { start_line: 2 },
+      message: "misra violation (use --rule-texts=<file> to get proper output)",
+      links: [],
+      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "misra-c2012-21.1",
+      path: "y2038-inc.h",
+      location: { start_line: 9 },
+      message: "misra violation (use --rule-texts=<file> to get proper output)",
+      links: [],
+      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "misra-c2012-21.1",
+      path: "y2038-test.c",
+      location: { start_line: 8 },
+      message: "misra violation (use --rule-texts=<file> to get proper output)",
+      links: [],
+      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "misra-c2012-21.6",
+      path: "misra-test.c",
+      location: { start_line: 7 },
+      message: "misra violation (use --rule-texts=<file> to get proper output)",
+      links: [],
+      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "misra-c2012-21.6",
+      path: "y2038-test.c",
+      location: { start_line: 1 },
+      message: "misra violation (use --rule-texts=<file> to get proper output)",
+      links: [],
+      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "misra-c2012-5.2",
+      path: "misra-test.c",
+      location: { start_line: 12 },
+      message: "misra violation (use --rule-texts=<file> to get proper output)",
+      links: [],
+      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "misra-c2012-5.2",
+      path: "misra-test.c",
+      location: { start_line: 27 },
+      message: "misra violation (use --rule-texts=<file> to get proper output)",
+      links: [],
+      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
+      git_blame_info: nil
+    },
+    {
       id: "y2038-type-bits-not-64",
       path: "y2038-test.c",
       location: { start_line: 8 },
