@@ -413,3 +413,56 @@ s.add_test(
   "unexpected_error",
   type: "failure", message: "cppcheck: Unknown language 'foo' enforced.", analyzer: { name: "Cppcheck", version: :_ }
 )
+
+s.add_test(
+  "addon",
+  type: "success",
+  issues: [
+    {
+      id: "y2038-type-bits-not-64",
+      path: "y2038-test.c",
+      location: { start_line: 8 },
+      message: "_TIME_BITS must be defined equal to 64",
+      links: [],
+      object: { severity: "error", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "y2038-type-bits-undef",
+      path: "y2038-inc.h",
+      location: { start_line: 9 },
+      message: "_USE_TIME_BITS64 is defined but _TIME_BITS was not",
+      links: [],
+      object: { severity: "warning", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "y2038-unsafe-call",
+      path: "y2038-inc.h",
+      location: { start_line: 21 },
+      message: "timespec is Y2038-unsafe",
+      links: [],
+      object: { severity: "warning", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "y2038-unsafe-call",
+      path: "y2038-inc.h",
+      location: { start_line: 27 },
+      message: "clock_gettime is Y2038-unsafe",
+      links: [],
+      object: { severity: "warning", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "y2038-unsafe-call",
+      path: "y2038-inc.h",
+      location: { start_line: 27 },
+      message: "timespec is Y2038-unsafe",
+      links: [],
+      object: { severity: "warning", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "Cppcheck", version: :_ }
+)

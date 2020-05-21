@@ -2,7 +2,7 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM sider/devon_rex_python:2.19.0 AS builder
+FROM sider/devon_rex_python:2.19.0
 
 # NOTE: The reason using Python image: when setting `MATCHCOMPILER=yes`, Python is used to optimise cppcheck.
 #
@@ -19,11 +19,6 @@ RUN cd /tmp && \
       HAVE_RULES=yes \
       CXXFLAGS="-O2 -DNDEBUG -Wall -Wno-sign-compare -Wno-unused-function" && \
     rm -rf cppcheck-${CPPCHECK_VERSION}
-
-FROM sider/devon_rex_base:2.19.0
-
-COPY --from=builder /usr/share/cppcheck /usr/share/cppcheck
-COPY --from=builder /usr/bin/cppcheck /usr/bin/cppcheck
 
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners

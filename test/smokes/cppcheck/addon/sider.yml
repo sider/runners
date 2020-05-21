@@ -1,0 +1,3 @@
+linter:
+  cppcheck:
+    addon: y2038
