@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 [Full diff](https://github.com/sider/runners/compare/0.24.0...HEAD)
 
 - Fix "No space left" error on Git workspace [#1112](https://github.com/sider/runners/pull/1112)
+- **GolangCI-Lint** Explicitly set `--timeout` [#1117](https://github.com/sider/runners/pull/1117)
 
 ## 0.24.0
 
