@@ -1,0 +1,4 @@
+#!/bin/bash
+
+basedir=$(dirname "$0")
+exec java -classpath "${basedir}:${CLASSPATH}" ShowPMDVersion
