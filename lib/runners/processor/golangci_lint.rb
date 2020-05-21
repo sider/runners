@@ -108,7 +108,7 @@ module Runners
     def path_to_config
       return config_linter[:config] if config_linter[:config]
 
-      # @see https://github.com/golangci/golangci-lint#config-file
+      # @see https://golangci-lint.run/usage/configuration/#config-file
       default_config_file_is_found = %w[.golangci.yml .golangci.toml .golangci.json].find { |f| (current_dir / f).exist? }
       return if default_config_file_is_found
 
