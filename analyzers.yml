@@ -104,6 +104,10 @@ analyzers:
     name: PHPMD
     github: phpmd/phpmd
     doc: tools/php/phpmd
+  pmd_cpd:
+    name: PMD CPD
+    github: pmd/pmd
+    doc: tools/others/pmd_cpd
   pmd_java:
     name: PMD Java
     github: pmd/pmd

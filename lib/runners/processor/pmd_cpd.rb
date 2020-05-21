@@ -21,6 +21,10 @@ module Runners
                     skip_blocks_pattern: string?,
                   })
       }
+
+      let :issue, object(
+        codefragment: string
+      )
     end
 
     DEFAULT_MINIMUM_TOKENS = "100".freeze
@@ -29,11 +33,7 @@ module Runners
     register_config_schema(name: :pmd_cpd, schema: Schema.runner_config)
 
     def analyzer_version
-      @analyzer_version ||= capture3!("show_pmd_version").yield_self { |stdout, | stdout.strip }
-    end
-
-    def analyzer_name
-      "PMD_CPD"
+      @analyzer_version ||= capture3!("show_pmd_version").yield_self { |stdout,| stdout.strip }
     end
 
     def analyzer_bin
