@@ -10,42 +10,42 @@ s.add_test(
         start_line: 1,
         start_column: 1,
         end_line: 28,
-        end_column: 1,
+        end_column: 1
       },
       id: "08ead55e619da352606d925fb154faa3eb678a3d",
       message: "Duplication code",
       links: [],
       object: {
-        codefragment: ["public class Main {\n" +
-                       "  public static void main(String[] args) {\n" +
-                       "    int day = 4;\n" +
-                       "    switch (day) {\n" +
-                       "      case 1:\n" +
-                       "        System.out.println(\"Monday\");\n" +
-                       "        break;\n" +
-                       "      case 2:\n" +
-                       "        System.out.println(\"Tuesday\");\n" +
-                       "        break;\n" +
-                       "      case 3:\n" +
-                       "        System.out.println(\"Wednesday\");\n" +
-                       "        break;\n" +
-                       "      case 4:\n" +
-                       "        System.out.println(\"Thursday\");\n" +
-                       "        break;\n" +
-                       "      case 5:\n" +
-                       "        System.out.println(\"Friday\");\n" +
-                       "        break;\n" +
-                       "      case 6:\n" +
-                       "        System.out.println(\"Saturday\");\n" +
-                       "        break;\n" +
-                       "      case 7:\n" +
-                       "        System.out.println(\"Sunday\");\n" +
-                       "        break;\n" +
-                       "    }\n" +
-                       "  }\n" +
-                       "}"],
+        codefragment: [%[public class Main {
+  public static void main(String[] args) {
+    int day = 4;
+    switch (day) {
+      case 1:
+        System.out.println("Monday");
+        break;
+      case 2:
+        System.out.println("Tuesday");
+        break;
+      case 3:
+        System.out.println("Wednesday");
+        break;
+      case 4:
+        System.out.println("Thursday");
+        break;
+      case 5:
+        System.out.println("Friday");
+        break;
+      case 6:
+        System.out.println("Saturday");
+        break;
+      case 7:
+        System.out.println("Sunday");
+        break;
+    }
+  }
+}]]
       },
-      git_blame_info: nil,
+      git_blame_info: nil
     },
     {
       path: "app.java",
@@ -53,52 +53,52 @@ s.add_test(
         start_line: 31,
         start_column: 1,
         end_line: 58,
-        end_column: 1,
+        end_column: 1
       },
       id: "08ead55e619da352606d925fb154faa3eb678a3d",
       message: "Duplication code",
       links: [],
       object: {
-        codefragment: ["public class Main {\n" +
-                       "  public static void main(String[] args) {\n" +
-                       "    int day = 4;\n" +
-                       "    switch (day) {\n" +
-                       "      case 1:\n" +
-                       "        System.out.println(\"Monday\");\n" +
-                       "        break;\n" +
-                       "      case 2:\n" +
-                       "        System.out.println(\"Tuesday\");\n" +
-                       "        break;\n" +
-                       "      case 3:\n" +
-                       "        System.out.println(\"Wednesday\");\n" +
-                       "        break;\n" +
-                       "      case 4:\n" +
-                       "        System.out.println(\"Thursday\");\n" +
-                       "        break;\n" +
-                       "      case 5:\n" +
-                       "        System.out.println(\"Friday\");\n" +
-                       "        break;\n" +
-                       "      case 6:\n" +
-                       "        System.out.println(\"Saturday\");\n" +
-                       "        break;\n" +
-                       "      case 7:\n" +
-                       "        System.out.println(\"Sunday\");\n" +
-                       "        break;\n" +
-                       "    }\n" +
-                       "  }\n" +
-                       "}"],
+        codefragment: [%[public class Main {
+  public static void main(String[] args) {
+    int day = 4;
+    switch (day) {
+      case 1:
+        System.out.println("Monday");
+        break;
+      case 2:
+        System.out.println("Tuesday");
+        break;
+      case 3:
+        System.out.println("Wednesday");
+        break;
+      case 4:
+        System.out.println("Thursday");
+        break;
+      case 5:
+        System.out.println("Friday");
+        break;
+      case 6:
+        System.out.println("Saturday");
+        break;
+      case 7:
+        System.out.println("Sunday");
+        break;
+    }
+  }
+}]]
       },
-      git_blame_info: nil,
-    },
+      git_blame_info: nil
+    }
   ],
-  analyzer: { name: "PMD_CPD", version: "6.21.0" },
+  analyzer: { name: "PMD_CPD", version: "6.21.0" }
 )
 
 s.add_test(
   "broken_sideci_yml",
   type: "failure",
   message: "The attribute `$.linter.pmd_cpd.files_path` in your `sideci.yml` is unsupported. Please fix and retry.",
-  analyzer: nil,
+  analyzer: nil
 )
 
 s.add_test(
@@ -111,42 +111,42 @@ s.add_test(
         start_line: 1,
         start_column: 1,
         end_line: 28,
-        end_column: 1,
+        end_column: 1
       },
       id: "a0d07ccc71c5882677ebf837cc1b0fbe9a653bb3",
       message: "Duplication code",
       links: [],
       object: {
-        codefragment: ["public class Main {\n" +
-                       "  public static void main(String[] args) {\n" +
-                       "    int day = 4;\n" +
-                       "    switch (day) {\n" +
-                       "      case 1:\n" +
-                       "        System.out.println(\"Monday\");\n" +
-                       "        break;\n" +
-                       "      case 2:\n" +
-                       "        System.out.println(\"Tuesday\");\n" +
-                       "        break;\n" +
-                       "      case 3:\n" +
-                       "        System.out.println(\"Wednesday\");\n" +
-                       "        break;\n" +
-                       "      case 4:\n" +
-                       "        System.out.println(\"Thursday\");\n" +
-                       "        break;\n" +
-                       "      case 5:\n" +
-                       "        System.out.println(\"Friday\");\n" +
-                       "        break;\n" +
-                       "      case 6:\n" +
-                       "        System.out.println(\"Saturday\");\n" +
-                       "        break;\n" +
-                       "      case 7:\n" +
-                       "        System.out.println(\"Sunday\");\n" +
-                       "        break;\n" +
-                       "    }\n" +
-                       "  }\n" +
-                       "}"],
+        codefragment: [%[public class Main {
+  public static void main(String[] args) {
+    int day = 4;
+    switch (day) {
+      case 1:
+        System.out.println("Monday");
+        break;
+      case 2:
+        System.out.println("Tuesday");
+        break;
+      case 3:
+        System.out.println("Wednesday");
+        break;
+      case 4:
+        System.out.println("Thursday");
+        break;
+      case 5:
+        System.out.println("Friday");
+        break;
+      case 6:
+        System.out.println("Saturday");
+        break;
+      case 7:
+        System.out.println("Sunday");
+        break;
+    }
+  }
+}]]
       },
-      git_blame_info: nil,
+      git_blame_info: nil
     },
     {
       path: "src/app.java",
@@ -154,45 +154,45 @@ s.add_test(
         start_line: 31,
         start_column: 1,
         end_line: 58,
-        end_column: 1,
+        end_column: 1
       },
       id: "a0d07ccc71c5882677ebf837cc1b0fbe9a653bb3",
       message: "Duplication code",
       links: [],
       object: {
-        codefragment: ["public class Main {\n" +
-                       "  public static void main(String[] args) {\n" +
-                       "    int day = 4;\n" +
-                       "    switch (day) {\n" +
-                       "      case 1:\n" +
-                       "        System.out.println(\"Monday\");\n" +
-                       "        break;\n" +
-                       "      case 2:\n" +
-                       "        System.out.println(\"Tuesday\");\n" +
-                       "        break;\n" +
-                       "      case 3:\n" +
-                       "        System.out.println(\"Wednesday\");\n" +
-                       "        break;\n" +
-                       "      case 4:\n" +
-                       "        System.out.println(\"Thursday\");\n" +
-                       "        break;\n" +
-                       "      case 5:\n" +
-                       "        System.out.println(\"Friday\");\n" +
-                       "        break;\n" +
-                       "      case 6:\n" +
-                       "        System.out.println(\"Saturday\");\n" +
-                       "        break;\n" +
-                       "      case 7:\n" +
-                       "        System.out.println(\"Sunday\");\n" +
-                       "        break;\n" +
-                       "    }\n" +
-                       "  }\n" +
-                       "}"],
+        codefragment: [%[public class Main {
+  public static void main(String[] args) {
+    int day = 4;
+    switch (day) {
+      case 1:
+        System.out.println("Monday");
+        break;
+      case 2:
+        System.out.println("Tuesday");
+        break;
+      case 3:
+        System.out.println("Wednesday");
+        break;
+      case 4:
+        System.out.println("Thursday");
+        break;
+      case 5:
+        System.out.println("Friday");
+        break;
+      case 6:
+        System.out.println("Saturday");
+        break;
+      case 7:
+        System.out.println("Sunday");
+        break;
+    }
+  }
+}]]
       },
-      git_blame_info: nil,
-    },
+      git_blame_info: nil
+    }
   ],
-  analyzer: { name: "PMD_CPD", version: "6.21.0" },
+  analyzer: { name: "PMD_CPD", version: "6.21.0" }
 )
 
 s.add_test(
@@ -203,56 +203,56 @@ s.add_test(
       path: "app.rb",
       location: {
         start_line: 1,
-        end_line: 14,
+        end_line: 14
       },
       id: "87db478b31e1688ba1747bce0b9ac7ec5e447af1",
       message: "Duplication code",
       links: [],
       object: {
-        codefragment: ["def show_status_tank capacity\n" +
-                       "  case capacity\n" +
-                       "  when 0\n" +
-                       "    \"You ran out of gas.\"\n" +
-                       "  when 1..20\n" +
-                       "    \"The tank is almost empty. Quickly, find a gas station!\"\n" +
-                       "  when 21..70\n" +
-                       "    \"You should be ok for now.\"\n" +
-                       "  when 71..100\n" +
-                       "    \"The tank is almost full.\"\n" +
-                       "  else\n" +
-                       "    \"Error: capacity has an invalid value (\#{capacity})\"\n" +
-                       "  end\n" +
-                       "end"],
+        codefragment: [%[def show_status_tank capacity
+  case capacity
+  when 0
+    "You ran out of gas."
+  when 1..20
+    "The tank is almost empty. Quickly, find a gas station!"
+  when 21..70
+    "You should be ok for now."
+  when 71..100
+    "The tank is almost full."
+  else
+    "Error: capacity has an invalid value (\#{capacity})"
+  end
+end]]
       },
-      git_blame_info: nil,
+      git_blame_info: nil
     },
     {
       path: "app.rb",
       location: {
         start_line: 16,
-        end_line: 29,
+        end_line: 29
       },
       id: "87db478b31e1688ba1747bce0b9ac7ec5e447af1",
       message: "Duplication code",
       links: [],
       object: {
-        codefragment: ["def show_status_tank capacity\n" +
-                       "  case capacity\n" +
-                       "  when 0\n" +
-                       "    \"You ran out of gas.\"\n" +
-                       "  when 1..20\n" +
-                       "    \"The tank is almost empty. Quickly, find a gas station!\"\n" +
-                       "  when 21..70\n" +
-                       "    \"You should be ok for now.\"\n" +
-                       "  when 71..100\n" +
-                       "    \"The tank is almost full.\"\n" +
-                       "  else\n" +
-                       "    \"Error: capacity has an invalid value (\#{capacity})\"\n" +
-                       "  end\n" +
-                       "end"],
+        codefragment: [%[def show_status_tank capacity
+  case capacity
+  when 0
+    "You ran out of gas."
+  when 1..20
+    "The tank is almost empty. Quickly, find a gas station!"
+  when 21..70
+    "You should be ok for now."
+  when 71..100
+    "The tank is almost full."
+  else
+    "Error: capacity has an invalid value (\#{capacity})"
+  end
+end]]
       },
-      git_blame_info: nil,
-    },
+      git_blame_info: nil
+    }
   ],
-  analyzer: { name: "PMD_CPD", version: "6.21.0" },
+  analyzer: { name: "PMD_CPD", version: "6.21.0" }
 )
