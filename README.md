@@ -160,7 +160,11 @@ $ bundle exec rake docker:build docker:smoke ANALYZER=rubocop
 You can use the `rake docker:shell` command to run a command directly in a Docker container, for example:
 
 ```shell-session
-$ bundle exec rake docker:shell ANALYZER=rubocop
+$ bundle exec rake docker:build docker:shell ANALYZER=rubocop
+docker run ...
+analyzer_runner@838f831e5aa7:/work$ cd test/smokes/rubocop/renamed-cop
+analyzer_runner@838f831e5aa7:/work$ rubocop .
+...
 ```
 
 ## License
