@@ -75,12 +75,20 @@ module Runners
     def analyzer_options
       [].tap do |opts|
         analysis_targets.each { |target| opts << target }
+
+        # NOTE: Always override the value in `.golangci.yml`
         opts << "--out-format=json"
         opts << "--print-issued-lines"
         opts << "--print-linter-name"
         opts << "--issues-exit-code=0"
         opts << "--color=never"
         opts << "--concurrency=2"
+
+        # NOTE: The value should be less than the top-level timeout value.
+        #
+        # @see https://github.com/sider/runners/blob/1231de0ca047c7a23449ab1a7bb0751f39f16643/images/Dockerfile.end.erb#L11
+        opts << "--timeout=15m"
+
         opts << "--tests=#{config_linter[:tests]}" unless config_linter[:tests].nil?
         opts << "--config=#{path_to_config}" if path_to_config
         Array(config_linter[:disable]).each { |disable| opts << "--disable=#{disable}" }
