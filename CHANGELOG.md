@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - Fix "No space left" error on Git workspace [#1112](https://github.com/sider/runners/pull/1112)
 - **GolangCI-Lint** Explicitly set `--timeout` [#1117](https://github.com/sider/runners/pull/1117)
+- Add `addon` option to **cppcheck** [#1119](https://github.com/sider/runners/pull/1119)
 
 ## 0.24.0
 
