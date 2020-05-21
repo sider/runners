@@ -2,7 +2,7 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM sider/devon_rex_java:master AS builder
+FROM sider/devon_rex_java:2.19.0 AS builder
 
 # NOTE: Download required dependency JAR files via maven-dependency-plugin.
 #       Also, this image uses a build layer because Maven downloads too many files to `~/.m2` directory.
@@ -12,7 +12,7 @@ COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_cpd/pom.xml ${RUNNER_USER
 RUN cd "${RUNNER_USER_HOME}/pmd_cpd" && \
     mvn --no-transfer-progress --batch-mode --threads 4 dependency:copy-dependencies -DoutputDirectory=.
 
-FROM sider/devon_rex_java:master
+FROM sider/devon_rex_java:2.19.0
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=builder ${RUNNER_USER_HOME}/pmd_cpd/*.jar ${RUNNER_USER_HOME}/pmd_cpd/
 ENV CLASSPATH ${RUNNER_USER_HOME}/pmd_cpd/*:${CLASSPATH}
@@ -28,18 +28,14 @@ RUN cd ${RUNNERS_DIR} && \
     BUNDLE_WITHOUT=development:test bundle install && \
     bundle list
 
-COPY images/pmd_cpd/cpd /usr/local/bin/
-
-# COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_cpd/default-ruleset.xml ${RUNNER_USER_HOME}/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_cpd/cpd ${RUNNER_USER_HOME}/bin/
 
 # NOTE: PMD does not have a CLI option to show its version.
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_cpd/ShowPMDVersion.java ${RUNNER_USER_HOME}/work/
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_cpd/show_pmd_version ${RUNNER_USER_HOME}/work/
-ENV PATH ${RUNNER_USER_HOME}/work:${PATH}
-RUN cd "${RUNNER_USER_HOME}/work" && \
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_cpd/ShowPMDVersion.java ${RUNNER_USER_HOME}/bin/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_cpd/show_pmd_version ${RUNNER_USER_HOME}/bin/
+RUN cd "${RUNNER_USER_HOME}/bin" && \
     javac ShowPMDVersion.java && \
-    cd .. && \
-    show_pmd_version
+    rm ShowPMDVersion.java
 
 
 # Copy the main source code

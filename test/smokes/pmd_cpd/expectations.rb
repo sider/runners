@@ -91,7 +91,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "PMD_CPD", version: "6.21.0" }
+  analyzer: { name: "PMD_CPD", version: "6.23.0" }
 )
 
 s.add_test(
@@ -192,7 +192,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "PMD_CPD", version: "6.21.0" }
+  analyzer: { name: "PMD_CPD", version: "6.23.0" }
 )
 
 s.add_test(
@@ -254,5 +254,5 @@ end]]
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "PMD_CPD", version: "6.21.0" }
+  analyzer: { name: "PMD_CPD", version: "6.23.0" }
 )
