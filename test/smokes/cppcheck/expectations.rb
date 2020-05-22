@@ -420,35 +420,8 @@ s.add_test(
   issues: [
     {
       id: "misra-c2012-14.4",
-      path: "misra-test.c",
-      location: { start_line: 24 },
-      message: "misra violation (use --rule-texts=<file> to get proper output)",
-      links: [],
-      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
-      git_blame_info: nil
-    },
-    {
-      id: "misra-c2012-14.4",
-      path: "misra-test.c",
-      location: { start_line: 30 },
-      message: "misra violation (use --rule-texts=<file> to get proper output)",
-      links: [],
-      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
-      git_blame_info: nil
-    },
-    {
-      id: "misra-c2012-16.4",
-      path: "misra-test.c",
-      location: { start_line: 16 },
-      message: "misra violation (use --rule-texts=<file> to get proper output)",
-      links: [],
-      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
-      git_blame_info: nil
-    },
-    {
-      id: "misra-c2012-2.7",
-      path: "y2038-test.c",
-      location: { start_line: 12 },
+      path: "bad.c",
+      location: { start_line: 8 },
       message: "misra violation (use --rule-texts=<file> to get proper output)",
       links: [],
       object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
@@ -456,7 +429,7 @@ s.add_test(
     },
     {
       id: "misra-c2012-21.1",
-      path: "y2038-inc.h",
+      path: "bad.h",
       location: { start_line: 2 },
       message: "misra violation (use --rule-texts=<file> to get proper output)",
       links: [],
@@ -464,100 +437,10 @@ s.add_test(
       git_blame_info: nil
     },
     {
-      id: "misra-c2012-21.1",
-      path: "y2038-inc.h",
-      location: { start_line: 9 },
-      message: "misra violation (use --rule-texts=<file> to get proper output)",
-      links: [],
-      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
-      git_blame_info: nil
-    },
-    {
-      id: "misra-c2012-21.1",
-      path: "y2038-test.c",
-      location: { start_line: 8 },
-      message: "misra violation (use --rule-texts=<file> to get proper output)",
-      links: [],
-      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
-      git_blame_info: nil
-    },
-    {
-      id: "misra-c2012-21.6",
-      path: "misra-test.c",
-      location: { start_line: 7 },
-      message: "misra violation (use --rule-texts=<file> to get proper output)",
-      links: [],
-      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
-      git_blame_info: nil
-    },
-    {
-      id: "misra-c2012-21.6",
-      path: "y2038-test.c",
-      location: { start_line: 1 },
-      message: "misra violation (use --rule-texts=<file> to get proper output)",
-      links: [],
-      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
-      git_blame_info: nil
-    },
-    {
-      id: "misra-c2012-5.2",
-      path: "misra-test.c",
-      location: { start_line: 12 },
-      message: "misra violation (use --rule-texts=<file> to get proper output)",
-      links: [],
-      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
-      git_blame_info: nil
-    },
-    {
-      id: "misra-c2012-5.2",
-      path: "misra-test.c",
-      location: { start_line: 27 },
-      message: "misra violation (use --rule-texts=<file> to get proper output)",
-      links: [],
-      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
-      git_blame_info: nil
-    },
-    {
-      id: "y2038-type-bits-not-64",
-      path: "y2038-test.c",
-      location: { start_line: 8 },
-      message: "_TIME_BITS must be defined equal to 64",
-      links: [],
-      object: { severity: "error", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
-      git_blame_info: nil
-    },
-    {
       id: "y2038-type-bits-undef",
-      path: "y2038-inc.h",
-      location: { start_line: 9 },
+      path: "bad.h",
+      location: { start_line: 2 },
       message: "_USE_TIME_BITS64 is defined but _TIME_BITS was not",
-      links: [],
-      object: { severity: "warning", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
-      git_blame_info: nil
-    },
-    {
-      id: "y2038-unsafe-call",
-      path: "y2038-inc.h",
-      location: { start_line: 21 },
-      message: "timespec is Y2038-unsafe",
-      links: [],
-      object: { severity: "warning", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
-      git_blame_info: nil
-    },
-    {
-      id: "y2038-unsafe-call",
-      path: "y2038-inc.h",
-      location: { start_line: 27 },
-      message: "clock_gettime is Y2038-unsafe",
-      links: [],
-      object: { severity: "warning", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
-      git_blame_info: nil
-    },
-    {
-      id: "y2038-unsafe-call",
-      path: "y2038-inc.h",
-      location: { start_line: 27 },
-      message: "timespec is Y2038-unsafe",
       links: [],
       object: { severity: "warning", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
       git_blame_info: nil
