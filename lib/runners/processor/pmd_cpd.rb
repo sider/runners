@@ -83,7 +83,7 @@ module Runners
         end_line: elem_file[:endline],
         end_column: elem_file[:endcolumn],
       )
-      id = Digest::SHA1.hexdigest(path.to_s)
+      id = Digest::SHA1.hexdigest(path.to_s + location.to_s) # In case multiple duplicates are found in a file, generate a hash from the file path and the location.
       return {
         id: id,
         path: path,

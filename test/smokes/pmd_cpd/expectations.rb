@@ -7,12 +7,12 @@ s.add_test(
     {
       path: "app.java",
       location: {
-        start_line: 1,
+        start_line: 31,
         start_column: 1,
-        end_line: 28,
+        end_line: 58,
         end_column: 1
       },
-      id: "08ead55e619da352606d925fb154faa3eb678a3d",
+      id: "069e8856ac66563b0c6e50b615209face9958fa7",
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
@@ -50,12 +50,12 @@ s.add_test(
     {
       path: "app.java",
       location: {
-        start_line: 31,
+        start_line: 1,
         start_column: 1,
-        end_line: 58,
+        end_line: 28,
         end_column: 1
       },
-      id: "08ead55e619da352606d925fb154faa3eb678a3d",
+      id: "e8eee93de21372ef3086ae97d2d0e998f15e96e7",
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
@@ -108,12 +108,12 @@ s.add_test(
     {
       path: "src/app.java",
       location: {
-        start_line: 1,
+        start_line: 31,
         start_column: 1,
-        end_line: 28,
+        end_line: 58,
         end_column: 1
       },
-      id: "a0d07ccc71c5882677ebf837cc1b0fbe9a653bb3",
+      id: "25d6b9d612c72d4e244709dede117579f55fcf3a",
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
@@ -151,12 +151,12 @@ s.add_test(
     {
       path: "src/app.java",
       location: {
-        start_line: 31,
+        start_line: 1,
         start_column: 1,
-        end_line: 58,
+        end_line: 28,
         end_column: 1
       },
-      id: "a0d07ccc71c5882677ebf837cc1b0fbe9a653bb3",
+      id: "fcc107525557a97b43b555bda88b63903ac1bed0",
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
@@ -202,10 +202,10 @@ s.add_test(
     {
       path: "app.rb",
       location: {
-        start_line: 1,
-        end_line: 14
+        start_line: 16,
+        end_line: 29
       },
-      id: "87db478b31e1688ba1747bce0b9ac7ec5e447af1",
+      id: "4a336bed0551258d443c4e061bcc219ca326783c",
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
@@ -229,10 +229,10 @@ end]
     {
       path: "app.rb",
       location: {
-        start_line: 16,
-        end_line: 29
+        start_line: 1,
+        end_line: 14
       },
-      id: "87db478b31e1688ba1747bce0b9ac7ec5e447af1",
+      id: "54a4099b5fbb00635c59fc0c0ee8fa3ab711ad76",
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
