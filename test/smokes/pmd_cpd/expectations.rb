@@ -13,7 +13,7 @@ s.add_test(
         end_column: 1
       },
       id: "08ead55e619da352606d925fb154faa3eb678a3d",
-      message: "Duplication code",
+      message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
         codefragment: [%[public class Main {
@@ -56,7 +56,7 @@ s.add_test(
         end_column: 1
       },
       id: "08ead55e619da352606d925fb154faa3eb678a3d",
-      message: "Duplication code",
+      message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
         codefragment: [%[public class Main {
@@ -114,7 +114,7 @@ s.add_test(
         end_column: 1
       },
       id: "a0d07ccc71c5882677ebf837cc1b0fbe9a653bb3",
-      message: "Duplication code",
+      message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
         codefragment: [%[public class Main {
@@ -157,7 +157,7 @@ s.add_test(
         end_column: 1
       },
       id: "a0d07ccc71c5882677ebf837cc1b0fbe9a653bb3",
-      message: "Duplication code",
+      message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
         codefragment: [%[public class Main {
@@ -206,7 +206,7 @@ s.add_test(
         end_line: 14
       },
       id: "87db478b31e1688ba1747bce0b9ac7ec5e447af1",
-      message: "Duplication code",
+      message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
         codefragment: [%[def show_status_tank capacity
@@ -233,7 +233,7 @@ end]]
         end_line: 29
       },
       id: "87db478b31e1688ba1747bce0b9ac7ec5e447af1",
-      message: "Duplication code",
+      message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
         codefragment: [%[def show_status_tank capacity

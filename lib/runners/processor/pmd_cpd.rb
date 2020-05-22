@@ -56,24 +56,27 @@ module Runners
     end
 
     def construct_result(result, stdout, stderr)
-      REXML::Document.new(stdout).root.each_element do |element|
-        element.each_element("file") do |file|
-          path = relative_path(file[:path])
+      REXML::Document.new(stdout).each_element('pmd-cpd/duplication') do |elem_dupli|
+        codefragment = elem_dupli.elements['codefragment'].cdatas
+        elem_files = elem_dupli.get_elements('file')
+
+        elem_files.each do |elem_file|
+          path = relative_path(elem_file[:path])
           id = Digest::SHA1.hexdigest(path.to_s)
           location = Location.new(
-            start_line: file[:line],
-            start_column: file[:column],
-            end_line: file[:endline],
-            end_column: file[:endcolumn],
+            start_line: elem_file[:line],
+            start_column: elem_file[:column],
+            end_line: elem_file[:endline],
+            end_column: elem_file[:endcolumn],
           )
 
           result.add_issue Issue.new(
             path: path,
             location: location,
             id: id,
-            message: "Duplication code",
+            message: "Code duplications found (#{elem_files.size} occurrences).",
             object: {
-              codefragment: element.elements["codefragment"].cdatas,
+              codefragment: codefragment,
             },
           )
         end
