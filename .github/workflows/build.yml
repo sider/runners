@@ -83,6 +83,7 @@ jobs:
           - misspell
           - phinder
           - phpmd
+          - pmd_cpd
           - pmd_java
           - querly
           - rails_best_practices

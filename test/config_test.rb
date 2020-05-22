@@ -79,6 +79,7 @@ class ConfigTest < Minitest::Test
           misspell: nil,
           phinder: nil,
           phpmd: nil,
+          pmd_cpd: nil,
           pmd_java: nil,
           querly: nil,
           rails_best_practices: nil,
