@@ -16,7 +16,7 @@ s.add_test(
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
-        codefragment: [%[public class Main {
+        codefragment: %[public class Main {
   public static void main(String[] args) {
     int day = 4;
     switch (day) {
@@ -43,7 +43,7 @@ s.add_test(
         break;
     }
   }
-}]]
+}]
       },
       git_blame_info: nil
     },
@@ -59,7 +59,7 @@ s.add_test(
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
-        codefragment: [%[public class Main {
+        codefragment: %[public class Main {
   public static void main(String[] args) {
     int day = 4;
     switch (day) {
@@ -86,7 +86,7 @@ s.add_test(
         break;
     }
   }
-}]]
+}]
       },
       git_blame_info: nil
     }
@@ -117,7 +117,7 @@ s.add_test(
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
-        codefragment: [%[public class Main {
+        codefragment: %[public class Main {
   public static void main(String[] args) {
     int day = 4;
     switch (day) {
@@ -144,7 +144,7 @@ s.add_test(
         break;
     }
   }
-}]]
+}]
       },
       git_blame_info: nil
     },
@@ -160,7 +160,7 @@ s.add_test(
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
-        codefragment: [%[public class Main {
+        codefragment: %[public class Main {
   public static void main(String[] args) {
     int day = 4;
     switch (day) {
@@ -187,7 +187,7 @@ s.add_test(
         break;
     }
   }
-}]]
+}]
       },
       git_blame_info: nil
     }
@@ -209,7 +209,7 @@ s.add_test(
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
-        codefragment: [%[def show_status_tank capacity
+        codefragment: %[def show_status_tank capacity
   case capacity
   when 0
     "You ran out of gas."
@@ -222,7 +222,7 @@ s.add_test(
   else
     "Error: capacity has an invalid value (\#{capacity})"
   end
-end]]
+end]
       },
       git_blame_info: nil
     },
@@ -236,7 +236,7 @@ end]]
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
-        codefragment: [%[def show_status_tank capacity
+        codefragment: %[def show_status_tank capacity
   case capacity
   when 0
     "You ran out of gas."
@@ -249,7 +249,7 @@ end]]
   else
     "Error: capacity has an invalid value (\#{capacity})"
   end
-end]]
+end]
       },
       git_blame_info: nil
     }

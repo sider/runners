@@ -57,30 +57,38 @@ module Runners
 
     def construct_result(result, stdout, stderr)
       REXML::Document.new(stdout).each_element('pmd-cpd/duplication') do |elem_dupli|
-        codefragment = elem_dupli.elements['codefragment'].cdatas
-        elem_files = elem_dupli.get_elements('file')
+        codefragment = elem_dupli.elements['codefragment'].cdatas[0].value
+        files = elem_dupli.get_elements('file').map{ |f| to_fileinfo(f) }
 
-        elem_files.each do |elem_file|
-          path = relative_path(elem_file[:path])
-          id = Digest::SHA1.hexdigest(path.to_s)
-          location = Location.new(
-            start_line: elem_file[:line],
-            start_column: elem_file[:column],
-            end_line: elem_file[:endline],
-            end_column: elem_file[:endcolumn],
-          )
-
+        files.each do |file|
           result.add_issue Issue.new(
-            path: path,
-            location: location,
-            id: id,
-            message: "Code duplications found (#{elem_files.size} occurrences).",
+            id: file[:id],
+            path: file[:path],
+            location: file[:location],
+            message: "Code duplications found (#{files.length} occurrences).",
             object: {
-              codefragment: codefragment,
+              codefragment: codefragment
             },
+            schema: Schema.issue,
           )
         end
       end
+    end
+
+    def to_fileinfo(elem_file)
+      path = relative_path(elem_file[:path])
+      location = Location.new(
+        start_line: elem_file[:line],
+        start_column: elem_file[:column],
+        end_line: elem_file[:endline],
+        end_column: elem_file[:endcolumn],
+      )
+      id = Digest::SHA1.hexdigest(path.to_s)
+      return {
+        id: id,
+        path: path,
+        location: location
+      }
     end
 
     def option_files
