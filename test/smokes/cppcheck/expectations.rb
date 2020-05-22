@@ -209,14 +209,14 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: :_ }
+  analyzer: { name: "Cppcheck", version: "2.0" }
 )
 
 s.add_test(
   "no_target",
   type: "success",
   issues: [],
-  analyzer: { name: "Cppcheck", version: :_ },
+  analyzer: { name: "Cppcheck", version: "2.0" },
   warnings: [{ message: "No linting files.", file: nil }]
 )
 
@@ -236,7 +236,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: :_ }
+  analyzer: { name: "Cppcheck", version: "2.0" }
 )
 
 s.add_test(
@@ -266,7 +266,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: :_ }
+  analyzer: { name: "Cppcheck", version: "2.0" }
 )
 
 s.add_test(
@@ -285,7 +285,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: :_ }
+  analyzer: { name: "Cppcheck", version: "2.0" }
 )
 
 s.add_test(
@@ -302,7 +302,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: :_ }
+  analyzer: { name: "Cppcheck", version: "2.0" }
 )
 
 s.add_test(
@@ -337,7 +337,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: :_ }
+  analyzer: { name: "Cppcheck", version: "2.0" }
 )
 
 s.add_test(
@@ -361,7 +361,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: :_ }
+  analyzer: { name: "Cppcheck", version: "2.0" }
 )
 
 s.add_test(
@@ -378,7 +378,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: :_ }
+  analyzer: { name: "Cppcheck", version: "2.0" }
 )
 
 s.add_test(
@@ -406,12 +406,12 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: :_ }
+  analyzer: { name: "Cppcheck", version: "2.0" }
 )
 
 s.add_test(
   "unexpected_error",
-  type: "failure", message: "cppcheck: Unknown language 'foo' enforced.", analyzer: { name: "Cppcheck", version: :_ }
+  type: "failure", message: "cppcheck: Unknown language 'foo' enforced.", analyzer: { name: "Cppcheck", version: "2.0" }
 )
 
 s.add_test(
@@ -446,5 +446,5 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: :_ }
+  analyzer: { name: "Cppcheck", version: "2.0" }
 )
