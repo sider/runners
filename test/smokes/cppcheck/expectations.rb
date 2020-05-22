@@ -209,7 +209,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "1.90" }
+  analyzer: { name: "Cppcheck", version: :_ }
 )
 
 s.add_test(
@@ -236,7 +236,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "1.90" }
+  analyzer: { name: "Cppcheck", version: :_ }
 )
 
 s.add_test(
@@ -266,7 +266,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "1.90" }
+  analyzer: { name: "Cppcheck", version: :_ }
 )
 
 s.add_test(
@@ -285,7 +285,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "1.90" }
+  analyzer: { name: "Cppcheck", version: :_ }
 )
 
 s.add_test(
@@ -302,7 +302,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "1.90" }
+  analyzer: { name: "Cppcheck", version: :_ }
 )
 
 s.add_test(
@@ -337,7 +337,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "1.90" }
+  analyzer: { name: "Cppcheck", version: :_ }
 )
 
 s.add_test(
@@ -361,7 +361,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "1.90" }
+  analyzer: { name: "Cppcheck", version: :_ }
 )
 
 s.add_test(
@@ -378,7 +378,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "1.90" }
+  analyzer: { name: "Cppcheck", version: :_ }
 )
 
 s.add_test(
@@ -406,7 +406,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "1.90" }
+  analyzer: { name: "Cppcheck", version: :_ }
 )
 
 s.add_test(
