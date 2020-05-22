@@ -16,6 +16,8 @@ s.add_test(
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
+        lines: 28,
+        tokens: 111,
         files: [
           {
             id: "e8eee93de21372ef3086ae97d2d0e998f15e96e7",
@@ -77,6 +79,8 @@ s.add_test(
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
+        lines: 28,
+        tokens: 111,
         files: [
           {
             id: "e8eee93de21372ef3086ae97d2d0e998f15e96e7",
@@ -153,6 +157,8 @@ s.add_test(
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
+        lines: 28,
+        tokens: 111,
         files: [
           {
             id: "fcc107525557a97b43b555bda88b63903ac1bed0",
@@ -214,6 +220,8 @@ s.add_test(
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
+        lines: 28,
+        tokens: 111,
         files: [
           {
             id: "fcc107525557a97b43b555bda88b63903ac1bed0",
@@ -281,6 +289,8 @@ s.add_test(
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
+        lines: 14,
+        tokens: 58,
         files: [
           {
             id: "54a4099b5fbb00635c59fc0c0ee8fa3ab711ad76",
@@ -326,6 +336,8 @@ end]
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
+        lines: 14,
+        tokens: 58,
         files: [
           {
             id: "54a4099b5fbb00635c59fc0c0ee8fa3ab711ad76",

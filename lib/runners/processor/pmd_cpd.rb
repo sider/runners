@@ -23,6 +23,8 @@ module Runners
       }
 
       let :issue, object(
+        lines: integer,
+        tokens: integer,
         files: array(object(
           id: string,
           path: string,
@@ -99,6 +101,8 @@ module Runners
     end
 
     def create_issue_object(elem_dupli, files)
+      lines = elem_dupli[:lines].to_i
+      tokens = elem_dupli[:tokens].to_i
       codefragment = elem_dupli.elements['codefragment'].cdatas[0].value
       fileobjs = files.map { |f| {
         id: f[:id],
@@ -110,6 +114,8 @@ module Runners
       }}
 
       return {
+        lines: lines,
+        tokens: tokens,
         files: fileobjs,
         codefragment: codefragment
       }
