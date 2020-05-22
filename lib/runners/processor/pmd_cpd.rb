@@ -23,6 +23,14 @@ module Runners
       }
 
       let :issue, object(
+        files: array(object(
+          id: string,
+          path: string,
+          start_line: integer,
+          start_column: integer?,
+          end_line: integer,
+          end_column: integer?
+        )),
         codefragment: string
       )
     end
@@ -57,8 +65,8 @@ module Runners
 
     def construct_result(result, stdout, stderr)
       REXML::Document.new(stdout).each_element('pmd-cpd/duplication') do |elem_dupli|
-        codefragment = elem_dupli.elements['codefragment'].cdatas[0].value
         files = elem_dupli.get_elements('file').map{ |f| to_fileinfo(f) }
+        issueobj = create_issue_object(elem_dupli, files)
 
         files.each do |file|
           result.add_issue Issue.new(
@@ -66,9 +74,7 @@ module Runners
             path: file[:path],
             location: file[:location],
             message: "Code duplications found (#{files.length} occurrences).",
-            object: {
-              codefragment: codefragment
-            },
+            object: issueobj,
             schema: Schema.issue,
           )
         end
@@ -84,10 +90,28 @@ module Runners
         end_column: elem_file[:endcolumn],
       )
       id = Digest::SHA1.hexdigest(path.to_s + location.to_s) # In case multiple duplicates are found in a file, generate a hash from the file path and the location.
+
       return {
         id: id,
         path: path,
         location: location
+      }
+    end
+
+    def create_issue_object(elem_dupli, files)
+      codefragment = elem_dupli.elements['codefragment'].cdatas[0].value
+      fileobjs = files.map { |f| {
+        id: f[:id],
+        path: f[:path].to_s,
+        start_line: f[:location].start_line,
+        start_column: f[:location].start_column,
+        end_line: f[:location].end_line,
+        end_column: f[:location].end_column,
+      }}
+
+      return {
+        files: fileobjs,
+        codefragment: codefragment
       }
     end
 

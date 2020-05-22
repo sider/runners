@@ -16,6 +16,24 @@ s.add_test(
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
+        files: [
+          {
+            id: "e8eee93de21372ef3086ae97d2d0e998f15e96e7",
+            path: "app.java",
+            start_line: 1,
+            start_column: 1,
+            end_line: 28,
+            end_column: 1
+          },
+          {
+            id: "069e8856ac66563b0c6e50b615209face9958fa7",
+            path: "app.java",
+            start_line: 31,
+            start_column: 1,
+            end_line: 58,
+            end_column: 1
+          }
+        ],
         codefragment: %[public class Main {
   public static void main(String[] args) {
     int day = 4;
@@ -59,6 +77,24 @@ s.add_test(
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
+        files: [
+          {
+            id: "e8eee93de21372ef3086ae97d2d0e998f15e96e7",
+            path: "app.java",
+            start_line: 1,
+            start_column: 1,
+            end_line: 28,
+            end_column: 1
+          },
+          {
+            id: "069e8856ac66563b0c6e50b615209face9958fa7",
+            path: "app.java",
+            start_line: 31,
+            start_column: 1,
+            end_line: 58,
+            end_column: 1
+          }
+        ],
         codefragment: %[public class Main {
   public static void main(String[] args) {
     int day = 4;
@@ -117,6 +153,24 @@ s.add_test(
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
+        files: [
+          {
+            id: "fcc107525557a97b43b555bda88b63903ac1bed0",
+            path: "src/app.java",
+            start_line: 1,
+            start_column: 1,
+            end_line: 28,
+            end_column: 1
+          },
+          {
+            id: "25d6b9d612c72d4e244709dede117579f55fcf3a",
+            path: "src/app.java",
+            start_line: 31,
+            start_column: 1,
+            end_line: 58,
+            end_column: 1
+          }
+        ],
         codefragment: %[public class Main {
   public static void main(String[] args) {
     int day = 4;
@@ -160,6 +214,24 @@ s.add_test(
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
+        files: [
+          {
+            id: "fcc107525557a97b43b555bda88b63903ac1bed0",
+            path: "src/app.java",
+            start_line: 1,
+            start_column: 1,
+            end_line: 28,
+            end_column: 1
+          },
+          {
+            id: "25d6b9d612c72d4e244709dede117579f55fcf3a",
+            path: "src/app.java",
+            start_line: 31,
+            start_column: 1,
+            end_line: 58,
+            end_column: 1
+          }
+        ],
         codefragment: %[public class Main {
   public static void main(String[] args) {
     int day = 4;
@@ -209,6 +281,24 @@ s.add_test(
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
+        files: [
+          {
+            id: "54a4099b5fbb00635c59fc0c0ee8fa3ab711ad76",
+            path: "app.rb",
+            start_line: 1,
+            start_column: nil,
+            end_line: 14,
+            end_column: nil
+          },
+          {
+            id: "4a336bed0551258d443c4e061bcc219ca326783c",
+            path: "app.rb",
+            start_line: 16,
+            start_column: nil,
+            end_line: 29,
+            end_column: nil
+          }
+        ],
         codefragment: %[def show_status_tank capacity
   case capacity
   when 0
@@ -236,6 +326,24 @@ end]
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
+        files: [
+          {
+            id: "54a4099b5fbb00635c59fc0c0ee8fa3ab711ad76",
+            path: "app.rb",
+            start_line: 1,
+            start_column: nil,
+            end_line: 14,
+            end_column: nil
+          },
+          {
+            id: "4a336bed0551258d443c4e061bcc219ca326783c",
+            path: "app.rb",
+            start_line: 16,
+            start_column: nil,
+            end_line: 29,
+            end_column: nil
+          }
+        ],
         codefragment: %[def show_status_tank capacity
   case capacity
   when 0
