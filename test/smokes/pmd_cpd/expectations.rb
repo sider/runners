@@ -376,3 +376,241 @@ end]
   ],
   analyzer: { name: "PMD CPD", version: "6.23.0" }
 )
+
+s.add_test(
+  "option_language_c",
+  type: "success",
+  issues: [
+    {
+      path: "src/fizzbuzz_2.c",
+      location: {
+        start_line: 11,
+        start_column: 16,
+        end_line: 13,
+        end_column: 13
+      },
+      id: "3b57b2623d8a19a1a050be0ffe54d21d22cac853",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 3,
+        tokens: 15,
+        files: [
+          {
+            id: "e6fffe827f811f90be0146a87204fd27a7249d06",
+            path: "src/fizzbuzz_1.c",
+            start_line: 10,
+            start_column: 18,
+            end_line: 12,
+            end_column: 15
+          },
+          {
+            id: "3b57b2623d8a19a1a050be0ffe54d21d22cac853",
+            path: "src/fizzbuzz_2.c",
+            start_line: 11,
+            start_column: 16,
+            end_line: 13,
+            end_column: 13
+          }
+        ],
+        codefragment: %[    } else if (i % 3 == 0) {
+      printf("Fizz\\n");
+    } else if (i % 5 == 0) {]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "src/fizzbuzz_1.c",
+      location: {
+        start_line: 12,
+        start_column: 18,
+        end_line: 15,
+        end_column: 20
+      },
+      id: "716fb07d6436e0486af893e0e93166fc06f42db9",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 4,
+        tokens: 18,
+        files: [
+          {
+            id: "716fb07d6436e0486af893e0e93166fc06f42db9",
+            path: "src/fizzbuzz_1.c",
+            start_line: 12,
+            start_column: 18,
+            end_line: 15,
+            end_column: 20
+          },
+          {
+            id: "e33562290c84ad67d2a2937738674ca7b8fb0397",
+            path: "src/fizzbuzz_2.c",
+            start_line: 13,
+            start_column: 16,
+            end_line: 16,
+            end_column: 18
+          }
+        ],
+        codefragment: %[    } else if (i % 5 == 0) {
+      printf("Buzz\\n");
+    } else {
+      printf("%d\\n", i);]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "src/fizzbuzz_1.c",
+      location: {
+        start_line: 8,
+        start_column: 25,
+        end_line: 10,
+        end_column: 15
+      },
+      id: "ab01be198edb6fa6635f534da66db0fd22928305",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 3,
+        tokens: 15,
+        files: [
+          {
+            id: "ab01be198edb6fa6635f534da66db0fd22928305",
+            path: "src/fizzbuzz_1.c",
+            start_line: 8,
+            start_column: 25,
+            end_line: 10,
+            end_column: 15
+          },
+          {
+            id: "cd80f7d3fa55dde6def3d4114931f102038a6abc",
+            path: "src/fizzbuzz_2.c",
+            start_line: 9,
+            start_column: 23,
+            end_line: 11,
+            end_column: 13
+          }
+        ],
+        codefragment: %[    if (i % 3 == 0 && i % 5 == 0) {
+      printf("Fizz, Buzz\\n");
+    } else if (i % 3 == 0) {]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "src/fizzbuzz_2.c",
+      location: {
+        start_line: 9,
+        start_column: 23,
+        end_line: 11,
+        end_column: 13
+      },
+      id: "cd80f7d3fa55dde6def3d4114931f102038a6abc",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 3,
+        tokens: 15,
+        files: [
+          {
+            id: "ab01be198edb6fa6635f534da66db0fd22928305",
+            path: "src/fizzbuzz_1.c",
+            start_line: 8,
+            start_column: 25,
+            end_line: 10,
+            end_column: 15
+          },
+          {
+            id: "cd80f7d3fa55dde6def3d4114931f102038a6abc",
+            path: "src/fizzbuzz_2.c",
+            start_line: 9,
+            start_column: 23,
+            end_line: 11,
+            end_column: 13
+          }
+        ],
+        codefragment: %[    if (i % 3 == 0 && i % 5 == 0) {
+      printf("Fizz, Buzz\\n");
+    } else if (i % 3 == 0) {]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "src/fizzbuzz_2.c",
+      location: {
+        start_line: 13,
+        start_column: 16,
+        end_line: 16,
+        end_column: 18
+      },
+      id: "e33562290c84ad67d2a2937738674ca7b8fb0397",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 4,
+        tokens: 18,
+        files: [
+          {
+            id: "716fb07d6436e0486af893e0e93166fc06f42db9",
+            path: "src/fizzbuzz_1.c",
+            start_line: 12,
+            start_column: 18,
+            end_line: 15,
+            end_column: 20
+          },
+          {
+            id: "e33562290c84ad67d2a2937738674ca7b8fb0397",
+            path: "src/fizzbuzz_2.c",
+            start_line: 13,
+            start_column: 16,
+            end_line: 16,
+            end_column: 18
+          }
+        ],
+        codefragment: %[    } else if (i % 5 == 0) {
+      printf("Buzz\\n");
+    } else {
+      printf("%d\\n", i);]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "src/fizzbuzz_1.c",
+      location: {
+        start_line: 10,
+        start_column: 18,
+        end_line: 12,
+        end_column: 15
+      },
+      id: "e6fffe827f811f90be0146a87204fd27a7249d06",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 3,
+        tokens: 15,
+        files: [
+          {
+            id: "e6fffe827f811f90be0146a87204fd27a7249d06",
+            path: "src/fizzbuzz_1.c",
+            start_line: 10,
+            start_column: 18,
+            end_line: 12,
+            end_column: 15
+          },
+          {
+            id: "3b57b2623d8a19a1a050be0ffe54d21d22cac853",
+            path: "src/fizzbuzz_2.c",
+            start_line: 11,
+            start_column: 16,
+            end_line: 13,
+            end_column: 13
+          }
+        ],
+        codefragment: %[    } else if (i % 3 == 0) {
+      printf("Fizz\\n");
+    } else if (i % 5 == 0) {]
+      },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "PMD CPD", version: "6.23.0" }
+)
