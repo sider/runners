@@ -614,3 +614,103 @@ s.add_test(
   ],
   analyzer: { name: "PMD CPD", version: "6.23.0" }
 )
+
+s.add_test(
+  "option_no_skip_blocks",
+  type: "success",
+  issues: [
+    {
+      path: "fizzbuzz.c",
+      location: {
+        start_line: 7,
+        start_column: 3,
+        end_line: 17,
+        end_column: 3
+      },
+      id: "089a0f0ed934c319fe150a6854e3b26eba56de53",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 11,
+        tokens: 78,
+        files: [
+          {
+            id: "089a0f0ed934c319fe150a6854e3b26eba56de53",
+            path: "fizzbuzz.c",
+            start_line: 7,
+            start_column: 3,
+            end_line: 17,
+            end_column: 3
+          },
+          {
+            id: "58ac94324fc335138e3603d5277edabd3cd3ffd5",
+            path: "fizzbuzz.c",
+            start_line: 20,
+            start_column: 3,
+            end_line: 30,
+            end_column: 3
+          }
+        ],
+        codefragment: %[  for (i = 1; i <= 100; i++) {
+    if (i % 3 == 0 && i % 5 == 0) {
+      printf("Fizz, Buzz\\n");
+    } else if (i % 3 == 0) {
+      printf("Fizz\\n");
+    } else if (i % 5 == 0) {
+      printf("Buzz\\n");
+    } else {
+      printf("%d\\n", i);
+    }
+  }]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "fizzbuzz.c",
+      location: {
+        start_line: 20,
+        start_column: 3,
+        end_line: 30,
+        end_column: 3
+      },
+      id: "58ac94324fc335138e3603d5277edabd3cd3ffd5",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 11,
+        tokens: 78,
+        files: [
+          {
+            id: "089a0f0ed934c319fe150a6854e3b26eba56de53",
+            path: "fizzbuzz.c",
+            start_line: 7,
+            start_column: 3,
+            end_line: 17,
+            end_column: 3
+          },
+          {
+            id: "58ac94324fc335138e3603d5277edabd3cd3ffd5",
+            path: "fizzbuzz.c",
+            start_line: 20,
+            start_column: 3,
+            end_line: 30,
+            end_column: 3
+          }
+        ],
+        codefragment: %[  for (i = 1; i <= 100; i++) {
+    if (i % 3 == 0 && i % 5 == 0) {
+      printf("Fizz, Buzz\\n");
+    } else if (i % 3 == 0) {
+      printf("Fizz\\n");
+    } else if (i % 5 == 0) {
+      printf("Buzz\\n");
+    } else {
+      printf("%d\\n", i);
+    }
+  }]
+      },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "PMD CPD", version: "6.23.0" }
+)
