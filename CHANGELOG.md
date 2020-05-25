@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - **GolangCI-Lint** Explicitly set `--timeout` [#1117](https://github.com/sider/runners/pull/1117)
 - **Cppcheck** Add `addon` option [#1119](https://github.com/sider/runners/pull/1119)
 - **Cppcheck** 1.90 -> 2.0 [#1083](https://github.com/sider/runners/pull/1083)
+- Add exception classes for failed git-fetch and git-checkout [#1139](https://github.com/sider/runners/pull/1139)
 
 ## 0.24.0
 
