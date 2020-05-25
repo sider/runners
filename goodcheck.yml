@@ -32,7 +32,7 @@ rules:
   - id: sider.runners.trace_writer.masked_string
     glob: lib/runners/trace_writer.rb
     message: |
-      Use `#masked_string` if the passed string has possibly sensitive values
+      Use `filter.mask(...)` if the passed string has possibly sensitive values
     justification:
       - When the passed value is not sensitive
       - When your change is irrelevant to `:writer`
