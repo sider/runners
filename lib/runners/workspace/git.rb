@@ -1,5 +1,8 @@
 module Runners
   class Workspace::Git < Workspace
+    class FetchFailed < SystemError; end
+    class CheckoutFailed < SystemError; end
+
     def range_git_blame_info(path_string, start_line, end_line)
       stdout, _ = shell.capture3!("git", "blame", "-p", "-L", "#{start_line},#{end_line}", git_source.head, "--", path_string,
                                   trace_stdout: false, trace_stderr: true)
@@ -17,8 +20,18 @@ module Runners
       shell.capture3!("git", "config", "gc.auto", "0")
       shell.capture3!("git", "config", "advice.detachedHead", "false")
       shell.capture3!("git", "remote", "add", "origin", remote_url.to_s)
-      shell.capture3!("git", "fetch", *git_fetch_args)
-      shell.capture3!("git", "checkout", git_source.head)
+
+      begin
+        shell.capture3!("git", "fetch", *git_fetch_args)
+      rescue Shell::ExecError => exn
+        raise FetchFailed, "git-fetch failed: #{exn.stderr_str}"
+      end
+
+      begin
+        shell.capture3!("git", "checkout", git_source.head)
+      rescue Shell::ExecError => exn
+        raise CheckoutFailed, "git-checkout failed: #{exn.stderr_str}"
+      end
     end
 
     def remote_url
