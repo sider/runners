@@ -1,5 +1,5 @@
 class Runners::SensitiveFilter
-  attr_reader options: Options
+  @options: Options
 
   def initialize: (options: Options) -> void
   def sensitives: () -> Array<String>
