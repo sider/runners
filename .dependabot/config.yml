@@ -12,6 +12,10 @@ update_configs:
       - match:
           dependency_type: "development"
           update_type: "all"
+    # TODO: Steep is broken by the update. See https://github.com/sider/runners/pull/1135
+    ignored_updates:
+      - match:
+          dependency_name: "strong_json"
 
   # Docker
   - { package_manager: "docker", update_schedule: "weekly", directory: "/images/golangci_lint" }
