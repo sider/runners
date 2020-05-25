@@ -6,20 +6,7 @@ class TraceWriterTest < Minitest::Test
   TraceWriter = Runners::TraceWriter
 
   def writer
-    source = {
-      head: "123abc",
-      base: "456def",
-      git_http_url: "https://github.com",
-      owner: "foo",
-      repo: "bar",
-      git_http_userinfo: "user:secret",
-      pull_number: 105,
-    }
-    filter = with_runners_options_env(source: source) do
-      options = Runners::Options.new(StringIO.new, StringIO.new)
-      Runners::SensitiveFilter.new(options: options)
-    end
-    @writer ||= TraceWriter.new(writer: [], filter: filter)
+    @writer ||= TraceWriter.new(writer: [], filter: sensitive_filter)
   end
 
   def now

@@ -10,7 +10,7 @@ class ProcessorTest < Minitest::Test
   Shell = Runners::Shell
 
   def trace_writer
-    @trace_writer ||= TraceWriter.new(writer: [])
+    @trace_writer ||= TraceWriter.new(writer: [], filter: sensitive_filter)
   end
 
   def processor_class

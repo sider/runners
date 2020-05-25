@@ -6,7 +6,7 @@ class IgnoringTest < Minitest::Test
   Ignoring = Runners::Ignoring
 
   def trace_writer
-    @trace_writer ||= Runners::TraceWriter.new(writer: [])
+    @trace_writer ||= new_trace_writer
   end
 
   def new_config(yaml, dir:)

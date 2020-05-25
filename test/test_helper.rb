@@ -40,8 +40,9 @@ module TestHelper
 
     with_runners_options_env(source: source, ssh_key: ssh_key) do
       options = Runners::Options.new(StringIO.new, StringIO.new)
+      filter = Runners::SensitiveFilter.new(options: options)
       mktmpdir do |dir|
-        yield Runners::Workspace.prepare(options: options, working_dir: dir, trace_writer: Runners::TraceWriter.new(writer: []))
+        yield Runners::Workspace.prepare(options: options, working_dir: dir, trace_writer: new_trace_writer(filter: filter))
       end
     end
   end
@@ -51,5 +52,25 @@ module TestHelper
       (path / 'sider.yml').write(yaml) if yaml
       Runners::Config.new(path)
     end
+  end
+
+  def sensitive_filter
+    source = {
+      head: "123abc",
+      base: "456def",
+      git_http_url: "https://github.com",
+      owner: "foo",
+      repo: "bar",
+      git_http_userinfo: "user:secret",
+      pull_number: 105,
+    }
+    with_runners_options_env(source: source) do
+      options = Runners::Options.new(StringIO.new, StringIO.new)
+      Runners::SensitiveFilter.new(options: options)
+    end
+  end
+
+  def new_trace_writer(filter: sensitive_filter)
+    Runners::TraceWriter.new(writer: [], filter: filter)
   end
 end

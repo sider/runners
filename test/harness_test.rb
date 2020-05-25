@@ -14,7 +14,7 @@ class HarnessTest < Minitest::Test
   Options = Runners::Options
 
   def trace_writer
-    @trace_writer ||= TraceWriter.new(writer: [])
+    @trace_writer ||= TraceWriter.new(writer: [], filter: sensitive_filter)
   end
 
   def with_options(head: data("foo.tgz"))

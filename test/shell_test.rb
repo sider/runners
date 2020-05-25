@@ -6,7 +6,7 @@ class ShellTest < Minitest::Test
   Shell = Runners::Shell
 
   def trace_writer
-    @trace_writer ||= Runners::TraceWriter.new(writer: [])
+    @trace_writer ||= new_trace_writer
   end
 
   def assert_trace_writer(expected)
