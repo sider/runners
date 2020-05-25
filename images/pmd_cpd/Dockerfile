@@ -28,7 +28,7 @@ RUN cd ${RUNNERS_DIR} && \
     BUNDLE_WITHOUT=development:test bundle install && \
     bundle list
 
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_cpd/cpd ${RUNNER_USER_HOME}/bin/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_cpd/pmd_cpd ${RUNNER_USER_HOME}/bin/
 
 # NOTE: PMD does not have a CLI option to show its version.
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/ShowPMDVersion.java ${RUNNER_USER_HOME}/bin/

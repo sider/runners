@@ -46,10 +46,6 @@ module Runners
       @analyzer_version ||= capture3!("show_pmd_version").yield_self { |stdout,| stdout.strip }
     end
 
-    def analyzer_bin
-      "cpd"
-    end
-
     def analyze(changes)
       run_analyzer
     end
