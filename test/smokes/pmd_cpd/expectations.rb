@@ -135,9 +135,9 @@ s.add_test(
 )
 
 s.add_test(
-  "broken_sideci_yml",
+  "broken_sider_yml",
   type: "failure",
-  message: "The attribute `$.linter.pmd_cpd.files_path` in your `sideci.yml` is unsupported. Please fix and retry.",
+  message: "The attribute `$.linter.pmd_cpd.files_path` in your `sider.yml` is unsupported. Please fix and retry.",
   analyzer: :_
 )
 
