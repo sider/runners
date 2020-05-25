@@ -1,5 +1,5 @@
 linter:
   pmd_cpd:
     language: c
-    minimum_tokens: 50
-    no_skip_blocks: true
+    minimum-tokens: 50
+    no-skip-blocks: true

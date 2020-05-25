@@ -5,20 +5,20 @@ module Runners
     Schema = StrongJSON.new do
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
-                    minimum_tokens: numeric?,
+                    'minimum-tokens': numeric?,
                     files: string?,
                     filelist: string?,
                     language: string?,
                     encoding: string?,
-                    skip_duplicate_files: boolean?,
-                    non_recursive: boolean?,
-                    skip_lexical_errors: boolean?,
-                    ignore_annotations: boolean?,
-                    ignore_identifiers: boolean?,
-                    ignore_literals: boolean?,
-                    ignore_usings: boolean?,
-                    no_skip_blocks: boolean?,
-                    skip_blocks_pattern: string?,
+                    'skip-duplicate-files': boolean?,
+                    'non-recursive': boolean?,
+                    'skip-lexical-errors': boolean?,
+                    'ignore-annotations': boolean?,
+                    'ignore-identifiers': boolean?,
+                    'ignore-literals': boolean?,
+                    'ignore-usings': boolean?,
+                    'no-skip-blocks': boolean?,
+                    'skip-blocks-pattern': string?,
                   })
       }
 
@@ -130,7 +130,7 @@ module Runners
     end
 
     def option_minimum_tokens
-      config_linter[:minimum_tokens].then do |v|
+      config_linter[:'minimum-tokens'].then do |v|
         v ? ["--minimum-tokens", v.to_s] : ["--minimum-tokens", DEFAULT_MINIMUM_TOKENS]
       end
     end
@@ -140,39 +140,39 @@ module Runners
     end
 
     def option_skip_duplicate_files
-      config_linter[:skip_duplicate_files].then { |v| v ? ["--skip-duplicate-files"] : [] }
+      config_linter[:'skip-duplicate-files'].then { |v| v ? ["--skip-duplicate-files"] : [] }
     end
 
     def option_non_recursive
-      config_linter[:non_recursive].then { |v| v ? ["--non-recursive"] : [] }
+      config_linter[:'non-recursive'].then { |v| v ? ["--non-recursive"] : [] }
     end
 
     def option_skip_lexical_errors
-      config_linter[:skip_lexical_errors].then { |v| v ? ["--skip-lexical-errors"] : [] }
+      config_linter[:'skip-lexical-errors'].then { |v| v ? ["--skip-lexical-errors"] : [] }
     end
 
     def option_ignore_annotations
-      config_linter[:ignore_annotations].then { |v| v ? ["--ignore-annotations"] : [] }
+      config_linter[:'ignore-annotations'].then { |v| v ? ["--ignore-annotations"] : [] }
     end
 
     def option_ignore_identifiers
-      config_linter[:ignore_identifiers].then { |v| v ? ["--ignore-identifiers"] : [] }
+      config_linter[:'ignore-identifiers'].then { |v| v ? ["--ignore-identifiers"] : [] }
     end
 
     def option_ignore_literals
-      config_linter[:ignore_literals].then { |v| v ? ["--ignore-literals"] : [] }
+      config_linter[:'ignore-literals'].then { |v| v ? ["--ignore-literals"] : [] }
     end
 
     def option_ignore_usings
-      config_linter[:ignore_usings].then { |v| v ? ["--ignore-usings"] : [] }
+      config_linter[:'ignore-usings'].then { |v| v ? ["--ignore-usings"] : [] }
     end
 
     def option_no_skip_blocks
-      config_linter[:no_skip_blocks].then { |v| v ? ["--no-skip-blocks"] : [] }
+      config_linter[:'no-skip-blocks'].then { |v| v ? ["--no-skip-blocks"] : [] }
     end
 
     def option_skip_blocks_pattern
-      config_linter[:skip_blocks_pattern].then { |v| v ? ["--skip-blocks-pattern", v] : [] }
+      config_linter[:'skip-blocks-pattern'].then { |v| v ? ["--skip-blocks-pattern", v] : [] }
     end
 
     def cli_options
