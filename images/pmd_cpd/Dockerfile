@@ -31,8 +31,8 @@ RUN cd ${RUNNERS_DIR} && \
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_cpd/cpd ${RUNNER_USER_HOME}/bin/
 
 # NOTE: PMD does not have a CLI option to show its version.
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_cpd/ShowPMDVersion.java ${RUNNER_USER_HOME}/bin/
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_cpd/show_pmd_version ${RUNNER_USER_HOME}/bin/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/ShowPMDVersion.java ${RUNNER_USER_HOME}/bin/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/show_pmd_version ${RUNNER_USER_HOME}/bin/
 RUN cd "${RUNNER_USER_HOME}/bin" && \
     javac ShowPMDVersion.java && \
     rm ShowPMDVersion.java
