@@ -448,3 +448,12 @@ s.add_test(
   ],
   analyzer: { name: "Cppcheck", version: "2.0" }
 )
+
+s.add_test(
+  "addon_misra_rules",
+  type: "success",
+  issues: [
+    # TODO: Add expectations...
+  ],
+  analyzer: { name: "Cppcheck", version: "2.0" }
+)
