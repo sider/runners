@@ -6,8 +6,7 @@ module Runners
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
                     'minimum-tokens': numeric?,
-                    files: string?,
-                    filelist: string?,
+                    files: enum?(string, array(string)),
                     language: string?,
                     encoding: string?,
                     'skip-duplicate-files': boolean?,
@@ -118,11 +117,7 @@ module Runners
     end
 
     def option_files
-      config_linter[:files].then { |v| v ? ["--files", v] : ["--files", DEFAULT_FILES] }
-    end
-
-    def option_filelist
-      config_linter[:filelist].then { |v| v ? ["--filelist", v] : [] }
+      Array(config_linter[:files] || DEFAULT_FILES).map { |v| ["--files", v] }.flatten
     end
 
     def option_encoding
@@ -183,7 +178,6 @@ module Runners
         *option_skip_duplicate_files,
         *option_non_recursive,
         *option_skip_lexical_errors,
-        *option_filelist,
         *option_ignore_usings,
         *option_no_skip_blocks,
         *option_skip_blocks_pattern,

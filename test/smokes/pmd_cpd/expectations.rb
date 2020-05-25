@@ -146,14 +146,14 @@ s.add_test(
   type: "success",
   issues: [
     {
-      path: "src/app.java",
+      path: "lib/foo/bar.java",
       location: {
-        start_line: 31,
+        start_line: 4,
         start_column: 1,
-        end_line: 58,
+        end_line: 31,
         end_column: 1
       },
-      id: "25d6b9d612c72d4e244709dede117579f55fcf3a",
+      id: "f721b99980175debf0b6e860af6e29b43b4509b3",
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
@@ -169,11 +169,11 @@ s.add_test(
             end_column: 1
           },
           {
-            id: "25d6b9d612c72d4e244709dede117579f55fcf3a",
-            path: "src/app.java",
-            start_line: 31,
+            id: "f721b99980175debf0b6e860af6e29b43b4509b3",
+            path: "lib/foo/bar.java",
+            start_line: 4,
             start_column: 1,
-            end_line: 58,
+            end_line: 31,
             end_column: 1
           }
         ],
@@ -232,11 +232,11 @@ s.add_test(
             end_column: 1
           },
           {
-            id: "25d6b9d612c72d4e244709dede117579f55fcf3a",
-            path: "src/app.java",
-            start_line: 31,
+            id: "f721b99980175debf0b6e860af6e29b43b4509b3",
+            path: "lib/foo/bar.java",
+            start_line: 4,
             start_column: 1,
-            end_line: 58,
+            end_line: 31,
             end_column: 1
           }
         ],
@@ -620,14 +620,14 @@ s.add_test(
   type: "success",
   issues: [
     {
-      path: "fizzbuzz.c",
+      path: "src/fizzbuzz.c",
       location: {
         start_line: 7,
         start_column: 3,
         end_line: 17,
         end_column: 3
       },
-      id: "089a0f0ed934c319fe150a6854e3b26eba56de53",
+      id: "71df59ee3a36c5d80d35007541cdbde6fd127215",
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
@@ -635,16 +635,16 @@ s.add_test(
         tokens: 78,
         files: [
           {
-            id: "089a0f0ed934c319fe150a6854e3b26eba56de53",
-            path: "fizzbuzz.c",
+            id: "71df59ee3a36c5d80d35007541cdbde6fd127215",
+            path: "src/fizzbuzz.c",
             start_line: 7,
             start_column: 3,
             end_line: 17,
             end_column: 3
           },
           {
-            id: "58ac94324fc335138e3603d5277edabd3cd3ffd5",
-            path: "fizzbuzz.c",
+            id: "7e98a5dcfadd5f7617d390c6ab4dbf2b3008fda8",
+            path: "src/fizzbuzz.c",
             start_line: 20,
             start_column: 3,
             end_line: 30,
@@ -666,14 +666,14 @@ s.add_test(
       git_blame_info: nil
     },
     {
-      path: "fizzbuzz.c",
+      path: "src/fizzbuzz.c",
       location: {
         start_line: 20,
         start_column: 3,
         end_line: 30,
         end_column: 3
       },
-      id: "58ac94324fc335138e3603d5277edabd3cd3ffd5",
+      id: "7e98a5dcfadd5f7617d390c6ab4dbf2b3008fda8",
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
@@ -681,16 +681,16 @@ s.add_test(
         tokens: 78,
         files: [
           {
-            id: "089a0f0ed934c319fe150a6854e3b26eba56de53",
-            path: "fizzbuzz.c",
+            id: "71df59ee3a36c5d80d35007541cdbde6fd127215",
+            path: "src/fizzbuzz.c",
             start_line: 7,
             start_column: 3,
             end_line: 17,
             end_column: 3
           },
           {
-            id: "58ac94324fc335138e3603d5277edabd3cd3ffd5",
-            path: "fizzbuzz.c",
+            id: "7e98a5dcfadd5f7617d390c6ab4dbf2b3008fda8",
+            path: "src/fizzbuzz.c",
             start_line: 20,
             start_column: 3,
             end_line: 30,
