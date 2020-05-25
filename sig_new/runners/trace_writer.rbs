@@ -4,9 +4,9 @@ end
 
 class Runners::TraceWriter
   attr_reader writer: _Writer
-  attr_reader sensitive_strings: Array[String]
+  attr_reader filter: SensitiveFilter
 
-  def initialize: (writer: _Writer, ?sensitive_strings: Array[String]) -> void
+  def initialize: (writer: _Writer, filter: SensitiveFilter) -> void
   def command_line: (Array[String] command_line, ?recorded_at: Time) -> void
   def status: (Process::Status status, ?recorded_at: Time) -> untyped
   def stdout: (String string, ?recorded_at: Time, ?max_length: Integer) -> void
@@ -21,5 +21,4 @@ class Runners::TraceWriter
   private
   def now: () -> untyped
   def each_slice: (String string, size: Integer) { (String, bool) -> void } -> void
-  def masked_string: (String str) -> String
 end
