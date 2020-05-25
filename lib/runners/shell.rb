@@ -126,8 +126,8 @@ module Runners
           if raise_on_failure
             raise ExecError.new(type: method,
                                 args: command_line,
-                                stdout_str: stdout_str,
-                                stderr_str: stderr_str,
+                                stdout_str: trace_writer.filter.mask(stdout_str),
+                                stderr_str: trace_writer.filter.mask(stderr_str),
                                 status: status,
                                 dir: current_dir)
           end

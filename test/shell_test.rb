@@ -225,4 +225,17 @@ class ShellTest < Minitest::Test
       assert_equal path, error.dir
     end
   end
+
+  def test_masking_senstives_in_exception
+    mktmpdir do |path|
+      shell = Shell.new(current_dir: path, trace_writer: trace_writer, env_hash: {})
+
+      error = assert_raises Shell::ExecError do
+        shell.capture3!("echo '[stdout] user:secret' ; echo '[stderr] user:secret' 1>&2 ; exit 1")
+      end
+
+      assert_equal "[stdout] [FILTERED]\n", error.stdout_str
+      assert_equal "[stderr] [FILTERED]\n", error.stderr_str
+    end
+  end
 end
