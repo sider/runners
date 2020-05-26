@@ -28,9 +28,9 @@ module Runners
           id: string,
           path: string,
           start_line: integer,
-          start_column: integer?,
+          start_column: integer,
           end_line: integer,
-          end_column: integer?
+          end_column: integer
         )),
         codefragment: string
       )
