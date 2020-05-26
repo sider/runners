@@ -36,7 +36,7 @@ module Runners
       )
     end
 
-    DEFAULT_MINIMUM_TOKENS = "100".freeze
+    DEFAULT_MINIMUM_TOKENS = 100
     DEFAULT_FILES = ".".freeze
 
     register_config_schema(name: :pmd_cpd, schema: Schema.runner_config)
@@ -125,9 +125,7 @@ module Runners
     end
 
     def option_minimum_tokens
-      config_linter[:'minimum-tokens'].then do |v|
-        v ? ["--minimum-tokens", v.to_s] : ["--minimum-tokens", DEFAULT_MINIMUM_TOKENS]
-      end
+      (config_linter[:'minimum-tokens'] || DEFAULT_MINIMUM_TOKENS).then { |v| ["--minimum-tokens", v.to_s] }
     end
 
     def option_language
