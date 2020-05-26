@@ -30,6 +30,10 @@ All notable changes to this project will be documented in this file.
 
 - Use git-ls-files instead of git-check-ignore [#1148](https://github.com/sider/runners/pull/1148)
 
+New supported:
+
+- **Pylint** [#1149](https://github.com/sider/runners/pull/1149)
+
 ## 0.25.2
 
 [Full diff](https://github.com/sider/runners/compare/0.25.1...0.25.2)

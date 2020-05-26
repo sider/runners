@@ -107,6 +107,7 @@ require "runners/processor/stylelint"
 require "runners/processor/swiftlint"
 require "runners/processor/tslint"
 require "runners/processor/tyscan"
+require "runners/processor/pylint"
 
 module Runners
 end

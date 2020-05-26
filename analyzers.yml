@@ -153,3 +153,7 @@ analyzers:
     name: TyScan
     github: sider/TyScan
     doc: tools/javascript/tyscan
+  pylint:
+    name: pylint
+    github: PyCQA/pylint
+    doc: tools/python/pylint
