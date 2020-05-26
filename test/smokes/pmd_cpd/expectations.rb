@@ -280,33 +280,35 @@ s.add_test(
   type: "success",
   issues: [
     {
-      path: "app.rb",
+      path: "foo/bar/baz/qux.rb",
       location: {
-        start_line: 16,
-        end_line: 29
+        start_line: 5,
+        start_column: 0,
+        end_line: 16,
+        end_column: 56
       },
-      id: "4a336bed0551258d443c4e061bcc219ca326783c",
+      id: "759a22bd523815368918029841de9924c8ca45b4",
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
-        lines: 14,
-        tokens: 58,
+        lines: 12,
+        tokens: 19,
         files: [
           {
-            id: "54a4099b5fbb00635c59fc0c0ee8fa3ab711ad76",
-            path: "app.rb",
-            start_line: 1,
-            start_column: nil,
-            end_line: 14,
-            end_column: nil
+            id: "759a22bd523815368918029841de9924c8ca45b4",
+            path: "foo/bar/baz/qux.rb",
+            start_line: 5,
+            start_column: 0,
+            end_line: 16,
+            end_column: 56
           },
           {
-            id: "4a336bed0551258d443c4e061bcc219ca326783c",
-            path: "app.rb",
-            start_line: 16,
-            start_column: nil,
-            end_line: 29,
-            end_column: nil
+            id: "93d15c9d00a8777d9d725ba82e6227da94bfd445",
+            path: "src/app.rb",
+            start_line: 3,
+            start_column: 0,
+            end_line: 14,
+            end_column: 56
           }
         ],
         codefragment: %[def show_status_tank capacity
@@ -320,40 +322,40 @@ s.add_test(
   when 71..100
     "The tank is almost full."
   else
-    "Error: capacity has an invalid value (\#{capacity})"
-  end
-end]
+    "Error: capacity has an invalid value (\#{capacity})"]
       },
       git_blame_info: nil
     },
     {
-      path: "app.rb",
+      path: "src/app.rb",
       location: {
-        start_line: 1,
-        end_line: 14
+        start_line: 3,
+        start_column: 0,
+        end_line: 14,
+        end_column: 56
       },
-      id: "54a4099b5fbb00635c59fc0c0ee8fa3ab711ad76",
+      id: "93d15c9d00a8777d9d725ba82e6227da94bfd445",
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
-        lines: 14,
-        tokens: 58,
+        lines: 12,
+        tokens: 19,
         files: [
           {
-            id: "54a4099b5fbb00635c59fc0c0ee8fa3ab711ad76",
-            path: "app.rb",
-            start_line: 1,
-            start_column: nil,
-            end_line: 14,
-            end_column: nil
+            id: "759a22bd523815368918029841de9924c8ca45b4",
+            path: "foo/bar/baz/qux.rb",
+            start_line: 5,
+            start_column: 0,
+            end_line: 16,
+            end_column: 56
           },
           {
-            id: "4a336bed0551258d443c4e061bcc219ca326783c",
-            path: "app.rb",
-            start_line: 16,
-            start_column: nil,
-            end_line: 29,
-            end_column: nil
+            id: "93d15c9d00a8777d9d725ba82e6227da94bfd445",
+            path: "src/app.rb",
+            start_line: 3,
+            start_column: 0,
+            end_line: 14,
+            end_column: 56
           }
         ],
         codefragment: %[def show_status_tank capacity
@@ -367,9 +369,7 @@ end]
   when 71..100
     "The tank is almost full."
   else
-    "Error: capacity has an invalid value (\#{capacity})"
-  end
-end]
+    "Error: capacity has an invalid value (\#{capacity})"]
       },
       git_blame_info: nil
     }

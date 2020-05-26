@@ -1,5 +1,5 @@
 linter:
   pmd_cpd:
     language: ruby
-    minimum-tokens: 50
-    files: app.rb
+    minimum-tokens: 15
+    files: [foo/bar, src/]
