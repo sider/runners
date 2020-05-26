@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 [Full diff](https://github.com/sider/runners/compare/0.25.1...HEAD)
 
 - Output trace more [#1145](https://github.com/sider/runners/pull/1145)
+- Do not remove .git within #with_gitignore [#1147](https://github.com/sider/runners/pull/1147)
 
 ## 0.25.1
 
