@@ -71,8 +71,6 @@ class IgnoringTest < Minitest::Test
       assert_not_exist dir / "yarn.log"
       assert_exist dir / "npm.log.bak"
 
-      refute((dir / ".git").exist?)
-
       assert_equal "Deleting ignored files...", trace_writer.writer[0][:message]
       assert_equal <<~MSG.chomp, trace_writer.writer[6][:message]
         .idea/workspace.xml

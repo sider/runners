@@ -48,7 +48,6 @@ module Runners
 
       yield stdout.split("\0").map { |f| Pathname(f) }
     ensure
-      FileUtils.rm_rf(working_dir / ".git") # NOTE: working_dir is not a Git directory.
       gitignore.write(backup) if backup
     end
   end
