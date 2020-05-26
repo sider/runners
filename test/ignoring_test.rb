@@ -74,7 +74,7 @@ class IgnoringTest < Minitest::Test
       refute((dir / ".git").exist?)
 
       assert_equal "Deleting ignored files...", trace_writer.writer[0][:message]
-      assert_equal <<~MSG.chomp, trace_writer.writer[1][:message]
+      assert_equal <<~MSG.chomp, trace_writer.writer[6][:message]
         .idea/workspace.xml
         examples/bar/out/index.html
         examples/foo/out/index.html
@@ -98,7 +98,7 @@ class IgnoringTest < Minitest::Test
       subject.delete_ignored_files!
 
       assert_equal "Deleting ignored files...", trace_writer.writer[0][:message]
-      assert_match %r{^-> }, trace_writer.writer[1][:message]
+      assert_match %r{^-> [\d\.]+s}, trace_writer.writer[6][:message]
     end
   end
 

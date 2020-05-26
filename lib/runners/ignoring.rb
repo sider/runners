@@ -35,12 +35,12 @@ module Runners
       all_files = working_dir.glob("**/*", File::FNM_DOTMATCH).filter(&:file?).map(&:to_path)
 
       shell = Shell.new(current_dir: working_dir, trace_writer: trace_writer, env_hash: {})
-      shell.capture3!("git", "init", trace_command_line: false, trace_stdout: false)
+      shell.capture3!("git", "init", trace_command_line: true, trace_stdout: true)
 
       # @see https://git-scm.com/docs/git-check-ignore#_exit_status
       stdout, = shell.capture3!(
         "git", "check-ignore", "--stdin", "-z",
-        trace_command_line: false,
+        trace_command_line: true,
         trace_stdout: false,
         is_success: -> (s) { s.exitstatus != 128 },
         stdin_data: all_files.join("\0"),
