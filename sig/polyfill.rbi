@@ -53,6 +53,7 @@ extension String (Polyfill)
   def delete_prefix: (String) -> String
   def lines: (?chomp: bool)-> Array<String>
   def to_sym: -> Symbol
+  def each_line: (?String, ?chomp: bool) { (String) -> void } -> self
 end
 
 extension Symbol (Polyfill)

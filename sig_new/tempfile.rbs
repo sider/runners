@@ -1,0 +1,3 @@
+class Tempfile
+  def self.open: [X] (Array[String]) { (File) -> X } -> X
+end

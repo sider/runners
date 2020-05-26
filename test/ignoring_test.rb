@@ -22,14 +22,6 @@ class IgnoringTest < Minitest::Test
     end
   end
 
-  def assert_exist(path)
-    assert path.file?
-  end
-
-  def assert_not_exist(path)
-    refute path.file?
-  end
-
   def test_delete_ignored_files
     mktmpdir do |dir|
       config = new_config <<~YAML, dir: dir
@@ -55,34 +47,31 @@ class IgnoringTest < Minitest::Test
       new_file dir / "npm.log.bak"
 
       subject = Ignoring.new(working_dir: dir, trace_writer: trace_writer, config: config)
-      subject.delete_ignored_files!
+      assert_equal [
+        ".idea/workspace.xml",
+        "examples/bar/out/index.html",
+        "examples/foo/out/index.html",
+        "npm.log",
+        "src/.idea/workspace.xml",
+        "test/a/outA/index.html",
+        "test/b/outB/index.html",
+        "test/c/out.txt",
+        "yarn.log",
+      ], subject.delete_ignored_files!
 
-      assert_not_exist dir / "examples/foo/out/index.html"
-      assert_not_exist dir / "examples/bar/out/index.html"
-      assert_exist dir / "examples/bar/pub/index.html"
-      assert_not_exist dir / "test/a/outA/index.html"
-      assert_not_exist dir / "test/b/outB/index.html"
-      assert_not_exist dir / "test/c/out.txt"
-      assert_not_exist dir / ".idea/workspace.xml"
-      assert_exist dir / "src/index.js"
-      assert_exist dir / "src/app/index.js"
-      assert_not_exist dir / "src/.idea/workspace.xml"
-      assert_not_exist dir / "npm.log"
-      assert_not_exist dir / "yarn.log"
-      assert_exist dir / "npm.log.bak"
-
-      assert_equal "Deleting ignored files...", trace_writer.writer[0][:message]
-      assert_equal <<~MSG.chomp, trace_writer.writer[6][:message]
-        .idea/workspace.xml
-        examples/bar/out/index.html
-        examples/foo/out/index.html
-        npm.log
-        src/.idea/workspace.xml
-        test/a/outA/index.html
-        test/b/outB/index.html
-        test/c/out.txt
-        yarn.log
-      MSG
+      refute_path_exists dir / "examples/foo/out/index.html"
+      refute_path_exists dir / "examples/bar/out/index.html"
+      assert_path_exists dir / "examples/bar/pub/index.html"
+      refute_path_exists dir / "test/a/outA/index.html"
+      refute_path_exists dir / "test/b/outB/index.html"
+      refute_path_exists dir / "test/c/out.txt"
+      refute_path_exists dir / ".idea/workspace.xml"
+      assert_path_exists dir / "src/index.js"
+      assert_path_exists dir / "src/app/index.js"
+      refute_path_exists dir / "src/.idea/workspace.xml"
+      refute_path_exists dir / "npm.log"
+      refute_path_exists dir / "yarn.log"
+      assert_path_exists dir / "npm.log.bak"
     end
   end
 
@@ -93,26 +82,22 @@ class IgnoringTest < Minitest::Test
       YAML
 
       subject = Ignoring.new(working_dir: dir, trace_writer: trace_writer, config: config)
-      subject.delete_ignored_files!
-
-      assert_equal "Deleting ignored files...", trace_writer.writer[0][:message]
-      assert_match %r{^-> [\d\.]+s}, trace_writer.writer[6][:message]
+      assert_empty subject.delete_ignored_files!
     end
   end
 
   def test_delete_ignored_files_when_users_gitignore_exists
     mktmpdir do |dir|
       new_file dir / ".gitignore", content: "foo"
+      new_file dir / "foo"
+      new_file dir / "bar"
 
       config = new_config <<~YAML, dir: dir
         ignore: "bar"
       YAML
 
       subject = Ignoring.new(working_dir: dir, trace_writer: trace_writer, config: config)
-      subject.delete_ignored_files!
-
-      assert_equal "Deleting ignored files...", trace_writer.writer[0][:message]
-      assert_equal "foo", (dir / ".gitignore").read
+      assert_equal ["bar"], subject.delete_ignored_files!
     end
   end
 end

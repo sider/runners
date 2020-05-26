@@ -10,14 +10,19 @@ module Runners
     end
 
     def delete_ignored_files!
-      return if ignores.empty?
+      return [] if ignores.empty?
+
+      # @type var deleted_files: Array[String]
+      deleted_files = []
 
       trace_writer.message("Deleting ignored files...") do
-        with_gitignore do |list|
-          FileUtils.rm_rf list
-          trace_writer.message list.map { |f| f.relative_path_from(working_dir).to_path }.sort.join("\n")
+        each_ignored_file do |file|
+          (working_dir / file).delete
+          deleted_files << file
         end
       end
+
+      deleted_files
     end
 
     private
@@ -26,29 +31,23 @@ module Runners
       config.ignore
     end
 
-    def with_gitignore
-      gitignore = (working_dir / ".gitignore")
-
-      backup = gitignore.file? ? gitignore.read : nil
-      gitignore.write(ignores.join("\n"))
-
-      all_files = working_dir.glob("**/*", File::FNM_DOTMATCH).filter(&:file?).map(&:to_path)
+    def each_ignored_file(&block)
+      gitignore = Tempfile.open(["gitignore-"]) do |file|
+        file.write ignores.join("\n")
+        file.path
+      end
 
       shell = Shell.new(current_dir: working_dir, trace_writer: trace_writer, env_hash: {})
-      shell.capture3!("git", "init", trace_command_line: true, trace_stdout: true)
+      shell.capture3! "git", "init"
+      shell.capture3! "git", "add", "."
 
-      # @see https://git-scm.com/docs/git-check-ignore#_exit_status
+      # @see https://git-scm.com/docs/git-ls-files
       stdout, = shell.capture3!(
-        "git", "check-ignore", "--stdin", "-z",
+        "git", "ls-files", "--ignored", "--exclude-from", gitignore,
         trace_command_line: true,
-        trace_stdout: false,
-        is_success: -> (s) { s.exitstatus != 128 },
-        stdin_data: all_files.join("\0"),
+        trace_stdout: true,
       )
-
-      yield stdout.split("\0").map { |f| Pathname(f) }
-    ensure
-      gitignore.write(backup) if backup
+      stdout.each_line(chomp: true, &block)
     end
   end
 end
