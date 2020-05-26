@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.25.1...HEAD)
 
+- Output trace more [#1145](https://github.com/sider/runners/pull/1145)
+
 ## 0.25.1
 
 [Full diff](https://github.com/sider/runners/compare/0.25.0...0.25.1)
