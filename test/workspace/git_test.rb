@@ -106,6 +106,18 @@ class WorkspaceGitTest < Minitest::Test
     end
   end
 
+  def test_git_blame_info_failed
+    with_workspace(**workspace_params_with_base) do |workspace|
+      workspace.send(:prepare_head_source, nil)
+      (workspace.working_dir / ".git").rmtree
+
+      error = assert_raises(Runners::Workspace::Git::BlameFailed) do
+        workspace.range_git_blame_info('test/smokes/haml_lint/expectations.rb', 137, 140)
+      end
+      assert_match %r{\Agit-blame failed: fatal: not a git repository \(or any of the parent directories\): \.git}, error.message
+    end
+  end
+
   def test_git_fetch_failed
     with_workspace(**workspace_params.merge(pull_number: 999999999)) do |workspace|
       error = assert_raises(Runners::Workspace::Git::FetchFailed) do
