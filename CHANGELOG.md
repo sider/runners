@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.25.0...HEAD)
 
+- Add `git-blame` failed exception [#1143](https://github.com/sider/runners/pull/1143)
+
 ## 0.25.0
 
 [Full diff](https://github.com/sider/runners/compare/0.24.0...0.25.0)
