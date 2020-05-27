@@ -2,11 +2,11 @@ module Runners
   class Processor::Pylint < Processor
     Schema = StrongJSON.new do
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
-        fields.merge!(
+        fields.merge!({
           rcfile: string?,
           ignore: enum?(string, array(string)),
           'errors-only': boolean?,
-        )
+        })
       }
 
       let :rule, object(
