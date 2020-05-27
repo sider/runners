@@ -135,6 +135,20 @@ s.add_test(
 )
 
 s.add_test(
+  "no_files",
+  type: "success",
+  issues: [],
+  analyzer: { name: "PMD CPD", version: "6.23.0" }
+)
+
+s.add_test(
+  "no_issues",
+  type: "success",
+  issues: [],
+  analyzer: { name: "PMD CPD", version: "6.23.0" }
+)
+
+s.add_test(
   "broken_sider_yml",
   type: "failure",
   message: "The attribute `$.linter.pmd_cpd.files-path` in your `sider.yml` is unsupported. Please fix and retry.",
@@ -713,4 +727,137 @@ s.add_test(
     }
   ],
   analyzer: { name: "PMD CPD", version: "6.23.0" }
+)
+
+s.add_test(
+  "option_encoding_success",
+  type: "success",
+  issues: [
+    {
+      path: "foo/こんにちは.sjis.cs",
+      location: {
+        start_line: 1,
+        start_column: 1,
+        end_line: 24,
+        end_column: 1
+      },
+      id: "37f517be4959df9fb77a38308b522a24d674c0aa",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 24,
+        tokens: 78,
+        files: [
+          {
+            id: "38c21ddc22cbcd412e1ea9fcbcd91251615c75ad",
+            path: "bar/baz/こんにちは.sjis.cs",
+            start_line: 3,
+            start_column: 1,
+            end_line: 26,
+            end_column: 1
+          },
+          {
+            id: "37f517be4959df9fb77a38308b522a24d674c0aa",
+            path: "foo/こんにちは.sjis.cs",
+            start_line: 1,
+            start_column: 1,
+            end_line: 24,
+            end_column: 1
+          }
+        ],
+        codefragment: %[using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
+namespace MyApp
+{
+    public class Hello
+    {
+        public static void Main()
+        {
+            今日は世界();
+        }
+
+        private static void 今日は世界()
+        {
+            Console.WriteLine("今日は, 世界!");
+        }
+    }
+}]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "bar/baz/こんにちは.sjis.cs",
+      location: {
+        start_line: 3,
+        start_column: 1,
+        end_line: 26,
+        end_column: 1
+      },
+      id: "38c21ddc22cbcd412e1ea9fcbcd91251615c75ad",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 24,
+        tokens: 78,
+        files: [
+          {
+            id: "38c21ddc22cbcd412e1ea9fcbcd91251615c75ad",
+            path: "bar/baz/こんにちは.sjis.cs",
+            start_line: 3,
+            start_column: 1,
+            end_line: 26,
+            end_column: 1
+          },
+          {
+            id: "37f517be4959df9fb77a38308b522a24d674c0aa",
+            path: "foo/こんにちは.sjis.cs",
+            start_line: 1,
+            start_column: 1,
+            end_line: 24,
+            end_column: 1
+          }
+        ],
+        codefragment: %[using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
+namespace MyApp
+{
+    public class Hello
+    {
+        public static void Main()
+        {
+            今日は世界();
+        }
+
+        private static void 今日は世界()
+        {
+            Console.WriteLine("今日は, 世界!");
+        }
+    }
+}]
+      },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "PMD CPD", version: "6.23.0" }
+)
+
+s.add_test(
+  "option_encoding_error",
+  type: "failure",
+  message: "Unexpected error occurred. Please see the analysis log.",
+  analyzer: :_
 )

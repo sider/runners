@@ -1,0 +1,3 @@
+linter:
+  pmd_cpd:
+    minimum-tokens: 200
