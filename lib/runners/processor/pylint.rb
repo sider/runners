@@ -69,7 +69,7 @@ module Runners
 
       trace_writer.message "Analyzing #{files.size} file(s)..."
 
-      stdout, stderr = capture3(
+      stdout, stderr = capture3!(
         analyzer_bin,
         *files,
         *rcfile,
@@ -77,6 +77,7 @@ module Runners
         *erros_only,
         '--output-format=json',
         '--jobs=2',
+        '--exit-zero',
       )
 
       return Results::Failure.new(guid: guid, message: stderr, analyzer: analyzer) unless stderr.empty?
