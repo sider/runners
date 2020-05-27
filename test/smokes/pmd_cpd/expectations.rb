@@ -861,3 +861,111 @@ s.add_test(
   message: "Unexpected error occurred. Please see the analysis log.",
   analyzer: :_
 )
+
+s.add_test(
+  "option_skip_duplicate_files",
+  type: "success",
+  issues: [
+    {
+      path: "foo/こんにちは.2.eucjp.cs",
+      location: {
+        start_line: 16,
+        start_column: 1,
+        end_line: 30,
+        end_column: 1
+      },
+      id: "2daa6f2b2f344ac293767c7ddd0f2090538cce9b",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 15,
+        tokens: 36,
+        files: [
+          {
+            id: "2daa6f2b2f344ac293767c7ddd0f2090538cce9b",
+            path: "foo/こんにちは.2.eucjp.cs",
+            start_line: 16,
+            start_column: 1,
+            end_line: 30,
+            end_column: 1
+          },
+          {
+            id: "408776ef9c22448f623aae1a15f82cab1d133846",
+            path: "bar/こんにちは.1.eucjp.cs",
+            start_line: 14,
+            start_column: 1,
+            end_line: 28,
+            end_column: 1
+          }
+        ],
+        codefragment: %[namespace MyApp
+{
+    public class Hello
+    {
+        public static void Main()
+        {
+            今日は世界();
+        }
+
+        private static void 今日は世界()
+        {
+            Console.WriteLine("今日は, 世界!");
+        }
+    }
+}]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "bar/こんにちは.1.eucjp.cs",
+      location: {
+        start_line: 14,
+        start_column: 1,
+        end_line: 28,
+        end_column: 1
+      },
+      id: "408776ef9c22448f623aae1a15f82cab1d133846",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 15,
+        tokens: 36,
+        files: [
+          {
+            id: "2daa6f2b2f344ac293767c7ddd0f2090538cce9b",
+            path: "foo/こんにちは.2.eucjp.cs",
+            start_line: 16,
+            start_column: 1,
+            end_line: 30,
+            end_column: 1
+          },
+          {
+            id: "408776ef9c22448f623aae1a15f82cab1d133846",
+            path: "bar/こんにちは.1.eucjp.cs",
+            start_line: 14,
+            start_column: 1,
+            end_line: 28,
+            end_column: 1
+          }
+        ],
+        codefragment: %[namespace MyApp
+{
+    public class Hello
+    {
+        public static void Main()
+        {
+            今日は世界();
+        }
+
+        private static void 今日は世界()
+        {
+            Console.WriteLine("今日は, 世界!");
+        }
+    }
+}]
+      },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "PMD CPD", version: "6.23.0" }
+)
