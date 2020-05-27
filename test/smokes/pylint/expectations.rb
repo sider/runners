@@ -12,27 +12,33 @@ s.add_test(
   type: "success",
   issues: [
     {
-      id: "C0114",
-      path: "bad.py",
-      location: {
-        start_line: 1
-      },
-      message: "Missing module docstring",
-      object: {
-        severity: "convention"
-      },
-      links: [],
-      git_blame_info: nil
-    },
-    {
-      id: "C0326",
+      id: "bad-whitespace",
       path: "bad.py",
       location: {
         start_line: 3
       },
       message: "No space allowed before bracket\n        print (\"{} * {} = {}\".format(i, j, i*j))\n              ^",
       object: {
-        severity: "convention"
+        severity: "convention",
+        "message-id": "C0326",
+        module: "bad",
+        obj: ""
+      },
+      links: [],
+      git_blame_info: nil
+    },
+    {
+      id: "missing-module-docstring",
+      path: "bad.py",
+      location: {
+        start_line: 1
+      },
+      message: "Missing module docstring",
+      object: {
+        severity: "convention",
+        "message-id": "C0114",
+        module: "bad",
+        obj: ""
       },
       links: [],
       git_blame_info: nil
@@ -46,27 +52,33 @@ s.add_test(
   type: "success",
   issues: [
     {
-      id: "C0114",
+      id: "missing-module-docstring",
       path: "folder/bad1.py",
       location: {
         start_line: 1
       },
       message: "Missing module docstring",
       object: {
-        severity: "convention"
+        severity: "convention",
+        "message-id": "C0114",
+        module: "bad1",
+        obj: ""
       },
       links: [],
       git_blame_info: nil
     },
     {
-      id: "C0114",
+      id: "missing-module-docstring",
       path: "folder/bad2.py",
       location: {
         start_line: 1
       },
       message: "Missing module docstring",
       object: {
-        severity: "convention"
+        severity: "convention",
+        "message-id": "C0114",
+        module: "bad2",
+        obj: ""
       },
       links: [],
       git_blame_info: nil
@@ -87,27 +99,33 @@ s.add_test(
   type: "success",
   issues: [
     {
-      id: "C0114",
-      path: "bad.py",
-      location: {
-        start_line: 1
-      },
-      message: "Missing module docstring",
-      object: {
-        severity: "convention"
-      },
-      links: [],
-      git_blame_info: nil
-    },
-    {
-      id: "C0326",
+      id: "bad-whitespace",
       path: "bad.py",
       location: {
         start_line: 3
       },
       message: "No space allowed before bracket\n        print (\"{} * {} = {}\".format(i, j, i*j))\n              ^",
       object: {
-        severity: "convention"
+        severity: "convention",
+        "message-id": "C0326",
+        module: "bad",
+        obj: ""
+      },
+      links: [],
+      git_blame_info: nil
+    },
+    {
+      id: "missing-module-docstring",
+      path: "bad.py",
+      location: {
+        start_line: 1
+      },
+      message: "Missing module docstring",
+      object: {
+        severity: "convention",
+        "message-id": "C0114",
+        module: "bad",
+        obj: ""
       },
       links: [],
       git_blame_info: nil
@@ -121,27 +139,33 @@ s.add_test(
   type: "success",
   issues: [
     {
-      id: "E0211",
+      id: "no-method-argument",
       path: "bad.py",
       location: {
         start_line: 4
       },
       message: "Method has no argument",
       object: {
-        severity: "error"
+        severity: "error",
+        "message-id": "E0211",
+        module: "bad",
+        obj: "TestFile.temp_method"
       },
       links: [],
       git_blame_info: nil
     },
     {
-      id: "E0602",
+      id: "undefined-variable",
       path: "bad.py",
       location: {
         start_line: 2
       },
       message: "Undefined variable 'temp'",
       object: {
-        severity: "error"
+        severity: "error",
+        "message-id": "E0602",
+        module: "bad",
+        obj: "TestFile"
       },
       links: [],
       git_blame_info: nil

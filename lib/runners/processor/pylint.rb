@@ -14,6 +14,9 @@ module Runners
 
       let :rule, object(
         severity: string,
+        'message-id': string,
+        module: string,
+        obj: string,
       )
     end
 
@@ -50,12 +53,15 @@ module Runners
       json = JSON.parse(output, symbolize_names: true)
       json.flat_map do |issue|
         yield Issue.new(
-          id: issue[:'message-id'],
+          id: issue[:symbol],
           path: relative_path(issue[:path]),
           location: Location.new(start_line: issue[:line]),
           message: issue[:message],
           object: {
             severity: issue[:type],
+            'message-id': issue[:'message-id'],
+            module: issue[:module],
+            obj: issue[:obj],
           },
           schema: Schema.rule,
         )
