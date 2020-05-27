@@ -28,8 +28,7 @@ module Runners
     private
 
     def rcfile
-      file = config_linter[:rcfile]
-      Array(file ? "--rcfile=#{file}" : nil)
+      config_linter[:rcfile].then { |file| file ? ["--rcfile=#{file}"] : [] }
     end
 
     def ignore
@@ -37,8 +36,7 @@ module Runners
     end
 
     def erros_only
-      config = config_linter[:'errors-only'] || config_linter.dig(:options, :'errors-only')
-      ["--errors-only"] if config
+      config_linter[:'errors-only'].then { |value| value ? ["--errors-only"] : [] }
     end
 
     def analyzed_files
