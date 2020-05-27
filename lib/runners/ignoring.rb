@@ -44,7 +44,7 @@ module Runners
         stdout, = shell.capture3!(
           "git", "ls-files", "--ignored", "--exclude-from", gitignore,
           trace_command_line: true,
-          trace_stdout: true,
+          trace_stdout: false,
         )
         stdout.each_line(chomp: true, &block)
       end
