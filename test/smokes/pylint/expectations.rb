@@ -4,7 +4,7 @@ s.add_test(
   "success",
   type: "success",
   issues: [],
-  analyzer: { name: "pylint", version: "2.5.2" }
+  analyzer: { name: "Pylint", version: "2.5.2" }
 )
 
 s.add_test(
@@ -39,14 +39,14 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "pylint", version: "2.5.2" }
+  analyzer: { name: "Pylint", version: "2.5.2" }
 )
 
 s.add_test(
   "rcfile",
   type: "success",
   issues: [],
-  analyzer: { name: "pylint", version: "2.5.2" }
+  analyzer: { name: "Pylint", version: "2.5.2" }
 )
 
 s.add_test(
@@ -80,7 +80,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "pylint", version: "2.5.2" }
+  analyzer: { name: "Pylint", version: "2.5.2" }
 )
 
 s.add_test(
@@ -114,5 +114,5 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "pylint", version: "2.5.2" }
+  analyzer: { name: "Pylint", version: "2.5.2" }
 )

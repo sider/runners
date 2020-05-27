@@ -96,6 +96,7 @@ require "runners/processor/misspell"
 require "runners/processor/phinder"
 require "runners/processor/phpmd"
 require "runners/processor/pmd_java"
+require "runners/processor/pylint"
 require "runners/processor/querly"
 require "runners/processor/rails_best_practices"
 require "runners/processor/reek"
@@ -107,7 +108,6 @@ require "runners/processor/stylelint"
 require "runners/processor/swiftlint"
 require "runners/processor/tslint"
 require "runners/processor/tyscan"
-require "runners/processor/pylint"
 
 module Runners
 end

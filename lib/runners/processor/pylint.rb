@@ -5,7 +5,7 @@ module Runners
         fields.merge!(
           rcfile: string?,
           ignore: enum?(string, array(string)),
-          errorsOnly: boolean?,
+          'errors-only': boolean?,
         )
       }
 
@@ -15,11 +15,6 @@ module Runners
     end
 
     register_config_schema(name: :pylint, schema: Schema.runner_config)
-
-    DEFAULT_TARGET = [
-      "**/*.{py}",
-      { shebang: true },
-    ].freeze
 
     def analyze(changes)
       run_analyzer
@@ -37,13 +32,13 @@ module Runners
     end
 
     def erros_only
-      config = config_linter[:errorsOnly] || config_linter.dig(:options, :errorsOnly)
+      config = config_linter[:'errors-only'] || config_linter.dig(:options, :'errors-only')
       ["--errors-only"] if config
     end
 
     def analyzed_files
       # Via glob
-      targets = Array(config_linter[:target] || DEFAULT_TARGET)
+      targets = ["**/*.{py}"]
       globs = targets.select { |glob| glob.is_a? String }
       Dir.glob(globs, File::FNM_EXTGLOB, base: current_dir)
     end

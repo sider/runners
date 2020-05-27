@@ -80,6 +80,7 @@ class ConfigTest < Minitest::Test
           phinder: nil,
           phpmd: nil,
           pmd_java: nil,
+          pylint: nil,
           querly: nil,
           rails_best_practices: nil,
           reek: nil,
