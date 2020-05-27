@@ -43,6 +43,40 @@ s.add_test(
 )
 
 s.add_test(
+  "target",
+  type: "success",
+  issues: [
+    {
+      id: "[C0114]missing-module-docstring",
+      path: "folder/bad1.py",
+      location: {
+        start_line: 1
+      },
+      message: "Missing module docstring",
+      object: {
+        severity: "convention"
+      },
+      links: [],
+      git_blame_info: nil
+    },
+    {
+      id: "[C0114]missing-module-docstring",
+      path: "folder/bad2.py",
+      location: {
+        start_line: 1
+      },
+      message: "Missing module docstring",
+      object: {
+        severity: "convention"
+      },
+      links: [],
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "Pylint", version: "2.5.2" }
+)
+
+s.add_test(
   "rcfile",
   type: "success",
   issues: [],

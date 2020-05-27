@@ -1,0 +1,5 @@
+linter:
+  pylint:
+    target:
+      - ./folder/bad1.py
+      - ./folder/bad2.py

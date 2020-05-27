@@ -1,8 +1,11 @@
 module Runners
   class Processor::Pylint < Processor
+    include Python
+
     Schema = StrongJSON.new do
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
+          target: enum?(string, array(string)),
           rcfile: string?,
           ignore: enum?(string, array(string)),
           'errors-only': boolean?,
@@ -15,6 +18,8 @@ module Runners
     end
 
     register_config_schema(name: :pylint, schema: Schema.runner_config)
+
+    DEFAULT_TARGET = ["**/*.{py}"].freeze
 
     def analyze(changes)
       run_analyzer
@@ -38,7 +43,7 @@ module Runners
 
     def analyzed_files
       # Via glob
-      targets = ["**/*.{py}"]
+      targets = Array(config_linter[:target] || DEFAULT_TARGET)
       globs = targets.select { |glob| glob.is_a? String }
       Dir.glob(globs, File::FNM_EXTGLOB, base: current_dir)
     end
@@ -64,7 +69,7 @@ module Runners
 
       trace_writer.message "Analyzing #{files.size} file(s)..."
 
-      stdout, stderr, status = capture3(
+      stdout, stderr = capture3(
         analyzer_bin,
         *files,
         *rcfile,
