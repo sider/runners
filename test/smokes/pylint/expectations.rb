@@ -12,7 +12,7 @@ s.add_test(
   type: "success",
   issues: [
     {
-      id: "[C0114]missing-module-docstring",
+      id: "C0114",
       path: "bad.py",
       location: {
         start_line: 1
@@ -25,7 +25,7 @@ s.add_test(
       git_blame_info: nil
     },
     {
-      id: "[C0326]bad-whitespace",
+      id: "C0326",
       path: "bad.py",
       location: {
         start_line: 3
@@ -46,7 +46,7 @@ s.add_test(
   type: "success",
   issues: [
     {
-      id: "[C0114]missing-module-docstring",
+      id: "C0114",
       path: "folder/bad1.py",
       location: {
         start_line: 1
@@ -59,7 +59,7 @@ s.add_test(
       git_blame_info: nil
     },
     {
-      id: "[C0114]missing-module-docstring",
+      id: "C0114",
       path: "folder/bad2.py",
       location: {
         start_line: 1
@@ -87,7 +87,7 @@ s.add_test(
   type: "success",
   issues: [
     {
-      id: "[C0114]missing-module-docstring",
+      id: "C0114",
       path: "bad.py",
       location: {
         start_line: 1
@@ -100,7 +100,7 @@ s.add_test(
       git_blame_info: nil
     },
     {
-      id: "[C0326]bad-whitespace",
+      id: "C0326",
       path: "bad.py",
       location: {
         start_line: 3
@@ -121,7 +121,7 @@ s.add_test(
   type: "success",
   issues: [
     {
-      id: "[E0211]no-method-argument",
+      id: "E0211",
       path: "bad.py",
       location: {
         start_line: 4
@@ -134,7 +134,7 @@ s.add_test(
       git_blame_info: nil
     },
     {
-      id: "[E0602]undefined-variable",
+      id: "E0602",
       path: "bad.py",
       location: {
         start_line: 2

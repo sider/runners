@@ -50,7 +50,7 @@ module Runners
       json = JSON.parse(output, symbolize_names: true)
       json.flat_map do |issue|
         yield Issue.new(
-          id: "[#{issue[:'message-id']}]#{issue[:symbol]}",
+          id: issue[:'message-id'],
           path: relative_path(issue[:path]),
           location: Location.new(start_line: issue[:line]),
           message: issue[:message],
