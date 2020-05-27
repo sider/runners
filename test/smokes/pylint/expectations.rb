@@ -9,7 +9,6 @@ s.add_test(
 
 s.add_test(
   "failure",
-  timestamp: :_,
   type: "success",
   issues: [
     {
