@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.25.3...HEAD)
 
+- Generated ignoring file sometimes is missing [#1150](https://github.com/sider/runners/pull/1150)
+
 ## 0.25.3
 
 [Full diff](https://github.com/sider/runners/compare/0.25.2...0.25.3)
