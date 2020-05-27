@@ -76,6 +76,7 @@ module Runners
         *ignore,
         *erros_only,
         '--output-format=json',
+        '--jobs=2',
       )
 
       return Results::Failure.new(guid: guid, message: stderr, analyzer: analyzer) unless stderr.empty?
