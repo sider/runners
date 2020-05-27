@@ -32,22 +32,22 @@ module Runners
     end
 
     def each_ignored_file(&block)
-      gitignore = Tempfile.open(["gitignore-"]) do |file|
-        file.write ignores.join("\n")
-        file.path
+      Tempfile.create("gitignore-") do |file|
+        gitignore = file.path
+        File.write gitignore, ignores.join("\n")
+
+        shell = Shell.new(current_dir: working_dir, trace_writer: trace_writer, env_hash: {})
+        shell.capture3! "git", "init"
+        shell.capture3! "git", "add", "."
+
+        # @see https://git-scm.com/docs/git-ls-files
+        stdout, = shell.capture3!(
+          "git", "ls-files", "--ignored", "--exclude-from", gitignore,
+          trace_command_line: true,
+          trace_stdout: true,
+        )
+        stdout.each_line(chomp: true, &block)
       end
-
-      shell = Shell.new(current_dir: working_dir, trace_writer: trace_writer, env_hash: {})
-      shell.capture3! "git", "init"
-      shell.capture3! "git", "add", "."
-
-      # @see https://git-scm.com/docs/git-ls-files
-      stdout, = shell.capture3!(
-        "git", "ls-files", "--ignored", "--exclude-from", gitignore,
-        trace_command_line: true,
-        trace_stdout: true,
-      )
-      stdout.each_line(chomp: true, &block)
     end
   end
 end

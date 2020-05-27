@@ -1,3 +1,3 @@
 class Tempfile
-  def self.open: [X] (Array[String]) { (File) -> X } -> X
+  def self.create: [X] (String | Array[String]) { (File) -> X } -> X
 end
