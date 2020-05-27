@@ -969,3 +969,161 @@ s.add_test(
   ],
   analyzer: { name: "PMD CPD", version: "6.23.0" }
 )
+
+s.add_test(
+  "option_language_java",
+  type: "success",
+  issues: [
+    {
+      path: "jp/MyAppJp.java",
+      location: {
+        start_line: 3,
+        start_column: 1,
+        end_line: 42,
+        end_column: 1
+      },
+      id: "bdb8c726d714be749ee35093e72d1472249215b6",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 40,
+        tokens: 110,
+        files: [
+          {
+            id: "bdb8c726d714be749ee35093e72d1472249215b6",
+            path: "jp/MyAppJp.java",
+            start_line: 3,
+            start_column: 1,
+            end_line: 42,
+            end_column: 1
+          },
+          {
+            id: "e5d36afbb6911b96a9e52d77388c9cad9c3cedf0",
+            path: "MyApp.java",
+            start_line: 1,
+            start_column: 1,
+            end_line: 40,
+            end_column: 1
+          }
+        ],
+        codefragment: %[public class MyAppJp {
+  public static void main(String[] args) {
+    String str;
+    int day = 5;
+    switch (day) {
+      case 1:
+        str = "月曜日";
+        break;
+      case 2:
+        str = "火曜日";
+        break;
+      case 3:
+        str = "水曜日";
+        break;
+      case 4:
+        str = "木曜日";
+        break;
+      case 5:
+        str = "金曜日";
+        break;
+      case 6:
+        str = "土曜日";
+        break;
+      case 7:
+        str = "日曜日";
+        break;
+      default:
+        str = null;
+        break;
+    }
+
+    System.out.println(str);
+  }
+
+  @Deprecated
+  private static void Foo(String text)
+  {
+    System.out.println(text);
+  }
+}]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "MyApp.java",
+      location: {
+        start_line: 1,
+        start_column: 1,
+        end_line: 40,
+        end_column: 1
+      },
+      id: "e5d36afbb6911b96a9e52d77388c9cad9c3cedf0",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 40,
+        tokens: 110,
+        files: [
+          {
+            id: "bdb8c726d714be749ee35093e72d1472249215b6",
+            path: "jp/MyAppJp.java",
+            start_line: 3,
+            start_column: 1,
+            end_line: 42,
+            end_column: 1
+          },
+          {
+            id: "e5d36afbb6911b96a9e52d77388c9cad9c3cedf0",
+            path: "MyApp.java",
+            start_line: 1,
+            start_column: 1,
+            end_line: 40,
+            end_column: 1
+          }
+        ],
+        codefragment: %[public class MyAppJp {
+  public static void main(String[] args) {
+    String str;
+    int day = 5;
+    switch (day) {
+      case 1:
+        str = "月曜日";
+        break;
+      case 2:
+        str = "火曜日";
+        break;
+      case 3:
+        str = "水曜日";
+        break;
+      case 4:
+        str = "木曜日";
+        break;
+      case 5:
+        str = "金曜日";
+        break;
+      case 6:
+        str = "土曜日";
+        break;
+      case 7:
+        str = "日曜日";
+        break;
+      default:
+        str = null;
+        break;
+    }
+
+    System.out.println(str);
+  }
+
+  @Deprecated
+  private static void Foo(String text)
+  {
+    System.out.println(text);
+  }
+}]
+      },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "PMD CPD", version: "6.23.0" }
+)
