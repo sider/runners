@@ -12,6 +12,10 @@ module Runners
           use: enum?(string, array(string)),
         )
       })
+
+      let :issue, object(
+        severity: string,
+      )
     end
 
     register_config_schema(name: :remark_lint, schema: Schema.runner_config)
@@ -137,16 +141,26 @@ module Runners
         path = relative_path(file[:path])
 
         file[:messages].each do |message|
-          if message[:fatal]
+          if message[:stack]
             errors << "#{message[:reason]}\n#{message[:stack]}"
             next
           end
+
+          # NOTE: When `fatal` is `true`, then `severity` is `error`.
+          #
+          # @see https://github.com/remarkjs/remark-lint/blob/7.0.0/packages/unified-lint-rule/index.js#L27
+          # @see https://github.com/remarkjs/remark-lint/blob/7.0.0/doc/rules.md#configuration
+          severity = message[:fatal] ? "error" : "warn"
 
           issues << Issue.new(
             path: path,
             location: message[:line].then { |line| line ? Location.new(start_line: line) : nil },
             id: message[:ruleId],
             message: message[:reason],
+            object: {
+              severity: severity,
+            },
+            schema: Schema.issue,
           )
         end
       end
