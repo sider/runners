@@ -107,7 +107,7 @@ analyzers:
   pmd_cpd:
     name: PMD CPD
     github: pmd/pmd
-    doc: tools/others/pmd_cpd
+    doc: tools/others/pmd-cpd
   pmd_java:
     name: PMD Java
     github: pmd/pmd
