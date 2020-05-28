@@ -82,7 +82,9 @@ module Runners
         '--output-format=json',
         '--jobs=2',
         '--exit-zero',
-        '--disable=E0401',
+        # NOTE: We don't support importing modules yet.
+        # @see http://pylint.pycqa.org/en/stable/technical_reference/features.html#imports-checker-messages
+        '--disable=import-error',
       )
 
       return Results::Failure.new(guid: guid, message: stderr, analyzer: analyzer) unless stderr.empty?
