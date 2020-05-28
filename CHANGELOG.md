@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.25.5...HEAD)
 
+- **remark-lint** Fix handling `fatal` output [#1156](https://github.com/sider/runners/pull/1156)
+
 ## 0.25.5
 
 [Full diff](https://github.com/sider/runners/compare/0.25.4...0.25.5)
