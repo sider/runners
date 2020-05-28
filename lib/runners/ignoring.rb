@@ -46,7 +46,10 @@ module Runners
           trace_command_line: true,
           trace_stdout: false,
         )
-        stdout.each_line(chomp: true, &block)
+
+        stdout.each_line(chomp: true) do |line|
+          block.call line.delete_prefix('"').delete_suffix('"')
+        end
       end
     end
   end
