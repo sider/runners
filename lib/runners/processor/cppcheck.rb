@@ -5,6 +5,7 @@ module Runners
         fields.merge!(
           target: enum?(string, array(string)),
           ignore: enum?(string, array(string)),
+          addon: enum?(string, array(string)),
           enable: string?,
           std: string?,
           project: string?,
@@ -40,6 +41,10 @@ module Runners
       Array(config_linter[:ignore] || DEFAULT_IGNORE).map { |i| ["-i", i] }.flatten
     end
 
+    def addon
+      Array(config_linter[:addon] || []).map { |config| "--addon=#{config}" }.flatten
+    end
+
     def enable
       id = config_linter[:enable]
       Array(id ? "--enable=#{id}" : nil)
@@ -71,6 +76,7 @@ module Runners
         *project,
         *language,
         *target,
+        *addon,
       )
 
       if status.exitstatus == 1 && stdout.strip == "cppcheck: error: could not find or open any of the paths given."

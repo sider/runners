@@ -9,7 +9,7 @@ class RubyTest < Minitest::Test
   LockfileLoader = Runners::Ruby::LockfileLoader
 
   def trace_writer
-    @trace_writer ||= Runners::TraceWriter.new(writer: [])
+    @trace_writer ||= new_trace_writer
   end
 
   def shell

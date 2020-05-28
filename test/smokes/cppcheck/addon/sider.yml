@@ -1,0 +1,5 @@
+linter:
+  cppcheck:
+    addon:
+      - y2038
+      - misra

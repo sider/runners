@@ -209,14 +209,14 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "1.90" }
+  analyzer: { name: "Cppcheck", version: "2.0" }
 )
 
 s.add_test(
   "no_target",
   type: "success",
   issues: [],
-  analyzer: { name: "Cppcheck", version: :_ },
+  analyzer: { name: "Cppcheck", version: "2.0" },
   warnings: [{ message: "No linting files.", file: nil }]
 )
 
@@ -236,7 +236,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "1.90" }
+  analyzer: { name: "Cppcheck", version: "2.0" }
 )
 
 s.add_test(
@@ -266,7 +266,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "1.90" }
+  analyzer: { name: "Cppcheck", version: "2.0" }
 )
 
 s.add_test(
@@ -285,7 +285,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "1.90" }
+  analyzer: { name: "Cppcheck", version: "2.0" }
 )
 
 s.add_test(
@@ -302,7 +302,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "1.90" }
+  analyzer: { name: "Cppcheck", version: "2.0" }
 )
 
 s.add_test(
@@ -337,7 +337,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "1.90" }
+  analyzer: { name: "Cppcheck", version: "2.0" }
 )
 
 s.add_test(
@@ -361,7 +361,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "1.90" }
+  analyzer: { name: "Cppcheck", version: "2.0" }
 )
 
 s.add_test(
@@ -378,7 +378,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "1.90" }
+  analyzer: { name: "Cppcheck", version: "2.0" }
 )
 
 s.add_test(
@@ -406,10 +406,45 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "1.90" }
+  analyzer: { name: "Cppcheck", version: "2.0" }
 )
 
 s.add_test(
   "unexpected_error",
-  type: "failure", message: "cppcheck: Unknown language 'foo' enforced.", analyzer: { name: "Cppcheck", version: :_ }
+  type: "failure", message: "cppcheck: Unknown language 'foo' enforced.", analyzer: { name: "Cppcheck", version: "2.0" }
+)
+
+s.add_test(
+  "addon",
+  type: "success",
+  issues: [
+    {
+      id: "misra-c2012-14.4",
+      path: "bad.c",
+      location: { start_line: 8 },
+      message: "misra violation (use --rule-texts=<file> to get proper output)",
+      links: [],
+      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "misra-c2012-21.1",
+      path: "bad.h",
+      location: { start_line: 2 },
+      message: "misra violation (use --rule-texts=<file> to get proper output)",
+      links: [],
+      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "y2038-type-bits-undef",
+      path: "bad.h",
+      location: { start_line: 2 },
+      message: "_USE_TIME_BITS64 is defined but _TIME_BITS was not",
+      links: [],
+      object: { severity: "warning", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "Cppcheck", version: "2.0" }
 )

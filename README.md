@@ -6,6 +6,7 @@ See also another related project, called [devon_rex](https://github.com/sider/de
 
 ## Supported analyzers
 
+<!-- prettier-ignore-start -->
 <!-- AUTO-GENERATED-CONTENT:START (analyzers) -->
 All 36 analyzers are provided as a Docker image:
 
@@ -49,6 +50,7 @@ All 36 analyzers are provided as a Docker image:
 | TSLint | [docker](https://hub.docker.com/r/sider/runner_tslint), [source](https://github.com/palantir/tslint), [doc](https://help.sider.review/tools/javascript/tslint) | ✅ |
 | TyScan | [docker](https://hub.docker.com/r/sider/runner_tyscan), [source](https://github.com/sider/TyScan), [doc](https://help.sider.review/tools/javascript/tyscan) | ✅ |
 <!-- AUTO-GENERATED-CONTENT:END (analyzers) -->
+<!-- prettier-ignore-end -->
 
 ## Developer guide
 
@@ -152,6 +154,18 @@ If you want to run tests right after changing code, you can run one command as f
 
 ```shell-session
 $ bundle exec rake docker:build docker:smoke ANALYZER=rubocop
+```
+
+### Debugging
+
+You can use the `rake docker:shell` command to run a command directly in a Docker container, for example:
+
+```shell-session
+$ bundle exec rake docker:build docker:shell ANALYZER=rubocop
+docker run ...
+analyzer_runner@838f831e5aa7:/work$ cd test/smokes/rubocop/renamed-cop
+analyzer_runner@838f831e5aa7:/work$ rubocop .
+...
 ```
 
 ## License

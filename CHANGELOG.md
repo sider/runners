@@ -4,11 +4,44 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.24.0...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.25.4...HEAD)
+
+- [PMD CPD] New support [#1122](https://github.com/sider/runners/pull/1122)
+
+## 0.25.4
+
+[Full diff](https://github.com/sider/runners/compare/0.25.3...0.25.4)
+
+- Generated ignoring file sometimes is missing [#1150](https://github.com/sider/runners/pull/1150)
+
+## 0.25.3
+
+[Full diff](https://github.com/sider/runners/compare/0.25.2...0.25.3)
+
+- Use git-ls-files instead of git-check-ignore [#1148](https://github.com/sider/runners/pull/1148)
+
+## 0.25.2
+
+[Full diff](https://github.com/sider/runners/compare/0.25.1...0.25.2)
+
+- Output trace more [#1145](https://github.com/sider/runners/pull/1145)
+- Do not remove .git within #with_gitignore [#1147](https://github.com/sider/runners/pull/1147)
+
+## 0.25.1
+
+[Full diff](https://github.com/sider/runners/compare/0.25.0...0.25.1)
+
+- Add `git-blame` failed exception [#1143](https://github.com/sider/runners/pull/1143)
+
+## 0.25.0
+
+[Full diff](https://github.com/sider/runners/compare/0.24.0...0.25.0)
 
 - Fix "No space left" error on Git workspace [#1112](https://github.com/sider/runners/pull/1112)
 - **GolangCI-Lint** Explicitly set `--timeout` [#1117](https://github.com/sider/runners/pull/1117)
-- [PMD CPD] New support [#1122](https://github.com/sider/runners/pull/1122)
+- **Cppcheck** Add `addon` option [#1119](https://github.com/sider/runners/pull/1119)
+- **Cppcheck** 1.90 -> 2.0 [#1083](https://github.com/sider/runners/pull/1083)
+- Add exception classes for failed git-fetch and git-checkout [#1139](https://github.com/sider/runners/pull/1139)
 
 ## 0.24.0
 

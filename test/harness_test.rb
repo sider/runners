@@ -9,12 +9,11 @@ class HarnessTest < Minitest::Test
   Issue = Runners::Issue
   Location = Runners::Location
   Analyzer = Runners::Analyzer
-  TraceWriter = Runners::TraceWriter
   Workspace = Runners::Workspace
   Options = Runners::Options
 
   def trace_writer
-    @trace_writer ||= TraceWriter.new(writer: [])
+    @trace_writer ||= new_trace_writer
   end
 
   def with_options(head: data("foo.tgz"))
