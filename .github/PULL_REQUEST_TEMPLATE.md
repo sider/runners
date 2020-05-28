@@ -6,6 +6,7 @@
 
 - [ ] Read and follow the [document](https://github.com/sider/runners/blob/master/docs/how-to-write-a-new-runner.md) for a new runner.
 - [ ] Add a new tool to [`analyzers.yml`](https://github.com/sider/runners/blob/master/analyzers.yml).
+- [ ] Run `bundle exec rake readme:generate` and commit the updated `README.md`.
 - [ ] Add a new tool to [`.dependabot/config.yml`](https://github.com/sider/runners/blob/master/.dependabot/config.yml).
 - [ ] Provide option(s) that users can customize.
 - [ ] Write smoke test cases with enough coverage. E.g. all options, successful end, warnings, errors, etc.
