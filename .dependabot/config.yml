@@ -24,6 +24,7 @@ update_configs:
 
   # Java
   - { package_manager: "java:maven", update_schedule: "weekly", directory: "/images/checkstyle" }
+  - { package_manager: "java:maven", update_schedule: "weekly", directory: "/images/pmd_cpd" }
   - { package_manager: "java:maven", update_schedule: "weekly", directory: "/images/pmd_java" }
 
   # Java (Kotlin)
