@@ -20,6 +20,7 @@ module Runners
           (working_dir / file).delete
           deleted_files << file
         end
+        trace_writer.message "Successfully deleted #{deleted_files.size} file(s)"
       end
 
       deleted_files
