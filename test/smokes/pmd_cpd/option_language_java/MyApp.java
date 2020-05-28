@@ -33,7 +33,7 @@ public class MyApp {
     System.out.println(str);
   }
 
-  private static void Foo(String msg)
+  private static void Bar(String msg)
   {
     System.out.println(msg);
   }
