@@ -61,7 +61,10 @@ module Runners
     end
 
     def construct_result(result, stdout, stderr)
-      stdout.sub!(/encoding=".*?"/,'') # Remove the encoding attribute to read this XML as UTF-8. The PMD CPD writes an XML report as UTF-8 with the inconsistent encoding attribute value when the --encoding option is specified.
+      # HACK: Replace the encoding attribute to read this XML as UTF-8.
+      #       The PMD CPD writes an XML report as UTF-8 with the inconsistent encoding attribute value when the --encoding option is specified.
+      stdout.sub!(/<\?xml version="1\.0" encoding=".+"\?>/, '<?xml version="1.0" encoding="UTF-8"?>')
+
       REXML::Document.new(stdout).each_element('pmd-cpd/duplication') do |elem_dupli|
         files = elem_dupli.get_elements('file').map{ |f| to_fileinfo(f) }
         issueobj = create_issue_object(elem_dupli, files)
