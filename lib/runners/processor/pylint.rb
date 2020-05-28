@@ -80,7 +80,9 @@ module Runners
         *ignore,
         *erros_only,
         '--output-format=json',
-        '--jobs=2',
+        # NOTE: If jobs option is not 1, the output is different
+        # @see https://github.com/PyCQA/pylint/issues/374
+        '--jobs=1',
         '--exit-zero',
         # NOTE: We don't support importing modules yet.
         # @see http://pylint.pycqa.org/en/stable/technical_reference/features.html#imports-checker-messages
