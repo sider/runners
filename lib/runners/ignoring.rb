@@ -40,16 +40,19 @@ module Runners
         shell.capture3! "git", "init"
         shell.capture3! "git", "add", "."
 
+        # @see https://git-scm.com/docs/git-config#Documentation/git-config.txt-corequotePath
+        shell.capture3! "git", "config", "core.quotePath", "false"
+
         # @see https://git-scm.com/docs/git-ls-files
-        stdout, = shell.capture3!(
+        ignored_files, = shell.capture3!(
           "git", "ls-files", "--ignored", "--exclude-from", gitignore,
           trace_command_line: true,
           trace_stdout: false,
         )
 
-        stdout.each_line(chomp: true) do |line|
-          block.call line.delete_prefix('"').delete_suffix('"')
-        end
+        shell.capture3! "git", "config", "--unset", "core.quotePath" # restore
+
+        ignored_files.each_line(chomp: true, &block)
       end
     end
   end
