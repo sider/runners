@@ -82,6 +82,7 @@ module Runners
         '--output-format=json',
         '--jobs=2',
         '--exit-zero',
+        '--disable=E0401',
       )
 
       return Results::Failure.new(guid: guid, message: stderr, analyzer: analyzer) unless stderr.empty?

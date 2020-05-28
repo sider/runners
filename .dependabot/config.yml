@@ -48,6 +48,7 @@ update_configs:
   # Python
   - { package_manager: "python", update_schedule: "weekly", directory: "/images/cpplint" }
   - { package_manager: "python", update_schedule: "weekly", directory: "/images/flake8" }
+  - { package_manager: "python", update_schedule: "weekly", directory: "/images/pylint" }
 
   # Ruby
   - { package_manager: "ruby:bundler", update_schedule: "weekly", directory: "/images/brakeman" }

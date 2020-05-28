@@ -18,6 +18,10 @@ All notable changes to this project will be documented in this file.
 
 - Fix ignoring non ASCII filename [#1153](https://github.com/sider/runners/pull/1153)
 
+New supported:
+
+- **Pylint** [#1149](https://github.com/sider/runners/pull/1149)
+
 ## 0.25.4
 
 [Full diff](https://github.com/sider/runners/compare/0.25.3...0.25.4)
@@ -29,10 +33,6 @@ All notable changes to this project will be documented in this file.
 [Full diff](https://github.com/sider/runners/compare/0.25.2...0.25.3)
 
 - Use git-ls-files instead of git-check-ignore [#1148](https://github.com/sider/runners/pull/1148)
-
-New supported:
-
-- **Pylint** [#1149](https://github.com/sider/runners/pull/1149)
 
 ## 0.25.2
 
