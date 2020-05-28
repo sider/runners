@@ -1,8 +1,8 @@
 > Explain a summary, purpose, or background for this change.
 
-> Add related issues if they exist, e.g. "Fix #<ISSUE_ID>" or "Related to #<ISSUE_ID>"
+> Link related issues, e.g. "Fix #<ISSUE_ID>", "Related to #<ISSUE_ID>", or "None."
 
-> Check the following items if adding a new runner. Otherwise, remove the list.
+> Check the following items when adding a new runner. Otherwise, remove this section and list.
 
 - [ ] Read and follow the [document](https://github.com/sider/runners/blob/master/docs/how-to-write-a-new-runner.md) for a new runner.
 - [ ] Add a new tool to [`analyzers.yml`](https://github.com/sider/runners/blob/master/analyzers.yml).
