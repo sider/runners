@@ -1,3 +1,0 @@
-linter:
-  pylint:
-    errors-only: true

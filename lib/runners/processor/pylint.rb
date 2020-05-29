@@ -71,11 +71,12 @@ module Runners
     def run_analyzer
       files = analyzed_files
 
-      trace_writer.message "Analyzing #{files.size} file(s)..."
-
-      if files.size == 0
+      if files.empty?
+        trace_writer.message "No files found."
         return Results::Success.new(guid: guid, analyzer: analyzer)
       end
+
+      trace_writer.message "Analyzing #{files.size} file(s)..."
 
       stdout, stderr = capture3!(
         analyzer_bin,
