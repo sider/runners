@@ -112,6 +112,10 @@ analyzers:
     name: PMD Java
     github: pmd/pmd
     doc: tools/java/pmd
+  pylint:
+    name: Pylint
+    github: PyCQA/pylint
+    doc: tools/python/pylint
   querly:
     name: Querly
     github: soutaro/querly

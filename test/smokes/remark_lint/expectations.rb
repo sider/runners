@@ -10,7 +10,7 @@ s.add_test(
       id: "no-undefined-references",
       message: "Found reference to undefined definition",
       links: [],
-      object: nil,
+      object: { severity: "warn" },
       git_blame_info: nil
     },
     {
@@ -19,7 +19,7 @@ s.add_test(
       id: "no-unused-definitions",
       message: "Found unused definition",
       links: [],
-      object: nil,
+      object: { severity: "warn" },
       git_blame_info: nil
     }
   ],
@@ -38,7 +38,7 @@ s.add_test(
       id: "heading-increment",
       message: "Heading levels should increment by one level at a time",
       links: [],
-      object: nil,
+      object: { severity: "warn" },
       git_blame_info: nil
     },
     {
@@ -47,7 +47,7 @@ s.add_test(
       id: "no-auto-link-without-protocol",
       message: "All automatic links must start with a protocol",
       links: [],
-      object: nil,
+      object: { severity: "warn" },
       git_blame_info: nil
     }
   ],
@@ -64,7 +64,7 @@ s.add_test(
       id: "no-auto-link-without-protocol",
       message: "All automatic links must start with a protocol",
       links: [],
-      object: nil,
+      object: { severity: "warn" },
       git_blame_info: nil
     },
     {
@@ -73,7 +73,7 @@ s.add_test(
       id: "no-auto-link-without-protocol",
       message: "All automatic links must start with a protocol",
       links: [],
-      object: nil,
+      object: { severity: "warn" },
       git_blame_info: nil
     }
   ],
@@ -90,7 +90,7 @@ s.add_test(
       id: "no-auto-link-without-protocol",
       message: "All automatic links must start with a protocol",
       links: [],
-      object: nil,
+      object: { severity: "error" },
       git_blame_info: nil
     }
   ],
@@ -107,7 +107,7 @@ s.add_test(
       id: "no-auto-link-without-protocol",
       message: "All automatic links must start with a protocol",
       links: [],
-      object: nil,
+      object: { severity: "warn" },
       git_blame_info: nil
     }
   ],
@@ -124,7 +124,7 @@ s.add_test(
       id: "file-extension",
       message: "Incorrect extension: use `md`",
       links: [],
-      object: nil,
+      object: { severity: "warn" },
       git_blame_info: nil
     },
     {
@@ -133,7 +133,7 @@ s.add_test(
       id: "no-heading-punctuation",
       message: "Don’t add a trailing `:` to headings",
       links: [],
-      object: nil,
+      object: { severity: "warn" },
       git_blame_info: nil
     }
   ],
@@ -150,7 +150,7 @@ s.add_test(
       id: "books-links",
       message: "Missing PDF indication",
       links: [],
-      object: nil,
+      object: { severity: "warn" },
       git_blame_info: nil
     },
     {
@@ -159,7 +159,7 @@ s.add_test(
       id: "books-links",
       message: "Missing a space before author",
       links: [],
-      object: nil,
+      object: { severity: "warn" },
       git_blame_info: nil
     },
     {
@@ -168,7 +168,7 @@ s.add_test(
       id: "books-links",
       message: "Missing PDF indication",
       links: [],
-      object: nil,
+      object: { severity: "warn" },
       git_blame_info: nil
     }
   ],
@@ -202,7 +202,7 @@ s.add_test(
       id: "first-heading-level",
       message: "First heading level should be `1`",
       links: [],
-      object: nil,
+      object: { severity: "warn" },
       git_blame_info: nil
     }
   ],

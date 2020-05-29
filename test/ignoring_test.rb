@@ -45,6 +45,7 @@ class IgnoringTest < Minitest::Test
       new_file dir / "npm.log"
       new_file dir / "yarn.log"
       new_file dir / "npm.log.bak"
+      new_file dir / "てすと.log"
 
       subject = Ignoring.new(working_dir: dir, trace_writer: trace_writer, config: config)
       assert_equal [
@@ -57,6 +58,7 @@ class IgnoringTest < Minitest::Test
         "test/b/outB/index.html",
         "test/c/out.txt",
         "yarn.log",
+        "てすと.log",
       ], subject.delete_ignored_files!
 
       refute_path_exists dir / "examples/foo/out/index.html"
@@ -72,6 +74,7 @@ class IgnoringTest < Minitest::Test
       refute_path_exists dir / "npm.log"
       refute_path_exists dir / "yarn.log"
       assert_path_exists dir / "npm.log.bak"
+      refute_path_exists dir / "てすと.log"
     end
   end
 

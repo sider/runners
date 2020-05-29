@@ -1,0 +1,3 @@
+linter:
+  pylint:
+    rcfile: ./folder/.pylintrc

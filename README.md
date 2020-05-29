@@ -38,6 +38,7 @@ All 37 analyzers are provided as a Docker image:
 | PHPMD | [docker](https://hub.docker.com/r/sider/runner_phpmd), [source](https://github.com/phpmd/phpmd), [doc](https://help.sider.review/tools/php/phpmd) | ✅ |
 | PMD CPD | [docker](https://hub.docker.com/r/sider/runner_pmd_cpd), [source](https://github.com/pmd/pmd), [doc](https://help.sider.review/tools/others/pmd-cpd) | ✅ |
 | PMD Java | [docker](https://hub.docker.com/r/sider/runner_pmd_java), [source](https://github.com/pmd/pmd), [doc](https://help.sider.review/tools/java/pmd) | ✅ |
+| Pylint | [docker](https://hub.docker.com/r/sider/runner_pylint), [source](https://github.com/PyCQA/pylint), [doc](https://help.sider.review/tools/python/pylint) | ✅ |
 | Querly | [docker](https://hub.docker.com/r/sider/runner_querly), [source](https://github.com/soutaro/querly), [doc](https://help.sider.review/tools/ruby/querly) | ✅ |
 | Rails Best Practices | [docker](https://hub.docker.com/r/sider/runner_rails_best_practices), [source](https://github.com/flyerhzm/rails_best_practices), [doc](https://help.sider.review/tools/ruby/rails-bestpractices) | ✅ |
 | Reek | [docker](https://hub.docker.com/r/sider/runner_reek), [source](https://github.com/troessner/reek), [doc](https://help.sider.review/tools/ruby/reek) | ✅ |

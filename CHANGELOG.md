@@ -4,7 +4,27 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.25.4...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.26.0...HEAD)
+
+## 0.26.0
+
+[Full diff](https://github.com/sider/runners/compare/0.25.6...0.26.0)
+
+New supported:
+
+- **Pylint** [#1149](https://github.com/sider/runners/pull/1149)
+
+## 0.25.6
+
+[Full diff](https://github.com/sider/runners/compare/0.25.5...0.25.6)
+
+- **remark-lint** Fix handling `fatal` output [#1156](https://github.com/sider/runners/pull/1156)
+
+## 0.25.5
+
+[Full diff](https://github.com/sider/runners/compare/0.25.4...0.25.5)
+
+- Fix ignoring non ASCII filename [#1153](https://github.com/sider/runners/pull/1153)
 
 - [PMD CPD] New support [#1122](https://github.com/sider/runners/pull/1122)
 
