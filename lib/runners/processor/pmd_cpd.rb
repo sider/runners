@@ -50,17 +50,24 @@ module Runners
     end
 
     def run_analyzer
-      stdout, stderr, status = capture3(analyzer_bin, *cli_options)
-      if status.success? || status.exitstatus == 4
-        Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-          construct_result(result, stdout, stderr)
-        end
-      else
-        Results::Failure.new(guid: guid, analyzer: analyzer, message: "Unexpected error occurred. Please see the analysis log.")
+      stdout, stderr = capture3!(analyzer_bin, *cli_options)
+
+      raise_warnings(stderr)
+
+      Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+        construct_result(result, stdout)
       end
     end
 
-    def construct_result(result, stdout, stderr)
+    def raise_warnings(stderr)
+      stderr.each_line do |line|
+        if line.start_with?("Skipping")
+          add_warning line.gsub(working_dir.to_s + '/', '')
+        end
+      end
+    end
+
+    def construct_result(result, stdout)
       # HACK: Replace the encoding attribute to read this XML as UTF-8.
       #       The PMD CPD writes an XML report as UTF-8 with the inconsistent encoding attribute value when the --encoding option is specified.
       stdout.sub!(/<\?xml version="1\.0" encoding=".+"\?>/, '<?xml version="1.0" encoding="UTF-8"?>')
@@ -187,6 +194,7 @@ module Runners
         *option_no_skip_blocks,
         *option_skip_blocks_pattern,
         "--format", "xml",
+        "--failOnViolation", "false",
         *option_files,
       ]
     end

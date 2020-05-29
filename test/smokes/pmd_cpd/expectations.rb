@@ -131,6 +131,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
+  warnings: [],
   analyzer: { name: "PMD CPD", version: "6.23.0" }
 )
 
@@ -138,6 +139,7 @@ s.add_test(
   "no_files",
   type: "success",
   issues: [],
+  warnings: [],
   analyzer: { name: "PMD CPD", version: "6.23.0" }
 )
 
@@ -145,6 +147,7 @@ s.add_test(
   "no_issues",
   type: "success",
   issues: [],
+  warnings: [],
   analyzer: { name: "PMD CPD", version: "6.23.0" }
 )
 
@@ -286,6 +289,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
+  warnings: [],
   analyzer: { name: "PMD CPD", version: "6.23.0" }
 )
 
@@ -388,6 +392,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
+  warnings: [],
   analyzer: { name: "PMD CPD", version: "6.23.0" }
 )
 
@@ -626,6 +631,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
+  warnings: [],
   analyzer: { name: "PMD CPD", version: "6.23.0" }
 )
 
@@ -726,6 +732,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
+  warnings: [],
   analyzer: { name: "PMD CPD", version: "6.23.0" }
 )
 
@@ -852,14 +859,22 @@ namespace MyApp
       git_blame_info: nil
     }
   ],
+  warnings: [
+    {
+      message: "Skipping ./bar/hello.eucjp.cs. Reason: Lexical error in file ./bar/hello.eucjp.cs at line 20, column 13.  Encountered: token recognition error at: '｣'",
+      file: nil
+    }
+  ],
   analyzer: { name: "PMD CPD", version: "6.23.0" }
 )
 
 s.add_test(
   "option_encoding_error",
-  type: "failure",
-  message: "Unexpected error occurred. Please see the analysis log.",
-  analyzer: :_
+  type: "error",
+  class: "Runners::Shell::ExecError",
+  backtrace: :_,
+  inspect: :_,
+  analyzer: { name: "PMD CPD", version: "6.23.0" }
 )
 
 s.add_test(
@@ -965,6 +980,16 @@ s.add_test(
 }]
       },
       git_blame_info: nil
+    }
+  ],
+  warnings: [
+    {
+      message: "Skipping bar/こんにちは.2.eucjp.cs since it appears to be a duplicate file and --skip-duplicate-files is set",
+      file: nil
+    },
+    {
+      message: "Skipping baz/こんにちは.2.eucjp.cs since it appears to be a duplicate file and --skip-duplicate-files is set",
+      file: nil
     }
   ],
   analyzer: { name: "PMD CPD", version: "6.23.0" }
@@ -1123,6 +1148,129 @@ s.add_test(
 }]
       },
       git_blame_info: nil
+    }
+  ],
+  warnings: [],
+  analyzer: { name: "PMD CPD", version: "6.23.0" }
+)
+
+s.add_test(
+  "warnings",
+  type: "success",
+  issues: [
+    {
+      path: "src/bar/こんにちは.1.sjis.cs",
+      location: {
+        start_line: 12,
+        start_column: 1,
+        end_line: 26,
+        end_column: 1
+      },
+      id: "0d0169de6995b44aca9b1860372a6428bf67faa7",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 15,
+        tokens: 36,
+        files: [
+          {
+            id: "300265fa853e0451e5b3898d13088549b0ed6709",
+            path: "src/foo/こんにちは.2.sjis.cs",
+            start_line: 12,
+            start_column: 1,
+            end_line: 26,
+            end_column: 1
+          },
+          {
+            id: "0d0169de6995b44aca9b1860372a6428bf67faa7",
+            path: "src/bar/こんにちは.1.sjis.cs",
+            start_line: 12,
+            start_column: 1,
+            end_line: 26,
+            end_column: 1
+          }
+        ],
+        codefragment: %[namespace MyApp
+{
+    public class Hello
+    {
+        public static void Main()
+        {
+            今日は世界();
+        }
+
+        private static void 今日は世界()
+        {
+            Console.WriteLine("今日は, 世界!");
+        }
+    }
+}]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "src/foo/こんにちは.2.sjis.cs",
+      location: {
+        start_line: 12,
+        start_column: 1,
+        end_line: 26,
+        end_column: 1
+      },
+      id: "300265fa853e0451e5b3898d13088549b0ed6709",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 15,
+        tokens: 36,
+        files: [
+          {
+            id: "300265fa853e0451e5b3898d13088549b0ed6709",
+            path: "src/foo/こんにちは.2.sjis.cs",
+            start_line: 12,
+            start_column: 1,
+            end_line: 26,
+            end_column: 1
+          },
+          {
+            id: "0d0169de6995b44aca9b1860372a6428bf67faa7",
+            path: "src/bar/こんにちは.1.sjis.cs",
+            start_line: 12,
+            start_column: 1,
+            end_line: 26,
+            end_column: 1
+          }
+        ],
+        codefragment: %[namespace MyApp
+{
+    public class Hello
+    {
+        public static void Main()
+        {
+            今日は世界();
+        }
+
+        private static void 今日は世界()
+        {
+            Console.WriteLine("今日は, 世界!");
+        }
+    }
+}]
+      },
+      git_blame_info: nil
+    }
+  ],
+  warnings: [
+    {
+      message: "Skipping src/bar/baz/こんにちは.1.eucjp.cs. Reason: Lexical error in file src/bar/baz/こんにちは.1.eucjp.cs at line 20, column 13.  Encountered: token recognition error at: '｣'",
+      file: nil
+    },
+    {
+      message: "Skipping src/bar/こんにちは.2.sjis.cs since it appears to be a duplicate file and --skip-duplicate-files is set",
+      file: nil
+    },
+    {
+      message: "Skipping src/baz/こんにちは.2.sjis.cs since it appears to be a duplicate file and --skip-duplicate-files is set",
+      file: nil
     }
   ],
   analyzer: { name: "PMD CPD", version: "6.23.0" }
