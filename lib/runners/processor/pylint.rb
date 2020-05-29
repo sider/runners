@@ -73,6 +73,10 @@ module Runners
 
       trace_writer.message "Analyzing #{files.size} file(s)..."
 
+      if files.size == 0
+        return Results::Success.new(guid: guid, analyzer: analyzer)
+      end
+
       stdout, stderr = capture3!(
         analyzer_bin,
         *files,

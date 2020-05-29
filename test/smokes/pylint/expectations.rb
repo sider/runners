@@ -293,3 +293,10 @@ s.add_test(
   ],
   analyzer: { name: "Pylint", version: "2.5.2" }
 )
+
+s.add_test(
+  "no_file",
+  type: "success",
+  issues: [],
+  analyzer: { name: "Pylint", version: "2.5.2" }
+)
