@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 New supported:
 
 - **PMD CPD** [#1122](https://github.com/sider/runners/pull/1122)
+- **Pylint** Fix no file error [#1158](https://github.com/sider/runners/pull/1158)
 
 ## 0.26.0
 
