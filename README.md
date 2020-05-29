@@ -8,7 +8,7 @@ See also another related project, called [devon_rex](https://github.com/sider/de
 
 <!-- prettier-ignore-start -->
 <!-- AUTO-GENERATED-CONTENT:START (analyzers) -->
-All 37 analyzers are provided as a Docker image:
+All 38 analyzers are provided as a Docker image:
 
 | Name | Links | Status |
 |:-----|:------|:------:|

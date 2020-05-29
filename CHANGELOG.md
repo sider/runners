@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.26.0...HEAD)
 
+New supported:
+
+- **PMD CPD** [#1122](https://github.com/sider/runners/pull/1122)
+
 ## 0.26.0
 
 [Full diff](https://github.com/sider/runners/compare/0.25.6...0.26.0)
@@ -25,8 +29,6 @@ New supported:
 [Full diff](https://github.com/sider/runners/compare/0.25.4...0.25.5)
 
 - Fix ignoring non ASCII filename [#1153](https://github.com/sider/runners/pull/1153)
-
-- [PMD CPD] New support [#1122](https://github.com/sider/runners/pull/1122)
 
 ## 0.25.4
 
