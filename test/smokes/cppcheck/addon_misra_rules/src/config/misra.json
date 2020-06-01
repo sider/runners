@@ -1,5 +1,5 @@
 {
-  "script": "misra.py",
+  "script": "misra",
   "args": [
     "--rule-texts=config/misra_rules.txt"
   ]
