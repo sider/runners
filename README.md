@@ -8,7 +8,7 @@ See also another related project, called [devon_rex](https://github.com/sider/de
 
 <!-- prettier-ignore-start -->
 <!-- AUTO-GENERATED-CONTENT:START (analyzers) -->
-All 38 analyzers are provided as a Docker image:
+All 35 analyzers are provided as a Docker image:
 
 | Name | Links | Status |
 |:-----|:------|:------:|
@@ -21,10 +21,7 @@ All 38 analyzers are provided as a Docker image:
 | ESLint | [docker](https://hub.docker.com/r/sider/runner_eslint), [source](https://github.com/eslint/eslint), [doc](https://help.sider.review/tools/javascript/eslint) | ✅ |
 | Flake8 | [docker](https://hub.docker.com/r/sider/runner_flake8), [source](https://github.com/PyCQA/flake8), [doc](https://help.sider.review/tools/python/flake8) | ✅ |
 | FxCop | [docker](https://hub.docker.com/r/sider/runner_fxcop), [source](https://github.com/dotnet/roslyn-analyzers), [doc](https://help.sider.review/tools/csharp/fxcop) | ✅ |
-| Go Meta Linter | [docker](https://hub.docker.com/r/sider/runner_gometalinter), [source](https://github.com/alecthomas/gometalinter), [doc](https://help.sider.review/tools/go/gometalinter) | ⚠️ *deprecated* |
-| go vet | [docker](https://hub.docker.com/r/sider/runner_go_vet), [website](https://golang.org/cmd/vet), [doc](https://help.sider.review/tools/go/govet) | ⚠️ *deprecated* |
 | GolangCI-Lint | [docker](https://hub.docker.com/r/sider/runner_golangci_lint), [source](https://github.com/golangci/golangci-lint), [doc](https://help.sider.review/tools/go/golangci-lint) | ✅ |
-| Golint | [docker](https://hub.docker.com/r/sider/runner_golint), [source](https://github.com/golang/lint), [doc](https://help.sider.review/tools/go/golint) | ⚠️ *deprecated* |
 | Goodcheck | [docker](https://hub.docker.com/r/sider/runner_goodcheck), [source](https://github.com/sider/goodcheck), [doc](https://help.sider.review/tools/others/goodcheck) | ✅ |
 | hadolint | [docker](https://hub.docker.com/r/sider/runner_hadolint), [source](https://github.com/hadolint/hadolint), [doc](https://help.sider.review/tools/dockerfile/hadolint) | ✅ |
 | HAML-Lint | [docker](https://hub.docker.com/r/sider/runner_haml_lint), [source](https://github.com/sds/haml-lint), [doc](https://help.sider.review/tools/ruby/haml-lint) | ✅ |

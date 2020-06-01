@@ -42,25 +42,10 @@ analyzers:
     github: dotnet/roslyn-analyzers
     doc: tools/csharp/fxcop
     dependabot: false
-  go_vet:
-    name: go vet
-    website: https://golang.org/cmd/vet
-    doc: tools/go/govet
-    deprecated: true
   golangci_lint:
     name: GolangCI-Lint
     github: golangci/golangci-lint
     doc: tools/go/golangci-lint
-  golint:
-    name: Golint
-    github: golang/lint
-    doc: tools/go/golint
-    deprecated: true
-  gometalinter:
-    name: Go Meta Linter
-    github: alecthomas/gometalinter
-    doc: tools/go/gometalinter
-    deprecated: true
   goodcheck:
     name: Goodcheck
     github: sider/goodcheck
