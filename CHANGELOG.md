@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.27.0...HEAD)
 
+- **Cppcheck** Add `bug-hunting` option [#1166](https://github.com/sider/runners/pull/1166)
+
 ## 0.27.0
 
 [Full diff](https://github.com/sider/runners/compare/0.26.0...0.27.0)
