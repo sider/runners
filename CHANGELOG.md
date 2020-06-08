@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 [Full diff](https://github.com/sider/runners/compare/0.27.0...HEAD)
 
 - **PMD Java** 6.23.0 -> 6.24.0 [#1123](https://github.com/sider/runners/pull/1123)
+- **Cppcheck** Add `bug-hunting` option [#1166](https://github.com/sider/runners/pull/1166)
 
 ## 0.27.0
 
