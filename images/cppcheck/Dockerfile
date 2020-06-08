@@ -9,9 +9,10 @@ FROM sider/devon_rex_python:2.19.0
 # See https://github.com/danmar/cppcheck#gnu-make
 
 ARG CPPCHECK_VERSION=2.0
+ARG LIBZ3_VERSION=4.4.1-1~deb10u1
 USER root
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends libz3-dev && \
+    apt-get install -y --no-install-recommends libz3-dev=${LIBZ3_VERSION} && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     cd /tmp && \
