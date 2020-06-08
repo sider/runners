@@ -10,6 +10,7 @@ module Runners
           std: string?,
           project: string?,
           language: string?,
+          'bug-hunting': boolean?
         )
       }
 
@@ -65,18 +66,40 @@ module Runners
       Array(lang ? "--language=#{lang}" : nil)
     end
 
+    def bug_hunting
+      Array(do_bug_hunting? ? "--bug-hunting" : nil)
+    end
+
+    def do_bug_hunting?
+      return config_linter[:'bug-hunting']
+    end
+
     def run_analyzer
+      results = Results::Success.new(guid: guid, analyzer: analyzer)
+
+      args_normal = [*enable, *std, *addon]
+      args_bughunting = do_bug_hunting? ? [ *bug_hunting ] : nil
+
+      [args_normal, args_bughunting].compact.each do |args|
+        ret = step_analyzer(results, *args)
+        if ret
+          return ret
+        end
+      end
+
+      return results
+    end
+
+    def step_analyzer(results, *args)
       stdout, stderr, status = capture3(
         analyzer_bin,
         "--quiet",
         "--xml",
         *ignore,
-        *enable,
-        *std,
         *project,
         *language,
-        *target,
-        *addon,
+        *args,
+        *target
       )
 
       if status.exitstatus == 1 && stdout.strip == "cppcheck: error: could not find or open any of the paths given."
@@ -97,11 +120,13 @@ module Runners
         return Results::Failure.new(guid: guid, analyzer: analyzer, message: "Invalid XML output!")
       end
 
-      Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+      results.tap do |result|
         parse_result(xml_output) do |issue|
           result.add_issue issue
         end
       end
+
+      return nil # return nil to indicate normal exit
     end
 
     # @see https://github.com/danmar/cppcheck/blob/master/man/manual.md#xml-output
