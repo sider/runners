@@ -2,7 +2,7 @@ void bar()
 {
     double v;
 
-    int ar[] = {3, 1, 4, 1, 0, 5, 9};
+    int ar[] = {1, 3, 5, 7, 9, 0, 11};
     for(int &x : ar) {
         v = 1 / x;
     }
