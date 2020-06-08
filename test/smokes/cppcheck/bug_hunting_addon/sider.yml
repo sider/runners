@@ -1,0 +1,4 @@
+linter:
+  cppcheck:
+    addon: misra
+    bug-hunting: true

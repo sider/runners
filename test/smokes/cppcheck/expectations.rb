@@ -688,3 +688,47 @@ s.add_test(
   ],
   analyzer: { name: "Cppcheck", version: "2.0" }
 )
+
+s.add_test(
+  "bug_hunting_addon",
+  type: "success",
+  issues: [
+    {
+      id: "bughuntingDivByZeroFloat",
+      path: "c_sample.c",
+      location: { start_line: 12 },
+      message: "There is division, cannot determine that there can't be a division by zero.",
+      links: [],
+      object: { severity: "error", verbose: nil, inconclusive: false, cwe: "369", location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "misra-c2012-10.4",
+      path: "c_sample.c",
+      location: { start_line: 12 },
+      message: "misra violation (use --rule-texts=<file> to get proper output)",
+      links: [],
+      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "misra-c2012-12.3",
+      path: "c_sample.c",
+      location: { start_line: 5 },
+      message: "misra violation (use --rule-texts=<file> to get proper output)",
+      links: [],
+      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "uninitvar",
+      path: "c_sample.c",
+      location: { start_line: 10 },
+      message: "Uninitialized variable: dz",
+      links: [],
+      object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "Cppcheck", version: "2.0" }
+)
