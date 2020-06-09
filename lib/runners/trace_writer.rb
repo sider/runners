@@ -1,14 +1,14 @@
 module Runners
   class TraceWriter
-    attr_reader :writer, :sensitive_strings
+    attr_reader :writer, :filter
 
-    def initialize(writer:, sensitive_strings: [])
+    def initialize(writer:, filter:)
       @writer = writer
-      @sensitive_strings = sensitive_strings
+      @filter = filter
     end
 
     def command_line(command_line, recorded_at: now)
-      self << { trace: :command_line, command_line: command_line.map { |v| masked_string(v) }, recorded_at: recorded_at }
+      self << { trace: :command_line, command_line: command_line.map { |v| filter.mask(v) }, recorded_at: recorded_at }
     end
 
     def status(status, recorded_at: now)
@@ -21,7 +21,7 @@ module Runners
       string = string.strip
       return if string.empty?
 
-      each_slice(masked_string(string), size: max_length) do |text, truncated|
+      each_slice(filter.mask(string), size: max_length) do |text, truncated|
         self << { trace: :stdout, string: text, recorded_at: recorded_at, truncated: truncated }
       end
     end
@@ -32,13 +32,13 @@ module Runners
       string = string.strip
       return if string.empty?
 
-      each_slice(masked_string(string), size: max_length) do |text, truncated|
+      each_slice(filter.mask(string), size: max_length) do |text, truncated|
         self << { trace: :stderr, string: text, recorded_at: recorded_at, truncated: truncated }
       end
     end
 
     def message(message, recorded_at: now, max_length: 4_000, limit: 100_000, omission: "...(truncated)")
-      string = masked_string(message.strip)
+      string = filter.mask(message.strip)
 
       if string.size > limit
         string = string[0, limit] + omission
@@ -65,11 +65,11 @@ module Runners
     end
 
     def header(message, recorded_at: now)
-      self << { trace: :header, message: masked_string(message.strip), recorded_at: recorded_at }
+      self << { trace: :header, message: filter.mask(message.strip), recorded_at: recorded_at }
     end
 
     def warning(message, file: nil, recorded_at: now)
-      self << { trace: :warning, file: file, message: masked_string(message.strip), recorded_at: recorded_at }
+      self << { trace: :warning, file: file, message: filter.mask(message.strip), recorded_at: recorded_at }
     end
 
     def ci_config(content, raw_content:, file:, recorded_at: now)
@@ -77,7 +77,7 @@ module Runners
     end
 
     def error(message, recorded_at: now, max_length: 4_000)
-      each_slice(masked_string(message.strip), size: max_length) do |text, truncated|
+      each_slice(filter.mask(message.strip), size: max_length) do |text, truncated|
         self << { trace: :error, message: text, recorded_at: recorded_at, truncated: truncated }
       end
     end
@@ -101,12 +101,6 @@ module Runners
         slice = string.slice!(0, size)
         truncated = slice.length == size
         yield slice, truncated
-      end
-    end
-
-    def masked_string(str)
-      sensitive_strings.inject(str) do |ret, secure_string|
-        ret.gsub(secure_string, "[FILTERED]")
       end
     end
   end

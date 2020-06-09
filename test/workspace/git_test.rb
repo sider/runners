@@ -105,4 +105,34 @@ class WorkspaceGitTest < Minitest::Test
         ], info)
     end
   end
+
+  def test_git_blame_info_failed
+    with_workspace(**workspace_params_with_base) do |workspace|
+      workspace.send(:prepare_head_source, nil)
+      (workspace.working_dir / ".git").rmtree
+
+      error = assert_raises(Runners::Workspace::Git::BlameFailed) do
+        workspace.range_git_blame_info('test/smokes/haml_lint/expectations.rb', 137, 140)
+      end
+      assert_match %r{\Agit-blame failed: fatal: not a git repository \(or any of the parent directories\): \.git}, error.message
+    end
+  end
+
+  def test_git_fetch_failed
+    with_workspace(**workspace_params.merge(pull_number: 999999999)) do |workspace|
+      error = assert_raises(Runners::Workspace::Git::FetchFailed) do
+        workspace.send(:prepare_head_source, nil)
+      end
+      assert_match %r{\Agit-fetch failed: fatal: couldn't find remote ref refs/pull/999999999/head}, error.message
+    end
+  end
+
+  def test_git_checkout_failed
+    with_workspace(**workspace_params.merge(head: "invalid_commit")) do |workspace|
+      error = assert_raises(Runners::Workspace::Git::CheckoutFailed) do
+        workspace.send(:prepare_head_source, nil)
+      end
+      assert_match %r{\Agit-checkout failed: error: pathspec 'invalid_commit' did not match any file\(s\) known to git}, error.message
+    end
+  end
 end

@@ -1,0 +1,3 @@
+linter:
+  pmd_cpd:
+    files: [src/app.java, lib]

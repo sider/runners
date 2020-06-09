@@ -10,14 +10,20 @@ module Runners
     end
 
     def delete_ignored_files!
-      return if ignores.empty?
+      return [] if ignores.empty?
+
+      # @type var deleted_files: Array[String]
+      deleted_files = []
 
       trace_writer.message("Deleting ignored files...") do
-        with_gitignore do |list|
-          FileUtils.rm_rf list
-          trace_writer.message list.map { |f| f.relative_path_from(working_dir).to_path }.sort.join("\n")
+        each_ignored_file do |file|
+          (working_dir / file).delete
+          deleted_files << file
         end
+        trace_writer.message "Successfully deleted #{deleted_files.size} file(s)"
       end
+
+      deleted_files
     end
 
     private
@@ -26,30 +32,29 @@ module Runners
       config.ignore
     end
 
-    def with_gitignore
-      gitignore = (working_dir / ".gitignore")
+    def each_ignored_file(&block)
+      Tempfile.create("gitignore-") do |file|
+        gitignore = file.path
+        File.write gitignore, ignores.join("\n")
 
-      backup = gitignore.file? ? gitignore.read : nil
-      gitignore.write(ignores.join("\n"))
+        shell = Shell.new(current_dir: working_dir, trace_writer: trace_writer, env_hash: {})
+        shell.capture3! "git", "init"
+        shell.capture3! "git", "add", "."
 
-      all_files = working_dir.glob("**/*", File::FNM_DOTMATCH).filter(&:file?).map(&:to_path)
+        # @see https://git-scm.com/docs/git-config#Documentation/git-config.txt-corequotePath
+        shell.capture3! "git", "config", "core.quotePath", "false"
 
-      shell = Shell.new(current_dir: working_dir, trace_writer: trace_writer, env_hash: {})
-      shell.capture3!("git", "init", trace_command_line: false, trace_stdout: false)
+        # @see https://git-scm.com/docs/git-ls-files
+        ignored_files, = shell.capture3!(
+          "git", "ls-files", "--ignored", "--exclude-from", gitignore,
+          trace_command_line: true,
+          trace_stdout: false,
+        )
 
-      # @see https://git-scm.com/docs/git-check-ignore#_exit_status
-      stdout, = shell.capture3!(
-        "git", "check-ignore", "--stdin", "-z",
-        trace_command_line: false,
-        trace_stdout: false,
-        is_success: -> (s) { s.exitstatus != 128 },
-        stdin_data: all_files.join("\0"),
-      )
+        shell.capture3! "git", "config", "--unset", "core.quotePath" # restore
 
-      yield stdout.split("\0").map { |f| Pathname(f) }
-    ensure
-      FileUtils.rm_rf(working_dir / ".git") # NOTE: working_dir is not a Git directory.
-      gitignore.write(backup) if backup
+        ignored_files.each_line(chomp: true, &block)
+      end
     end
   end
 end

@@ -11,7 +11,7 @@ analyzers:
   code_sniffer:
     name: PHP_CodeSniffer
     github: squizlabs/PHP_CodeSniffer
-    doc: tools/php/codesniffer
+    doc: tools/php/code-sniffer
   coffeelint:
     name: CoffeeLint
     github: clutchski/coffeelint
@@ -104,10 +104,18 @@ analyzers:
     name: PHPMD
     github: phpmd/phpmd
     doc: tools/php/phpmd
+  pmd_cpd:
+    name: PMD CPD
+    github: pmd/pmd
+    doc: tools/others/pmd-cpd
   pmd_java:
     name: PMD Java
     github: pmd/pmd
     doc: tools/java/pmd
+  pylint:
+    name: Pylint
+    github: PyCQA/pylint
+    doc: tools/python/pylint
   querly:
     name: Querly
     github: soutaro/querly
@@ -115,7 +123,7 @@ analyzers:
   rails_best_practices:
     name: Rails Best Practices
     github: flyerhzm/rails_best_practices
-    doc: tools/ruby/rails-bestpractices
+    doc: tools/ruby/rails-best-practices
   reek:
     name: Reek
     github: troessner/reek

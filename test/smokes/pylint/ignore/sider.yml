@@ -1,0 +1,5 @@
+linter:
+  pylint:
+    ignore:
+      - bad1.py
+      - bad2.py

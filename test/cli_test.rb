@@ -3,6 +3,7 @@ require "runners/cli"
 
 class CLITest < Minitest::Test
   include TestHelper
+
   CLI = Runners::CLI
   TraceWriter = Runners::TraceWriter
 
@@ -136,19 +137,6 @@ class CLITest < Minitest::Test
       end
     end
   end
-
-  def test_run_when_the_source_contains_userinfo
-    mktmpdir do |head_dir|
-      with_runners_options_env(source: { head: head_dir, git_http_url: 'https://github.com', owner: 'foo', repo: 'bar', git_http_userinfo: 'user:secret' }) do
-        mock.proxy(TraceWriter).new(writer: anything, sensitive_strings: ['user:secret'])
-
-        cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr)
-        cli.instance_variable_set(:@processor_class, TestProcessor)
-        cli.run
-      end
-    end
-  end
-
 
   def test_processor_class
     with_runners_options_env(source: { head: 'http://example.com/head' }) do

@@ -54,7 +54,7 @@ module Runners
       io.flush! # Write or upload empty content to let the caller of Runners notice the beginning of the analysis.
       with_working_dir do |working_dir|
         writer = JSONSEQ::Writer.new(io: io)
-        trace_writer = TraceWriter.new(writer: writer, sensitive_strings: sensitive_strings)
+        trace_writer = TraceWriter.new(writer: writer, filter: SensitiveFilter.new(options: options))
         started_at = Time.now
         trace_writer.header "Analysis started", recorded_at: started_at
         trace_writer.message "Started at #{started_at.utc}"
@@ -96,20 +96,6 @@ module Runners
 
     def io
       @io ||= options.io
-    end
-
-    def sensitive_strings
-      @sensitive_strings ||= begin
-        # @type var strings: Array[String]
-        strings = []
-        source = options.source
-        if source.is_a?(Options::GitSource)
-          # @type var source: Options::GitSource
-          user_info = source.git_http_userinfo
-          strings << user_info if user_info
-        end
-        strings
-      end
     end
 
     def format_duration(duration_in_sec)

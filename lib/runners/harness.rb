@@ -45,10 +45,10 @@ module Runners
             return root_dir_not_found if root_dir_not_found
 
             processor.in_root_dir do
-              trace_writer.header "Setting up analyzer"
+              trace_writer.header "Setting up #{processor.analyzer_name}"
               processor.show_runtime_versions
               result = processor.setup do
-                trace_writer.header "Running analyzer"
+                trace_writer.header "Running #{processor.analyzer_name}"
                 @analyzer = processor.analyzer # initialize analyzer
                 exclude_special_dirs { processor.analyze(changes) }
               end
@@ -110,10 +110,14 @@ module Runners
       # @type var saved: Hash<Pathname, Pathname>
       saved = [".git"].filter_map do |dir|
         src = working_dir / dir
-        if src.exist?
+        if src.directory?
           dest = mktmpdir_as_pathname / dir
           src.rename(dest)
+          trace_writer.message "Move #{src} to #{dest}"
           [src, dest]
+        else
+          trace_writer.error "#{src} is not a directory"
+          nil
         end
       end.to_h
 
@@ -123,6 +127,7 @@ module Runners
       saved.each do |src, dest|
         dest.rename(src)
         dest.parent.rmdir
+        trace_writer.message "Restore #{dest} to #{src}"
       end
     end
   end

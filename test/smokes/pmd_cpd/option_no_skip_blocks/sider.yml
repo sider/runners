@@ -1,0 +1,6 @@
+linter:
+  pmd_cpd:
+    language: c
+    minimum-tokens: 50
+    files: src
+    no-skip-blocks: true

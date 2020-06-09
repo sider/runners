@@ -25,7 +25,7 @@ class NodejsTest < Minitest::Test
   end
 
   def trace_writer
-    @trace_writer ||= Runners::TraceWriter.new(writer: [])
+    @trace_writer ||= new_trace_writer
   end
 
   def actual_commands

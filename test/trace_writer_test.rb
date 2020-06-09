@@ -1,10 +1,12 @@
 require "test_helper"
 
 class TraceWriterTest < Minitest::Test
+  include TestHelper
+
   TraceWriter = Runners::TraceWriter
 
   def writer
-    @writer ||= TraceWriter.new(writer: [])
+    @writer ||= TraceWriter.new(writer: [], filter: sensitive_filter)
   end
 
   def now
@@ -87,16 +89,15 @@ class TraceWriterTest < Minitest::Test
   end
 
   def test_masked_string
-    writer = TraceWriter.new(writer: [], sensitive_strings: %w[supersecret hidden])
-    writer.command_line(%w[cat https://user:supersecret@github.com], recorded_at: now)
-    writer.stdout("supersecret in stdout", recorded_at: now)
-    writer.stderr("supersecret in stderr", recorded_at: now)
-    writer.message("Your 'hidden' should not be exposed", recorded_at: now)
-    writer.header("'hidden' in header", recorded_at: now)
-    writer.error("'hidden' in error", recorded_at: now)
-    writer.warning("'hidden' in warning", recorded_at: now)
+    writer.command_line(%w[cat https://user:secret@github.com], recorded_at: now)
+    writer.stdout("user:secret in stdout", recorded_at: now)
+    writer.stderr("user:secret in stderr", recorded_at: now)
+    writer.message("Your 'user:secret' should not be exposed", recorded_at: now)
+    writer.header("'user:secret' in header", recorded_at: now)
+    writer.error("'user:secret' in error", recorded_at: now)
+    writer.warning("'user:secret' in warning", recorded_at: now)
     expected = [
-      { trace: :command_line, command_line: %w[cat https://user:[FILTERED]@github.com], recorded_at: "2017-08-01T22:34:51.200Z" },
+      { trace: :command_line, command_line: %w[cat https://[FILTERED]@github.com], recorded_at: "2017-08-01T22:34:51.200Z" },
       { trace: :stdout, string: "[FILTERED] in stdout", recorded_at: "2017-08-01T22:34:51.200Z", truncated: false },
       { trace: :stderr, string: "[FILTERED] in stderr", recorded_at: "2017-08-01T22:34:51.200Z", truncated: false },
       { trace: :message, message: "Your '[FILTERED]' should not be exposed", recorded_at: "2017-08-01T22:34:51.200Z", truncated: false },
