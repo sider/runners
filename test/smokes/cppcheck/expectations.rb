@@ -448,3 +448,47 @@ s.add_test(
   ],
   analyzer: { name: "Cppcheck", version: "2.0" }
 )
+
+s.add_test(
+  "addon_misra_rules",
+  type: "success",
+  issues: [
+    {
+      id: "misra-c2012-12.3",
+      path: "src/foo/test.cpp",
+      location: { start_line: 9 },
+      message: "Text of rule 12.3",
+      links: [],
+      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "misra-c2012-14.4",
+      path: "src/foo/test.cpp",
+      location: { start_line: 16 },
+      message: "Text of rule 14.4",
+      links: [],
+      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "misra-c2012-16.4",
+      path: "src/foo/test.cpp",
+      location: { start_line: 10 },
+      message: "Text of rule 16.4",
+      links: [],
+      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "misra-c2012-21.6",
+      path: "src/foo/test.cpp",
+      location: { start_line: 2 },
+      message: "Text of rule 21.6",
+      links: [],
+      object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "Cppcheck", version: "2.0" }
+)

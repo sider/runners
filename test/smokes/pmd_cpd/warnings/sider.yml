@@ -1,0 +1,10 @@
+linter:
+  pmd_cpd:
+    root_dir: src
+    files: [foo, bar/, baz]
+    minimum-tokens: 30
+    language: cs
+    encoding: Shift_JIS
+    skip-lexical-errors: true
+    skip-duplicate-files: true
+    ignore-usings: true

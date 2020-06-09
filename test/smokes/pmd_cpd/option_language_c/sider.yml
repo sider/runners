@@ -1,0 +1,5 @@
+linter:
+  pmd_cpd:
+    language: c
+    minimum-tokens: 15
+    skip-blocks-pattern: '#ifdef TEST|#endif'

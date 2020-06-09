@@ -1,0 +1,4 @@
+'''
+module docstring
+'''
+print("Good")

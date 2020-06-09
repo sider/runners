@@ -6,7 +6,7 @@ class Runners::Processor::PhpmdTest < Minitest::Test
   Phpmd = Runners::Processor::Phpmd
 
   def trace_writer
-    @trace_writer ||= Runners::TraceWriter.new(writer: [])
+    @trace_writer ||= new_trace_writer
   end
 
   def subject(workspace, yaml: nil)

@@ -5,12 +5,11 @@ class ProcessorTest < Minitest::Test
 
   Processor = Runners::Processor
   Results = Runners::Results
-  TraceWriter = Runners::TraceWriter
   Analyzer = Runners::Analyzer
   Shell = Runners::Shell
 
   def trace_writer
-    @trace_writer ||= TraceWriter.new(writer: [])
+    @trace_writer ||= new_trace_writer
   end
 
   def processor_class

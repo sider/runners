@@ -12,6 +12,10 @@ update_configs:
       - match:
           dependency_type: "development"
           update_type: "all"
+    # TODO: Steep is broken by the update. See https://github.com/sider/runners/pull/1135
+    ignored_updates:
+      - match:
+          dependency_name: "strong_json"
 
   # Docker
   - { package_manager: "docker", update_schedule: "weekly", directory: "/images/golangci_lint" }
@@ -20,6 +24,7 @@ update_configs:
 
   # Java
   - { package_manager: "java:maven", update_schedule: "weekly", directory: "/images/checkstyle" }
+  - { package_manager: "java:maven", update_schedule: "weekly", directory: "/images/pmd_cpd" }
   - { package_manager: "java:maven", update_schedule: "weekly", directory: "/images/pmd_java" }
 
   # Java (Kotlin)
@@ -44,6 +49,7 @@ update_configs:
   # Python
   - { package_manager: "python", update_schedule: "weekly", directory: "/images/cpplint" }
   - { package_manager: "python", update_schedule: "weekly", directory: "/images/flake8" }
+  - { package_manager: "python", update_schedule: "weekly", directory: "/images/pylint" }
 
   # Ruby
   - { package_manager: "ruby:bundler", update_schedule: "weekly", directory: "/images/brakeman" }

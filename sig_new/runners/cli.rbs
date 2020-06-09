@@ -12,6 +12,5 @@ class Runners::CLI
   def processor_class: () -> Class
   def run: () -> untyped
   def io: () -> Runners::IO
-  def sensitive_strings: () -> Array[String]
   def format_duration: (Float duration_in_sec) -> String
 end

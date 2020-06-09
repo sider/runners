@@ -1,0 +1,9 @@
+linter:
+  pmd_cpd:
+    files: [foo, bar/, baz]
+    minimum-tokens: 30
+    language: cs
+    encoding: EUC-JP
+    non-recursive: true
+    skip-duplicate-files: true
+    ignore-usings: true

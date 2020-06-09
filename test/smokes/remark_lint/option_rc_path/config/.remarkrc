@@ -1,5 +1,5 @@
 {
-  "plugins": [
-    "remark-preset-lint-recommended"
-  ]
+  "plugins": {
+    "remark-lint-no-auto-link-without-protocol": ["error"]
+  }
 }

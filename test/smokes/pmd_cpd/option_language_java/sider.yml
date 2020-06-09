@@ -1,0 +1,6 @@
+linter:
+  pmd_cpd:
+    minimum-tokens: 100
+    ignore-literals: true
+    ignore-identifiers: true
+    ignore-annotations: true

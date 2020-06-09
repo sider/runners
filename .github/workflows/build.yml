@@ -83,7 +83,9 @@ jobs:
           - misspell
           - phinder
           - phpmd
+          - pmd_cpd
           - pmd_java
+          - pylint
           - querly
           - rails_best_practices
           - reek

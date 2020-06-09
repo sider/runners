@@ -19,9 +19,9 @@ end
 
 class Runners::TraceWriter
   attr_reader writer: _Writer
-  attr_reader sensitive_strings: Array<String>
-  def initialize: (writer: _Writer, ?sensitive_strings: Array<String>) -> any
+  attr_reader filter: SensitiveFilter
 
+  def initialize: (writer: _Writer, filter: SensitiveFilter) -> any
   def command_line: (Array<String>, ?recorded_at: Time) -> void
   def status: (Process::Status, ?recorded_at: Time) -> void
   def stdout: (String, ?recorded_at: Time, ?max_length: Integer) -> void
@@ -34,7 +34,6 @@ class Runners::TraceWriter
   def <<: (Hash<Symbol, any>) -> void
   def now: -> Time
   def each_slice: (String, size: Integer) { (String, bool) -> void } -> void
-  def masked_string: (String) -> String
 end
 
 class Runners::Analyzer
@@ -63,8 +62,8 @@ class Runners::Results::Success < Runners::Results::Base
   attr_reader issues: Array<Runners::Issue>
   attr_reader analyzer: Analyzer
 
-  def initialize: (guid: String, analyzer: Analyzer) -> any
-  def add_issue: (Runners::Issue) -> void
+  def initialize: (guid: String, analyzer: Analyzer, ?issues: Array<Runners::Issue>) -> any
+  def add_issue: (*Runners::Issue) -> void
   def filter_issues: (Changes) -> void
   def add_git_blame_info: (Workspace) -> void
 end
@@ -229,6 +228,5 @@ class Runners::CLI
   def validate_analyzer!: () -> void
   def run: () -> result
   def io: () -> Runners::IO
-  def sensitive_strings: () -> Array<String>
   def format_duration: (Float) -> String
 end

@@ -1,0 +1,5 @@
+linter:
+  cppcheck:
+    root_dir: src
+    addon:
+      - config/misra.json
