@@ -66,19 +66,16 @@ module Runners
       Array(lang ? "--language=#{lang}" : nil)
     end
 
-    def bug_hunting
-      Array(do_bug_hunting? ? "--bug-hunting" : nil)
+    def args_normal
+      [*enable, *std, *addon]
     end
 
-    def do_bug_hunting?
-      return config_linter[:'bug-hunting']
+    def args_bughunting
+      config_linter[:'bug-hunting'] ? ["--bug-hunting"] : nil
     end
 
     def run_analyzer
       results = Results::Success.new(guid: guid, analyzer: analyzer)
-
-      args_normal = [*enable, *std, *addon]
-      args_bughunting = do_bug_hunting? ? [ *bug_hunting ] : nil
 
       [args_normal, args_bughunting].compact.each do |args|
         ret = step_analyzer(results, *args)
