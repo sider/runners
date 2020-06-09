@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - **PMD Java** 6.23.0 -> 6.24.0 [#1123](https://github.com/sider/runners/pull/1123)
 - **PMD CPD** 6.23.0 -> 6.24.0 [#1157](https://github.com/sider/runners/pull/1157)
+- **Flake8** 3.8.1 -> 3.8.2 [#1127](https://github.com/sider/runners/pull/1127)
 
 ## 0.27.0
 
