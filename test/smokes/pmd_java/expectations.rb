@@ -1,13 +1,15 @@
 s = Runners::Testing::Smoke
 
+default_version = "6.24.0"
+
 s.add_test(
   "success",
   type: "success",
-  analyzer: { name: "PMD Java", version: "6.23.0" },
+  analyzer: { name: "PMD Java", version: default_version },
   issues: [
     {
       message: "Do not add empty strings",
-      links: %w[https://pmd.github.io/pmd-6.23.0/pmd_rules_java_performance.html#addemptystring],
+      links: %W[https://pmd.github.io/pmd-#{default_version}/pmd_rules_java_performance.html#addemptystring],
       id: "AddEmptyString",
       path: "src/Hello.java",
       location: { start_line: 17, start_column: 16, end_line: 17, end_column: 17 },
@@ -16,7 +18,7 @@ s.add_test(
     },
     {
       message: "Avoid calling finalize() explicitly",
-      links: %w[https://pmd.github.io/pmd-6.23.0/pmd_rules_java_errorprone.html#avoidcallingfinalize],
+      links: %W[https://pmd.github.io/pmd-#{default_version}/pmd_rules_java_errorprone.html#avoidcallingfinalize],
       id: "AvoidCallingFinalize",
       path: "src/Hello.java",
       location: { start_line: 16, start_column: 9, end_line: 16, end_column: 16 },
@@ -25,7 +27,7 @@ s.add_test(
     },
     {
       message: "Use block level rather than method level synchronization",
-      links: %w[https://pmd.github.io/pmd-6.23.0/pmd_rules_java_multithreading.html#avoidsynchronizedatmethodlevel],
+      links: %W[https://pmd.github.io/pmd-#{default_version}/pmd_rules_java_multithreading.html#avoidsynchronizedatmethodlevel],
       id: "AvoidSynchronizedAtMethodLevel",
       path: "src/Hello.java",
       location: { start_line: 20, start_column: 18, end_line: 20, end_column: 29 },
@@ -34,7 +36,7 @@ s.add_test(
     },
     {
       message: "Exceptions should not extend java.lang.Error",
-      links: %w[https://pmd.github.io/pmd-6.23.0/pmd_rules_java_design.html#donotextendjavalangerror],
+      links: %W[https://pmd.github.io/pmd-#{default_version}/pmd_rules_java_design.html#donotextendjavalangerror],
       id: "DoNotExtendJavaLangError",
       path: "src/Hello.java",
       location: { start_line: 22, start_column: 23, end_line: 22, end_column: 37 },
@@ -43,7 +45,7 @@ s.add_test(
     },
     {
       message: "Do not use hard coded encryption keys",
-      links: %w[https://pmd.github.io/pmd-6.23.0/pmd_rules_java_security.html#hardcodedcryptokey],
+      links: %W[https://pmd.github.io/pmd-#{default_version}/pmd_rules_java_security.html#hardcodedcryptokey],
       id: "HardCodedCryptoKey",
       path: "src/Hello.java",
       location: { start_line: 12, start_column: 27, end_line: 12, end_column: 42 },
@@ -52,7 +54,7 @@ s.add_test(
     },
     {
       message: "System.out.println is used",
-      links: %w[https://pmd.github.io/pmd-6.23.0/pmd_rules_java_bestpractices.html#systemprintln],
+      links: %W[https://pmd.github.io/pmd-#{default_version}/pmd_rules_java_bestpractices.html#systemprintln],
       id: "SystemPrintln",
       path: "src/Hello.java",
       location: { start_line: 8, start_column: 9, end_line: 8, end_column: 26 },
@@ -67,11 +69,11 @@ s.add_test(
 s.add_test(
   "old-rulesets-style",
   type: "success",
-  analyzer: { name: "PMD Java", version: "6.23.0" },
+  analyzer: { name: "PMD Java", version: default_version },
   issues: [
     {
       message: "Parameter 'args' is not assigned and could be declared final",
-      links: %w[https://pmd.github.io/pmd-6.23.0/pmd_rules_java_codestyle.html#methodargumentcouldbefinal],
+      links: %W[https://pmd.github.io/pmd-#{default_version}/pmd_rules_java_codestyle.html#methodargumentcouldbefinal],
       id: "MethodArgumentCouldBeFinal",
       path: "Main.java",
       location: { start_line: 5, start_column: 29, end_line: 5, end_column: 41 },
@@ -146,11 +148,11 @@ s.add_test(
 s.add_test(
   "config",
   type: "success",
-  analyzer: { name: "PMD Java", version: "6.23.0" },
+  analyzer: { name: "PMD Java", version: default_version },
   issues: [
     {
       message: "Parameter 'args' is not assigned and could be declared final",
-      links: %w[https://pmd.github.io/pmd-6.23.0/pmd_rules_java_codestyle.html#methodargumentcouldbefinal],
+      links: %W[https://pmd.github.io/pmd-#{default_version}/pmd_rules_java_codestyle.html#methodargumentcouldbefinal],
       id: "MethodArgumentCouldBeFinal",
       path: "src/Main.java",
       location: { start_line: 5, start_column: 29, end_line: 5, end_column: 41 },
@@ -159,7 +161,7 @@ s.add_test(
     },
     {
       message: "Avoid short class names like Main",
-      links: %w[https://pmd.github.io/pmd-6.23.0/pmd_rules_java_codestyle.html#shortclassname],
+      links: %W[https://pmd.github.io/pmd-#{default_version}/pmd_rules_java_codestyle.html#shortclassname],
       id: "ShortClassName",
       path: "src/Main.java",
       location: { start_line: 3, start_column: 8, end_line: 8, end_column: 1 },
@@ -172,11 +174,11 @@ s.add_test(
 s.add_test(
   "duplicate-rule-name",
   type: "success",
-  analyzer: { name: "PMD Java", version: "6.23.0" },
+  analyzer: { name: "PMD Java", version: default_version },
   issues: [
     {
       message: "Comment is too large: Line too long",
-      links: %w[https://pmd.github.io/pmd-6.23.0/pmd_rules_java_documentation.html#commentsize],
+      links: %W[https://pmd.github.io/pmd-#{default_version}/pmd_rules_java_documentation.html#commentsize],
       id: "CommentSize",
       path: "Main.java",
       location: { start_line: 10, start_column: 1, end_line: 10, end_column: 2 },
@@ -185,7 +187,7 @@ s.add_test(
     },
     {
       message: "Comment is too large: Too many lines",
-      links: %w[https://pmd.github.io/pmd-6.23.0/pmd_rules_java_documentation.html#commentsize],
+      links: %W[https://pmd.github.io/pmd-#{default_version}/pmd_rules_java_documentation.html#commentsize],
       id: "CommentSize",
       path: "Main.java",
       location: { start_line: 10, start_column: 1, end_line: 34, end_column: 2 },
@@ -198,14 +200,14 @@ s.add_test(
 s.add_test(
   "failure",
   type: "failure",
-  analyzer: { name: "PMD Java", version: "6.23.0" },
+  analyzer: { name: "PMD Java", version: default_version },
   message: "Unexpected error occurred. Please see the analysis log."
 )
 
 s.add_test(
   "deprecated-functions",
   type: "success",
-  analyzer: { name: "PMD Java", version: "6.23.0" },
+  analyzer: { name: "PMD Java", version: default_version },
   issues: [
     {
       message: "violation message",
@@ -236,11 +238,11 @@ s.add_test(
 s.add_test(
   "deprecated-rules",
   type: "success",
-  analyzer: { name: "PMD Java", version: "6.23.0" },
+  analyzer: { name: "PMD Java", version: default_version },
   issues: [
     {
       message: 'The String literal "Howdy" appears 4 times in this file; the first occurrence is on line 3',
-      links: %w[https://pmd.github.io/pmd-6.23.0/pmd_rules_java_errorprone.html#avoidduplicateliterals],
+      links: %W[https://pmd.github.io/pmd-#{default_version}/pmd_rules_java_errorprone.html#avoidduplicateliterals],
       id: "AvoidDuplicateLiterals",
       path: "AvoidDupliatedLiterals.java",
       location: { start_line: 3, start_column: 13, end_line: 3, end_column: 19 },
