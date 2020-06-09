@@ -4,11 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.26.0...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.27.0...HEAD)
+
+- **PMD Java** 6.23.0 -> 6.24.0 [#1123](https://github.com/sider/runners/pull/1123)
+
+## 0.27.0
+
+[Full diff](https://github.com/sider/runners/compare/0.26.0...0.27.0)
 
 New supported:
 
 - **PMD CPD** [#1122](https://github.com/sider/runners/pull/1122)
+- **Pylint** Fix no file error [#1158](https://github.com/sider/runners/pull/1158)
 
 ## 0.26.0
 

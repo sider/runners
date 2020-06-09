@@ -62,8 +62,8 @@ class Runners::Results::Success < Runners::Results::Base
   attr_reader issues: Array<Runners::Issue>
   attr_reader analyzer: Analyzer
 
-  def initialize: (guid: String, analyzer: Analyzer) -> any
-  def add_issue: (Runners::Issue) -> void
+  def initialize: (guid: String, analyzer: Analyzer, ?issues: Array<Runners::Issue>) -> any
+  def add_issue: (*Runners::Issue) -> void
   def filter_issues: (Changes) -> void
   def add_git_blame_info: (Workspace) -> void
 end
