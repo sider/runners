@@ -29,9 +29,9 @@ module Runners
       attr_reader :issues
       attr_reader :analyzer
 
-      def initialize(guid:, analyzer:)
+      def initialize(guid:, analyzer:, issues: [])
         super(guid: guid)
-        @issues = []
+        @issues = issues
         @analyzer = analyzer
       end
 
@@ -57,8 +57,8 @@ module Runners
         super && analyzer&.valid?
       end
 
-      def add_issue(issue)
-        issues << issue
+      def add_issue(*issue)
+        issues.push(*issue)
       end
 
       def filter_issues(changes)
