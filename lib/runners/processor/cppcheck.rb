@@ -75,19 +75,26 @@ module Runners
     end
 
     def run_analyzer
-      results = Results::Success.new(guid: guid, analyzer: analyzer)
+      issues = []
 
       [args_normal, args_bughunting].compact.each do |args|
-        ret = step_analyzer(results, *args)
-        if ret
+        ret = step_analyzer(*args)
+        case ret
+        when Results::Success
+          issues.push(*ret.issues)
+        when :no_target_files
+          return Results::Success.new(guid: guid, analyzer: analyzer)
+        else
           return ret
         end
       end
 
-      return results
+      Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+        result.issues.push(*issues)
+      end
     end
 
-    def step_analyzer(results, *args)
+    def step_analyzer(*args)
       stdout, stderr, status = capture3(
         analyzer_bin,
         "--quiet",
@@ -101,7 +108,7 @@ module Runners
 
       if status.exitstatus == 1 && stdout.strip == "cppcheck: error: could not find or open any of the paths given."
         add_warning "No linting files."
-        return Results::Success.new(guid: guid, analyzer: analyzer)
+        return :no_target_files
       end
 
       unless status.success?
@@ -117,13 +124,11 @@ module Runners
         return Results::Failure.new(guid: guid, analyzer: analyzer, message: "Invalid XML output!")
       end
 
-      results.tap do |result|
+      Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
         parse_result(xml_output) do |issue|
           result.add_issue issue
         end
       end
-
-      return nil # return nil to indicate normal exit
     end
 
     # @see https://github.com/danmar/cppcheck/blob/master/man/manual.md#xml-output
