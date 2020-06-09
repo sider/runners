@@ -1,5 +1,7 @@
 s = Runners::Testing::Smoke
 
+default_version = "3.8.2"
+
 s.add_test(
   "sandbox_django",
   type: "success",
@@ -77,7 +79,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Flake8", version: "3.8.1" }
+  analyzer: { name: "Flake8", version: default_version }
 )
 
 s.add_test(
@@ -103,7 +105,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Flake8", version: "3.8.1" }
+  analyzer: { name: "Flake8", version: default_version }
 )
 
 s.add_test(
@@ -113,7 +115,7 @@ s.add_test(
   analyzer: {
     # W191 is not issued.
     name: "Flake8",
-    version: "3.8.1"
+    version: default_version
   }
 )
 
@@ -131,7 +133,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Flake8", version: "3.8.1" }
+  analyzer: { name: "Flake8", version: default_version }
 )
 
 s.add_test(
@@ -175,7 +177,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Flake8", version: "3.8.1" }
+  analyzer: { name: "Flake8", version: default_version }
 )
 
 s.add_test(
@@ -190,16 +192,16 @@ s.add_test(
   "python2",
   type: "success",
   issues: [],
-  analyzer: { name: "Flake8", version: "3.8.1" },
+  analyzer: { name: "Flake8", version: default_version },
   warnings: [{ message: "Python 2 is deprecated. Consider migrating to Python 3.", file: nil }]
 )
 
-s.add_test("dot_python_version", type: "success", issues: [], analyzer: { name: "Flake8", version: "3.8.1" })
+s.add_test("dot_python_version", type: "success", issues: [], analyzer: { name: "Flake8", version: default_version })
 
 s.add_test(
   "dot_python_version_2",
   type: "success",
   issues: [],
-  analyzer: { name: "Flake8", version: "3.8.1" },
+  analyzer: { name: "Flake8", version: default_version },
   warnings: [{ message: "Python 2 is deprecated. Consider migrating to Python 3.", file: nil }]
 )
