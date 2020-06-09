@@ -1,5 +1,7 @@
 s = Runners::Testing::Smoke
 
+default_version = "6.24.0"
+
 s.add_test(
   "success",
   type: "success",
@@ -132,7 +134,7 @@ s.add_test(
     }
   ],
   warnings: [],
-  analyzer: { name: "PMD CPD", version: "6.23.0" }
+  analyzer: { name: "PMD CPD", version: default_version }
 )
 
 s.add_test(
@@ -140,7 +142,7 @@ s.add_test(
   type: "success",
   issues: [],
   warnings: [],
-  analyzer: { name: "PMD CPD", version: "6.23.0" }
+  analyzer: { name: "PMD CPD", version: default_version }
 )
 
 s.add_test(
@@ -148,7 +150,7 @@ s.add_test(
   type: "success",
   issues: [],
   warnings: [],
-  analyzer: { name: "PMD CPD", version: "6.23.0" }
+  analyzer: { name: "PMD CPD", version: default_version }
 )
 
 s.add_test(
@@ -290,7 +292,7 @@ s.add_test(
     }
   ],
   warnings: [],
-  analyzer: { name: "PMD CPD", version: "6.23.0" }
+  analyzer: { name: "PMD CPD", version: default_version }
 )
 
 s.add_test(
@@ -393,7 +395,7 @@ s.add_test(
     }
   ],
   warnings: [],
-  analyzer: { name: "PMD CPD", version: "6.23.0" }
+  analyzer: { name: "PMD CPD", version: default_version }
 )
 
 s.add_test(
@@ -632,7 +634,7 @@ s.add_test(
     }
   ],
   warnings: [],
-  analyzer: { name: "PMD CPD", version: "6.23.0" }
+  analyzer: { name: "PMD CPD", version: default_version }
 )
 
 s.add_test(
@@ -733,7 +735,7 @@ s.add_test(
     }
   ],
   warnings: [],
-  analyzer: { name: "PMD CPD", version: "6.23.0" }
+  analyzer: { name: "PMD CPD", version: default_version }
 )
 
 s.add_test(
@@ -865,7 +867,7 @@ namespace MyApp
       file: nil
     }
   ],
-  analyzer: { name: "PMD CPD", version: "6.23.0" }
+  analyzer: { name: "PMD CPD", version: default_version }
 )
 
 s.add_test(
@@ -874,7 +876,7 @@ s.add_test(
   class: "Runners::Shell::ExecError",
   backtrace: :_,
   inspect: :_,
-  analyzer: { name: "PMD CPD", version: "6.23.0" }
+  analyzer: { name: "PMD CPD", version: default_version }
 )
 
 s.add_test(
@@ -992,7 +994,7 @@ s.add_test(
       file: nil
     }
   ],
-  analyzer: { name: "PMD CPD", version: "6.23.0" }
+  analyzer: { name: "PMD CPD", version: default_version }
 )
 
 s.add_test(
@@ -1151,7 +1153,7 @@ s.add_test(
     }
   ],
   warnings: [],
-  analyzer: { name: "PMD CPD", version: "6.23.0" }
+  analyzer: { name: "PMD CPD", version: default_version }
 )
 
 s.add_test(
@@ -1273,5 +1275,5 @@ s.add_test(
       file: nil
     }
   ],
-  analyzer: { name: "PMD CPD", version: "6.23.0" }
+  analyzer: { name: "PMD CPD", version: default_version }
 )
