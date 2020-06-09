@@ -17,7 +17,7 @@ Updated tools:
 
 Misc:
 
-N/A
+- **Cppcheck** Add `bug-hunting` option [#1166](https://github.com/sider/runners/pull/1166)
 
 ## 0.27.0
 

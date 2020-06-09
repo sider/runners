@@ -10,6 +10,7 @@ module Runners
           std: string?,
           project: string?,
           language: string?,
+          'bug-hunting': boolean?
         )
       }
 
@@ -65,23 +66,49 @@ module Runners
       Array(lang ? "--language=#{lang}" : nil)
     end
 
+    def args_normal
+      [*enable, *std, *addon]
+    end
+
+    def args_bughunting
+      config_linter[:'bug-hunting'] ? ["--bug-hunting"] : nil
+    end
+
     def run_analyzer
+      issues = []
+
+      [args_normal, args_bughunting].compact.each do |args|
+        ret = step_analyzer(*args)
+        case ret
+        when Results::Success
+          issues.push(*ret.issues)
+        when :no_target_files
+          return Results::Success.new(guid: guid, analyzer: analyzer)
+        else
+          return ret
+        end
+      end
+
+      Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+        result.issues.push(*issues)
+      end
+    end
+
+    def step_analyzer(*args)
       stdout, stderr, status = capture3(
         analyzer_bin,
         "--quiet",
         "--xml",
         *ignore,
-        *enable,
-        *std,
         *project,
         *language,
-        *target,
-        *addon,
+        *args,
+        *target
       )
 
       if status.exitstatus == 1 && stdout.strip == "cppcheck: error: could not find or open any of the paths given."
         add_warning "No linting files."
-        return Results::Success.new(guid: guid, analyzer: analyzer)
+        return :no_target_files
       end
 
       unless status.success?

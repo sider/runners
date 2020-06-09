@@ -1,0 +1,4 @@
+linter:
+  cppcheck:
+    project: test.vcxproj
+    bug-hunting: true
