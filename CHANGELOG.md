@@ -14,6 +14,7 @@ Updated tools:
 - **Reek** 6.0.0 -> 6.0.1 [#1161](https://github.com/sider/runners/pull/1161)
 - **Checkstyle** 8.32 -> 8.33 [#1162](https://github.com/sider/runners/pull/1162)
 - **ktlint** 0.36.0 -> 0.37.0 [#1167](https://github.com/sider/runners/pull/1167)
+- **stylelint** 13.4.1 -> 13.6.0 [#1168](https://github.com/sider/runners/pull/1168)
 
 Misc:
 
