@@ -20,6 +20,9 @@ module Runners
 
     register_config_schema(name: :pmd_java, schema: Schema.runner_config)
 
+    DEFAULT_RULESET = (Pathname(Dir.home) / "default-ruleset.xml").to_path.freeze
+    DEFAULT_DIR = ".".freeze
+
     def analyzer_version
       @analyzer_version ||= capture3!("show_pmd_version").yield_self { |stdout,| stdout.strip }
     end
@@ -107,15 +110,11 @@ module Runners
     end
 
     def rulesets
-      Array(config_linter[:rulesets] || default_ruleset)
-    end
-
-    def default_ruleset
-      (Pathname(Dir.home) / "default-ruleset.xml").realpath
+      Array(config_linter[:rulesets] || DEFAULT_RULESET)
     end
 
     def dir
-      config_linter[:dir] || "."
+      config_linter[:dir] || DEFAULT_DIR
     end
 
     def encoding

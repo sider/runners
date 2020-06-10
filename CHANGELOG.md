@@ -6,6 +6,21 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.27.0...HEAD)
 
+Updated tools:
+
+- **Checkstyle** 8.32 -> 8.33 [#1162](https://github.com/sider/runners/pull/1162)
+- **Flake8** 3.8.1 -> 3.8.2 [#1127](https://github.com/sider/runners/pull/1127)
+- **hadolint** 1.17.6 -> 1.18.0 [#1177](https://github.com/sider/runners/pull/1177)
+- **ktlint** 0.36.0 -> 0.37.0 [#1167](https://github.com/sider/runners/pull/1167)
+- **PMD CPD** 6.23.0 -> 6.24.0 [#1157](https://github.com/sider/runners/pull/1157)
+- **PMD Java** 6.23.0 -> 6.24.0 [#1123](https://github.com/sider/runners/pull/1123)
+- **Reek** 6.0.0 -> 6.0.1 [#1161](https://github.com/sider/runners/pull/1161)
+- **stylelint** 13.4.1 -> 13.6.0 [#1168](https://github.com/sider/runners/pull/1168)
+
+Misc:
+
+- **Cppcheck** Add `bug-hunting` option [#1166](https://github.com/sider/runners/pull/1166)
+
 ## 0.27.0
 
 [Full diff](https://github.com/sider/runners/compare/0.26.0...0.27.0)
