@@ -1,15 +1,17 @@
 s = Runners::Testing::Smoke
 
+default_version = "0.37.0"
+
 s.add_test(
   "cli",
   type: "success",
-  analyzer: { name: "ktlint", version: "0.36.0" },
+  analyzer: { name: "ktlint", version: default_version },
   issues: [
     {
-      id: "7c8346bd",
+      id: "18748d47",
       path: "src/Foo.kt",
       location: { start_line: 1 },
-      message: "Not a valid Kotlin file (expecting a top level declaration) (cannot be auto-corrected)",
+      message: "Not a valid Kotlin file (1:1 expecting a top level declaration) (cannot be auto-corrected)",
       links: [],
       object: nil,
       git_blame_info: nil
@@ -18,7 +20,7 @@ s.add_test(
       id: "indent",
       path: "src/App.kt",
       location: { start_line: 8 },
-      message: "Unexpected indentation (2) (it should be 4) (cannot be auto-corrected)",
+      message: "Unexpected indentation (2) (should be 4)",
       links: [],
       object: nil,
       git_blame_info: nil
@@ -27,7 +29,16 @@ s.add_test(
       id: "indent",
       path: "src/App.kt",
       location: { start_line: 9 },
-      message: "Unexpected indentation (12) (it should be 6) (cannot be auto-corrected)",
+      message: "Missing newline before \"}\"",
+      links: [],
+      object: nil,
+      git_blame_info: nil
+    },
+    {
+      id: "indent",
+      path: "src/App.kt",
+      location: { start_line: 9 },
+      message: "Unexpected indentation (12) (should be 8)",
       links: [],
       object: nil,
       git_blame_info: nil
@@ -38,7 +49,7 @@ s.add_test(
 s.add_test(
   "cli_with_options",
   type: "success",
-  analyzer: { name: "ktlint", version: "0.36.0" },
+  analyzer: { name: "ktlint", version: default_version },
   issues: [
     {
       id: "experimental:package-name",

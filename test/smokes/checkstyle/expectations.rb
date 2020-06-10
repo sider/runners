@@ -1,9 +1,11 @@
 s = Runners::Testing::Smoke
 
+default_version = "8.33"
+
 s.add_test(
   "success",
   type: "success",
-  analyzer: { name: "Checkstyle", version: "8.32" },
+  analyzer: { name: "Checkstyle", version: default_version },
   issues: [
     {
       message: "'method def modifier' has incorrect indentation level 4, expected level should be 2.",
@@ -47,7 +49,7 @@ s.add_test(
 s.add_test(
   "config",
   type: "success",
-  analyzer: { name: "Checkstyle", version: "8.32" },
+  analyzer: { name: "Checkstyle", version: default_version },
   issues: [
     {
       message: "Parameter args should be final.",
@@ -92,7 +94,7 @@ s.add_test(
   "failure",
   type: "failure",
   message: "Analysis failed. See the log for details.",
-  analyzer: { name: "Checkstyle", version: "8.32" }
+  analyzer: { name: "Checkstyle", version: default_version }
 )
 
 s.add_test(
@@ -144,12 +146,12 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Checkstyle", version: "8.32" }
+  analyzer: { name: "Checkstyle", version: default_version }
 )
 
 s.add_test(
   "syntax_error",
   type: "failure",
   message: "Analysis failed. See the log for details.",
-  analyzer: { name: "Checkstyle", version: "8.32" }
+  analyzer: { name: "Checkstyle", version: default_version }
 )

@@ -1,3 +1,4 @@
 linter:
   cppcheck:
     target: "autoVariables.c"
+    bug-hunting: false
