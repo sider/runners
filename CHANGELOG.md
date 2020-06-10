@@ -10,6 +10,7 @@ Updated tools:
 
 - **Checkstyle** 8.32 -> 8.33 [#1162](https://github.com/sider/runners/pull/1162)
 - **Flake8** 3.8.1 -> 3.8.2 [#1127](https://github.com/sider/runners/pull/1127)
+- **hadolint** 1.17.6 -> 1.18.0 [#1177](https://github.com/sider/runners/pull/1177)
 - **ktlint** 0.36.0 -> 0.37.0 [#1167](https://github.com/sider/runners/pull/1167)
 - **PMD CPD** 6.23.0 -> 6.24.0 [#1157](https://github.com/sider/runners/pull/1157)
 - **PMD Java** 6.23.0 -> 6.24.0 [#1123](https://github.com/sider/runners/pull/1123)
