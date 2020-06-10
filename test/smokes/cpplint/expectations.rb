@@ -1,5 +1,7 @@
 s = Runners::Testing::Smoke
 
+default_version = "1.5.1"
+
 s.add_test(
   "default",
   type: "success",
@@ -32,16 +34,16 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "cpplint", version: "1.4.5" }
+  analyzer: { name: "cpplint", version: default_version }
 )
 
-s.add_test("official_samples", type: "success", issues: :_, analyzer: { name: "cpplint", version: "1.4.5" })
+s.add_test("official_samples", type: "success", issues: :_, analyzer: { name: "cpplint", version: default_version })
 
-s.add_test("option_exclude", type: "success", issues: [], analyzer: { name: "cpplint", version: "1.4.5" })
+s.add_test("option_exclude", type: "success", issues: [], analyzer: { name: "cpplint", version: default_version })
 
-s.add_test("option_exclude_multi", type: "success", issues: [], analyzer: { name: "cpplint", version: "1.4.5" })
+s.add_test("option_exclude_multi", type: "success", issues: [], analyzer: { name: "cpplint", version: default_version })
 
-s.add_test("option_extensions", type: "success", issues: [], analyzer: { name: "cpplint", version: "1.4.5" })
+s.add_test("option_extensions", type: "success", issues: [], analyzer: { name: "cpplint", version: default_version })
 
 s.add_test(
   "option_filter",
@@ -57,10 +59,10 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "cpplint", version: "1.4.5" }
+  analyzer: { name: "cpplint", version: default_version }
 )
 
-s.add_test("option_headers", type: "success", issues: [], analyzer: { name: "cpplint", version: "1.4.5" })
+s.add_test("option_headers", type: "success", issues: [], analyzer: { name: "cpplint", version: default_version })
 
 s.add_test(
   "option_linelength",
@@ -85,7 +87,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "cpplint", version: "1.4.5" }
+  analyzer: { name: "cpplint", version: default_version }
 )
 
 s.add_test(
@@ -102,7 +104,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "cpplint", version: "1.4.5" }
+  analyzer: { name: "cpplint", version: default_version }
 )
 
 s.add_test(
@@ -128,7 +130,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "cpplint", version: "1.4.5" }
+  analyzer: { name: "cpplint", version: default_version }
 )
 
 s.add_test(
@@ -154,5 +156,5 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "cpplint", version: "1.4.5" }
+  analyzer: { name: "cpplint", version: default_version }
 )
