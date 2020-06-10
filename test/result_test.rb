@@ -191,6 +191,24 @@ class ResultTest < Minitest::Test
 
   end
 
+  def test_success_initializing_issues
+    analyzer = Analyzer.new(name: "RuboCop", version: "1.0.0")
+    issues = [
+      Issue.new(path: Pathname("foo.rb"), location: nil, id: "aaa", message: "bbb"),
+      Issue.new(path: Pathname("foo.rb"), location: nil, id: "xxx", message: "yyy"),
+    ]
+    result = Results::Success.new(guid: SecureRandom.uuid, analyzer: analyzer, issues: issues)
+    assert_equal issues, result.issues
+  end
+
+  def test_success_add_multiple_issues
+    result = Results::Success.new(guid: SecureRandom.uuid, analyzer: Analyzer.new(name: "RuboCop", version: "1.0.0"))
+    issue1 = Issue.new(path: Pathname("foo.rb"), location: nil, id: "aaa", message: "bbb")
+    issue2 = Issue.new(path: Pathname("foo.rb"), location: nil, id: "xxx", message: "yyy")
+    result.add_issue(issue1, issue2)
+    assert_equal [issue1, issue2], result.issues
+  end
+
   def test_add_git_blame_info
     result = Results::Success.new(guid: SecureRandom.uuid, analyzer: Analyzer.new(name: "RuboCop", version: "1.3.2pre"))
     result.add_issue Issue.new(

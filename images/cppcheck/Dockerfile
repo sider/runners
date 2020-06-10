@@ -9,15 +9,21 @@ FROM sider/devon_rex_python:2.19.0
 # See https://github.com/danmar/cppcheck#gnu-make
 
 ARG CPPCHECK_VERSION=2.0
+ARG LIBZ3_VERSION=4.4.1-1~deb10u1
 USER root
-RUN cd /tmp && \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends libz3-dev=${LIBZ3_VERSION} && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    cd /tmp && \
     curl -sSL https://github.com/danmar/cppcheck/archive/${CPPCHECK_VERSION}.tar.gz | tar -xz && \
     cd cppcheck-${CPPCHECK_VERSION} && \
     make install -s \
       MATCHCOMPILER=yes \
       FILESDIR=/usr/share/cppcheck \
       HAVE_RULES=yes \
-      CXXFLAGS="-O2 -DNDEBUG -Wall -Wno-sign-compare -Wno-unused-function" && \
+      USE_Z3=yes \
+      CPPFLAGS="-DUSE_Z3 -Wno-deprecated-declarations -Wno-unused-function" && \
     rm -rf cppcheck-${CPPCHECK_VERSION}
 
 
