@@ -12,7 +12,7 @@ Updated tools:
 - **cpplint** 1.4.5 -> 1.5.1 [#1175](https://github.com/sider/runners/pull/1175)
 - **Flake8** 3.8.1 -> 3.8.2 [#1127](https://github.com/sider/runners/pull/1127)
 - **hadolint** 1.17.6 -> 1.18.0 [#1177](https://github.com/sider/runners/pull/1177)
-- **ktlint** 0.36.0 -> 0.37.0 [#1167](https://github.com/sider/runners/pull/1167)
+- **ktlint** 0.36.0 -> 0.37.1 [#1167](https://github.com/sider/runners/pull/1167) [#1186](https://github.com/sider/runners/pull/1186)
 - **PMD CPD** 6.23.0 -> 6.24.0 [#1157](https://github.com/sider/runners/pull/1157)
 - **PMD Java** 6.23.0 -> 6.24.0 [#1123](https://github.com/sider/runners/pull/1123)
 - **Reek** 6.0.0 -> 6.0.1 [#1161](https://github.com/sider/runners/pull/1161)
