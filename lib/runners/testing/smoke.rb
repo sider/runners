@@ -37,7 +37,10 @@ module Runners
         puts "Running smoke tests..."
         load expectations.to_s
 
-        results = Parallel.map(self.class.tests, in_processes: ENV["JOBS"]&.to_i) do |params|
+        jobs = ENV["JOBS"]&.to_i
+        puts "JOBS: #{jobs}" if jobs
+
+        results = Parallel.map(self.class.tests, in_processes: jobs) do |params|
           out = StringIO.new(''.dup)
           result = run_test(params, out)
           print out.string

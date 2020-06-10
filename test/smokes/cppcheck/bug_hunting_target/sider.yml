@@ -1,0 +1,9 @@
+linter:
+  cppcheck:
+    root_dir: src
+    bug-hunting: true
+    language: c++
+    target:
+      - cpp_sample_2.c++
+      - bar
+    ignore: bar/foo
