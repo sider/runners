@@ -1,10 +1,12 @@
 s = Runners::Testing::Smoke
 
+default_version = "2.5.3"
+
 s.add_test(
   "success",
   type: "success",
   issues: [],
-  analyzer: { name: "Pylint", version: "2.5.2" }
+  analyzer: { name: "Pylint", version: default_version }
 )
 
 s.add_test(
@@ -44,7 +46,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Pylint", version: "2.5.2" }
+  analyzer: { name: "Pylint", version: default_version }
 )
 
 s.add_test(
@@ -84,14 +86,14 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Pylint", version: "2.5.2" }
+  analyzer: { name: "Pylint", version: default_version }
 )
 
 s.add_test(
   "rcfile",
   type: "success",
   issues: [],
-  analyzer: { name: "Pylint", version: "2.5.2" }
+  analyzer: { name: "Pylint", version: default_version }
 )
 
 s.add_test(
@@ -115,7 +117,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Pylint", version: "2.5.2" }
+  analyzer: { name: "Pylint", version: default_version }
 )
 
 s.add_test(
@@ -155,7 +157,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Pylint", version: "2.5.2" }
+  analyzer: { name: "Pylint", version: default_version }
 )
 
 s.add_test(
@@ -195,7 +197,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Pylint", version: "2.5.2" }
+  analyzer: { name: "Pylint", version: default_version }
 )
 
 s.add_test(
@@ -219,7 +221,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Pylint", version: "2.5.2" }
+  analyzer: { name: "Pylint", version: default_version }
 )
 
 s.add_test(
@@ -243,7 +245,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Pylint", version: "2.5.2" }
+  analyzer: { name: "Pylint", version: default_version }
 )
 
 s.add_test(
@@ -267,7 +269,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Pylint", version: "2.5.2" }
+  analyzer: { name: "Pylint", version: default_version }
 )
 
 s.add_test(
@@ -291,12 +293,12 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Pylint", version: "2.5.2" }
+  analyzer: { name: "Pylint", version: default_version }
 )
 
 s.add_test(
   "no_file",
   type: "success",
   issues: [],
-  analyzer: { name: "Pylint", version: "2.5.2" }
+  analyzer: { name: "Pylint", version: default_version }
 )
