@@ -34,27 +34,39 @@ module Runners
       end
 
       def run
-        puts "Running smoke tests..."
+        start = Time.now
+        jobs = ENV["JOBS"]&.to_i
+        if jobs
+          puts "Running smoke tests with #{jobs} jobs..."
+        else
+          puts "Running smoke tests..."
+        end
+
         load expectations.to_s
 
-        jobs = ENV["JOBS"]&.to_i
-        puts "JOBS: #{jobs}" if jobs
-
-        results = Parallel.map(self.class.tests, in_processes: jobs) do |params|
+        task = ->(params) {
           out = StringIO.new(''.dup)
           result = run_test(params, out)
           print out.string
           [result, params.name]
-        end
+        }
+
+        results =
+          if jobs == 1
+            self.class.tests.map(&task)
+          else
+            Parallel.map(self.class.tests, in_processes: jobs, &task)
+          end
 
         abort "❌ No smoke tests!" if results.empty?
 
         passed = results.count { |result,| result == :passed }
         failed = results.count { |result,| result == :failed }
         total = results.count
-        summary = "#{passed} passed, #{failed} failed, #{total} total"
+        duration = (Time.now - start).round(1)
+        summary = "#{passed} passed, #{failed} failed, #{total} total in #{duration} seconds"
 
-        puts
+        puts ""
         if failed == 0
           puts "❤️  Smoke tests passed! -- #{summary}"
         else
