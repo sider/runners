@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 Updated tools:
 
 - **Checkstyle** 8.32 -> 8.33 [#1162](https://github.com/sider/runners/pull/1162)
+- **cpplint** 1.4.5 -> 1.5.1 [#1175](https://github.com/sider/runners/pull/1175)
 - **Flake8** 3.8.1 -> 3.8.2 [#1127](https://github.com/sider/runners/pull/1127)
 - **ktlint** 0.36.0 -> 0.37.0 [#1167](https://github.com/sider/runners/pull/1167)
 - **PMD CPD** 6.23.0 -> 6.24.0 [#1157](https://github.com/sider/runners/pull/1157)
