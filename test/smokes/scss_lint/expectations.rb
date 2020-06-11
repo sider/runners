@@ -47,8 +47,8 @@ s.add_test(
     {
       message: <<~MSG.strip,
         DEPRECATION WARNING!!!
-        The support for SCSS-Lint is deprecated. Sider will drop these versions in the near future.
-        Please consider using an alternative tool stylelint. See https://github.com/sds/scss-lint/blob/master/README.md#notice-consider-other-tools-before-adopting-scss-lint
+        The support for SCSS-Lint is deprecated and will be removed in the near future.
+        Please migrate to stylelint which is an alternative. See https://github.com/sds/scss-lint/blob/master/README.md#notice-consider-other-tools-before-adopting-scss-lint
       MSG
       file: "sider.yml"
     }

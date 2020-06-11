@@ -38,8 +38,7 @@ s.add_test(
   "pinned_old_eslint",
   type: "failure",
   message: <<~MSG.strip,
-    Your `eslint` settings could not satisfy the required constraints. Please check your `package.json` again.
-    If you want to analyze via the Sider default settings, please configure your `sideci.yml`. For details, see the documentation.
+    Your ESLint dependencies do not satisfy our constraints `eslint@>=5.0.0 <8.0.0`. Please update them.
   MSG
   analyzer: :_
 )
@@ -133,8 +132,9 @@ s.add_test(
     {
       message: <<~MSG.strip,
         DEPRECATION WARNING!!!
-        The `$.linter.eslint.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
-        Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/javascript/eslint ).
+        The following options in your `sideci.yml` are deprecated and will be removed.
+        See https://help.sider.review/tools/javascript/eslint for details.
+        - `linter.eslint.options`
       MSG
       file: "sideci.yml"
     }

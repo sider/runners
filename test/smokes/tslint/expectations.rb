@@ -259,7 +259,7 @@ s.add_test(
 s.add_test(
   "invalid-tslint-version",
   type: "failure",
-  message: /Your `tslint` settings could not satisfy the required constraints/,
+  message: "Your TSLint dependencies do not satisfy our constraints `tslint@>=5.0.0 <7.0.0`. Please update them.",
   analyzer: :_,
   warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }]
 )

@@ -7,7 +7,7 @@ module Runners
       end
 
       def to_s
-        @versions.join(", ")
+        @versions.join(" ")
       end
 
       def satisfied_by?(dependency)

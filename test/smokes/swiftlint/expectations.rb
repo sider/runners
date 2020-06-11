@@ -152,8 +152,9 @@ s.add_test(
     {
       message: <<~MSG.strip,
         DEPRECATION WARNING!!!
-        The `$.linter.swiftlint.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
-        Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/swift/swiftlint ).
+        The following options in your `sideci.yml` are deprecated and will be removed.
+        See https://help.sider.review/tools/swift/swiftlint for details.
+        - `linter.swiftlint.options`
       MSG
       file: "sideci.yml"
     }
