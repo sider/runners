@@ -33,7 +33,7 @@ module Runners
             spec.override_by_lockfile(lockfile)
           else
             locked_version = lockfile.locked_version!(spec)
-            constraint_text = constraints[spec.name].join(", ")
+            constraint_text = constraints.fetch(spec.name).join(", ")
             add_warning <<~MESSAGE
               `#{spec.name} #{spec.version.first}` is installed instead of `#{locked_version}` in your `Gemfile.lock`.
               Because `#{locked_version}` does not satisfy the constraint `#{constraint_text}`.
