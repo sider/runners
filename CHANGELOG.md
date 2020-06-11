@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.27.0...HEAD)
 
+Updated environments:
+
+- **devon_rex** 2.19.0 -> master [#1110](https://github.com/sider/runners/pull/1196)
+
 Updated tools:
 
 - **Checkstyle** 8.32 -> 8.33 [#1162](https://github.com/sider/runners/pull/1162)
