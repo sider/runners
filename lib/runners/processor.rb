@@ -16,6 +16,12 @@ module Runners
       Schema::Config.register(**args)
     end
 
+    # TODO: Keep the following schemas for the backward compatibility.
+    RemovedGoToolSchema = StrongJSON.new { let :config, any? }
+    register_config_schema(name: :golint, schema: RemovedGoToolSchema.config)
+    register_config_schema(name: :go_vet, schema: RemovedGoToolSchema.config)
+    register_config_schema(name: :gometalinter, schema: RemovedGoToolSchema.config)
+
     def initialize(guid:, working_dir:, config:, git_ssh_path:, trace_writer:)
       @guid = guid
       @working_dir = working_dir
