@@ -238,6 +238,21 @@ class ConfigTest < Minitest::Test
     end
   end
 
+  def test_linter?
+    mktmpdir do |path|
+      (path / "sider.yml").write(<<~YAML)
+        linter:
+          eslint: { root_dir: "src" }
+      YAML
+      config = Runners::Config.new(path)
+      assert config.linter?("eslint")
+      refute config.linter?("foo")
+
+      (path / "sider.yml").write("")
+      refute Runners::Config.new(path).linter?("foo")
+    end
+  end
+
   def test_removed_go_tools_do_not_break
     mktmpdir do |path|
       (path / "sider.yml").write(<<~YAML)

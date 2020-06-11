@@ -56,6 +56,13 @@ module Runners
     end
 
     def setup
+      # TODO: Keep the following schemas for the backward compatibility.
+      if ["golint", "go_vet", "gometalinter"].any? { |id| config.linter?(id) }
+        add_warning <<~MSG, file: config.path_name
+          The `golint`, `go_vet`, and `gometalinter` options in your `#{config.path_name}` has been unsupported. Please remove them.
+        MSG
+      end
+
       trace_writer.message "No setup..."
       yield
     end

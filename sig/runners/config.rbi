@@ -9,6 +9,7 @@ class Runners::Config
   def path_exist?: -> bool
   def ignore: -> Array<String>
   def linter: (String) -> Hash<Symbol, any>
+  def linter?: (String) -> bool
   def path: -> Pathname?
   def parse_yaml: () -> String?
   def check_schema: (String?) -> Hash<Symbol, any>

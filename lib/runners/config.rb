@@ -43,6 +43,10 @@ module Runners
       content.dig(:linter, id.to_sym).freeze || {}
     end
 
+    def linter?(id)
+      !!content.dig(:linter, id.to_sym)
+    end
+
     private
 
     def path
