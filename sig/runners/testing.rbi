@@ -12,8 +12,8 @@ class Runners::Testing::Smoke
   def expectations: -> Pathname
   def initialize: (Array<String>) -> any
   def run: () -> void
-  def run_test: (TestParams, IO) -> Symbol
-  def unify_result: (any, any, IO) -> bool
+  def run_test: (TestParams, StringIO) -> Symbol
+  def unify_result: (any, any, StringIO) -> bool
   def with_data_container: <'x> { () -> 'x } -> 'x
   def command_line: (TestParams) -> String
   def colored_pretty_inspect: (any) -> String

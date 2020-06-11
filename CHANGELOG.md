@@ -6,6 +6,23 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.27.0...HEAD)
 
+Updated tools:
+
+- **Checkstyle** 8.32 -> 8.33 [#1162](https://github.com/sider/runners/pull/1162)
+- **cpplint** 1.4.5 -> 1.5.1 [#1175](https://github.com/sider/runners/pull/1175)
+- **Flake8** 3.8.1 -> 3.8.3 [#1127](https://github.com/sider/runners/pull/1127) [#1189](https://github.com/sider/runners/pull/1189)
+- **hadolint** 1.17.6 -> 1.18.0 [#1177](https://github.com/sider/runners/pull/1177)
+- **ktlint** 0.36.0 -> 0.37.1 [#1167](https://github.com/sider/runners/pull/1167) [#1186](https://github.com/sider/runners/pull/1186)
+- **PMD CPD** 6.23.0 -> 6.24.0 [#1157](https://github.com/sider/runners/pull/1157)
+- **PMD Java** 6.23.0 -> 6.24.0 [#1123](https://github.com/sider/runners/pull/1123)
+- **Pylint** 2.5.2 -> 2.5.3 [#1190](https://github.com/sider/runners/pull/1190)
+- **Reek** 6.0.0 -> 6.0.1 [#1161](https://github.com/sider/runners/pull/1161)
+- **RuboCop** 0.83.0 -> 0.85.1 [#1170](https://github.com/sider/runners/pull/1170)
+- **stylelint** 13.4.1 -> 13.6.0 [#1168](https://github.com/sider/runners/pull/1168)
+
+Misc:
+
+- **Cppcheck** Add `bug-hunting` option [#1166](https://github.com/sider/runners/pull/1166)
 - Drop deprecated Golint, Govet, and GoMetaLinter [#1164](https://github.com/sider/runners/pull/1164)
 
 ## 0.27.0

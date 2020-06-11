@@ -1,5 +1,7 @@
 s = Runners::Testing::Smoke
 
+default_version = "1.18.0"
+
 s.add_test(
   "config_option",
   type: "success",
@@ -23,7 +25,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "hadolint", version: "1.17.6" }
+  analyzer: { name: "hadolint", version: default_version }
 )
 
 s.add_test(
@@ -58,7 +60,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "hadolint", version: "1.17.6" }
+  analyzer: { name: "hadolint", version: default_version }
 )
 
 s.add_test(
@@ -93,18 +95,18 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "hadolint", version: "1.17.6" }
+  analyzer: { name: "hadolint", version: default_version }
 )
 
-s.add_test("option_ignore", type: "success", issues: [], analyzer: { name: "hadolint", version: "1.17.6" })
+s.add_test("option_ignore", type: "success", issues: [], analyzer: { name: "hadolint", version: default_version })
 
-s.add_test("option_ignore_multi", type: "success", issues: [], analyzer: { name: "hadolint", version: "1.17.6" })
+s.add_test("option_ignore_multi", type: "success", issues: [], analyzer: { name: "hadolint", version: default_version })
 
-s.add_test("no_dockerfile", type: "success", issues: [], analyzer: { name: "hadolint", version: "1.17.6" })
+s.add_test("no_dockerfile", type: "success", issues: [], analyzer: { name: "hadolint", version: default_version })
 
 s.add_test(
   "invalid_option_target",
-  type: "failure", message: "Invalid Dockerfile(s) specified.", analyzer: { name: "hadolint", version: "1.17.6" }
+  type: "failure", message: "Invalid Dockerfile(s) specified.", analyzer: { name: "hadolint", version: default_version }
 )
 
 s.add_test(
@@ -121,7 +123,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "hadolint", version: "1.17.6" }
+  analyzer: { name: "hadolint", version: default_version }
 )
 
 s.add_test(
@@ -138,5 +140,5 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "hadolint", version: "1.17.6" }
+  analyzer: { name: "hadolint", version: default_version }
 )
