@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.27.0...HEAD)
 
+Updated environments:
+
+- **devon_rex** 2.19.0 -> master [#1110](https://github.com/sider/runners/pull/1196)
+
 Updated tools:
 
 - **Checkstyle** 8.32 -> 8.33 [#1162](https://github.com/sider/runners/pull/1162)
@@ -24,6 +28,7 @@ Misc:
 
 - **Cppcheck** Add `bug-hunting` option [#1166](https://github.com/sider/runners/pull/1166)
 - Drop deprecated Golint, Govet, and GoMetaLinter [#1164](https://github.com/sider/runners/pull/1164)
+- Improve warning messages [#1195](https://github.com/sider/runners/pull/1195)
 
 ## 0.27.0
 
