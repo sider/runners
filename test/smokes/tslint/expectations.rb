@@ -142,8 +142,8 @@ s.add_test(
     {
       message: <<~MSG.strip,
         DEPRECATION WARNING!!!
-        The support for TSLint is deprecated. Sider will drop these versions on December 1, 2020.
-        Please consider using an alternative tool ESLint. See https://github.com/palantir/tslint/issues/4534
+        The support for TSLint is deprecated and will be removed on December 1, 2020.
+        Please migrate to ESLint which is an alternative. See https://github.com/palantir/tslint/issues/4534
       MSG
       file: "sideci.yml"
     }
@@ -189,7 +189,7 @@ s.add_test(
 s.add_test(
   "broken_sideci_yml",
   type: "failure",
-  message: "The value of the attribute `$.linter.tslint.config` in your `sideci.yml` is invalid. Please fix and retry.",
+  message: "The value of the attribute `linter.tslint.config` in your `sideci.yml` is invalid. Please fix and retry.",
   analyzer: :_
 )
 

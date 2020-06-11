@@ -149,11 +149,12 @@ s.add_test(
   warnings: [
     {
       message: <<~MESSAGE.strip,
-        Sider tried to install `brakeman 4.4.0` according to your `Gemfile.lock`, but it installs `4.3.1` instead.
-        Because `4.4.0` does not satisfy the Sider constraints [\">= 4.0.0\", \"< 4.4.0\"].
+        `brakeman 4.3.1` is installed instead of `4.4.0` in your `Gemfile.lock`.
+        Because `4.4.0` does not satisfy the constraint `>= 4.0.0, < 4.4.0`.
 
-        If you want to use a different version of `brakeman`, update your `Gemfile.lock` to satisfy the constraint or specify the gem version in your `sider.yml`.
-        See https://help.sider.review/getting-started/custom-configuration#gems-option
+        If you want to use a different version of `brakeman`, please do either:
+        - Update your `Gemfile.lock` to satisfy the constraint
+        - Set the `linter.brakeman.gems` option in your `sider.yml`
       MESSAGE
       file: nil
     }

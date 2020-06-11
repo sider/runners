@@ -110,7 +110,7 @@ s.add_test(
   "broken_sideci_yml",
   type: "failure",
   message:
-    "The value of the attribute `$.linter.eslint.npm_install` in your `sideci.yml` is invalid. Please fix and retry.",
+    "The value of the attribute `linter.eslint.npm_install` in your `sideci.yml` is invalid. Please fix and retry.",
   analyzer: :_
 )
 
@@ -279,7 +279,7 @@ s.add_test(
     {
       message: <<~MESSAGE.strip,
         Parsing error: Unexpected token, expected ";"
-        
+
           1 | function bar() {
         > 2 |   var x = foo:
             |              ^

@@ -113,7 +113,7 @@ s.add_test(
   "broken_sideci_yml",
   type: "failure",
   message:
-    "The value of the attribute `$.linter.phpmd.minimumpriority` in your `sideci.yml` is invalid. Please fix and retry.",
+    "The value of the attribute `linter.phpmd.minimumpriority` in your `sideci.yml` is invalid. Please fix and retry.",
   analyzer: :_
 )
 

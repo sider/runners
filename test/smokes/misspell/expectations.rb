@@ -217,7 +217,7 @@ s.add_offline_test(
   "broken_sideci_yml",
   type: "failure",
   message:
-    "The value of the attribute `$.linter.misspell.locale` in your `sideci.yml` is invalid. Please fix and retry.",
+    "The value of the attribute `linter.misspell.locale` in your `sideci.yml` is invalid. Please fix and retry.",
   analyzer: :_
 )
 

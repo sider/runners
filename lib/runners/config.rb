@@ -66,10 +66,12 @@ module Runners
     def check_schema(object)
       object ? Schema::Config.payload.coerce(object) : {}
     rescue StrongJSON::Type::UnexpectedAttributeError => exn
-      message = "The attribute `#{exn.path}.#{exn.attribute}` in your `#{path_name}` is unsupported. Please fix and retry."
+      attr = "#{exn.path}.#{exn.attribute}".delete_prefix("$.")
+      message = "The attribute `#{attr}` in your `#{path_name}` is unsupported. Please fix and retry."
       raise InvalidConfiguration.new(message, raw_content!)
     rescue StrongJSON::Type::TypeError => exn
-      message = "The value of the attribute `#{exn.path}` in your `#{path_name}` is invalid. Please fix and retry."
+      attr = exn.path.to_s.delete_prefix("$.")
+      message = "The value of the attribute `#{attr}` in your `#{path_name}` is invalid. Please fix and retry."
       raise InvalidConfiguration.new(message, raw_content!)
     end
   end

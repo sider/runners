@@ -84,7 +84,7 @@ s.add_test(
       message: <<~MESSAGE.strip,
         Phinder configuration validation failed.
         Check the following output by `phinder test` command.
-        
+
         `in_array(2, $arr, false)` does not match the rule sample.in_array_without_3rd_param but should match that rule.
         `in_array(4, $arr)` matches the rule sample.in_array_without_3rd_param but should not match that rule.
       MESSAGE
@@ -98,7 +98,7 @@ s.add_test(
   type: "failure",
   message: <<~MESSAGE,
     1 error(s) occurred:
-    
+
     InvalidRule: Invalid id value found in 1st rule in phinder.yml
   MESSAGE
   analyzer: { name: "Phinder", version: "0.9.2" }
@@ -107,7 +107,7 @@ s.add_test(
 s.add_test(
   "invalid_runner_config",
   type: "failure",
-  message: "The attribute `$.linter.phinder.format` in your `sideci.yml` is unsupported. Please fix and retry.",
+  message: "The attribute `linter.phinder.format` in your `sideci.yml` is unsupported. Please fix and retry.",
   analyzer: :_
 )
 
@@ -142,7 +142,7 @@ s.add_test(
       message: <<~MESSAGE.strip,
         Sider cannot find the required configuration file(s): `phinder.yml`.
         Please set up Phinder by following the instructions, or you can disable it in the repository settings.
-        
+
         - https://github.com/sider/phinder
         - https://help.sider.review/tools/php/phinder
       MESSAGE

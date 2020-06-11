@@ -37,9 +37,9 @@ module Runners
             shell.capture3!("bundle", "list")
           rescue Shell::ExecError
             raise InstallationFailure.new(<<~MESSAGE.strip)
-              Failed to install gems. Sider automatically installs gems according to `#{config_path_name}` and `Gemfile.lock`.
+              Failed to install gems according to `#{config_path_name}` and `Gemfile.lock`.
               You can select the version of gems you want to install via `#{config_path_name}`.
-              See https://help.sider.review/getting-started/custom-configuration#gems-option
+              See https://help.sider.review/getting-started/custom-configuration#linteranalyzer_idgems
             MESSAGE
           end
 
