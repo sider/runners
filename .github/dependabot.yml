@@ -7,7 +7,7 @@ updates:
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
     versioning-strategy: increase
     ignore:
@@ -22,21 +22,21 @@ updates:
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
   - package-ecosystem: docker
     directory: "/images/hadolint"
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
   - package-ecosystem: docker
     directory: "/images/shellcheck"
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
 
   # Java
@@ -45,21 +45,21 @@ updates:
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
   - package-ecosystem: maven
     directory: "/images/pmd_cpd"
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
   - package-ecosystem: maven
     directory: "/images/pmd_java"
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
 
   # Java (Kotlin)
@@ -68,14 +68,14 @@ updates:
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
   - package-ecosystem: maven
     directory: "/images/ktlint"
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
 
   # JavaScript
@@ -85,42 +85,42 @@ updates:
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
   - package-ecosystem: npm
     directory: "/images/jshint"
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
   - package-ecosystem: npm
     directory: "/images/remark_lint"
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
   - package-ecosystem: npm
     directory: "/images/stylelint"
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
   - package-ecosystem: npm
     directory: "/images/tslint"
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
   - package-ecosystem: npm
     directory: "/images/tyscan"
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
 
   # PHP
@@ -129,21 +129,21 @@ updates:
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
   - package-ecosystem: composer
     directory: "/images/phinder"
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
   - package-ecosystem: composer
     directory: "/images/phpmd"
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
 
   # Python
@@ -152,21 +152,21 @@ updates:
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
   - package-ecosystem: pip
     directory: "/images/flake8"
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
   - package-ecosystem: pip
     directory: "/images/pylint"
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
 
   # Ruby
@@ -175,54 +175,54 @@ updates:
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
   - package-ecosystem: bundler
     directory: "/images/goodcheck"
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
   - package-ecosystem: bundler
     directory: "/images/haml_lint"
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
   - package-ecosystem: bundler
     directory: "/images/querly"
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
   - package-ecosystem: bundler
     directory: "/images/rails_best_practices"
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
   - package-ecosystem: bundler
     directory: "/images/reek"
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
   - package-ecosystem: bundler
     directory: "/images/rubocop"
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
   - package-ecosystem: bundler
     directory: "/images/scss_lint"
     schedule:
       interval: weekly
       time: "09:00"
-      timezone: Japan
+      timezone: Asia/Tokyo
     open-pull-requests-limit: 10
