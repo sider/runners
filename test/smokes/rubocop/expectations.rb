@@ -405,7 +405,7 @@ s.add_test(
     {
       message: <<~MSG.strip,
         `rubocop 0.85.1` is installed instead of `0.60.0` in your `Gemfile.lock`.
-        Because `0.60.0` does not satisfy the constraint `>= 0.61.0, < 1.0.0`.
+        Because `0.60.0` does not satisfy our constraints `>= 0.61.0, < 1.0.0`.
 
         If you want to use a different version of `rubocop`, please do either:
         - Update your `Gemfile.lock` to satisfy the constraint

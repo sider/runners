@@ -342,7 +342,7 @@ s.add_test(
   ],
   analyzer: { name: "ESLint", version: "6.5.1" },
   warnings: [
-    { message: /The required dependency `eslint` may not have been correctly installed/, file: "package.json" }
+    { message: "The required dependency `eslint` may not be installed and be a missing peer dependency.", file: "package.json" }
   ]
 )
 

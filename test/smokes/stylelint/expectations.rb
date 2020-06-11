@@ -452,7 +452,7 @@ s.add_test(
     }
   ],
   warnings: [
-    { message: /The required dependency `stylelint` may not have been correctly installed/, file: "package.json" }
+    { message: "The required dependency `stylelint` may not be installed and be a missing peer dependency.", file: "package.json" }
   ]
 )
 

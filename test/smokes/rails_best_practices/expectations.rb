@@ -194,7 +194,7 @@ s.add_test(
     {
       message: <<~MESSAGE.strip,
         `rails_best_practices 1.19.4` is installed instead of `1.16.0` in your `Gemfile.lock`.
-        Because `1.16.0` does not satisfy the constraint `>= 1.19.1, < 2.0`.
+        Because `1.16.0` does not satisfy our constraints `>= 1.19.1, < 2.0`.
 
         If you want to use a different version of `rails_best_practices`, please do either:
         - Update your `Gemfile.lock` to satisfy the constraint

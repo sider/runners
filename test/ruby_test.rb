@@ -652,7 +652,7 @@ EOF
         assert trace_writer.writer.find { |m| m[:trace] == :command_line && m[:command_line] == %w[bundle install] }
         assert_equal <<~MESSAGE.strip, processor.warnings.first[:message]
           `multi_json 1.14.0` is installed instead of `1.12.0` in your `Gemfile.lock`.
-          Because `1.12.0` does not satisfy the constraint `> 1.13.0, < 2.0.0`.
+          Because `1.12.0` does not satisfy our constraints `> 1.13.0, < 2.0.0`.
 
           If you want to use a different version of `multi_json`, please do either:
           - Update your `Gemfile.lock` to satisfy the constraint

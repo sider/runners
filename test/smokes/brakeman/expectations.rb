@@ -150,7 +150,7 @@ s.add_test(
     {
       message: <<~MESSAGE.strip,
         `brakeman 4.3.1` is installed instead of `4.4.0` in your `Gemfile.lock`.
-        Because `4.4.0` does not satisfy the constraint `>= 4.0.0, < 4.4.0`.
+        Because `4.4.0` does not satisfy our constraints `>= 4.0.0, < 4.4.0`.
 
         If you want to use a different version of `brakeman`, please do either:
         - Update your `Gemfile.lock` to satisfy the constraint
