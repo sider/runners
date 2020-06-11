@@ -238,7 +238,7 @@ class ConfigTest < Minitest::Test
     end
   end
 
-  def test_removed_go_tools_does_not_break
+  def test_removed_go_tools_do_not_break
     mktmpdir do |path|
       (path / "sider.yml").write(<<~YAML)
         linter:
