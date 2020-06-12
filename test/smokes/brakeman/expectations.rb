@@ -161,3 +161,20 @@ s.add_test(
   ],
   analyzer: { name: "Brakeman", version: "4.4.0" }
 )
+
+s.add_test(
+  "config_file",
+  type: "success",
+  issues: [
+    {
+      path: "app/models/user.rb",
+      location: { start_line: 2 },
+      id: "Authentication-101",
+      message: "Hardcoded value for `SECRET` in source code",
+      links: %w[https://brakemanscanner.org/docs/warning_types/authentication/],
+      object: { severity: "Medium" },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "Brakeman", version: default_version }
+)
