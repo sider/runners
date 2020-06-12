@@ -211,12 +211,12 @@ class ProcessorTest < Minitest::Test
 
       expected_message = ->(v) { <<~MSG.strip }
         DEPRECATION WARNING!!!
-        The 1.0.0 and older versions are deprecated and these versions will be dropped in the near future.
+        The `1.0.0` and older versions are deprecated, and these versions will be dropped in the near future.
         Please consider upgrading to #{v} or a newer version.
       MSG
       expected_message2 = ->(v) { <<~MSG.strip }
         DEPRECATION WARNING!!!
-        The 1.0.0 and older versions are deprecated and these versions will be dropped on January 9, 2020.
+        The `1.0.0` and older versions are deprecated, and these versions will be dropped on January 9, 2020.
         Please consider upgrading to #{v} or a newer version.
       MSG
 

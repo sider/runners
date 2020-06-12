@@ -167,7 +167,7 @@ module Runners
         deadline_str = deadline ? deadline.strftime('on %B %-d, %Y') : 'in the near future'
         add_warning <<~MSG, file: file
           DEPRECATION WARNING!!!
-          The #{analyzer_version} and older versions are deprecated and these versions will be dropped #{deadline_str}.
+          The `#{analyzer_version}` and older versions are deprecated, and these versions will be dropped #{deadline_str}.
           Please consider upgrading to #{minimum} or a newer version.
         MSG
       end
