@@ -2,12 +2,12 @@ module Runners
   module Nodejs
     class Constraint
       def initialize(version, *versions)
-        @versions = Array(version) + versions
+        @versions = [version, *versions].map { |v| v.delete(" ") }
         @requirements = @versions.map { |ver| Gem::Requirement.create(ver) }
       end
 
       def to_s
-        @versions.join(", ")
+        @versions.join(" ")
       end
 
       def satisfied_by?(dependency)

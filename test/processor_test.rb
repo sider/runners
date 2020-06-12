@@ -136,7 +136,7 @@ class ProcessorTest < Minitest::Test
       YAML
       result = processor.check_root_dir_exist
       assert_instance_of Runners::Results::Failure, result
-      assert_equal "`path/to/unknown` directory is not found! Please check `$.linter.eslint.root_dir` in your `sider.yml`", result.message
+      assert_equal "`path/to/unknown` directory is not found! Please check `linter.eslint.root_dir` in your `sider.yml`", result.message
       assert_nil result.analyzer
     end
   end
@@ -211,12 +211,12 @@ class ProcessorTest < Minitest::Test
 
       expected_message = ->(v) { <<~MSG.strip }
         DEPRECATION WARNING!!!
-        The 1.0.0 and older versions are deprecated. Sider will drop these versions in the near future.
+        The `1.0.0` and older versions are deprecated, and these versions will be dropped in the near future.
         Please consider upgrading to #{v} or a newer version.
       MSG
       expected_message2 = ->(v) { <<~MSG.strip }
         DEPRECATION WARNING!!!
-        The 1.0.0 and older versions are deprecated. Sider will drop these versions on January 9, 2020.
+        The `1.0.0` and older versions are deprecated, and these versions will be dropped on January 9, 2020.
         Please consider upgrading to #{v} or a newer version.
       MSG
 
@@ -254,8 +254,10 @@ class ProcessorTest < Minitest::Test
 
       expected_message = <<~MSG.strip
         DEPRECATION WARNING!!!
-        The `$.linter.eslint.quiet`, `$.linter.eslint.options` option(s) in your `sider.yml` are deprecated and will be removed in the near future.
-        Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/javascript/eslint ).
+        The following options in your `sider.yml` are deprecated and will be removed.
+        See https://help.sider.review/tools/javascript/eslint for details.
+        - `linter.eslint.quiet`
+        - `linter.eslint.options`
       MSG
 
       assert_equal(
@@ -264,6 +266,36 @@ class ProcessorTest < Minitest::Test
       )
       assert_equal(
         [{ message: expected_message, file: "sider.yml" }],
+        processor.warnings,
+      )
+    end
+  end
+
+  def test_add_warning_for_deprecated_linter
+    with_workspace do |workspace|
+      processor = new_processor(workspace: workspace)
+
+      processor.add_warning_for_deprecated_linter(alternative: "Foo", ref: "https://foo/bar")
+      processor.add_warning_for_deprecated_linter(alternative: "Foo", ref: "https://foo/bar", deadline: Time.new(2020, 12, 31))
+
+      expected_message = ->(time) { <<~MSG.strip }
+        DEPRECATION WARNING!!!
+        The support for ESLint is deprecated and will be removed #{time}.
+        Please migrate to Foo as an alternative. See https://foo/bar
+      MSG
+
+      assert_equal(
+        [
+          { trace: :warning, message: expected_message.call("in the near future"), file: "sider.yml" },
+          { trace: :warning, message: expected_message.call("on December 31, 2020"), file: "sider.yml" },
+        ],
+        trace_writer.writer.map { |hash| hash.slice(:trace, :message, :file) }.select { |hash| hash[:trace] == :warning },
+      )
+      assert_equal(
+        [
+          { message: expected_message.call("in the near future"), file: "sider.yml" },
+          { message: expected_message.call("on December 31, 2020"), file: "sider.yml" },
+        ],
         processor.warnings,
       )
     end

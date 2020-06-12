@@ -45,7 +45,7 @@ s.add_test(
   "broken_sider_yml",
   type: "failure",
   analyzer: :_,
-  message: "The value of the attribute `$.linter.javasee.dir[2]` in your `sider.yml` is invalid. Please fix and retry."
+  message: "The value of the attribute `linter.javasee.dir[2]` in your `sider.yml` is invalid. Please fix and retry."
 )
 
 s.add_test(

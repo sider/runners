@@ -168,11 +168,12 @@ s.add_test(
   warnings: [
     {
       message: <<~MESSAGE.strip,
-        Sider tried to install `reek 4.0.0` according to your `Gemfile.lock`, but it installs `#{default_version}` instead.
-        Because `4.0.0` does not satisfy the Sider constraints [\">= 4.4.0\", \"< 7.0.0\"].
+        `reek 6.0.1` is installed instead of `4.0.0` in your `Gemfile.lock`.
+        Because `4.0.0` does not satisfy our constraints `>= 4.4.0, < 7.0.0`.
 
-        If you want to use a different version of `reek`, update your `Gemfile.lock` to satisfy the constraint or specify the gem version in your `sider.yml`.
-        See https://help.sider.review/getting-started/custom-configuration#gems-option
+        If you want to use a different version of `reek`, please do either:
+        - Update your `Gemfile.lock` to satisfy the constraint
+        - Set the `linter.reek.gems` option in your `sider.yml`
       MESSAGE
       file: nil
     }

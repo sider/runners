@@ -4,7 +4,7 @@ s.add_test(
   "with_broken_sider_yml",
   type: "failure",
   analyzer: :_,
-  message: "The attribute `$.linter.detekt.cli` in your `sider.yml` is unsupported. Please fix and retry."
+  message: "The attribute `linter.detekt.cli` in your `sider.yml` is unsupported. Please fix and retry."
 )
 
 s.add_test(

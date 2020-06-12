@@ -179,7 +179,7 @@ s.add_test(
   "broken_sider_yml",
   type: "failure",
   message:
-    "The value of the attribute `$.linter.remark_lint.rc-path` in your `sider.yml` is invalid. Please fix and retry.",
+    "The value of the attribute `linter.remark_lint.rc-path` in your `sider.yml` is invalid. Please fix and retry.",
   analyzer: :_
 )
 
