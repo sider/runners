@@ -192,7 +192,7 @@ module Runners
       add_warning <<~MSG, file: config.path_name
         DEPRECATION WARNING!!!
         The support for #{analyzer_name} is deprecated and will be removed #{deadline_str}.
-        Please migrate to #{alternative} which is an alternative. See #{ref}
+        Please migrate to #{alternative} as an alternative. See #{ref}
       MSG
     end
 

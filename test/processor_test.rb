@@ -281,7 +281,7 @@ class ProcessorTest < Minitest::Test
       expected_message = ->(time) { <<~MSG.strip }
         DEPRECATION WARNING!!!
         The support for ESLint is deprecated and will be removed #{time}.
-        Please migrate to Foo which is an alternative. See https://foo/bar
+        Please migrate to Foo as an alternative. See https://foo/bar
       MSG
 
       assert_equal(
