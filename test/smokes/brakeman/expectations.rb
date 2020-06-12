@@ -92,7 +92,19 @@ s.add_test(
   analyzer: { name: "Brakeman", version: default_version }
 )
 
-s.add_test("not_rails", type: "failure", message: :_, analyzer: { name: "Brakeman", version: default_version })
+s.add_test(
+  "not_rails",
+  type: "success",
+  issues: [],
+  analyzer: { name: "Brakeman", version: default_version },
+  warnings: [{ message: <<~MSG.strip, file: "sider.yml" }]
+    If your Rails application is not located in the root directory, configure your `sider.yml` as follows:
+    ---
+    linter:
+      brakeman:
+        root_dir: "path/to/your/rails/root"
+  MSG
+)
 
 s.add_test(
   "lowest_deps",

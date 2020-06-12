@@ -26,7 +26,6 @@ module Runners
     end
 
     def analyze(changes)
-      # run analysis and return result
       _, stderr, status = capture3(
         *ruby_analyzer_bin,
         '--format=json',
@@ -36,11 +35,22 @@ module Runners
         '--no-progress',
         '--quiet',
       )
-      return Results::Failure.new(guid: guid, message: stderr, analyzer: analyzer) unless status.success?
-      construct_result
-    end
 
-    def construct_result
+      unless status.success?
+        if stderr.include?("Please supply the path to a Rails application")
+          add_warning <<~MSG, file: config.path_name
+            If your Rails application is not located in the root directory, configure your `#{config.path_name}` as follows:
+            ---
+            linter:
+              #{analyzer_id}:
+                root_dir: "path/to/your/rails/root"
+          MSG
+          return Results::Success.new(guid: guid, analyzer: analyzer)
+        else
+          raise stderr
+        end
+      end
+
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
         json = read_report_json
 
