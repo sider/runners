@@ -9,7 +9,7 @@ module Runners
     register_config_schema(name: :brakeman, schema: Schema.runner_config)
 
     CONSTRAINTS = {
-      "brakeman" => [">= 4.0.0", "< 4.4.0"]
+      "brakeman" => [">= 4.0.0", "< 5.0.0"]
     }.freeze
 
     def setup
@@ -41,11 +41,7 @@ module Runners
         json[:warnings].each do |warning|
           path = relative_path(warning[:file])
           # http://brakemanscanner.org/docs/warning_types/basic_authentication などはlineを持たない
-          line = warning[:line].nil? ? 0 : warning[:line].to_i
-          loc = Location.new(start_line: line,
-                                          start_column: nil,
-                                          end_line: nil,
-                                          end_column: nil)
+          loc = Location.new(start_line: warning[:line])
 
           result.add_issue Issue.new(
             path: path,
