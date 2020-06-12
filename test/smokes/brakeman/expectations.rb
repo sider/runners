@@ -98,7 +98,8 @@ s.add_test(
   issues: [],
   analyzer: { name: "Brakeman", version: default_version },
   warnings: [{ message: <<~MSG.strip, file: "sider.yml" }]
-    If your Rails application is not located in the root directory, configure your `sider.yml` as follows:
+    Brakeman is for Rails only. Your repository may not have a Rails application.
+    If your Rails is not located in the root directory, configure your `sider.yml` as follows:
     ---
     linter:
       brakeman:

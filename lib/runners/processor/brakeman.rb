@@ -39,7 +39,8 @@ module Runners
       unless status.success?
         if stderr.include?("Please supply the path to a Rails application")
           add_warning <<~MSG, file: config.path_name
-            If your Rails application is not located in the root directory, configure your `#{config.path_name}` as follows:
+            #{analyzer_name} is for Rails only. Your repository may not have a Rails application.
+            If your Rails is not located in the root directory, configure your `#{config.path_name}` as follows:
             ---
             linter:
               #{analyzer_id}:
