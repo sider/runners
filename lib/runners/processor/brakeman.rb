@@ -4,6 +4,10 @@ module Runners
 
     Schema = StrongJSON.new do
       let :runner_config, Schema::BaseConfig.ruby
+
+      let :issue, object(
+        severity: string,
+      )
     end
 
     register_config_schema(name: :brakeman, schema: Schema.runner_config)
@@ -23,32 +27,35 @@ module Runners
 
     def analyze(changes)
       # run analysis and return result
-      stdout, stderr, status = capture3(
+      _, stderr, status = capture3(
         *ruby_analyzer_bin,
         '--format=json',
+        '--output', report_file,
         '--no-exit-on-warn',
         '--no-exit-on-error',
         '--no-progress',
         '--quiet',
       )
       return Results::Failure.new(guid: guid, message: stderr, analyzer: analyzer) unless status.success?
-      construct_result(stdout)
+      construct_result
     end
 
-    def construct_result(stdout)
+    def construct_result
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        json = JSON.parse(stdout, symbolize_names: true)
-        json[:warnings].each do |warning|
-          path = relative_path(warning[:file])
-          # http://brakemanscanner.org/docs/warning_types/basic_authentication などはlineを持たない
-          loc = Location.new(start_line: warning[:line])
+        json = read_report_json
 
+        json[:warnings].each do |warning|
+          line = warning[:line]
           result.add_issue Issue.new(
-            path: path,
-            location: loc,
+            path: relative_path(warning[:file]),
+            location: line ? Location.new(start_line: line) : nil,
             id: "#{warning[:warning_type]}-#{warning[:warning_code]}",
             message: warning[:message],
-            links: [warning[:link]]
+            links: [warning[:link]],
+            object: {
+              severity: warning[:confidence],
+            },
+            schema: Schema.issue,
           )
         end
 

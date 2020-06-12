@@ -13,7 +13,7 @@ s.add_test(
       message:
         "Rails 4.2.7 `content_tag` does not escape double quotes in attribute values (CVE-2016-6316). Upgrade to Rails 4.2.7.1",
       links: %w[https://groups.google.com/d/msg/ruby-security-ann/8B2iV2tPRSE/JkjCJkSoCgAJ],
-      object: nil,
+      object: { severity: "Medium" },
       git_blame_info: nil
     },
     {
@@ -22,7 +22,7 @@ s.add_test(
       id: "Cross-Site Scripting-106",
       message: "loofah gem 2.0.3 is vulnerable (CVE-2018-8048). Upgrade to 2.2.1",
       links: %w[https://github.com/flavorjones/loofah/issues/144],
-      object: nil,
+      object: { severity: "Medium" },
       git_blame_info: nil
     },
     {
@@ -31,7 +31,7 @@ s.add_test(
       id: "Cross-Site Scripting-107",
       message: "rails-html-sanitizer 1.0.3 is vulnerable (CVE-2018-3741). Upgrade to rails-html-sanitizer 1.0.4",
       links: %w[https://groups.google.com/d/msg/rubyonrails-security/tP7W3kLc5u4/uDy2Br7xBgAJ],
-      object: nil,
+      object: { severity: "Medium" },
       git_blame_info: nil
     },
     {
@@ -40,7 +40,7 @@ s.add_test(
       id: "SQL Injection-103",
       message: "Rails 4.2.7 contains a SQL injection vulnerability (CVE-2016-6317). Upgrade to Rails 4.2.7.1",
       links: %w[https://groups.google.com/d/msg/ruby-security-ann/WccgKSKiPZA/9DrsDVSoCgAJ],
-      object: nil,
+      object: { severity: "High" },
       git_blame_info: nil
     }
   ],
@@ -58,7 +58,7 @@ s.add_test(
       message:
         "Rails 4.2.7 `content_tag` does not escape double quotes in attribute values (CVE-2016-6316). Upgrade to Rails 4.2.7.1",
       links: %w[https://groups.google.com/d/msg/ruby-security-ann/8B2iV2tPRSE/JkjCJkSoCgAJ],
-      object: nil,
+      object: { severity: "Medium" },
       git_blame_info: nil
     },
     {
@@ -67,7 +67,7 @@ s.add_test(
       id: "Cross-Site Scripting-106",
       message: "loofah gem 2.0.3 is vulnerable (CVE-2018-8048). Upgrade to 2.2.1",
       links: %w[https://github.com/flavorjones/loofah/issues/144],
-      object: nil,
+      object: { severity: "Medium" },
       git_blame_info: nil
     },
     {
@@ -76,7 +76,7 @@ s.add_test(
       id: "Cross-Site Scripting-107",
       message: "rails-html-sanitizer 1.0.3 is vulnerable (CVE-2018-3741). Upgrade to rails-html-sanitizer 1.0.4",
       links: %w[https://groups.google.com/d/msg/rubyonrails-security/tP7W3kLc5u4/uDy2Br7xBgAJ],
-      object: nil,
+      object: { severity: "Medium" },
       git_blame_info: nil
     },
     {
@@ -85,7 +85,7 @@ s.add_test(
       id: "SQL Injection-103",
       message: "Rails 4.2.7 contains a SQL injection vulnerability (CVE-2016-6317). Upgrade to Rails 4.2.7.1",
       links: %w[https://groups.google.com/d/msg/ruby-security-ann/WccgKSKiPZA/9DrsDVSoCgAJ],
-      object: nil,
+      object: { severity: "High" },
       git_blame_info: nil
     }
   ],
@@ -105,7 +105,7 @@ s.add_test(
       message:
         "Rails 4.2.7 content_tag does not escape double quotes in attribute values (CVE-2016-6316). Upgrade to 4.2.7.1",
       links: %w[https://groups.google.com/d/msg/ruby-security-ann/8B2iV2tPRSE/JkjCJkSoCgAJ],
-      object: nil,
+      object: { severity: "Medium" },
       git_blame_info: nil
     },
     {
@@ -114,7 +114,7 @@ s.add_test(
       id: "SQL Injection-103",
       message: "Rails 4.2.7 contains a SQL injection vulnerability (CVE-2016-6317). Upgrade to 4.2.7.1",
       links: %w[https://groups.google.com/d/msg/ruby-security-ann/WccgKSKiPZA/9DrsDVSoCgAJ],
-      object: nil,
+      object: { severity: "High" },
       git_blame_info: nil
     }
   ],
@@ -134,7 +134,7 @@ s.add_test(
       message:
         "Rails 4.2.7 `content_tag` does not escape double quotes in attribute values (CVE-2016-6316). Upgrade to Rails 4.2.7.1",
       links: %w[https://groups.google.com/d/msg/ruby-security-ann/8B2iV2tPRSE/JkjCJkSoCgAJ],
-      object: nil,
+      object: { severity: "Medium" },
       git_blame_info: nil
     },
     {
@@ -143,7 +143,7 @@ s.add_test(
       id: "SQL Injection-103",
       message: "Rails 4.2.7 contains a SQL injection vulnerability (CVE-2016-6317). Upgrade to Rails 4.2.7.1",
       links: %w[https://groups.google.com/d/msg/ruby-security-ann/WccgKSKiPZA/9DrsDVSoCgAJ],
-      object: nil,
+      object: { severity: "High" },
       git_blame_info: nil
     }
   ],
