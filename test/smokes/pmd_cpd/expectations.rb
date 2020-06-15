@@ -1277,3 +1277,846 @@ s.add_test(
   ],
   analyzer: { name: "PMD CPD", version: default_version }
 )
+
+s.add_test(
+  "option_multiple_languages_default",
+  type: "success",
+  issues: [
+    {
+      path: "bar/hello_cpp.cpp",
+      location: {
+        start_line: 3,
+        start_column: 1,
+        end_line: 17,
+        end_column: 1
+      },
+      id: "1043fd82f4219d1d06a380cba3b5dd68f6a29c9c",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 15,
+        tokens: 30,
+        files: [
+          {
+            id: "1043fd82f4219d1d06a380cba3b5dd68f6a29c9c",
+            path: "bar/hello_cpp.cpp",
+            start_line: 3,
+            start_column: 1,
+            end_line: 17,
+            end_column: 1
+          },
+          {
+            id: "f596d2f766fb7b912331c3691b493b5d028f8ce3",
+            path: "foo/hello_cpp.cpp",
+            start_line: 3,
+            start_column: 1,
+            end_line: 17,
+            end_column: 1
+          }
+        ],
+        codefragment: %[void print_hello();
+
+int main(void)
+{
+    print_hello();
+    return 0;
+}
+
+void print_hello()
+{
+#ifdef TEST
+    int bar;
+#endif
+    puts("Hello, world!");
+}]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "foo/hello_ecmascript.js",
+      location: {
+        start_line: 1,
+        start_column: 1,
+        end_line: 5,
+        end_column: 14
+      },
+      id: "2313e91e4b39484760de0c6a7de02d9fcd7db381",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 5,
+        tokens: 17,
+        files: [
+          {
+            id: "55adda2f9e7939504b6d9938a16422894b054888",
+            path: "bar/hello_ecmascript.js",
+            start_line: 1,
+            start_column: 1,
+            end_line: 5,
+            end_column: 14
+          },
+          {
+            id: "2313e91e4b39484760de0c6a7de02d9fcd7db381",
+            path: "foo/hello_ecmascript.js",
+            start_line: 1,
+            start_column: 1,
+            end_line: 5,
+            end_column: 14
+          }
+        ],
+        codefragment: %[function print_hello() {
+    console.log("Hello, world!");
+}
+
+print_hello();]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "bar/hello_java.java",
+      location: {
+        start_line: 1,
+        start_column: 1,
+        end_line: 13,
+        end_column: 1
+      },
+      id: "34a7cda47c1a5be96dc3077987747cfcab326455",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 13,
+        tokens: 35,
+        files: [
+          {
+            id: "34a7cda47c1a5be96dc3077987747cfcab326455",
+            path: "bar/hello_java.java",
+            start_line: 1,
+            start_column: 1,
+            end_line: 13,
+            end_column: 1
+          },
+          {
+            id: "59d1a6ee4579c0bb7c7abecf5c0aaa006988b5e4",
+            path: "foo/hello_java.java",
+            start_line: 1,
+            start_column: 1,
+            end_line: 13,
+            end_column: 1
+          }
+        ],
+        codefragment: %[class TestJp
+{
+    public static void  main(String[] args)
+    {
+        printHelloJp();
+    }
+
+    @SuppressWarnings("deprecation")
+    public static void printHelloJp()
+    {
+        System.out.println("こんにちは, 世界!");
+    }
+}]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "foo/hello_kotlin.kt",
+      location: {
+        start_line: 1,
+        start_column: 1,
+        end_line: 7,
+        end_column: 1
+      },
+      id: "551c2990310dfc0c56a00a83d7e2b3010de61732",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 7,
+        tokens: 27,
+        files: [
+          {
+            id: "b9f17da21dec2181d8a7eb66b611362fc525aa11",
+            path: "bar/hello_kotlin.kt",
+            start_line: 1,
+            start_column: 1,
+            end_line: 7,
+            end_column: 1
+          },
+          {
+            id: "551c2990310dfc0c56a00a83d7e2b3010de61732",
+            path: "foo/hello_kotlin.kt",
+            start_line: 1,
+            start_column: 1,
+            end_line: 7,
+            end_column: 1
+          }
+        ],
+        codefragment: %[fun main(args: Array<String>) {
+    printHello()
+}
+
+fun printHello() {
+    println("Hello, world!")
+}]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "bar/hello_ecmascript.js",
+      location: {
+        start_line: 1,
+        start_column: 1,
+        end_line: 5,
+        end_column: 14
+      },
+      id: "55adda2f9e7939504b6d9938a16422894b054888",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 5,
+        tokens: 17,
+        files: [
+          {
+            id: "55adda2f9e7939504b6d9938a16422894b054888",
+            path: "bar/hello_ecmascript.js",
+            start_line: 1,
+            start_column: 1,
+            end_line: 5,
+            end_column: 14
+          },
+          {
+            id: "2313e91e4b39484760de0c6a7de02d9fcd7db381",
+            path: "foo/hello_ecmascript.js",
+            start_line: 1,
+            start_column: 1,
+            end_line: 5,
+            end_column: 14
+          }
+        ],
+        codefragment: %[function print_hello() {
+    console.log("Hello, world!");
+}
+
+print_hello();]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "foo/hello_java.java",
+      location: {
+        start_line: 1,
+        start_column: 1,
+        end_line: 13,
+        end_column: 1
+      },
+      id: "59d1a6ee4579c0bb7c7abecf5c0aaa006988b5e4",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 13,
+        tokens: 35,
+        files: [
+          {
+            id: "34a7cda47c1a5be96dc3077987747cfcab326455",
+            path: "bar/hello_java.java",
+            start_line: 1,
+            start_column: 1,
+            end_line: 13,
+            end_column: 1
+          },
+          {
+            id: "59d1a6ee4579c0bb7c7abecf5c0aaa006988b5e4",
+            path: "foo/hello_java.java",
+            start_line: 1,
+            start_column: 1,
+            end_line: 13,
+            end_column: 1
+          }
+        ],
+        codefragment: %[class TestJp
+{
+    public static void  main(String[] args)
+    {
+        printHelloJp();
+    }
+
+    @SuppressWarnings("deprecation")
+    public static void printHelloJp()
+    {
+        System.out.println("こんにちは, 世界!");
+    }
+}]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "foo/hello_go.go",
+      location: {
+        start_line: 1,
+        start_column: 1,
+        end_line: 10,
+        end_column: 1
+      },
+      id: "7e380f221fcff72d4568a72141e1a29d1acf9ba4",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 10,
+        tokens: 25,
+        files: [
+          {
+            id: "b132dc6bb149c3edce143b36ae2eb9245eea4e81",
+            path: "bar/hello_go.go",
+            start_line: 1,
+            start_column: 1,
+            end_line: 10,
+            end_column: 1
+          },
+          {
+            id: "7e380f221fcff72d4568a72141e1a29d1acf9ba4",
+            path: "foo/hello_go.go",
+            start_line: 1,
+            start_column: 1,
+            end_line: 10,
+            end_column: 1
+          }
+        ],
+        codefragment: %[package main
+import "fmt"
+
+func main() {
+	print_hello()
+}
+
+func print_hello() {
+	fmt.Printf("Hello, world!")
+}]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "bar/hello_cs.cs",
+      location: {
+        start_line: 5,
+        start_column: 1,
+        end_line: 16,
+        end_column: 1
+      },
+      id: "a3ae806ca52225161be17832b2b18cc24a24d09d",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 12,
+        tokens: 38,
+        files: [
+          {
+            id: "a3ae806ca52225161be17832b2b18cc24a24d09d",
+            path: "bar/hello_cs.cs",
+            start_line: 5,
+            start_column: 1,
+            end_line: 16,
+            end_column: 1
+          },
+          {
+            id: "ff532463942827ebfcbe38b1f1c34924421d13ef",
+            path: "foo/hello_cs.cs",
+            start_line: 5,
+            start_column: 1,
+            end_line: 16,
+            end_column: 1
+          }
+        ],
+        codefragment: %[public class Test
+{
+    public static void Main(string[] args)
+    {
+        PrintHello();
+    }
+
+    public static void PrintHello()
+    {
+        System.Console.WriteLine("Hello, world!");
+    }
+}]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "bar/hello_python.py",
+      location: {
+        start_line: 1,
+        start_column: 1,
+        end_line: 7,
+        end_column: 6
+      },
+      id: "a6ab9a2c09efa41b65880070942ddf9d8606b2f9",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 7,
+        tokens: 20,
+        files: [
+          {
+            id: "a6ab9a2c09efa41b65880070942ddf9d8606b2f9",
+            path: "bar/hello_python.py",
+            start_line: 1,
+            start_column: 1,
+            end_line: 7,
+            end_column: 6
+          },
+          {
+            id: "c78059bc1c128c7f394e24848ba626ea6983bcb8",
+            path: "foo/hello_python.py",
+            start_line: 1,
+            start_column: 1,
+            end_line: 7,
+            end_column: 6
+          }
+        ],
+        codefragment: %[def main():
+    print_hello()
+
+def print_hello():
+    print("Hello, world!")
+
+main()]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "bar/hello_ruby.rb",
+      location: {
+        start_line: 1,
+        start_column: 0,
+        end_line: 24,
+        end_column: 3
+      },
+      id: "aa346f51a19a1376a7891b8d3aca80da60105bd5",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 24,
+        tokens: 27,
+        files: [
+          {
+            id: "aa346f51a19a1376a7891b8d3aca80da60105bd5",
+            path: "bar/hello_ruby.rb",
+            start_line: 1,
+            start_column: 0,
+            end_line: 24,
+            end_column: 3
+          },
+          {
+            id: "bdc333b6770aad21f63ca65eb3c400749f02a272",
+            path: "foo/hello_ruby.rb",
+            start_line: 1,
+            start_column: 0,
+            end_line: 24,
+            end_column: 3
+          }
+        ],
+        codefragment: %[def main()
+    print_hello()
+end
+
+def print_hello()
+    puts "Hello, world!"
+end
+
+def show_status_tank capacity
+    case capacity
+    when 0
+        "You ran out of gas."
+    when 1..20
+        "The tank is almost empty. Quickly, find a gas station!"
+    when 21..70
+        "You should be ok for now."
+    when 71..100
+        "The tank is almost full."
+    else
+        "Error: capacity has an invalid value (\#{capacity})"
+    end
+end
+
+main()]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "bar/hello_go.go",
+      location: {
+        start_line: 1,
+        start_column: 1,
+        end_line: 10,
+        end_column: 1
+      },
+      id: "b132dc6bb149c3edce143b36ae2eb9245eea4e81",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 10,
+        tokens: 25,
+        files: [
+          {
+            id: "b132dc6bb149c3edce143b36ae2eb9245eea4e81",
+            path: "bar/hello_go.go",
+            start_line: 1,
+            start_column: 1,
+            end_line: 10,
+            end_column: 1
+          },
+          {
+            id: "7e380f221fcff72d4568a72141e1a29d1acf9ba4",
+            path: "foo/hello_go.go",
+            start_line: 1,
+            start_column: 1,
+            end_line: 10,
+            end_column: 1
+          }
+        ],
+        codefragment: %[package main
+import "fmt"
+
+func main() {
+	print_hello()
+}
+
+func print_hello() {
+	fmt.Printf("Hello, world!")
+}]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "bar/hello_kotlin.kt",
+      location: {
+        start_line: 1,
+        start_column: 1,
+        end_line: 7,
+        end_column: 1
+      },
+      id: "b9f17da21dec2181d8a7eb66b611362fc525aa11",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 7,
+        tokens: 27,
+        files: [
+          {
+            id: "b9f17da21dec2181d8a7eb66b611362fc525aa11",
+            path: "bar/hello_kotlin.kt",
+            start_line: 1,
+            start_column: 1,
+            end_line: 7,
+            end_column: 1
+          },
+          {
+            id: "551c2990310dfc0c56a00a83d7e2b3010de61732",
+            path: "foo/hello_kotlin.kt",
+            start_line: 1,
+            start_column: 1,
+            end_line: 7,
+            end_column: 1
+          }
+        ],
+        codefragment: %[fun main(args: Array<String>) {
+    printHello()
+}
+
+fun printHello() {
+    println("Hello, world!")
+}]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "foo/hello_ruby.rb",
+      location: {
+        start_line: 1,
+        start_column: 0,
+        end_line: 24,
+        end_column: 3
+      },
+      id: "bdc333b6770aad21f63ca65eb3c400749f02a272",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 24,
+        tokens: 27,
+        files: [
+          {
+            id: "aa346f51a19a1376a7891b8d3aca80da60105bd5",
+            path: "bar/hello_ruby.rb",
+            start_line: 1,
+            start_column: 0,
+            end_line: 24,
+            end_column: 3
+          },
+          {
+            id: "bdc333b6770aad21f63ca65eb3c400749f02a272",
+            path: "foo/hello_ruby.rb",
+            start_line: 1,
+            start_column: 0,
+            end_line: 24,
+            end_column: 3
+          }
+        ],
+        codefragment: %[def main()
+    print_hello()
+end
+
+def print_hello()
+    puts "Hello, world!"
+end
+
+def show_status_tank capacity
+    case capacity
+    when 0
+        "You ran out of gas."
+    when 1..20
+        "The tank is almost empty. Quickly, find a gas station!"
+    when 21..70
+        "You should be ok for now."
+    when 71..100
+        "The tank is almost full."
+    else
+        "Error: capacity has an invalid value (\#{capacity})"
+    end
+end
+
+main()]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "foo/hello_python.py",
+      location: {
+        start_line: 1,
+        start_column: 1,
+        end_line: 7,
+        end_column: 6
+      },
+      id: "c78059bc1c128c7f394e24848ba626ea6983bcb8",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 7,
+        tokens: 20,
+        files: [
+          {
+            id: "a6ab9a2c09efa41b65880070942ddf9d8606b2f9",
+            path: "bar/hello_python.py",
+            start_line: 1,
+            start_column: 1,
+            end_line: 7,
+            end_column: 6
+          },
+          {
+            id: "c78059bc1c128c7f394e24848ba626ea6983bcb8",
+            path: "foo/hello_python.py",
+            start_line: 1,
+            start_column: 1,
+            end_line: 7,
+            end_column: 6
+          }
+        ],
+        codefragment: %[def main():
+    print_hello()
+
+def print_hello():
+    print("Hello, world!")
+
+main()]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "foo/hello_swift.swift",
+      location: {
+        start_line: 1,
+        start_column: 1,
+        end_line: 9,
+        end_column: 6
+      },
+      id: "c89018422ac15c0d1fc595195903c7c65371fac3",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 9,
+        tokens: 22,
+        files: [
+          {
+            id: "f9bbe8b502aaa2f832bb2bd8cab6377172077bd7",
+            path: "bar/hello_swift.swift",
+            start_line: 1,
+            start_column: 1,
+            end_line: 9,
+            end_column: 6
+          },
+          {
+            id: "c89018422ac15c0d1fc595195903c7c65371fac3",
+            path: "foo/hello_swift.swift",
+            start_line: 1,
+            start_column: 1,
+            end_line: 9,
+            end_column: 6
+          }
+        ],
+        codefragment: %[func main() {
+    print_hello()
+}
+
+func print_hello() {
+    print("Hello, world!")
+}
+
+main()]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "foo/hello_cpp.cpp",
+      location: {
+        start_line: 3,
+        start_column: 1,
+        end_line: 17,
+        end_column: 1
+      },
+      id: "f596d2f766fb7b912331c3691b493b5d028f8ce3",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 15,
+        tokens: 30,
+        files: [
+          {
+            id: "1043fd82f4219d1d06a380cba3b5dd68f6a29c9c",
+            path: "bar/hello_cpp.cpp",
+            start_line: 3,
+            start_column: 1,
+            end_line: 17,
+            end_column: 1
+          },
+          {
+            id: "f596d2f766fb7b912331c3691b493b5d028f8ce3",
+            path: "foo/hello_cpp.cpp",
+            start_line: 3,
+            start_column: 1,
+            end_line: 17,
+            end_column: 1
+          }
+        ],
+        codefragment: %[void print_hello();
+
+int main(void)
+{
+    print_hello();
+    return 0;
+}
+
+void print_hello()
+{
+#ifdef TEST
+    int bar;
+#endif
+    puts("Hello, world!");
+}]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "bar/hello_swift.swift",
+      location: {
+        start_line: 1,
+        start_column: 1,
+        end_line: 9,
+        end_column: 6
+      },
+      id: "f9bbe8b502aaa2f832bb2bd8cab6377172077bd7",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 9,
+        tokens: 22,
+        files: [
+          {
+            id: "f9bbe8b502aaa2f832bb2bd8cab6377172077bd7",
+            path: "bar/hello_swift.swift",
+            start_line: 1,
+            start_column: 1,
+            end_line: 9,
+            end_column: 6
+          },
+          {
+            id: "c89018422ac15c0d1fc595195903c7c65371fac3",
+            path: "foo/hello_swift.swift",
+            start_line: 1,
+            start_column: 1,
+            end_line: 9,
+            end_column: 6
+          }
+        ],
+        codefragment: %[func main() {
+    print_hello()
+}
+
+func print_hello() {
+    print("Hello, world!")
+}
+
+main()]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "foo/hello_cs.cs",
+      location: {
+        start_line: 5,
+        start_column: 1,
+        end_line: 16,
+        end_column: 1
+      },
+      id: "ff532463942827ebfcbe38b1f1c34924421d13ef",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 12,
+        tokens: 38,
+        files: [
+          {
+            id: "a3ae806ca52225161be17832b2b18cc24a24d09d",
+            path: "bar/hello_cs.cs",
+            start_line: 5,
+            start_column: 1,
+            end_line: 16,
+            end_column: 1
+          },
+          {
+            id: "ff532463942827ebfcbe38b1f1c34924421d13ef",
+            path: "foo/hello_cs.cs",
+            start_line: 5,
+            start_column: 1,
+            end_line: 16,
+            end_column: 1
+          }
+        ],
+        codefragment: %[public class Test
+{
+    public static void Main(string[] args)
+    {
+        PrintHello();
+    }
+
+    public static void PrintHello()
+    {
+        System.Console.WriteLine("Hello, world!");
+    }
+}]
+      },
+      git_blame_info: nil
+    }
+  ],
+  warnings: [],
+  analyzer: { name: "PMD CPD", version: default_version }
+)
