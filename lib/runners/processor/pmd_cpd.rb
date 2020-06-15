@@ -7,7 +7,7 @@ module Runners
         fields.merge!({
                     'minimum-tokens': numeric?,
                     files: enum?(string, array(string)),
-                    language: string?,
+                    language: enum?(string, array(string)),
                     encoding: string?,
                     'skip-duplicate-files': boolean?,
                     'non-recursive': boolean?,
@@ -38,6 +38,7 @@ module Runners
 
     DEFAULT_MINIMUM_TOKENS = 100
     DEFAULT_FILES = ".".freeze
+    DEFAULT_LANGUAGE = ["cpp", "cs", "ecmascript", "go", "java", "kotlin", "php", "python", "ruby", "swift"].freeze
 
     register_config_schema(name: :pmd_cpd, schema: Schema.runner_config)
 
@@ -50,12 +51,17 @@ module Runners
     end
 
     def run_analyzer
-      stdout, stderr = capture3!(analyzer_bin, *cli_options)
+      issues = []
 
-      raise_warnings(stderr)
+      languages.each do |language|
+        stdout, stderr = capture3!(analyzer_bin, *cli_options(language))
+        raise_warnings(stderr)
+        ret = construct_result(stdout)
+        issues.push(*ret)
+      end
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        construct_result(result, stdout)
+        issues.each { |i| result.add_issue(i) }
       end
     end
 
@@ -67,17 +73,19 @@ module Runners
       end
     end
 
-    def construct_result(result, stdout)
+    def construct_result(stdout)
       # HACK: Replace the encoding attribute to read this XML as UTF-8.
       #       The PMD CPD writes an XML report as UTF-8 with the inconsistent encoding attribute value when the --encoding option is specified.
       stdout.sub!(/<\?xml version="1\.0" encoding=".+"\?>/, '<?xml version="1.0" encoding="UTF-8"?>')
+
+      issues = []
 
       REXML::Document.new(stdout).each_element('pmd-cpd/duplication') do |elem_dupli|
         files = elem_dupli.get_elements('file').map{ |f| to_fileinfo(f) }
         issueobj = create_issue_object(elem_dupli, files)
 
         files.each do |file|
-          result.add_issue Issue.new(
+          issues << Issue.new(
             id: file[:id],
             path: file[:path],
             location: file[:location],
@@ -87,6 +95,8 @@ module Runners
           )
         end
       end
+
+      issues
     end
 
     def to_fileinfo(elem_file)
@@ -139,8 +149,12 @@ module Runners
       (config_linter[:'minimum-tokens'] || DEFAULT_MINIMUM_TOKENS).then { |v| ["--minimum-tokens", v.to_s] }
     end
 
-    def option_language
-      config_linter[:language].then { |v| v ? ["--language", v] : [] }
+    def languages
+      Array(config_linter[:language] || DEFAULT_LANGUAGE)
+    end
+
+    def option_language(v)
+      ["--language", v]
     end
 
     def option_skip_duplicate_files
@@ -179,11 +193,11 @@ module Runners
       config_linter[:'skip-blocks-pattern'].then { |v| v ? ["--skip-blocks-pattern", v] : [] }
     end
 
-    def cli_options
+    def cli_options(language)
       [
         *option_encoding,
         *option_minimum_tokens,
-        *option_language,
+        *option_language(language),
         *option_skip_duplicate_files,
         *option_non_recursive,
         *option_skip_lexical_errors,
