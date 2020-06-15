@@ -38,7 +38,7 @@ module Runners
 
     DEFAULT_MINIMUM_TOKENS = 100
     DEFAULT_FILES = ".".freeze
-    DEFAULT_LANGUAGE = ["cpp", "cs", "ecmascript", "go", "java", "kotlin", "php", "python", "ruby", "swift"].freeze
+    DEFAULT_LANGUAGE = ["cpp", "cs", "ecmascript", "go", "java", "kotlin", "python", "ruby", "swift"].freeze
 
     register_config_schema(name: :pmd_cpd, schema: Schema.runner_config)
 
