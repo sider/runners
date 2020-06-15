@@ -2385,3 +2385,190 @@ main()]
   warnings: [],
   analyzer: { name: "PMD CPD", version: default_version }
 )
+
+s.add_test(
+  "option_multiple_languages_invalid",
+  type: "success",
+  issues: [
+    {
+      path: "src/bar/hello_cs.cs",
+      location: {
+        start_line: 5,
+        start_column: 1,
+        end_line: 16,
+        end_column: 1
+      },
+      id: "3b8a89336f524cb4ae32ffdc0c575a35e763ed94",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 12,
+        tokens: 38,
+        files: [
+          {
+            id: "3b8a89336f524cb4ae32ffdc0c575a35e763ed94",
+            path: "src/bar/hello_cs.cs",
+            start_line: 5,
+            start_column: 1,
+            end_line: 16,
+            end_column: 1
+          },
+          {
+            id: "65e7060f56fd696b0bbd839f72969ff7089f75c1",
+            path: "src/foo/hello_cs.cs",
+            start_line: 5,
+            start_column: 1,
+            end_line: 16,
+            end_column: 1
+          }
+        ],
+        codefragment: %[public class Test
+{
+    public static void Main(string[] args)
+    {
+        PrintHello();
+    }
+
+    public static void PrintHello()
+    {
+        System.Console.WriteLine("Hello, world!");
+    }
+}]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "src/foo/hello_cs.cs",
+      location: {
+        start_line: 5,
+        start_column: 1,
+        end_line: 16,
+        end_column: 1
+      },
+      id: "65e7060f56fd696b0bbd839f72969ff7089f75c1",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 12,
+        tokens: 38,
+        files: [
+          {
+            id: "3b8a89336f524cb4ae32ffdc0c575a35e763ed94",
+            path: "src/bar/hello_cs.cs",
+            start_line: 5,
+            start_column: 1,
+            end_line: 16,
+            end_column: 1
+          },
+          {
+            id: "65e7060f56fd696b0bbd839f72969ff7089f75c1",
+            path: "src/foo/hello_cs.cs",
+            start_line: 5,
+            start_column: 1,
+            end_line: 16,
+            end_column: 1
+          }
+        ],
+        codefragment: %[public class Test
+{
+    public static void Main(string[] args)
+    {
+        PrintHello();
+    }
+
+    public static void PrintHello()
+    {
+        System.Console.WriteLine("Hello, world!");
+    }
+}]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "src/bar/hello_tcl.tcl",
+      location: {
+        start_line: 1,
+        end_line: 9
+      },
+      id: "b2dd306cf6f04b345205f872135d56c8d3219e85",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 9,
+        tokens: 20,
+        files: [
+          {
+            id: "b2dd306cf6f04b345205f872135d56c8d3219e85",
+            path: "src/bar/hello_tcl.tcl",
+            start_line: 1,
+            start_column: 0,
+            end_line: 9,
+            end_column: 0
+          },
+          {
+            id: "b406d92700be1543ff7b496aaf4ef22c5c2340be",
+            path: "src/foo/hello_tcl.tcl",
+            start_line: 1,
+            start_column: 0,
+            end_line: 9,
+            end_column: 0
+          }
+        ],
+        codefragment: %(proc main {} {
+    print_hello ;
+}
+
+proc print_hello {} {
+    puts "Hello, world!"
+}
+
+main)
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "src/foo/hello_tcl.tcl",
+      location: {
+        start_line: 1,
+        end_line: 9
+      },
+      id: "b406d92700be1543ff7b496aaf4ef22c5c2340be",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 9,
+        tokens: 20,
+        files: [
+          {
+            id: "b2dd306cf6f04b345205f872135d56c8d3219e85",
+            path: "src/bar/hello_tcl.tcl",
+            start_line: 1,
+            start_column: 0,
+            end_line: 9,
+            end_column: 0
+          },
+          {
+            id: "b406d92700be1543ff7b496aaf4ef22c5c2340be",
+            path: "src/foo/hello_tcl.tcl",
+            start_line: 1,
+            start_column: 0,
+            end_line: 9,
+            end_column: 0
+          }
+        ],
+        codefragment: %(proc main {} {
+    print_hello ;
+}
+
+proc print_hello {} {
+    puts "Hello, world!"
+}
+
+main)
+      },
+      git_blame_info: nil
+    }
+  ],
+  warnings: [],
+  analyzer: { name: "PMD CPD", version: default_version }
+)

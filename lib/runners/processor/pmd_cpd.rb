@@ -124,9 +124,9 @@ module Runners
         id: f[:id],
         path: f[:path].to_s,
         start_line: f[:location].start_line,
-        start_column: f[:location].start_column,
+        start_column: f[:location].start_column.to_i,
         end_line: f[:location].end_line,
-        end_column: f[:location].end_column,
+        end_column: f[:location].end_column.to_i,
       }}
 
       return {
