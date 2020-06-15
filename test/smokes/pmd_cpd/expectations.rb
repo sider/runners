@@ -1421,6 +1421,47 @@ print_hello();]
       git_blame_info: nil
     },
     {
+      path: "foo/hello_php.php",
+      location: {
+        start_line: 1,
+        end_line: 8
+      },
+      id: "3f18338e7a3124257c7b1424604e3386e6808bc4",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 8,
+        tokens: 57,
+        files: [
+          {
+            id: "816e15083fd49ae7bd01aee5f5a979978f6f7b84",
+            path: "bar/hello_php.php",
+            start_line: 1,
+            start_column: 0,
+            end_line: 8,
+            end_column: 0
+          },
+          {
+            id: "3f18338e7a3124257c7b1424604e3386e6808bc4",
+            path: "foo/hello_php.php",
+            start_line: 1,
+            start_column: 0,
+            end_line: 8,
+            end_column: 0
+          }
+        ],
+        codefragment: %[<?php
+  printHello();
+
+  function printHello()
+  {
+    echo "Hello, world!";
+  }
+?>]
+      },
+      git_blame_info: nil
+    },
+    {
       path: "foo/hello_kotlin.kt",
       location: {
         start_line: 1,
@@ -1592,6 +1633,47 @@ func main() {
 func print_hello() {
 	fmt.Printf("Hello, world!")
 }]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "bar/hello_php.php",
+      location: {
+        start_line: 1,
+        end_line: 8
+      },
+      id: "816e15083fd49ae7bd01aee5f5a979978f6f7b84",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 8,
+        tokens: 57,
+        files: [
+          {
+            id: "816e15083fd49ae7bd01aee5f5a979978f6f7b84",
+            path: "bar/hello_php.php",
+            start_line: 1,
+            start_column: 0,
+            end_line: 8,
+            end_column: 0
+          },
+          {
+            id: "3f18338e7a3124257c7b1424604e3386e6808bc4",
+            path: "foo/hello_php.php",
+            start_line: 1,
+            start_column: 0,
+            end_line: 8,
+            end_column: 0
+          }
+        ],
+        codefragment: %[<?php
+  printHello();
+
+  function printHello()
+  {
+    echo "Hello, world!";
+  }
+?>]
       },
       git_blame_info: nil
     },
