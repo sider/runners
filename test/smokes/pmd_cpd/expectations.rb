@@ -2120,3 +2120,268 @@ main()]
   warnings: [],
   analyzer: { name: "PMD CPD", version: default_version }
 )
+
+s.add_test(
+  "option_multiple_languages",
+  type: "success",
+  issues: [
+    {
+      path: "src/bar/hello_dart.dart",
+      location: {
+        start_line: 1,
+        start_column: 1,
+        end_line: 7,
+        end_column: 1
+      },
+      id: "24e1fe0d195a05c3f08be9162af15df810755211",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 7,
+        tokens: 19,
+        files: [
+          {
+            id: "24e1fe0d195a05c3f08be9162af15df810755211",
+            path: "src/bar/hello_dart.dart",
+            start_line: 1,
+            start_column: 1,
+            end_line: 7,
+            end_column: 1
+          },
+          {
+            id: "8b7407bcff2b251861c4454c59c29184b78750e9",
+            path: "src/foo/hello_dart.dart",
+            start_line: 1,
+            start_column: 1,
+            end_line: 7,
+            end_column: 1
+          }
+        ],
+        codefragment: %[void main() {
+    printHello();
+}
+
+void printHello() {
+    print("Hello, world!");
+}]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "src/foo/hello_python.py",
+      location: {
+        start_line: 1,
+        start_column: 1,
+        end_line: 7,
+        end_column: 6
+      },
+      id: "266f2b1a5dc72b41758be1aca2ebea206ea4cf24",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 7,
+        tokens: 20,
+        files: [
+          {
+            id: "71b080e1acdb056e1b06047b5a2d252422607322",
+            path: "src/bar/hello_python.py",
+            start_line: 1,
+            start_column: 1,
+            end_line: 7,
+            end_column: 6
+          },
+          {
+            id: "266f2b1a5dc72b41758be1aca2ebea206ea4cf24",
+            path: "src/foo/hello_python.py",
+            start_line: 1,
+            start_column: 1,
+            end_line: 7,
+            end_column: 6
+          }
+        ],
+        codefragment: %[def main():
+    print_hello()
+
+def print_hello():
+    print("Hello, world!")
+
+main()]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "src/bar/hello_python.py",
+      location: {
+        start_line: 1,
+        start_column: 1,
+        end_line: 7,
+        end_column: 6
+      },
+      id: "71b080e1acdb056e1b06047b5a2d252422607322",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 7,
+        tokens: 20,
+        files: [
+          {
+            id: "71b080e1acdb056e1b06047b5a2d252422607322",
+            path: "src/bar/hello_python.py",
+            start_line: 1,
+            start_column: 1,
+            end_line: 7,
+            end_column: 6
+          },
+          {
+            id: "266f2b1a5dc72b41758be1aca2ebea206ea4cf24",
+            path: "src/foo/hello_python.py",
+            start_line: 1,
+            start_column: 1,
+            end_line: 7,
+            end_column: 6
+          }
+        ],
+        codefragment: %[def main():
+    print_hello()
+
+def print_hello():
+    print("Hello, world!")
+
+main()]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "src/foo/hello_dart.dart",
+      location: {
+        start_line: 1,
+        start_column: 1,
+        end_line: 7,
+        end_column: 1
+      },
+      id: "8b7407bcff2b251861c4454c59c29184b78750e9",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 7,
+        tokens: 19,
+        files: [
+          {
+            id: "24e1fe0d195a05c3f08be9162af15df810755211",
+            path: "src/bar/hello_dart.dart",
+            start_line: 1,
+            start_column: 1,
+            end_line: 7,
+            end_column: 1
+          },
+          {
+            id: "8b7407bcff2b251861c4454c59c29184b78750e9",
+            path: "src/foo/hello_dart.dart",
+            start_line: 1,
+            start_column: 1,
+            end_line: 7,
+            end_column: 1
+          }
+        ],
+        codefragment: %[void main() {
+    printHello();
+}
+
+void printHello() {
+    print("Hello, world!");
+}]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "src/foo/hello_lua.lua",
+      location: {
+        start_line: 1,
+        start_column: 1,
+        end_line: 9,
+        end_column: 6
+      },
+      id: "b4b263f2acec2d1721e04791c768966feedb8080",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 9,
+        tokens: 18,
+        files: [
+          {
+            id: "b66bcfec6a73c25cbc233365326fb4bad4f39f5e",
+            path: "src/bar/hello_lua.lua",
+            start_line: 1,
+            start_column: 1,
+            end_line: 9,
+            end_column: 6
+          },
+          {
+            id: "b4b263f2acec2d1721e04791c768966feedb8080",
+            path: "src/foo/hello_lua.lua",
+            start_line: 1,
+            start_column: 1,
+            end_line: 9,
+            end_column: 6
+          }
+        ],
+        codefragment: %[function main()
+    print_hello()
+end
+
+function print_hello()
+    print "Hello, world!"
+end
+
+main()]
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "src/bar/hello_lua.lua",
+      location: {
+        start_line: 1,
+        start_column: 1,
+        end_line: 9,
+        end_column: 6
+      },
+      id: "b66bcfec6a73c25cbc233365326fb4bad4f39f5e",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 9,
+        tokens: 18,
+        files: [
+          {
+            id: "b66bcfec6a73c25cbc233365326fb4bad4f39f5e",
+            path: "src/bar/hello_lua.lua",
+            start_line: 1,
+            start_column: 1,
+            end_line: 9,
+            end_column: 6
+          },
+          {
+            id: "b4b263f2acec2d1721e04791c768966feedb8080",
+            path: "src/foo/hello_lua.lua",
+            start_line: 1,
+            start_column: 1,
+            end_line: 9,
+            end_column: 6
+          }
+        ],
+        codefragment: %[function main()
+    print_hello()
+end
+
+function print_hello()
+    print "Hello, world!"
+end
+
+main()]
+      },
+      git_blame_info: nil
+    }
+  ],
+  warnings: [],
+  analyzer: { name: "PMD CPD", version: default_version }
+)
