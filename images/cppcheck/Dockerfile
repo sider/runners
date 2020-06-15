@@ -8,7 +8,7 @@ FROM sider/devon_rex_python:master
 #
 # See https://github.com/danmar/cppcheck#gnu-make
 
-ARG CPPCHECK_VERSION=2.0
+ARG CPPCHECK_VERSION=2.1
 ARG LIBZ3_VERSION=4.4.1-1~deb10u1
 USER root
 RUN apt-get update && \
