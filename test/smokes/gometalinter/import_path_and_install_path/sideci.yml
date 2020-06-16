@@ -1,5 +1,0 @@
-linter:
-  gometalinter:
-    import_path: github.com/sideci/install_path_test
-    # It should be ignored.
-    install_path: path/to/bad/install_path

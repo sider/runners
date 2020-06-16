@@ -1,4 +1,0 @@
-linter:
-  gometalinter:
-    options:
-      config: 'gometalinter.json'

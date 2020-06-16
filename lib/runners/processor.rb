@@ -16,6 +16,15 @@ module Runners
       Schema::Config.register(**args)
     end
 
+    # TODO: Keep the following schemas for the backward compatibility.
+    RemovedGoToolSchema = StrongJSON.new do
+      # @type self: StrongJSON
+      let :config, any?
+    end
+    register_config_schema(name: :golint, schema: RemovedGoToolSchema.config)
+    register_config_schema(name: :go_vet, schema: RemovedGoToolSchema.config)
+    register_config_schema(name: :gometalinter, schema: RemovedGoToolSchema.config)
+
     def initialize(guid:, working_dir:, config:, git_ssh_path:, trace_writer:)
       @guid = guid
       @working_dir = working_dir
@@ -47,6 +56,13 @@ module Runners
     end
 
     def setup
+      # TODO: Keep the following schemas for the backward compatibility.
+      if ["golint", "go_vet", "gometalinter"].any? { |id| config.linter?(id) }
+        add_warning <<~MSG, file: config.path_name
+          The `golint`, `go_vet`, and `gometalinter` options in your `#{config.path_name}` has been unsupported. Please remove them.
+        MSG
+      end
+
       trace_writer.message "No setup..."
       yield
     end
@@ -128,9 +144,9 @@ module Runners
       end
     end
 
-    # Returns e.g. "$.linter.rubocop.gems"
+    # Returns e.g. "linter.rubocop.gems"
     def config_field_path(*fields)
-      "$.linter.#{analyzer_id}.#{fields.join('.')}"
+      "linter.#{analyzer_id}.#{fields.join('.')}"
     end
 
     def delete_unchanged_files(changes, except: [], only: [])
@@ -151,7 +167,7 @@ module Runners
         deadline_str = deadline ? deadline.strftime('on %B %-d, %Y') : 'in the near future'
         add_warning <<~MSG, file: file
           DEPRECATION WARNING!!!
-          The #{analyzer_version} and older versions are deprecated. Sider will drop these versions #{deadline_str}.
+          The `#{analyzer_version}` and older versions are deprecated, and these versions will be dropped #{deadline_str}.
           Please consider upgrading to #{minimum} or a newer version.
         MSG
       end
@@ -159,13 +175,14 @@ module Runners
 
     def add_warning_if_deprecated_options(keys)
       deprecated_keys = config_linter.slice(*keys).compact.keys
-        .map { |k| "`#{config_field_path(k)}`" }
+        .map { |k| "- `#{config_field_path(k)}`" }
 
       unless deprecated_keys.empty?
         add_warning <<~MSG, file: config.path_name
           DEPRECATION WARNING!!!
-          The #{deprecated_keys.join(", ")} option(s) in your `#{config.path_name}` are deprecated and will be removed in the near future.
-          Please update to the new option(s) according to our documentation (see #{analyzer_doc} ).
+          The following options in your `#{config.path_name}` are deprecated and will be removed.
+          See #{analyzer_doc} for details.
+          #{deprecated_keys.join("\n")}
         MSG
       end
     end
@@ -174,8 +191,8 @@ module Runners
       deadline_str = deadline ? deadline.strftime("on %B %-d, %Y") : "in the near future"
       add_warning <<~MSG, file: config.path_name
         DEPRECATION WARNING!!!
-        The support for #{analyzer_name} is deprecated. Sider will drop these versions #{deadline_str}.
-        Please consider using an alternative tool #{alternative}. See #{ref}
+        The support for #{analyzer_name} is deprecated and will be removed #{deadline_str}.
+        Please migrate to #{alternative} as an alternative. See #{ref}
       MSG
     end
 

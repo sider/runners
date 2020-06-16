@@ -9,6 +9,9 @@ class Runners::Config
   def path_exist?: () -> bool
   def ignore: () -> Array[String]
   def linter: (String) -> Hash[Symbol, untyped]
+  def linter?: (String) -> bool
+
+  private
   def path: () -> Pathname?
   def parse_yaml: () -> String?
   def check_schema: (String? object) -> Hash[Symbol, untyped]

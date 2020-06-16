@@ -157,6 +157,9 @@ class Runners::Processor
   def read_report_json: <'x> (?String) { () -> 'x } -> (Hash<Symbol, any> | 'x)
 end
 
+# TODO: Keep for the backward compatibility.
+Runners::Processor::RemovedGoToolSchema: any
+
 type capture3_options = bool | Proc
 
 class Runners::Shell

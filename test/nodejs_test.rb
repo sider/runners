@@ -21,6 +21,10 @@ class NodejsTest < Minitest::Test
       def analyzer_bin
         "eslint"
       end
+
+      def analyzer_name
+        "ESLint"
+      end
     end
   end
 
@@ -544,8 +548,7 @@ class NodejsTest < Minitest::Test
       pass "when no dependencies satisfying constraints"
 
       expected_error_message = <<~MSG.strip
-        Your `eslint` settings could not satisfy the required constraints. Please check your `package.json` again.
-        If you want to analyze via the Sider default settings, please configure your `sider.yml`. For details, see the documentation.
+        Your ESLint dependencies do not satisfy our constraints `eslint@>=5.0.0`. Please update them.
       MSG
 
       npm_install.call(dependencies: { "eslint-config-standard" => "10.0.0" })
@@ -561,7 +564,7 @@ class NodejsTest < Minitest::Test
       ### assert warnings output
 
       expected_warnings = [
-        "The required dependency `eslint` may not have been correctly installed. It may be a missing peer dependency."
+        "The required dependency `eslint` may not be installed and be a missing peer dependency."
       ]
       actual_warnings = trace_writer.writer.select { |e| e[:trace] == :warning }.map { |e| e[:message] }
       assert_equal expected_warnings, actual_warnings
@@ -570,7 +573,7 @@ class NodejsTest < Minitest::Test
       ], processor.warnings
 
       expected_errors = [
-        "The installed dependency `eslint@4.0.0` did not satisfy the constraint `>= 5.0.0`.",
+        "The installed dependency `eslint@4.0.0` does not satisfy our constraint `>=5.0.0`.",
         expected_error_message,
       ]
       assert_equal expected_errors, actual_errors

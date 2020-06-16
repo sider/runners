@@ -6,8 +6,13 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.27.0...HEAD)
 
+Updated environments:
+
+- **devon_rex** 2.19.0 -> master [#1110](https://github.com/sider/runners/pull/1196)
+
 Updated tools:
 
+- **Brakeman** 4.3.1 -> 4.8.2 [#1188](https://github.com/sider/runners/pull/1188)
 - **Checkstyle** 8.32 -> 8.33 [#1162](https://github.com/sider/runners/pull/1162)
 - **cpplint** 1.4.5 -> 1.5.1 [#1175](https://github.com/sider/runners/pull/1175)
 - **Flake8** 3.8.1 -> 3.8.3 [#1127](https://github.com/sider/runners/pull/1127) [#1189](https://github.com/sider/runners/pull/1189)
@@ -23,6 +28,8 @@ Updated tools:
 Misc:
 
 - **Cppcheck** Add `bug-hunting` option [#1166](https://github.com/sider/runners/pull/1166)
+- Drop deprecated Golint, Govet, and GoMetaLinter [#1164](https://github.com/sider/runners/pull/1164)
+- Improve error and warning messages [#1195](https://github.com/sider/runners/pull/1195)
 
 ## 0.27.0
 

@@ -37,7 +37,5 @@ class AnalyzersTest < Minitest::Test
   def test_deprecated
     refute analyzers.deprecated?(:eslint)
     refute analyzers.deprecated?("eslint")
-    assert analyzers.deprecated?(:golint)
-    assert analyzers.deprecated?("golint")
   end
 end

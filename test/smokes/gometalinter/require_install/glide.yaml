@@ -1,3 +1,0 @@
-package: .
-import:
-- package: github.com/k0kubun/pp

@@ -49,7 +49,7 @@ s.add_test(
   type: "failure",
   analyzer: :_,
   message:
-    "The value of the attribute `$.linter.rails_best_practices.exclude` in your `sideci.yml` is invalid. Please fix and retry."
+    "The value of the attribute `linter.rails_best_practices.exclude` in your `sideci.yml` is invalid. Please fix and retry."
 )
 
 s.add_test(
@@ -71,8 +71,9 @@ s.add_test(
     {
       message: <<~MSG.strip,
         DEPRECATION WARNING!!!
-        The `$.linter.rails_best_practices.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
-        Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/ruby/rails-best-practices ).
+        The following options in your `sideci.yml` are deprecated and will be removed.
+        See https://help.sider.review/tools/ruby/rails-best-practices for details.
+        - `linter.rails_best_practices.options`
       MSG
       file: "sideci.yml"
     }
@@ -192,11 +193,12 @@ s.add_test(
   warnings: [
     {
       message: <<~MESSAGE.strip,
-        Sider tried to install `rails_best_practices 1.16.0` according to your `Gemfile.lock`, but it installs `1.19.4` instead.
-        Because `1.16.0` does not satisfy the Sider constraints [">= 1.19.1", "< 2.0"].
+        `rails_best_practices 1.19.4` is installed instead of `1.16.0` in your `Gemfile.lock`.
+        Because `1.16.0` does not satisfy our constraints `>= 1.19.1, < 2.0`.
 
-        If you want to use a different version of `rails_best_practices`, update your `Gemfile.lock` to satisfy the constraint or specify the gem version in your `sider.yml`.
-        See https://help.sider.review/getting-started/custom-configuration#gems-option
+        If you want to use a different version of `rails_best_practices`, please do either:
+        - Update your `Gemfile.lock` to satisfy the constraint
+        - Set the `linter.rails_best_practices.gems` option in your `sider.yml`
       MESSAGE
       file: nil
     }

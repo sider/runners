@@ -73,7 +73,7 @@ s.add_test(
   "broken_sideci_yml",
   type: "failure",
   analyzer: :_,
-  message: "The value of the attribute `$.linter.jshint.config` in your `sideci.yml` is invalid. Please fix and retry."
+  message: "The value of the attribute `linter.jshint.config` in your `sideci.yml` is invalid. Please fix and retry."
 )
 
 s.add_test(
@@ -95,8 +95,9 @@ s.add_test(
     {
       message: <<~MSG.strip,
         DEPRECATION WARNING!!!
-        The `$.linter.jshint.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
-        Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/javascript/jshint ).
+        The following options in your `sideci.yml` are deprecated and will be removed.
+        See https://help.sider.review/tools/javascript/jshint for details.
+        - `linter.jshint.options`
       MSG
       file: "sideci.yml"
     }

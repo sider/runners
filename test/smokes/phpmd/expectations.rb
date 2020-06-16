@@ -60,8 +60,9 @@ s.add_test(
     {
       message: <<~MSG.strip,
         DEPRECATION WARNING!!!
-        The `$.linter.phpmd.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
-        Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/php/phpmd ).
+        The following options in your `sideci.yml` are deprecated and will be removed.
+        See https://help.sider.review/tools/php/phpmd for details.
+        - `linter.phpmd.options`
       MSG
       file: "sideci.yml"
     }
@@ -113,7 +114,7 @@ s.add_test(
   "broken_sideci_yml",
   type: "failure",
   message:
-    "The value of the attribute `$.linter.phpmd.minimumpriority` in your `sideci.yml` is invalid. Please fix and retry.",
+    "The value of the attribute `linter.phpmd.minimumpriority` in your `sideci.yml` is invalid. Please fix and retry.",
   analyzer: :_
 )
 

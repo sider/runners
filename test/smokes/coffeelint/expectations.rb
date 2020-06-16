@@ -1,8 +1,5 @@
 s = Runners::Testing::Smoke
 
-# Smoke test allows testing by input and output of the analysis.
-# Following example, create "success" directory and put files, configurations, etc in this directory.
-#
 s.add_test(
   "success",
   type: "success",
@@ -49,8 +46,9 @@ s.add_test(
     {
       message: <<~MSG.strip,
         DEPRECATION WARNING!!!
-        The `$.linter.coffeelint.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
-        Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/javascript/coffeelint ).
+        The following options in your `sideci.yml` are deprecated and will be removed.
+        See https://help.sider.review/tools/javascript/coffeelint for details.
+        - `linter.coffeelint.options`
       MSG
       file: "sideci.yml"
     }

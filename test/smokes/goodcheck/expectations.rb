@@ -44,7 +44,7 @@ s.add_offline_test(
       message: <<~MESSAGE.strip,
         Sider cannot find the required configuration file `goodcheck.yml`.
         Please set up Goodcheck by following the instructions, or you can disable it in the repository settings.
-        
+
         - https://github.com/sider/goodcheck
         - https://help.sider.review/tools/others/goodcheck
       MESSAGE
@@ -64,7 +64,7 @@ s.add_offline_test(
   "with_invalid_ci_config",
   type: "failure",
   message:
-    "The value of the attribute `$.linter.goodcheck.config` in your `sideci.yml` is invalid. Please fix and retry.",
+    "The value of the attribute `linter.goodcheck.config` in your `sideci.yml` is invalid. Please fix and retry.",
   analyzer: :_
 )
 
