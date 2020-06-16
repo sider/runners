@@ -29,6 +29,7 @@ Misc:
 - **Cppcheck** Add `bug-hunting` option [#1166](https://github.com/sider/runners/pull/1166)
 - Drop deprecated Golint, Govet, and GoMetaLinter [#1164](https://github.com/sider/runners/pull/1164)
 - Improve warning messages [#1195](https://github.com/sider/runners/pull/1195)
+- **PMD CPD** Analyze multiple languages by default [#1200](https://github.com/sider/runners/pull/1200)
 
 ## 0.27.0
 
