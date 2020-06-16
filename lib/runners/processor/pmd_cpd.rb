@@ -61,7 +61,7 @@ module Runners
       end
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        issues.each { |i| result.add_issue(i) }
+        result.add_issue(*issues)
       end
     end
 
