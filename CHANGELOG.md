@@ -12,6 +12,7 @@ Updated environments:
 
 Updated tools:
 
+- **Brakeman** 4.3.1 -> 4.8.2 [#1188](https://github.com/sider/runners/pull/1188)
 - **Checkstyle** 8.32 -> 8.33 [#1162](https://github.com/sider/runners/pull/1162)
 - **Cppcheck** 2.0 -> 2.1 [#1199](https://github.com/sider/runners/pull/1199)
 - **cpplint** 1.4.5 -> 1.5.1 [#1175](https://github.com/sider/runners/pull/1175)
