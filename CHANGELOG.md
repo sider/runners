@@ -30,6 +30,7 @@ Updated tools:
 Misc:
 
 - **Cppcheck** Add `bug-hunting` option [#1166](https://github.com/sider/runners/pull/1166)
+- **ESLint** Stop using `~/.eslintrc.*` [#1201](https://github.com/sider/runners/pull/1201)
 - Drop deprecated Golint, Govet, and GoMetaLinter [#1164](https://github.com/sider/runners/pull/1164)
 - Improve error and warning messages [#1195](https://github.com/sider/runners/pull/1195)
 
