@@ -1314,21 +1314,7 @@ s.add_test(
             end_column: 1
           }
         ],
-        codefragment: %[void print_hello();
-
-int main(void)
-{
-    print_hello();
-    return 0;
-}
-
-void print_hello()
-{
-#ifdef TEST
-    int bar;
-#endif
-    puts("Hello, world!");
-}]
+        codefragment: /void print_hello\(\);/
       },
       git_blame_info: nil
     },
@@ -1364,11 +1350,7 @@ void print_hello()
             end_column: 14
           }
         ],
-        codefragment: %[function print_hello() {
-    console.log("Hello, world!");
-}
-
-print_hello();]
+        codefragment: /function print_hello\(\) \{/
       },
       git_blame_info: nil
     },
@@ -1404,19 +1386,7 @@ print_hello();]
             end_column: 1
           }
         ],
-        codefragment: %[class TestJp
-{
-    public static void  main(String[] args)
-    {
-        printHelloJp();
-    }
-
-    @SuppressWarnings("deprecation")
-    public static void printHelloJp()
-    {
-        System.out.println("こんにちは, 世界!");
-    }
-}]
+        codefragment: /class TestJp/
       },
       git_blame_info: nil
     },
@@ -1450,14 +1420,7 @@ print_hello();]
             end_column: 0
           }
         ],
-        codefragment: %[<?php
-  printHello();
-
-  function printHello()
-  {
-    echo "Hello, world!";
-  }
-?>]
+        codefragment: /<\?php/
       },
       git_blame_info: nil
     },
@@ -1493,13 +1456,7 @@ print_hello();]
             end_column: 1
           }
         ],
-        codefragment: %[fun main(args: Array<String>) {
-    printHello()
-}
-
-fun printHello() {
-    println("Hello, world!")
-}]
+        codefragment: /fun main\(args\: Array<String>\) \{/
       },
       git_blame_info: nil
     },
@@ -1535,11 +1492,7 @@ fun printHello() {
             end_column: 14
           }
         ],
-        codefragment: %[function print_hello() {
-    console.log("Hello, world!");
-}
-
-print_hello();]
+        codefragment: /function print_hello\(\) \{/
       },
       git_blame_info: nil
     },
@@ -1575,19 +1528,7 @@ print_hello();]
             end_column: 1
           }
         ],
-        codefragment: %[class TestJp
-{
-    public static void  main(String[] args)
-    {
-        printHelloJp();
-    }
-
-    @SuppressWarnings("deprecation")
-    public static void printHelloJp()
-    {
-        System.out.println("こんにちは, 世界!");
-    }
-}]
+        codefragment: /class TestJp/
       },
       git_blame_info: nil
     },
@@ -1623,16 +1564,7 @@ print_hello();]
             end_column: 1
           }
         ],
-        codefragment: %[package main
-import "fmt"
-
-func main() {
-	print_hello()
-}
-
-func print_hello() {
-	fmt.Printf("Hello, world!")
-}]
+        codefragment: /package main/
       },
       git_blame_info: nil
     },
@@ -1666,14 +1598,7 @@ func print_hello() {
             end_column: 0
           }
         ],
-        codefragment: %[<?php
-  printHello();
-
-  function printHello()
-  {
-    echo "Hello, world!";
-  }
-?>]
+        codefragment: /<\?php/
       },
       git_blame_info: nil
     },
@@ -1709,18 +1634,7 @@ func print_hello() {
             end_column: 1
           }
         ],
-        codefragment: %[public class Test
-{
-    public static void Main(string[] args)
-    {
-        PrintHello();
-    }
-
-    public static void PrintHello()
-    {
-        System.Console.WriteLine("Hello, world!");
-    }
-}]
+        codefragment: /public class Test/
       },
       git_blame_info: nil
     },
@@ -1756,13 +1670,7 @@ func print_hello() {
             end_column: 6
           }
         ],
-        codefragment: %[def main():
-    print_hello()
-
-def print_hello():
-    print("Hello, world!")
-
-main()]
+        codefragment: /def main\(\)\:/
       },
       git_blame_info: nil
     },
@@ -1798,30 +1706,7 @@ main()]
             end_column: 3
           }
         ],
-        codefragment: %[def main()
-    print_hello()
-end
-
-def print_hello()
-    puts "Hello, world!"
-end
-
-def show_status_tank capacity
-    case capacity
-    when 0
-        "You ran out of gas."
-    when 1..20
-        "The tank is almost empty. Quickly, find a gas station!"
-    when 21..70
-        "You should be ok for now."
-    when 71..100
-        "The tank is almost full."
-    else
-        "Error: capacity has an invalid value (\#{capacity})"
-    end
-end
-
-main()]
+        codefragment: /def main\(\)/
       },
       git_blame_info: nil
     },
@@ -1857,16 +1742,7 @@ main()]
             end_column: 1
           }
         ],
-        codefragment: %[package main
-import "fmt"
-
-func main() {
-	print_hello()
-}
-
-func print_hello() {
-	fmt.Printf("Hello, world!")
-}]
+        codefragment: /package main/
       },
       git_blame_info: nil
     },
@@ -1902,13 +1778,7 @@ func print_hello() {
             end_column: 1
           }
         ],
-        codefragment: %[fun main(args: Array<String>) {
-    printHello()
-}
-
-fun printHello() {
-    println("Hello, world!")
-}]
+        codefragment: /fun main\(args\: Array<String>\) \{/
       },
       git_blame_info: nil
     },
@@ -1944,30 +1814,7 @@ fun printHello() {
             end_column: 3
           }
         ],
-        codefragment: %[def main()
-    print_hello()
-end
-
-def print_hello()
-    puts "Hello, world!"
-end
-
-def show_status_tank capacity
-    case capacity
-    when 0
-        "You ran out of gas."
-    when 1..20
-        "The tank is almost empty. Quickly, find a gas station!"
-    when 21..70
-        "You should be ok for now."
-    when 71..100
-        "The tank is almost full."
-    else
-        "Error: capacity has an invalid value (\#{capacity})"
-    end
-end
-
-main()]
+        codefragment: /def main\(\)/
       },
       git_blame_info: nil
     },
@@ -2003,13 +1850,7 @@ main()]
             end_column: 6
           }
         ],
-        codefragment: %[def main():
-    print_hello()
-
-def print_hello():
-    print("Hello, world!")
-
-main()]
+        codefragment: /def main\(\)\:/
       },
       git_blame_info: nil
     },
@@ -2045,15 +1886,7 @@ main()]
             end_column: 6
           }
         ],
-        codefragment: %[func main() {
-    print_hello()
-}
-
-func print_hello() {
-    print("Hello, world!")
-}
-
-main()]
+        codefragment: /func main\(\) \{/
       },
       git_blame_info: nil
     },
@@ -2089,21 +1922,7 @@ main()]
             end_column: 1
           }
         ],
-        codefragment: %[void print_hello();
-
-int main(void)
-{
-    print_hello();
-    return 0;
-}
-
-void print_hello()
-{
-#ifdef TEST
-    int bar;
-#endif
-    puts("Hello, world!");
-}]
+        codefragment: /void print_hello\(\);/
       },
       git_blame_info: nil
     },
@@ -2139,15 +1958,7 @@ void print_hello()
             end_column: 6
           }
         ],
-        codefragment: %[func main() {
-    print_hello()
-}
-
-func print_hello() {
-    print("Hello, world!")
-}
-
-main()]
+        codefragment: /func main\(\) \{/
       },
       git_blame_info: nil
     },
@@ -2183,18 +1994,7 @@ main()]
             end_column: 1
           }
         ],
-        codefragment: %[public class Test
-{
-    public static void Main(string[] args)
-    {
-        PrintHello();
-    }
-
-    public static void PrintHello()
-    {
-        System.Console.WriteLine("Hello, world!");
-    }
-}]
+        codefragment: /public class Test/
       },
       git_blame_info: nil
     }
@@ -2239,13 +2039,7 @@ s.add_test(
             end_column: 1
           }
         ],
-        codefragment: %[void main() {
-    printHello();
-}
-
-void printHello() {
-    print("Hello, world!");
-}]
+        codefragment: /void main\(\) \{/
       },
       git_blame_info: nil
     },
@@ -2281,13 +2075,7 @@ void printHello() {
             end_column: 6
           }
         ],
-        codefragment: %[def main():
-    print_hello()
-
-def print_hello():
-    print("Hello, world!")
-
-main()]
+        codefragment: /def main\(\)\:/
       },
       git_blame_info: nil
     },
@@ -2323,13 +2111,7 @@ main()]
             end_column: 6
           }
         ],
-        codefragment: %[def main():
-    print_hello()
-
-def print_hello():
-    print("Hello, world!")
-
-main()]
+        codefragment: /def main\(\)\:/
       },
       git_blame_info: nil
     },
@@ -2365,13 +2147,7 @@ main()]
             end_column: 1
           }
         ],
-        codefragment: %[void main() {
-    printHello();
-}
-
-void printHello() {
-    print("Hello, world!");
-}]
+        codefragment: /void main\(\) \{/
       },
       git_blame_info: nil
     },
@@ -2407,15 +2183,7 @@ void printHello() {
             end_column: 6
           }
         ],
-        codefragment: %[function main()
-    print_hello()
-end
-
-function print_hello()
-    print "Hello, world!"
-end
-
-main()]
+        codefragment: /function main\(\)/
       },
       git_blame_info: nil
     },
@@ -2451,15 +2219,7 @@ main()]
             end_column: 6
           }
         ],
-        codefragment: %[function main()
-    print_hello()
-end
-
-function print_hello()
-    print "Hello, world!"
-end
-
-main()]
+        codefragment: /function main\(\)/
       },
       git_blame_info: nil
     }
@@ -2504,18 +2264,7 @@ s.add_test(
             end_column: 1
           }
         ],
-        codefragment: %[public class Test
-{
-    public static void Main(string[] args)
-    {
-        PrintHello();
-    }
-
-    public static void PrintHello()
-    {
-        System.Console.WriteLine("Hello, world!");
-    }
-}]
+        codefragment: /public class Test/
       },
       git_blame_info: nil
     },
@@ -2551,18 +2300,7 @@ s.add_test(
             end_column: 1
           }
         ],
-        codefragment: %[public class Test
-{
-    public static void Main(string[] args)
-    {
-        PrintHello();
-    }
-
-    public static void PrintHello()
-    {
-        System.Console.WriteLine("Hello, world!");
-    }
-}]
+        codefragment: /public class Test/
       },
       git_blame_info: nil
     },
@@ -2596,15 +2334,7 @@ s.add_test(
             end_column: 0
           }
         ],
-        codefragment: %(proc main {} {
-    print_hello ;
-}
-
-proc print_hello {} {
-    puts "Hello, world!"
-}
-
-main)
+        codefragment: /proc main \{\} \{/
       },
       git_blame_info: nil
     },
@@ -2638,15 +2368,7 @@ main)
             end_column: 0
           }
         ],
-        codefragment: %(proc main {} {
-    print_hello ;
-}
-
-proc print_hello {} {
-    puts "Hello, world!"
-}
-
-main)
+        codefragment: /proc main \{\} \{/
       },
       git_blame_info: nil
     }
