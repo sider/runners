@@ -1,8 +1,5 @@
 s = Runners::Testing::Smoke
 
-# Smoke test allows testing by input and output of the analysis.
-# Following example, create "success" directory and put files, configurations, etc in this directory.
-#
 s.add_test(
   "success",
   type: "success",
@@ -29,7 +26,7 @@ s.add_test(
     {
       message: <<~MESSAGE.strip,
         `tyscan.yml` does not exist in your repository.
-        
+
         To start performing analysis, `tyscan.yml` is required.
         See also: https://help.sider.review/tools/javascript/tyscan
       MESSAGE
@@ -57,7 +54,9 @@ s.add_test(
 
 s.add_test(
   "typescript_not_found",
-  type: "failure", message: /Your `tyscan` settings could not satisfy the required constraints/, analyzer: :_
+  type: "failure",
+  message: "Your TyScan dependencies do not satisfy our constraints `tyscan@>=0.2.1 <1.0.0`. Please update them.",
+  analyzer: :_
 )
 
 s.add_test(

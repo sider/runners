@@ -37,7 +37,6 @@ module Runners
       GemInstaller::Spec.new(name: "rubocop-sequel", version: []),
     ].freeze
 
-    # @see https://help.sider.review/tools/ruby/rubocop#gems
     OPTIONAL_GEMS = [
       *OFFICIAL_RUBOCOP_PLUGINS,
       GemInstaller::Spec.new(name: "cookstyle", version: []),
@@ -107,9 +106,9 @@ module Runners
       when rails && !rails_cops_removed?
         '--rails'
       when rails && rails_cops_removed?
-        add_warning(<<~WARNING, file: "sideci.yml")
-          `rails` option is ignored because the option was removed from RuboCop 0.72. Use the `rubocop-rails` gem instead.
-          See https://help.sider.review/getting-started/custom-configuration#gems-option
+        add_warning(<<~WARNING, file: config.path_name)
+          The `#{config_field_path("rails")}` option in your `#{config.path_name}` is ignored.
+          Because the `--rails` option was removed from RuboCop 0.72. Use the `rubocop-rails` gem instead.
         WARNING
         nil
       when rails == false
@@ -150,9 +149,7 @@ module Runners
           add_warning(msg, file: relative_path(file).to_s)
         when /Rails cops will be removed from RuboCop 0.72/
           add_warning(<<~WARNING)
-            Rails cops will be removed from RuboCop 0.72. Use the `rubocop-rails` gem instead.
-            https://github.com/rubocop-hq/rubocop/blob/master/manual/migrate_rails_cops.md
-            https://help.sider.review/getting-started/custom-configuration#gems-option
+            Rails cops were removed from RuboCop 0.72. Use the `rubocop-rails` gem instead.
           WARNING
         when /^\d+ errors? occurred:$/
           # NOTE: "An error occurred... is displayed twice, "when an error happens", and "at the end of RuboCop runtime".

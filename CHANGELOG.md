@@ -12,7 +12,9 @@ Updated environments:
 
 Updated tools:
 
+- **Brakeman** 4.3.1 -> 4.8.2 [#1188](https://github.com/sider/runners/pull/1188)
 - **Checkstyle** 8.32 -> 8.33 [#1162](https://github.com/sider/runners/pull/1162)
+- **Cppcheck** 2.0 -> 2.1 [#1199](https://github.com/sider/runners/pull/1199)
 - **cpplint** 1.4.5 -> 1.5.1 [#1175](https://github.com/sider/runners/pull/1175)
 - **Flake8** 3.8.1 -> 3.8.3 [#1127](https://github.com/sider/runners/pull/1127) [#1189](https://github.com/sider/runners/pull/1189)
 - **hadolint** 1.17.6 -> 1.18.0 [#1177](https://github.com/sider/runners/pull/1177)
@@ -28,7 +30,7 @@ Misc:
 
 - **Cppcheck** Add `bug-hunting` option [#1166](https://github.com/sider/runners/pull/1166)
 - Drop deprecated Golint, Govet, and GoMetaLinter [#1164](https://github.com/sider/runners/pull/1164)
-- Improve warning messages [#1195](https://github.com/sider/runners/pull/1195)
+- Improve error and warning messages [#1195](https://github.com/sider/runners/pull/1195)
 - **PMD CPD** Analyze multiple languages by default [#1200](https://github.com/sider/runners/pull/1200)
 
 ## 0.27.0

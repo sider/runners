@@ -38,8 +38,9 @@ s.add_test(
     {
       message: <<~MSG.strip,
         DEPRECATION WARNING!!!
-        The `$.linter.code_sniffer.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
-        Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/php/code-sniffer ).
+        The following options in your `sideci.yml` are deprecated and will be removed.
+        See https://help.sider.review/tools/php/code-sniffer for details.
+        - `linter.code_sniffer.options`
       MSG
       file: "sideci.yml"
     }
@@ -56,7 +57,7 @@ s.add_test(
   "broken_sideci_yml",
   type: "failure",
   analyzer: :_,
-  message: "The attribute `$.linter.code_sniffer.extension` in your `sideci.yml` is unsupported. Please fix and retry."
+  message: "The attribute `linter.code_sniffer.extension` in your `sideci.yml` is unsupported. Please fix and retry."
 )
 
 s.add_test(
@@ -76,7 +77,12 @@ s.add_test(
   analyzer: { name: "PHP_CodeSniffer", version: "3.5.5" },
   warnings: [
     {
-      message: /The `\$\.linter\.code_sniffer\.version` option\(s\) in your `sider\.yml` are deprecated/,
+      message: <<~MSG.strip,
+        DEPRECATION WARNING!!!
+        The following options in your `sider.yml` are deprecated and will be removed.
+        See https://help.sider.review/tools/php/code-sniffer for details.
+        - `linter.code_sniffer.version`
+      MSG
       file: "sider.yml"
     }
   ]

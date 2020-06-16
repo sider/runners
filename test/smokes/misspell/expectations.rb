@@ -45,8 +45,9 @@ s.add_offline_test(
     {
       message: <<~MSG.strip,
         DEPRECATION WARNING!!!
-        The `$.linter.misspell.options` option(s) in your `sideci.yml` are deprecated and will be removed in the near future.
-        Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/others/misspell ).
+        The following options in your `sideci.yml` are deprecated and will be removed.
+        See https://help.sider.review/tools/others/misspell for details.
+        - `linter.misspell.options`
       MSG
       file: "sideci.yml"
     }
@@ -130,7 +131,12 @@ s.add_offline_test(
     }
   ],
   analyzer: { name: "Misspell", version: "0.3.4" },
-  warnings: [{ message: /DEPRECATION WARNING!!!\nThe `\$\.linter\.misspell\.targets` option/, file: "sideci.yml" }]
+  warnings: [{ message: <<~MSG.strip, file: "sideci.yml" }]
+    DEPRECATION WARNING!!!
+    The following options in your `sideci.yml` are deprecated and will be removed.
+    See https://help.sider.review/tools/others/misspell for details.
+    - `linter.misspell.targets`
+  MSG
 )
 
 s.add_offline_test(
@@ -217,7 +223,7 @@ s.add_offline_test(
   "broken_sideci_yml",
   type: "failure",
   message:
-    "The value of the attribute `$.linter.misspell.locale` in your `sideci.yml` is invalid. Please fix and retry.",
+    "The value of the attribute `linter.misspell.locale` in your `sideci.yml` is invalid. Please fix and retry.",
   analyzer: :_
 )
 

@@ -219,22 +219,22 @@ module Runners
 
         version = installed_deps.fetch(name)
         if version.empty?
-          add_warning "The required dependency `#{name}` may not have been correctly installed. It may be a missing peer dependency.", file: "package.json"
+          add_warning "The required dependency `#{name}` may not be installed and be a missing peer dependency.", file: "package.json"
           next
         end
 
         installed_dependency = Dependency.new(name: name, version: version)
         unless constraint.satisfied_by? installed_dependency
-          trace_writer.error "The installed dependency `#{installed_dependency}` did not satisfy the constraint `#{constraint}`."
+          trace_writer.error "The installed dependency `#{installed_dependency}` does not satisfy our constraint `#{constraint}`."
           all_constraints_satisfied = false
           next
         end
       end
 
       unless all_constraints_satisfied
+        constraints_text = constraints.map { |name, constraint| "`#{name}@#{constraint}`" }.join(", ")
         message = <<~MSG.strip
-          Your `#{analyzer_bin}` settings could not satisfy the required constraints. Please check your `package.json` again.
-          If you want to analyze via the Sider default settings, please configure your `#{config.path_name}`. For details, see the documentation.
+          Your #{analyzer_name} dependencies do not satisfy our constraints #{constraints_text}. Please update them.
         MSG
         trace_writer.error message
         raise ConstraintsNotSatisfied, message

@@ -333,7 +333,8 @@ s.add_test(
 
 s.add_test(
   "pinned_stylelint_version",
-  analyzer: :_, type: "failure", message: /Your `stylelint` settings could not satisfy the required constraints/
+  analyzer: :_, type: "failure",
+  message: "Your stylelint dependencies do not satisfy our constraints `stylelint@>=8.3.0 <14.0.0`. Please update them."
 )
 
 s.add_test(
@@ -452,7 +453,7 @@ s.add_test(
     }
   ],
   warnings: [
-    { message: /The required dependency `stylelint` may not have been correctly installed/, file: "package.json" }
+    { message: "The required dependency `stylelint` may not be installed and be a missing peer dependency.", file: "package.json" }
   ]
 )
 
@@ -470,7 +471,7 @@ s.add_test(
   analyzer: :_,
   type: "failure",
   message:
-    "The value of the attribute `$.linter.stylelint.options.ignore-path` in your `sideci.yml` is invalid. Please fix and retry."
+    "The value of the attribute `linter.stylelint.options.ignore-path` in your `sideci.yml` is invalid. Please fix and retry."
 )
 
 s.add_test(
@@ -482,8 +483,9 @@ s.add_test(
     {
       message: <<~MSG.strip,
         DEPRECATION WARNING!!!
-        The `$.linter.stylelint.options` option(s) in your `sider.yml` are deprecated and will be removed in the near future.
-        Please update to the new option(s) according to our documentation (see https://help.sider.review/tools/css/stylelint ).
+        The following options in your `sider.yml` are deprecated and will be removed.
+        See https://help.sider.review/tools/css/stylelint for details.
+        - `linter.stylelint.options`
       MSG
       file: "sider.yml"
     }

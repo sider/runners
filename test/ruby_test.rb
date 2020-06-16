@@ -647,15 +647,16 @@ EOF
       YAML
 
       processor.install_gems([Spec.new(name: "multi_json", version: ["1.14.0"])],
-                             constraints: { "multi_json" => ["> 1.13.0"] }) do
+                             constraints: { "multi_json" => ["> 1.13.0", "< 2.0.0"] }) do
         assert_equal 1, processor.warnings.count
         assert trace_writer.writer.find { |m| m[:trace] == :command_line && m[:command_line] == %w[bundle install] }
         assert_equal <<~MESSAGE.strip, processor.warnings.first[:message]
-          Sider tried to install `multi_json 1.12.0` according to your `Gemfile.lock`, but it installs `1.14.0` instead.
-          Because `1.12.0` does not satisfy the Sider constraints ["> 1.13.0"].
+          `multi_json 1.14.0` is installed instead of `1.12.0` in your `Gemfile.lock`.
+          Because `1.12.0` does not satisfy our constraints `> 1.13.0, < 2.0.0`.
 
-          If you want to use a different version of `multi_json`, update your `Gemfile.lock` to satisfy the constraint or specify the gem version in your `sider.yml`.
-          See https://help.sider.review/getting-started/custom-configuration#gems-option
+          If you want to use a different version of `multi_json`, please do either:
+          - Update your `Gemfile.lock` to satisfy the constraint
+          - Set the `linter.rubocop.gems` option in your `sider.yml`
         MESSAGE
 
         stdout, _ = processor.shell.capture3!("bundle", "list")

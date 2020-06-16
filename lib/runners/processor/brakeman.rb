@@ -4,12 +4,16 @@ module Runners
 
     Schema = StrongJSON.new do
       let :runner_config, Schema::BaseConfig.ruby
+
+      let :issue, object(
+        severity: string,
+      )
     end
 
     register_config_schema(name: :brakeman, schema: Schema.runner_config)
 
     CONSTRAINTS = {
-      "brakeman" => [">= 4.0.0", "< 4.4.0"]
+      "brakeman" => [">= 4.0.0", "< 5.0.0"]
     }.freeze
 
     def setup
@@ -22,37 +26,47 @@ module Runners
     end
 
     def analyze(changes)
-      # run analysis and return result
-      stdout, stderr, status = capture3(
+      _, stderr, status = capture3(
         *ruby_analyzer_bin,
         '--format=json',
+        '--output', report_file,
         '--no-exit-on-warn',
         '--no-exit-on-error',
         '--no-progress',
         '--quiet',
       )
-      return Results::Failure.new(guid: guid, message: stderr, analyzer: analyzer) unless status.success?
-      construct_result(stdout)
-    end
 
-    def construct_result(stdout)
+      unless status.success?
+        if stderr.include?("Please supply the path to a Rails application")
+          add_warning <<~MSG, file: config.path_name
+            #{analyzer_name} is for Rails only. Your repository may not have a Rails application.
+            If your Rails is not located in the root directory, configure your `#{config.path_name}` as follows:
+            ---
+            linter:
+              #{analyzer_id}:
+                root_dir: "path/to/your/rails/root"
+          MSG
+          return Results::Success.new(guid: guid, analyzer: analyzer)
+        else
+          raise stderr
+        end
+      end
+
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        json = JSON.parse(stdout, symbolize_names: true)
-        json[:warnings].each do |warning|
-          path = relative_path(warning[:file])
-          # http://brakemanscanner.org/docs/warning_types/basic_authentication などはlineを持たない
-          line = warning[:line].nil? ? 0 : warning[:line].to_i
-          loc = Location.new(start_line: line,
-                                          start_column: nil,
-                                          end_line: nil,
-                                          end_column: nil)
+        json = read_report_json
 
+        json[:warnings].each do |warning|
+          line = warning[:line]
           result.add_issue Issue.new(
-            path: path,
-            location: loc,
+            path: relative_path(warning[:file]),
+            location: line ? Location.new(start_line: line) : nil,
             id: "#{warning[:warning_type]}-#{warning[:warning_code]}",
             message: warning[:message],
-            links: [warning[:link]]
+            links: [warning[:link]],
+            object: {
+              severity: warning[:confidence],
+            },
+            schema: Schema.issue,
           )
         end
 

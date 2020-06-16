@@ -1,5 +1,7 @@
 s = Runners::Testing::Smoke
 
+default_version = "2.1"
+
 s.add_test(
   "default",
   type: "success",
@@ -209,14 +211,14 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "2.0" }
+  analyzer: { name: "Cppcheck", version: default_version }
 )
 
 s.add_test(
   "no_target",
   type: "success",
   issues: [],
-  analyzer: { name: "Cppcheck", version: "2.0" },
+  analyzer: { name: "Cppcheck", version: default_version },
   warnings: [{ message: "No linting files.", file: nil }]
 )
 
@@ -236,7 +238,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "2.0" }
+  analyzer: { name: "Cppcheck", version: default_version }
 )
 
 s.add_test(
@@ -266,7 +268,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "2.0" }
+  analyzer: { name: "Cppcheck", version: default_version }
 )
 
 s.add_test(
@@ -285,7 +287,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "2.0" }
+  analyzer: { name: "Cppcheck", version: default_version }
 )
 
 s.add_test(
@@ -302,7 +304,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "2.0" }
+  analyzer: { name: "Cppcheck", version: default_version }
 )
 
 s.add_test(
@@ -337,7 +339,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "2.0" }
+  analyzer: { name: "Cppcheck", version: default_version }
 )
 
 s.add_test(
@@ -361,7 +363,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "2.0" }
+  analyzer: { name: "Cppcheck", version: default_version }
 )
 
 s.add_test(
@@ -378,7 +380,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "2.0" }
+  analyzer: { name: "Cppcheck", version: default_version }
 )
 
 s.add_test(
@@ -406,12 +408,12 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "2.0" }
+  analyzer: { name: "Cppcheck", version: default_version }
 )
 
 s.add_test(
   "unexpected_error",
-  type: "failure", message: "cppcheck: Unknown language 'foo' enforced.", analyzer: { name: "Cppcheck", version: "2.0" }
+  type: "failure", message: "cppcheck: Unknown language 'foo' enforced.", analyzer: { name: "Cppcheck", version: default_version }
 )
 
 s.add_test(
@@ -446,7 +448,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "2.0" }
+  analyzer: { name: "Cppcheck", version: default_version }
 )
 
 s.add_test(
@@ -490,7 +492,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "2.0" }
+  analyzer: { name: "Cppcheck", version: default_version }
 )
 
 s.add_test(
@@ -552,6 +554,60 @@ s.add_test(
       git_blame_info: nil
     },
     {
+      id: "bughuntingUninit",
+      path: "src/bar/c_sample.c",
+      location: { start_line: 16 },
+      message: "Cannot determine that 'dz' is initialized",
+      links: [],
+      object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "bughuntingUninit",
+      path: "src/bar/c_sample.c",
+      location: { start_line: 19 },
+      message: "Cannot determine that 'dz' is initialized",
+      links: [],
+      object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "bughuntingUninit",
+      path: "src/bar/cpp_sample.c++",
+      location: { start_line: 22 },
+      message: "Cannot determine that 'dz' is initialized",
+      links: [],
+      object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "bughuntingUninit",
+      path: "src/bar/cpp_sample.c++",
+      location: { start_line: 25 },
+      message: "Cannot determine that 'dz' is initialized",
+      links: [],
+      object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "bughuntingUninit",
+      path: "src/cpp_sample_2.c++",
+      location: { start_line: 20 },
+      message: "Cannot determine that 'dz' is initialized",
+      links: [],
+      object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "bughuntingUninit",
+      path: "src/cpp_sample_2.c++",
+      location: { start_line: 23 },
+      message: "Cannot determine that 'dz' is initialized",
+      links: [],
+      object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
+      git_blame_info: nil
+    },
+    {
       id: "uninitvar",
       path: "src/bar/c_sample.c",
       location: { start_line: 16 },
@@ -606,7 +662,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "2.0" }
+  analyzer: { name: "Cppcheck", version: default_version }
 )
 
 s.add_test(
@@ -650,6 +706,42 @@ s.add_test(
       git_blame_info: nil
     },
     {
+      id: "bughuntingUninit",
+      path: "src/cpp_sample_1.c++",
+      location: { start_line: 18 },
+      message: "Cannot determine that 'dz' is initialized",
+      links: [],
+      object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "bughuntingUninit",
+      path: "src/cpp_sample_1.c++",
+      location: { start_line: 21 },
+      message: "Cannot determine that 'dz' is initialized",
+      links: [],
+      object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "bughuntingUninit",
+      path: "src/cpp_sample_3.c++",
+      location: { start_line: 22 },
+      message: "Cannot determine that 'dz' is initialized",
+      links: [],
+      object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "bughuntingUninit",
+      path: "src/cpp_sample_3.c++",
+      location: { start_line: 25 },
+      message: "Cannot determine that 'dz' is initialized",
+      links: [],
+      object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
+      git_blame_info: nil
+    },
+    {
       id: "uninitvar",
       path: "src/cpp_sample_1.c++",
       location: { start_line: 18 },
@@ -686,7 +778,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "2.0" }
+  analyzer: { name: "Cppcheck", version: default_version }
 )
 
 s.add_test(
@@ -700,6 +792,15 @@ s.add_test(
       message: "There is division, cannot determine that there can't be a division by zero.",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "369", location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "bughuntingUninit",
+      path: "c_sample.c",
+      location: { start_line: 10 },
+      message: "Cannot determine that 'dz' is initialized",
+      links: [],
+      object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
       git_blame_info: nil
     },
     {
@@ -730,5 +831,5 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Cppcheck", version: "2.0" }
+  analyzer: { name: "Cppcheck", version: default_version }
 )
