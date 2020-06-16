@@ -1,5 +1,7 @@
 s = Runners::Testing::Smoke
 
+default_version = "7.2.0"
+
 s.add_test(
   "no_config",
   type: "success",
@@ -23,7 +25,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "ESLint", version: "6.8.0" }
+  analyzer: { name: "ESLint", version: default_version }
 )
 
 # This test case's .eslintrc includes ESLint plugin, thus Sider fails because of the plugin unavailable.
@@ -31,7 +33,7 @@ s.add_test(
   "only_eslintrc",
   type: "failure",
   message: /ESLint couldn't find the plugin "eslint-plugin-filenames"/,
-  analyzer: { name: "ESLint", version: "6.8.0" }
+  analyzer: { name: "ESLint", version: default_version }
 )
 
 s.add_test(
@@ -43,7 +45,7 @@ s.add_test(
   analyzer: :_
 )
 
-s.add_test("no_files", type: "success", issues: [], analyzer: { name: "ESLint", version: "6.8.0" })
+s.add_test("no_files", type: "success", issues: [], analyzer: { name: "ESLint", version: default_version })
 
 s.add_test(
   "pinned_eslint5",
@@ -127,7 +129,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "ESLint", version: "6.8.0" },
+  analyzer: { name: "ESLint", version: default_version },
   warnings: [
     {
       message: <<~MSG.strip,
@@ -164,7 +166,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "ESLint", version: "6.8.0" }
+  analyzer: { name: "ESLint", version: default_version }
 )
 
 s.add_test(
@@ -298,7 +300,7 @@ s.add_test(
   analyzer: { name: "ESLint", version: "5.16.0" }
 )
 
-s.add_test("default_version_is_used", type: "success", issues: [], analyzer: { name: "ESLint", version: "6.8.0" })
+s.add_test("default_version_is_used", type: "success", issues: [], analyzer: { name: "ESLint", version: default_version })
 
 s.add_test(
   "mismatched_package_version",
@@ -321,7 +323,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "ESLint", version: "6.8.0" }
+  analyzer: { name: "ESLint", version: default_version }
 )
 
 s.add_test(
