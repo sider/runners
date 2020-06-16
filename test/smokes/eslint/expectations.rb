@@ -28,6 +28,40 @@ s.add_test(
   analyzer: { name: "ESLint", version: default_version }
 )
 
+s.add_test(
+  "no_config_v5",
+  type: "success",
+  issues: [
+    {
+      path: "index.js",
+      location: { start_line: 1, start_column: 1, end_line: 1, end_column: 12 },
+      id: "no-console",
+      message: "Unexpected console statement.",
+      links: [],
+      object: { severity: "error", category: nil, recommended: nil },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "ESLint", version: "5.0.0" }
+)
+
+s.add_test(
+  "no_config_v6",
+  type: "success",
+  issues: [
+    {
+      path: "index.js",
+      location: { start_line: 1, start_column: 5, end_line: 1, end_column: 11 },
+      id: "no-constant-condition",
+      message: "Unexpected constant condition.",
+      links: %w[https://eslint.org/docs/rules/no-constant-condition],
+      object: { severity: "error", category: "Possible Errors", recommended: true },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "ESLint", version: "6.0.0" }
+)
+
 # This test case's .eslintrc includes ESLint plugin, thus Sider fails because of the plugin unavailable.
 s.add_test(
   "only_eslintrc",

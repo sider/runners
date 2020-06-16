@@ -30,11 +30,8 @@ ENV PATH ${RUNNER_USER_HOME}/eslint/node_modules/.bin:${PATH}
 # See https://nodejs.org/api/cli.html#cli_node_path_path
 ENV NODE_PATH ${RUNNER_USER_HOME}/eslint/node_modules:${NODE_PATH}
 
-# NOTE: ESLint uses a configuration file in the home directory if no other configuration files are found.
-#       See https://eslint.org/docs/user-guide/configuring#configuration-cascading-and-hierarchy
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/eslint/sider_eslintrc.yml ${RUNNER_USER_HOME}/.eslintrc.yml
-
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/eslint/custom-eslint-json-formatter.js ${RUNNER_USER_HOME}/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/eslint/sider_eslintrc.yml ${RUNNER_USER_HOME}/eslint/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/eslint/custom-eslint-json-formatter.js ${RUNNER_USER_HOME}/eslint/
 
 
 # Copy the main source code

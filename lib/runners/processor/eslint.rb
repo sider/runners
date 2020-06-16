@@ -41,6 +41,10 @@ module Runners
       "eslint" => Constraint.new(">= 5.0.0", "< 8.0.0")
     }.freeze
 
+    CUSTOM_FORMATTER = (Pathname(Dir.home) / "eslint" / "custom-eslint-json-formatter.js").to_path.freeze
+    DEFAULT_ESLINT_CONFIG = (Pathname(Dir.home) / "eslint" / "sider_eslintrc.yml").to_path.freeze
+    DEFAULT_DIR = ".".freeze
+
     def setup
       add_warning_if_deprecated_options([:options])
 
@@ -54,23 +58,16 @@ module Runners
     end
 
     def analyze(_changes)
-      additional_options = [eslint_config, ext, ignore_path, ignore_pattern, no_ignore, global, quiet].flatten.compact
-      run_analyzer(dir, additional_options)
+      run_analyzer config: eslint_config
     end
 
     private
 
     def dir
-      dir = config_linter[:dir] || config_linter.dig(:options, :dir) || '.'
-      Array(dir)
+      Array(config_linter[:dir] || config_linter.dig(:options, :dir) || DEFAULT_DIR)
     end
 
     def eslint_config
-      conf = user_specified_eslint_config_path
-      "--config=#{conf}" if conf
-    end
-
-    def user_specified_eslint_config_path
       path = config_linter[:config] || config_linter.dig(:options, :config)
       if path && directory_traversal_attack?(path)
         path = nil
@@ -80,35 +77,32 @@ module Runners
 
     def ext
       ext = config_linter[:ext] || config_linter.dig(:options, :ext)
-      "--ext=#{ext}" if ext
+      ext ? ["--ext", ext] : []
     end
 
     def ignore_path
       ignore_path = config_linter[:'ignore-path'] || config_linter.dig(:options, :'ignore-path')
-      "--ignore-path=#{ignore_path}" if ignore_path
+      ignore_path ? ["--ignore-path", ignore_path] : []
     end
 
     def ignore_pattern
       ignore_pattern = config_linter[:'ignore-pattern'] || config_linter.dig(:options, :'ignore-pattern')
-      pattern = Array(ignore_pattern)
-      unless pattern.empty?
-        pattern.map { |value| "--ignore-pattern=#{value}" }
-      end
+      Array(ignore_pattern).flat_map { |value| ["--ignore-pattern", value] }
     end
 
     def no_ignore
       no_ignore = config_linter[:'no-ignore'] || config_linter.dig(:options, :'no-ignore')
-      "--no-ignore" if no_ignore
+      no_ignore ? ["--no-ignore"] : []
     end
 
     def global
       global = config_linter[:global] || config_linter.dig(:options, :global)
-      "--global='#{global}'" if global
+      global ? ["--global", global] : []
     end
 
     def quiet
       quiet = config_linter[:quiet] || config_linter.dig(:options, :quiet)
-      "--quiet" if quiet
+      quiet ? ["--quiet"] : []
     end
 
     # @see https://eslint.org/docs/user-guide/configuring#configuring-rules
@@ -167,7 +161,7 @@ module Runners
       end
     end
 
-    def run_analyzer(target_dir, additional_options)
+    def run_analyzer(config:)
       # NOTE: eslint exit with status code 1 when some issues are found.
       #       We use `capture3` instead of `capture3!`
       #
@@ -182,11 +176,17 @@ module Runners
 
       _stdout, stderr, status = capture3(
         nodejs_analyzer_bin,
-        "--format=#{custom_formatter}",
-        "--output-file=#{report_file}",
+        "--format", CUSTOM_FORMATTER,
+        "--output-file", report_file,
         "--no-color",
-        *additional_options,
-        *target_dir
+        *(config ? ["--config", config] : []),
+        *ext,
+        *ignore_path,
+        *ignore_pattern,
+        *no_ignore,
+        *global,
+        *quiet,
+        *dir
       )
 
       output_json = report_file_exist? ? read_report_json { nil } : nil
@@ -197,19 +197,21 @@ module Runners
         end
       elsif no_linting_files?(stderr)
         Results::Success.new(guid: guid, analyzer: analyzer)
+      elsif no_eslint_config?(stderr)
+        run_analyzer config: DEFAULT_ESLINT_CONFIG # retry with the default configuration
       else
         Results::Failure.new(guid: guid, message: stderr.strip, analyzer: analyzer)
       end
-    end
-
-    def custom_formatter
-      (Pathname(Dir.home) / "custom-eslint-json-formatter.js").realpath
     end
 
     # NOTE: Linting nonexistent files is a fatal error since v5.0.0.
     # @see https://eslint.org/docs/user-guide/migrating-to-5.0.0#-linting-nonexistent-files-from-the-command-line-is-now-a-fatal-error
     def no_linting_files?(stderr)
       stderr.match?(/No files matching the pattern ".+" were found/)
+    end
+
+    def no_eslint_config?(stderr)
+      eslint_config.nil? && stderr.include?("ESLint couldn't find a configuration file")
     end
   end
 end

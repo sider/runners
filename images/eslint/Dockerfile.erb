@@ -3,10 +3,7 @@ FROM sider/devon_rex_npm:master
 <%= render_erb 'images/Dockerfile.base.erb' %>
 <%= render_erb 'images/Dockerfile.npm.erb' %>
 
-# NOTE: ESLint uses a configuration file in the home directory if no other configuration files are found.
-#       See https://eslint.org/docs/user-guide/configuring#configuration-cascading-and-hierarchy
-COPY --chown=<%= chown %> images/eslint/sider_eslintrc.yml ${RUNNER_USER_HOME}/.eslintrc.yml
-
-COPY --chown=<%= chown %> images/eslint/custom-eslint-json-formatter.js ${RUNNER_USER_HOME}/
+COPY --chown=<%= chown %> images/<%= analyzer %>/sider_eslintrc.yml ${RUNNER_USER_HOME}/<%= analyzer %>/
+COPY --chown=<%= chown %> images/<%= analyzer %>/custom-eslint-json-formatter.js ${RUNNER_USER_HOME}/<%= analyzer %>/
 
 <%= render_erb 'images/Dockerfile.end.erb' %>
