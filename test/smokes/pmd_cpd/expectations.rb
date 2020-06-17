@@ -1407,17 +1407,17 @@ s.add_test(
             id: "816e15083fd49ae7bd01aee5f5a979978f6f7b84",
             path: "bar/hello_php.php",
             start_line: 1,
-            start_column: 0,
+            start_column: nil,
             end_line: 8,
-            end_column: 0
+            end_column: nil
           },
           {
             id: "3f18338e7a3124257c7b1424604e3386e6808bc4",
             path: "foo/hello_php.php",
             start_line: 1,
-            start_column: 0,
+            start_column: nil,
             end_line: 8,
-            end_column: 0
+            end_column: nil
           }
         ],
         codefragment: /<\?php/
@@ -1585,17 +1585,17 @@ s.add_test(
             id: "816e15083fd49ae7bd01aee5f5a979978f6f7b84",
             path: "bar/hello_php.php",
             start_line: 1,
-            start_column: 0,
+            start_column: nil,
             end_line: 8,
-            end_column: 0
+            end_column: nil
           },
           {
             id: "3f18338e7a3124257c7b1424604e3386e6808bc4",
             path: "foo/hello_php.php",
             start_line: 1,
-            start_column: 0,
+            start_column: nil,
             end_line: 8,
-            end_column: 0
+            end_column: nil
           }
         ],
         codefragment: /<\?php/
@@ -2321,17 +2321,17 @@ s.add_test(
             id: "b2dd306cf6f04b345205f872135d56c8d3219e85",
             path: "src/bar/hello_tcl.tcl",
             start_line: 1,
-            start_column: 0,
+            start_column: nil,
             end_line: 9,
-            end_column: 0
+            end_column: nil
           },
           {
             id: "b406d92700be1543ff7b496aaf4ef22c5c2340be",
             path: "src/foo/hello_tcl.tcl",
             start_line: 1,
-            start_column: 0,
+            start_column: nil,
             end_line: 9,
-            end_column: 0
+            end_column: nil
           }
         ],
         codefragment: /proc main \{\} \{/
@@ -2355,17 +2355,17 @@ s.add_test(
             id: "b2dd306cf6f04b345205f872135d56c8d3219e85",
             path: "src/bar/hello_tcl.tcl",
             start_line: 1,
-            start_column: 0,
+            start_column: nil,
             end_line: 9,
-            end_column: 0
+            end_column: nil
           },
           {
             id: "b406d92700be1543ff7b496aaf4ef22c5c2340be",
             path: "src/foo/hello_tcl.tcl",
             start_line: 1,
-            start_column: 0,
+            start_column: nil,
             end_line: 9,
-            end_column: 0
+            end_column: nil
           }
         ],
         codefragment: /proc main \{\} \{/

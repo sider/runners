@@ -28,9 +28,9 @@ module Runners
           id: string,
           path: string,
           start_line: integer,
-          start_column: integer,
+          start_column: integer?,
           end_line: integer,
-          end_column: integer
+          end_column: integer?
         )),
         codefragment: string
       )
@@ -124,9 +124,9 @@ module Runners
         id: f[:id],
         path: f[:path].to_s,
         start_line: f[:location].start_line,
-        start_column: f[:location].start_column.to_i,
+        start_column: f[:location].start_column,
         end_line: f[:location].end_line,
-        end_column: f[:location].end_column.to_i,
+        end_column: f[:location].end_column,
       }}
 
       return {
