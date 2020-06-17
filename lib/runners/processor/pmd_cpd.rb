@@ -3,11 +3,38 @@ module Runners
     include Java
 
     Schema = StrongJSON.new do
+      let :available_languages, enum(
+        literal("apex"),
+        literal("cpp"),
+        literal("cs"),
+        literal("dart"),
+        literal("ecmascript"),
+        literal("fortran"),
+        literal("go"),
+        literal("groovy"),
+        literal("java"),
+        literal("jsp"),
+        literal("kotlin"),
+        literal("lua"),
+        literal("matlab"),
+        literal("modelica"),
+        literal("objectivec"),
+        literal("perl"),
+        literal("php"),
+        literal("plsql"),
+        literal("python"),
+        literal("ruby"),
+        literal("scala"),
+        literal("swift"),
+        literal("vf"),
+        literal("xml")
+      )
+
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
                     'minimum-tokens': numeric?,
                     files: enum?(string, array(string)),
-                    language: enum?(string, array(string)),
+                    language: enum?(available_languages, array(available_languages)),
                     encoding: string?,
                     'skip-duplicate-files': boolean?,
                     'non-recursive': boolean?,

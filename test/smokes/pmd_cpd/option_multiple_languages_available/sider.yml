@@ -1,0 +1,4 @@
+linter:
+  pmd_cpd:
+    minimum-tokens: 15
+    language: [apex, cpp, cs, dart, ecmascript, fortran, go, groovy, java, jsp, kotlin, lua, matlab, modelica, objectivec, perl, php, plsql, python, ruby, scala, swift, vf, xml]
