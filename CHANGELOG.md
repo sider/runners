@@ -25,7 +25,7 @@ Updated tools:
 - **Pylint** 2.5.2 -> 2.5.3 [#1190](https://github.com/sider/runners/pull/1190)
 - **Reek** 6.0.0 -> 6.0.1 [#1161](https://github.com/sider/runners/pull/1161)
 - **RuboCop** 0.83.0 -> 0.85.1 [#1170](https://github.com/sider/runners/pull/1170)
-- **stylelint** 13.4.1 -> 13.6.0 [#1168](https://github.com/sider/runners/pull/1168)
+- **stylelint** 13.4.1 -> 13.6.1 [#1168](https://github.com/sider/runners/pull/1168) [#1203](https://github.com/sider/runners/pull/1203)
 
 Misc:
 
