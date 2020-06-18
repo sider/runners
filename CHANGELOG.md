@@ -19,7 +19,7 @@ Updated tools:
 - **ESLint** 6.8.0 -> 7.2.0 [#1192](https://github.com/sider/runners/pull/1192)
 - **Flake8** 3.8.1 -> 3.8.3 [#1127](https://github.com/sider/runners/pull/1127) [#1189](https://github.com/sider/runners/pull/1189)
 - **hadolint** 1.17.6 -> 1.18.0 [#1177](https://github.com/sider/runners/pull/1177)
-- **ktlint** 0.36.0 -> 0.37.1 [#1167](https://github.com/sider/runners/pull/1167) [#1186](https://github.com/sider/runners/pull/1186)
+- **ktlint** 0.36.0 -> 0.37.2 [#1167](https://github.com/sider/runners/pull/1167) [#1186](https://github.com/sider/runners/pull/1186) [#1202](https://github.com/sider/runners/pull/1202)
 - **PMD CPD** 6.23.0 -> 6.24.0 [#1157](https://github.com/sider/runners/pull/1157)
 - **PMD Java** 6.23.0 -> 6.24.0 [#1123](https://github.com/sider/runners/pull/1123)
 - **Pylint** 2.5.2 -> 2.5.3 [#1190](https://github.com/sider/runners/pull/1190)
