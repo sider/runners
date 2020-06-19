@@ -223,34 +223,47 @@ module Runners
     end
 
     def build_cop_links(cop_name)
-      department, cop = cop_name.split("/").map(&:downcase)
+      department, cop = cop_name.split("/")
 
       if department && cop
-        fragment = "#{department}#{cop}"
-        case
-        when core_departments.include?(department)
-          return ["https://github.com/rubocop-hq/rubocop/blob/v#{analyzer_version}/manual/cops_#{department}.md##{fragment}"]
-        when ["rails", "performance"].include?(department)
-          version = rubocop_plugin_version("rubocop-#{department}")
-          if version
-            return ["https://github.com/rubocop-hq/rubocop-#{department}/blob/v#{version}/manual/cops_#{department}.md##{fragment}"]
-          end
+        gem_name = department_to_gem_name[department]
+        if gem_name
+          department.downcase!
+          cop.downcase!
+          return ["https://docs.rubocop.org/#{gem_name}/cops_#{department}.html##{department}#{cop}"]
         end
       end
 
       []
     end
 
-    def core_departments
-      @core_departments ||= %w[style layout lint metrics naming security bundler gemspec].tap do |list|
-        list << "rails" unless rails_cops_removed?
-        list << "performance" unless performance_cops_removed?
-      end
-    end
+    def department_to_gem_name
+      @rubocop_gem_names ||= {
+        # rubocop
+        "Bundler" => "rubocop",
+        "Gemspec" => "rubocop",
+        "Layout" => "rubocop",
+        "Lint" => "rubocop",
+        "Metrics" => "rubocop",
+        "Migration" => "rubocop",
+        "Naming" => "rubocop",
+        "Security" => "rubocop",
+        "Style" => "rubocop",
 
-    def rubocop_plugin_version(gem_name)
-      @rubocop_plugin_versions ||= installed_gem_versions("rubocop-rails", "rubocop-performance", exception: false)
-      @rubocop_plugin_versions[gem_name]&.first
+        # rubocop-rails
+        "Rails" => "rubocop-rails",
+
+        # rubocop-rspec
+        "Capybara" => "rubocop-rspec",
+        "FactoryBot" => "rubocop-rspec",
+        "RSpec" => "rubocop-rspec",
+
+        # rubocop-minitest
+        "Minitest" => "rubocop-minitest",
+
+        # rubocop-performance
+        "Performance" => "rubocop-performance",
+      }.freeze
     end
 
     def normalize_message(original_message, links, cop_name)
@@ -260,11 +273,6 @@ module Runners
     # @see https://github.com/rubocop-hq/rubocop/blob/v0.72.0/CHANGELOG.md
     def rails_cops_removed?
       Gem::Version.create(analyzer_version) >= Gem::Version.create("0.72.0")
-    end
-
-    # @see https://github.com/rubocop-hq/rubocop/blob/v0.68.0/CHANGELOG.md
-    def performance_cops_removed?
-      Gem::Version.create(analyzer_version) >= Gem::Version.create("0.68.0")
     end
   end
 end

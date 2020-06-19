@@ -8,7 +8,7 @@ s.add_test(
   issues: [
     {
       message: "Literal `true` appeared as a condition.",
-      links: %W[https://github.com/rubocop-hq/rubocop/blob/v#{default_version}/manual/cops_lint.md#lintliteralascondition],
+      links: %w[https://docs.rubocop.org/rubocop/cops_lint.html#lintliteralascondition],
       id: "Lint/LiteralAsCondition",
       path: "app/controllers/users_controller.rb",
       object: { severity: "warning", corrected: false },
@@ -17,7 +17,7 @@ s.add_test(
     },
     {
       message: "Shadowing outer local variable - `v`.",
-      links: %W[https://github.com/rubocop-hq/rubocop/blob/v#{default_version}/manual/cops_lint.md#lintshadowingouterlocalvariable],
+      links: %w[https://docs.rubocop.org/rubocop/cops_lint.html#lintshadowingouterlocalvariable],
       id: "Lint/ShadowingOuterLocalVariable",
       path: "app/controllers/users_controller.rb",
       object: { severity: "warning", corrected: false },
@@ -26,9 +26,9 @@ s.add_test(
     },
     {
       message: "Useless assignment to variable - `v`.",
-      links: %W[
+      links: %w[
         https://rubystyle.guide#underscore-unused-vars
-        https://github.com/rubocop-hq/rubocop/blob/v#{default_version}/manual/cops_lint.md#lintuselessassignment
+        https://docs.rubocop.org/rubocop/cops_lint.html#lintuselessassignment
       ],
       id: "Lint/UselessAssignment",
       path: "app/controllers/users_controller.rb",
@@ -38,9 +38,9 @@ s.add_test(
     },
     {
       message: "Prefer symbols instead of strings as hash keys.",
-      links: %W[
+      links: %w[
         https://rubystyle.guide#symbols-as-keys
-        https://github.com/rubocop-hq/rubocop/blob/v#{default_version}/manual/cops_style.md#stylestringhashkeys
+        https://docs.rubocop.org/rubocop/cops_style.html#stylestringhashkeys
       ],
       id: "Style/StringHashKeys",
       path: "config/environments/development.rb",
@@ -50,9 +50,9 @@ s.add_test(
     },
     {
       message: "Prefer symbols instead of strings as hash keys.",
-      links: %W[
+      links: %w[
         https://rubystyle.guide#symbols-as-keys
-        https://github.com/rubocop-hq/rubocop/blob/v#{default_version}/manual/cops_style.md#stylestringhashkeys
+        https://docs.rubocop.org/rubocop/cops_style.html#stylestringhashkeys
       ],
       id: "Style/StringHashKeys",
       path: "config/environments/test.rb",
@@ -70,7 +70,7 @@ s.add_test(
   issues: [
     {
       "message": "Missing top-level class documentation comment.",
-      "links": %W[https://github.com/rubocop-hq/rubocop/blob/v#{default_version}/manual/cops_style.md#styledocumentation],
+      "links": %w[https://docs.rubocop.org/rubocop/cops_style.html#styledocumentation],
       "id": "Style/Documentation",
       "path": "app.rb",
       "location": { "start_line": 3, "start_column": 1, "end_line": 3, "end_column": 5 },
@@ -79,9 +79,9 @@ s.add_test(
     },
     {
       "message": "Put empty method definitions on a single line.",
-      "links": %W[
+      "links": %w[
         https://rubystyle.guide#no-single-line-methods
-        https://github.com/rubocop-hq/rubocop/blob/v#{default_version}/manual/cops_style.md#styleemptymethod
+        https://docs.rubocop.org/rubocop/cops_style.html#styleemptymethod
       ],
       "id": "Style/EmptyMethod",
       "path": "app.rb",
@@ -101,7 +101,7 @@ s.add_test(
       message: "Use 2 (not 1) spaces for indentation.",
       links: %w[
         https://rubystyle.guide#spaces-indentation
-        https://github.com/rubocop-hq/rubocop/blob/v0.79.0/manual/cops_layout.md#layoutindentationwidth
+        https://docs.rubocop.org/rubocop/cops_layout.html#layoutindentationwidth
       ],
       id: "Layout/IndentationWidth",
       path: "test.rb",
@@ -113,7 +113,7 @@ s.add_test(
       message: "Tab detected.",
       links: %w[
         https://rubystyle.guide#spaces-indentation
-        https://github.com/rubocop-hq/rubocop/blob/v0.79.0/manual/cops_layout.md#layouttab
+        https://docs.rubocop.org/rubocop/cops_layout.html#layouttab
       ],
       id: "Layout/Tab",
       path: "test.rb",
@@ -126,9 +126,7 @@ s.add_test(
       location: { start_line: 1, start_column: 1, end_line: 1, end_column: 1 },
       id: "Style/FrozenStringLiteralComment",
       message: "Missing magic comment `# frozen_string_literal: true`.",
-      links: %w[
-        https://github.com/rubocop-hq/rubocop/blob/v0.79.0/manual/cops_style.md#stylefrozenstringliteralcomment
-      ],
+      links: %w[https://docs.rubocop.org/rubocop/cops_style.html#stylefrozenstringliteralcomment],
       object: { severity: "convention", corrected: false },
       git_blame_info: nil
     },
@@ -137,9 +135,7 @@ s.add_test(
       location: { start_line: 1, start_column: 1, end_line: 1, end_column: 1 },
       id: "Style/FrozenStringLiteralComment",
       message: "Missing magic comment `# frozen_string_literal: true`.",
-      links: %w[
-        https://github.com/rubocop-hq/rubocop/blob/v0.79.0/manual/cops_style.md#stylefrozenstringliteralcomment
-      ],
+      links: %w[https://docs.rubocop.org/rubocop/cops_style.html#stylefrozenstringliteralcomment],
       object: { severity: "convention", corrected: false },
       git_blame_info: nil
     }
@@ -156,7 +152,7 @@ s.add_test(
       message: "Line is too long. [218/200]",
       links: %w[
         https://rubystyle.guide#80-character-limits
-        https://github.com/rubocop-hq/rubocop/blob/v0.79.0/manual/cops_layout.md#layoutlinelength
+        https://docs.rubocop.org/rubocop/cops_layout.html#layoutlinelength
       ],
       id: "Layout/LineLength",
       path: "cat.rb",
@@ -174,7 +170,7 @@ s.add_test(
   issues: [
     {
       message: "Use the `&&` operator to compare multiple values.",
-      links: %W[https://github.com/rubocop-hq/rubocop/blob/v#{default_version}/manual/cops_lint.md#lintmultiplecomparison],
+      links: %w[https://docs.rubocop.org/rubocop/cops_lint.html#lintmultiplecomparison],
       id: "Lint/MultipleComparison",
       path: "test.rb",
       object: { severity: "warning", corrected: false },
@@ -206,7 +202,7 @@ s.add_test(
   issues: [
     {
       message: "Empty `ensure` block detected.",
-      links: %W[https://github.com/rubocop-hq/rubocop/blob/v#{default_version}/manual/cops_lint.md#lintemptyensure],
+      links: %w[https://docs.rubocop.org/rubocop/cops_lint.html#lintemptyensure],
       id: "Lint/EmptyEnsure",
       path: "drink.rb",
       location: { start_line: 12, start_column: 3, end_line: 12, end_column: 8 },
@@ -215,7 +211,7 @@ s.add_test(
     },
     {
       message: "Do not chain ordinary method call after safe navigation operator.",
-      links: %W[https://github.com/rubocop-hq/rubocop/blob/v#{default_version}/manual/cops_lint.md#lintsafenavigationchain],
+      links: %w[https://docs.rubocop.org/rubocop/cops_lint.html#lintsafenavigationchain],
       id: "Lint/SafeNavigationChain",
       path: "drink.rb",
       location: { start_line: 18, start_column: 21, end_line: 18, end_column: 27 },
@@ -246,7 +242,7 @@ s.add_test(
       message: "Line is too long. [218/200]",
       links: %w[
         https://github.com/rubocop-hq/ruby-style-guide#80-character-limits
-        https://github.com/rubocop-hq/rubocop/blob/v0.71.0/manual/cops_metrics.md#metricslinelength
+        https://docs.rubocop.org/rubocop/cops_metrics.html#metricslinelength
       ],
       id: "Metrics/LineLength",
       path: "cat.rb",
@@ -272,7 +268,7 @@ s.add_test(
       message: "Line is too long. [218/200]",
       links: %w[
         https://rubystyle.guide#80-character-limits
-        https://github.com/rubocop-hq/rubocop/blob/v0.72.0/manual/cops_metrics.md#metricslinelength
+        https://docs.rubocop.org/rubocop/cops_metrics.html#metricslinelength
       ],
       id: "Metrics/LineLength",
       path: "cat.rb",
@@ -292,7 +288,7 @@ s.add_test(
       message: "Line is too long. [218/200]",
       links: %w[
         https://rubystyle.guide#80-character-limits
-        https://github.com/rubocop-hq/rubocop/blob/v0.72.0/manual/cops_metrics.md#metricslinelength
+        https://docs.rubocop.org/rubocop/cops_metrics.html#metricslinelength
       ],
       id: "Metrics/LineLength",
       path: "cat.rb",
@@ -319,9 +315,7 @@ s.add_test(
   issues: [
     {
       message: "Use `caller(2..2).first` instead of `caller[1]`.",
-      links: %w[
-        https://github.com/rubocop-hq/rubocop-performance/blob/v1.5.0/manual/cops_performance.md#performancecaller
-      ],
+      links: %w[https://docs.rubocop.org/rubocop-performance/cops_performance.html#performancecaller],
       id: "Performance/Caller",
       path: "app/foo.rb",
       location: { start_line: 1, start_column: 1, end_line: 1, end_column: 9 },
@@ -330,7 +324,7 @@ s.add_test(
     },
     {
       message: "Do not use `exit` in Rails applications.",
-      links: %w[https://github.com/rubocop-hq/rubocop-rails/blob/v2.3.2/manual/cops_rails.md#railsexit],
+      links: %w[https://docs.rubocop.org/rubocop-rails/cops_rails.html#railsexit],
       id: "Rails/Exit",
       path: "app/foo.rb",
       location: { start_line: 3, start_column: 1, end_line: 3, end_column: 4 },
@@ -339,7 +333,7 @@ s.add_test(
     },
     {
       message: "Please use `Rails.root.join('path', 'to')` instead.",
-      links: %w[https://github.com/rubocop-hq/rubocop-rails/blob/v2.3.2/manual/cops_rails.md#railsfilepath],
+      links: %w[https://docs.rubocop.org/rubocop-rails/cops_rails.html#railsfilepath],
       id: "Rails/FilePath",
       path: "app/foo.rb",
       location: { start_line: 2, start_column: 1, end_line: 2, end_column: 33 },
@@ -356,7 +350,7 @@ s.add_test(
   issues: [
     {
       message: "Use `caller(2..2).first` instead of `caller[1]`.",
-      links: %w[https://github.com/rubocop-hq/rubocop/blob/v0.67.0/manual/cops_performance.md#performancecaller],
+      links: %w[https://docs.rubocop.org/rubocop-performance/cops_performance.html#performancecaller],
       id: "Performance/Caller",
       path: "app/foo.rb",
       location: { start_line: 1, start_column: 1, end_line: 1, end_column: 9 },
@@ -365,7 +359,7 @@ s.add_test(
     },
     {
       message: "Do not use `exit` in Rails applications.",
-      links: %w[https://github.com/rubocop-hq/rubocop/blob/v0.67.0/manual/cops_rails.md#railsexit],
+      links: %w[https://docs.rubocop.org/rubocop-rails/cops_rails.html#railsexit],
       id: "Rails/Exit",
       path: "app/foo.rb",
       location: { start_line: 3, start_column: 1, end_line: 3, end_column: 4 },
@@ -374,7 +368,7 @@ s.add_test(
     },
     {
       message: "Please use `Rails.root.join('path', 'to')` instead.",
-      links: %w[https://github.com/rubocop-hq/rubocop/blob/v0.67.0/manual/cops_rails.md#railsfilepath],
+      links: %w[https://docs.rubocop.org/rubocop-rails/cops_rails.html#railsfilepath],
       id: "Rails/FilePath",
       path: "app/foo.rb",
       location: { start_line: 2, start_column: 1, end_line: 2, end_column: 33 },
