@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 [Full diff](https://github.com/sider/runners/compare/0.28.0...HEAD)
 
 - **Brakeman** Fix warning in Markdown [#1206](https://github.com/sider/runners/pull/1206)
+- **RuboCop** Fix broken document link [#1207](https://github.com/sider/runners/pull/1207)
 
 ## 0.28.0
 
