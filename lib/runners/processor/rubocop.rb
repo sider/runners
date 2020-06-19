@@ -238,7 +238,7 @@ module Runners
     end
 
     def department_to_gem_name
-      @rubocop_gem_names ||= {
+      @department_to_gem_name ||= {
         # rubocop
         "Bundler" => "rubocop",
         "Gemspec" => "rubocop",
