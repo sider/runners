@@ -14,7 +14,7 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.2, >= 2.2.2)
-    amazing_print (1.2.0)
+    amazing_print (1.2.1)
     ast (2.4.0)
     ast_utils (0.3.0)
       parser (~> 2.4)
