@@ -1,9 +1,5 @@
-# AwsS3IO expects AWS credentials set with environment variables or an instance profile.
-# So, before using this, make sure AWS credentials available.
-# Also, prepare the S3 bucket and allow this instance to upload an S3 object.
 module Runners
   class IO::AwsS3
-    # @type const BUFFER_SIZE: Integer
     BUFFER_SIZE = 300
 
     def self.parse_s3_uri!(s3_uri)
@@ -19,7 +15,6 @@ module Runners
 
     attr_reader :uri, :bucket_name, :object_name, :tempfile, :written_items, :client
 
-    # @param uri [String]
     def initialize(uri)
       @uri = uri
       @bucket_name, @object_name = self.class.parse_s3_uri!(uri)

@@ -9,7 +9,7 @@ class Runners::Options
   def parse_options: () -> Hash[Symbol, untyped]
 end
 
-class Runners::Options::GitSource
+class Runners::Options::GitSource < Struct[untyped]
   attr_reader head: String
   attr_reader base: String?
   attr_reader git_http_url: String

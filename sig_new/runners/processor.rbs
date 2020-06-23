@@ -1,3 +1,62 @@
-class Runners::Processor
+type Runners::capture3_options = bool | Proc
 
+class Runners::Processor
+  extend Forwardable
+  include Tmpdir
+
+  def self.register_config_schema: (**untyped) -> void
+
+  attr_reader guid: String
+  attr_reader working_dir: Pathname
+  attr_reader git_ssh_path: Pathname?
+  attr_reader trace_writer: TraceWriter
+  attr_reader shell: Shell
+  attr_reader warnings: Array[untyped]
+  attr_reader config: Config
+
+  def initialize: (guid: String, working_dir: Pathname, config: Config, git_ssh_path: Pathname?, trace_writer: TraceWriter) -> void
+  def relative_path: (String | Pathname, ?from: Pathname) -> Pathname
+  def setup: { () -> result } -> result
+  def analyze: (Changes) -> result
+  def config_linter: () -> Hash[Symbol, untyped]
+  def check_root_dir_exist: () -> result?
+  def in_root_dir: [X] { (Pathname) -> X } -> X
+  def ensure_files: (*Pathname) { (Pathname) -> result } -> result
+  def ensure_runner_config_schema: (untyped) { (untyped) -> result } -> result
+  def chdir: [X] (Pathname) { (Pathname) -> X } -> X
+  def current_dir: () -> Pathname
+
+  def capture3: (String, *String, **capture3_options) -> [String, String, Process::Status]
+  def capture3!: (String, *String, **capture3_options) -> [String, String]
+  def capture3_with_retry!: (String, *String, ?tries: Integer) -> [String, String]
+  def capture3_trace: (String, *String, **capture3_options) -> [String, String, Process::Status]
+
+  def push_env_hash: [X] (Hash[String, String?]) { () -> X } -> X
+  def env_hash: () -> Hash[String, String?]
+
+  def delete_unchanged_files: (Changes, ?except: Array[String], ?only: Array[String]) -> void
+  def add_warning: (String, ?file: String?) -> void
+  def add_warning_if_deprecated_version: (minimum: String, ?file: String?, ?deadline: Time?) -> void
+  def add_warning_if_deprecated_options: (Array[Symbol]) -> void
+  def add_warning_for_deprecated_linter: (alternative: String, ref: String, ?deadline: Time?) -> void
+  def analyzer: () -> Analyzer
+  def analyzers: () -> Analyzers
+  def analyzer_id: () -> String
+  def analyzer_name: () -> String
+  def analyzer_doc: () -> String
+  def analyzer_bin: () -> String
+  def analyzer_version: () -> String
+  def extract_version!: (String | Array[String], ?(String | Array[String]), ?pattern: Regexp) -> String
+  def config_field_path: (*_ToS) -> String
+  def root_dir: () -> Pathname
+  def directory_traversal_attack?: (String) -> bool
+  def show_runtime_versions: () -> void
+  def report_file: () -> String
+  def report_file_exist?: () -> bool
+  def read_report_file: (?String) -> String
+  def read_report_xml: (?String) -> REXML::Document
+  def read_report_json: [X] (?String) { () -> X } -> (Hash[Symbol, untyped] | X)
 end
+
+# TODO: Keep for the backward compatibility.
+Runners::Processor::RemovedGoToolSchema: untyped

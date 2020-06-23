@@ -3,7 +3,7 @@ class Runners::Ignoring
   attr_reader trace_writer: TraceWriter
   attr_reader config: Config
 
-  def initialize: (working_dir: Pathname, trace_writer: TraceWriter, config: Config) -> untyped
+  def initialize: (working_dir: Pathname, trace_writer: TraceWriter, config: Config) -> void
   def delete_ignored_files!: () -> Array[String]
 
   private

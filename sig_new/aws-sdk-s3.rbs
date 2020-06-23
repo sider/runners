@@ -1,0 +1,2 @@
+class Aws::S3::Client
+end
