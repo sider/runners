@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.28.1...HEAD)
 
+- **Rails Best Practices** Improvements [#1213](https://github.com/sider/runners/pull/1213)
 - Retry git-fetch(1) and git-checkout(1) [#1214](https://github.com/sider/runners/pull/1214)
 
 ## 0.28.1
