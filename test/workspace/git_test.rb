@@ -19,6 +19,14 @@ class WorkspaceGitTest < Minitest::Test
     workspace_params.merge(base: "abe1cfc294c8d39de7484954bf8c3d7792fd8ad1")
   end
 
+  def with_workspace(**params)
+    super(**params) do |workspace|
+      workspace.stub :try_count, 1 do
+        yield workspace
+      end
+    end
+  end
+
   def test_instance_class
     with_workspace(**workspace_params) do |workspace|
       assert_instance_of Runners::Workspace::Git, workspace

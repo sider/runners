@@ -115,29 +115,35 @@ module Runners
         # NOTE: rails_best_practices exit with status code n (issue count)
         #       when some issues are found.
         #       We use `capture3` instead of `capture3!`
-        stdout, _, _ = capture3(
+        capture3(
           *ruby_analyzer_bin,
           '--without-color',
           '--silent',
-          '--output-file=/dev/stdout',
+          '--output-file', report_file,
           '--format=yaml',
           *options
         )
         # NOTE: rails_best_practices returns top-level YAML array with tags.
-        #       We want to just parse a YAML, so we remove YAML tags before passing to `YAML.load`.
-        YAML.load(stdout.gsub('- !ruby/object:RailsBestPractices::Core::Error', '-'), symbolize_names: true).each do |yaml|
-          loc = Location.new(
-            start_line: yaml.fetch(:line_number).to_i,
-            start_column: 0,
-            end_line: yaml.fetch(:line_number).to_i,
-            end_column: 0
-          )
+        #       We want to just parse a YAML, so we remove YAML tags before passing.
+        output = read_report_file
+        output.gsub!('- !ruby/object:RailsBestPractices::Core::Error', '-')
+        YAML.safe_load(output, symbolize_names: true, filename: report_file).each do |issue|
+          # HACK: `line_number` sometimes is not a number.
+          line_number = issue.fetch(:line_number)
+          start_line = Integer(line_number, exception: false)
+          location = if start_line
+                       Location.new(start_line: start_line)
+                     else
+                       add_warning "`line_number` is invalid: #{line_number.inspect}. The line location is lost."
+                       nil
+                     end
+
           result.add_issue Issue.new(
-            path: relative_path(yaml.fetch(:filename)),
-            location: loc,
-            id: yaml.fetch(:type),
-            message: yaml.fetch(:message),
-            links: [yaml[:url]].compact
+            path: relative_path(issue.fetch(:filename)),
+            location: location,
+            id: issue.fetch(:type),
+            message: issue.fetch(:message),
+            links: Array(issue[:url]),
           )
         end
       end

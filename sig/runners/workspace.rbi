@@ -41,4 +41,5 @@ class Runners::Workspace::Git < Workspace
   def prepare_head_source: (Pathname) -> void
   def remote_url: () -> URI
   def git_fetch_args: () -> Array<String>
+  def try_count: () -> Integer
 end

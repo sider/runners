@@ -1,3 +1,6 @@
+AllCops:
+  NewCops: enable
+
 require:
   - rubocop-minitest
   - rubocop-performance

@@ -18,6 +18,11 @@ module Runners
       # noop
     end
 
+    # for testing
+    def try_count
+      3
+    end
+
     def prepare_head_source(_dest)
       shell.capture3!("git", "init")
       shell.capture3!("git", "config", "gc.auto", "0")
@@ -25,13 +30,13 @@ module Runners
       shell.capture3!("git", "remote", "add", "origin", remote_url.to_s)
 
       begin
-        shell.capture3!("git", "fetch", *git_fetch_args)
+        shell.capture3_with_retry!("git", "fetch", *git_fetch_args, tries: try_count)
       rescue Shell::ExecError => exn
         raise FetchFailed, "git-fetch failed: #{exn.stderr_str}"
       end
 
       begin
-        shell.capture3!("git", "checkout", git_source.head)
+        shell.capture3_with_retry!("git", "checkout", git_source.head, tries: try_count)
       rescue Shell::ExecError => exn
         raise CheckoutFailed, "git-checkout failed: #{exn.stderr_str}"
       end

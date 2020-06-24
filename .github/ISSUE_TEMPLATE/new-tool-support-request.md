@@ -1,5 +1,5 @@
 ---
-name: New tool support request
+name: 🛠 New tool support request
 about: Suggest new analysis tool support for this project
 title: Support [ANALYSIS_TOOL_NAME]
 labels: enhancement

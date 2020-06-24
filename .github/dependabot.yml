@@ -87,6 +87,7 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    versioning-strategy: increase
   - package-ecosystem: npm
     directory: "/images/jshint"
     schedule:
@@ -94,6 +95,7 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    versioning-strategy: increase
   - package-ecosystem: npm
     directory: "/images/remark_lint"
     schedule:
@@ -101,6 +103,7 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    versioning-strategy: increase
   - package-ecosystem: npm
     directory: "/images/stylelint"
     schedule:
@@ -108,6 +111,7 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    versioning-strategy: increase
   - package-ecosystem: npm
     directory: "/images/tslint"
     schedule:
@@ -115,6 +119,7 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    versioning-strategy: increase
   - package-ecosystem: npm
     directory: "/images/tyscan"
     schedule:
@@ -122,6 +127,7 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    versioning-strategy: increase
 
   # PHP
   - package-ecosystem: composer
@@ -131,6 +137,7 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    versioning-strategy: increase
   - package-ecosystem: composer
     directory: "/images/phinder"
     schedule:
@@ -138,6 +145,7 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    versioning-strategy: increase
   - package-ecosystem: composer
     directory: "/images/phpmd"
     schedule:
@@ -145,6 +153,7 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    versioning-strategy: increase
 
   # Python
   - package-ecosystem: pip
@@ -177,6 +186,7 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    versioning-strategy: increase
   - package-ecosystem: bundler
     directory: "/images/goodcheck"
     schedule:
@@ -184,6 +194,7 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    versioning-strategy: increase
   - package-ecosystem: bundler
     directory: "/images/haml_lint"
     schedule:
@@ -191,6 +202,7 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    versioning-strategy: increase
   - package-ecosystem: bundler
     directory: "/images/querly"
     schedule:
@@ -198,6 +210,7 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    versioning-strategy: increase
   - package-ecosystem: bundler
     directory: "/images/rails_best_practices"
     schedule:
@@ -205,6 +218,7 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    versioning-strategy: increase
   - package-ecosystem: bundler
     directory: "/images/reek"
     schedule:
@@ -212,6 +226,7 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    versioning-strategy: increase
   - package-ecosystem: bundler
     directory: "/images/rubocop"
     schedule:
@@ -219,6 +234,7 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    versioning-strategy: increase
   - package-ecosystem: bundler
     directory: "/images/scss_lint"
     schedule:
@@ -226,3 +242,4 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    versioning-strategy: increase
