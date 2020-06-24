@@ -141,10 +141,10 @@ class CLITest < Minitest::Test
   def test_processor_class
     with_runners_options_env(source: { head: 'http://example.com/head' }) do
       cli = CLI.new(argv: %w[--analyzer=rubocop test-guid], stdout: stdout, stderr: stderr)
-      assert_equal Runners::Processor::RuboCop, cli.processor_class
+      assert_equal 'Runners::Processor::RuboCop', cli.processor_class.name
 
       cli = CLI.new(argv: %w[--analyzer=scss_lint test-guid], stdout: stdout, stderr: stderr)
-      assert_equal Runners::Processor::ScssLint, cli.processor_class
+      assert_equal 'Runners::Processor::ScssLint', cli.processor_class.name
 
       error = assert_raises { CLI.new(argv: %w[--analyzer=foo test-guid], stdout: stdout, stderr: stderr) }
       assert_equal "Not found processor class with 'foo'", error.message
