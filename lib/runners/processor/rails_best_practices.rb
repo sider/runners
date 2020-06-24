@@ -134,7 +134,7 @@ module Runners
           location = if start_line
                        Location.new(start_line: start_line)
                      else
-                       add_warning "`line_number` is invalid: #{line_number.inspect}. Ignored."
+                       add_warning "`line_number` is invalid: #{line_number.inspect}. The line location is lost."
                        nil
                      end
 
