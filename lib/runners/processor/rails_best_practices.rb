@@ -128,9 +128,19 @@ module Runners
         output = read_report_file
         output.gsub!('- !ruby/object:RailsBestPractices::Core::Error', '-')
         YAML.safe_load(output, symbolize_names: true, filename: report_file).each do |issue|
+          # HACK: `line_number` sometimes is not a number.
+          line_number = issue.fetch(:line_number)
+          start_line = Integer(line_number, exception: false)
+          location = if start_line
+                       Location.new(start_line: start_line)
+                     else
+                       add_warning "`line_number` is invalid: #{line_number.inspect}. Ignored."
+                       nil
+                     end
+
           result.add_issue Issue.new(
             path: relative_path(issue.fetch(:filename)),
-            location: Location.new(start_line: issue.fetch(:line_number)),
+            location: location,
             id: issue.fetch(:type),
             message: issue.fetch(:message),
             links: Array(issue[:url]),
