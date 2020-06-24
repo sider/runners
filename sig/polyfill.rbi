@@ -89,6 +89,7 @@ extension File (Polyfill)
   def self.basename: (String | Pathname, ?String) -> String
   def self.write: (String, String, ?perm: Integer) -> Integer
   def self.file?: (String) -> bool
+  def self.expand_path: (String, ?String) -> String
 end
 
 class Digest
@@ -205,7 +206,7 @@ end
 
 class YAML
   def self.load_file: (String, fallback: any) -> any
-  def self.safe_load: (String, symbolize_names: bool) -> any
+  def self.safe_load: (String, ?symbolize_names: bool) -> any
 end
 
 # HACK: To avoid receiving the error message `Unknown alias: untyped`,
