@@ -107,7 +107,7 @@ module Runners
     end
 
     def exclude_special_dirs
-      # @type var saved: Hash<Pathname, Pathname>
+      # @type var saved: Hash[Pathname, Pathname]
       saved = [".git"].filter_map do |dir|
         src = working_dir / dir
         if src.directory?

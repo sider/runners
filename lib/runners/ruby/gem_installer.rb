@@ -56,7 +56,7 @@ module Runners
       def gemfile_content
         trace_writer.header "Generating optimized Gemfile..."
 
-        # @type var lines: Array<String>
+        # @type var lines: Array[String]
         lines = ["source #{DEFAULT_SOURCE.inspect}", ""]
 
         group_specs.each do |source, specs|
