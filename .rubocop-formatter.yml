@@ -1,5 +1,6 @@
 AllCops:
   DefaultFormatter: quiet
+  NewCops: enable
 
 Layout/LineLength:
   Enabled: false

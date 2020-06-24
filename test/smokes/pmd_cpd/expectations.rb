@@ -1456,7 +1456,7 @@ s.add_test(
             end_column: 1
           }
         ],
-        codefragment: /fun main\(args\: Array<String>\) \{/
+        codefragment: /fun main\(args: Array<String>\) \{/
       },
       git_blame_info: nil
     },
@@ -1670,7 +1670,7 @@ s.add_test(
             end_column: 6
           }
         ],
-        codefragment: /def main\(\)\:/
+        codefragment: /def main\(\):/
       },
       git_blame_info: nil
     },
@@ -1778,7 +1778,7 @@ s.add_test(
             end_column: 1
           }
         ],
-        codefragment: /fun main\(args\: Array<String>\) \{/
+        codefragment: /fun main\(args: Array<String>\) \{/
       },
       git_blame_info: nil
     },
@@ -1850,7 +1850,7 @@ s.add_test(
             end_column: 6
           }
         ],
-        codefragment: /def main\(\)\:/
+        codefragment: /def main\(\):/
       },
       git_blame_info: nil
     },
@@ -2075,7 +2075,7 @@ s.add_test(
             end_column: 6
           }
         ],
-        codefragment: /def main\(\)\:/
+        codefragment: /def main\(\):/
       },
       git_blame_info: nil
     },
@@ -2111,7 +2111,7 @@ s.add_test(
             end_column: 6
           }
         ],
-        codefragment: /def main\(\)\:/
+        codefragment: /def main\(\):/
       },
       git_blame_info: nil
     },
