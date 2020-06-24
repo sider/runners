@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.28.3...HEAD)
 
+- **Rails Best Practices** 1.19.4 -> 1.20.0 [#1228](https://github.com/sider/runners/pull/1228)
+
 ## 0.28.3
 
 [Full diff](https://github.com/sider/runners/compare/0.28.2...0.28.3)
