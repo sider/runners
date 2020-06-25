@@ -134,7 +134,8 @@ module Runners
           location = if start_line
                        Location.new(start_line: start_line)
                      else
-                       add_warning "`line_number` is invalid: #{line_number.inspect}. The line location is lost."
+                       file = relative_path(issue.fetch(:filename)).to_path
+                       add_warning "Invalid `line_number` is output: #{line_number.inspect}. The line location in `#{file}` is lost.", file: file
                        nil
                      end
 
