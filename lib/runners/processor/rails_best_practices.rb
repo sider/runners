@@ -42,6 +42,17 @@ module Runners
       "rails_best_practices" => [">= 1.19.1", "< 2.0"]
     }.freeze
 
+    def default_gem_specs
+      super.tap do |specs|
+        # HACK: https://github.com/flyerhzm/code_analyzer/pull/13 is not released yet.
+        source = GemInstaller::Source.create(git: {
+          repo: "https://github.com/flyerhzm/code_analyzer.git",
+          ref: "331749f94f4ff0f6b1b4cd976363057540fd826a",
+        })
+        specs << GemInstaller::Spec.new(name: "code_analyzer", version: [], source: source)
+      end
+    end
+
     def setup
       add_warning_if_deprecated_options([:options])
 
