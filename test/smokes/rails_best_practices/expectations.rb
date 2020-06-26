@@ -275,3 +275,23 @@ s.add_test(
     }
   ]
 )
+
+s.add_test(
+  "invalid_line_number",
+  type: "success",
+  analyzer: { name: "Rails Best Practices", version: default_version },
+  issues: [
+    {
+      message: "move code into model (article use_count > 2)",
+      links: %w[https://rails-bestpractices.com/posts/2010/07/24/move-code-into-model/],
+      id: "RailsBestPractices::Reviews::MoveCodeIntoModelReview",
+      path: "app/views/articles/show.html.erb",
+      location: nil,
+      object: nil,
+      git_blame_info: nil
+    }
+  ],
+  warnings: [
+    { message: "Invalid `line_number` is output: \"call\". The line location in `app/views/articles/show.html.erb` is lost.", file: "app/views/articles/show.html.erb" }
+  ]
+)

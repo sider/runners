@@ -1,0 +1,3 @@
+<% if !article.published? && article.published_from_feed? && !article.user&.feed_admin_publish_permission? %>
+  <%= link_to 'Edit this article', edit_article_url(article) %>
+<% end %>
