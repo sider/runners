@@ -7,4 +7,4 @@ gem 'sass', '3.7.4'
 gem 'sassc', '2.4.0'
 
 # HACK: See `Runners::Processor::RailsBestPractices#default_gem_specs`.
-gem 'code_analyzer', git: 'https://github.com/flyerhzm/code_analyzer.git', ref: '331749f94f4ff0f6b1b4cd976363057540fd826a'
+gem 'code_analyzer', git: 'https://github.com/flyerhzm/code_analyzer.git', ref: 'e31ce438d3858df055bf85334003f29e1bd1673d'
