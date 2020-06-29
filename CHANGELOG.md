@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.29.1...HEAD)
 
+- **Rails Best Practices** Re-challenge to fix invalid line number [#1240](https://github.com/sider/runners/pull/1240)
+
 ## 0.29.1
 
 [Full diff](https://github.com/sider/runners/compare/0.29.0...0.29.1)
