@@ -298,6 +298,24 @@ s.add_test(
       location: { start_line: 5 },
       object: nil,
       git_blame_info: nil
+    },
+    {
+      message: "move code into model (post use_count > 2)",
+      links: %w[https://rails-bestpractices.com/posts/2010/07/24/move-code-into-model/],
+      id: "RailsBestPractices::Reviews::MoveCodeIntoModelReview",
+      path: "app/views/articles/show.html.erb",
+      location: { start_line: 9 },
+      object: nil,
+      git_blame_info: nil
+    },
+    {
+      message: "move code into model (Time use_count > 2)",
+      links: %w[https://rails-bestpractices.com/posts/2010/07/24/move-code-into-model/],
+      id: "RailsBestPractices::Reviews::MoveCodeIntoModelReview",
+      path: "app/views/articles/show.html.erb",
+      location: { start_line: 13 },
+      object: nil,
+      git_blame_info: nil
     }
   ]
 )

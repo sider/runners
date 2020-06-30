@@ -47,7 +47,7 @@ module Runners
         # HACK: https://github.com/flyerhzm/code_analyzer/pull/13 is not released yet.
         source = GemInstaller::Source.create(git: {
           repo: "https://github.com/flyerhzm/code_analyzer.git",
-          ref: "e31ce438d3858df055bf85334003f29e1bd1673d",
+          ref: "e816d9b4ff9dbd1bb7aa1eef9c78ae9a84f1cae1",
         })
         specs << GemInstaller::Spec.new(name: "code_analyzer", version: [], source: source)
       end
