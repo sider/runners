@@ -10,6 +10,10 @@ Updated environments:
 
 - **devon_rex** 2.20.0 -> 2.21.0 [#1244](https://github.com/sider/runners/pull/1244)
 
+Updated tools:
+
+- **PMD Java** 6.24.0 -> 6.25.0 [#1237](https://github.com/sider/runners/pull/1237)
+
 ## 0.29.3
 
 [Full diff](https://github.com/sider/runners/compare/0.29.2...0.29.3)
