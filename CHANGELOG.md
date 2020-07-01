@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.29.3...HEAD)
 
+Updated environments:
+
+- **devon_rex** 2.20.0 -> 2.21.0 [#1244](https://github.com/sider/runners/pull/1244)
+
 ## 0.29.3
 
 [Full diff](https://github.com/sider/runners/compare/0.29.2...0.29.3)
