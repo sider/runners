@@ -44,10 +44,10 @@ module Runners
 
     def default_gem_specs
       super.tap do |specs|
-        # HACK: https://github.com/flyerhzm/code_analyzer/pull/13 is not released yet.
+        # HACK: The new version of `code_analyzer` is not released yet to Rubygems.
         source = GemInstaller::Source.create(git: {
           repo: "https://github.com/flyerhzm/code_analyzer.git",
-          ref: "e816d9b4ff9dbd1bb7aa1eef9c78ae9a84f1cae1",
+          tag: "v0.5.2",
         })
         specs << GemInstaller::Spec.new(name: "code_analyzer", version: [], source: source)
       end
