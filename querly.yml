@@ -107,3 +107,5 @@ rules:
           result[:line].to_i
       - after: |
           Integer(result[:line])
+    justification:
+      - When the use of `.to_i` can make the code more simple
