@@ -12,6 +12,7 @@ Updated environments:
 
 Updated tools:
 
+- **ESLint** 7.2.0 -> 7.3.1 [#1224](https://github.com/sider/runners/pull/1224)
 - **PMD Java** 6.24.0 -> 6.25.0 [#1237](https://github.com/sider/runners/pull/1237)
 
 Misc:
