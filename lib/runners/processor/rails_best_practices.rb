@@ -42,17 +42,6 @@ module Runners
       "rails_best_practices" => [">= 1.19.1", "< 2.0"]
     }.freeze
 
-    def default_gem_specs
-      super.tap do |specs|
-        # HACK: The new version of `code_analyzer` is not released yet to Rubygems.
-        source = GemInstaller::Source.create(git: {
-          repo: "https://github.com/flyerhzm/code_analyzer.git",
-          tag: "v0.5.2",
-        })
-        specs << GemInstaller::Spec.new(name: "code_analyzer", version: [], source: source)
-      end
-    end
-
     def setup
       add_warning_if_deprecated_options([:options])
 

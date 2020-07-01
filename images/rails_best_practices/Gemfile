@@ -5,6 +5,3 @@ gem 'slim', '4.1.0'
 gem 'haml', '5.1.2'
 gem 'sass', '3.7.4'
 gem 'sassc', '2.4.0'
-
-# HACK: See `Runners::Processor::RailsBestPractices#default_gem_specs`.
-gem 'code_analyzer', git: 'https://github.com/flyerhzm/code_analyzer.git', tag: 'v0.5.2'
