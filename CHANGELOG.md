@@ -15,6 +15,10 @@ Updated tools:
 - **PMD Java** 6.24.0 -> 6.25.0 [#1237](https://github.com/sider/runners/pull/1237)
 - **cpplint** 1.5.1 -> 1.5.2 [#1222](https://github.com/sider/runners/pull/1222)
 
+Misc:
+
+- Use Docker BuildKit [#1245](https://github.com/sider/runners/pull/1245)
+
 ## 0.29.3
 
 [Full diff](https://github.com/sider/runners/compare/0.29.2...0.29.3)
