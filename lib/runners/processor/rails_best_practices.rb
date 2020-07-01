@@ -42,6 +42,17 @@ module Runners
       "rails_best_practices" => [">= 1.19.1", "< 2.0"]
     }.freeze
 
+    def default_gem_specs
+      super.tap do |specs|
+        # HACK: The new version of `code_analyzer` is not released yet to Rubygems.
+        source = GemInstaller::Source.create(git: {
+          repo: "https://github.com/flyerhzm/code_analyzer.git",
+          tag: "v0.5.2",
+        })
+        specs << GemInstaller::Spec.new(name: "code_analyzer", version: [], source: source)
+      end
+    end
+
     def setup
       add_warning_if_deprecated_options([:options])
 
@@ -134,7 +145,8 @@ module Runners
           location = if start_line
                        Location.new(start_line: start_line)
                      else
-                       add_warning "`line_number` is invalid: #{line_number.inspect}. The line location is lost."
+                       file = relative_path(issue.fetch(:filename)).to_path
+                       add_warning "Invalid `line_number` is output: #{line_number.inspect}. The line location in `#{file}` is lost.", file: file
                        nil
                      end
 

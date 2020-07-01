@@ -17,7 +17,7 @@ s.add_test(
   type: "error",
   class: "RuntimeError",
   backtrace: :_,
-  inspect: %r{.*\'non\/exists\/dir\/\' does not exist.*},
+  inspect: %r{.*'non/exists/dir/' does not exist.*},
   analyzer: { name: "detekt", version: "1.9.1" }
 )
 

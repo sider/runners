@@ -214,7 +214,7 @@ updates:
   - package-ecosystem: bundler
     directory: "/images/rails_best_practices"
     schedule:
-      interval: weekly
+      interval: daily # NOTE: See the `code_analyzer` gem issue. We need to revert this to `weekly` in the future.
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10

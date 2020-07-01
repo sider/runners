@@ -2,7 +2,7 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM sider/devon_rex_java:2.20.0 AS builder
+FROM sider/devon_rex_java:2.21.0 AS builder
 
 # NOTE: Download required dependency JAR files via maven-dependency-plugin.
 #       Also, this image uses a build layer because Maven downloads too many files to `~/.m2` directory.
@@ -12,7 +12,7 @@ COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/ktlint/pom.xml ${RUNNER_USER_
 RUN cd "${RUNNER_USER_HOME}/ktlint" && \
     mvn --no-transfer-progress --batch-mode --threads 4 dependency:copy-dependencies -DoutputDirectory=.
 
-FROM sider/devon_rex_java:2.20.0
+FROM sider/devon_rex_java:2.21.0
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=builder ${RUNNER_USER_HOME}/ktlint/*.jar ${RUNNER_USER_HOME}/ktlint/
 ENV CLASSPATH ${RUNNER_USER_HOME}/ktlint/*:${CLASSPATH}

@@ -20,8 +20,8 @@ module Runners
 
     def content
       @content ||= begin
-        file = Pathname(__dir__).join("../../analyzers.yml")
-        YAML.safe_load(file.read, symbolize_names: true).fetch(:analyzers).freeze
+        file = File.expand_path("../../../analyzers.yml", __FILE__)
+        YAML.safe_load(File.read(file), symbolize_names: true).fetch(:analyzers).freeze
       end
     end
 

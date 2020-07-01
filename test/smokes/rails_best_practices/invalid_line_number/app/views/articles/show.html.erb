@@ -1,0 +1,13 @@
+<% if !article.published? && article.published_from_feed? && !article.user&.feed_admin_publish_permission? %>
+  <%= link_to 'Edit this article', edit_article_url(article) %>
+<% end %>
+
+<% unless (allowed? :some, "extra") || article.exists? || article.started_at.nil? || article.published_at <= Time.current %>
+  <p>...</p>
+<% end %>
+
+<% if ::PostScanner.search(:some, "extra") || post.exists? || post.started_at.nil? || post.published_at <= Time.current %>
+  <p>...</p>
+<% end %>
+
+<%= (Time.zone.parse('2020-01-01')..Time.zone.parse('2020-01-05')).cover?(Time.current) ? 'on' : 'off' %>

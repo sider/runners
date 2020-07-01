@@ -4,7 +4,44 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.28.3...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.29.3...HEAD)
+
+Updated environments:
+
+- **devon_rex** 2.20.0 -> 2.21.0 [#1244](https://github.com/sider/runners/pull/1244)
+
+Updated tools:
+
+- **PMD Java** 6.24.0 -> 6.25.0 [#1237](https://github.com/sider/runners/pull/1237)
+
+Misc:
+
+- Use Docker BuildKit [#1245](https://github.com/sider/runners/pull/1245)
+
+## 0.29.3
+
+[Full diff](https://github.com/sider/runners/compare/0.29.2...0.29.3)
+
+- **Rails Best Practices** Fix invalid line number [#1242](https://github.com/sider/runners/pull/1242)
+
+## 0.29.2
+
+[Full diff](https://github.com/sider/runners/compare/0.29.1...0.29.2)
+
+- **Rails Best Practices** Re-challenge to fix invalid line number [#1240](https://github.com/sider/runners/pull/1240)
+
+## 0.29.1
+
+[Full diff](https://github.com/sider/runners/compare/0.29.0...0.29.1)
+
+- **Rails Best Practices** Fix invalid line number [#1232](https://github.com/sider/runners/pull/1232)
+
+## 0.29.0
+
+[Full diff](https://github.com/sider/runners/compare/0.28.3...0.29.0)
+
+- **Rails Best Practices** 1.19.4 -> 1.20.0 [#1228](https://github.com/sider/runners/pull/1228)
+- **Rails Best Practices** More info in warning message [#1230](https://github.com/sider/runners/pull/1230)
 
 ## 0.28.3
 
