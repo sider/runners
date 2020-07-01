@@ -14,6 +14,7 @@ Updated tools:
 
 - **cpplint** 1.5.1 -> 1.5.2 [#1222](https://github.com/sider/runners/pull/1222)
 - **ESLint** 7.2.0 -> 7.3.1 [#1224](https://github.com/sider/runners/pull/1224)
+- **PMD CPD** 6.24.0 -> 6.25.0 [#1235](https://github.com/sider/runners/pull/1235)
 - **PMD Java** 6.24.0 -> 6.25.0 [#1237](https://github.com/sider/runners/pull/1237)
 - **RuboCop** 0.85.1 -> 0.86.0 [#1220](https://github.com/sider/runners/pull/1220)
 
