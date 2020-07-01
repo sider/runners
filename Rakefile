@@ -7,6 +7,8 @@ require_relative "lib/tasks/bump/devon_rex"
 require_relative "lib/tasks/docker/timeout_test"
 require_relative "lib/tasks/readme/generate"
 
+ENV["DOCKER_BUILDKIT"] = "1"
+
 Aufgaben::Release.new do |t|
   t.files = ["lib/runners/version.rb"]
 end
