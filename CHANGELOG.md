@@ -12,6 +12,7 @@ Updated environments:
 
 Updated tools:
 
+- **Checkstyle** 8.33 -> 8.34 [#1239](https://github.com/sider/runners/pull/1239)
 - **cpplint** 1.5.1 -> 1.5.2 [#1222](https://github.com/sider/runners/pull/1222)
 - **ESLint** 7.2.0 -> 7.3.1 [#1224](https://github.com/sider/runners/pull/1224)
 - **PMD CPD** 6.24.0 -> 6.25.0 [#1235](https://github.com/sider/runners/pull/1235)
