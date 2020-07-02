@@ -67,7 +67,7 @@ module Runners
 
     def exclude
       exclude = comma_separated_list(config_linter[:exclude] || config_linter.dig(:options, :exclude))
-      exclude ? ["--exclude", "#{exclude}"] : []
+      exclude ? ["--exclude", exclude] : []
     end
 
     def strict
