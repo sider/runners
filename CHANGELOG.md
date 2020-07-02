@@ -21,6 +21,7 @@ Updated tools:
 Misc:
 
 - Use Docker BuildKit [#1245](https://github.com/sider/runners/pull/1245)
+- Fix Kotlin file extensions [#1252](https://github.com/sider/runners/pull/1252)
 
 ## 0.29.3
 
