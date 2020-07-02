@@ -36,6 +36,7 @@ class ConfigTest < Minitest::Test
           golint: nil, go_vet: nil, gometalinter: nil,
           brakeman: nil,
           checkstyle: nil,
+          clang_tidy: nil,
           code_sniffer: nil,
           coffeelint: nil,
           cppcheck: nil,

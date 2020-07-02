@@ -8,6 +8,10 @@ analyzers:
     name: Checkstyle
     github: checkstyle/checkstyle
     doc: tools/java/checkstyle
+  clang_tidy:
+    name: Clang-Tidy
+    github: llvm/llvm-project
+    doc: tools/cplusplus/clang-tidy
   code_sniffer:
     name: PHP_CodeSniffer
     github: squizlabs/PHP_CodeSniffer

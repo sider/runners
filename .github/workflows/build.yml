@@ -61,6 +61,7 @@ jobs:
         analyzer:
           - brakeman
           - checkstyle
+          - clang_tidy
           - code_sniffer
           - coffeelint
           - cppcheck
