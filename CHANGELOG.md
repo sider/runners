@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 
 New supported:
 
-- **Clang-Tidy** [#TBD](https://github.com/sider/runners/pull/TBD)
+- **Clang-Tidy** [#1254](https://github.com/sider/runners/pull/1254)
 
 Updated environments:
 
