@@ -4,6 +4,7 @@ module Runners
       # @type self: Types::Issue
 
       let :location, enum?(object(start_line: integer, start_column: integer, end_line: integer, end_column: integer),
+                           object(start_line: integer, start_column: integer),
                            object(start_line: integer, end_line: integer),
                            object(start_line: integer))
 

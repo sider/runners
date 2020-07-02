@@ -100,7 +100,7 @@ module Runners
           when "error"
             yield Issue.new(
               path: relative_path(file[:name]),
-              location: Location.new(start_line: error[:line]),
+              location: Location.new(start_line: error[:line], start_column: error[:column]),
               id: error[:source],
               message: error[:message],
               object: { severity: error[:severity] },

@@ -154,7 +154,7 @@ module Runners
 
           issues << Issue.new(
             path: path,
-            location: message[:line].then { |line| line ? Location.new(start_line: line) : nil },
+            location: message[:line]&.then { |line| Location.new(start_line: line, start_column: message[:column]) },
             id: message[:ruleId],
             message: message[:reason],
             object: {

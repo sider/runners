@@ -117,19 +117,6 @@ module Runners
       end
     end
 
-    def new_location(start_line, start_column, end_line, end_column)
-      case
-      when start_line && start_column && end_line && end_column
-        Location.new(start_line: start_line, start_column: start_column, end_line: end_line, end_column: end_column)
-      when start_line && end_line
-        Location.new(start_line: start_line, end_line: end_line)
-      when start_line
-        Location.new(start_line: start_line)
-      else
-        nil
-      end
-    end
-
     # @see https://eslint.org/docs/developer-guide/working-with-custom-formatters#the-results-object
     def parse_result(result)
       result.each do |issue|
@@ -146,7 +133,12 @@ module Runners
 
           yield Issue.new(
             path: path,
-            location: new_location(details[:line], details[:column], details[:endLine], details[:endColumn]),
+            location: details[:line] ? Location.new(
+              start_line: details[:line],
+              start_column: details[:column],
+              end_line: details[:endLine],
+              end_column: details[:endColumn],
+            ) : nil,
             id: id,
             message: message,
             links: Array(details.dig(:docs, :url)),

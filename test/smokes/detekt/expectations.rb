@@ -31,7 +31,7 @@ s.add_test(
     {
       id: "detekt.EmptyClassBlock",
       path: "src/FilteredClass.kt",
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 21 },
       message: "The class or object FilteredClass is empty.",
       links: [],
       object: { severity: "info" },
@@ -40,7 +40,7 @@ s.add_test(
     {
       id: "detekt.ForEachOnRange",
       path: "src/ComplexClass.kt",
-      location: { start_line: 44 },
+      location: { start_line: 44, start_column: 21 },
       message: "Using the forEach method on ranges has a heavy performance cost. Prefer using simple for loops.",
       links: [],
       object: { severity: "warning" },
@@ -49,7 +49,7 @@ s.add_test(
     {
       id: "detekt.FunctionOnlyReturningConstant",
       path: "src/App.kt",
-      location: { start_line: 8 },
+      location: { start_line: 8, start_column: 7 },
       message: "get is returning a constant. Prefer declaring a constant instead.",
       links: [],
       object: { severity: "warning" },
@@ -58,7 +58,7 @@ s.add_test(
     {
       id: "detekt.NestedBlockDepth",
       path: "src/ComplexClass.kt",
-      location: { start_line: 9 },
+      location: { start_line: 9, start_column: 13 },
       message: "Function complex is nested too deeply.",
       links: [],
       object: { severity: "warning" },
@@ -75,7 +75,7 @@ s.add_test(
     {
       id: "detekt.EmptyClassBlock",
       path: "src/FilteredClass.kt",
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 21 },
       message: "The class or object FilteredClass is empty.",
       links: [],
       object: { severity: "info" },
@@ -84,7 +84,7 @@ s.add_test(
     {
       id: "detekt.ForEachOnRange",
       path: "src/ComplexClass.kt",
-      location: { start_line: 44 },
+      location: { start_line: 44, start_column: 21 },
       message: "Using the forEach method on ranges has a heavy performance cost. Prefer using simple for loops.",
       links: [],
       object: { severity: "warning" },
@@ -93,7 +93,7 @@ s.add_test(
     {
       id: "detekt.FunctionOnlyReturningConstant",
       path: "src/App.kt",
-      location: { start_line: 8 },
+      location: { start_line: 8, start_column: 7 },
       message: "get is returning a constant. Prefer declaring a constant instead.",
       links: [],
       object: { severity: "warning" },
@@ -102,7 +102,7 @@ s.add_test(
     {
       id: "detekt.MagicNumber",
       path: "src/ComplexClass.kt",
-      location: { start_line: 44 },
+      location: { start_line: 44, start_column: 17 },
       message: "This expression contains a magic number. Consider defining it to a well named constant.",
       links: [],
       object: { severity: "warning" },
@@ -111,7 +111,7 @@ s.add_test(
     {
       id: "detekt.MagicNumber",
       path: "src/ComplexClass.kt",
-      location: { start_line: 48 },
+      location: { start_line: 48, start_column: 26 },
       message: "This expression contains a magic number. Consider defining it to a well named constant.",
       links: [],
       object: { severity: "warning" },
@@ -120,7 +120,7 @@ s.add_test(
     {
       id: "detekt.NestedBlockDepth",
       path: "src/ComplexClass.kt",
-      location: { start_line: 9 },
+      location: { start_line: 9, start_column: 13 },
       message: "Function complex is nested too deeply.",
       links: [],
       object: { severity: "warning" },
@@ -129,7 +129,7 @@ s.add_test(
     {
       id: "detekt.TooGenericExceptionCaught",
       path: "src/ComplexClass.kt",
-      location: { start_line: 19 },
+      location: { start_line: 19, start_column: 22 },
       message:
         "Caught exception is too generic. Prefer catching specific exceptions to the case that is currently handled.",
       links: [],
@@ -139,7 +139,7 @@ s.add_test(
     {
       id: "detekt.TooGenericExceptionCaught",
       path: "src/ComplexClass.kt",
-      location: { start_line: 22 },
+      location: { start_line: 22, start_column: 26 },
       message:
         "Caught exception is too generic. Prefer catching specific exceptions to the case that is currently handled.",
       links: [],
@@ -149,7 +149,7 @@ s.add_test(
     {
       id: "detekt.TooGenericExceptionCaught",
       path: "src/ComplexClass.kt",
-      location: { start_line: 34 },
+      location: { start_line: 34, start_column: 26 },
       message:
         "Caught exception is too generic. Prefer catching specific exceptions to the case that is currently handled.",
       links: [],
@@ -167,7 +167,7 @@ s.add_test(
     {
       id: "detekt.EmptyClassBlock",
       path: "src/main/App.kt",
-      location: { start_line: 1 },
+      location: { start_line: 1, start_column: 11 },
       message: "The class or object App is empty.",
       links: [],
       object: { severity: "info" },

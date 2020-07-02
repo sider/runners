@@ -12,7 +12,7 @@ s.add_test(
       links: %w[https://checkstyle.org/config_misc.html#Indentation],
       id: "IndentationCheck",
       path: "src/Hello.java",
-      location: { start_line: 5 },
+      location: { start_line: 5, start_column: 5 },
       object: { severity: "warning" },
       git_blame_info: nil
     },
@@ -21,7 +21,7 @@ s.add_test(
       links: %w[https://checkstyle.org/config_misc.html#Indentation],
       id: "IndentationCheck",
       path: "src/Hello.java",
-      location: { start_line: 6 },
+      location: { start_line: 6, start_column: 9 },
       object: { severity: "warning" },
       git_blame_info: nil
     },
@@ -30,7 +30,7 @@ s.add_test(
       links: %w[https://checkstyle.org/config_misc.html#Indentation],
       id: "IndentationCheck",
       path: "src/Hello.java",
-      location: { start_line: 7 },
+      location: { start_line: 7, start_column: 5 },
       object: { severity: "warning" },
       git_blame_info: nil
     },
@@ -39,7 +39,7 @@ s.add_test(
       links: %w[https://checkstyle.org/config_misc.html#OuterTypeFilename],
       id: "OuterTypeFilenameCheck",
       path: "src/Hello.java",
-      location: { start_line: 3 },
+      location: { start_line: 3, start_column: 1 },
       object: { severity: "warning" },
       git_blame_info: nil
     }
@@ -56,7 +56,7 @@ s.add_test(
       links: %w[https://checkstyle.org/config_misc.html#FinalParameters],
       id: "FinalParametersCheck",
       path: "src/Main.java",
-      location: { start_line: 5 },
+      location: { start_line: 5, start_column: 29 },
       object: { severity: "error" },
       git_blame_info: nil
     },
@@ -65,7 +65,7 @@ s.add_test(
       links: %w[https://checkstyle.org/config_design.html#HideUtilityClassConstructor],
       id: "HideUtilityClassConstructorCheck",
       path: "src/Main.java",
-      location: { start_line: 3 },
+      location: { start_line: 3, start_column: 1 },
       object: { severity: "error" },
       git_blame_info: nil
     },
@@ -83,7 +83,7 @@ s.add_test(
       links: %w[https://checkstyle.org/config_javadoc.html#MissingJavadocMethod],
       id: "MissingJavadocMethodCheck",
       path: "src/Main.java",
-      location: { start_line: 5 },
+      location: { start_line: 5, start_column: 5 },
       object: { severity: "error" },
       git_blame_info: nil
     }

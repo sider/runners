@@ -10,7 +10,7 @@ s.add_test(
       id: "DL3026",
       links: %w[https://github.com/hadolint/hadolint/wiki/DL3026],
       path: "Dockerfile",
-      location: { start_line: 7 },
+      location: { start_line: 7, start_column: 1 },
       message: "Use only an allowed registry in the FROM image",
       object: { severity: "error" },
       git_blame_info: nil
@@ -19,7 +19,7 @@ s.add_test(
       id: "SC2028",
       links: %w[https://github.com/koalaman/shellcheck/wiki/SC2028],
       path: "Dockerfile",
-      location: { start_line: 10 },
+      location: { start_line: 10, start_column: 1 },
       message: "echo may not expand escape sequences. Use printf.",
       object: { severity: "info" },
       git_blame_info: nil
@@ -36,7 +36,7 @@ s.add_test(
       id: "DL3002",
       links: %w[https://github.com/hadolint/hadolint/wiki/DL3002],
       path: "src/Dockerfile",
-      location: { start_line: 3 },
+      location: { start_line: 3, start_column: 1 },
       message: "Last USER should not be root",
       object: { severity: "warning" },
       git_blame_info: nil
@@ -45,7 +45,7 @@ s.add_test(
       id: "DL3003",
       links: %w[https://github.com/hadolint/hadolint/wiki/DL3003],
       path: "src/Dockerfile",
-      location: { start_line: 4 },
+      location: { start_line: 4, start_column: 1 },
       message: "Use WORKDIR to switch to a directory",
       object: { severity: "warning" },
       git_blame_info: nil
@@ -54,7 +54,7 @@ s.add_test(
       id: "SC2028",
       links: %w[https://github.com/koalaman/shellcheck/wiki/SC2028],
       path: "src/Dockerfile",
-      location: { start_line: 6 },
+      location: { start_line: 6, start_column: 1 },
       message: "echo may not expand escape sequences. Use printf.",
       object: { severity: "info" },
       git_blame_info: nil
@@ -71,7 +71,7 @@ s.add_test(
       id: "DL3002",
       links: %w[https://github.com/hadolint/hadolint/wiki/DL3002],
       path: "1/Dockerfile",
-      location: { start_line: 3 },
+      location: { start_line: 3, start_column: 1 },
       message: "Last USER should not be root",
       object: { severity: "warning" },
       git_blame_info: nil
@@ -80,7 +80,7 @@ s.add_test(
       id: "DL3002",
       links: %w[https://github.com/hadolint/hadolint/wiki/DL3002],
       path: "2/Dockerfile",
-      location: { start_line: 3 },
+      location: { start_line: 3, start_column: 1 },
       message: "Last USER should not be root",
       object: { severity: "warning" },
       git_blame_info: nil
@@ -89,7 +89,7 @@ s.add_test(
       id: "DL3002",
       links: %w[https://github.com/hadolint/hadolint/wiki/DL3002],
       path: "Dockerfile.production",
-      location: { start_line: 3 },
+      location: { start_line: 3, start_column: 1 },
       message: "Last USER should not be root",
       object: { severity: "warning" },
       git_blame_info: nil
@@ -117,7 +117,7 @@ s.add_test(
       id: "DL3026",
       links: %w[https://github.com/hadolint/hadolint/wiki/DL3026],
       path: "Dockerfile",
-      location: { start_line: 4 },
+      location: { start_line: 4, start_column: 1 },
       message: "Use only an allowed registry in the FROM image",
       object: { severity: "error" },
       git_blame_info: nil
@@ -134,7 +134,7 @@ s.add_test(
       id: "DL3026",
       links: %w[https://github.com/hadolint/hadolint/wiki/DL3026],
       path: "Dockerfile",
-      location: { start_line: 7 },
+      location: { start_line: 7, start_column: 1 },
       message: "Use only an allowed registry in the FROM image",
       object: { severity: "error" },
       git_blame_info: nil

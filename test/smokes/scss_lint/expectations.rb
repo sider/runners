@@ -12,7 +12,7 @@ s.add_test(
       path: "test.scss",
       object: nil,
       git_blame_info: nil,
-      location: { start_line: 2 }
+      location: { start_line: 2, start_column: 12 }
     },
     {
       message: "Line should be indented 2 spaces, but was indented 4 spaces",
@@ -21,7 +21,7 @@ s.add_test(
       path: "test.scss",
       object: nil,
       git_blame_info: nil,
-      location: { start_line: 2 }
+      location: { start_line: 2, start_column: 1 }
     },
     {
       message: "Begin pseudo elements with double colons: `::`",
@@ -30,7 +30,7 @@ s.add_test(
       path: "test.scss",
       object: nil,
       git_blame_info: nil,
-      location: { start_line: 1 }
+      location: { start_line: 1, start_column: 1 }
     },
     {
       message: "Declaration should be terminated by a semicolon",
@@ -39,7 +39,7 @@ s.add_test(
       path: "test.scss",
       object: nil,
       git_blame_info: nil,
-      location: { start_line: 2 }
+      location: { start_line: 2, start_column: 1 }
     }
   ],
   analyzer: { name: "SCSS-Lint", version: "0.59.0" },
@@ -78,7 +78,7 @@ s.add_test(
       path: "test.scss",
       object: nil,
       git_blame_info: nil,
-      location: { start_line: 2 }
+      location: { start_line: 2, start_column: 12 }
     },
     {
       message: "Begin pseudo elements with double colons: `::`",
@@ -87,7 +87,7 @@ s.add_test(
       path: "test.scss",
       object: nil,
       git_blame_info: nil,
-      location: { start_line: 1 }
+      location: { start_line: 1, start_column: 1 }
     },
     {
       message: "Declaration should be terminated by a semicolon",
@@ -96,7 +96,7 @@ s.add_test(
       path: "test.scss",
       object: nil,
       git_blame_info: nil,
-      location: { start_line: 2 }
+      location: { start_line: 2, start_column: 1 }
     }
   ],
   analyzer: { name: "SCSS-Lint", version: "0.59.0" },
@@ -114,7 +114,7 @@ s.add_test(
       path: "err.scss",
       object: nil,
       git_blame_info: nil,
-      location: { start_line: 3 }
+      location: { start_line: 3, start_column: 1 }
     }
   ],
   analyzer: { name: "SCSS-Lint", version: "0.59.0" },

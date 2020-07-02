@@ -16,9 +16,7 @@ s.add_test(
     {
       id: "bad-whitespace",
       path: "bad.py",
-      location: {
-        start_line: 3
-      },
+      location: { start_line: 3, start_column: 14 },
       message: "No space allowed before bracket\n        print (\"{} * {} = {}\".format(i, j, i*j))\n              ^",
       object: {
         severity: "convention",
@@ -32,9 +30,7 @@ s.add_test(
     {
       id: "missing-module-docstring",
       path: "bad.py",
-      location: {
-        start_line: 1
-      },
+      location: { start_line: 1, start_column: 0 },
       message: "Missing module docstring",
       object: {
         severity: "convention",
@@ -56,9 +52,7 @@ s.add_test(
     {
       id: "missing-module-docstring",
       path: "folder/bad1.py",
-      location: {
-        start_line: 1
-      },
+      location: { start_line: 1, start_column: 0 },
       message: "Missing module docstring",
       object: {
         severity: "convention",
@@ -72,9 +66,7 @@ s.add_test(
     {
       id: "missing-module-docstring",
       path: "folder/bad2.py",
-      location: {
-        start_line: 1
-      },
+      location: { start_line: 1, start_column: 0 },
       message: "Missing module docstring",
       object: {
         severity: "convention",
@@ -103,9 +95,7 @@ s.add_test(
     {
       id: "missing-module-docstring",
       path: "bad.py",
-      location: {
-        start_line: 1
-      },
+      location: { start_line: 1, start_column: 0 },
       message: "Missing module docstring",
       object: {
         severity: "convention",
@@ -127,9 +117,7 @@ s.add_test(
     {
       id: "no-method-argument",
       path: "bad.py",
-      location: {
-        start_line: 4
-      },
+      location: { start_line: 4, start_column: 4 },
       message: "Method has no argument",
       object: {
         severity: "error",
@@ -143,9 +131,7 @@ s.add_test(
     {
       id: "undefined-variable",
       path: "bad.py",
-      location: {
-        start_line: 2
-      },
+      location: { start_line: 2, start_column: 11 },
       message: "Undefined variable 'temp'",
       object: {
         severity: "error",
@@ -167,9 +153,7 @@ s.add_test(
     {
       id: "missing-function-docstring",
       path: "hello.py",
-      location: {
-        start_line: 6
-      },
+      location: { start_line: 6, start_column: 0 },
       message: "Missing function or method docstring",
       object: {
         severity: "convention",
@@ -183,9 +167,7 @@ s.add_test(
     {
       id: "missing-module-docstring",
       path: "hello.py",
-      location: {
-        start_line: 1
-      },
+      location: { start_line: 1, start_column: 0 },
       message: "Missing module docstring",
       object: {
         severity: "convention",
@@ -207,9 +189,7 @@ s.add_test(
     {
       id: "import-outside-toplevel",
       path: "manage.py",
-      location: {
-        start_line: 10
-      },
+      location: { start_line: 10, start_column: 8 },
       message: "Import outside toplevel (django.core.management.execute_from_command_line)",
       object: {
         severity: "convention",
@@ -231,9 +211,7 @@ s.add_test(
     {
       id: "missing-module-docstring",
       path: "bad.py",
-      location: {
-        start_line: 1
-      },
+      location: { start_line: 1, start_column: 0 },
       message: "Missing module docstring",
       object: {
         severity: "convention",
@@ -255,9 +233,7 @@ s.add_test(
     {
       id: "missing-module-docstring",
       path: "test.py",
-      location: {
-        start_line: 1
-      },
+      location: { start_line: 1, start_column: 0 },
       message: "Missing module docstring",
       object: {
         severity: "convention",
@@ -279,9 +255,7 @@ s.add_test(
     {
       id: "missing-module-docstring",
       path: "test.py",
-      location: {
-        start_line: 1
-      },
+      location: { start_line: 1, start_column: 0 },
       message: "Missing module docstring",
       object: {
         severity: "convention",
