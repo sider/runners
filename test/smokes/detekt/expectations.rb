@@ -1,5 +1,7 @@
 s = Runners::Testing::Smoke
 
+default_version = "1.10.0"
+
 s.add_test(
   "with_broken_sider_yml",
   type: "failure",
@@ -9,7 +11,7 @@ s.add_test(
 
 s.add_test(
   "with_invalid_detekt_config",
-  type: "failure", analyzer: { name: "detekt", version: "1.9.1" }, message: "Your detekt configuration is invalid"
+  type: "failure", analyzer: { name: "detekt", version: default_version }, message: "Your detekt configuration is invalid"
 )
 
 s.add_test(
@@ -18,13 +20,13 @@ s.add_test(
   class: "RuntimeError",
   backtrace: :_,
   inspect: %r{.*'non/exists/dir/' does not exist.*},
-  analyzer: { name: "detekt", version: "1.9.1" }
+  analyzer: { name: "detekt", version: default_version }
 )
 
 s.add_test(
   "with_options",
   type: "success",
-  analyzer: { name: "detekt", version: "1.9.1" },
+  analyzer: { name: "detekt", version: default_version },
   issues: [
     {
       id: "detekt.EmptyClassBlock",
@@ -68,7 +70,7 @@ s.add_test(
 s.add_test(
   "without_options",
   type: "success",
-  analyzer: { name: "detekt", version: "1.9.1" },
+  analyzer: { name: "detekt", version: default_version },
   issues: [
     {
       id: "detekt.EmptyClassBlock",
@@ -160,7 +162,7 @@ s.add_test(
 s.add_test(
   "with_option_includes",
   type: "success",
-  analyzer: { name: "detekt", version: "1.9.1" },
+  analyzer: { name: "detekt", version: default_version },
   issues: [
     {
       id: "detekt.EmptyClassBlock",
@@ -174,4 +176,4 @@ s.add_test(
   ]
 )
 
-s.add_test("no_files", type: "success", analyzer: { name: "detekt", version: "1.9.1" }, issues: [])
+s.add_test("no_files", type: "success", analyzer: { name: "detekt", version: default_version }, issues: [])
