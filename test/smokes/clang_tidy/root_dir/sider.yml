@@ -1,0 +1,3 @@
+linter:
+  clang_tidy:
+    root_dir: src

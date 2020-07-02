@@ -29,6 +29,7 @@ module Runners
 
       changed_paths
         .select { |path| FILE_EXTENSIONS.include?(path.extname.downcase) }
+        .map{ |path| relative_path(working_dir / path, from: current_dir) }
         .each do |path|
         stdout, stderr = capture3!(analyzer_bin, path.to_s, "--")
         ret = construct_result(stdout)
