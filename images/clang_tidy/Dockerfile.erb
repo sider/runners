@@ -1,0 +1,11 @@
+FROM sider/devon_rex_base:2.21.0
+
+USER root
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends clang-tidy && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+USER $RUNNER_USER
+
+<%= render_erb 'images/Dockerfile.base.erb' %>
+<%= render_erb 'images/Dockerfile.end.erb' %>
