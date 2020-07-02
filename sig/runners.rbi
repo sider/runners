@@ -155,6 +155,7 @@ class Runners::Processor
   def read_report_file: (?String) -> String
   def read_report_xml: (?String) -> REXML::Document
   def read_report_json: <'x> (?String) { () -> 'x } -> (Hash<Symbol, any> | 'x)
+  def comma_separated_list: (String | Array<String> | nil) -> String?
 end
 
 # TODO: Keep for the backward compatibility.

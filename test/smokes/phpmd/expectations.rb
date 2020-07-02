@@ -1,5 +1,7 @@
 s = Runners::Testing::Smoke
 
+default_version = "2.8.1"
+
 s.add_test(
   "success",
   type: "success",
@@ -14,12 +16,12 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "PHPMD", version: "2.8.1" }
+  analyzer: { name: "PHPMD", version: default_version }
 )
 
 s.add_test(
   "invalid_rule",
-  type: "failure", message: 'Invalid rule: "invalid_rule"', analyzer: { name: "PHPMD", version: "2.8.1" }
+  type: "failure", message: 'Invalid rule: "invalid_rule"', analyzer: { name: "PHPMD", version: default_version }
 )
 
 s.add_test(
@@ -55,7 +57,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "PHPMD", version: "2.8.1" },
+  analyzer: { name: "PHPMD", version: default_version },
   warnings: [
     {
       message: <<~MSG.strip,
@@ -71,7 +73,7 @@ s.add_test(
 
 s.add_test(
   "syntax_error",
-  type: "failure", message: /Unexpected end of token stream in file:/, analyzer: { name: "PHPMD", version: "2.8.1" }
+  type: "failure", message: /Unexpected end of token stream in file:/, analyzer: { name: "PHPMD", version: default_version }
 )
 
 s.add_test(
@@ -88,7 +90,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "PHPMD", version: "2.8.1" }
+  analyzer: { name: "PHPMD", version: default_version }
 )
 
 s.add_test(
@@ -105,10 +107,10 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "PHPMD", version: "2.8.1" }
+  analyzer: { name: "PHPMD", version: default_version }
 )
 
-s.add_test("with_php_version", type: "success", issues: [], analyzer: { name: "PHPMD", version: "2.8.1" })
+s.add_test("with_php_version", type: "success", issues: [], analyzer: { name: "PHPMD", version: default_version })
 
 s.add_test(
   "broken_sideci_yml",
@@ -150,12 +152,29 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "PHPMD", version: "2.8.1" }
+  analyzer: { name: "PHPMD", version: default_version }
 )
 
 s.add_test(
   "invalid_output_xml",
   type: "failure",
   message: "Invalid XML was output. See the log for details.",
-  analyzer: { name: "PHPMD", version: "2.8.1" }
+  analyzer: { name: "PHPMD", version: default_version }
+)
+
+s.add_test(
+  "array_options",
+  type: "success",
+  issues: [
+    {
+      path: "foo.phtml",
+      location: { start_line: 5, end_line: 5 },
+      id: "UnusedLocalVariable",
+      message: "Avoid unused local variables such as '$var'.",
+      links: %w[https://phpmd.org/rules/unusedcode.html#unusedlocalvariable],
+      object: nil,
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "PHPMD", version: default_version }
 )

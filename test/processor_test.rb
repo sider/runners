@@ -491,4 +491,18 @@ class ProcessorTest < Minitest::Test
       assert_raises(JSON::ParserError) { processor.read_report_json(file) }
     end
   end
+
+  def test_comma_separated_list
+    with_workspace do |workspace|
+      processor = new_processor(workspace: workspace)
+
+      assert_nil processor.comma_separated_list(nil)
+      assert_nil processor.comma_separated_list([])
+      assert_equal "", processor.comma_separated_list("")
+      assert_equal "a", processor.comma_separated_list("a")
+      assert_equal "a,b", processor.comma_separated_list("a,b")
+      assert_equal "a", processor.comma_separated_list(["a"])
+      assert_equal "a,b", processor.comma_separated_list(["a", "b"])
+    end
+  end
 end

@@ -249,5 +249,10 @@ module Runners
         JSON.parse(output, symbolize_names: true)
       end
     end
+
+    def comma_separated_list(value)
+      values = Array(value).map { |s| s.split(",") }
+      values.empty? ? nil : values.join(",")
+    end
   end
 end
