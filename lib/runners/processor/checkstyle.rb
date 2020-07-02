@@ -87,7 +87,7 @@ module Runners
 
             yield Issue.new(
               path: path,
-              location: line == 0 || line.nil? ? nil : Location.new(start_line: line, start_column: error[:column]),
+              location: line == "0" || line.nil? ? nil : Location.new(start_line: line, start_column: error[:column]),
               id: normalize_id(id),
               message: error[:message],
               links: build_links(id),
