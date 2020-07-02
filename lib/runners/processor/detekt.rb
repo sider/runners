@@ -1,6 +1,7 @@
 module Runners
   class Processor::Detekt < Processor
     include Java
+    include Kotlin
 
     Schema = StrongJSON.new do
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
@@ -25,7 +26,7 @@ module Runners
     register_config_schema(name: :detekt, schema: Schema.runner_config)
 
     def analyze(changes)
-      delete_unchanged_files changes, only: ["*.kt", "*.kts"]
+      delete_unchanged_files changes, only: kotlin_file_extensions
       run_analyzer
     end
 

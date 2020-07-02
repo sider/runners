@@ -1,6 +1,7 @@
 module Runners
   class Processor::Ktlint < Processor
     include Java
+    include Kotlin
 
     Schema = StrongJSON.new do
       let :reporter, enum(literal("json"), literal("plain"), literal("checkstyle"))
@@ -153,7 +154,7 @@ module Runners
     end
 
     def analyze(changes)
-      delete_unchanged_files changes, only: ["*.kt", "*.kts"]
+      delete_unchanged_files changes, only: kotlin_file_extensions
 
       issues = case
                when gradle_config

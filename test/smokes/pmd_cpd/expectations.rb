@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "6.24.0"
+default_version = "6.25.0"
 
 s.add_test(
   "success",
@@ -300,14 +300,14 @@ s.add_test(
   type: "success",
   issues: [
     {
-      path: "foo/bar/baz/qux.rb",
+      path: "src/app.rb",
       location: {
-        start_line: 5,
-        start_column: 0,
-        end_line: 16,
+        start_line: 3,
+        start_column: 1,
+        end_line: 14,
         end_column: 56
       },
-      id: "759a22bd523815368918029841de9924c8ca45b4",
+      id: "90ee917cf8612589def4e3030d309564062cdbf8",
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
@@ -315,18 +315,18 @@ s.add_test(
         tokens: 19,
         files: [
           {
-            id: "759a22bd523815368918029841de9924c8ca45b4",
+            id: "b232ffb305e88308e309ab3dd3ff66e8578168b5",
             path: "foo/bar/baz/qux.rb",
             start_line: 5,
-            start_column: 0,
+            start_column: 1,
             end_line: 16,
             end_column: 56
           },
           {
-            id: "93d15c9d00a8777d9d725ba82e6227da94bfd445",
+            id: "90ee917cf8612589def4e3030d309564062cdbf8",
             path: "src/app.rb",
             start_line: 3,
-            start_column: 0,
+            start_column: 1,
             end_line: 14,
             end_column: 56
           }
@@ -347,14 +347,14 @@ s.add_test(
       git_blame_info: nil
     },
     {
-      path: "src/app.rb",
+      path: "foo/bar/baz/qux.rb",
       location: {
-        start_line: 3,
-        start_column: 0,
-        end_line: 14,
+        start_line: 5,
+        start_column: 1,
+        end_line: 16,
         end_column: 56
       },
-      id: "93d15c9d00a8777d9d725ba82e6227da94bfd445",
+      id: "b232ffb305e88308e309ab3dd3ff66e8578168b5",
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
@@ -362,18 +362,18 @@ s.add_test(
         tokens: 19,
         files: [
           {
-            id: "759a22bd523815368918029841de9924c8ca45b4",
+            id: "b232ffb305e88308e309ab3dd3ff66e8578168b5",
             path: "foo/bar/baz/qux.rb",
             start_line: 5,
-            start_column: 0,
+            start_column: 1,
             end_line: 16,
             end_column: 56
           },
           {
-            id: "93d15c9d00a8777d9d725ba82e6227da94bfd445",
+            id: "90ee917cf8612589def4e3030d309564062cdbf8",
             path: "src/app.rb",
             start_line: 3,
-            start_column: 0,
+            start_column: 1,
             end_line: 14,
             end_column: 56
           }
@@ -1603,6 +1603,42 @@ s.add_test(
       git_blame_info: nil
     },
     {
+      path: "bar/hello_ruby.rb",
+      location: {
+        start_line: 1,
+        start_column: 1,
+        end_line: 24,
+        end_column: 4
+      },
+      id: "936520f0ce1feec8bd0ebcaab536888c2268f715",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 24,
+        tokens: 27,
+        files: [
+          {
+            id: "936520f0ce1feec8bd0ebcaab536888c2268f715",
+            path: "bar/hello_ruby.rb",
+            start_line: 1,
+            start_column: 1,
+            end_line: 24,
+            end_column: 4
+          },
+          {
+            id: "dee764319f0b6fe2d4ff23925c5ab296c779ca14",
+            path: "foo/hello_ruby.rb",
+            start_line: 1,
+            start_column: 1,
+            end_line: 24,
+            end_column: 4
+          }
+        ],
+        codefragment: /def main\(\)/
+      },
+      git_blame_info: nil
+    },
+    {
       path: "bar/hello_cs.cs",
       location: {
         start_line: 5,
@@ -1671,42 +1707,6 @@ s.add_test(
           }
         ],
         codefragment: /def main\(\):/
-      },
-      git_blame_info: nil
-    },
-    {
-      path: "bar/hello_ruby.rb",
-      location: {
-        start_line: 1,
-        start_column: 0,
-        end_line: 24,
-        end_column: 3
-      },
-      id: "aa346f51a19a1376a7891b8d3aca80da60105bd5",
-      message: "Code duplications found (2 occurrences).",
-      links: [],
-      object: {
-        lines: 24,
-        tokens: 27,
-        files: [
-          {
-            id: "aa346f51a19a1376a7891b8d3aca80da60105bd5",
-            path: "bar/hello_ruby.rb",
-            start_line: 1,
-            start_column: 0,
-            end_line: 24,
-            end_column: 3
-          },
-          {
-            id: "bdc333b6770aad21f63ca65eb3c400749f02a272",
-            path: "foo/hello_ruby.rb",
-            start_line: 1,
-            start_column: 0,
-            end_line: 24,
-            end_column: 3
-          }
-        ],
-        codefragment: /def main\(\)/
       },
       git_blame_info: nil
     },
@@ -1783,42 +1783,6 @@ s.add_test(
       git_blame_info: nil
     },
     {
-      path: "foo/hello_ruby.rb",
-      location: {
-        start_line: 1,
-        start_column: 0,
-        end_line: 24,
-        end_column: 3
-      },
-      id: "bdc333b6770aad21f63ca65eb3c400749f02a272",
-      message: "Code duplications found (2 occurrences).",
-      links: [],
-      object: {
-        lines: 24,
-        tokens: 27,
-        files: [
-          {
-            id: "aa346f51a19a1376a7891b8d3aca80da60105bd5",
-            path: "bar/hello_ruby.rb",
-            start_line: 1,
-            start_column: 0,
-            end_line: 24,
-            end_column: 3
-          },
-          {
-            id: "bdc333b6770aad21f63ca65eb3c400749f02a272",
-            path: "foo/hello_ruby.rb",
-            start_line: 1,
-            start_column: 0,
-            end_line: 24,
-            end_column: 3
-          }
-        ],
-        codefragment: /def main\(\)/
-      },
-      git_blame_info: nil
-    },
-    {
       path: "foo/hello_python.py",
       location: {
         start_line: 1,
@@ -1887,6 +1851,42 @@ s.add_test(
           }
         ],
         codefragment: /func main\(\) \{/
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "foo/hello_ruby.rb",
+      location: {
+        start_line: 1,
+        start_column: 1,
+        end_line: 24,
+        end_column: 4
+      },
+      id: "dee764319f0b6fe2d4ff23925c5ab296c779ca14",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 24,
+        tokens: 27,
+        files: [
+          {
+            id: "936520f0ce1feec8bd0ebcaab536888c2268f715",
+            path: "bar/hello_ruby.rb",
+            start_line: 1,
+            start_column: 1,
+            end_line: 24,
+            end_column: 4
+          },
+          {
+            id: "dee764319f0b6fe2d4ff23925c5ab296c779ca14",
+            path: "foo/hello_ruby.rb",
+            start_line: 1,
+            start_column: 1,
+            end_line: 24,
+            end_column: 4
+          }
+        ],
+        codefragment: /def main\(\)/
       },
       git_blame_info: nil
     },
