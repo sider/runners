@@ -29,18 +29,14 @@ module Runners
 
     def analyzer_options
       [].tap do |opts|
-        opts << "--output=junit"
+        opts << "--output" << "junit"
         opts << "--recursive"
-        opts << "--extensions=#{config_linter[:extensions]}" if config_linter[:extensions]
-        opts << "--headers=#{config_linter[:headers]}" if config_linter[:headers]
-        opts << "--filter=#{config_linter[:filter]}" if config_linter[:filter]
-        opts << "--linelength=#{config_linter[:linelength]}" if config_linter[:linelength]
-        Array(config_linter[:exclude]).each do |exclude|
-          opts << "--exclude=#{exclude}"
-        end
-        Array(config_linter[:target] || DEFAULT_TARGET).each do |target|
-          opts << target
-        end
+        config_linter[:extensions]&.then { |v| opts << "--extensions" << v }
+        config_linter[:headers]&.then { |v| opts << "--headers" << v }
+        config_linter[:filter]&.then { |v| opts << "--filter" << v }
+        config_linter[:linelength]&.then { |v| opts << "--linelength" << v.to_s }
+        Array(config_linter[:exclude]).each { |v| opts << "--exclude" << v }
+        Array(config_linter[:target] || DEFAULT_TARGET).each { |v| opts << v }
       end
     end
 
@@ -71,8 +67,8 @@ module Runners
     #
     #     3: Tab found; better to use spaces [whitespace/tab] [1]
     #
-    # @see https://github.com/cpplint/cpplint/blob/1.4.4/cpplint.py#L1151
-    # @see https://github.com/cpplint/cpplint/blob/1.4.4/cpplint.py#L1441-L1448
+    # @see https://github.com/cpplint/cpplint/blob/1.5.2/cpplint.py#L1396
+    # @see https://github.com/cpplint/cpplint/blob/1.5.2/cpplint.py#L1686-L1693
     def parse_result(xml_doc)
       message_pattern = /([^:]+): (.+) \[(.+)\] \[(.+)\]/
 

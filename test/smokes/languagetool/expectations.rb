@@ -1,5 +1,7 @@
 s = Runners::Testing::Smoke
 
+default_version = "5.0"
+
 s.add_test(
   "success",
   type: "success",
@@ -57,7 +59,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "LanguageTool", version: "4.9.1" }
+  analyzer: { name: "LanguageTool", version: default_version }
 )
 
 s.add_test(
@@ -93,7 +95,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "LanguageTool", version: "4.9.1" }
+  analyzer: { name: "LanguageTool", version: default_version }
 )
 
 s.add_test(
@@ -110,7 +112,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "LanguageTool", version: "4.9.1" }
+  analyzer: { name: "LanguageTool", version: default_version }
 )
 
 s.add_test(
@@ -160,7 +162,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "LanguageTool", version: "4.9.1" }
+  analyzer: { name: "LanguageTool", version: default_version }
 )
 
 s.add_test(
@@ -177,7 +179,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "LanguageTool", version: "4.9.1" }
+  analyzer: { name: "LanguageTool", version: default_version }
 )
 
 s.add_test(
@@ -194,10 +196,10 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "LanguageTool", version: "4.9.1" }
+  analyzer: { name: "LanguageTool", version: default_version }
 )
 
-s.add_test("option_disable", type: "success", issues: [], analyzer: { name: "LanguageTool", version: "4.9.1" })
+s.add_test("option_disable", type: "success", issues: [], analyzer: { name: "LanguageTool", version: default_version })
 
 s.add_test(
   "option_enable",
@@ -213,7 +215,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "LanguageTool", version: "4.9.1" }
+  analyzer: { name: "LanguageTool", version: default_version }
 )
 
 s.add_test(
@@ -230,7 +232,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "LanguageTool", version: "4.9.1" }
+  analyzer: { name: "LanguageTool", version: default_version }
 )
 
 s.add_test(
@@ -247,14 +249,14 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "LanguageTool", version: "4.9.1" }
+  analyzer: { name: "LanguageTool", version: default_version }
 )
 
-s.add_test("no_files", type: "success", issues: [], analyzer: { name: "LanguageTool", version: "4.9.1" })
+s.add_test("no_files", type: "success", issues: [], analyzer: { name: "LanguageTool", version: default_version })
 
 s.add_test(
   "invalid_options",
   type: "failure",
   message: "You cannot specify both disabled rules and enabledonly\nPlease check your `sider.yml`",
-  analyzer: { name: "LanguageTool", version: "4.9.1" }
+  analyzer: { name: "LanguageTool", version: default_version }
 )
