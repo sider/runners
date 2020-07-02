@@ -251,7 +251,7 @@ module Runners
     end
 
     def comma_separated_list(value)
-      values = Array(value).map { |s| s.split(",") }
+      values = Array(value).flat_map { |s| s.split(/\s*,\s*/) }
       values.empty? ? nil : values.join(",")
     end
   end
