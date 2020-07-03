@@ -5,6 +5,7 @@ module Runners
     Schema = StrongJSON.new do
       let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
         fields.merge!({
+                        target: enum?(string, array(string)),
                         dir: enum?(string, array(string)),
                         ext: string?,
                         config: string?,
@@ -43,10 +44,16 @@ module Runners
 
     CUSTOM_FORMATTER = (Pathname(Dir.home) / "eslint" / "custom-eslint-json-formatter.js").to_path.freeze
     DEFAULT_ESLINT_CONFIG = (Pathname(Dir.home) / "eslint" / "sider_eslintrc.yml").to_path.freeze
-    DEFAULT_DIR = ".".freeze
+    DEFAULT_TARGET = ".".freeze
 
     def setup
       add_warning_if_deprecated_options([:options])
+
+      if config_linter[:dir]
+        add_warning <<~MSG, file: config.path_name
+          The `dir` option is deprecated. Use the `target` option instead.
+        MSG
+      end
 
       begin
         install_nodejs_deps(constraints: CONSTRAINTS, install_option: config_linter[:npm_install])
@@ -63,8 +70,9 @@ module Runners
 
     private
 
-    def dir
-      Array(config_linter[:dir] || config_linter.dig(:options, :dir) || DEFAULT_DIR)
+    def target
+      Array(config_linter[:target] || config_linter[:dir] ||
+            config_linter.dig(:options, :dir) || DEFAULT_TARGET)
     end
 
     def eslint_config
@@ -178,7 +186,7 @@ module Runners
         *no_ignore,
         *global,
         *quiet,
-        *dir
+        *target
       )
 
       output_json = report_file_exist? ? read_report_json { nil } : nil

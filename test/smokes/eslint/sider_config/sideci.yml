@@ -1,6 +1,7 @@
 linter:
   eslint:
     npm_install: true
+    dir: src/
     config: .myeslintrc.yml
     ext: 'js,jsx'
     ignore-pattern: /src/*

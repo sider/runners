@@ -253,7 +253,8 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "ESLint", version: "5.16.0" }
+  analyzer: { name: "ESLint", version: "5.16.0" },
+  warnings: [{ message: "The `dir` option is deprecated. Use the `target` option instead.", file: "sideci.yml" }]
 )
 
 s.add_test(
@@ -405,4 +406,30 @@ s.add_test(
     }
   ],
   analyzer: { name: "ESLint", version: "7.0.0" }
+)
+
+s.add_test(
+  "option_target",
+  type: "success",
+  issues: [
+    {
+      id: "no-extra-semi",
+      message: "Unnecessary semicolon.",
+      links: %w[https://eslint.org/docs/rules/no-extra-semi],
+      path: "foo.js",
+      location: { start_line: 1, start_column: 5, end_line: 1, end_column: 6 },
+      object: { severity: "error", category: "Possible Errors", recommended: true },
+      git_blame_info: nil
+    },
+    {
+      id: "no-extra-semi",
+      message: "Unnecessary semicolon.",
+      links: %w[https://eslint.org/docs/rules/no-extra-semi],
+      path: "src/bar.js",
+      location: { start_line: 1, start_column: 5, end_line: 1, end_column: 6 },
+      object: { severity: "error", category: "Possible Errors", recommended: true },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "ESLint", version: default_version }
 )
