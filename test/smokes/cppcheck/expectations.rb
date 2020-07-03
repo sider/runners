@@ -94,7 +94,7 @@ s.add_test(
       location: { start_line: 9, start_column: 17 },
       message: "Using iterator to local container 'items' that may be invalid.",
       links: [],
-      object: { severity: "error", verbose: nil, inconclusive: false, cwe: "664", location_info: nil },
+      object: { severity: "error", verbose: nil, inconclusive: false, cwe: "664", location_info: "Iterator to container is created here." },
       git_blame_info: nil
     },
     {
@@ -103,9 +103,7 @@ s.add_test(
       location: { start_line: 9, start_column: 32 },
       message: "Using iterator to local container 'items' that may be invalid.",
       links: [],
-      object: {
-        severity: "error", verbose: nil, inconclusive: false, cwe: "664", location_info: "Assuming condition is true."
-      },
+      object: { severity: "error", verbose: nil, inconclusive: false, cwe: "664", location_info: nil },
       git_blame_info: nil
     },
     {
@@ -119,7 +117,7 @@ s.add_test(
         verbose: nil,
         inconclusive: false,
         cwe: "664",
-        location_info: "Iterator to container is created here."
+        location_info: "Assuming condition is true."
       },
       git_blame_info: nil
     },
