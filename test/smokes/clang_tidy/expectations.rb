@@ -6,7 +6,7 @@ s.add_test(
   issues: [
     {
       path: "foo/テスト.cpp",
-      location: { start_line: 6, start_column: 5, end_line: 6, end_column: 5 },
+      location: { start_line: 6, start_column: 5 },
       id: "clang-analyzer-core.CallAndMessage",
       message: "2nd function call argument is an uninitialized value",
       object: {
@@ -17,7 +17,7 @@ s.add_test(
     },
     {
       path: "test.c",
-      location: { start_line: 5, start_column: 3, end_line: 5, end_column: 3 },
+      location: { start_line: 5, start_column: 3 },
       id: "clang-analyzer-core.uninitialized.Assign",
       message: "Assigned value is garbage or undefined",
       object: {
@@ -28,7 +28,7 @@ s.add_test(
     },
     {
       path: "test.c",
-      location: { start_line: 5, start_column: 15, end_line: 5, end_column: 15 },
+      location: { start_line: 5, start_column: 15 },
       id: "clang-analyzer-deadcode.DeadStores",
       message: "Value stored to 't' during its initialization is never read",
       object: {
@@ -47,7 +47,7 @@ s.add_test(
   issues: [
     {
       path: "src/foo/テスト.C++",
-      location: { start_line: 6, start_column: 5, end_line: 6, end_column: 5 },
+      location: { start_line: 6, start_column: 5 },
       id: "clang-analyzer-core.CallAndMessage",
       message: "2nd function call argument is an uninitialized value",
       object: {
@@ -58,7 +58,7 @@ s.add_test(
     },
     {
       path: "src/test.CC",
-      location: { start_line: 5, start_column: 3, end_line: 5, end_column: 3 },
+      location: { start_line: 5, start_column: 3 },
       id: "clang-analyzer-core.uninitialized.Assign",
       message: "Assigned value is garbage or undefined",
       object: {
@@ -69,7 +69,7 @@ s.add_test(
     },
     {
       path: "test.cp",
-      location: { start_line: 5, start_column: 15, end_line: 5, end_column: 15 },
+      location: { start_line: 5, start_column: 15 },
       id: "clang-analyzer-deadcode.DeadStores",
       message: "Value stored to 't' during its initialization is never read",
       object: {
@@ -88,7 +88,7 @@ s.add_test(
   issues: [
     {
       path: "example.CXX",
-      location: { start_line: 11, start_column: 12, end_line: 11, end_column: 12 },
+      location: { start_line: 11, start_column: 12 },
       id: "clang-analyzer-core.CallAndMessage",
       message: "Passed-by-value struct argument contains uninitialized data (e.g., field: 'dptr')",
       object: {
@@ -99,7 +99,7 @@ s.add_test(
     },
     {
       path: "foo/test.C",
-      location: { start_line: 2, start_column: 10, end_line: 2, end_column: 10 },
+      location: { start_line: 2, start_column: 10 },
       id: "clang-diagnostic-error",
       message: "'bar.h' file not found",
       object: {
@@ -118,7 +118,7 @@ s.add_test(
   issues: [
     {
       path: "example.cc",
-      location: { start_line: 11, start_column: 12, end_line: 11, end_column: 12 },
+      location: { start_line: 11, start_column: 12 },
       id: "clang-analyzer-core.CallAndMessage",
       message: "Passed-by-value struct argument contains uninitialized data (e.g., field: 'dptr')",
       object: {

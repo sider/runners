@@ -71,11 +71,9 @@ module Runners
         #        <path>:<line>:<column>: <severity>: <message> [<id>]
         match = line.strip.match(/^(?<path>.+):(?<line>\d+):(?<column>\d+): (?<severity>[^:]+): (?<message>.+) \[(?<id>[^\[]+)\]$/)
         if match
-          start_line = Integer(match[:line])
-          start_column = Integer(match[:column])
           issues << Issue.new(
             path: relative_path(match[:path]),
-            location: Location.new(start_line: start_line, start_column: start_column, end_line: start_line, end_column: start_column),
+            location: Location.new(start_line: Integer(match[:line]), start_column: Integer(match[:column])),
             id: match[:id],
             message: match[:message],
             object: {
