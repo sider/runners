@@ -42,7 +42,7 @@ s.add_test(
 )
 
 s.add_test(
-  "root_dir",
+  "option_root_dir",
   type: "success",
   issues: [
     {
