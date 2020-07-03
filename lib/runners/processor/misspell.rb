@@ -7,7 +7,7 @@ module Runners
                         targets: array?(string),
                         target: array?(string),
                         locale: enum?(literal('US'), literal('UK')),
-                        ignore: string?,
+                        ignore: enum?(string, array(string)),
                         # DO NOT ADD ANY OPTIONS under `options`.
                         options: optional(object(
                                             locale: enum?(literal('US'), literal('UK')),
@@ -23,6 +23,8 @@ module Runners
     end
 
     register_config_schema(name: :misspell, schema: Schema.runner_config)
+
+    DEFAULT_TARGET = ".".freeze
 
     def analyzer_version
       @analyzer_version ||= extract_version! analyzer_bin, '-v'
@@ -80,12 +82,12 @@ module Runners
 
     def ignore
       # The option requires comma separated with string when user would like to set ignore multiple targets.
-      ignore = config_linter[:ignore] || config_linter.dig(:options, :ignore)
-      ignore ? ["-i", "#{ignore}"] : []
+      ignore = comma_separated_list(config_linter[:ignore] || config_linter.dig(:options, :ignore))
+      ignore ? ["-i", ignore] : []
     end
 
     def analysis_targets
-      Array(config_linter[:target] || config_linter[:targets] || '.')
+      Array(config_linter[:target] || config_linter[:targets] || DEFAULT_TARGET)
     end
 
     def delete_targets
