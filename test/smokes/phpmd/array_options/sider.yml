@@ -1,0 +1,11 @@
+linter:
+  phpmd:
+    exclude:
+      - app/Controller/
+      - app/index.php
+    rule:
+      - cleancode,codesize
+      - controversial,design
+      - naming
+      - unusedcode
+    suffixes: [php, phtml]
