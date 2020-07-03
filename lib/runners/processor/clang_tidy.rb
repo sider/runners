@@ -12,10 +12,10 @@ module Runners
 
     register_config_schema(name: :clang_tidy, schema: Schema.runner_config)
 
-    FILE_EXTENSIONS = [".c", ".cc", ".cpp", ".c++", ".cp", ".cxx"].freeze
+    VALID_EXTENSIONS = [".c", ".cc", ".cpp", ".c++", ".cp", ".cxx"].freeze
 
     def analyze(changes)
-      run_analyzer(changes.changed_paths)
+      run_analyzer(changes)
     end
 
     private
@@ -24,17 +24,18 @@ module Runners
       "clang-tidy"
     end
 
-    def run_analyzer(changed_paths)
+    def run_analyzer(changes)
       issues = []
 
-      changed_paths
-        .select { |path| FILE_EXTENSIONS.include?(path.extname.downcase) }
+      changes
+        .changed_paths
+        .select { |path| VALID_EXTENSIONS.include?(path.extname.downcase) }
         .map{ |path| relative_path(working_dir / path, from: current_dir) }
         .each do |path|
-        stdout, stderr = capture3!(analyzer_bin, path.to_s, "--")
-        ret = construct_result(stdout)
-        issues.push(*ret)
-      end
+          stdout, stderr = capture3!(analyzer_bin, path.to_s, "--")
+          ret = construct_result(stdout)
+          issues.push(*ret)
+        end
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
         result.add_issue(*issues)
