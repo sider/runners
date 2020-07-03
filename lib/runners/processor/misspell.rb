@@ -80,13 +80,6 @@ module Runners
       locale ? ["-locale", "#{locale}"] : []
     end
 
-    # TODO: Please this method when PR #1253 will be merged.
-    # @see https://github.com/sider/runners/pull/1253/files#diff-d96aa2fcf642c90a48d541348afe8949
-    def comma_separated_list(value)
-      values = Array(value).flat_map { |s| s.split(/\s*,\s*/) }
-      values.empty? ? nil : values.join(",")
-    end
-
     def ignore
       # The option requires comma separated with string when user would like to set ignore multiple targets.
       ignore = comma_separated_list(config_linter[:ignore] || config_linter.dig(:options, :ignore))
