@@ -24,9 +24,18 @@ module Runners
     private
 
     def deploy_packages
-      if config_linter[:apt]
-        # TODO select "lib*" and report others as warning
-        packages = Array(config_linter[:apt])
+      # select "lib*" and report others as warning for security concerns
+      packages = Array(config_linter[:apt])
+        .select do |pkg|
+          if pkg.start_with?("lib")
+            true
+          else
+            add_warning "Installing the package '%s' is blocked." % pkg
+            false
+          end
+        end
+
+      unless packages.empty?
         capture3!("sudo", "apt-get", "install", "-y", "--no-install-recommends", *packages)
       end
     end

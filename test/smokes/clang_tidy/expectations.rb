@@ -111,3 +111,32 @@ s.add_test(
   ],
   analyzer: { name: "Clang-Tidy", version: "7.0.1" }
 )
+
+s.add_test(
+  "option_apt_exclude",
+  type: "success",
+  issues: [
+    {
+      path: "example.cc",
+      location: { start_line: 11, start_column: 12, end_line: 11, end_column: 12 },
+      id: "clang-analyzer-core.CallAndMessage",
+      message: "Passed-by-value struct argument contains uninitialized data (e.g., field: 'dptr')",
+      object: {
+        severity: "warning"
+      },
+      git_blame_info: nil,
+      links: []
+    }
+  ],
+  warnings: [
+    {
+      message: "Installing the package 'foobar' is blocked.",
+      file: nil
+    },
+    {
+      message: "Installing the package 'bazqux=1.2.3-4' is blocked.",
+      file: nil
+    }
+  ],
+  analyzer: { name: "Clang-Tidy", version: "7.0.1" }
+)
