@@ -2,7 +2,9 @@ module Runners
   class Processor::ClangTidy < Processor
     Schema = StrongJSON.new do
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
-        fields.merge!({})
+        fields.merge!({
+          apt: enum?(string, array(string))
+        })
       }
 
       let :issue, object(
@@ -15,10 +17,19 @@ module Runners
     VALID_EXTENSIONS = [".c", ".cc", ".cpp", ".c++", ".cp", ".cxx"].freeze
 
     def analyze(changes)
+      deploy_packages
       run_analyzer(changes)
     end
 
     private
+
+    def deploy_packages
+      if config_linter[:apt]
+        # TODO select "lib*" and report others as warning
+        packages = Array(config_linter[:apt])
+        capture3!("sudo", "apt-get", "install", "-y", "--no-install-recommends", *packages)
+      end
+    end
 
     def analyzer_bin
       "clang-tidy"
@@ -32,7 +43,8 @@ module Runners
         .select { |path| VALID_EXTENSIONS.include?(path.extname.downcase) }
         .map{ |path| relative_path(working_dir / path, from: current_dir) }
         .each do |path|
-          stdout, stderr = capture3!(analyzer_bin, path.to_s, "--")
+          stdout, stderr = capture3!(analyzer_bin, path.to_s, "--",
+            is_success: ->(status) { [0, 1].include?(status.exitstatus) })
           ret = construct_result(stdout)
           issues.push(*ret)
         end

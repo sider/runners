@@ -1,0 +1,5 @@
+linter:
+  clang_tidy:
+    apt:
+      - libgdbm-dev
+      - libfastjson-dev=0.99.8-2

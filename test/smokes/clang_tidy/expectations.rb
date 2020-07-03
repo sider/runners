@@ -81,3 +81,33 @@ s.add_test(
   ],
   analyzer: { name: "Clang-Tidy", version: "7.0.1" }
 )
+
+s.add_test(
+  "option_apt_valid",
+  type: "success",
+  issues: [
+    {
+      path: "example.CXX",
+      location: { start_line: 11, start_column: 12, end_line: 11, end_column: 12 },
+      id: "clang-analyzer-core.CallAndMessage",
+      message: "Passed-by-value struct argument contains uninitialized data (e.g., field: 'dptr')",
+      object: {
+        severity: "warning"
+      },
+      git_blame_info: nil,
+      links: []
+    },
+    {
+      path: "foo/test.C",
+      location: { start_line: 2, start_column: 10, end_line: 2, end_column: 10 },
+      id: "clang-diagnostic-error",
+      message: "'bar.h' file not found",
+      object: {
+        severity: "error"
+      },
+      git_blame_info: nil,
+      links: []
+    }
+  ],
+  analyzer: { name: "Clang-Tidy", version: "7.0.1" }
+)

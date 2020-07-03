@@ -8,7 +8,7 @@ USER root
 RUN apt-get update && \
     apt-get install -y --no-install-recommends clang-tidy && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    echo "analyzer_runner ALL=NOPASSWD: /usr/bin/apt-get" >> /etc/sudoers
 USER $RUNNER_USER
 
 
