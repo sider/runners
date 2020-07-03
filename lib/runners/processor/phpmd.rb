@@ -52,7 +52,7 @@ module Runners
     end
 
     def target_dirs
-      comma_separated_list(config_linter[:target] || DEFAULT_TARGET)
+      comma_separated_list(config_linter[:target]) || DEFAULT_TARGET
     end
 
     def minimumpriority
