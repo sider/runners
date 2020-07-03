@@ -9,7 +9,7 @@ s.add_test(
   issues: [
     {
       path: "test.sss",
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 12 },
       id: "block-closing-brace-newline-before",
       message: 'Expected newline before "}" of a multi-line block',
       object: { severity: "error" },
@@ -18,7 +18,7 @@ s.add_test(
     },
     {
       path: "test.sss",
-      location: { start_line: 1 },
+      location: { start_line: 1, start_column: 1 },
       id: "block-opening-brace-space-before",
       message: 'Expected single space before "{"',
       object: { severity: "error" },
@@ -27,7 +27,7 @@ s.add_test(
     },
     {
       path: "test.less",
-      location: { start_line: 8 },
+      location: { start_line: 8, start_column: 15 },
       id: "declaration-block-trailing-semicolon",
       message: "Expected a trailing semicolon",
       object: { severity: "error" },
@@ -36,7 +36,7 @@ s.add_test(
     },
     {
       path: "test.sss",
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 13 },
       id: "declaration-block-trailing-semicolon",
       message: "Expected a trailing semicolon",
       object: { severity: "error" },
@@ -45,7 +45,7 @@ s.add_test(
     },
     {
       path: "test.scss",
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 5 },
       id: "indentation",
       message: "Expected indentation of 2 spaces",
       object: { severity: "error" },
@@ -54,7 +54,7 @@ s.add_test(
     },
     {
       path: "test.less",
-      location: { start_line: 11 },
+      location: { start_line: 11, start_column: 1 },
       id: "max-empty-lines",
       message: "Expected no more than 1 empty line",
       object: { severity: "error" },
@@ -63,7 +63,7 @@ s.add_test(
     },
     {
       path: "test.less",
-      location: { start_line: 12 },
+      location: { start_line: 12, start_column: 1 },
       id: "max-empty-lines",
       message: "Expected no more than 1 empty line",
       object: { severity: "error" },
@@ -72,7 +72,7 @@ s.add_test(
     },
     {
       path: "test.css",
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 3 },
       id: "property-no-unknown",
       message: 'Unexpected unknown property "someattr"',
       object: { severity: "error" },
@@ -81,7 +81,7 @@ s.add_test(
     },
     {
       path: "test.scss",
-      location: { start_line: 6 },
+      location: { start_line: 6, start_column: 7 },
       id: "property-no-unknown",
       message: 'Unexpected unknown property "font-color"',
       object: { severity: "error" },
@@ -90,7 +90,7 @@ s.add_test(
     },
     {
       path: "test.scss",
-      location: { start_line: 3 },
+      location: { start_line: 3, start_column: 3 },
       id: "rule-empty-line-before",
       message: "Expected empty line before rule",
       object: { severity: "error" },
@@ -99,7 +99,7 @@ s.add_test(
     },
     {
       path: "test.scss",
-      location: { start_line: 5 },
+      location: { start_line: 5, start_column: 5 },
       id: "rule-empty-line-before",
       message: "Expected empty line before rule",
       object: { severity: "error" },
@@ -108,7 +108,7 @@ s.add_test(
     },
     {
       path: "test.scss",
-      location: { start_line: 11 },
+      location: { start_line: 11, start_column: 1 },
       id: "scss/dollar-variable-pattern",
       message: "Expected $ variable name to match specified pattern",
       object: { severity: "warning" },
@@ -117,7 +117,7 @@ s.add_test(
     },
     {
       path: "test.less",
-      location: { start_line: 13 },
+      location: { start_line: 13, start_column: 1 },
       id: "selector-type-no-unknown",
       message: 'Unexpected unknown type selector "hoge"',
       object: { severity: "error" },
@@ -134,7 +134,7 @@ s.add_test(
   issues: [
     {
       path: "test.css",
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 10 },
       id: "color-no-invalid-hex",
       message: 'Unexpected invalid hex color "#100000000"',
       links: %W[https://github.com/stylelint/stylelint/tree/#{default_version}/lib/rules/color-no-invalid-hex],
@@ -143,7 +143,7 @@ s.add_test(
     },
     {
       path: "test.css",
-      location: { start_line: 1 },
+      location: { start_line: 1, start_column: 1 },
       id: "selector-type-no-unknown",
       message: 'Unexpected unknown type selector "foo"',
       links: %W[https://github.com/stylelint/stylelint/tree/#{default_version}/lib/rules/selector-type-no-unknown],
@@ -176,7 +176,7 @@ s.add_test(
       path: "test.scss",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 1 }
+      location: { start_line: 1, start_column: 5 }
     },
     {
       message: 'Expected newline before "}" of a multi-line block',
@@ -185,7 +185,7 @@ s.add_test(
       path: "test.sss",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 2 }
+      location: { start_line: 2, start_column: 14 }
     },
     {
       message: 'Expected single space before "{"',
@@ -194,7 +194,7 @@ s.add_test(
       path: "test.sss",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 1 }
+      location: { start_line: 1, start_column: 1 }
     },
     {
       message: "Expected a trailing semicolon",
@@ -203,7 +203,7 @@ s.add_test(
       path: "test.sss",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 2 }
+      location: { start_line: 2, start_column: 13 }
     }
   ]
 )
@@ -220,7 +220,7 @@ s.add_test(
       path: "ng.css",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 1 }
+      location: { start_line: 1, start_column: 1 }
     },
     {
       message: 'Unexpected unknown property "someattr"',
@@ -229,7 +229,7 @@ s.add_test(
       path: "ok.css",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 2 }
+      location: { start_line: 2, start_column: 3 }
     }
   ]
 )
@@ -246,7 +246,7 @@ s.add_test(
       path: "test.css",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 2 }
+      location: { start_line: 2, start_column: 3 }
     },
     {
       message: 'Unexpected unknown property "font-color"',
@@ -255,7 +255,7 @@ s.add_test(
       path: "test.scss",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 6 }
+      location: { start_line: 6, start_column: 7 }
     },
     {
       message: 'Unexpected unknown type selector "hoge"',
@@ -264,7 +264,7 @@ s.add_test(
       path: "test.less",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 13 }
+      location: { start_line: 13, start_column: 1 }
     }
   ]
 )
@@ -281,7 +281,7 @@ s.add_test(
       path: "test.scss",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 16 }
+      location: { start_line: 16, start_column: 5 }
     },
     {
       message: "Expected empty line before closing brace",
@@ -290,7 +290,7 @@ s.add_test(
       path: "test.scss",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 17 }
+      location: { start_line: 17, start_column: 3 }
     },
     {
       message: "Expected empty line before closing brace",
@@ -299,7 +299,7 @@ s.add_test(
       path: "test.scss",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 20 }
+      location: { start_line: 20, start_column: 3 }
     },
     {
       message: "Expected empty line before closing brace",
@@ -308,7 +308,7 @@ s.add_test(
       path: "test.scss",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 21 }
+      location: { start_line: 21, start_column: 1 }
     },
     {
       message: "Expected a trailing semicolon",
@@ -317,7 +317,7 @@ s.add_test(
       path: "test.scss",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 1 }
+      location: { start_line: 1, start_column: 20 }
     },
     {
       message: "Expected a trailing semicolon",
@@ -326,7 +326,7 @@ s.add_test(
       path: "test.scss",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 19 }
+      location: { start_line: 19, start_column: 32 }
     }
   ]
 )
@@ -351,7 +351,7 @@ s.add_test(
       path: "test.css",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 6 }
+      location: { start_line: 6, start_column: 45 }
     },
     {
       message: 'Unexpected unknown property "someattr"',
@@ -360,7 +360,7 @@ s.add_test(
       path: "test.css",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 2 }
+      location: { start_line: 2, start_column: 3 }
     },
     {
       message: 'Unexpected unknown type selector "hoge"',
@@ -369,7 +369,7 @@ s.add_test(
       path: "test.less",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 13 }
+      location: { start_line: 13, start_column: 1 }
     }
   ]
 )
@@ -386,7 +386,7 @@ s.add_test(
       path: "test.less",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 8 }
+      location: { start_line: 8, start_column: 15 }
     },
     {
       message: "Expected indentation of 2 spaces",
@@ -395,7 +395,7 @@ s.add_test(
       path: "test.scss",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 2 }
+      location: { start_line: 2, start_column: 5 }
     },
     {
       message: "Expected no more than 1 empty line",
@@ -404,7 +404,7 @@ s.add_test(
       path: "test.less",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 11 }
+      location: { start_line: 11, start_column: 1 }
     },
     {
       message: "Expected no more than 1 empty line",
@@ -413,7 +413,7 @@ s.add_test(
       path: "test.less",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 12 }
+      location: { start_line: 12, start_column: 1 }
     },
     {
       message: 'Unexpected unknown property "font-color"',
@@ -422,7 +422,7 @@ s.add_test(
       path: "test.scss",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 6 }
+      location: { start_line: 6, start_column: 7 }
     },
     {
       message: "Expected empty line before rule",
@@ -431,7 +431,7 @@ s.add_test(
       path: "test.scss",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 3 }
+      location: { start_line: 3, start_column: 3 }
     },
     {
       message: "Expected empty line before rule",
@@ -440,7 +440,7 @@ s.add_test(
       path: "test.scss",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 5 }
+      location: { start_line: 5, start_column: 5 }
     },
     {
       message: 'Unexpected unknown type selector "hoge"',
@@ -449,7 +449,7 @@ s.add_test(
       path: "test.less",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 13 }
+      location: { start_line: 13, start_column: 1 }
     }
   ],
   warnings: [
@@ -504,7 +504,7 @@ s.add_test(
       path: "test.sss",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 2 }
+      location: { start_line: 2, start_column: 12 }
     },
     {
       message: 'Expected single space before "{"',
@@ -513,7 +513,7 @@ s.add_test(
       path: "test.sss",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 1 }
+      location: { start_line: 1, start_column: 1 }
     },
     {
       message: "Expected a trailing semicolon",
@@ -522,7 +522,7 @@ s.add_test(
       path: "test.sss",
       object: { severity: "error" },
       git_blame_info: nil,
-      location: { start_line: 2 }
+      location: { start_line: 2, start_column: 13 }
     }
   ]
 )
@@ -548,7 +548,7 @@ s.add_test(
       path: "a.css",
       id: "property-no-unknown",
       message: /Unexpected unknown property/,
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 3 },
       links: %W[https://github.com/stylelint/stylelint/tree/#{default_version}/lib/rules/property-no-unknown],
       object: { severity: "error" },
       git_blame_info: nil
@@ -557,7 +557,7 @@ s.add_test(
       path: "a.less",
       id: "property-no-unknown",
       message: /Unexpected unknown property/,
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 3 },
       links: %W[https://github.com/stylelint/stylelint/tree/#{default_version}/lib/rules/property-no-unknown],
       object: { severity: "error" },
       git_blame_info: nil
@@ -566,7 +566,7 @@ s.add_test(
       path: "a.sass",
       id: "property-no-unknown",
       message: /Unexpected unknown property/,
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 3 },
       links: %W[https://github.com/stylelint/stylelint/tree/#{default_version}/lib/rules/property-no-unknown],
       object: { severity: "error" },
       git_blame_info: nil
@@ -575,7 +575,7 @@ s.add_test(
       path: "a.scss",
       id: "property-no-unknown",
       message: /Unexpected unknown property/,
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 3 },
       links: %W[https://github.com/stylelint/stylelint/tree/#{default_version}/lib/rules/property-no-unknown],
       object: { severity: "error" },
       git_blame_info: nil
@@ -584,7 +584,7 @@ s.add_test(
       path: "a.sss",
       id: "property-no-unknown",
       message: /Unexpected unknown property/,
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 3 },
       links: %W[https://github.com/stylelint/stylelint/tree/#{default_version}/lib/rules/property-no-unknown],
       object: { severity: "error" },
       git_blame_info: nil

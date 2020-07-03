@@ -6,10 +6,10 @@ module Runners
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
                         target: enum?(string, array(string)),
-                        rule: string?,
+                        rule: enum?(string, array(string)),
                         minimumpriority: numeric?,
-                        suffixes: string?,
-                        exclude: string?,
+                        suffixes: enum?(string, array(string)),
+                        exclude: enum?(string, array(string)),
                         strict: boolean?,
                         custom_rule_path: array?(string),
                         # DO NOT ADD ANY OPTIONS in `options` option.
@@ -26,6 +26,9 @@ module Runners
 
     register_config_schema(name: :phpmd, schema: Schema.runner_config)
 
+    DEFAULT_TARGET = ".".freeze
+    DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_config.xml").to_path.freeze
+
     def setup
       add_warning_if_deprecated_options([:options])
       yield
@@ -33,8 +36,7 @@ module Runners
 
     def analyze(changes)
       delete_unchanged_files(changes, only: target_files, except: config_linter[:custom_rule_path] || [])
-      options = [minimumpriority, suffixes, exclude, strict].flatten.compact
-      run_analyzer(changes, target_dirs, rule, options)
+      run_analyzer(changes)
     end
 
     private
@@ -46,50 +48,48 @@ module Runners
 
     def rule
       rules = config_linter[:rule] || config_linter.dig(:options, :rule)
-      if rules
-        rules
-      else
-        # NOTE: It assumes that default config xml is located in $HOME
-        (Pathname(Dir.home) / 'sider_config.xml').realpath.to_s
-      end
+      comma_separated_list(rules) || DEFAULT_CONFIG_FILE
     end
 
     def target_dirs
-      Array(config_linter[:target] || './').flat_map { |target| target.split(',') }.join(',')
+      comma_separated_list(config_linter[:target]) || DEFAULT_TARGET
     end
 
     def minimumpriority
-      min_priority = config_linter[:minimumpriority] || config_linter.dig(:options, :minimumpriority)
-      ["--minimumpriority", "#{min_priority}"] if min_priority
+      priority = config_linter[:minimumpriority] || config_linter.dig(:options, :minimumpriority)
+      priority ? ["--minimumpriority", priority.to_s] : []
     end
 
     def suffixes
-      suffixes = config_linter[:suffixes] || config_linter.dig(:options, :suffixes)
-      ["--suffixes", "#{suffixes}"] if suffixes
+      suffixes = comma_separated_list(config_linter[:suffixes] || config_linter.dig(:options, :suffixes))
+      suffixes ? ["--suffixes", suffixes] : []
     end
 
     def exclude
-      exclude = config_linter[:exclude] || config_linter.dig(:options, :exclude)
-      ["--exclude", "#{exclude}"] if exclude
+      exclude = comma_separated_list(config_linter[:exclude] || config_linter.dig(:options, :exclude))
+      exclude ? ["--exclude", exclude] : []
     end
 
     def strict
       strict = config_linter[:strict] || config_linter.dig(:options, :strict)
-      ["--strict"] if strict
+      strict ? ["--strict"] : []
     end
 
-    def run_analyzer(changes, targets, rule, options)
+    def run_analyzer(changes)
       # PHPMD exits 1 when some violations are found.
       # The `--ignore-violation-on-exit` will exit with a zero code, even if any violations are found.
       # See https://phpmd.org/documentation/index.html
       _stdout, stderr, status = capture3(
         analyzer_bin,
-        targets,
+        target_dirs,
         "xml",
         rule,
         "--ignore-violations-on-exit",
         "--report-file", report_file,
-        *options
+        *minimumpriority,
+        *suffixes,
+        *exclude,
+        *strict,
       )
 
       unless status.success?

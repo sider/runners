@@ -60,7 +60,7 @@ module Runners
           message = error[:message].strip
           yield Issue.new(
             path: relative_path(file[:name]),
-            location: Location.new(start_line: error[:line]),
+            location: Location.new(start_line: error[:line], start_column: error[:column]),
             id: error[:source] || Digest::SHA1.hexdigest(message),
             message: message,
           )

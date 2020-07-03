@@ -8,7 +8,7 @@ s.add_test(
   issues: [
     {
       path: "app.php",
-      location: { start_line: 18 },
+      location: { start_line: 18, start_column: 1 },
       id: "PSR2.Files.ClosingTag.NotAllowed",
       message: "A closing tag is not permitted at the end of a PHP file",
       links: [],
@@ -25,7 +25,7 @@ s.add_test(
   issues: [
     {
       path: "app/app.php",
-      location: { start_line: 6 },
+      location: { start_line: 6, start_column: 1 },
       id: "PSR2.Files.ClosingTag.NotAllowed",
       message: "A closing tag is not permitted at the end of a PHP file",
       links: [],
@@ -66,7 +66,7 @@ s.add_test(
   issues: [
     {
       path: "app.php",
-      location: { start_line: 18 },
+      location: { start_line: 18, start_column: 1 },
       id: "PSR2.Files.ClosingTag.NotAllowed",
       message: "A closing tag is not permitted at the end of a PHP file",
       links: [],
@@ -94,7 +94,7 @@ s.add_test(
   issues: [
     {
       path: "app/test.php",
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 1 },
       id: "CakePHP.Commenting.FunctionComment.Missing",
       message: "Missing doc comment for function foo()",
       links: [],
@@ -111,7 +111,7 @@ s.add_test(
   issues: [
     {
       path: "src/test.php",
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 1 },
       id: "Squiz.Functions.GlobalFunction.Found",
       message: 'Consider putting global function "foo" in a static class',
       links: [],
@@ -120,7 +120,7 @@ s.add_test(
     },
     {
       path: "src/test.php",
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 1 },
       id: "Symfony.Commenting.FunctionComment.Missing",
       message: "Missing doc comment for function foo()",
       links: [],

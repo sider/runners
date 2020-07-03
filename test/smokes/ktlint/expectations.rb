@@ -10,7 +10,7 @@ s.add_test(
     {
       id: "18748d47",
       path: "src/Foo.kt",
-      location: { start_line: 1 },
+      location: { start_line: 1, start_column: 1 },
       message: "Not a valid Kotlin file (1:1 expecting a top level declaration) (cannot be auto-corrected)",
       links: [],
       object: nil,
@@ -19,7 +19,7 @@ s.add_test(
     {
       id: "indent",
       path: "src/App.kt",
-      location: { start_line: 8 },
+      location: { start_line: 8, start_column: 1 },
       message: "Unexpected indentation (2) (should be 4)",
       links: [],
       object: nil,
@@ -28,8 +28,8 @@ s.add_test(
     {
       id: "indent",
       path: "src/App.kt",
-      location: { start_line: 9 },
-      message: "Missing newline before \"}\"",
+      location: { start_line: 9, start_column: 1 },
+      message: "Unexpected indentation (12) (should be 8)",
       links: [],
       object: nil,
       git_blame_info: nil
@@ -37,8 +37,8 @@ s.add_test(
     {
       id: "indent",
       path: "src/App.kt",
-      location: { start_line: 9 },
-      message: "Unexpected indentation (12) (should be 8)",
+      location: { start_line: 9, start_column: 34 },
+      message: "Missing newline before \"}\"",
       links: [],
       object: nil,
       git_blame_info: nil
@@ -54,7 +54,7 @@ s.add_test(
     {
       id: "experimental:package-name",
       path: "src/App.kt",
-      location: { start_line: 1 },
+      location: { start_line: 1, start_column: 1 },
       message: "Package name must not contain underscore (cannot be auto-corrected)",
       links: [],
       object: nil,
@@ -63,7 +63,7 @@ s.add_test(
     {
       id: "no-semi",
       path: "src/App.kt",
-      location: { start_line: 6 },
+      location: { start_line: 6, start_column: 19 },
       message: "Unnecessary semicolon",
       links: [],
       object: nil,
@@ -80,7 +80,7 @@ s.add_test(
     {
       id: "0ebc0f91",
       path: "src/main/kotlin/gradle/App.kt",
-      location: { start_line: 9 },
+      location: { start_line: 9, start_column: 1 },
       message: "Unexpected indentation (12) (it should be 6) (cannot be auto-corrected)",
       links: [],
       object: nil,
@@ -89,7 +89,7 @@ s.add_test(
     {
       id: "5e2630c4",
       path: "src/main/kotlin/gradle/App.kt",
-      location: { start_line: 8 },
+      location: { start_line: 8, start_column: 1 },
       message: "Unexpected indentation (2) (it should be 4) (cannot be auto-corrected)",
       links: [],
       object: nil,
@@ -106,7 +106,7 @@ s.add_test(
     {
       id: "experimental:indent",
       path: "src/main/kotlin/gradle/App.kt",
-      location: { start_line: 10 },
+      location: { start_line: 10, start_column: 1 },
       message: "Unexpected indentation (6) (should be 4)",
       links: [],
       object: nil,
@@ -115,7 +115,7 @@ s.add_test(
     {
       id: "indent",
       path: "src/main/kotlin/gradle/App.kt",
-      location: { start_line: 10 },
+      location: { start_line: 10, start_column: 1 },
       message: "Unexpected indentation (6) (it should be 8) (cannot be auto-corrected)",
       links: [],
       object: nil,
@@ -132,7 +132,7 @@ s.add_test(
     {
       id: "indent",
       path: "src/main/App.kt",
-      location: { start_line: 8 },
+      location: { start_line: 8, start_column: 1 },
       message: "Unexpected indentation (2) (it should be 4) (cannot be auto-corrected)",
       links: [],
       object: nil,
@@ -141,7 +141,7 @@ s.add_test(
     {
       id: "indent",
       path: "src/main/App.kt",
-      location: { start_line: 9 },
+      location: { start_line: 9, start_column: 1 },
       message: "Unexpected indentation (12) (it should be 6) (cannot be auto-corrected)",
       links: [],
       object: nil,

@@ -14,6 +14,26 @@ Updated environments:
 
 - **devon_rex** 2.20.0 -> 2.21.0 [#1244](https://github.com/sider/runners/pull/1244)
 
+Updated tools:
+
+- **Checkstyle** 8.33 -> 8.34 [#1239](https://github.com/sider/runners/pull/1239)
+- **cpplint** 1.5.1 -> 1.5.2 [#1222](https://github.com/sider/runners/pull/1222)
+- **detekt** 1.9.1 -> 1.10.0 [#1236](https://github.com/sider/runners/pull/1236)
+- **ESLint** 7.2.0 -> 7.3.1 [#1224](https://github.com/sider/runners/pull/1224)
+- **LanguageTool** 4.9.1 -> 5.0 [#1241](https://github.com/sider/runners/pull/1241)
+- **PMD CPD** 6.24.0 -> 6.25.0 [#1235](https://github.com/sider/runners/pull/1235)
+- **PMD Java** 6.24.0 -> 6.25.0 [#1237](https://github.com/sider/runners/pull/1237)
+- **RuboCop** 0.85.1 -> 0.86.0 [#1220](https://github.com/sider/runners/pull/1220)
+
+Misc:
+
+- Use Docker BuildKit [#1245](https://github.com/sider/runners/pull/1245)
+- Fix Kotlin file extensions [#1252](https://github.com/sider/runners/pull/1252)
+- **PHPMD** Support the comma-separated list options as array [#1253](https://github.com/sider/runners/pull/1253)
+- **Misspell** Support `ignore` option as array [#1255](https://github.com/sider/runners/pull/1255)
+- Allow `location(start_line,start_column)` format [#1257](https://github.com/sider/runners/pull/1257)
+- **ESLint** Add `target` option instead of `dir` option [#1264](https://github.com/sider/runners/pull/1264)
+
 ## 0.29.3
 
 [Full diff](https://github.com/sider/runners/compare/0.29.2...0.29.3)

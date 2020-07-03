@@ -144,8 +144,8 @@ module Runners
     end
 
     def create_issue_object(elem_dupli, files)
-      lines = elem_dupli[:lines].to_i
-      tokens = elem_dupli[:tokens].to_i
+      lines = Integer(elem_dupli[:lines])
+      tokens = Integer(elem_dupli[:tokens])
       codefragment = elem_dupli.elements['codefragment'].cdatas[0].value
       fileobjs = files.map { |f| {
         id: f[:id],

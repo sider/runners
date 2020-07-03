@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "7.2.0"
+default_version = "7.3.1"
 
 s.add_test(
   "no_config",
@@ -186,7 +186,7 @@ s.add_test(
       links: %w[https://eslint.org/docs/rules/max-len],
       id: "max-len",
       path: "app.js",
-      location: { start_line: 1 },
+      location: { start_line: 1, start_column: 1 },
       object: { severity: "warn", category: "Stylistic Issues", recommended: false },
       git_blame_info: nil
     },
@@ -212,7 +212,7 @@ s.add_test(
       links: [],
       id: "0299e5a2c549669334ef4905ed3a636d9ae07723",
       path: "src/App.jsx",
-      location: { start_line: 1 },
+      location: { start_line: 1, start_column: 1 },
       object: { severity: "error", category: nil, recommended: nil },
       git_blame_info: nil
     },
@@ -221,7 +221,7 @@ s.add_test(
       links: [],
       id: "0299e5a2c549669334ef4905ed3a636d9ae07723",
       path: "src/application.jsx",
-      location: { start_line: 1 },
+      location: { start_line: 1, start_column: 1 },
       object: { severity: "error", category: nil, recommended: nil },
       git_blame_info: nil
     },
@@ -253,7 +253,8 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "ESLint", version: "5.16.0" }
+  analyzer: { name: "ESLint", version: "5.16.0" },
+  warnings: [{ message: "The `dir` option is deprecated. Use the `target` option instead.", file: "sideci.yml" }]
 )
 
 s.add_test(
@@ -265,7 +266,7 @@ s.add_test(
       links: [],
       id: "0299e5a2c549669334ef4905ed3a636d9ae07723",
       path: "src/App.jsx",
-      location: { start_line: 1 },
+      location: { start_line: 1, start_column: 1 },
       object: { severity: "error", category: nil, recommended: nil },
       git_blame_info: nil
     },
@@ -274,7 +275,7 @@ s.add_test(
       links: [],
       id: "0299e5a2c549669334ef4905ed3a636d9ae07723",
       path: "src/index.jsx",
-      location: { start_line: 1 },
+      location: { start_line: 1, start_column: 1 },
       object: { severity: "error", category: nil, recommended: nil },
       git_blame_info: nil
     }
@@ -291,7 +292,7 @@ s.add_test(
       links: [],
       id: "0299e5a2c549669334ef4905ed3a636d9ae07723",
       path: "src/App.jsx",
-      location: { start_line: 1 },
+      location: { start_line: 1, start_column: 1 },
       object: { severity: "error", category: nil, recommended: nil },
       git_blame_info: nil
     },
@@ -300,7 +301,7 @@ s.add_test(
       links: [],
       id: "0299e5a2c549669334ef4905ed3a636d9ae07723",
       path: "src/application.jsx",
-      location: { start_line: 1 },
+      location: { start_line: 1, start_column: 1 },
       object: { severity: "error", category: nil, recommended: nil },
       git_blame_info: nil
     }
@@ -326,7 +327,7 @@ s.add_test(
       links: [],
       id: "d91b54561db04524f183f5f8dee752dcf1d4fcb0",
       path: "index.js",
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 14 },
       object: { severity: "error", category: nil, recommended: nil },
       git_blame_info: nil
     }
@@ -405,4 +406,30 @@ s.add_test(
     }
   ],
   analyzer: { name: "ESLint", version: "7.0.0" }
+)
+
+s.add_test(
+  "option_target",
+  type: "success",
+  issues: [
+    {
+      id: "no-extra-semi",
+      message: "Unnecessary semicolon.",
+      links: %w[https://eslint.org/docs/rules/no-extra-semi],
+      path: "foo.js",
+      location: { start_line: 1, start_column: 5, end_line: 1, end_column: 6 },
+      object: { severity: "error", category: "Possible Errors", recommended: true },
+      git_blame_info: nil
+    },
+    {
+      id: "no-extra-semi",
+      message: "Unnecessary semicolon.",
+      links: %w[https://eslint.org/docs/rules/no-extra-semi],
+      path: "src/bar.js",
+      location: { start_line: 1, start_column: 5, end_line: 1, end_column: 6 },
+      object: { severity: "error", category: "Possible Errors", recommended: true },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "ESLint", version: default_version }
 )

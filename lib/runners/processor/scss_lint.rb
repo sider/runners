@@ -48,23 +48,14 @@ module Runners
 
     # @param stdout [String]
     def parse_result(stdout)
-      JSON.parse(stdout).flat_map do |file, issues|
+      JSON.parse(stdout, symbolize_names: true).flat_map do |file, issues|
+        path = relative_path(file.to_s)
         issues.map do |issue|
-          line = issue['line']
-          message = issue['reason']
-          id = issue['linter']
-
-          loc = Location.new(
-            start_line: line,
-            start_column: nil,
-            end_line: nil,
-            end_column: nil
-          )
           Issue.new(
-            path: relative_path(file),
-            location: loc,
-            id: id,
-            message: message,
+            path: path,
+            location: Location.new(start_line: issue[:line], start_column: issue[:column]),
+            id: issue[:linter],
+            message: issue[:reason],
           )
         end
       end

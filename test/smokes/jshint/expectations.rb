@@ -6,7 +6,7 @@ s.add_test(
   issues: [
     {
       path: "src/index.js",
-      location: { start_line: 3 },
+      location: { start_line: 3, start_column: 1 },
       id: "jshint.W067",
       message: "Unorthodox function invocation.",
       links: [],
@@ -23,7 +23,7 @@ s.add_test(
   issues: [
     {
       path: "index.js",
-      location: { start_line: 1 },
+      location: { start_line: 1, start_column: 1 },
       id: "jshint.W097",
       message: 'Use the function form of "use strict".',
       links: [],
@@ -32,7 +32,7 @@ s.add_test(
     },
     {
       path: "index.js",
-      location: { start_line: 9 },
+      location: { start_line: 9, start_column: 5 },
       id: "jshint.W117",
       message: "'console' is not defined.",
       links: [],
@@ -41,7 +41,7 @@ s.add_test(
     },
     {
       path: "index.js",
-      location: { start_line: 16 },
+      location: { start_line: 16, start_column: 3 },
       id: "jshint.W117",
       message: "'console' is not defined.",
       links: [],
@@ -58,7 +58,7 @@ s.add_test(
   issues: [
     {
       path: "src/app.js",
-      location: { start_line: 3 },
+      location: { start_line: 3, start_column: 1 },
       id: "jshint.W067",
       message: "Unorthodox function invocation.",
       links: [],
@@ -85,7 +85,7 @@ s.add_test(
       links: [],
       id: "jshint.W067",
       path: "src/index.js",
-      location: { start_line: 3 },
+      location: { start_line: 3, start_column: 1 },
       object: nil,
       git_blame_info: nil
     }

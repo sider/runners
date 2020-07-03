@@ -1,0 +1,5 @@
+linter:
+  eslint:
+    target:
+      - foo.*
+      - src/

@@ -100,20 +100,14 @@ module Runners
       # `:::` is a separater
       #
       output.split("\n").map do |value|
-        id, path, line, _, message = value.split(':::')
-        loc = Location.new(
-          start_line: line.to_i,
-          start_column: nil,
-          end_line: nil,
-          end_column: nil
-        )
+        id, path, line, column, message = value.split(':::')
         Issue.new(
           path: relative_path(path),
-          location: loc,
+          location: Location.new(start_line: line, start_column: column),
           id: id,
           message: message,
         )
-      end.compact
+      end
     end
 
     def run_analyzer

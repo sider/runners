@@ -8,7 +8,7 @@ s.add_test(
   issues: [
     {
       path: "app1/views.py",
-      location: { start_line: 6 },
+      location: { start_line: 6, start_column: 12 },
       id: "E999",
       message: "IndentationError: unexpected indent",
       links: [],
@@ -17,7 +17,7 @@ s.add_test(
     },
     {
       path: "app1/admin.py",
-      location: { start_line: 1 },
+      location: { start_line: 1, start_column: 1 },
       id: "F401",
       message: "'django.contrib.admin' imported but unused",
       links: [],
@@ -26,7 +26,7 @@ s.add_test(
     },
     {
       path: "app1/tests.py",
-      location: { start_line: 1 },
+      location: { start_line: 1, start_column: 1 },
       id: "F401",
       message: "'django.test.TestCase' imported but unused",
       links: [],
@@ -35,7 +35,7 @@ s.add_test(
     },
     {
       path: "manage.py",
-      location: { start_line: 14 },
+      location: { start_line: 14, start_column: 13 },
       id: "F401",
       message: "'django' imported but unused",
       links: [],
@@ -44,7 +44,7 @@ s.add_test(
     },
     {
       path: "app1/models.py",
-      location: { start_line: 15 },
+      location: { start_line: 15, start_column: 13 },
       id: "F601",
       message: "dictionary key 'name' repeated with different values",
       links: [],
@@ -53,7 +53,7 @@ s.add_test(
     },
     {
       path: "app1/models.py",
-      location: { start_line: 16 },
+      location: { start_line: 16, start_column: 13 },
       id: "F601",
       message: "dictionary key 'name' repeated with different values",
       links: [],
@@ -62,7 +62,7 @@ s.add_test(
     },
     {
       path: "app1/models.py",
-      location: { start_line: 12 },
+      location: { start_line: 12, start_column: 15 },
       id: "F821",
       message: "undefined name 'ok'",
       links: [],
@@ -71,7 +71,7 @@ s.add_test(
     },
     {
       path: "app1/models.py",
-      location: { start_line: 13 },
+      location: { start_line: 13, start_column: 9 },
       id: "F841",
       message: "local variable 'foo' is assigned to but never used",
       links: [],
@@ -88,7 +88,7 @@ s.add_test(
   issues: [
     {
       path: "foo.py",
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 3 },
       id: "E117",
       links: [],
       message: "over-indented",
@@ -97,7 +97,7 @@ s.add_test(
     },
     {
       path: "foo.py",
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 1 },
       id: "W191",
       message: "indentation contains tabs",
       links: [],
@@ -125,7 +125,7 @@ s.add_test(
   issues: [
     {
       path: "foo.py",
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 5 },
       id: "A001",
       message: '"id" is a python builtin and is being shadowed, consider renaming the variable',
       links: [],
@@ -145,7 +145,7 @@ s.add_test(
       links: [],
       id: "E302",
       path: "foo.py",
-      location: { start_line: 4 },
+      location: { start_line: 4, start_column: 1 },
       object: nil,
       git_blame_info: nil
     },
@@ -154,7 +154,7 @@ s.add_test(
       links: [],
       id: "F841",
       path: "foo.py",
-      location: { start_line: 5 },
+      location: { start_line: 5, start_column: 5 },
       object: nil,
       git_blame_info: nil
     },
@@ -163,7 +163,7 @@ s.add_test(
       links: [],
       id: "F841",
       path: "foo.py",
-      location: { start_line: 6 },
+      location: { start_line: 6, start_column: 5 },
       object: nil,
       git_blame_info: nil
     },
@@ -172,7 +172,7 @@ s.add_test(
       links: [],
       id: "W391",
       path: "foo.py",
-      location: { start_line: 8 },
+      location: { start_line: 8, start_column: 1 },
       object: nil,
       git_blame_info: nil
     }

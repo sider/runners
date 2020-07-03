@@ -138,7 +138,7 @@ module Runners
           yield Issue.new(
             id: err[:id],
             path: relative_path(loc[:file]),
-            location: Location.new(start_line: loc[:line]),
+            location: Location.new(start_line: loc[:line], start_column: loc[:column]),
             message: err[:msg],
             object: {
               severity: err[:severity],

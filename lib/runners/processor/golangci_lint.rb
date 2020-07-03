@@ -148,7 +148,7 @@ module Runners
 
         yield Issue.new(
           path: relative_path(issue.dig(:Pos, :Filename)),
-          location: Location.new(start_line: issue.dig(:Pos, :Line)),
+          location: Location.new(start_line: issue.dig(:Pos, :Line), start_column: issue.dig(:Pos, :Column)),
           id: id,
           message: message,
         )
