@@ -12,7 +12,7 @@ s.add_test(
       id: "errcheck",
       message: "Error return value of `validate` is not checked",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     },
     {
@@ -21,7 +21,7 @@ s.add_test(
       id: "errcheck",
       message: "Error return value of `validate` is not checked",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     }
   ],
@@ -38,7 +38,7 @@ s.add_test(
       id: "bodyclose",
       message: "response body must be closed",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     }
   ],
@@ -66,7 +66,7 @@ s.add_test(
       id: "lll",
       message: "line is 188 characters",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     },
     {
@@ -75,7 +75,7 @@ s.add_test(
       id: "structcheck",
       message: "`birthDay` is unused",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     }
   ],
@@ -92,7 +92,7 @@ s.add_test(
       id: "varcheck",
       message: "`unused` is unused",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     }
   ],
@@ -109,7 +109,14 @@ s.add_test(
       id: "misspell",
       message: "`Amercia` is a misspelling of `America`",
       links: [],
-      object: nil,
+      object: {
+        severity: "",
+        replacement: {
+          NeedOnlyDelete: false,
+          NewLines: nil,
+          Inline: { StartCol: 13, Length: 7, NewString: "America" }
+        }
+      },
       git_blame_info: nil
     }
   ],
@@ -126,7 +133,7 @@ s.add_test(
       id: "unused",
       message: "var `unused` is unused",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     }
   ],
@@ -171,7 +178,7 @@ s.add_test(
       id: "gocritic:appendCombine",
       message: "appendCombine: can combine chain of 2 appends into one",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     },
     {
@@ -180,7 +187,7 @@ s.add_test(
       id: "gocritic:commentFormatting",
       message: "commentFormatting: put a space between `//` and comment text",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     },
     {
@@ -189,7 +196,7 @@ s.add_test(
       id: "golint",
       message: "don't use underscores in Go names; func redundant_append should be redundantAppend",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     },
     {
@@ -198,7 +205,7 @@ s.add_test(
       id: "gosec:G401",
       message: "G401: Use of weak cryptographic primitive",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     },
     {
@@ -207,7 +214,7 @@ s.add_test(
       id: "gosec:G505",
       message: "G505: Blacklisted import `crypto/sha1`: weak cryptographic primitive",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     },
     {
@@ -216,7 +223,7 @@ s.add_test(
       id: "gosimple:S1002",
       message: "S1002: should omit comparison to bool constant, can be simplified to `x`",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     },
     {
@@ -225,7 +232,7 @@ s.add_test(
       id: "staticcheck:SA9003",
       message: "SA9003: empty branch",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     }
   ],
@@ -244,7 +251,7 @@ s.add_test(
       id: "varcheck",
       message: "`unused` is unused",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     }
   ],
@@ -261,7 +268,14 @@ s.add_test(
       id: "gofmt",
       message: "File is not `gofmt`-ed with `-s`",
       links: [],
-      object: nil,
+      object: {
+        severity: "",
+        replacement: {
+          NeedOnlyDelete: false,
+          NewLines: [%(\t"errors"), %(\t"fmt")],
+          Inline: nil
+        }
+      },
       git_blame_info: nil
     },
     {
@@ -270,7 +284,7 @@ s.add_test(
       id: "gofumpt",
       message: "File is not `gofumpt`-ed",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     }
   ],
@@ -303,7 +317,7 @@ s.add_test(
       id: "errcheck",
       message: "Error return value of `validate` is not checked",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     }
   ],
@@ -322,7 +336,7 @@ s.add_test(
       id: "errcheck",
       message: "Error return value of `validate` is not checked",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     }
   ],
