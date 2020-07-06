@@ -1,5 +1,7 @@
 s = Runners::Testing::Smoke
 
+default_version = "1.28.0"
+
 s.add_test(
   "target",
   type: "success",
@@ -23,7 +25,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
@@ -40,19 +42,19 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
-s.add_test("no_error", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: "1.27.0" })
+s.add_test("no_error", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: default_version })
 
 s.add_test(
   "failure",
   type: "failure",
   message: "Analysis failed. See the log for details.",
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
-s.add_test("no_go_file", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: "1.27.0" })
+s.add_test("no_go_file", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: default_version })
 
 s.add_test(
   "config_sample",
@@ -77,7 +79,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
@@ -94,7 +96,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
@@ -111,7 +113,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
@@ -128,35 +130,35 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
   "disable_default_linter_in_yml",
   type: "failure",
   message: "Analysis failed. See the log for details.",
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
   "disable_only",
   type: "failure",
   message: "Analysis failed. See the log for details.",
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
   "enable_disable_same_linter",
   type: "failure",
   message: "Analysis failed. See the log for details.",
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
   "duplicate_disable",
   type: "failure",
   message: "Analysis failed. See the log for details.",
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
@@ -227,10 +229,10 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
-s.add_test("tests", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: "1.27.0" })
+s.add_test("tests", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: default_version })
 
 s.add_test(
   "no-lint",
@@ -246,7 +248,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
@@ -261,26 +263,35 @@ s.add_test(
       links: [],
       object: nil,
       git_blame_info: nil
+    },
+    {
+      path: "sample.go",
+      location: { start_line: 22, start_column: 0 },
+      id: "gofumpt",
+      message: "File is not `gofumpt`-ed",
+      links: [],
+      object: nil,
+      git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
   "presets_validate",
   type: "failure",
   message: "Analysis failed. See the log for details.",
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
   "no_such_linter",
   type: "failure",
   message: "Analysis failed. See the log for details.",
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
-s.add_test("no-config", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: "1.27.0" })
+s.add_test("no-config", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: default_version })
 
 s.add_test(
   "skip-dirs-use-default",
@@ -296,10 +307,10 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
-s.add_test("skip-files", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: "1.27.0" })
+s.add_test("skip-files", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: default_version })
 
 s.add_test(
   "skip-dirs",
@@ -315,7 +326,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 # NOTE: Monorepo is unsupported by GolangCI-Lint.
@@ -324,5 +335,5 @@ s.add_test(
   "monorepo",
   type: "failure",
   message: "Analysis failed. See the log for details.",
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
