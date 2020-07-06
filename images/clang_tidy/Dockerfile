@@ -4,9 +4,11 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM sider/devon_rex_base:2.21.0
 
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/clang_tidy/packages.list ${RUNNER_USER_HOME}/
+
 USER root
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends clang-tidy && \
+    cat ${RUNNER_USER_HOME}/packages.list | xargs apt-get install -y --no-install-recommends && \
     apt-get clean && \
     echo "analyzer_runner ALL=NOPASSWD: /usr/bin/apt-get" >> /etc/sudoers
 USER $RUNNER_USER
