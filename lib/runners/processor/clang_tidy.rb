@@ -56,7 +56,7 @@ module Runners
         .select { |path| VALID_EXTENSIONS.include?(path.extname.downcase) }
         .map{ |path| relative_path(working_dir / path, from: current_dir) }
         .each do |path|
-          stdout, stderr = capture3!(analyzer_bin, path.to_s, "--", *option_includes,
+          stdout, = capture3!(analyzer_bin, path.to_s, "--", *option_includes,
             is_success: ->(status) { [0, 1].include?(status.exitstatus) })
           ret = construct_result(stdout)
           issues.push(*ret)
