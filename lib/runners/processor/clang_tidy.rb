@@ -3,7 +3,10 @@ module Runners
     Schema = StrongJSON.new do
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
-          apt: enum?(string, array(string))
+          apt: enum?(string, array(string)),
+          'compilation-options': object?(
+            '-I': enum?(string, array(string))
+          )
         })
       }
 
@@ -52,7 +55,7 @@ module Runners
         .select { |path| VALID_EXTENSIONS.include?(path.extname.downcase) }
         .map{ |path| relative_path(working_dir / path, from: current_dir) }
         .each do |path|
-          stdout, stderr = capture3!(analyzer_bin, path.to_s, "--",
+          stdout, stderr = capture3!(analyzer_bin, path.to_s, "--", *option_includes,
             is_success: ->(status) { [0, 1].include?(status.exitstatus) })
           ret = construct_result(stdout)
           issues.push(*ret)
@@ -67,8 +70,8 @@ module Runners
       issues = []
 
       stdout.each_line do |line|
-        # group: 1      2      3         4           5          6
-        #        <path>:<line>:<column>: <severity>: <message> [<id>]
+        # issue format
+        # <path>:<line>:<column>: <severity>: <message> [<id>]
         match = line.strip.match(/^(?<path>.+):(?<line>\d+):(?<column>\d+): (?<severity>[^:]+): (?<message>.+) \[(?<id>[^\[]+)\]$/)
         if match
           issues << Issue.new(
@@ -85,6 +88,11 @@ module Runners
       end
 
       issues
+    end
+
+    def option_includes
+      includes = config_linter.dig(:'compilation-options', :'-I') || []
+      includes.map { |v| "-I" + v }
     end
   end
 end

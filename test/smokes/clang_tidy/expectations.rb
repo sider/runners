@@ -140,3 +140,44 @@ s.add_test(
   ],
   analyzer: { name: "Clang-Tidy", version: "7.0.1" }
 )
+
+s.add_test(
+  "option_I",
+  type: "success",
+  issues: [
+    {
+      path: "source/foo/テスト.cp",
+      location: { start_line: 8, start_column: 5 },
+      id: "clang-analyzer-core.CallAndMessage",
+      message: "2nd function call argument is an uninitialized value",
+      object: {
+        severity: "warning"
+      },
+      git_blame_info: nil,
+      links: []
+    },
+    {
+      path: "source/test.c++",
+      location: { start_line: 8, start_column: 3 },
+      id: "clang-analyzer-core.uninitialized.Assign",
+      message: "Assigned value is garbage or undefined",
+      object: {
+        severity: "warning"
+      },
+      git_blame_info: nil,
+      links: []
+    },
+    {
+      path: "test.CPP",
+      location: { start_line: 9, start_column: 3 },
+      id: "clang-analyzer-core.uninitialized.Assign",
+      message: "Assigned value is garbage or undefined",
+      object: {
+        severity: "warning"
+      },
+      git_blame_info: nil,
+      links: []
+    }
+  ],
+  analyzer: { name: "Clang-Tidy", version: "7.0.1" }
+)
