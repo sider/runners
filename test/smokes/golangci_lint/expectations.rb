@@ -351,3 +351,29 @@ s.add_test(
   message: "Analysis failed. See the log for details.",
   analyzer: { name: "GolangCI-Lint", version: default_version }
 )
+
+s.add_test(
+  "severity",
+  type: "success",
+  issues: [
+    {
+      path: "test.go",
+      location: { start_line: 3, start_column: 5 },
+      id: "deadcode",
+      message: "`unused` is unused",
+      links: [],
+      object: { severity: "error", replacement: nil },
+      git_blame_info: nil
+    },
+    {
+      path: "test.go",
+      location: { start_line: 6, start_column: 0 },
+      id: "gofmt",
+      message: "File is not `gofmt`-ed with `-s`",
+      links: [],
+      object: { severity: "warning", replacement: :_ },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "GolangCI-Lint", version: default_version }
+)
