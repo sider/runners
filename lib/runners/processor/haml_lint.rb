@@ -84,6 +84,7 @@ module Runners
     def setup_default_config
       config_file = ".rubocop.yml"
       return if File.exist? config_file
+      return unless haml_lint_config.empty?
 
       FileUtils.cp(DEFAULT_CONFIG, config_file)
       config_file
