@@ -18,6 +18,7 @@ module Runners
     register_config_schema(name: :clang_tidy, schema: Schema.runner_config)
 
     VALID_EXTENSIONS = [".c", ".cc", ".cpp", ".c++", ".cp", ".cxx"].freeze
+    GLOB_HEADERS = "**/*.{h,hpp,h++}".freeze
 
     def analyze(changes)
       deploy_packages
@@ -91,8 +92,15 @@ module Runners
     end
 
     def option_includes
-      includes = config_linter.dig(:'compilation-options', :'-I') || []
+      includes = config_linter.dig(:'compilation-options', :'-I') || find_paths_containing_headers
       includes.map { |v| "-I" + v }
+    end
+
+    def find_paths_containing_headers
+      working_dir.glob(GLOB_HEADERS, File::FNM_EXTGLOB | File::FNM_CASEFOLD)
+        .select { |path| path.file? }
+        .map { |path| relative_path(path.parent, from: current_dir).to_path }
+        .uniq
     end
   end
 end

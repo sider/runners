@@ -1,4 +1,6 @@
-#include "テスト.hpp"
+#include <gdbm.h>
+#include "example.hpp"
+#include <stdio.h>
 
 int main()
 {
