@@ -63,7 +63,7 @@ module Runners
 
       if config_linter[:file]
         add_warning <<~MSG, file: config.path_name
-          The `file` option is deprecated. Use the `target` option instead.
+          The `#{config_field_path(:file)}` option is deprecated. Use the `#{config_field_path(:target)}` option instead.
         MSG
       end
 

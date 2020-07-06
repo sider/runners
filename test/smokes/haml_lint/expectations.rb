@@ -44,7 +44,10 @@ s.add_test(
       MSG
       file: "sideci.yml"
     },
-    { message: "The `file` option is deprecated. Use the `target` option instead.", file: "sideci.yml" }
+    {
+      message: "The `linter.haml_lint.file` option is deprecated. Use the `linter.haml_lint.target` option instead.",
+      file: "sideci.yml"
+    }
   ]
 )
 
