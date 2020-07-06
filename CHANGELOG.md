@@ -31,6 +31,7 @@ Misc:
 - Allow `location(start_line,start_column)` format [#1257](https://github.com/sider/runners/pull/1257)
 - **ESLint** Add `target` option instead of `dir` option [#1264](https://github.com/sider/runners/pull/1264)
 - **HAML-Lint** Add `target` option [#1265](https://github.com/sider/runners/pull/1265)
+- **GolangCI-Lint** Add `severity` and `replacement` to issue result [#1268](https://github.com/sider/runners/pull/1268)
 
 ## 0.29.3
 
