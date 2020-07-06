@@ -1,4 +1,10 @@
-extends: 'eslint:recommended'
+root: true
+
+extends:
+  - eslint:recommended
+
 rules:
+  # NOTE: Disable the `no-undef` rule by default.
+  #       Because it requires to set `globals` or `env` in some cases.
+  #       See https://eslint.org/docs/rules/no-undef
   no-undef: off
-  no-unused-vars: off
