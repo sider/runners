@@ -43,7 +43,7 @@ module Runners
     }.freeze
 
     DEFAULT_TARGET = ".".freeze
-    DEFAULT_CONFIG = (Pathname(Dir.home) / 'default_rubocop.yml').to_path.freeze
+    DEFAULT_RUBOCOP_CONFIG = (Pathname(Dir.home) / 'default_rubocop.yml').to_path.freeze
 
     def analyzer_bin
       "haml-lint"
@@ -51,7 +51,7 @@ module Runners
 
     def default_gem_specs
       super(*DEFAULT_GEMS).tap do |gems|
-        if setup_default_config
+        if setup_default_rubocop_config
           # NOTE: See rubocop.rb about no versions.
           gems << GemInstaller::Spec.new(name: "meowcop", version: [])
         end
@@ -81,12 +81,11 @@ module Runners
 
     private
 
-    def setup_default_config
+    def setup_default_rubocop_config
       config_file = ".rubocop.yml"
       return if File.exist? config_file
-      return unless haml_lint_config.empty?
 
-      FileUtils.cp(DEFAULT_CONFIG, config_file)
+      FileUtils.cp(DEFAULT_RUBOCOP_CONFIG, config_file)
       config_file
     end
 
