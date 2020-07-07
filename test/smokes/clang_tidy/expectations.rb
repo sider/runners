@@ -38,7 +38,7 @@ s.add_test(
       links: []
     }
   ],
-  analyzer: { name: "Clang-Tidy", version: "7.0.1" }
+  analyzer: { name: "Clang-Tidy", version: "10.0.1" }
 )
 
 s.add_test(
@@ -79,7 +79,7 @@ s.add_test(
       links: []
     }
   ],
-  analyzer: { name: "Clang-Tidy", version: "7.0.1" }
+  analyzer: { name: "Clang-Tidy", version: "10.0.1" }
 )
 
 s.add_test(
@@ -109,7 +109,7 @@ s.add_test(
       links: []
     }
   ],
-  analyzer: { name: "Clang-Tidy", version: "7.0.1" }
+  analyzer: { name: "Clang-Tidy", version: "10.0.1" }
 )
 
 s.add_test(
@@ -138,7 +138,7 @@ s.add_test(
       file: nil
     }
   ],
-  analyzer: { name: "Clang-Tidy", version: "7.0.1" }
+  analyzer: { name: "Clang-Tidy", version: "10.0.1" }
 )
 
 s.add_test(
@@ -179,7 +179,7 @@ s.add_test(
       links: []
     }
   ],
-  analyzer: { name: "Clang-Tidy", version: "7.0.1" }
+  analyzer: { name: "Clang-Tidy", version: "10.0.1" }
 )
 
 s.add_test(
@@ -220,5 +220,5 @@ s.add_test(
       links: []
     }
   ],
-  analyzer: { name: "Clang-Tidy", version: "7.0.1" }
+  analyzer: { name: "Clang-Tidy", version: "10.0.1" }
 )
