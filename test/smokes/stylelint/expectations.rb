@@ -154,10 +154,20 @@ s.add_test(
 )
 
 s.add_test(
-  "analyse-only-css",
+  "analyze-only-css",
   analyzer: { name: "stylelint", version: default_version },
-  type: "failure",
-  message: /Error: Could not find "stylelint-config-standard"/
+  type: "success",
+  issues: [
+    {
+      path: "test.css",
+      location: { start_line: 2, start_column: 3 },
+      id: "property-no-unknown",
+      message: 'Unexpected unknown property "someattr"',
+      links: %W[https://github.com/stylelint/stylelint/tree/#{default_version}/lib/rules/property-no-unknown],
+      object: { severity: "error" },
+      git_blame_info: nil
+    }
+  ]
 )
 
 s.add_test("without-css", analyzer: { name: "stylelint", version: default_version }, type: "success", issues: [])
@@ -256,6 +266,24 @@ s.add_test(
       object: { severity: "error" },
       git_blame_info: nil,
       location: { start_line: 6, start_column: 7 }
+    },
+    {
+      message: 'Unexpected unknown at-rule "@functio" (at-rule-no-unknown)',
+      links: [],
+      id: "scss/at-rule-no-unknown",
+      path: "test.scss",
+      object: { severity: "error" },
+      git_blame_info: nil,
+      location: { start_line: 11, start_column: 1 }
+    },
+    {
+      message: "Unexpected empty comment",
+      links: [],
+      id: "scss/comment-no-empty",
+      path: "test.scss",
+      object: { severity: "error" },
+      git_blame_info: nil,
+      location: { start_line: 12, start_column: 3 }
     },
     {
       message: 'Unexpected unknown type selector "hoge"',
