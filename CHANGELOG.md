@@ -16,7 +16,7 @@ Updated tools:
 - **cpplint** 1.5.1 -> 1.5.2 [#1222](https://github.com/sider/runners/pull/1222)
 - **detekt** 1.9.1 -> 1.10.0 [#1236](https://github.com/sider/runners/pull/1236)
 - **ESLint** 7.2.0 -> 7.4.0 [#1224](https://github.com/sider/runners/pull/1224) [#1267](https://github.com/sider/runners/pull/1267)
-- **GolangCI-Lint** 1.27.0 -> 1.28.0 [#1266](https://github.com/sider/runners/pull/1266)
+- **GolangCI-Lint** 1.27.0 -> 1.28.1 [#1266](https://github.com/sider/runners/pull/1266) [#1273](https://github.com/sider/runners/pull/1273)
 - **LanguageTool** 4.9.1 -> 5.0 [#1241](https://github.com/sider/runners/pull/1241)
 - **PMD CPD** 6.24.0 -> 6.25.0 [#1235](https://github.com/sider/runners/pull/1235)
 - **PMD Java** 6.24.0 -> 6.25.0 [#1237](https://github.com/sider/runners/pull/1237)
@@ -30,6 +30,8 @@ Misc:
 - **Misspell** Support `ignore` option as array [#1255](https://github.com/sider/runners/pull/1255)
 - Allow `location(start_line,start_column)` format [#1257](https://github.com/sider/runners/pull/1257)
 - **ESLint** Add `target` option instead of `dir` option [#1264](https://github.com/sider/runners/pull/1264)
+- **ESLint** Pre-install popular configs and plugins [#1271](https://github.com/sider/runners/pull/1271)
+- **ESLint** Update the default configuration [#1270](https://github.com/sider/runners/pull/1270)
 - **HAML-Lint** Add `target` option [#1265](https://github.com/sider/runners/pull/1265)
 - **stylelint** Pre-install popular configs and plugins [#1272](https://github.com/sider/runners/pull/1272)
 

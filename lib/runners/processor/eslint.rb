@@ -161,7 +161,7 @@ module Runners
       end
     end
 
-    def run_analyzer(config:)
+    def run_analyzer(config: nil)
       # NOTE: eslint exit with status code 1 when some issues are found.
       #       We use `capture3` instead of `capture3!`
       #
@@ -198,7 +198,9 @@ module Runners
       elsif no_linting_files?(stderr)
         Results::Success.new(guid: guid, analyzer: analyzer)
       elsif no_eslint_config?(stderr)
-        run_analyzer config: DEFAULT_ESLINT_CONFIG # retry with the default configuration
+        trace_writer.message "Retrying with the default configuration file because no configuration files were found..."
+        FileUtils.copy(DEFAULT_ESLINT_CONFIG, ".eslintrc.yml")
+        run_analyzer
       else
         Results::Failure.new(guid: guid, message: stderr.strip, analyzer: analyzer)
       end

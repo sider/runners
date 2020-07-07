@@ -369,7 +369,7 @@ s.add_test(
       id: "@typescript-eslint/no-unused-vars",
       message: "'x' is assigned a value but never used.",
       links: %w[
-        https://github.com/typescript-eslint/typescript-eslint/blob/v1.13.0/packages/eslint-plugin/docs/rules/no-unused-vars.md
+        https://github.com/typescript-eslint/typescript-eslint/blob/v3.5.0/packages/eslint-plugin/docs/rules/no-unused-vars.md
       ],
       path: "index.ts",
       location: { start_line: 1, start_column: 7, end_line: 1, end_column: 8 },
@@ -377,10 +377,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "ESLint", version: "6.5.1" },
-  warnings: [
-    { message: "The required dependency `eslint` may not be installed and be a missing peer dependency.", file: "package.json" }
-  ]
+  analyzer: { name: "ESLint", version: default_version }
 )
 
 s.add_test(
