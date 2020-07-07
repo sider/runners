@@ -3,4 +3,4 @@ pre-commit:
   commands:
     format-smoke-tests:
       glob: "test/smokes/**/expectations.rb"
-      run: bundle exec rubocop -c .rubocop-formatter.yml --safe-auto-correct {staged_files} && git add {staged_files}
+      run: bundle exec rubocop -c .rubocop-formatter.yml --auto-correct {staged_files} && git add {staged_files}
