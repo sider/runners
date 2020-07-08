@@ -1,5 +1,7 @@
 s = Runners::Testing::Smoke
 
+default_version = "10.0.1"
+
 s.add_test(
   "success",
   type: "success",
@@ -38,7 +40,7 @@ s.add_test(
       links: []
     }
   ],
-  analyzer: { name: "Clang-Tidy", version: "10.0.1" }
+  analyzer: { name: "Clang-Tidy", version: default_version }
 )
 
 s.add_test(
@@ -79,7 +81,7 @@ s.add_test(
       links: []
     }
   ],
-  analyzer: { name: "Clang-Tidy", version: "10.0.1" }
+  analyzer: { name: "Clang-Tidy", version: default_version }
 )
 
 s.add_test(
@@ -109,7 +111,7 @@ s.add_test(
       links: []
     }
   ],
-  analyzer: { name: "Clang-Tidy", version: "10.0.1" }
+  analyzer: { name: "Clang-Tidy", version: default_version }
 )
 
 s.add_test(
@@ -138,7 +140,7 @@ s.add_test(
       file: nil
     }
   ],
-  analyzer: { name: "Clang-Tidy", version: "10.0.1" }
+  analyzer: { name: "Clang-Tidy", version: default_version }
 )
 
 s.add_test(
@@ -179,7 +181,7 @@ s.add_test(
       links: []
     }
   ],
-  analyzer: { name: "Clang-Tidy", version: "10.0.1" }
+  analyzer: { name: "Clang-Tidy", version: default_version }
 )
 
 s.add_test(
@@ -220,5 +222,5 @@ s.add_test(
       links: []
     }
   ],
-  analyzer: { name: "Clang-Tidy", version: "10.0.1" }
+  analyzer: { name: "Clang-Tidy", version: default_version }
 )
