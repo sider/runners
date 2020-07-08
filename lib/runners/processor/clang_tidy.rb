@@ -20,8 +20,12 @@ module Runners
     VALID_EXTENSIONS = [".c", ".cc", ".cpp", ".c++", ".cp", ".cxx"].freeze
     GLOB_HEADERS = "**/*.{h,hpp,h++}".freeze
 
-    def analyze(changes)
+    def setup
       deploy_packages
+      yield
+    end
+
+    def analyze(changes)
       run_analyzer(changes)
     end
 
