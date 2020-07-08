@@ -127,7 +127,7 @@ class Runners::Processor
   def self.register_config_schema: (**any) -> void
   def capture3: (String, *String, **capture3_options) -> [String, String, Process::Status]
   def capture3!: (String, *String, **capture3_options) -> [String, String]
-  def capture3_with_retry!: (String, *String, ?tries: Integer) -> [String, String]
+  def capture3_with_retry!: (String, *String, ?tries: Integer, ?sleep: ^(Integer) -> Numeric) -> [String, String]
   def capture3_trace: (String, *String, **capture3_options) -> [String, String, Process::Status]
 
   def push_env_hash: <'x> (Hash<String, String?>) { -> 'x } -> 'x
@@ -174,7 +174,7 @@ class Runners::Shell
 
   def capture3: (String, *String, **capture3_options) -> [String, String, Process::Status]
   def capture3!: (String, *String, **capture3_options) -> [String, String]
-  def capture3_with_retry!: (String, *String, ?tries: Integer) -> [String, String]
+  def capture3_with_retry!: (String, *String, ?tries: Integer, ?sleep: ^(Integer) -> Numeric) -> [String, String]
   def capture3_trace: (String, *String, **capture3_options) -> [String, String, Process::Status]
 
   def chdir: <'x> (Pathname) { (Pathname) -> 'x } -> 'x
