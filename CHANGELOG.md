@@ -35,6 +35,7 @@ Misc:
 - **GolangCI-Lint** Add `severity` and `replacement` to issue result [#1268](https://github.com/sider/runners/pull/1268)
 - **HAML-Lint** Add `target` option [#1265](https://github.com/sider/runners/pull/1265)
 - **stylelint** Pre-install popular configs and plugins [#1272](https://github.com/sider/runners/pull/1272)
+- Increase :tries and :sleep of Retryable for git-fetch(1) [#1279](https://github.com/sider/runners/pull/1279)
 
 ## 0.29.3
 
