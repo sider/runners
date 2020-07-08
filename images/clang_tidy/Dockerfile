@@ -12,6 +12,7 @@ RUN curl -fsSL https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
     apt-get update && \
     cat ${RUNNER_USER_HOME}/packages.list | xargs apt-get install -y --no-install-recommends && \
     apt-get clean && \
+    update-alternatives --install /usr/local/bin/clang-tidy clang-tidy /usr/lib/llvm-10/bin/clang-tidy 20 && \
     echo "analyzer_runner ALL=NOPASSWD: /usr/bin/apt-get" >> /etc/sudoers
 USER $RUNNER_USER
 

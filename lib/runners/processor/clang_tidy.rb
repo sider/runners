@@ -45,7 +45,7 @@ module Runners
     end
 
     def analyzer_bin
-      "clang-tidy-10"
+      "clang-tidy"
     end
 
     def run_analyzer(changes)
