@@ -132,11 +132,11 @@ s.add_test(
   ],
   warnings: [
     {
-      message: "Installing the package 'foobar' is blocked.",
+      message: "Installing the package `foobar` is blocked.",
       file: nil
     },
     {
-      message: "Installing the package 'bazqux=1.2.3-4' is blocked.",
+      message: "Installing the package `bazqux=1.2.3-4` is blocked.",
       file: nil
     }
   ],
