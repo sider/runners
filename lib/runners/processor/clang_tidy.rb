@@ -25,8 +25,27 @@ module Runners
       yield
     end
 
+    def analyzer_bin
+      "clang-tidy"
+    end
+
     def analyze(changes)
-      run_analyzer(changes)
+      issues = []
+
+      changes
+        .changed_paths
+        .select { |path| VALID_EXTENSIONS.include?(path.extname.downcase) }
+        .map{ |path| relative_path(working_dir / path, from: current_dir) }
+        .each do |path|
+          stdout, = capture3!(analyzer_bin, path.to_s, "--", *option_includes,
+            is_success: ->(status) { [0, 1].include?(status.exitstatus) })
+          ret = construct_result(stdout)
+          issues.push(*ret)
+        end
+
+      Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+        result.add_issue(*issues)
+      end
     end
 
     private
@@ -45,29 +64,6 @@ module Runners
 
       unless packages.empty?
         capture3!("sudo", "apt-get", "install", "-y", "--no-install-recommends", *packages)
-      end
-    end
-
-    def analyzer_bin
-      "clang-tidy"
-    end
-
-    def run_analyzer(changes)
-      issues = []
-
-      changes
-        .changed_paths
-        .select { |path| VALID_EXTENSIONS.include?(path.extname.downcase) }
-        .map{ |path| relative_path(working_dir / path, from: current_dir) }
-        .each do |path|
-          stdout, = capture3!(analyzer_bin, path.to_s, "--", *option_includes,
-            is_success: ->(status) { [0, 1].include?(status.exitstatus) })
-          ret = construct_result(stdout)
-          issues.push(*ret)
-        end
-
-      Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        result.add_issue(*issues)
       end
     end
 
