@@ -63,7 +63,7 @@ module Runners
         end
 
       unless packages.empty?
-        capture3!("sudo", "apt-get", "install", "-y", "--no-install-recommends", *packages)
+        capture3!("sudo", "apt-get", "install", "-qq", "-y", "--no-install-recommends", *packages)
       end
     end
 
