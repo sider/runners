@@ -77,7 +77,7 @@ module Runners
         if match
           issues << Issue.new(
             path: relative_path(match[:path]),
-            location: Location.new(start_line: Integer(match[:line]), start_column: Integer(match[:column])),
+            location: Location.new(start_line: match[:line], start_column: match[:column]),
             id: match[:id],
             message: match[:message],
             object: {
