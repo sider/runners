@@ -17,8 +17,10 @@ module Runners
 
     register_config_schema(name: :clang_tidy, schema: Schema.runner_config)
 
-    VALID_EXTENSIONS = [".c", ".cc", ".cpp", ".c++", ".cp", ".cxx"].freeze
-    GLOB_HEADERS = "**/*.{h,hpp,h++}".freeze
+    # @see https://github.com/github/linguist/blob/775b07d40c04ef6e0051a541886a8f1e30a892f4/lib/linguist/languages.yml#L532-L535
+    # @see https://github.com/github/linguist/blob/775b07d40c04ef6e0051a541886a8f1e30a892f4/lib/linguist/languages.yml#L568-L584
+    VALID_EXTENSIONS = [".c", ".cpp", ".c++", ".cc", ".cp", ".cxx"].freeze
+    GLOB_HEADERS = "**/*.{h,h++,hh,hpp,hxx,inc,inl,ipp,tcc,tpp}".freeze
 
     def setup
       deploy_packages
