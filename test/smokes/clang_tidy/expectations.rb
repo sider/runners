@@ -70,7 +70,7 @@ s.add_test(
       links: []
     },
     {
-      path: "test.cp",
+      path: "src/baz/test.cp",
       location: { start_line: 5, start_column: 15 },
       id: "clang-analyzer-deadcode.DeadStores",
       message: "Value stored to 't' during its initialization is never read",
@@ -170,7 +170,7 @@ s.add_test(
       links: []
     },
     {
-      path: "test.CPP",
+      path: "source/サンプル/test.CPP",
       location: { start_line: 9, start_column: 3 },
       id: "clang-analyzer-core.uninitialized.Assign",
       message: "Assigned value is garbage or undefined",
@@ -211,12 +211,23 @@ s.add_test(
       links: []
     },
     {
-      path: "test.CC",
+      path: "source/xuq/test.CC",
       location: { start_line: 9, start_column: 3 },
       id: "clang-analyzer-core.uninitialized.Assign",
       message: "Assigned value is garbage or undefined",
       object: {
         severity: "warning"
+      },
+      git_blame_info: nil,
+      links: []
+    },
+    {
+      path: "source/xuq/inclerr.C++",
+      location: { start_line: 1, start_column: 10 },
+      id: "clang-diagnostic-error",
+      message: "'incl.hh' file not found",
+      object: {
+        severity: "error"
       },
       git_blame_info: nil,
       links: []

@@ -38,6 +38,7 @@ module Runners
         .changed_paths
         .select { |path| VALID_EXTENSIONS.include?(path.extname.downcase) }
         .map{ |path| relative_path(working_dir / path, from: current_dir) }
+        .reject { |path| path.to_s.start_with?("../") } # reject files outside the current_dir
         .each do |path|
           stdout, = capture3!(analyzer_bin, path.to_s, "--", *option_includes,
             is_success: ->(status) { [0, 1].include?(status.exitstatus) })
@@ -99,7 +100,7 @@ module Runners
     end
 
     def find_paths_containing_headers
-      working_dir.glob(GLOB_HEADERS, File::FNM_EXTGLOB | File::FNM_CASEFOLD)
+      current_dir.glob(GLOB_HEADERS, File::FNM_EXTGLOB | File::FNM_CASEFOLD)
         .select { |path| path.file? }
         .map { |path| relative_path(path.parent, from: current_dir).to_path }
         .uniq
