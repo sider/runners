@@ -71,22 +71,20 @@ module Runners
     def construct_result(stdout)
       issues = []
 
-      stdout.each_line do |line|
-        # issue format
-        # <path>:<line>:<column>: <severity>: <message> [<id>]
-        match = line.strip.match(/^(?<path>.+):(?<line>\d+):(?<column>\d+): (?<severity>[^:]+): (?<message>.+) \[(?<id>[^\[]+)\]$/)
-        if match
-          issues << Issue.new(
-            path: relative_path(match[:path]),
-            location: Location.new(start_line: match[:line], start_column: match[:column]),
-            id: match[:id],
-            message: match[:message],
-            object: {
-              severity: match[:severity],
-            },
-            schema: Schema.issue,
-          )
-        end
+      # issue format
+      # <path>:<line>:<column>: <severity>: <message> [<id>]
+      pattern = /^(.+):(\d+):(\d+): ([^:]+): (.+) \[([^\[]+)\]$/
+      stdout.scan(pattern) do |path, line, column, severity, message, id|
+        issues << Issue.new(
+          path: relative_path(path),
+          location: Location.new(start_line: line, start_column: column),
+          id: id,
+          message: message,
+          object: {
+            severity: severity,
+          },
+          schema: Schema.issue,
+        )
       end
 
       issues
