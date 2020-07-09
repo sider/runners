@@ -205,3 +205,53 @@ s.add_test(
   analyzer: { name: "Flake8", version: default_version },
   warnings: [{ message: "Python 2 is deprecated. Consider migrating to Python 3.", file: nil }]
 )
+
+s.add_test(
+  "option_config",
+  type: "success",
+  issues: [],
+  analyzer: { name: "Flake8", version: default_version }
+)
+
+s.add_test(
+  "option_target",
+  type: "success",
+  issues: [
+    {
+      message: "local variable 'a' is assigned to but never used",
+      links: [],
+      id: "F841",
+      path: "src/bar.py",
+      location: { start_line: 2, start_column: 5 },
+      object: nil,
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "Flake8", version: default_version }
+)
+
+s.add_test(
+  "option_target_multiple",
+  type: "success",
+  issues: [
+    {
+      message: "local variable 'a' is assigned to but never used",
+      links: [],
+      id: "F841",
+      path: "lib/baz.py",
+      location: { start_line: 2, start_column: 5 },
+      object: nil,
+      git_blame_info: nil
+    },
+    {
+      message: "local variable 'a' is assigned to but never used",
+      links: [],
+      id: "F841",
+      path: "src/bar.py",
+      location: { start_line: 2, start_column: 5 },
+      object: nil,
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "Flake8", version: default_version }
+)

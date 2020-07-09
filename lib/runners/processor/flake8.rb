@@ -2,29 +2,40 @@ module Runners
   class Processor::Flake8 < Processor
     include Python
 
-    FLAKE8_OUTPUT_FORMAT = '%(code)s:::%(path)s:::%(row)d:::%(col)d:::%(text)s'.freeze
-
     Schema = StrongJSON.new do
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
+                        target: enum?(string, array(string)),
+                        config: string?,
                         version: numeric?,
-                        plugins: enum?(string, array(string))
+                        plugins: enum?(string, array(string)),
                       })
       }
     end
 
     register_config_schema(name: :flake8, schema: Schema.runner_config)
 
+    # Output example:
+    #
+    # E999:::app1/views.py:::6:::12:::IndentationError: unexpected indent
+    #
+    # `:::` is a separater
+    #
+    OUTPUT_FORMAT = '%(code)s:::%(path)s:::%(row)d:::%(col)d:::%(text)s'.freeze
+    OUTPUT_PATTERN = /^([^:]+):::([^:]+):::(\d+):::(\d+):::(.+)$/.freeze
+
+    DEFAULT_TARGET = ".".freeze
+
     def setup
       prepare_config
       capture3! 'pyenv', 'global', detected_python_version
       capture3! "python", "--version" # NOTE: `show_runtime_versions` does not work...
       capture3! "pip", "--version"
+      prepare_plugins
       yield
     end
 
     def analyze(changes)
-      prepare_plugins
       run_analyzer
     end
 
@@ -41,8 +52,8 @@ module Runners
     end
 
     def prepare_plugins
-      if config_linter[:plugins]
-        plugins = Array(config_linter[:plugins]).flatten
+      plugins = Array(config_linter[:plugins])
+      unless plugins.empty?
         capture3!('pip', 'install', *plugins)
       end
     end
@@ -93,15 +104,9 @@ module Runners
     end
 
     def parse_result(output)
-      # Output example:
-      #
-      # E999:::app1/views.py:::6:::12:::IndentationError: unexpected indent
-      #
-      # `:::` is a separater
-      #
-      output.split("\n").map do |value|
-        id, path, line, column, message = value.split(':::')
-        Issue.new(
+      output.scan(OUTPUT_PATTERN) do |match|
+        id, path, line, column, message = match
+        yield Issue.new(
           path: relative_path(path),
           location: Location.new(start_line: line, start_column: column),
           id: id,
@@ -111,18 +116,20 @@ module Runners
     end
 
     def run_analyzer
+      capture3!(
+        analyzer_bin,
+        "--exit-zero",
+        "--output-file", report_file,
+        "--format", OUTPUT_FORMAT,
+        "--append-config", ignored_config_path.to_path,
+        *(config_linter[:config]&.then { |c| ["--config", c] }),
+        *Array(config_linter[:target] || DEFAULT_TARGET),
+      )
+      output = read_report_file
+
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        capture3!(
-          analyzer_bin,
-          '--exit-zero',
-          "--output-file=#{report_file}",
-          "--format=#{FLAKE8_OUTPUT_FORMAT}",
-          "--append-config=#{ignored_config_path}",
-          './'
-        )
-        output = read_report_file
-        break result if output.empty?
-        parse_result(output).each { |v| result.add_issue(v) }
+        next if output.empty?
+        parse_result(output) { |issue| result.add_issue(issue) }
       end
     end
   end
