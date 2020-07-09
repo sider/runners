@@ -77,7 +77,7 @@ module Runners
         (lines.join("\n") + "\n").tap do |content|
           trace_writer.message <<~MSG
             ---
-            #{content}
+            #{content.chomp}
             ---
           MSG
         end
