@@ -86,6 +86,10 @@ module Runners
       analyzers.doc(analyzer_id)
     end
 
+    def analyzer_github
+      analyzers.github(analyzer_id)
+    end
+
     def analyzer
       @analyzer ||= Analyzer.new(name: analyzer_name, version: analyzer_version)
     end
