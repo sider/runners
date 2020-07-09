@@ -20,7 +20,7 @@ Updated tools:
 - **LanguageTool** 4.9.1 -> 5.0 [#1241](https://github.com/sider/runners/pull/1241)
 - **PMD CPD** 6.24.0 -> 6.25.0 [#1235](https://github.com/sider/runners/pull/1235)
 - **PMD Java** 6.24.0 -> 6.25.0 [#1237](https://github.com/sider/runners/pull/1237)
-- **RuboCop** 0.85.1 -> 0.86.0 [#1220](https://github.com/sider/runners/pull/1220)
+- **RuboCop** 0.85.1 -> 0.87.1 [#1220](https://github.com/sider/runners/pull/1220) [#1281](https://github.com/sider/runners/pull/1281)
 
 Misc:
 
