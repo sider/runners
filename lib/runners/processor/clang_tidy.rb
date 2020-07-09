@@ -4,9 +4,7 @@ module Runners
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
           apt: enum?(string, array(string)),
-          'compilation-options': object?(
-            '-I': enum?(string, array(string))
-          )
+          'include-path': enum?(string, array(string))
         })
       }
 
@@ -40,7 +38,7 @@ module Runners
         .map{ |path| relative_path(working_dir / path, from: current_dir) }
         .reject { |path| path.to_s.start_with?("../") } # reject files outside the current_dir
         .each do |path|
-          stdout, = capture3!(analyzer_bin, path.to_s, "--", *option_includes,
+          stdout, = capture3!(analyzer_bin, path.to_s, "--", *option_include_path,
             is_success: ->(status) { [0, 1].include?(status.exitstatus) })
           ret = construct_result(stdout)
           issues.push(*ret)
@@ -94,8 +92,8 @@ module Runners
       issues
     end
 
-    def option_includes
-      includes = config_linter.dig(:'compilation-options', :'-I') || find_paths_containing_headers
+    def option_include_path
+      includes = config_linter[:'include-path'] || find_paths_containing_headers
       includes.map { |v| "-I" + v }
     end
 
