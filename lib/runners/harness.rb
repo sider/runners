@@ -45,10 +45,10 @@ module Runners
             return root_dir_not_found if root_dir_not_found
 
             processor.in_root_dir do
-              trace_writer.header "Setting up #{processor.analyzer_name}"
+              trace_writer.header "Set up #{processor.analyzer_name}"
               processor.show_runtime_versions
               result = processor.setup do
-                trace_writer.header "Running #{processor.analyzer_name}"
+                trace_writer.header "Run #{processor.analyzer_name}"
                 @analyzer = processor.analyzer # initialize analyzer
                 exclude_special_dirs { processor.analyze(changes) }
               end
