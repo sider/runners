@@ -63,6 +63,8 @@ module Runners
         return # not install
       end
 
+      trace_writer.message "Installing npm packages..."
+
       install_option = INSTALL_OPTION_ALL if install_option.nil?
 
       if yarn_lock_path.exist?
@@ -78,6 +80,16 @@ module Runners
       end
 
       check_installed_nodejs_deps(constraints)
+
+      if nodejs_analyzer_locally_installed?
+        trace_writer.message <<~MSG
+          `#{nodejs_analyzer_local_command}` was successfully installed with the version #{analyzer_version}.
+        MSG
+      else
+        trace_writer.message <<~MSG
+          `#{nodejs_analyzer_local_command}` was not installed. The default version #{analyzer_version} will be used instead.
+        MSG
+      end
     end
 
     def show_runtime_versions
