@@ -144,7 +144,7 @@ s.add_test(
 )
 
 s.add_test(
-  "option_I",
+  "option_include_path",
   type: "success",
   issues: [
     {
@@ -185,7 +185,7 @@ s.add_test(
 )
 
 s.add_test(
-  "option_I_default",
+  "option_include_path_default",
   type: "success",
   issues: [
     {
