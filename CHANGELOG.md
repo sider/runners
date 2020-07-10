@@ -31,6 +31,7 @@ Misc:
 - **ESLint** Add `target` option instead of `dir` option [#1264](https://github.com/sider/runners/pull/1264)
 - **ESLint** Pre-install popular configs and plugins [#1271](https://github.com/sider/runners/pull/1271)
 - **ESLint** Update the default configuration [#1270](https://github.com/sider/runners/pull/1270)
+- **ESLint** Set `ecmaVersion:2015` to the default configuration [#1290](https://github.com/sider/runners/pull/1290)
 - **Flake8** Support `target` and `config` options [#1287](https://github.com/sider/runners/pull/1287)
 - **GolangCI-Lint** Add `severity` and `replacement` to issue result [#1268](https://github.com/sider/runners/pull/1268)
 - **HAML-Lint** Add `target` option [#1265](https://github.com/sider/runners/pull/1265)
