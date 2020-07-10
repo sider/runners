@@ -133,11 +133,11 @@ s.add_test(
   warnings: [
     {
       message: "Installing the package `foobar` is blocked.",
-      file: nil
+      file: "sider.yml"
     },
     {
       message: "Installing the package `bazqux=1.2.3-4` is blocked.",
-      file: nil
+      file: "sider.yml"
     }
   ],
   analyzer: { name: "Clang-Tidy", version: default_version }

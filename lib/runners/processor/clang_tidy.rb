@@ -57,7 +57,7 @@ module Runners
           if pkg.start_with?("lib")
             true
           else
-            add_warning "Installing the package `#{pkg}` is blocked."
+            add_warning "Installing the package `#{pkg}` is blocked.", file: config.path_name
             false
           end
         end
