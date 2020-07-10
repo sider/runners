@@ -61,34 +61,6 @@ s.add_test(
 )
 
 s.add_test(
-  "version_2",
-  type: "success",
-  issues: [
-    {
-      path: "app.php",
-      location: { start_line: 18, start_column: 1 },
-      id: "PSR2.Files.ClosingTag.NotAllowed",
-      message: "A closing tag is not permitted at the end of a PHP file",
-      links: [],
-      object: { type: "ERROR", severity: 5, fixable: true },
-      git_blame_info: nil
-    }
-  ],
-  analyzer: { name: "PHP_CodeSniffer", version: "3.5.5" },
-  warnings: [
-    {
-      message: <<~MSG.strip,
-        DEPRECATION WARNING!!!
-        The following options in your `sider.yml` are deprecated and will be removed.
-        See https://help.sider.review/tools/php/code-sniffer for details.
-        - `linter.code_sniffer.version`
-      MSG
-      file: "sider.yml"
-    }
-  ]
-)
-
-s.add_test(
   "autodetect_cakephp",
   type: "success",
   issues: [

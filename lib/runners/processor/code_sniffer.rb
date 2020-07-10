@@ -33,8 +33,6 @@ module Runners
 
     def setup
       add_warning_if_deprecated_options([:options])
-      add_warning_if_deprecated_options([:version])
-
       yield
     end
 
