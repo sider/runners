@@ -30,7 +30,7 @@ module Runners
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_config.xml").to_path.freeze
 
     def setup
-      add_warning_if_deprecated_options([:options])
+      add_warning_if_deprecated_options
       yield
     end
 

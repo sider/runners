@@ -40,7 +40,7 @@ module Runners
     DEFAULT_GLOB = "**/#{DEFAULT_TARGET_FILES}".freeze
 
     def setup
-      add_warning_if_deprecated_options([:options])
+      add_warning_if_deprecated_options
 
       prepare_ignore_file
 

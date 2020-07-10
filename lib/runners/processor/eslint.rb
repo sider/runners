@@ -47,13 +47,8 @@ module Runners
     DEFAULT_TARGET = ".".freeze
 
     def setup
-      add_warning_if_deprecated_options([:options])
-
-      if config_linter[:dir]
-        add_warning <<~MSG, file: config.path_name
-          The `dir` option is deprecated. Use the `target` option instead.
-        MSG
-      end
+      add_warning_if_deprecated_options
+      add_warning_for_deprecated_option :dir, to: :target
 
       begin
         install_nodejs_deps(constraints: CONSTRAINTS, install_option: config_linter[:npm_install])

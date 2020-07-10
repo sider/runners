@@ -71,12 +71,7 @@ s.add_test(
   ],
   warnings: [
     {
-      message: <<~MSG.strip,
-        DEPRECATION WARNING!!!
-        The following options in your `sideci.yml` are deprecated and will be removed.
-        See https://help.sider.review/tools/ruby/rails-best-practices for details.
-        - `linter.rails_best_practices.options`
-      MSG
+      message: /The `linter.rails_best_practices.options` option is deprecated/,
       file: "sideci.yml"
     }
   ]
