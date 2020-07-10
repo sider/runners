@@ -152,3 +152,31 @@ s.add_test(
   ],
   analyzer: { name: "Querly", version: default_version }
 )
+
+s.add_test(
+  "duplicate_config_files",
+  type: "success",
+  issues: [
+    {
+      path: "test.rb",
+      location: { start_line: 1, start_column: 0, end_line: 1, end_column: 5 },
+      id: "foo",
+      message: "Disallow `foo`",
+      links: [],
+      object: {
+        id: "foo",
+        messages: ["Disallow `foo`"],
+        justifications: [],
+        examples: []
+      },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "Querly", version: default_version },
+  warnings: [
+    {
+      message: "There are duplicate configuration files (`querly.yml`, `querly.yaml`). Remove the files except the first one.",
+      file: "querly.yml"
+    }
+  ]
+)

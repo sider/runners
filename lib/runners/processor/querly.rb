@@ -28,6 +28,9 @@ module Runners
       "querly" => [">= 0.5.0", "< 2.0.0"]
     }.freeze
 
+    CONFIG_FILE = "querly.yml".freeze
+    CONFIG_FILES_GLOB = "querly.{yml,yaml}".freeze
+
     def analyzer_version
       @analyzer_version ||= extract_version! ruby_analyzer_bin, "version"
     end
@@ -90,13 +93,22 @@ module Runners
 
     def default_config_file
       return @default_config_file if defined? @default_config_file
-      @default_config_file ||= Dir.glob("querly.{yml,yaml}").first
+
+      config_files = Dir.glob(CONFIG_FILES_GLOB)
+
+      if config_files.size > 1
+        file_list = config_files.map { |file| "`#{file}`" }.join(', ')
+        add_warning <<~MSG, file: CONFIG_FILE
+          There are duplicate configuration files (#{file_list}). Remove the files except the first one.
+        MSG
+      end
+
+      @default_config_file ||= config_files.first
     end
 
     def missing_config_file_result
-      file = "querly.yml"
-      add_warning <<~MSG, file: file
-        Sider could not find the required configuration file `#{file}`.
+      add_warning <<~MSG, file: CONFIG_FILE
+        Sider could not find the required configuration file `#{CONFIG_FILE}`.
         Please create the file according to the following documents:
         - #{analyzer_github}
         - #{analyzer_doc}

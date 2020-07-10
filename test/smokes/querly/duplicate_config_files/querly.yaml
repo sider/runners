@@ -1,0 +1,4 @@
+rules:
+  - id: bar
+    pattern: bar
+    message: Disallow `bar`
