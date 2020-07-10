@@ -85,6 +85,36 @@ s.add_test(
 )
 
 s.add_test(
+  "option_string_values",
+  type: "success",
+  issues: [
+    {
+      path: "src/test.c",
+      location: { start_line: 6, start_column: 3 },
+      id: "clang-analyzer-core.uninitialized.Assign",
+      message: "Assigned value is garbage or undefined",
+      object: {
+        severity: "warning"
+      },
+      git_blame_info: nil,
+      links: []
+    },
+    {
+      path: "src/test.c",
+      location: { start_line: 6, start_column: 15 },
+      id: "clang-analyzer-deadcode.DeadStores",
+      message: "Value stored to 't' during its initialization is never read",
+      object: {
+        severity: "warning"
+      },
+      git_blame_info: nil,
+      links: []
+    }
+  ],
+  analyzer: { name: "Clang-Tidy", version: default_version }
+)
+
+s.add_test(
   "option_apt_valid",
   type: "success",
   issues: [

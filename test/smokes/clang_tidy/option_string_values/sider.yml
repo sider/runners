@@ -1,0 +1,4 @@
+linter:
+  clang_tidy:
+    include-path: myinclude
+    apt: libfastjson-dev=0.99.8-2

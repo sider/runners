@@ -86,7 +86,7 @@ module Runners
     end
 
     def option_include_path
-      includes = config_linter[:'include-path'] || find_paths_containing_headers
+      includes = Array(config_linter[:'include-path'] || find_paths_containing_headers)
       includes.map { |v| "-I" + v }
     end
 
