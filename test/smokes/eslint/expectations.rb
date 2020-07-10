@@ -262,18 +262,18 @@ s.add_test(
   type: "success",
   issues: [
     {
-      message: "Parsing error: The keyword 'import' is reserved",
+      message: "Parsing error: 'import' and 'export' may appear only with 'sourceType: module'",
       links: [],
-      id: "0299e5a2c549669334ef4905ed3a636d9ae07723",
+      id: "f5e284aac9909f94f39932ce3290c6171d728ba2",
       path: "src/App.jsx",
       location: { start_line: 1, start_column: 1 },
       object: { severity: "error", category: nil, recommended: nil },
       git_blame_info: nil
     },
     {
-      message: "Parsing error: The keyword 'import' is reserved",
+      message: "Parsing error: 'import' and 'export' may appear only with 'sourceType: module'",
       links: [],
-      id: "0299e5a2c549669334ef4905ed3a636d9ae07723",
+      id: "f5e284aac9909f94f39932ce3290c6171d728ba2",
       path: "src/index.jsx",
       location: { start_line: 1, start_column: 1 },
       object: { severity: "error", category: nil, recommended: nil },
