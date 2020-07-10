@@ -40,8 +40,7 @@ module Runners
         .each do |path|
           stdout, = capture3!(analyzer_bin, path.to_s, "--", *option_include_path,
             is_success: ->(status) { [0, 1].include?(status.exitstatus) })
-          ret = construct_result(stdout)
-          issues.push(*ret)
+          construct_result(stdout) { |issue| issues << issue }
         end
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
@@ -69,13 +68,11 @@ module Runners
     end
 
     def construct_result(stdout)
-      issues = []
-
       # issue format
       # <path>:<line>:<column>: <severity>: <message> [<id>]
       pattern = /^(.+):(\d+):(\d+): ([^:]+): (.+) \[([^\[]+)\]$/
       stdout.scan(pattern) do |path, line, column, severity, message, id|
-        issues << Issue.new(
+        yield Issue.new(
           path: relative_path(path),
           location: Location.new(start_line: line, start_column: column),
           id: id,
@@ -86,8 +83,6 @@ module Runners
           schema: Schema.issue,
         )
       end
-
-      issues
     end
 
     def option_include_path
