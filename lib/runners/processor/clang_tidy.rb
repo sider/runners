@@ -91,8 +91,8 @@ module Runners
     end
 
     def find_paths_containing_headers
-      current_dir.glob(GLOB_HEADERS, File::FNM_EXTGLOB | File::FNM_CASEFOLD)
-        .filter_map { |path| relative_path(path.parent, from: current_dir).to_path if path.file? }
+      Pathname.glob(GLOB_HEADERS, File::FNM_EXTGLOB | File::FNM_CASEFOLD)
+        .filter_map { |path| path.parent.to_path if path.file? }
         .uniq
     end
   end
