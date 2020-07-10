@@ -17,7 +17,7 @@ module Runners
 
     # @see https://github.com/github/linguist/blob/775b07d40c04ef6e0051a541886a8f1e30a892f4/lib/linguist/languages.yml#L532-L535
     # @see https://github.com/github/linguist/blob/775b07d40c04ef6e0051a541886a8f1e30a892f4/lib/linguist/languages.yml#L568-L584
-    VALID_EXTENSIONS = [".c", ".cpp", ".c++", ".cc", ".cp", ".cxx"].freeze
+    GLOB_SOURCES = "*.{c,cpp,c++,cc,cp,cxx}".freeze
     GLOB_HEADERS = "**/*.{h,h++,hh,hpp,hxx,inc,inl,ipp,tcc,tpp}".freeze
 
     def setup
@@ -34,7 +34,7 @@ module Runners
 
       changes
         .changed_paths
-        .select { |path| VALID_EXTENSIONS.include?(path.extname.downcase) }
+        .select { |path| path.fnmatch?(GLOB_SOURCES, File::FNM_EXTGLOB | File::FNM_CASEFOLD) }
         .map{ |path| relative_path(working_dir / path, from: current_dir) }
         .reject { |path| path.to_s.start_with?("../") } # reject files outside the current_dir
         .each do |path|
