@@ -36,6 +36,7 @@ Misc:
 - **GolangCI-Lint** Add `severity` and `replacement` to issue result [#1268](https://github.com/sider/runners/pull/1268)
 - **HAML-Lint** Add `target` option [#1265](https://github.com/sider/runners/pull/1265)
 - **Misspell** Support `ignore` option as array [#1255](https://github.com/sider/runners/pull/1255)
+- **PHP_CodeSniffer** Remove deprecated `version` option [#1291](https://github.com/sider/runners/pull/1291)
 - **PHPMD** Support the comma-separated list options as array [#1253](https://github.com/sider/runners/pull/1253)
 - **Querly** Support `config` option [#1288](https://github.com/sider/runners/pull/1288)
 - **stylelint** Pre-install popular configs and plugins [#1272](https://github.com/sider/runners/pull/1272)
