@@ -16,7 +16,7 @@ Updated tools:
 - **cpplint** 1.5.1 -> 1.5.2 [#1222](https://github.com/sider/runners/pull/1222)
 - **detekt** 1.9.1 -> 1.10.0 [#1236](https://github.com/sider/runners/pull/1236)
 - **ESLint** 7.2.0 -> 7.4.0 [#1224](https://github.com/sider/runners/pull/1224) [#1267](https://github.com/sider/runners/pull/1267)
-- **GolangCI-Lint** 1.27.0 -> 1.28.1 [#1266](https://github.com/sider/runners/pull/1266) [#1273](https://github.com/sider/runners/pull/1273)
+- **GolangCI-Lint** 1.27.0 -> 1.28.2 [#1266](https://github.com/sider/runners/pull/1266) [#1273](https://github.com/sider/runners/pull/1273) [#1289](https://github.com/sider/runners/pull/1289)
 - **LanguageTool** 4.9.1 -> 5.0 [#1241](https://github.com/sider/runners/pull/1241)
 - **PMD CPD** 6.24.0 -> 6.25.0 [#1235](https://github.com/sider/runners/pull/1235)
 - **PMD Java** 6.24.0 -> 6.25.0 [#1237](https://github.com/sider/runners/pull/1237)
