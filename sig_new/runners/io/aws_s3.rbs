@@ -1,7 +1,6 @@
-# This class expects AWS credentials set with environment variables or an instance profile.
-# So, before using this, make sure AWS credentials available.
-# Also, prepare the S3 bucket and allow this instance to upload an S3 object.
 class Runners::IO::AwsS3
+  include _IO
+
   def self.parse_s3_uri!: (String s3_uri) -> [String, String]
 
   attr_reader uri: String
@@ -12,9 +11,6 @@ class Runners::IO::AwsS3
   attr_reader client: Aws::S3::Client
 
   def initialize: (String uri) -> void
-  def write: (*untyped args) -> void
-  def flush: (*untyped args) -> void
-  def flush!: () -> void
   def should_flush?: () -> bool
 
   private

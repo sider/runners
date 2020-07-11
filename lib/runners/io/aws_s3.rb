@@ -1,4 +1,7 @@
 module Runners
+  # This class expects AWS credentials set with environment variables or an instance profile.
+  # So, before using this, make sure AWS credentials available.
+  # Also, prepare the S3 bucket and allow this instance to upload an S3 object.
   class IO::AwsS3
     BUFFER_SIZE = 300
 
@@ -21,27 +24,27 @@ module Runners
       @tempfile = Tempfile.new
       @written_items = 0
 
+      # @type var args: Hash[Symbol, Integer | Float | String | bool]
       args = {
         retry_limit: 5,
         retry_base_delay: 1.2,
         instance_profile_credentials_retries: 5,
         instance_profile_credentials_timeout: 3,
-      }.tap do |hash|
-        if ENV["S3_ENDPOINT"]
-          hash[:endpoint] = ENV["S3_ENDPOINT"]
-          hash[:force_path_style] = true
-        end
+      }
+      if ENV["S3_ENDPOINT"]
+        args[:endpoint] = ENV["S3_ENDPOINT"]
+        args[:force_path_style] = true
       end
       @client = Aws::S3::Client.new(**args)
     end
 
-    def write(*args)
+    def write(string)
       @written_items += 1
-      tempfile.write(*args)
+      tempfile.write(string)
     end
 
-    def flush(*args)
-      tempfile.flush(*args)
+    def flush
+      tempfile.flush
       flush_to_s3! if should_flush?
     end
 

@@ -1,3 +1,5 @@
-class Tempfile
+class Tempfile < File
   def self.create: [X] (String | Array[String]) { (File) -> X } -> X
+
+  def initialize: () -> void
 end
