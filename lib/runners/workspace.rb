@@ -149,7 +149,7 @@ module Runners
       dec = OpenSSL::Cipher.new("AES-256-CBC")
       dec.decrypt
       archive.open do |f|
-        salt = f.read(dec.iv_len).force_encoding('ASCII-8BIT')[8, dec.iv_len]
+        salt = f.read(dec.iv_len).to_s.force_encoding('ASCII-8BIT')[8, dec.iv_len]
         dec.pkcs5_keyivgen(password, salt, 1, 'md5')
 
         out_path.open('w') do |out|

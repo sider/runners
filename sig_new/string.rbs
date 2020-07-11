@@ -1,0 +1,3 @@
+extension String (Polyfill)
+  def force_encoding: (String) -> String
+end

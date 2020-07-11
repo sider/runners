@@ -1,0 +1,3 @@
+extension Pathname (Polyfill)
+  def write: (String, ?perm: Integer) -> Integer
+end
