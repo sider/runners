@@ -86,13 +86,11 @@ module Runners
     def parse_result(stdout)
       JSON.parse(stdout, symbolize_names: true).map do |file|
         path = relative_path(file[:file])
-
-        line = file[:line]
         id = file[:code]
 
         Issue.new(
           path: path,
-          location: Location.new(start_line: line),
+          location: Location.new(start_line: file[:line], start_column: file[:column]),
           id: id,
           message: file[:message],
           object: {

@@ -55,7 +55,7 @@ module Runners
         yield Issue.new(
           id: issue[:symbol],
           path: relative_path(issue[:path]),
-          location: Location.new(start_line: issue[:line]),
+          location: Location.new(start_line: issue[:line], start_column: issue[:column]),
           message: issue[:message],
           object: {
             severity: issue[:type],

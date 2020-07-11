@@ -112,7 +112,7 @@ module Runners
 
           Issue.new(
             path: path,
-            location: line ? Location.new(start_line: line) : nil, # NOTE: There is a rare case that stylelint doesn't output the `line`.
+            location: line ? Location.new(start_line: line, start_column: warning[:column]) : nil, # NOTE: There is a rare case that stylelint doesn't output the `line`.
             id: id,
             message: normalize_message(id, warning[:text]),
             links: [rule_doc_urls[id]].compact,

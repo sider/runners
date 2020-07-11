@@ -1,0 +1,5 @@
+linter:
+  misspell:
+    ignore:
+      - infomation
+      - recieve

@@ -1,0 +1,4 @@
+rules:
+  - id: foo
+    pattern: foo
+    message: Disallow `foo`

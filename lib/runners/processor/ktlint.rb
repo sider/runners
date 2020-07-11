@@ -1,6 +1,7 @@
 module Runners
   class Processor::Ktlint < Processor
     include Java
+    include Kotlin
 
     Schema = StrongJSON.new do
       let :reporter, enum(literal("json"), literal("plain"), literal("checkstyle"))
@@ -153,7 +154,7 @@ module Runners
     end
 
     def analyze(changes)
-      delete_unchanged_files changes, only: ["*.kt", "*.kts"]
+      delete_unchanged_files changes, only: kotlin_file_extensions
 
       issues = case
                when gradle_config
@@ -182,10 +183,10 @@ module Runners
       end
     end
 
-    def construct_issue(file:, line:, message:, rule: "")
+    def construct_issue(file:, line:, column:, message:, rule: "")
       Issue.new(
-        path: relative_path(working_dir.realpath / file, from: working_dir.realpath),
-        location: Location.new(start_line: line),
+        path: relative_path(working_dir / file, from: working_dir),
+        location: Location.new(start_line: line, start_column: column),
         id: rule.empty? ? Digest::SHA1.hexdigest(message)[0, 8] : rule,
         message: message,
       )
@@ -199,6 +200,7 @@ module Runners
           construct_issue(
             file: hash[:file],
             line: error[:line],
+            column: error[:column],
             message: error[:message],
             rule: error[:rule],
           )
@@ -224,6 +226,7 @@ module Runners
             issues << construct_issue(
               file: file[:name],
               line: error[:line],
+              column: error[:column],
               message: error[:message],
               rule: error[:source],
             )
@@ -240,10 +243,11 @@ module Runners
       output.lines(chomp: true).map do |line|
         match = line.match(/\A([^:]+):(\d+):(\d+):(.+)\Z/)
         if match
-          path, line, _column, message = match.captures
+          path, line, column, message = match.captures
           construct_issue(
             file: path,
             line: line,
+            column: column,
             message: message.strip,
           )
         else

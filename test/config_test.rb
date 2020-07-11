@@ -44,6 +44,7 @@ class ConfigTest < Minitest::Test
           eslint: {
             root_dir: nil,
             npm_install: nil,
+            target: nil,
             dir: nil,
             ext: nil,
             config: "abc",
@@ -219,6 +220,7 @@ class ConfigTest < Minitest::Test
         ext: ".js",
         root_dir: nil,
         npm_install: nil,
+        target: nil,
         dir: nil,
         config: nil,
         "ignore-path": nil,

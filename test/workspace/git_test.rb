@@ -22,7 +22,9 @@ class WorkspaceGitTest < Minitest::Test
   def with_workspace(**params)
     super(**params) do |workspace|
       workspace.stub :try_count, 1 do
-        yield workspace
+        workspace.stub :sleep_lambda, lambda { 0 } do
+          yield workspace
+        end
       end
     end
   end

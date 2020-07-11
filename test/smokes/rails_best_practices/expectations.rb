@@ -1,5 +1,7 @@
 s = Runners::Testing::Smoke
 
+default_version = "1.20.0"
+
 s.add_test(
   "sandbox_rails",
   type: "success",
@@ -41,7 +43,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Rails Best Practices", version: "1.19.4" }
+  analyzer: { name: "Rails Best Practices", version: default_version }
 )
 
 s.add_test(
@@ -55,7 +57,7 @@ s.add_test(
 s.add_test(
   "valid_sideci_yml",
   type: "success",
-  analyzer: { name: "Rails Best Practices", version: "1.19.4" },
+  analyzer: { name: "Rails Best Practices", version: default_version },
   issues: [
     {
       message: "Don't rescue Exception",
@@ -178,7 +180,7 @@ s.add_test(
 s.add_test(
   "unsupported",
   type: "success",
-  analyzer: { name: "Rails Best Practices", version: "1.19.4" },
+  analyzer: { name: "Rails Best Practices", version: default_version },
   issues: [
     {
       message: "Don't rescue Exception",
@@ -193,7 +195,7 @@ s.add_test(
   warnings: [
     {
       message: <<~MESSAGE.strip,
-        `rails_best_practices 1.19.4` is installed instead of `1.16.0` in your `Gemfile.lock`.
+        `rails_best_practices #{default_version}` is installed instead of `1.16.0` in your `Gemfile.lock`.
         Because `1.16.0` does not satisfy our constraints `>= 1.19.1, < 2.0`.
 
         If you want to use a different version of `rails_best_practices`, please do either:
@@ -208,7 +210,7 @@ s.add_test(
 s.add_test(
   "include_dirs_by_default",
   type: "success",
-  analyzer: { name: "Rails Best Practices", version: "1.19.4" },
+  analyzer: { name: "Rails Best Practices", version: default_version },
   issues: [
     {
       message: "Don't rescue Exception",
@@ -225,7 +227,7 @@ s.add_test(
 s.add_test(
   "include_dirs_with_config",
   type: "success",
-  analyzer: { name: "Rails Best Practices", version: "1.19.4" },
+  analyzer: { name: "Rails Best Practices", version: default_version },
   issues: [
     {
       message: "Don't rescue Exception",
@@ -260,7 +262,7 @@ s.add_test(
 s.add_test(
   "exclude_multiple",
   type: "success",
-  analyzer: { name: "Rails Best Practices", version: "1.19.4" },
+  analyzer: { name: "Rails Best Practices", version: default_version },
   issues: [
     {
       message: "Don't rescue Exception",
@@ -268,6 +270,50 @@ s.add_test(
       id: "RailsBestPractices::Reviews::NotRescueExceptionReview",
       path: "foo.rb",
       location: { start_line: 3 },
+      object: nil,
+      git_blame_info: nil
+    }
+  ]
+)
+
+s.add_test(
+  "invalid_line_number",
+  type: "success",
+  analyzer: { name: "Rails Best Practices", version: default_version },
+  issues: [
+    {
+      message: "move code into model (article use_count > 2)",
+      links: %w[https://rails-bestpractices.com/posts/2010/07/24/move-code-into-model/],
+      id: "RailsBestPractices::Reviews::MoveCodeIntoModelReview",
+      path: "app/views/articles/show.html.erb",
+      location: { start_line: 1 },
+      object: nil,
+      git_blame_info: nil
+    },
+    {
+      message: "move code into model (article use_count > 2)",
+      links: %w[https://rails-bestpractices.com/posts/2010/07/24/move-code-into-model/],
+      id: "RailsBestPractices::Reviews::MoveCodeIntoModelReview",
+      path: "app/views/articles/show.html.erb",
+      location: { start_line: 5 },
+      object: nil,
+      git_blame_info: nil
+    },
+    {
+      message: "move code into model (post use_count > 2)",
+      links: %w[https://rails-bestpractices.com/posts/2010/07/24/move-code-into-model/],
+      id: "RailsBestPractices::Reviews::MoveCodeIntoModelReview",
+      path: "app/views/articles/show.html.erb",
+      location: { start_line: 9 },
+      object: nil,
+      git_blame_info: nil
+    },
+    {
+      message: "move code into model (Time use_count > 2)",
+      links: %w[https://rails-bestpractices.com/posts/2010/07/24/move-code-into-model/],
+      id: "RailsBestPractices::Reviews::MoveCodeIntoModelReview",
+      path: "app/views/articles/show.html.erb",
+      location: { start_line: 13 },
       object: nil,
       git_blame_info: nil
     }

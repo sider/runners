@@ -1,0 +1,5 @@
+linter:
+  flake8:
+    target:
+      - lib/baz.py
+      - src

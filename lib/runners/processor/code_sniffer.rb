@@ -33,8 +33,6 @@ module Runners
 
     def setup
       add_warning_if_deprecated_options([:options])
-      add_warning_if_deprecated_options([:version])
-
       yield
     end
 
@@ -141,7 +139,7 @@ module Runners
           suggests[:messages].each do |suggest|
             issues << Issue.new(
               path: relative_path(path.to_s),
-              location: Location.new(start_line: suggest[:line]),
+              location: Location.new(start_line: suggest[:line], start_column: suggest[:column]),
               id: suggest[:source],
               message: suggest[:message],
               object: {

@@ -42,4 +42,5 @@ class Runners::Workspace::Git < Workspace
   def remote_url: () -> URI
   def git_fetch_args: () -> Array<String>
   def try_count: () -> Integer
+  def sleep_lambda: () -> (^(Integer) -> Numeric)
 end

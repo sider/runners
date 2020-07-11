@@ -1,5 +1,7 @@
 s = Runners::Testing::Smoke
 
+default_version = "0.3.4"
+
 s.add_offline_test(
   "success",
   type: "success",
@@ -14,7 +16,7 @@ s.add_offline_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Misspell", version: "0.3.4" }
+  analyzer: { name: "Misspell", version: default_version }
 )
 
 s.add_offline_test(
@@ -40,7 +42,7 @@ s.add_offline_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Misspell", version: "0.3.4" },
+  analyzer: { name: "Misspell", version: default_version },
   warnings: [
     {
       message: <<~MSG.strip,
@@ -68,7 +70,14 @@ s.add_offline_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Misspell", version: "0.3.4" }
+  analyzer: { name: "Misspell", version: default_version }
+)
+
+s.add_offline_test(
+  "ignore_array",
+  type: "success",
+  issues: [],
+  analyzer: { name: "Misspell", version: default_version }
 )
 
 s.add_offline_test(
@@ -130,7 +139,7 @@ s.add_offline_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Misspell", version: "0.3.4" },
+  analyzer: { name: "Misspell", version: default_version },
   warnings: [{ message: <<~MSG.strip, file: "sideci.yml" }]
     DEPRECATION WARNING!!!
     The following options in your `sideci.yml` are deprecated and will be removed.
@@ -216,7 +225,7 @@ s.add_offline_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Misspell", version: "0.3.4" }
+  analyzer: { name: "Misspell", version: default_version }
 )
 
 s.add_offline_test(
@@ -250,5 +259,5 @@ s.add_offline_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Misspell", version: "0.3.4" }
+  analyzer: { name: "Misspell", version: default_version }
 )

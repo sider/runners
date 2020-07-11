@@ -1,0 +1,5 @@
+linter:
+  haml_lint:
+    target:
+      - src/
+      - foo.*

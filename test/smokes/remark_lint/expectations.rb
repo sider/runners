@@ -6,7 +6,7 @@ s.add_test(
   issues: [
     {
       path: "readme.md",
-      location: { start_line: 3 },
+      location: { start_line: 3, start_column: 1 },
       id: "no-undefined-references",
       message: "Found reference to undefined definition",
       links: [],
@@ -15,7 +15,7 @@ s.add_test(
     },
     {
       path: "docs/zzz.markdown",
-      location: { start_line: 1 },
+      location: { start_line: 1, start_column: 1 },
       id: "no-unused-definitions",
       message: "Found unused definition",
       links: [],
@@ -34,7 +34,7 @@ s.add_test(
   issues: [
     {
       path: "src/foo.md",
-      location: { start_line: 3 },
+      location: { start_line: 3, start_column: 1 },
       id: "heading-increment",
       message: "Heading levels should increment by one level at a time",
       links: [],
@@ -43,7 +43,7 @@ s.add_test(
     },
     {
       path: "docs/bar.md",
-      location: { start_line: 1 },
+      location: { start_line: 1, start_column: 1 },
       id: "no-auto-link-without-protocol",
       message: "All automatic links must start with a protocol",
       links: [],
@@ -60,7 +60,7 @@ s.add_test(
   issues: [
     {
       path: "readme.markdown",
-      location: { start_line: 1 },
+      location: { start_line: 1, start_column: 1 },
       id: "no-auto-link-without-protocol",
       message: "All automatic links must start with a protocol",
       links: [],
@@ -69,7 +69,7 @@ s.add_test(
     },
     {
       path: "readme.mdown",
-      location: { start_line: 1 },
+      location: { start_line: 1, start_column: 1 },
       id: "no-auto-link-without-protocol",
       message: "All automatic links must start with a protocol",
       links: [],
@@ -86,7 +86,7 @@ s.add_test(
   issues: [
     {
       path: "readme.md",
-      location: { start_line: 4 },
+      location: { start_line: 4, start_column: 1 },
       id: "no-auto-link-without-protocol",
       message: "All automatic links must start with a protocol",
       links: [],
@@ -103,7 +103,7 @@ s.add_test(
   issues: [
     {
       path: "readme.md",
-      location: { start_line: 1 },
+      location: { start_line: 1, start_column: 1 },
       id: "no-auto-link-without-protocol",
       message: "All automatic links must start with a protocol",
       links: [],
@@ -129,7 +129,7 @@ s.add_test(
     },
     {
       path: "readme.markdown",
-      location: { start_line: 1 },
+      location: { start_line: 1, start_column: 1 },
       id: "no-heading-punctuation",
       message: "Don’t add a trailing `:` to headings",
       links: [],
@@ -146,7 +146,7 @@ s.add_test(
   issues: [
     {
       path: "readme.md",
-      location: { start_line: 1 },
+      location: { start_line: 1, start_column: 3 },
       id: "books-links",
       message: "Missing PDF indication",
       links: [],
@@ -155,7 +155,7 @@ s.add_test(
     },
     {
       path: "readme.md",
-      location: { start_line: 1 },
+      location: { start_line: 1, start_column: 3 },
       id: "books-links",
       message: "Missing a space before author",
       links: [],
@@ -164,7 +164,7 @@ s.add_test(
     },
     {
       path: "readme.md",
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 3 },
       id: "books-links",
       message: "Missing PDF indication",
       links: [],
@@ -198,7 +198,7 @@ s.add_test(
   issues: [
     {
       path: "foo.md",
-      location: { start_line: 1 },
+      location: { start_line: 1, start_column: 1 },
       id: "first-heading-level",
       message: "First heading level should be `1`",
       links: [],

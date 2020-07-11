@@ -1,0 +1,4 @@
+rules:
+  - id: rule.foo
+    pattern: foo(_)
+    message: Check `foo` method

@@ -5,6 +5,7 @@ module Runners
     Schema = StrongJSON.new do
       let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
         fields.merge!({
+                        target: enum?(string, array(string)),
                         dir: enum?(string, array(string)),
                         ext: string?,
                         config: string?,
@@ -43,10 +44,16 @@ module Runners
 
     CUSTOM_FORMATTER = (Pathname(Dir.home) / "eslint" / "custom-eslint-json-formatter.js").to_path.freeze
     DEFAULT_ESLINT_CONFIG = (Pathname(Dir.home) / "eslint" / "sider_eslintrc.yml").to_path.freeze
-    DEFAULT_DIR = ".".freeze
+    DEFAULT_TARGET = ".".freeze
 
     def setup
       add_warning_if_deprecated_options([:options])
+
+      if config_linter[:dir]
+        add_warning <<~MSG, file: config.path_name
+          The `dir` option is deprecated. Use the `target` option instead.
+        MSG
+      end
 
       begin
         install_nodejs_deps(constraints: CONSTRAINTS, install_option: config_linter[:npm_install])
@@ -63,8 +70,9 @@ module Runners
 
     private
 
-    def dir
-      Array(config_linter[:dir] || config_linter.dig(:options, :dir) || DEFAULT_DIR)
+    def target
+      Array(config_linter[:target] || config_linter[:dir] ||
+            config_linter.dig(:options, :dir) || DEFAULT_TARGET)
     end
 
     def eslint_config
@@ -117,19 +125,6 @@ module Runners
       end
     end
 
-    def new_location(start_line, start_column, end_line, end_column)
-      case
-      when start_line && start_column && end_line && end_column
-        Location.new(start_line: start_line, start_column: start_column, end_line: end_line, end_column: end_column)
-      when start_line && end_line
-        Location.new(start_line: start_line, end_line: end_line)
-      when start_line
-        Location.new(start_line: start_line)
-      else
-        nil
-      end
-    end
-
     # @see https://eslint.org/docs/developer-guide/working-with-custom-formatters#the-results-object
     def parse_result(result)
       result.each do |issue|
@@ -146,7 +141,12 @@ module Runners
 
           yield Issue.new(
             path: path,
-            location: new_location(details[:line], details[:column], details[:endLine], details[:endColumn]),
+            location: details[:line] ? Location.new(
+              start_line: details[:line],
+              start_column: details[:column],
+              end_line: details[:endLine],
+              end_column: details[:endColumn],
+            ) : nil,
             id: id,
             message: message,
             links: Array(details.dig(:docs, :url)),
@@ -161,7 +161,7 @@ module Runners
       end
     end
 
-    def run_analyzer(config:)
+    def run_analyzer(config: nil)
       # NOTE: eslint exit with status code 1 when some issues are found.
       #       We use `capture3` instead of `capture3!`
       #
@@ -186,7 +186,7 @@ module Runners
         *no_ignore,
         *global,
         *quiet,
-        *dir
+        *target
       )
 
       output_json = report_file_exist? ? read_report_json { nil } : nil
@@ -198,7 +198,9 @@ module Runners
       elsif no_linting_files?(stderr)
         Results::Success.new(guid: guid, analyzer: analyzer)
       elsif no_eslint_config?(stderr)
-        run_analyzer config: DEFAULT_ESLINT_CONFIG # retry with the default configuration
+        trace_writer.message "Retrying with the default configuration file because no configuration files were found..."
+        FileUtils.copy(DEFAULT_ESLINT_CONFIG, ".eslintrc.yml")
+        run_analyzer
       else
         Results::Failure.new(guid: guid, message: stderr.strip, analyzer: analyzer)
       end

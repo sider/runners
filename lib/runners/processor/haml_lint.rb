@@ -7,6 +7,7 @@ module Runners
     Schema = StrongJSON.new do
       let :runner_config, Schema::BaseConfig.ruby.update_fields { |fields|
         fields.merge!({
+                        target: enum?(string, array(string)),
                         file: string?,
                         include_linter: enum?(string, array(string)),
                         exclude_linter: enum?(string, array(string)),
@@ -41,13 +42,16 @@ module Runners
       "haml_lint" => [">= 0.26.0", "< 1.0.0"]
     }.freeze
 
+    DEFAULT_TARGET = ".".freeze
+    DEFAULT_RUBOCOP_CONFIG = (Pathname(Dir.home) / 'default_rubocop.yml').to_path.freeze
+
     def analyzer_bin
       "haml-lint"
     end
 
     def default_gem_specs
       super(*DEFAULT_GEMS).tap do |gems|
-        if setup_default_config
+        if setup_default_rubocop_config
           # NOTE: See rubocop.rb about no versions.
           gems << GemInstaller::Spec.new(name: "meowcop", version: [])
         end
@@ -56,6 +60,12 @@ module Runners
 
     def setup
       add_warning_if_deprecated_options([:options])
+
+      if config_linter[:file]
+        add_warning <<~MSG, file: config.path_name
+          The `#{config_field_path(:file)}` option is deprecated. Use the `#{config_field_path(:target)}` option instead.
+        MSG
+      end
 
       install_gems default_gem_specs, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS do
         yield
@@ -66,48 +76,42 @@ module Runners
     end
 
     def analyze(_changes)
-      options = [include_linter, exclude_linter, exclude, haml_lint_config].compact
-      run_analyzer(file, options)
+      run_analyzer
     end
 
-    def setup_default_config
-      # NOTE: We expect default_rubocop.yml to be located in $HOME.
-      default_config = (Pathname(Dir.home) / './default_rubocop.yml').realpath
-      path = Pathname("#{current_dir}/.rubocop.yml")
-      return false if path.exist?
-      path.parent.mkpath
-      FileUtils.cp(default_config, path)
-      true
+    private
+
+    def setup_default_rubocop_config
+      config_file = ".rubocop.yml"
+      return if File.exist? config_file
+
+      FileUtils.cp(DEFAULT_RUBOCOP_CONFIG, config_file)
+      config_file
     end
 
-    def file
-      config_linter[:file] || config_linter.dig(:options, :file) || '.'
+    def target
+      Array(config_linter[:target] || config_linter[:file] ||
+            config_linter.dig(:options, :file) || DEFAULT_TARGET)
     end
 
     def include_linter
-      include_linter = config_linter[:include_linter] || config_linter.dig(:options, :include_linter)
-      if include_linter
-        "--include-linter=#{Array(include_linter).join(',')}"
-      end
+      value = comma_separated_list(config_linter[:include_linter] || config_linter.dig(:options, :include_linter))
+      value ? ["--include-linter", value] : []
     end
 
     def exclude_linter
-      exclude_linter = config_linter[:exclude_linter] || config_linter.dig(:options, :exclude_linter)
-      if exclude_linter
-        "--exclude-linter=#{Array(exclude_linter).join(',')}"
-      end
+      value = comma_separated_list(config_linter[:exclude_linter] || config_linter.dig(:options, :exclude_linter))
+      value ? ["--exclude-linter", value] : []
     end
 
     def exclude
-      exclude = config_linter[:exclude] || config_linter.dig(:options, :exclude)
-      if exclude
-        "--exclude=#{Array(exclude).join(',')}"
-      end
+      value = comma_separated_list(config_linter[:exclude] || config_linter.dig(:options, :exclude))
+      value ? ["--exclude", value] : []
     end
 
     def haml_lint_config
       config = config_linter[:config] || config_linter.dig(:options, :config)
-      "--config=#{config}" if config
+      config ? ["--config", config] : []
     end
 
     def parse_result(output)
@@ -140,13 +144,15 @@ module Runners
       ["https://github.com/sds/haml-lint/blob/v#{analyzer_version}/lib/haml_lint/linter##{issue_id.downcase}"]
     end
 
-    def run_analyzer(targets, options)
+    def run_analyzer
       stdout, stderr, status = capture3(
         *ruby_analyzer_bin,
-        targets,
-        '--reporter',
-        'json',
-        *options,
+        "--reporter", "json",
+        *include_linter,
+        *exclude_linter,
+        *exclude,
+        *haml_lint_config,
+        *target,
       )
 
       # @see https://github.com/sds/haml-lint/blob/v0.35.0/lib/haml_lint/cli.rb#L110

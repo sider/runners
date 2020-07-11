@@ -225,3 +225,8 @@ end
 extension Float (Polyfill)
   def to_i: () -> Integer
 end
+
+extension Integer (Polyfill)
+  def **: (Float) -> Float
+        | super
+end

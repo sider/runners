@@ -11,7 +11,7 @@ class Runners::Shell
   def env_hash: () -> Hash[String, String?]
   def capture3: (String, *String, **untyped) -> [String, String, Process::Status]
   def capture3!: (String, *String, **untyped) -> [String, String]
-  def capture3_with_retry!: (String, *String, ?tries: Integer) -> [String, String]
+  def capture3_with_retry!: (String, *String, ?tries: Integer, ?sleep: ^(Integer) -> Integer | Float) -> [String, String]
   def capture3_trace: (String, *String, **untyped) -> [String, String, Process::Status]
 end
 

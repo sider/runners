@@ -1,0 +1,3 @@
+linter:
+  querly:
+    config: my_querly.yml

@@ -9,7 +9,7 @@ s.add_test(
     {
       id: "arrayIndexOutOfBounds",
       path: "arrayIndexOutOfBounds.c",
-      location: { start_line: 7 },
+      location: { start_line: 7, start_column: 6 },
       message: "Array 'a[2]' accessed at index 2, which is out of bounds.",
       links: [],
       object: {
@@ -20,7 +20,7 @@ s.add_test(
     {
       id: "autoVariables",
       path: "autoVariables.c",
-      location: { start_line: 4 },
+      location: { start_line: 4, start_column: 5 },
       message: "Address of local auto-variable assigned to a function parameter.",
       links: [],
       object: {
@@ -35,7 +35,7 @@ s.add_test(
     {
       id: "ctunullpointer",
       path: "src/nullpointer.c",
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 6 },
       message: "Null pointer dereference: q",
       links: [],
       object: {
@@ -50,7 +50,7 @@ s.add_test(
     {
       id: "ctunullpointer",
       path: "src/nullpointer.c",
-      location: { start_line: 6 },
+      location: { start_line: 6, start_column: 14 },
       message: "Null pointer dereference: q",
       links: [],
       object: {
@@ -65,7 +65,7 @@ s.add_test(
     {
       id: "ctunullpointer",
       path: "src/nullpointer.c",
-      location: { start_line: 7 },
+      location: { start_line: 7, start_column: 6 },
       message: "Null pointer dereference: q",
       links: [],
       object: {
@@ -80,7 +80,7 @@ s.add_test(
     {
       id: "invalidContainer",
       path: "src/erase.cpp",
-      location: { start_line: 4 },
+      location: { start_line: 4, start_column: 22 },
       message: "Using iterator to local container 'items' that may be invalid.",
       links: [],
       object: {
@@ -91,7 +91,16 @@ s.add_test(
     {
       id: "invalidContainer",
       path: "src/erase.cpp",
-      location: { start_line: 9 },
+      location: { start_line: 9, start_column: 17 },
+      message: "Using iterator to local container 'items' that may be invalid.",
+      links: [],
+      object: { severity: "error", verbose: nil, inconclusive: false, cwe: "664", location_info: "Iterator to container is created here." },
+      git_blame_info: nil
+    },
+    {
+      id: "invalidContainer",
+      path: "src/erase.cpp",
+      location: { start_line: 9, start_column: 32 },
       message: "Using iterator to local container 'items' that may be invalid.",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "664", location_info: nil },
@@ -100,18 +109,7 @@ s.add_test(
     {
       id: "invalidContainer",
       path: "src/erase.cpp",
-      location: { start_line: 9 },
-      message: "Using iterator to local container 'items' that may be invalid.",
-      links: [],
-      object: {
-        severity: "error", verbose: nil, inconclusive: false, cwe: "664", location_info: "Assuming condition is true."
-      },
-      git_blame_info: nil
-    },
-    {
-      id: "invalidContainer",
-      path: "src/erase.cpp",
-      location: { start_line: 9 },
+      location: { start_line: 9, start_column: 37 },
       message: "Using iterator to local container 'items' that may be invalid.",
       links: [],
       object: {
@@ -119,14 +117,14 @@ s.add_test(
         verbose: nil,
         inconclusive: false,
         cwe: "664",
-        location_info: "Iterator to container is created here."
+        location_info: "Assuming condition is true."
       },
       git_blame_info: nil
     },
     {
       id: "invalidContainer",
       path: "src/erase.cpp",
-      location: { start_line: 10 },
+      location: { start_line: 10, start_column: 19 },
       message: "Using iterator to local container 'items' that may be invalid.",
       links: [],
       object: {
@@ -137,7 +135,7 @@ s.add_test(
     {
       id: "invalidContainer",
       path: "src/erase.cpp",
-      location: { start_line: 10 },
+      location: { start_line: 10, start_column: 19 },
       message: "Using iterator to local container 'items' that may be invalid.",
       links: [],
       object: {
@@ -148,7 +146,7 @@ s.add_test(
     {
       id: "invalidContainer",
       path: "src/erase.cpp",
-      location: { start_line: 11 },
+      location: { start_line: 11, start_column: 13 },
       message: "Using iterator to local container 'items' that may be invalid.",
       links: [],
       object: {
@@ -163,7 +161,7 @@ s.add_test(
     {
       id: "nullPointer",
       path: "src/nullpointer.c",
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 6 },
       message: "Possible null pointer dereference: q",
       links: [],
       object: {
@@ -174,7 +172,7 @@ s.add_test(
     {
       id: "nullPointer",
       path: "src/nullpointer.c",
-      location: { start_line: 6 },
+      location: { start_line: 6, start_column: 14 },
       message: "Possible null pointer dereference: q",
       links: [],
       object: {
@@ -189,7 +187,7 @@ s.add_test(
     {
       id: "nullPointer",
       path: "src/nullpointer.c",
-      location: { start_line: 7 },
+      location: { start_line: 7, start_column: 7 },
       message: "Possible null pointer dereference: q",
       links: [],
       object: {
@@ -204,7 +202,7 @@ s.add_test(
     {
       id: "syntaxError",
       path: "src/syntaxError.c",
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 1 },
       message: "Unmatched '{'. Configuration: ''.",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
@@ -229,7 +227,7 @@ s.add_test(
     {
       id: "autoVariables",
       path: "autoVariables.c",
-      location: { start_line: 4 },
+      location: { start_line: 4, start_column: 5 },
       message: "Address of local auto-variable assigned to a function parameter.",
       links: [],
       object: {
@@ -248,7 +246,7 @@ s.add_test(
     {
       id: "arrayIndexOutOfBounds",
       path: "src/arrayIndexOutOfBounds.c",
-      location: { start_line: 7 },
+      location: { start_line: 7, start_column: 6 },
       message: "Array 'a[2]' accessed at index 2, which is out of bounds.",
       links: [],
       object: {
@@ -259,7 +257,7 @@ s.add_test(
     {
       id: "autoVariables",
       path: "autoVariables.c",
-      location: { start_line: 4 },
+      location: { start_line: 4, start_column: 5 },
       message: "Address of local auto-variable assigned to a function parameter.",
       links: [],
       object: {
@@ -278,7 +276,7 @@ s.add_test(
     {
       id: "arrayIndexOutOfBounds",
       path: "arrayIndexOutOfBounds.c",
-      location: { start_line: 7 },
+      location: { start_line: 7, start_column: 6 },
       message: "Array 'a[2]' accessed at index 2, which is out of bounds.",
       links: [],
       object: {
@@ -297,7 +295,7 @@ s.add_test(
     {
       id: "syntaxError",
       path: "syntaxError.c",
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 1 },
       message: "Unmatched '{'. Configuration: ''.",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
@@ -314,7 +312,7 @@ s.add_test(
     {
       id: "readWriteOnlyFile",
       path: "bad.c",
-      location: { start_line: 5 },
+      location: { start_line: 5, start_column: 5 },
       message: "Read operation on a file that was opened only for writing.",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "664", location_info: nil },
@@ -323,7 +321,7 @@ s.add_test(
     {
       id: "seekOnAppendedFile",
       path: "bad.c",
-      location: { start_line: 4 },
+      location: { start_line: 4, start_column: 5 },
       message: "Repositioning operation performed on a file opened in append mode has no effect.",
       links: [],
       object: { severity: "warning", verbose: nil, inconclusive: false, cwe: "398", location_info: nil },
@@ -332,7 +330,7 @@ s.add_test(
     {
       id: "unusedFunction",
       path: "bad.c",
-      location: { start_line: 1 },
+      location: { start_line: 1, start_column: 0 },
       message: "The function 'foo' is never used.",
       links: [],
       object: { severity: "style", verbose: nil, inconclusive: false, cwe: "561", location_info: nil },
@@ -349,7 +347,7 @@ s.add_test(
     {
       id: "allocaCalled",
       path: "bad.c",
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 15 },
       message:
         "Obsolete function 'alloca' called. In C99 and later it is recommended to use a variable length array instead.",
       links: [],
@@ -373,7 +371,7 @@ s.add_test(
     {
       id: "zerodiv",
       path: "main.c",
-      location: { start_line: 5 },
+      location: { start_line: 5, start_column: 11 },
       message: "Division by zero.",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "369", location_info: "Division by zero" },
@@ -390,7 +388,7 @@ s.add_test(
     {
       id: "arrayIndexOutOfBounds",
       path: "bad.c",
-      location: { start_line: 4 },
+      location: { start_line: 4, start_column: 6 },
       message: "Array 'a[1]' accessed at index 1, which is out of bounds.",
       links: [],
       object: {
@@ -401,7 +399,7 @@ s.add_test(
     {
       id: "syntaxError",
       path: "bad.cpp",
-      location: { start_line: 4 },
+      location: { start_line: 4, start_column: 5 },
       message: "Code 'std::vector' is invalid C code. Use --std or --language to configure the language.",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
@@ -423,7 +421,7 @@ s.add_test(
     {
       id: "misra-c2012-14.4",
       path: "bad.c",
-      location: { start_line: 8 },
+      location: { start_line: 8, start_column: 7 },
       message: "misra violation (use --rule-texts=<file> to get proper output)",
       links: [],
       object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
@@ -432,7 +430,7 @@ s.add_test(
     {
       id: "misra-c2012-21.1",
       path: "bad.h",
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 0 },
       message: "misra violation (use --rule-texts=<file> to get proper output)",
       links: [],
       object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
@@ -441,7 +439,7 @@ s.add_test(
     {
       id: "y2038-type-bits-undef",
       path: "bad.h",
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 0 },
       message: "_USE_TIME_BITS64 is defined but _TIME_BITS was not",
       links: [],
       object: { severity: "warning", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
@@ -458,7 +456,7 @@ s.add_test(
     {
       id: "misra-c2012-12.3",
       path: "src/foo/test.cpp",
-      location: { start_line: 9 },
+      location: { start_line: 9, start_column: 8 },
       message: "Text of rule 12.3",
       links: [],
       object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
@@ -467,7 +465,7 @@ s.add_test(
     {
       id: "misra-c2012-14.4",
       path: "src/foo/test.cpp",
-      location: { start_line: 16 },
+      location: { start_line: 16, start_column: 11 },
       message: "Text of rule 14.4",
       links: [],
       object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
@@ -476,7 +474,7 @@ s.add_test(
     {
       id: "misra-c2012-16.4",
       path: "src/foo/test.cpp",
-      location: { start_line: 10 },
+      location: { start_line: 10, start_column: 3 },
       message: "Text of rule 16.4",
       links: [],
       object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
@@ -485,7 +483,7 @@ s.add_test(
     {
       id: "misra-c2012-21.6",
       path: "src/foo/test.cpp",
-      location: { start_line: 2 },
+      location: { start_line: 2, start_column: 0 },
       message: "Text of rule 21.6",
       links: [],
       object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
@@ -502,7 +500,7 @@ s.add_test(
     {
       id: "bughuntingDivByZero",
       path: "src/bar/cpp_sample.c++",
-      location: { start_line: 11 },
+      location: { start_line: 11, start_column: 15 },
       message: "There is division, cannot determine that there can't be a division by zero.",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "369", location_info: nil },
@@ -511,7 +509,7 @@ s.add_test(
     {
       id: "bughuntingDivByZero",
       path: "src/cpp_sample_2.c++",
-      location: { start_line: 9 },
+      location: { start_line: 9, start_column: 15 },
       message: "There is division, cannot determine that there can't be a division by zero.",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "369", location_info: nil },
@@ -520,7 +518,7 @@ s.add_test(
     {
       id: "bughuntingDivByZeroFloat",
       path: "src/bar/c_sample.c",
-      location: { start_line: 18 },
+      location: { start_line: 18, start_column: 14 },
       message: "There is division, cannot determine that there can't be a division by zero.",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "369", location_info: nil },
@@ -529,7 +527,7 @@ s.add_test(
     {
       id: "bughuntingDivByZeroFloat",
       path: "src/bar/c_sample.c",
-      location: { start_line: 20 },
+      location: { start_line: 20, start_column: 14 },
       message: "There is division, cannot determine that there can't be a division by zero.",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "369", location_info: nil },
@@ -538,7 +536,7 @@ s.add_test(
     {
       id: "bughuntingDivByZeroFloat",
       path: "src/bar/cpp_sample.c++",
-      location: { start_line: 24 },
+      location: { start_line: 24, start_column: 14 },
       message: "There is division, cannot determine that there can't be a division by zero.",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "369", location_info: nil },
@@ -547,7 +545,7 @@ s.add_test(
     {
       id: "bughuntingDivByZeroFloat",
       path: "src/cpp_sample_2.c++",
-      location: { start_line: 22 },
+      location: { start_line: 22, start_column: 14 },
       message: "There is division, cannot determine that there can't be a division by zero.",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "369", location_info: nil },
@@ -556,7 +554,7 @@ s.add_test(
     {
       id: "bughuntingUninit",
       path: "src/bar/c_sample.c",
-      location: { start_line: 16 },
+      location: { start_line: 16, start_column: 12 },
       message: "Cannot determine that 'dz' is initialized",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
@@ -565,7 +563,7 @@ s.add_test(
     {
       id: "bughuntingUninit",
       path: "src/bar/c_sample.c",
-      location: { start_line: 19 },
+      location: { start_line: 19, start_column: 16 },
       message: "Cannot determine that 'dz' is initialized",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
@@ -574,7 +572,7 @@ s.add_test(
     {
       id: "bughuntingUninit",
       path: "src/bar/cpp_sample.c++",
-      location: { start_line: 22 },
+      location: { start_line: 22, start_column: 12 },
       message: "Cannot determine that 'dz' is initialized",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
@@ -583,7 +581,7 @@ s.add_test(
     {
       id: "bughuntingUninit",
       path: "src/bar/cpp_sample.c++",
-      location: { start_line: 25 },
+      location: { start_line: 25, start_column: 16 },
       message: "Cannot determine that 'dz' is initialized",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
@@ -592,7 +590,7 @@ s.add_test(
     {
       id: "bughuntingUninit",
       path: "src/cpp_sample_2.c++",
-      location: { start_line: 20 },
+      location: { start_line: 20, start_column: 12 },
       message: "Cannot determine that 'dz' is initialized",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
@@ -601,7 +599,7 @@ s.add_test(
     {
       id: "bughuntingUninit",
       path: "src/cpp_sample_2.c++",
-      location: { start_line: 23 },
+      location: { start_line: 23, start_column: 16 },
       message: "Cannot determine that 'dz' is initialized",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
@@ -610,7 +608,7 @@ s.add_test(
     {
       id: "uninitvar",
       path: "src/bar/c_sample.c",
-      location: { start_line: 16 },
+      location: { start_line: 16, start_column: 12 },
       message: "Uninitialized variable: dz",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
@@ -619,7 +617,7 @@ s.add_test(
     {
       id: "uninitvar",
       path: "src/bar/c_sample.c",
-      location: { start_line: 19 },
+      location: { start_line: 19, start_column: 16 },
       message: "Uninitialized variable: dz",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
@@ -628,7 +626,7 @@ s.add_test(
     {
       id: "uninitvar",
       path: "src/bar/cpp_sample.c++",
-      location: { start_line: 22 },
+      location: { start_line: 22, start_column: 12 },
       message: "Uninitialized variable: dz",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
@@ -637,7 +635,7 @@ s.add_test(
     {
       id: "uninitvar",
       path: "src/bar/cpp_sample.c++",
-      location: { start_line: 25 },
+      location: { start_line: 25, start_column: 16 },
       message: "Uninitialized variable: dz",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
@@ -646,7 +644,7 @@ s.add_test(
     {
       id: "uninitvar",
       path: "src/cpp_sample_2.c++",
-      location: { start_line: 20 },
+      location: { start_line: 20, start_column: 12 },
       message: "Uninitialized variable: dz",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
@@ -655,7 +653,7 @@ s.add_test(
     {
       id: "uninitvar",
       path: "src/cpp_sample_2.c++",
-      location: { start_line: 23 },
+      location: { start_line: 23, start_column: 16 },
       message: "Uninitialized variable: dz",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
@@ -672,7 +670,7 @@ s.add_test(
     {
       id: "bughuntingDivByZero",
       path: "src/cpp_sample_1.c++",
-      location: { start_line: 7 },
+      location: { start_line: 7, start_column: 15 },
       message: "There is division, cannot determine that there can't be a division by zero.",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "369", location_info: nil },
@@ -681,7 +679,7 @@ s.add_test(
     {
       id: "bughuntingDivByZero",
       path: "src/cpp_sample_3.c++",
-      location: { start_line: 11 },
+      location: { start_line: 11, start_column: 15 },
       message: "There is division, cannot determine that there can't be a division by zero.",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "369", location_info: nil },
@@ -690,7 +688,7 @@ s.add_test(
     {
       id: "bughuntingDivByZeroFloat",
       path: "src/cpp_sample_1.c++",
-      location: { start_line: 20 },
+      location: { start_line: 20, start_column: 14 },
       message: "There is division, cannot determine that there can't be a division by zero.",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "369", location_info: nil },
@@ -699,7 +697,7 @@ s.add_test(
     {
       id: "bughuntingDivByZeroFloat",
       path: "src/cpp_sample_3.c++",
-      location: { start_line: 24 },
+      location: { start_line: 24, start_column: 14 },
       message: "There is division, cannot determine that there can't be a division by zero.",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "369", location_info: nil },
@@ -708,7 +706,7 @@ s.add_test(
     {
       id: "bughuntingUninit",
       path: "src/cpp_sample_1.c++",
-      location: { start_line: 18 },
+      location: { start_line: 18, start_column: 12 },
       message: "Cannot determine that 'dz' is initialized",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
@@ -717,7 +715,7 @@ s.add_test(
     {
       id: "bughuntingUninit",
       path: "src/cpp_sample_1.c++",
-      location: { start_line: 21 },
+      location: { start_line: 21, start_column: 16 },
       message: "Cannot determine that 'dz' is initialized",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
@@ -726,7 +724,7 @@ s.add_test(
     {
       id: "bughuntingUninit",
       path: "src/cpp_sample_3.c++",
-      location: { start_line: 22 },
+      location: { start_line: 22, start_column: 12 },
       message: "Cannot determine that 'dz' is initialized",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
@@ -735,7 +733,7 @@ s.add_test(
     {
       id: "bughuntingUninit",
       path: "src/cpp_sample_3.c++",
-      location: { start_line: 25 },
+      location: { start_line: 25, start_column: 16 },
       message: "Cannot determine that 'dz' is initialized",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
@@ -744,7 +742,7 @@ s.add_test(
     {
       id: "uninitvar",
       path: "src/cpp_sample_1.c++",
-      location: { start_line: 18 },
+      location: { start_line: 18, start_column: 12 },
       message: "Uninitialized variable: dz",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
@@ -753,7 +751,7 @@ s.add_test(
     {
       id: "uninitvar",
       path: "src/cpp_sample_1.c++",
-      location: { start_line: 21 },
+      location: { start_line: 21, start_column: 16 },
       message: "Uninitialized variable: dz",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
@@ -762,7 +760,7 @@ s.add_test(
     {
       id: "uninitvar",
       path: "src/cpp_sample_3.c++",
-      location: { start_line: 22 },
+      location: { start_line: 22, start_column: 12 },
       message: "Uninitialized variable: dz",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
@@ -771,7 +769,7 @@ s.add_test(
     {
       id: "uninitvar",
       path: "src/cpp_sample_3.c++",
-      location: { start_line: 25 },
+      location: { start_line: 25, start_column: 16 },
       message: "Uninitialized variable: dz",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
@@ -788,7 +786,7 @@ s.add_test(
     {
       id: "bughuntingDivByZeroFloat",
       path: "c_sample.c",
-      location: { start_line: 12 },
+      location: { start_line: 12, start_column: 14 },
       message: "There is division, cannot determine that there can't be a division by zero.",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "369", location_info: nil },
@@ -797,7 +795,7 @@ s.add_test(
     {
       id: "bughuntingUninit",
       path: "c_sample.c",
-      location: { start_line: 10 },
+      location: { start_line: 10, start_column: 12 },
       message: "Cannot determine that 'dz' is initialized",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
@@ -806,7 +804,7 @@ s.add_test(
     {
       id: "misra-c2012-10.4",
       path: "c_sample.c",
-      location: { start_line: 12 },
+      location: { start_line: 12, start_column: 14 },
       message: "misra violation (use --rule-texts=<file> to get proper output)",
       links: [],
       object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
@@ -815,7 +813,7 @@ s.add_test(
     {
       id: "misra-c2012-12.3",
       path: "c_sample.c",
-      location: { start_line: 5 },
+      location: { start_line: 5, start_column: 14 },
       message: "misra violation (use --rule-texts=<file> to get proper output)",
       links: [],
       object: { severity: "style", verbose: nil, inconclusive: false, cwe: nil, location_info: nil },
@@ -824,7 +822,7 @@ s.add_test(
     {
       id: "uninitvar",
       path: "c_sample.c",
-      location: { start_line: 10 },
+      location: { start_line: 10, start_column: 12 },
       message: "Uninitialized variable: dz",
       links: [],
       object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },

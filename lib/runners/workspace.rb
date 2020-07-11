@@ -37,7 +37,7 @@ module Runners
     # @yieldparam changes [Runners::Changes]
     def open
       prepare_ssh do |git_ssh_path|
-        trace_writer.header "Setting up source code"
+        trace_writer.header "Set up source code"
 
         mktmpdir do |base_path|
           if options.source.base

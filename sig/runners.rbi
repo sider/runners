@@ -127,7 +127,7 @@ class Runners::Processor
   def self.register_config_schema: (**any) -> void
   def capture3: (String, *String, **capture3_options) -> [String, String, Process::Status]
   def capture3!: (String, *String, **capture3_options) -> [String, String]
-  def capture3_with_retry!: (String, *String, ?tries: Integer) -> [String, String]
+  def capture3_with_retry!: (String, *String, ?tries: Integer, ?sleep: ^(Integer) -> Numeric) -> [String, String]
   def capture3_trace: (String, *String, **capture3_options) -> [String, String, Process::Status]
 
   def push_env_hash: <'x> (Hash<String, String?>) { -> 'x } -> 'x
@@ -143,6 +143,7 @@ class Runners::Processor
   def analyzer_id: -> String
   def analyzer_name: -> String
   def analyzer_doc: -> String
+  def analyzer_github: -> String
   def analyzer_bin: -> String
   def analyzer_version: -> String
   def extract_version!: (String | Array<String>, ?(String | Array<String>), ?pattern: Regexp) -> String
@@ -155,6 +156,7 @@ class Runners::Processor
   def read_report_file: (?String) -> String
   def read_report_xml: (?String) -> REXML::Document
   def read_report_json: <'x> (?String) { () -> 'x } -> (Hash<Symbol, any> | 'x)
+  def comma_separated_list: (String | Array<String> | nil) -> String?
 end
 
 # TODO: Keep for the backward compatibility.
@@ -173,7 +175,7 @@ class Runners::Shell
 
   def capture3: (String, *String, **capture3_options) -> [String, String, Process::Status]
   def capture3!: (String, *String, **capture3_options) -> [String, String]
-  def capture3_with_retry!: (String, *String, ?tries: Integer) -> [String, String]
+  def capture3_with_retry!: (String, *String, ?tries: Integer, ?sleep: ^(Integer) -> Numeric) -> [String, String]
   def capture3_trace: (String, *String, **capture3_options) -> [String, String, Process::Status]
 
   def chdir: <'x> (Pathname) { (Pathname) -> 'x } -> 'x

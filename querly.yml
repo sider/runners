@@ -10,9 +10,10 @@ rules:
       If you want to know if it is aborted, consider using also `Process#exited?`.
 
       See also:
-      * https://ruby-doc.org/core-2.7.1/Process/Status.html#method-i-exitstatus
+      * https://ruby-doc.org/core/Process/Status.html#method-i-exitstatus
     justification:
       - When you are not interested in aborted or core-dumped.
+
   - id: sider.runners.trace_writer_status
     pattern:
       - status(_, ...)
@@ -24,6 +25,7 @@ rules:
     examples:
       - before: trace_writer.status(status)
       - before: "trace_writer.status(status, recorded_at: Time.now)"
+
   - id: sider.runners.sh-util-in-rake-tasks
     pattern:
       - sh(_)
@@ -35,7 +37,7 @@ rules:
 
       See also:
       * https://www.rubydoc.info/gems/rake/FileUtils#sh-instance_method
-      * https://ruby-doc.org/core-2.6.5/Kernel.html#method-i-exec
+      * https://ruby-doc.org/core/Kernel.html#method-i-exec
     justification:
       - When required to run the command via the system shell.
       - When the command has no arguments.
@@ -44,6 +46,7 @@ rules:
           sh "echo #{username}"
         after: |
           sh "echo", username
+
   - id: sider.runners.tmpdir
     pattern:
       - Dir.tmpdir
@@ -58,12 +61,14 @@ rules:
           output_file = Pathname(Dir.tmpdir) / "output.json"
       - after: |
           output_file = working_dir / "output.json"
+
   - id: sider.runners.mktmpdir
     pattern: Dir.mktmpdir
     message: The code probably may be more simple if using `Runners::Tmpdir` instead.
     examples:
       - before: Dir.mktmpdir { |dir| puts Pathname(dir) }
         after: mktmpdir { |dir| puts dir }
+
   - id: sider.runners.tempfile_new
     pattern: Tempfile.new
     message: |
@@ -72,9 +77,35 @@ rules:
       `Tempfile.create` does **not** automatically remove the created file.
       On the other hand, since `Tempfile.new` removes automatically the file, smoke tests can sometimes fail.
 
-      See https://ruby-doc.org/stdlib-2.7.0/libdoc/tempfile/rdoc/Tempfile.html
+      See https://ruby-doc.org/stdlib/libdoc/tempfile/rdoc/Tempfile.html
     examples:
       - before: |
           Tempfile.new(["rubocop-", ".json"])
       - after: |
           Tempfile.create(["rubocop-", ".json"])
+
+  - id: sider.runners.to_i
+    pattern: _.to_i
+    message: |
+      Be careful with the `.to_i` method.
+
+      For example, `nil.to_i` or `"".to_i` returns `0`, but this behavior may be unexpected.
+      If you want to just covert String to Integer, the `Integer` method may be suitable in most cases.
+
+      Example:
+      ```ruby
+      Integer("0") #=> 0
+      Integer("") #=> ArgumentError
+      ```
+
+      See also:
+      * https://ruby-doc.org/core/NilClass.html#to_i-method
+      * https://ruby-doc.org/core/String.html#to_i-method
+      * https://ruby-doc.org/core/Kernel.html#Integer-method
+    examples:
+      - before: |
+          result[:line].to_i
+      - after: |
+          Integer(result[:line])
+    justification:
+      - When the use of `.to_i` can make the code more simple

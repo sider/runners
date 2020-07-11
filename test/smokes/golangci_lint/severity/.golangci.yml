@@ -1,0 +1,10 @@
+linters:
+  enable:
+    - gofmt
+
+severity:
+  default-severity: error
+
+  rules:
+    - linters: [gofmt]
+      severity: warning

@@ -86,6 +86,10 @@ module Runners
       analyzers.doc(analyzer_id)
     end
 
+    def analyzer_github
+      analyzers.github(analyzer_id)
+    end
+
     def analyzer
       @analyzer ||= Analyzer.new(name: analyzer_name, version: analyzer_version)
     end
@@ -248,6 +252,11 @@ module Runners
       else
         JSON.parse(output, symbolize_names: true)
       end
+    end
+
+    def comma_separated_list(value)
+      values = Array(value).flat_map { |s| s.split(/\s*,\s*/) }
+      values.empty? ? nil : values.join(",")
     end
   end
 end
