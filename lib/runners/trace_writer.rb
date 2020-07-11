@@ -41,7 +41,9 @@ module Runners
       string = filter.mask(message.strip)
 
       if string.size > limit
-        string = string[0, limit] + omission
+        # @type var sliced: String
+        sliced = _ = string.slice(0, limit)
+        string = sliced + omission
         all_truncated = true
       end
 
@@ -97,10 +99,11 @@ module Runners
     def each_slice(string, size:)
       string = string.dup
 
-      while string.length > 0
-        slice = string.slice!(0, size)
-        truncated = slice.length == size
-        yield slice, truncated
+      while not string.empty?
+        # @var sliced: String
+        sliced = _ = string.slice!(0, size)
+        truncated = sliced.size == size
+        yield sliced, truncated
       end
     end
   end
