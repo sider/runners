@@ -1,10 +1,15 @@
-class Runners::IO
-  attr_reader ios: Array[::IO]
-
-  def initialize: (*::IO ios) -> void
-  def write: (*untyped args) -> void
-  def flush: (*untyped args) -> void
+interface Runners::_IO
+  def write: (String) -> void
+  def flush: () -> void
   def flush!: () -> void
+  def respond_to?: (Symbol) -> bool
 end
 
-Runners::IO::REQUIRED_METHODS_FOR_IOS: Array[Symbol]
+class Runners::IO
+  attr_reader ios: Array[::IO | Runners::_IO]
+
+  def initialize: (*(::IO | Runners::_IO)) -> void
+  def write: (String) -> void
+  def flush: () -> void
+  def flush!: () -> void
+end

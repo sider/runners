@@ -1,12 +1,8 @@
-interface Runners::TraceWriter::_Writer
-  def <<: (Hash[Symbol, untyped]) -> void
-end
-
 class Runners::TraceWriter
-  attr_reader writer: _Writer
+  attr_reader writer: JSONSEQ::Writer
   attr_reader filter: SensitiveFilter
 
-  def initialize: (writer: _Writer, filter: SensitiveFilter) -> void
+  def initialize: (writer: JSONSEQ::Writer, filter: SensitiveFilter) -> void
   def command_line: (Array[String] command_line, ?recorded_at: Time) -> void
   def status: (Process::Status status, ?recorded_at: Time) -> untyped
   def stdout: (String string, ?recorded_at: Time, ?max_length: Integer) -> void
