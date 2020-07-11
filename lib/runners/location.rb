@@ -8,7 +8,7 @@ module Runners
     def initialize(start_line:, start_column: nil, end_line: nil, end_column: nil)
       @start_line = start_line ? Integer(start_line) : nil
       @start_column = start_column ? Integer(start_column) : nil
-      @end_line = end_line? Integer(end_line) : nil
+      @end_line = end_line ? Integer(end_line) : nil
       @end_column = end_column ? Integer(end_column) : nil
     end
 
