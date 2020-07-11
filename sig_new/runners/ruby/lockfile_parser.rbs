@@ -1,0 +1,3 @@
+module Runners::Ruby::LockfileParser
+  def self.parse: (String) -> ::Bundler::LockfileParser
+end

@@ -1,0 +1,24 @@
+module Runners::Ruby::GemInstaller::Source
+  def self.create: (gems_item) -> source_type
+end
+
+class Runners::Ruby::GemInstaller::Source::Base
+  def rubygems?: () -> bool
+  def git?: () -> bool
+  def default?: () -> bool
+end
+
+class Runners::Ruby::GemInstaller::Source::Rubygems < Base
+  attr_reader source: String
+
+  def initialize: (?String) -> void
+end
+
+class Runners::Ruby::GemInstaller::Source::Git < Base
+  attr_reader repo: String
+  attr_reader ref: String?
+  attr_reader branch: String?
+  attr_reader tag: String?
+
+  def initialize: (String, ?ref: String, ?branch: String, ?tag: String) -> void
+end

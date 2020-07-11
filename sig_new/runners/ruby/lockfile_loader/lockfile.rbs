@@ -1,0 +1,12 @@
+class Runners::Ruby::LockfileLoader::Lockfile
+  attr_reader specs: Array[GemInstaller::Spec]
+
+  def initialize: (String?) -> void
+  def spec_exists?: (GemInstaller::Spec | String) -> bool
+  def locked_version: (GemInstaller::Spec | String) -> String?
+  def locked_version!: (GemInstaller::Spec | String) -> String
+  def satisfied_by?: (GemInstaller::Spec | String, Hash[String, Array[String]]) -> bool
+
+  private
+  def find_spec: (GemInstaller::Spec | String) -> GemInstaller::Spec?
+end
