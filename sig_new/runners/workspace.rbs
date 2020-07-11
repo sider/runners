@@ -36,10 +36,3 @@ class Runners::Workspace::File < Workspace
   def prepare_head_source: (Pathname) -> void
   def provision: (Pathname, Pathname, String?) -> void
 end
-
-class Runners::Workspace::Git < Workspace
-  def prepare_base_source: (Pathname) -> void
-  def prepare_head_source: (Pathname) -> void
-  def remote_url: () -> URI
-  def git_fetch_args: () -> Array[String]
-end
