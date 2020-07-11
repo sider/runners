@@ -28,10 +28,6 @@ module Runners
       @object = object
     end
 
-    def eql?(other)
-      self == other
-    end
-
     def ==(other)
       other.class == self.class &&
         other.path == path &&
@@ -41,6 +37,7 @@ module Runners
         other.links == links &&
         other.object == object
     end
+    alias eql? ==
 
     def hash
       path.hash ^ location.hash ^ id.hash ^ message.hash ^ links.hash ^ object.hash ^ git_blame_info.hash
@@ -59,9 +56,9 @@ module Runners
     end
 
     def add_git_blame_info(workspace)
-      loc = location # NOTE: It's required to pass typecheck
-      @git_blame_info = if loc
-                          workspace.range_git_blame_info(path.to_s, loc.start_line, loc.start_line).first
+      start_line = location&.start_line
+      @git_blame_info = if start_line
+                          workspace.range_git_blame_info(path.to_path, start_line, start_line).first
                         else
                           nil
                         end
