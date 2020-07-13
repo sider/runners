@@ -252,7 +252,7 @@ s.add_test(
   warnings: [
     { message: <<~MSG.strip, file: "sideci.yml" }
       DEPRECATION WARNING!!!
-      The `linter.eslint.dir` option is deprecated in your `sideci.yml`. Use the `linter.eslint.target` option instead.
+      The `linter.eslint.dir` option is deprecated. Use the `linter.eslint.target` option instead in your `sideci.yml`.
       See https://help.sider.review/tools/javascript/eslint for details.
     MSG
   ]
