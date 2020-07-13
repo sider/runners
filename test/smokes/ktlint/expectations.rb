@@ -8,7 +8,7 @@ s.add_test(
   analyzer: { name: "ktlint", version: default_version },
   issues: [
     {
-      id: "18748d47",
+      id: "18748d47ed6c20995492c1190b0fb829b794f8c1",
       path: "src/Foo.kt",
       location: { start_line: 1, start_column: 1 },
       message: "Not a valid Kotlin file (1:1 expecting a top level declaration) (cannot be auto-corrected)",
@@ -78,7 +78,7 @@ s.add_test(
   analyzer: { name: "ktlint", version: "0.34.0" },
   issues: [
     {
-      id: "0ebc0f91",
+      id: "0ebc0f91e8cfb83e28a81acd00e39d30d1ca76d6",
       path: "src/main/kotlin/gradle/App.kt",
       location: { start_line: 9, start_column: 1 },
       message: "Unexpected indentation (12) (it should be 6) (cannot be auto-corrected)",
@@ -87,7 +87,7 @@ s.add_test(
       git_blame_info: nil
     },
     {
-      id: "5e2630c4",
+      id: "5e2630c41b5d03f9b8c0e413a08de2a8d3e8aa1d",
       path: "src/main/kotlin/gradle/App.kt",
       location: { start_line: 8, start_column: 1 },
       message: "Unexpected indentation (2) (it should be 4) (cannot be auto-corrected)",

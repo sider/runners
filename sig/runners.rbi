@@ -66,6 +66,7 @@ class Runners::Results::Success < Runners::Results::Base
   def add_issue: (*Runners::Issue) -> void
   def filter_issues: (Changes) -> void
   def add_git_blame_info: (Workspace) -> void
+  def each_missing_id_warning: { (String) -> void } -> void
 end
 
 class Runners::Results::Failure < Runners::Results::Base

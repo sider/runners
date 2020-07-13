@@ -126,14 +126,6 @@ module Runners
         path = relative_path(issue[:filePath])
         # ESLint informs errors as an array if ESLint detects errors in a file.
         issue[:messages].each do |details|
-          id = details[:ruleId]
-          message = details[:message]
-
-          unless id
-            trace_writer.message("No rule ID found! - #{message} in #{path}")
-            id = Digest::SHA1.hexdigest(message)
-          end
-
           yield Issue.new(
             path: path,
             location: details[:line] ? Location.new(
@@ -142,8 +134,8 @@ module Runners
               end_line: details[:endLine],
               end_column: details[:endColumn],
             ) : nil,
-            id: id,
-            message: message,
+            id: details[:ruleId],
+            message: details[:message],
             links: Array(details.dig(:docs, :url)),
             object: {
               severity: normalize_severity(details[:severity]),

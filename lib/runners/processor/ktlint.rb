@@ -183,11 +183,11 @@ module Runners
       end
     end
 
-    def construct_issue(file:, line:, column:, message:, rule: "")
+    def construct_issue(file:, line:, column:, message:, rule: nil)
       Issue.new(
         path: relative_path(working_dir / file, from: working_dir),
         location: Location.new(start_line: line, start_column: column),
-        id: rule.empty? ? Digest::SHA1.hexdigest(message)[0, 8] : rule,
+        id: rule,
         message: message,
       )
     end

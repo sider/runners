@@ -61,7 +61,7 @@ module Runners
           yield Issue.new(
             path: relative_path(file[:name]),
             location: Location.new(start_line: error[:line], start_column: error[:column]),
-            id: error[:source] || Digest::SHA1.hexdigest(message),
+            id: error[:source],
             message: message,
           )
         end

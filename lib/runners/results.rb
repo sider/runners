@@ -72,6 +72,19 @@ module Runners
           issue.add_git_blame_info(workspace)
         end
       end
+
+      def each_missing_id_warning
+        issues.each do |issue|
+          next unless issue.missing_id?
+
+          path = issue.path.to_path
+          line = issue&.location&.start_line || "-"
+          column = issue&.location&.start_column || "-"
+          message = issue.message
+
+          yield "Missing issue ID - #{path}:#{line}:#{column}: #{message}"
+        end
+      end
     end
 
     # Result to indicate that processing failed by some error.
