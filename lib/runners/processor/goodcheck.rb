@@ -23,30 +23,27 @@ module Runners
       "goodcheck" => [">= 1.0.0", "< 3.0"]
     }.freeze
 
+    DEFAULT_TARGET = ".".freeze
+    DEFAULT_CONFIG_FILE = "goodcheck.yml".freeze
+
     def analyzer_version
       @analyzer_version ||= extract_version! ruby_analyzer_bin, "version"
-    end
-
-    def goodcheck_config_file
-      @goodcheck_config_file ||= config_linter[:config] || "goodcheck.yml"
-    end
-
-    def cli_options(*additional_args)
-      [
-        config_linter[:config]&.yield_self { |config| "--config=#{config}"},
-      ].compact + additional_args
     end
 
     def goodcheck_test
       # NOTE: Suppress Ruby 2.7 warning to prevent `stderr` from getting dirty.
       #       See https://www.ruby-lang.org/en/news/2019/12/25/ruby-2-7-0-released
       stdout, stderr, status = push_env_hash({ "RUBYOPT" => "-W:no-deprecated" }) do
-        capture3(*ruby_analyzer_bin, "test", *cli_options)
+        capture3(
+          *ruby_analyzer_bin,
+          "test",
+          *(config_linter[:config]&.then { |config| ["--config", config] }),
+        )
       end
 
       if !status.success? && !stdout.empty?
-        msg = "The validation of your Goodcheck configuration file failed. Check the output of `goodcheck test` command."
-        add_warning(msg, file: goodcheck_config_file)
+        config_file = config_linter[:config] || DEFAULT_CONFIG_FILE
+        add_warning "Validating your Goodcheck configuration file `#{config_file}` failed.", file: config_file
       end
 
       if !status.success? && !stderr.empty?
@@ -57,8 +54,13 @@ module Runners
     end
 
     def goodcheck_check
-      targets = Array(config_linter[:target]) || ["."]
-      stdout, stderr, _ = capture3(*ruby_analyzer_bin, "check", "--format=json", *cli_options(*targets))
+      stdout, stderr, _ = capture3(
+        *ruby_analyzer_bin,
+        "check",
+        "--format=json",
+        *(config_linter[:config]&.then { |config| ["--config", config] }),
+        *Array(config_linter[:target] || DEFAULT_TARGET),
+      )
 
       json = JSON.parse(stdout, symbolize_names: true)
 
@@ -132,15 +134,23 @@ module Runners
     end
 
     def analyze(changes)
+      if !config_linter[:config] && !File.exist?(DEFAULT_CONFIG_FILE)
+        add_warning <<~MSG, file: DEFAULT_CONFIG_FILE
+          Sider could not find the required configuration file `#{DEFAULT_CONFIG_FILE}`.
+          Please create the file according to the following documents:
+          - #{analyzer_github}
+          - #{analyzer_doc}
+        MSG
+        return Results::Success.new(guid: guid, analyzer: analyzer)
+      end
+
       delete_unchanged_files(changes, except: ["*.yml", "*.yaml"])
 
-      ensure_files(relative_path(goodcheck_config_file)) do
-        error_message = goodcheck_test
-        if error_message
-          Results::Failure.new(guid: guid, analyzer: analyzer, message: error_message)
-        else
-          goodcheck_check
-        end
+      error_message = goodcheck_test
+      if error_message
+        Results::Failure.new(guid: guid, analyzer: analyzer, message: error_message)
+      else
+        goodcheck_check
       end
     end
   end
