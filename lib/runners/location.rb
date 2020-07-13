@@ -6,10 +6,10 @@ module Runners
     attr_reader :end_column
 
     def initialize(start_line:, start_column: nil, end_line: nil, end_column: nil)
-      @start_line = Integer(start_line) if start_line
-      @start_column = Integer(start_column) if start_column
-      @end_line = Integer(end_line) if end_line
-      @end_column = Integer(end_column) if end_column
+      @start_line = start_line ? Integer(start_line) : nil
+      @start_column = start_column ? Integer(start_column) : nil
+      @end_line = end_line ? Integer(end_line) : nil
+      @end_column = end_column ? Integer(end_column) : nil
     end
 
     def ==(other)
@@ -19,13 +19,10 @@ module Runners
         other.end_line == end_line &&
         other.end_column == end_column
     end
+    alias eql? ==
 
     def hash
       start_line.hash ^ start_column.hash ^ end_line.hash ^ end_column.hash
-    end
-
-    def eql?(other)
-      self == other
     end
 
     def self.from_json(json)
