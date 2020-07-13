@@ -1,5 +1,7 @@
+# Main Clang-Tidy package
 clang-tidy-10=1:10.0.1~++20200708124224+ef32c611aa2-1~exp1~20200707224822.188
 
+# Popular packages of https://github.com/fffaraz/awesome-cpp
 libapr1-dev
 libasio-dev
 libev-dev
@@ -34,6 +36,8 @@ libprotobuf-dev
 libxml++2.6-dev
 libtinyxml-dev
 
+# Popular packages of Debian popcon
+# curl -fsSL https://popcon.debian.org/by_inst | grep -v "Not in sid" | tr -s ' ' | cut -d' ' -f 2 | grep "lib.*-dev" | head -30
 libc6-dev
 linux-libc-dev
 libc-dev-bin
