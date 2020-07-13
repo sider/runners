@@ -31,7 +31,8 @@ module Runners
     end
 
     def setup
-      add_warning_if_deprecated_options([:options, :targets])
+      add_warning_if_deprecated_options
+      add_warning_for_deprecated_option :targets, to: :target
       yield
     end
 

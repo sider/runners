@@ -12,27 +12,39 @@ New supported:
 
 Updated environments:
 
-- **devon_rex** 2.20.0 -> 2.21.0 [#1244](https://github.com/sider/runners/pull/1244)
+- **devon_rex** 2.20.0 -> 2.22.0 [#1244](https://github.com/sider/runners/pull/1244) [#1278](https://github.com/sider/runners/pull/1278)
 
 Updated tools:
 
 - **Checkstyle** 8.33 -> 8.34 [#1239](https://github.com/sider/runners/pull/1239)
 - **cpplint** 1.5.1 -> 1.5.2 [#1222](https://github.com/sider/runners/pull/1222)
 - **detekt** 1.9.1 -> 1.10.0 [#1236](https://github.com/sider/runners/pull/1236)
-- **ESLint** 7.2.0 -> 7.3.1 [#1224](https://github.com/sider/runners/pull/1224)
+- **ESLint** 7.2.0 -> 7.4.0 [#1224](https://github.com/sider/runners/pull/1224) [#1267](https://github.com/sider/runners/pull/1267)
+- **GolangCI-Lint** 1.27.0 -> 1.28.2 [#1266](https://github.com/sider/runners/pull/1266) [#1273](https://github.com/sider/runners/pull/1273) [#1289](https://github.com/sider/runners/pull/1289)
 - **LanguageTool** 4.9.1 -> 5.0 [#1241](https://github.com/sider/runners/pull/1241)
 - **PMD CPD** 6.24.0 -> 6.25.0 [#1235](https://github.com/sider/runners/pull/1235)
 - **PMD Java** 6.24.0 -> 6.25.0 [#1237](https://github.com/sider/runners/pull/1237)
-- **RuboCop** 0.85.1 -> 0.86.0 [#1220](https://github.com/sider/runners/pull/1220)
+- **RuboCop** 0.85.1 -> 0.87.1 [#1220](https://github.com/sider/runners/pull/1220) [#1281](https://github.com/sider/runners/pull/1281)
 
 Misc:
 
 - Use Docker BuildKit [#1245](https://github.com/sider/runners/pull/1245)
 - Fix Kotlin file extensions [#1252](https://github.com/sider/runners/pull/1252)
-- **PHPMD** Support the comma-separated list options as array [#1253](https://github.com/sider/runners/pull/1253)
-- **Misspell** Support `ignore` option as array [#1255](https://github.com/sider/runners/pull/1255)
+- Increase :tries and :sleep of Retryable for git-fetch(1) [#1279](https://github.com/sider/runners/pull/1279)
 - Allow `location(start_line,start_column)` format [#1257](https://github.com/sider/runners/pull/1257)
+- Make deprecation warning messages more useful [#1292](https://github.com/sider/runners/pull/1292)
 - **ESLint** Add `target` option instead of `dir` option [#1264](https://github.com/sider/runners/pull/1264)
+- **ESLint** Pre-install popular configs and plugins [#1271](https://github.com/sider/runners/pull/1271)
+- **ESLint** Update the default configuration [#1270](https://github.com/sider/runners/pull/1270)
+- **ESLint** Set `ecmaVersion:2015` to the default configuration [#1290](https://github.com/sider/runners/pull/1290)
+- **Flake8** Support `target` and `config` options [#1287](https://github.com/sider/runners/pull/1287)
+- **GolangCI-Lint** Add `severity` and `replacement` to issue result [#1268](https://github.com/sider/runners/pull/1268)
+- **HAML-Lint** Add `target` option [#1265](https://github.com/sider/runners/pull/1265)
+- **Misspell** Support `ignore` option as array [#1255](https://github.com/sider/runners/pull/1255)
+- **PHP_CodeSniffer** Remove deprecated `version` option [#1291](https://github.com/sider/runners/pull/1291)
+- **PHPMD** Support the comma-separated list options as array [#1253](https://github.com/sider/runners/pull/1253)
+- **Querly** Support `config` option [#1288](https://github.com/sider/runners/pull/1288)
+- **stylelint** Pre-install popular configs and plugins [#1272](https://github.com/sider/runners/pull/1272)
 
 ## 0.29.3
 

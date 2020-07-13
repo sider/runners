@@ -127,7 +127,7 @@ class Runners::Processor
   def self.register_config_schema: (**any) -> void
   def capture3: (String, *String, **capture3_options) -> [String, String, Process::Status]
   def capture3!: (String, *String, **capture3_options) -> [String, String]
-  def capture3_with_retry!: (String, *String, ?tries: Integer) -> [String, String]
+  def capture3_with_retry!: (String, *String, ?tries: Integer, ?sleep: ^(Integer) -> Numeric) -> [String, String]
   def capture3_trace: (String, *String, **capture3_options) -> [String, String, Process::Status]
 
   def push_env_hash: <'x> (Hash<String, String?>) { -> 'x } -> 'x
@@ -136,13 +136,15 @@ class Runners::Processor
   def delete_unchanged_files: (Changes, ?except: Array<String>, ?only: Array<String>) -> void
   def add_warning: (String, ?file: String?) -> void
   def add_warning_if_deprecated_version: (minimum: String, ?file: String?, ?deadline: Time?) -> void
-  def add_warning_if_deprecated_options: (Array<Symbol>) -> void
+  def add_warning_if_deprecated_options: () -> void
+  def add_warning_for_deprecated_option: (Symbol, to: Symbol) -> void
   def add_warning_for_deprecated_linter: (alternative: String, ref: String, ?deadline: Time?) -> void
   def analyzer: -> Analyzer
   def analyzers: -> Analyzers
   def analyzer_id: -> String
   def analyzer_name: -> String
   def analyzer_doc: -> String
+  def analyzer_github: -> String
   def analyzer_bin: -> String
   def analyzer_version: -> String
   def extract_version!: (String | Array<String>, ?(String | Array<String>), ?pattern: Regexp) -> String
@@ -174,7 +176,7 @@ class Runners::Shell
 
   def capture3: (String, *String, **capture3_options) -> [String, String, Process::Status]
   def capture3!: (String, *String, **capture3_options) -> [String, String]
-  def capture3_with_retry!: (String, *String, ?tries: Integer) -> [String, String]
+  def capture3_with_retry!: (String, *String, ?tries: Integer, ?sleep: ^(Integer) -> Numeric) -> [String, String]
   def capture3_trace: (String, *String, **capture3_options) -> [String, String, Process::Status]
 
   def chdir: <'x> (Pathname) { (Pathname) -> 'x } -> 'x

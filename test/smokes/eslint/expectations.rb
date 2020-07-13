@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "7.3.1"
+default_version = "7.4.0"
 
 s.add_test(
   "no_config",
@@ -166,12 +166,7 @@ s.add_test(
   analyzer: { name: "ESLint", version: default_version },
   warnings: [
     {
-      message: <<~MSG.strip,
-        DEPRECATION WARNING!!!
-        The following options in your `sideci.yml` are deprecated and will be removed.
-        See https://help.sider.review/tools/javascript/eslint for details.
-        - `linter.eslint.options`
-      MSG
+      message: /The `linter.eslint.options` option is deprecated/,
       file: "sideci.yml"
     }
   ]
@@ -254,7 +249,13 @@ s.add_test(
     }
   ],
   analyzer: { name: "ESLint", version: "5.16.0" },
-  warnings: [{ message: "The `dir` option is deprecated. Use the `target` option instead.", file: "sideci.yml" }]
+  warnings: [
+    { message: <<~MSG.strip, file: "sideci.yml" }
+      DEPRECATION WARNING!!!
+      The `linter.eslint.dir` option is deprecated. Use the `linter.eslint.target` option instead in your `sideci.yml`.
+      See https://help.sider.review/tools/javascript/eslint for details.
+    MSG
+  ]
 )
 
 s.add_test(
@@ -262,18 +263,18 @@ s.add_test(
   type: "success",
   issues: [
     {
-      message: "Parsing error: The keyword 'import' is reserved",
+      message: "Parsing error: 'import' and 'export' may appear only with 'sourceType: module'",
       links: [],
-      id: "0299e5a2c549669334ef4905ed3a636d9ae07723",
+      id: "f5e284aac9909f94f39932ce3290c6171d728ba2",
       path: "src/App.jsx",
       location: { start_line: 1, start_column: 1 },
       object: { severity: "error", category: nil, recommended: nil },
       git_blame_info: nil
     },
     {
-      message: "Parsing error: The keyword 'import' is reserved",
+      message: "Parsing error: 'import' and 'export' may appear only with 'sourceType: module'",
       links: [],
-      id: "0299e5a2c549669334ef4905ed3a636d9ae07723",
+      id: "f5e284aac9909f94f39932ce3290c6171d728ba2",
       path: "src/index.jsx",
       location: { start_line: 1, start_column: 1 },
       object: { severity: "error", category: nil, recommended: nil },
@@ -369,7 +370,7 @@ s.add_test(
       id: "@typescript-eslint/no-unused-vars",
       message: "'x' is assigned a value but never used.",
       links: %w[
-        https://github.com/typescript-eslint/typescript-eslint/blob/v1.13.0/packages/eslint-plugin/docs/rules/no-unused-vars.md
+        https://github.com/typescript-eslint/typescript-eslint/blob/v3.5.0/packages/eslint-plugin/docs/rules/no-unused-vars.md
       ],
       path: "index.ts",
       location: { start_line: 1, start_column: 7, end_line: 1, end_column: 8 },
@@ -377,10 +378,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "ESLint", version: "6.5.1" },
-  warnings: [
-    { message: "The required dependency `eslint` may not be installed and be a missing peer dependency.", file: "package.json" }
-  ]
+  analyzer: { name: "ESLint", version: default_version }
 )
 
 s.add_test(

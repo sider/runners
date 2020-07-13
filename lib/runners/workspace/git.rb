@@ -20,7 +20,12 @@ module Runners
 
     # for testing
     def try_count
-      3
+      10
+    end
+
+    # for testing
+    def sleep_lambda
+      -> (n) { n ** 2.5 }
     end
 
     def prepare_head_source(_dest)
@@ -30,7 +35,7 @@ module Runners
       shell.capture3!("git", "remote", "add", "origin", remote_url.to_s)
 
       begin
-        shell.capture3_with_retry!("git", "fetch", *git_fetch_args, tries: try_count)
+        shell.capture3_with_retry!("git", "fetch", *git_fetch_args, tries: try_count, sleep: sleep_lambda)
       rescue Shell::ExecError => exn
         raise FetchFailed, "git-fetch failed: #{exn.stderr_str}"
       end

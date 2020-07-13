@@ -28,7 +28,7 @@ module Runners
       def install!
         gemfile_path.write(gemfile_content)
 
-        trace_writer.header "Installing gems..."
+        trace_writer.message "Installing gems..."
 
         Bundler.with_unbundled_env do
           shell.chdir gem_home do
@@ -54,7 +54,7 @@ module Runners
       end
 
       def gemfile_content
-        trace_writer.header "Generating optimized Gemfile..."
+        trace_writer.message "Generating optimized Gemfile..."
 
         # @type var lines: Array<String>
         lines = ["source #{DEFAULT_SOURCE.inspect}", ""]
@@ -74,8 +74,12 @@ module Runners
           end
         end
 
-        (lines.join("\n") + "\n").tap do |res|
-          trace_writer.message res
+        (lines.join("\n") + "\n").tap do |content|
+          trace_writer.message <<~MSG
+            ---
+            #{content.chomp}
+            ---
+          MSG
         end
       end
 

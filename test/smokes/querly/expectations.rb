@@ -1,5 +1,7 @@
 s = Runners::Testing::Smoke
 
+default_version = "1.1.0"
+
 s.add_test(
   "success",
   timestamp: :_,
@@ -34,24 +36,23 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Querly", version: "1.1.0" }
+  analyzer: { name: "Querly", version: default_version }
 )
 
 s.add_test(
   "no_config_file",
   type: "success",
   issues: [],
-  analyzer: { name: "Querly", version: "1.1.0" },
+  analyzer: { name: "Querly", version: default_version },
   warnings: [
     {
       message: <<~MESSAGE.strip,
-        Sider cannot find the required configuration file `querly.yml`.
-        Please set up Querly by following the instructions, or you can disable it in the repository settings.
-        
+        Sider could not find the required configuration file `querly.yml`.
+        Please create the file according to the following documents:
         - https://github.com/soutaro/querly
         - https://help.sider.review/tools/ruby/querly
       MESSAGE
-      file: nil
+      file: "querly.yml"
     }
   ]
 )
@@ -70,7 +71,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Querly", version: "1.1.0" },
+  analyzer: { name: "Querly", version: default_version },
   warnings: [{ message: "com.test.pathname:\t1st *after* example matched with some of patterns", file: "querly.yml" }]
 )
 
@@ -88,7 +89,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Querly", version: "1.1.0" }
+  analyzer: { name: "Querly", version: default_version }
 )
 
 s.add_test(
@@ -105,7 +106,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Querly", version: "1.1.0" }
+  analyzer: { name: "Querly", version: default_version }
 )
 
 s.add_test(
@@ -128,4 +129,54 @@ s.add_test(
     }
   ],
   analyzer: { name: "Querly", version: "0.5.0" }
+)
+
+s.add_test(
+  "option_config",
+  type: "success",
+  issues: [
+    {
+      path: "foo.rb",
+      location: { start_line: 1, start_column: 0, end_line: 1, end_column: 6 },
+      id: "rule.foo",
+      message: "Check `foo` method",
+      links: [],
+      object: {
+        id: "rule.foo",
+        messages: ["Check `foo` method"],
+        justifications: [],
+        examples: []
+      },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "Querly", version: default_version }
+)
+
+s.add_test(
+  "duplicate_config_files",
+  type: "success",
+  issues: [
+    {
+      path: "test.rb",
+      location: { start_line: 1, start_column: 0, end_line: 1, end_column: 5 },
+      id: "foo",
+      message: "Disallow `foo`",
+      links: [],
+      object: {
+        id: "foo",
+        messages: ["Disallow `foo`"],
+        justifications: [],
+        examples: []
+      },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "Querly", version: default_version },
+  warnings: [
+    {
+      message: "There are duplicate configuration files (`querly.yml`, `querly.yaml`). Remove the files except the first one.",
+      file: "querly.yml"
+    }
+  ]
 )

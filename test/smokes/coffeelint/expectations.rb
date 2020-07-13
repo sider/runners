@@ -44,12 +44,7 @@ s.add_test(
   analyzer: { name: "CoffeeLint", version: "1.16.0" },
   warnings: [
     {
-      message: <<~MSG.strip,
-        DEPRECATION WARNING!!!
-        The following options in your `sideci.yml` are deprecated and will be removed.
-        See https://help.sider.review/tools/javascript/coffeelint for details.
-        - `linter.coffeelint.options`
-      MSG
+      message: /The `linter.coffeelint.options` option is deprecated/,
       file: "sideci.yml"
     }
   ]

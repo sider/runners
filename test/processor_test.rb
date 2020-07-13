@@ -244,25 +244,56 @@ class ProcessorTest < Minitest::Test
       processor = new_processor(workspace: workspace, config_yaml: <<~YAML)
         linter:
           eslint:
-            quiet: true
             options:
               ext: .ts
       YAML
 
-      processor.add_warning_if_deprecated_options([:quiet, :options])
-      processor.add_warning_if_deprecated_options([:global])
+      processor.add_warning_if_deprecated_options
 
       expected_message = <<~MSG.strip
         DEPRECATION WARNING!!!
-        The following options in your `sider.yml` are deprecated and will be removed.
+        The `linter.eslint.options` option is deprecated. Fix your `sider.yml` as follows:
         See https://help.sider.review/tools/javascript/eslint for details.
-        - `linter.eslint.quiet`
-        - `linter.eslint.options`
+
+        ```diff
+         linter:
+           eslint:
+        -    options:
+        -      foo: "bar"
+        +    foo: "bar"
+        ```
       MSG
 
       assert_equal(
         [{ trace: :warning, message: expected_message, file: "sider.yml" }],
         trace_writer.writer.map { |hash| hash.slice(:trace, :message, :file) }.select { |hash| hash[:trace] == :warning },
+      )
+      assert_equal(
+        [{ message: expected_message, file: "sider.yml" }],
+        processor.warnings,
+      )
+    end
+  end
+
+  def test_add_warning_for_deprecated_option
+    with_workspace do |workspace|
+      processor = new_processor(workspace: workspace, config_yaml: <<~YAML)
+        linter:
+          eslint:
+            dir: src
+      YAML
+
+      processor.add_warning_for_deprecated_option(:dir, to: :target)
+
+      expected_message = <<~MSG.strip
+        DEPRECATION WARNING!!!
+        The `linter.eslint.dir` option is deprecated. Use the `linter.eslint.target` option instead in your `sider.yml`.
+        See https://help.sider.review/tools/javascript/eslint for details.
+      MSG
+
+      assert_equal(
+        [{ trace: :warning, message: expected_message, file: "sider.yml" }],
+        trace_writer.writer.filter_map { |hash| hash.slice(:trace, :message, :file) if hash[:trace] == :warning },
       )
       assert_equal(
         [{ message: expected_message, file: "sider.yml" }],

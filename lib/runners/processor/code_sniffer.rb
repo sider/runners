@@ -32,9 +32,7 @@ module Runners
     register_config_schema(name: :code_sniffer, schema: Schema.runner_config)
 
     def setup
-      add_warning_if_deprecated_options([:options])
-      add_warning_if_deprecated_options([:version])
-
+      add_warning_if_deprecated_options
       yield
     end
 

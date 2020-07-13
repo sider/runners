@@ -45,12 +45,7 @@ s.add_offline_test(
   analyzer: { name: "Misspell", version: default_version },
   warnings: [
     {
-      message: <<~MSG.strip,
-        DEPRECATION WARNING!!!
-        The following options in your `sideci.yml` are deprecated and will be removed.
-        See https://help.sider.review/tools/others/misspell for details.
-        - `linter.misspell.options`
-      MSG
+      message: /The `linter.misspell.options` option is deprecated/,
       file: "sideci.yml"
     }
   ]
@@ -142,9 +137,8 @@ s.add_offline_test(
   analyzer: { name: "Misspell", version: default_version },
   warnings: [{ message: <<~MSG.strip, file: "sideci.yml" }]
     DEPRECATION WARNING!!!
-    The following options in your `sideci.yml` are deprecated and will be removed.
+    The `linter.misspell.targets` option is deprecated. Use the `linter.misspell.target` option instead in your `sideci.yml`.
     See https://help.sider.review/tools/others/misspell for details.
-    - `linter.misspell.targets`
   MSG
 )
 

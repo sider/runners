@@ -4,28 +4,37 @@ module Runners
 
     Schema =
       StrongJSON.new do
-        let :runner_config,
-            Schema::BaseConfig.base.update_fields { |fields|
-              fields.merge!(
-                {
-                  target: enum?(string, array(string)),
-                  config: string?,
-                  disable: enum?(string, array(string)),
-                  'disable-all': boolean?,
-                  enable: enum?(string, array(string)),
-                  fast: boolean?,
-                  'no-config': boolean?,
-                  presets: enum?(string, array(string)),
-                  'skip-dirs': enum?(string, array(string)),
-                  'skip-dirs-use-default': boolean?,
-                  'skip-files': enum?(string, array(string)),
-                  tests: boolean?,
-                  'uniq-by-line': boolean?
-                }
-              )
-            }
+        let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
+          fields.merge!({
+            target: enum?(string, array(string)),
+            config: string?,
+            disable: enum?(string, array(string)),
+            'disable-all': boolean?,
+            enable: enum?(string, array(string)),
+            fast: boolean?,
+            'no-config': boolean?,
+            presets: enum?(string, array(string)),
+            'skip-dirs': enum?(string, array(string)),
+            'skip-dirs-use-default': boolean?,
+            'skip-files': enum?(string, array(string)),
+            tests: boolean?,
+            'uniq-by-line': boolean?
+          })
+        }
 
-        let :issue, object(severity: string?)
+        # @see https://github.com/golangci/golangci-lint/blob/306cbb0e6e9e27357fc3e70535988b71ed0cbc39/pkg/result/issue.go#L27
+        let :issue, object(
+          severity: string,
+          replacement: object?(
+            NeedOnlyDelete: boolean,
+            NewLines: array?(string),
+            Inline: object?(
+              StartCol: integer,
+              Length: integer,
+              NewString: string,
+            ),
+          ),
+        )
       end
 
     register_config_schema(name: :golangci_lint, schema: Schema.runner_config)
@@ -151,6 +160,11 @@ module Runners
           location: Location.new(start_line: issue.dig(:Pos, :Line), start_column: issue.dig(:Pos, :Column)),
           id: id,
           message: message,
+          object: {
+            severity: issue[:Severity],
+            replacement: issue[:Replacement],
+          },
+          schema: Schema.issue,
         )
       end
     end

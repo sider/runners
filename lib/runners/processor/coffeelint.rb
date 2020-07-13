@@ -22,7 +22,7 @@ module Runners
     }.freeze
 
     def setup
-      add_warning_if_deprecated_options([:options])
+      add_warning_if_deprecated_options
 
       begin
         install_nodejs_deps(constraints: CONSTRAINTS, install_option: config_linter[:npm_install])

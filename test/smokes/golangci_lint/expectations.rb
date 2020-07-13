@@ -1,5 +1,7 @@
 s = Runners::Testing::Smoke
 
+default_version = "1.28.2"
+
 s.add_test(
   "target",
   type: "success",
@@ -10,7 +12,7 @@ s.add_test(
       id: "errcheck",
       message: "Error return value of `validate` is not checked",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     },
     {
@@ -19,11 +21,11 @@ s.add_test(
       id: "errcheck",
       message: "Error return value of `validate` is not checked",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
@@ -36,23 +38,23 @@ s.add_test(
       id: "bodyclose",
       message: "response body must be closed",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
-s.add_test("no_error", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: "1.27.0" })
+s.add_test("no_error", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: default_version })
 
 s.add_test(
   "failure",
   type: "failure",
   message: "Analysis failed. See the log for details.",
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
-s.add_test("no_go_file", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: "1.27.0" })
+s.add_test("no_go_file", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: default_version })
 
 s.add_test(
   "config_sample",
@@ -64,7 +66,7 @@ s.add_test(
       id: "lll",
       message: "line is 188 characters",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     },
     {
@@ -73,11 +75,11 @@ s.add_test(
       id: "structcheck",
       message: "`birthDay` is unused",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
@@ -90,11 +92,11 @@ s.add_test(
       id: "varcheck",
       message: "`unused` is unused",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
@@ -107,11 +109,18 @@ s.add_test(
       id: "misspell",
       message: "`Amercia` is a misspelling of `America`",
       links: [],
-      object: nil,
+      object: {
+        severity: "",
+        replacement: {
+          NeedOnlyDelete: false,
+          NewLines: nil,
+          Inline: { StartCol: 13, Length: 7, NewString: "America" }
+        }
+      },
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
@@ -124,39 +133,39 @@ s.add_test(
       id: "unused",
       message: "var `unused` is unused",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
   "disable_default_linter_in_yml",
   type: "failure",
   message: "Analysis failed. See the log for details.",
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
   "disable_only",
   type: "failure",
   message: "Analysis failed. See the log for details.",
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
   "enable_disable_same_linter",
   type: "failure",
   message: "Analysis failed. See the log for details.",
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
   "duplicate_disable",
   type: "failure",
   message: "Analysis failed. See the log for details.",
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
@@ -169,7 +178,7 @@ s.add_test(
       id: "gocritic:appendCombine",
       message: "appendCombine: can combine chain of 2 appends into one",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     },
     {
@@ -178,7 +187,7 @@ s.add_test(
       id: "gocritic:commentFormatting",
       message: "commentFormatting: put a space between `//` and comment text",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     },
     {
@@ -187,7 +196,7 @@ s.add_test(
       id: "golint",
       message: "don't use underscores in Go names; func redundant_append should be redundantAppend",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     },
     {
@@ -196,7 +205,7 @@ s.add_test(
       id: "gosec:G401",
       message: "G401: Use of weak cryptographic primitive",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     },
     {
@@ -205,7 +214,7 @@ s.add_test(
       id: "gosec:G505",
       message: "G505: Blacklisted import `crypto/sha1`: weak cryptographic primitive",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     },
     {
@@ -214,7 +223,7 @@ s.add_test(
       id: "gosimple:S1002",
       message: "S1002: should omit comparison to bool constant, can be simplified to `x`",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     },
     {
@@ -223,14 +232,14 @@ s.add_test(
       id: "staticcheck:SA9003",
       message: "SA9003: empty branch",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
-s.add_test("tests", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: "1.27.0" })
+s.add_test("tests", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: default_version })
 
 s.add_test(
   "no-lint",
@@ -242,11 +251,11 @@ s.add_test(
       id: "varcheck",
       message: "`unused` is unused",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
@@ -259,28 +268,44 @@ s.add_test(
       id: "gofmt",
       message: "File is not `gofmt`-ed with `-s`",
       links: [],
-      object: nil,
+      object: {
+        severity: "",
+        replacement: {
+          NeedOnlyDelete: false,
+          NewLines: [%(\t"errors"), %(\t"fmt")],
+          Inline: nil
+        }
+      },
+      git_blame_info: nil
+    },
+    {
+      path: "sample.go",
+      location: { start_line: 22, start_column: 0 },
+      id: "gofumpt",
+      message: "File is not `gofumpt`-ed",
+      links: [],
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
   "presets_validate",
   type: "failure",
   message: "Analysis failed. See the log for details.",
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
   "no_such_linter",
   type: "failure",
   message: "Analysis failed. See the log for details.",
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
-s.add_test("no-config", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: "1.27.0" })
+s.add_test("no-config", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: default_version })
 
 s.add_test(
   "skip-dirs-use-default",
@@ -292,14 +317,14 @@ s.add_test(
       id: "errcheck",
       message: "Error return value of `validate` is not checked",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
-s.add_test("skip-files", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: "1.27.0" })
+s.add_test("skip-files", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: default_version })
 
 s.add_test(
   "skip-dirs",
@@ -311,11 +336,11 @@ s.add_test(
       id: "errcheck",
       message: "Error return value of `validate` is not checked",
       links: [],
-      object: nil,
+      object: { severity: "", replacement: nil },
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 # NOTE: Monorepo is unsupported by GolangCI-Lint.
@@ -324,5 +349,31 @@ s.add_test(
   "monorepo",
   type: "failure",
   message: "Analysis failed. See the log for details.",
-  analyzer: { name: "GolangCI-Lint", version: "1.27.0" }
+  analyzer: { name: "GolangCI-Lint", version: default_version }
+)
+
+s.add_test(
+  "severity",
+  type: "success",
+  issues: [
+    {
+      path: "test.go",
+      location: { start_line: 3, start_column: 5 },
+      id: "deadcode",
+      message: "`unused` is unused",
+      links: [],
+      object: { severity: "error", replacement: nil },
+      git_blame_info: nil
+    },
+    {
+      path: "test.go",
+      location: { start_line: 6, start_column: 0 },
+      id: "gofmt",
+      message: "File is not `gofmt`-ed with `-s`",
+      links: [],
+      object: { severity: "warning", replacement: :_ },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "GolangCI-Lint", version: default_version }
 )

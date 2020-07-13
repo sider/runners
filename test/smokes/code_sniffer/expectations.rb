@@ -36,12 +36,7 @@ s.add_test(
   analyzer: { name: "PHP_CodeSniffer", version: "3.5.5" },
   warnings: [
     {
-      message: <<~MSG.strip,
-        DEPRECATION WARNING!!!
-        The following options in your `sideci.yml` are deprecated and will be removed.
-        See https://help.sider.review/tools/php/code-sniffer for details.
-        - `linter.code_sniffer.options`
-      MSG
+      message: /The `linter.code_sniffer.options` option is deprecated/,
       file: "sideci.yml"
     }
   ]
@@ -58,34 +53,6 @@ s.add_test(
   type: "failure",
   analyzer: :_,
   message: "The attribute `linter.code_sniffer.extension` in your `sideci.yml` is unsupported. Please fix and retry."
-)
-
-s.add_test(
-  "version_2",
-  type: "success",
-  issues: [
-    {
-      path: "app.php",
-      location: { start_line: 18, start_column: 1 },
-      id: "PSR2.Files.ClosingTag.NotAllowed",
-      message: "A closing tag is not permitted at the end of a PHP file",
-      links: [],
-      object: { type: "ERROR", severity: 5, fixable: true },
-      git_blame_info: nil
-    }
-  ],
-  analyzer: { name: "PHP_CodeSniffer", version: "3.5.5" },
-  warnings: [
-    {
-      message: <<~MSG.strip,
-        DEPRECATION WARNING!!!
-        The following options in your `sider.yml` are deprecated and will be removed.
-        See https://help.sider.review/tools/php/code-sniffer for details.
-        - `linter.code_sniffer.version`
-      MSG
-      file: "sider.yml"
-    }
-  ]
 )
 
 s.add_test(

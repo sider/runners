@@ -150,12 +150,7 @@ s.add_test(
   analyzer: { name: "SwiftLint", version: "0.39.2" },
   warnings: [
     {
-      message: <<~MSG.strip,
-        DEPRECATION WARNING!!!
-        The following options in your `sideci.yml` are deprecated and will be removed.
-        See https://help.sider.review/tools/swift/swiftlint for details.
-        - `linter.swiftlint.options`
-      MSG
+      message: /The `linter.swiftlint.options` option is deprecated/,
       file: "sideci.yml"
     }
   ]

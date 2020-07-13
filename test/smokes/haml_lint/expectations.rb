@@ -1,12 +1,14 @@
 s = Runners::Testing::Smoke
 
+default_version = "0.35.0"
+
 s.add_test(
   "success",
   type: "success",
   issues: [
     {
       message: "Avoid defining `class` in attributes hash for static class names",
-      links: %w[https://github.com/sds/haml-lint/blob/v0.35.0/lib/haml_lint/linter#classattributewithstaticvalue],
+      links: %W[https://github.com/sds/haml-lint/blob/v#{default_version}/lib/haml_lint/linter#classattributewithstaticvalue],
       id: "ClassAttributeWithStaticValue",
       path: "test.haml",
       location: { start_line: 4 },
@@ -14,7 +16,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "HAML-Lint", version: "0.35.0" }
+  analyzer: { name: "HAML-Lint", version: default_version }
 )
 
 s.add_test(
@@ -23,7 +25,7 @@ s.add_test(
   issues: [
     {
       message: "Avoid defining `class` in attributes hash for static class names",
-      links: %w[https://github.com/sds/haml-lint/blob/v0.35.0/lib/haml_lint/linter#classattributewithstaticvalue],
+      links: %W[https://github.com/sds/haml-lint/blob/v#{default_version}/lib/haml_lint/linter#classattributewithstaticvalue],
       id: "ClassAttributeWithStaticValue",
       path: "test.haml",
       location: { start_line: 4 },
@@ -31,14 +33,17 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "HAML-Lint", version: "0.35.0" },
+  analyzer: { name: "HAML-Lint", version: default_version },
   warnings: [
+    {
+      message: /The `linter.haml_lint.options` option is deprecated/,
+      file: "sideci.yml"
+    },
     {
       message: <<~MSG.strip,
         DEPRECATION WARNING!!!
-        The following options in your `sideci.yml` are deprecated and will be removed.
+        The `linter.haml_lint.file` option is deprecated. Use the `linter.haml_lint.target` option instead in your `sideci.yml`.
         See https://help.sider.review/tools/ruby/haml-lint for details.
-        - `linter.haml_lint.options`
       MSG
       file: "sideci.yml"
     }
@@ -51,7 +56,7 @@ s.add_test(
   issues: [
     {
       message: "Lint/UselessAssignment: Useless assignment to variable - `unused_variable`.",
-      links: %w[https://github.com/sds/haml-lint/blob/v0.35.0/lib/haml_lint/linter#rubocop],
+      links: %W[https://github.com/sds/haml-lint/blob/v#{default_version}/lib/haml_lint/linter#rubocop],
       id: "RuboCop",
       path: "test.haml",
       location: { start_line: 3 },
@@ -59,7 +64,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "HAML-Lint", version: "0.35.0" }
+  analyzer: { name: "HAML-Lint", version: default_version }
 )
 
 s.add_test(
@@ -86,7 +91,7 @@ s.add_test(
   issues: [
     {
       message: "Avoid defining `class` in attributes hash for static class names",
-      links: %w[https://github.com/sds/haml-lint/blob/v0.35.0/lib/haml_lint/linter#classattributewithstaticvalue],
+      links: %W[https://github.com/sds/haml-lint/blob/v#{default_version}/lib/haml_lint/linter#classattributewithstaticvalue],
       id: "ClassAttributeWithStaticValue",
       path: "test.haml",
       location: { start_line: 4 },
@@ -98,12 +103,12 @@ s.add_test(
       location: { start_line: 5 },
       id: "RuboCop",
       message: "Performance/FlatMap: Use `flat_map` instead of `map...flatten`.",
-      links: %w[https://github.com/sds/haml-lint/blob/v0.35.0/lib/haml_lint/linter#rubocop],
+      links: %W[https://github.com/sds/haml-lint/blob/v#{default_version}/lib/haml_lint/linter#rubocop],
       object: { severity: "warning" },
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "HAML-Lint", version: "0.35.0" }
+  analyzer: { name: "HAML-Lint", version: default_version }
 )
 
 s.add_test(
@@ -112,7 +117,7 @@ s.add_test(
   issues: [
     {
       message: "3 consecutive Ruby scripts can be merged into a single `:ruby` filter",
-      links: %w[https://github.com/sds/haml-lint/blob/v0.35.0/lib/haml_lint/linter#consecutivesilentscripts],
+      links: %W[https://github.com/sds/haml-lint/blob/v#{default_version}/lib/haml_lint/linter#consecutivesilentscripts],
       id: "ConsecutiveSilentScripts",
       path: "hello.haml",
       location: { start_line: 2 },
@@ -129,7 +134,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "HAML-Lint", version: "0.35.0" }
+  analyzer: { name: "HAML-Lint", version: default_version }
 )
 
 s.add_test(
@@ -205,7 +210,7 @@ s.add_test(
 
 s.add_test(
   "missing_rubocop_required_gems",
-  type: "failure", message: "HAML-Lint raises an unexpected error", analyzer: { name: "HAML-Lint", version: "0.35.0" }
+  type: "failure", message: "HAML-Lint raises an unexpected error", analyzer: { name: "HAML-Lint", version: default_version }
 )
 
 s.add_test(
@@ -224,4 +229,30 @@ s.add_test(
   ],
   analyzer: { name: "HAML-Lint", version: "0.34.2" },
   warnings: [{ message: "cannot load such file -- rubocop-performance", file: nil }]
+)
+
+s.add_test(
+  "option_target",
+  type: "success",
+  issues: [
+    {
+      message: "Avoid defining `class` in attributes hash for static class names",
+      links: %W[https://github.com/sds/haml-lint/blob/v#{default_version}/lib/haml_lint/linter#classattributewithstaticvalue],
+      id: "ClassAttributeWithStaticValue",
+      path: "foo.haml",
+      location: { start_line: 1 },
+      object: { severity: "warning" },
+      git_blame_info: nil
+    },
+    {
+      message: "Avoid defining `class` in attributes hash for static class names",
+      links: %W[https://github.com/sds/haml-lint/blob/v#{default_version}/lib/haml_lint/linter#classattributewithstaticvalue],
+      id: "ClassAttributeWithStaticValue",
+      path: "src/bar.haml",
+      location: { start_line: 1 },
+      object: { severity: "warning" },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "HAML-Lint", version: default_version }
 )
