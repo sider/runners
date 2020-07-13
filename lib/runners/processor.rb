@@ -203,7 +203,7 @@ module Runners
       file = config.path_name
       add_warning <<~MSG, file: file
         DEPRECATION WARNING!!!
-        The `#{config_field_path(name)}` option is deprecated in your `#{file}`. Use the `#{config_field_path(to)}` option instead.
+        The `#{config_field_path(name)}` option is deprecated. Use the `#{config_field_path(to)}` option instead in your `#{file}`.
         See #{analyzer_doc} for details.
       MSG
     end
