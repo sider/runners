@@ -509,12 +509,7 @@ s.add_test(
   issues: [],
   warnings: [
     {
-      message: <<~MSG.strip,
-        DEPRECATION WARNING!!!
-        The following options in your `sider.yml` are deprecated and will be removed.
-        See https://help.sider.review/tools/css/stylelint for details.
-        - `linter.stylelint.options`
-      MSG
+      message: /The `linter.stylelint.options` option is deprecated/,
       file: "sider.yml"
     }
   ]

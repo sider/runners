@@ -10,13 +10,13 @@ module Runners
 
     def initialize(path:, location:, id:, message:, links: [], object: nil, schema: nil)
       path.instance_of?(Pathname) or
-        raise ArgumentError, "#{path.inspect} must be a #{Pathname}"
+        raise ArgumentError, "`path` must be a #{Pathname}: #{path.inspect}"
 
       (id && !id.empty?) or
-        raise ArgumentError, "#{id.inspect} must be required"
+        raise ArgumentError, "`id` must be required: #{id.inspect}"
 
       (message && !message.empty?) or
-        raise ArgumentError, "#{message.inspect} must be required"
+        raise ArgumentError, "`message` must be required: #{message.inspect}"
 
       schema.coerce(object) if object && schema
 
@@ -45,7 +45,7 @@ module Runners
 
     def as_json
       Schema::Issue.issue.coerce({
-        path: path.to_s,
+        path: path.to_path,
         location: location&.as_json,
         id: id,
         message: message,

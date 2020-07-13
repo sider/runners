@@ -36,16 +36,15 @@ s.add_test(
   analyzer: { name: "HAML-Lint", version: default_version },
   warnings: [
     {
-      message: <<~MSG.strip,
-        DEPRECATION WARNING!!!
-        The following options in your `sideci.yml` are deprecated and will be removed.
-        See https://help.sider.review/tools/ruby/haml-lint for details.
-        - `linter.haml_lint.options`
-      MSG
+      message: /The `linter.haml_lint.options` option is deprecated/,
       file: "sideci.yml"
     },
     {
-      message: "The `linter.haml_lint.file` option is deprecated. Use the `linter.haml_lint.target` option instead.",
+      message: <<~MSG.strip,
+        DEPRECATION WARNING!!!
+        The `linter.haml_lint.file` option is deprecated. Use the `linter.haml_lint.target` option instead in your `sideci.yml`.
+        See https://help.sider.review/tools/ruby/haml-lint for details.
+      MSG
       file: "sideci.yml"
     }
   ]

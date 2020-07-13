@@ -59,13 +59,8 @@ module Runners
     end
 
     def setup
-      add_warning_if_deprecated_options([:options])
-
-      if config_linter[:file]
-        add_warning <<~MSG, file: config.path_name
-          The `#{config_field_path(:file)}` option is deprecated. Use the `#{config_field_path(:target)}` option instead.
-        MSG
-      end
+      add_warning_if_deprecated_options
+      add_warning_for_deprecated_option :file, to: :target
 
       install_gems default_gem_specs, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS do
         yield

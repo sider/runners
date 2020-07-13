@@ -177,18 +177,35 @@ module Runners
       end
     end
 
-    def add_warning_if_deprecated_options(keys)
-      deprecated_keys = config_linter.slice(*keys).compact.keys
-        .map { |k| "- `#{config_field_path(k)}`" }
+    def add_warning_if_deprecated_options
+      name = :options
+      return unless config_linter[name]
 
-      unless deprecated_keys.empty?
-        add_warning <<~MSG, file: config.path_name
-          DEPRECATION WARNING!!!
-          The following options in your `#{config.path_name}` are deprecated and will be removed.
-          See #{analyzer_doc} for details.
-          #{deprecated_keys.join("\n")}
-        MSG
-      end
+      file = config.path_name
+      add_warning <<~MSG, file: file
+        DEPRECATION WARNING!!!
+        The `#{config_field_path(name)}` option is deprecated. Fix your `#{file}` as follows:
+        See #{analyzer_doc} for details.
+
+        ```diff
+         linter:
+           #{analyzer_id}:
+        -    options:
+        -      foo: "bar"
+        +    foo: "bar"
+        ```
+      MSG
+    end
+
+    def add_warning_for_deprecated_option(name, to:)
+      return unless config_linter[name]
+
+      file = config.path_name
+      add_warning <<~MSG, file: file
+        DEPRECATION WARNING!!!
+        The `#{config_field_path(name)}` option is deprecated. Use the `#{config_field_path(to)}` option instead in your `#{file}`.
+        See #{analyzer_doc} for details.
+      MSG
     end
 
     def add_warning_for_deprecated_linter(alternative:, ref:, deadline: nil)

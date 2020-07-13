@@ -93,12 +93,7 @@ s.add_test(
   analyzer: { name: "JSHint", version: "2.11.1" },
   warnings: [
     {
-      message: <<~MSG.strip,
-        DEPRECATION WARNING!!!
-        The following options in your `sideci.yml` are deprecated and will be removed.
-        See https://help.sider.review/tools/javascript/jshint for details.
-        - `linter.jshint.options`
-      MSG
+      message: /The `linter.jshint.options` option is deprecated/,
       file: "sideci.yml"
     }
   ]

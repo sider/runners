@@ -60,12 +60,7 @@ s.add_test(
   analyzer: { name: "PHPMD", version: default_version },
   warnings: [
     {
-      message: <<~MSG.strip,
-        DEPRECATION WARNING!!!
-        The following options in your `sideci.yml` are deprecated and will be removed.
-        See https://help.sider.review/tools/php/phpmd for details.
-        - `linter.phpmd.options`
-      MSG
+      message: /The `linter.phpmd.options` option is deprecated/,
       file: "sideci.yml"
     }
   ]

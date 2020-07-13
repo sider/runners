@@ -28,6 +28,7 @@ Misc:
 - Fix Kotlin file extensions [#1252](https://github.com/sider/runners/pull/1252)
 - Increase :tries and :sleep of Retryable for git-fetch(1) [#1279](https://github.com/sider/runners/pull/1279)
 - Allow `location(start_line,start_column)` format [#1257](https://github.com/sider/runners/pull/1257)
+- Make deprecation warning messages more useful [#1292](https://github.com/sider/runners/pull/1292)
 - **ESLint** Add `target` option instead of `dir` option [#1264](https://github.com/sider/runners/pull/1264)
 - **ESLint** Pre-install popular configs and plugins [#1271](https://github.com/sider/runners/pull/1271)
 - **ESLint** Update the default configuration [#1270](https://github.com/sider/runners/pull/1270)
