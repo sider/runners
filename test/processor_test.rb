@@ -252,7 +252,7 @@ class ProcessorTest < Minitest::Test
 
       expected_message = <<~MSG.strip
         DEPRECATION WARNING!!!
-        The `linter.eslint.options` option is deprecated in your `sider.yml`. Fix it as follows:
+        The `linter.eslint.options` option is deprecated. Fix your `sider.yml` as follows:
         See https://help.sider.review/tools/javascript/eslint for details.
 
         ```diff
