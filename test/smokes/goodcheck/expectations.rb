@@ -1,5 +1,7 @@
 s = Runners::Testing::Smoke
 
+default_version = "2.5.1"
+
 s.add_offline_test(
   "success",
   type: "success",
@@ -14,7 +16,7 @@ s.add_offline_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Goodcheck", version: "2.5.1" }
+  analyzer: { name: "Goodcheck", version: default_version }
 )
 
 s.add_offline_test(
@@ -31,24 +33,23 @@ s.add_offline_test(
       location: { start_line: 1, start_column: 0, end_line: 1, end_column: 3 }
     }
   ],
-  analyzer: { name: "Goodcheck", version: "2.5.1" }
+  analyzer: { name: "Goodcheck", version: default_version }
 )
 
 s.add_offline_test(
   "no_config_file",
   type: "success",
   issues: [],
-  analyzer: { name: "Goodcheck", version: "2.5.1" },
+  analyzer: { name: "Goodcheck", version: default_version },
   warnings: [
     {
       message: <<~MESSAGE.strip,
-        Sider cannot find the required configuration file `goodcheck.yml`.
-        Please set up Goodcheck by following the instructions, or you can disable it in the repository settings.
-
+        Sider could not find the required configuration file `goodcheck.yml`.
+        Please create the file according to the following documents:
         - https://github.com/sider/goodcheck
         - https://help.sider.review/tools/others/goodcheck
       MESSAGE
-      file: nil
+      file: "goodcheck.yml"
     }
   ]
 )
@@ -57,7 +58,7 @@ s.add_offline_test(
   "invalid_config_file",
   type: "failure",
   message: 'Invalid config: TypeError at $.rules[0]: expected=rule, value="id:foo"',
-  analyzer: { name: "Goodcheck", version: "2.5.1" }
+  analyzer: { name: "Goodcheck", version: default_version }
 )
 
 s.add_offline_test(
@@ -72,11 +73,11 @@ s.add_offline_test(
   "warning_config_file",
   type: "success",
   issues: [],
-  analyzer: { name: "Goodcheck", version: "2.5.1" },
+  analyzer: { name: "Goodcheck", version: default_version },
   warnings: [
     {
       message:
-        "The validation of your Goodcheck configuration file failed. Check the output of `goodcheck test` command.",
+        "Validating your Goodcheck configuration file `goodcheck.yml` failed.",
       file: "goodcheck.yml"
     }
   ]
@@ -86,7 +87,7 @@ s.add_offline_test(
   "deprecated-options",
   type: "success",
   issues: [],
-  analyzer: { name: "Goodcheck", version: "2.5.1" },
+  analyzer: { name: "Goodcheck", version: default_version },
   warnings: [{ message: "👻 `case_insensitive` option is deprecated. Use `case_sensitive` option instead.", file: nil }]
 )
 
@@ -121,7 +122,7 @@ s.add_offline_test(
       location: nil
     }
   ],
-  analyzer: { name: "Goodcheck", version: "2.5.1" }
+  analyzer: { name: "Goodcheck", version: default_version }
 )
 
 s.add_offline_test(
@@ -146,5 +147,5 @@ s.add_offline_test(
       location: nil
     }
   ],
-  analyzer: { name: "Goodcheck", version: "2.5.1" }
+  analyzer: { name: "Goodcheck", version: default_version }
 )
