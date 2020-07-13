@@ -287,7 +287,7 @@ class ProcessorTest < Minitest::Test
 
       expected_message = <<~MSG.strip
         DEPRECATION WARNING!!!
-        The `linter.eslint.dir` option is deprecated in your `sider.yml`. Use the `linter.eslint.target` option instead.
+        The `linter.eslint.dir` option is deprecated. Use the `linter.eslint.target` option instead in your `sider.yml`.
         See https://help.sider.review/tools/javascript/eslint for details.
       MSG
 
