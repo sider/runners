@@ -120,8 +120,7 @@ class Runners::Processor
   def config_linter: () -> Hash<Symbol, any>
   def check_root_dir_exist: () -> result?
   def in_root_dir: <'x> { (Pathname) -> 'x } -> 'x
-  def ensure_files: (*Pathname) { (Pathname) -> result } -> result
-  def ensure_runner_config_schema: (any) { (any) -> result } -> result
+  def missing_config_file_result: (String) -> Results::Success
   def chdir: <'x> (Pathname) { (Pathname) -> 'x } -> 'x
   def current_dir: () -> Pathname
 
@@ -148,6 +147,7 @@ class Runners::Processor
   def analyzer_github: -> String
   def analyzer_bin: -> String
   def analyzer_version: -> String
+  def extract_version_option: () -> String
   def extract_version!: (String | Array<String>, ?(String | Array<String>), ?pattern: Regexp) -> String
   def config_field_path: (*_ToS) -> String
   def root_dir: -> Pathname

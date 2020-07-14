@@ -77,6 +77,12 @@ module Runners
 
     def analyzer_version
       @analyzer_version ||= extract_version! ruby_analyzer_bin
+    rescue Shell::ExecError => exn
+      if exn.stderr_str.include? "Could not locate Gemfile or .bundle/ directory"
+        extract_version! analyzer_bin # fallback to default
+      else
+        raise
+      end
     end
 
     def installed_gem_versions(gem_name, *gem_names, exception: true)

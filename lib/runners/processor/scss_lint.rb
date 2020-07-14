@@ -23,10 +23,6 @@ module Runners
       'scss-lint'
     end
 
-    def analyzer_version
-      @analyzer_version ||= extract_version! analyzer_bin
-    end
-
     def setup
       add_warning_for_deprecated_linter(
         alternative: analyzers.name(:stylelint),

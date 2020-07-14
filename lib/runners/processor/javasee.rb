@@ -4,15 +4,10 @@ module Runners
 
     Schema = StrongJSON.new do
       let :runner_config, Schema::BaseConfig.base.update_fields { |hash|
-        hash[:dir] = enum?(string, array(string), detector: -> (value) {
-          case value
-          when String
-            string
-          when Array
-            array(string)
-          end
+        hash.merge!({
+          dir: enum?(string, array(string)),
+          config: string?,
         })
-        hash[:config] = string?
       }
 
       let :rule, object(
@@ -24,39 +19,41 @@ module Runners
 
     register_config_schema(name: :javasee, schema: Schema.runner_config)
 
-    def javasee_check(dirs:, config_path:)
-      args = ["-format", "json"]
-      args.push("-config", config_path.to_s) if config_path
+    DEFAULT_CONFIG_FILE = "javasee.yml".freeze
 
-      shell.capture3(analyzer_bin, "check", *args, *dirs.map(&:to_s))
+    def extract_version_option
+      "version"
     end
 
-    def analyzer_version
-      @analyzer_version ||= extract_version! analyzer_bin, "version"
+    def setup
+      if !config_linter[:config] && !File.exist?(DEFAULT_CONFIG_FILE)
+        return missing_config_file_result(DEFAULT_CONFIG_FILE)
+      end
+
+      yield
     end
 
     def analyze(changes)
-      analyzer_version
-
       delete_unchanged_files changes, only: ["*.java"]
 
-      check_runner_config do |dirs, config_path|
-        stdout, stderr, status = javasee_check dirs: dirs, config_path: config_path
+      stdout, stderr, status = shell.capture3(
+        analyzer_bin,
+        "check",
+        "-format", "json",
+        *(config_linter[:config]&.then { |config| ["-config", config] }),
+        *Array(config_linter[:dir]),
+      )
 
-        if status.success? || status.exitstatus == 2
-          Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-            construct_result(result, stdout, stderr)
-          end
-        elsif stderr.match?(/Configuration file .+ does not look a file/)
-          add_warning stderr
-          return Results::Success.new(guid: guid, analyzer: analyzer)
-        else
-          Results::Failure.new(
-            guid: guid,
-            analyzer: analyzer,
-            message: stderr,
-          )
+      if [0, 2].include?(status.exitstatus)
+        Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+          construct_result(result, stdout, stderr)
         end
+      else
+        Results::Failure.new(
+          guid: guid,
+          analyzer: analyzer,
+          message: stderr,
+        )
       end
     end
 
@@ -79,15 +76,6 @@ module Runners
           schema: Schema.rule
         )
       end
-    end
-
-    def check_runner_config
-      dirs = Array(config_linter[:dir]).map { |dir| Pathname(dir) }
-
-      config_path = config_linter[:config]
-      config_path = Pathname(config_path) if config_path
-
-      yield dirs, config_path
     end
   end
 end

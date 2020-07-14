@@ -102,7 +102,11 @@ module Runners
       @analyzer_version ||= extract_version! analyzer_bin
     end
 
-    def extract_version!(command, version_option = "--version", pattern: /v?(\d+\.\d+(\.\d+)?)\b/)
+    def extract_version_option
+      "--version"
+    end
+
+    def extract_version!(command, version_option = extract_version_option, pattern: /v?(\d+\.\d+(\.\d+)?)\b/)
       single_command, *extra_commands = Array(command)
       command_options = extra_commands + Array(version_option)
       outputs = capture3!(single_command, *command_options)
@@ -135,17 +139,15 @@ module Runners
       config_linter[:root_dir]&.yield_self { |root| working_dir / root } || working_dir
     end
 
-    def ensure_files(*paths)
-      trace_writer.message "Checking if required file exists: #{paths.join(', ')}"
+    def missing_config_file_result(file)
+      add_warning <<~MSG, file: file
+        Sider could not find the required configuration file `#{file}`.
+        Please create the file according to the following documents:
+        - #{analyzer_github}
+        - #{analyzer_doc}
+      MSG
 
-      file = paths.find {|path| (working_dir + path).file? }
-      if file
-        trace_writer.message "Found #{file}"
-        yield file
-      else
-        trace_writer.error "No file found..."
-        Results::MissingFilesFailure.new(guid: guid, files: paths)
-      end
+      Results::Success.new(guid: guid, analyzer: analyzer)
     end
 
     # Returns e.g. "linter.rubocop.gems"

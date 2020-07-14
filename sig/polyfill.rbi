@@ -54,6 +54,7 @@ extension String (Polyfill)
   def lines: (?chomp: bool)-> Array<String>
   def to_sym: -> Symbol
   def each_line: (?String, ?chomp: bool) { (String) -> void } -> self
+  def include?: (String) -> bool
 end
 
 extension Symbol (Polyfill)

@@ -2,7 +2,6 @@ module Runners
   class Processor::Phinder < Processor
     include PHP
 
-    DEFAULT_RULE_FILE = "phinder.yml".freeze
     Schema = StrongJSON.new do
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
@@ -19,6 +18,8 @@ module Runners
     end
 
     register_config_schema(name: :phinder, schema: Schema.runner_config)
+
+    DEFAULT_RULE_FILE = "phinder.yml".freeze
 
     def test_phinder_config
       args = []
@@ -106,31 +107,18 @@ module Runners
       end
     end
 
+    def setup
+      if !config_linter[:rule] && !File.exist?(DEFAULT_RULE_FILE)
+        return missing_config_file_result(DEFAULT_RULE_FILE)
+      end
+
+      yield
+    end
+
     def analyze(changes)
-      delete_unchanged_files(changes, except: ["*.yml", "*.yaml"])
-
-      paths = []
-      paths << relative_path(config_linter[:rule]) if config_linter[:rule]
-      paths << relative_path(DEFAULT_RULE_FILE)
-      ret = ensure_files(*paths) do
-        test_phinder_config
-        run_phinder
-      end
-
-      # NOTE: Exceptionally MissingFileFailure is treated as successful
-      if ret.instance_of? Results::MissingFilesFailure
-        trace_writer.error "File not found: #{paths.join(", ")}"
-        add_warning(<<~MESSAGE, file: DEFAULT_RULE_FILE)
-          Sider cannot find the required configuration file(s): `#{DEFAULT_RULE_FILE}`.
-          Please set up Phinder by following the instructions, or you can disable it in the repository settings.
-
-          - https://github.com/sider/phinder
-          - #{analyzer_doc}
-        MESSAGE
-        Results::Success.new(guid: guid, analyzer: analyzer)
-      else
-        ret
-      end
+      delete_unchanged_files changes, except: ["*.yml", "*.yaml"]
+      test_phinder_config
+      run_phinder
     end
   end
 end

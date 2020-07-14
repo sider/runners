@@ -45,7 +45,7 @@ s.add_test(
   "broken_sider_yml",
   type: "failure",
   analyzer: :_,
-  message: "The value of the attribute `linter.javasee.dir[2]` in your `sider.yml` is invalid. Please fix and retry."
+  message: "The value of the attribute `linter.javasee.dir` in your `sider.yml` is invalid. Please fix and retry."
 )
 
 s.add_test(
@@ -55,10 +55,13 @@ s.add_test(
   issues: [],
   warnings: [
     {
-      message:
-        "Configuration file javasee.yml does not look a file.\n" \
-          "Specify configuration file by -config option.",
-      file: nil
+      message: <<~MSG.strip,
+        Sider could not find the required configuration file `javasee.yml`.
+        Please create the file according to the following documents:
+        - https://github.com/sider/JavaSee
+        - https://help.sider.review/tools/java/javasee
+      MSG
+      file: "javasee.yml"
     }
   ]
 )

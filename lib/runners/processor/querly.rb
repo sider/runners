@@ -31,24 +31,24 @@ module Runners
     CONFIG_FILE = "querly.yml".freeze
     CONFIG_FILES_GLOB = "querly.{yml,yaml}".freeze
 
-    def analyzer_version
-      @analyzer_version ||= extract_version! ruby_analyzer_bin, "version"
+    def extract_version_option
+      "version"
     end
 
-    def setup
-      install_gems default_gem_specs, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS do
-        yield
+    def setup(&block)
+      if !config_file && !default_config_file
+        return missing_config_file_result(CONFIG_FILE)
       end
-    rescue InstallGemsFailure => exn
-      trace_writer.error exn.message
-      return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
+
+      begin
+        install_gems default_gem_specs, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS, &block
+      rescue InstallGemsFailure => exn
+        trace_writer.error exn.message
+        return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
+      end
     end
 
     def analyze(changes)
-      if !config_file && !default_config_file
-        return missing_config_file_result
-      end
-
       test_config_file
 
       stdout, _ = capture3!(
@@ -104,17 +104,6 @@ module Runners
       end
 
       @default_config_file ||= config_files.first
-    end
-
-    def missing_config_file_result
-      add_warning <<~MSG, file: CONFIG_FILE
-        Sider could not find the required configuration file `#{CONFIG_FILE}`.
-        Please create the file according to the following documents:
-        - #{analyzer_github}
-        - #{analyzer_doc}
-      MSG
-
-      Results::Success.new(guid: guid, analyzer: analyzer)
     end
 
     def test_config_file
