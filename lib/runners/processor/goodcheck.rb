@@ -110,10 +110,6 @@ module Runners
     end
 
     def setup(&block)
-      if !config_linter[:config] && !File.exist?(DEFAULT_CONFIG_FILE)
-        return missing_config_file_result(DEFAULT_CONFIG_FILE)
-      end
-
       begin
         install_gems default_gem_specs, constraints: CONSTRAINTS, &block
       rescue InstallGemsFailure => exn
@@ -123,6 +119,11 @@ module Runners
     end
 
     def analyze(changes)
+      # NOTE: This check should be called after installing gems.
+      if !config_linter[:config] && !File.exist?(DEFAULT_CONFIG_FILE)
+        return missing_config_file_result(DEFAULT_CONFIG_FILE)
+      end
+
       delete_unchanged_files(changes, except: ["*.yml", "*.yaml"])
 
       error_message = goodcheck_test

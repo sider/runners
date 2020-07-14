@@ -36,10 +36,6 @@ module Runners
     end
 
     def setup(&block)
-      if !config_file && !default_config_file
-        return missing_config_file_result(CONFIG_FILE)
-      end
-
       begin
         install_gems default_gem_specs, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS, &block
       rescue InstallGemsFailure => exn
@@ -49,6 +45,11 @@ module Runners
     end
 
     def analyze(changes)
+      # NOTE: This check should be called after installing gems.
+      if !config_file && !default_config_file
+        return missing_config_file_result(CONFIG_FILE)
+      end
+
       test_config_file
 
       stdout, _ = capture3!(
