@@ -37,34 +37,34 @@ libxml++2.6-dev
 libtinyxml-dev
 
 # Popular packages of Debian popcon
-# curl -fsSL https://popcon.debian.org/by_inst | grep -v "Not in sid" | tr -s ' ' | cut -d' ' -f 2 | grep "lib.*-dev" | head -30
+# curl -fsSL https://popcon.debian.org/by_inst | grep -v "Not in sid" | tr -s ' ' | cut -d' ' -f 2 | grep -e "-dev$" | head -30
 libc6-dev
 linux-libc-dev
-libc-dev-bin
+manpages-dev
+dpkg-dev
 libgcc-8-dev
 zlib1g-dev
 libexpat1-dev
+autotools-dev
 libstdc++-8-dev
 libltdl-dev
 libssl-dev
+x11proto-core-dev
 libpthread-stubs0-dev
+xtrans-dev
 libxdmcp-dev
 libxau-dev
 libxcb1-dev
 libx11-dev
+python-dev
+python2.7-dev
 libpython2.7-dev
 libpython-dev
 libpcre3-dev
 libice-dev
 libsm-dev
 libffi-dev
+x11proto-input-dev
+x11proto-xext-dev
 libxext-dev
 libpython3-dev
-libxt-dev
-libicu-dev
-libxcb-render0-dev
-libpng-dev
-libxfixes-dev
-libglib2.0-dev
-libfreetype6-dev
-libxdamage-dev

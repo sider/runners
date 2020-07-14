@@ -51,10 +51,10 @@ module Runners
     private
 
     def deploy_packages
-      # select "lib*" and report others as warning for security concerns
+      # select development packages and report others as warning for security concerns
       packages = Array(config_linter[:apt])
         .select do |pkg|
-          if pkg.start_with?("lib")
+          if pkg.match?(/-dev(=.+)?$/)
             true
           else
             add_warning "Installing the package `#{pkg}` is blocked.", file: config.path_name

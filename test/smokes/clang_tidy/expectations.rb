@@ -166,7 +166,7 @@ s.add_test(
       file: "sider.yml"
     },
     {
-      message: "Installing the package `bazqux=1.2.3-4` is blocked.",
+      message: "Installing the package `bazqux-dev-bin=1.2.3-4` is blocked.",
       file: "sider.yml"
     }
   ],
