@@ -21,7 +21,7 @@ Updated tools:
 - **detekt** 1.9.1 -> 1.10.0 [#1236](https://github.com/sider/runners/pull/1236)
 - **ESLint** 7.2.0 -> 7.4.0 [#1224](https://github.com/sider/runners/pull/1224) [#1267](https://github.com/sider/runners/pull/1267)
 - **GolangCI-Lint** 1.27.0 -> 1.28.3 [#1266](https://github.com/sider/runners/pull/1266) [#1273](https://github.com/sider/runners/pull/1273) [#1289](https://github.com/sider/runners/pull/1289) [#1297](https://github.com/sider/runners/pull/1297)
-- **LanguageTool** 4.9.1 -> 5.0 [#1241](https://github.com/sider/runners/pull/1241)
+- **LanguageTool** 4.9.1 -> 5.0.1 [#1241](https://github.com/sider/runners/pull/1241) [#1305](https://github.com/sider/runners/pull/1305)
 - **PMD CPD** 6.24.0 -> 6.25.0 [#1235](https://github.com/sider/runners/pull/1235)
 - **PMD Java** 6.24.0 -> 6.25.0 [#1237](https://github.com/sider/runners/pull/1237)
 - **RuboCop** 0.85.1 -> 0.87.1 [#1220](https://github.com/sider/runners/pull/1220) [#1281](https://github.com/sider/runners/pull/1281)
