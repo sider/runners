@@ -34,6 +34,7 @@ Misc:
 - Allow `location(start_line,start_column)` format [#1257](https://github.com/sider/runners/pull/1257)
 - Make deprecation warning messages more useful [#1292](https://github.com/sider/runners/pull/1292)
 - Prevent unexpected error when missing issue ID [#1301](https://github.com/sider/runners/pull/1301)
+- Avoid git-blame when base commit is not given [#1307](https://github.com/sider/runners/pull/1307)
 - **ESLint** Add `target` option instead of `dir` option [#1264](https://github.com/sider/runners/pull/1264)
 - **ESLint** Pre-install popular configs and plugins [#1271](https://github.com/sider/runners/pull/1271)
 - **ESLint** Update the default configuration [#1270](https://github.com/sider/runners/pull/1270)
