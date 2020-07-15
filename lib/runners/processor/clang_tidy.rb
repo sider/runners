@@ -31,21 +31,27 @@ module Runners
 
     def analyze(changes)
       issues = []
+      analyzed_files = []
 
       changes
         .changed_paths
         .select { |path| path.fnmatch?(GLOB_SOURCES, File::FNM_EXTGLOB | File::FNM_CASEFOLD) }
-        .map{ |path| relative_path(working_dir / path, from: current_dir) }
+        .map { |path| relative_path(working_dir / path, from: current_dir) }
         .reject { |path| path.to_s.start_with?("../") } # reject files outside the current_dir
         .each do |path|
           stdout, = capture3!(analyzer_bin, path.to_s, "--", *option_include_path,
             is_success: ->(status) { [0, 1].include?(status.exitstatus) })
           construct_result(stdout) { |issue| issues << issue }
+          analyzed_files << path
         end
 
-      Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        result.add_issue(*issues)
+      if analyzed_files.empty?
+        trace_writer.message "No files to analyze."
+      else
+        trace_writer.message "#{analyzed_files.size} file(s) were analyzed."
       end
+
+      Results::Success.new(guid: guid, analyzer: analyzer, issues: issues)
     end
 
     private
@@ -62,7 +68,9 @@ module Runners
           end
         end
 
-      unless packages.empty?
+      if packages.empty?
+        trace_writer.message "No packages to install."
+      else
         capture3!("sudo", "apt-get", "install", "-qq", "-y", "--no-install-recommends", *packages)
       end
     end
