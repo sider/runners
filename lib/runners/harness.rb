@@ -57,7 +57,9 @@ module Runners
               when Results::Success
                 trace_writer.message "Removing issues from unchanged or untracked files..." do
                   result.filter_issues(changes)
-                  result.add_git_blame_info(workspace)
+                  if options.source.head && options.source.base
+                    result.add_git_blame_info(workspace)
+                  end
                 end
                 result.each_missing_id_warning { |msg| trace_writer.message(msg) }
                 result
