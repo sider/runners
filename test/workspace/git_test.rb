@@ -124,7 +124,7 @@ class WorkspaceGitTest < Minitest::Test
       error = assert_raises(Runners::Workspace::Git::BlameFailed) do
         workspace.range_git_blame_info('test/smokes/haml_lint/expectations.rb', 137, 140)
       end
-      assert_match %r{\Agit-blame failed with test/smokes/haml_lint/expectations.rb:137,140: fatal: not a git repository \(or any of the parent directories\): \.git}, error.message
+      assert_match %r{\Agit-blame failed: fatal: not a git repository \(or any of the parent directories\): \.git}, error.message
     end
   end
 
