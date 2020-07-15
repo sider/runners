@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.30.0...HEAD)
 
+- **Brakeman** Syntax highlight for warning message [#1309](https://github.com/sider/runners/pull/1309)
+
 ## 0.30.0
 
 [Full diff](https://github.com/sider/runners/compare/0.29.3...0.30.0)
