@@ -24,6 +24,7 @@ namespace :bump do
       else
         t.commit_and_push_changes!
         t.create_pull_request!
+        t.add_labels!
         puts "  --> #{t.pull_request_url}"
       end
     end
@@ -92,7 +93,7 @@ BumpAnalyzers = Struct.new(
     end
   end
 
-  # @see https://developer.github.com/v3/git/refs/#list-matching-references
+  # @see https://docs.github.com/en/rest/reference/git#list-matching-references
   def tags
     @tags ||= call_github_api(:get, "/repos/#{github_repo}/git/refs/tags")
       .reject { |tag| tag.fetch(:ref).include?("beta") }
@@ -107,7 +108,7 @@ BumpAnalyzers = Struct.new(
     ENV.fetch("GITHUB_REPOSITORY")
   end
 
-  # @see https://developer.github.com/v3/git/trees/#get-a-tree
+  # @see https://docs.github.com/en/rest/reference/git#get-a-tree
   def branch_exist?(branch)
     call_github_api(:get, "/repos/#{original_github_repo}/git/trees/#{branch}")
     true
@@ -119,7 +120,7 @@ BumpAnalyzers = Struct.new(
     end
   end
 
-  # @see https://developer.github.com/v3/pulls/#create-a-pull-request
+  # @see https://docs.github.com/en/rest/reference/pulls#create-a-pull-request
   def create_pull_request!
     call_github_api(:post, "/repos/#{original_github_repo}/pulls", {
       title: pull_request_title,
@@ -204,5 +205,13 @@ BumpAnalyzers = Struct.new(
 
   def run(*cmd)
     system(*cmd, exception: true)
+  end
+
+  # @see https://docs.github.com/en/rest/reference/issues#add-labels-to-an-issue
+  def add_labels!
+    pull_number = Integer(self.pull_request_url.split("/").last)
+    call_github_api(:post, "/repos/#{original_github_repo}/issues/#{pull_number}/labels", {
+      labels: ["dependencies"],
+    })
   end
 end
