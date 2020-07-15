@@ -250,6 +250,15 @@ s.add_test(
   type: "success",
   issues: [
     {
+      message: "Expected custom property to come before declaration",
+      links: [],
+      id: "order/order",
+      path: "test.css",
+      object: { severity: "error" },
+      git_blame_info: nil,
+      location: { start_line: 4, start_column: 3 }
+    },
+    {
       message: 'Unexpected unknown property "someattr"',
       links: %W[https://github.com/stylelint/stylelint/tree/#{default_version}/lib/rules/property-no-unknown],
       id: "property-no-unknown",
