@@ -41,6 +41,7 @@ Misc:
 - **Flake8** Support `target` and `config` options [#1287](https://github.com/sider/runners/pull/1287)
 - **GolangCI-Lint** Add `severity` and `replacement` to issue result [#1268](https://github.com/sider/runners/pull/1268)
 - **HAML-Lint** Add `target` option [#1265](https://github.com/sider/runners/pull/1265)
+- **HAML-Lint** Fix `line: 0` [#1306](https://github.com/sider/runners/pull/1306)
 - **Misspell** Support `ignore` option as array [#1255](https://github.com/sider/runners/pull/1255)
 - **PHP_CodeSniffer** Remove deprecated `version` option [#1291](https://github.com/sider/runners/pull/1291)
 - **PHPMD** Support the comma-separated list options as array [#1253](https://github.com/sider/runners/pull/1253)
