@@ -119,7 +119,7 @@ module Runners
 
           Issue.new(
             path: relative_path(path),
-            location: Location.new(start_line: line),
+            location: line == 0 ? nil : Location.new(start_line: line),
             id: id,
             message: message,
             links: build_links(id),

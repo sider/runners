@@ -9,7 +9,7 @@ module Runners
                                   trace_stdout: false, trace_stderr: true)
       GitBlameInfo.parse(stdout)
     rescue Shell::ExecError => exn
-      raise BlameFailed, "git-blame failed: #{exn.stderr_str}"
+      raise BlameFailed, "git-blame failed with #{path_string}:#{start_line},#{end_line}: #{exn.stderr_str}"
     end
 
     private
