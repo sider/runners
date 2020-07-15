@@ -45,11 +45,7 @@ module Runners
           analyzed_files << path
         end
 
-      if analyzed_files.empty?
-        trace_writer.message "No files to analyze."
-      else
-        trace_writer.message "#{analyzed_files.size} file(s) were analyzed."
-      end
+      trace_writer.message analyzed_files.empty? ? "No files to analyze." : "#{analyzed_files.size} file(s) were analyzed."
 
       Results::Success.new(guid: guid, analyzer: analyzer, issues: issues)
     end
