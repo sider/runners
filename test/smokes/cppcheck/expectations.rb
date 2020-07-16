@@ -831,3 +831,68 @@ s.add_test(
   ],
   analyzer: { name: "Cppcheck", version: default_version }
 )
+
+s.add_test(
+  "option_include_path",
+  type: "success",
+  issues: [
+    {
+      id: "uninitvar",
+      path: "source/test.c++",
+      location: { start_line: 8, start_column: 19 },
+      message: "Uninitialized variable: s",
+      links: [],
+      object: {
+        severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil
+      },
+      git_blame_info: nil
+    },
+    {
+      id: "uninitvar",
+      path: "source/サンプル/test.CPP",
+      location: { start_line: 9, start_column: 19 },
+      message: "Uninitialized variable: s",
+      links: [],
+      object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "Cppcheck", version: default_version }
+)
+
+s.add_test(
+  "option_include_path_default",
+  type: "success",
+  issues: [
+    {
+      id: "uninitvar",
+      path: "source/foo/テスト.cxx",
+      location: { start_line: 8, start_column: 20 },
+      message: "Uninitialized variable: a",
+      links: [],
+      object: {
+        severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil
+      },
+      git_blame_info: nil
+    },
+    {
+      id: "uninitvar",
+      path: "source/test.c",
+      location: { start_line: 9, start_column: 19 },
+      message: "Uninitialized variable: s",
+      links: [],
+      object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
+      git_blame_info: nil
+    },
+    {
+      id: "uninitvar",
+      path: "source/xuq/test.CC",
+      location: { start_line: 9, start_column: 19 },
+      message: "Uninitialized variable: s",
+      links: [],
+      object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "Cppcheck", version: default_version }
+)

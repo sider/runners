@@ -1,5 +1,7 @@
 module Runners
   class Processor::Cppcheck < Processor
+    include CPlusPlus
+
     Schema = StrongJSON.new do
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!(
@@ -11,6 +13,8 @@ module Runners
           project: string?,
           language: string?,
           'bug-hunting': boolean?
+        ).merge!(
+          { 'include-path': enum?(string, array(string)) } # TODO use FIELD_INCLUDE_PATH at cplusplus.rb
         )
       }
 
@@ -102,6 +106,7 @@ module Runners
         *ignore,
         *project,
         *language,
+        *option_include_path,
         *args,
         *target
       )
