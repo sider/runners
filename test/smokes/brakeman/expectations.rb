@@ -101,9 +101,11 @@ s.add_test(
     Brakeman is for Rails only. Your repository may not have a Rails application.
     If your Rails is not located in the root directory, configure your `sider.yml` as follows:
 
-        linter:
-          brakeman:
-            root_dir: "path/to/your/rails/root"
+    ```yaml
+    linter:
+      brakeman:
+        root_dir: "path/to/your/rails/root"
+    ```
   MSG
 )
 

@@ -265,3 +265,10 @@ s.add_test(
   ],
   analyzer: { name: "Clang-Tidy", version: default_version }
 )
+
+s.add_test(
+  "no_files",
+  type: "success",
+  issues: [],
+  analyzer: { name: "Clang-Tidy", version: default_version }
+)

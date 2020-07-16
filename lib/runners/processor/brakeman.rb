@@ -42,9 +42,11 @@ module Runners
             #{analyzer_name} is for Rails only. Your repository may not have a Rails application.
             If your Rails is not located in the root directory, configure your `#{config.path_name}` as follows:
 
-                linter:
-                  #{analyzer_id}:
-                    root_dir: "path/to/your/rails/root"
+            ```yaml
+            linter:
+              #{analyzer_id}:
+                root_dir: "path/to/your/rails/root"
+            ```
           MSG
           return Results::Success.new(guid: guid, analyzer: analyzer)
         else
