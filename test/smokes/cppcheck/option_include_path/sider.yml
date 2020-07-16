@@ -1,0 +1,9 @@
+linter:
+  clang_tidy:
+    root_dir: source
+    apt: ["libgdbm-dev", libfastjson-dev]
+    include-path:
+      - myinc/
+      - bar/include
+      - /usr/include/libfastjson
+      - baz/myinclude
