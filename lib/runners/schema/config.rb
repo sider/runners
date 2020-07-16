@@ -25,6 +25,12 @@ module Runners
         )
       })
 
+      let :cplusplus, (base.update_fields { |fields|
+        fields.merge!(
+          'include-path': enum?(string, array(string))
+        )
+      })
+
       let :npm_install, enum(boolean, literal('development'), literal('production'))
 
       let :npm, (base.update_fields { |fields|
