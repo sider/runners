@@ -1,0 +1,3 @@
+linter:
+  cppcheck:
+    include-path: myinclude

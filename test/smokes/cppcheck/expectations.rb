@@ -896,3 +896,22 @@ s.add_test(
   ],
   analyzer: { name: "Cppcheck", version: default_version }
 )
+
+s.add_test(
+  "config_string_values",
+  type: "success",
+  issues: [
+    {
+      id: "uninitvar",
+      path: "src/test.c",
+      location: { start_line: 6, start_column: 19 },
+      message: "Uninitialized variable: s",
+      links: [],
+      object: {
+        severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil
+      },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "Cppcheck", version: default_version }
+)
