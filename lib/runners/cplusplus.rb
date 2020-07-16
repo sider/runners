@@ -1,8 +1,7 @@
 module Runners
   module CPlusPlus
-    def option_include_path
-      includes = Array(config_linter[:'include-path'] || find_paths_containing_headers)
-      includes.map { |v| "-I" + v }
+    def config_include_path
+      Array(config_linter[:'include-path'] || find_paths_containing_headers).map { |v| "-I#{v}" }
     end
 
     private

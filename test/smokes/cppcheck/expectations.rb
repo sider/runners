@@ -833,7 +833,7 @@ s.add_test(
 )
 
 s.add_test(
-  "option_include_path",
+  "include_path",
   type: "success",
   issues: [
     {
@@ -861,7 +861,7 @@ s.add_test(
 )
 
 s.add_test(
-  "option_include_path_default",
+  "include_path_default",
   type: "success",
   issues: [
     {

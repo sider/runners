@@ -104,7 +104,7 @@ module Runners
         *ignore,
         *project,
         *language,
-        *option_include_path,
+        *config_include_path,
         *args,
         *target
       )
