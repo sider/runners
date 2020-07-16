@@ -13,13 +13,6 @@ class WorkspaceTest < Minitest::Test
       assert_instance_of Workspace::File, workspace
     end
 
-    with_runners_options_env(source: { head: "https://example.com" }) do
-      options = Runners::Options.new(StringIO.new, StringIO.new)
-      filter = Runners::SensitiveFilter.new(options: options)
-      workspace = Workspace.prepare(options: options, trace_writer: new_trace_writer(filter: filter), working_dir: Pathname("/"))
-      assert_instance_of Workspace::HTTP, workspace
-    end
-
     with_runners_options_env(source: { head: "commit", git_http_url: "https://github.com", owner: "foo", repo: "bar" }) do
       options = Runners::Options.new(StringIO.new, StringIO.new)
       filter = Runners::SensitiveFilter.new(options: options)

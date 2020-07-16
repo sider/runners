@@ -21,15 +21,6 @@ class Runners::Workspace
   def range_git_blame_info: (String, Integer, Integer) -> Array<GitBlameInfo>
 end
 
-class Runners::Workspace::HTTP < Workspace
-  def prepare_base_source: (Pathname) -> void
-  def prepare_head_source: (Pathname) -> void
-  def provision: (URI, Pathname, String?) -> void
-  def download_with_retry: (URI) { (Pathname) -> void } -> void
-  def download: (URI, dest: ::IO, max_retries: Integer, max_redirects: Integer) -> void
-  def retryable_sleep: (Integer) -> Integer
-end
-
 class Runners::Workspace::File < Workspace
   def prepare_base_source: (Pathname) -> void
   def prepare_head_source: (Pathname) -> void

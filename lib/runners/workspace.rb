@@ -9,8 +9,6 @@ module Runners
       case source
       when Options::ArchiveSource
         case
-        when source.http?
-          Workspace::HTTP.new(options: options, working_dir: working_dir, trace_writer: trace_writer)
         when source.file?
           Workspace::File.new(options: options, working_dir: working_dir, trace_writer: trace_writer)
         else

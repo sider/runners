@@ -3,11 +3,6 @@ module Runners
     GitSource = Struct.new(:head, :base, :git_http_url, :owner, :repo, :git_http_userinfo, :pull_number, keyword_init: true)
 
     ArchiveSource = Struct.new(:head, :head_key, :base, :base_key, keyword_init: true) do
-      def http?
-        scheme = URI.parse(head).scheme
-        %w[http https].include?(scheme)
-      end
-
       def file?
         scheme = URI.parse(head).scheme
         scheme.nil? || scheme == 'file'
