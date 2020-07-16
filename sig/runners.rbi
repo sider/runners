@@ -46,7 +46,6 @@ end
 
 type result = Runners::Results::Success
             | Runners::Results::Failure
-            | Runners::Results::MissingFilesFailure
             | Runners::Results::Error
 
 class Runners::Results::Base
@@ -73,11 +72,6 @@ class Runners::Results::Failure < Runners::Results::Base
   attr_reader message: String
   attr_reader analyzer: Analyzer?
   def initialize: (guid: String, message: String, ?analyzer: Analyzer?) -> any
-end
-
-class Runners::Results::MissingFilesFailure < Runners::Results::Base
-  attr_reader files: Array<Pathname>
-  def initialize: (guid: String, files: Array<Pathname>) -> any
 end
 
 class Runners::Results::Error < Runners::Results::Base
