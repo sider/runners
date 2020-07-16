@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - **Brakeman** Syntax highlight for warning message [#1309](https://github.com/sider/runners/pull/1309)
 - **stylelint** Add `stylelint-order` to pre-installed list [#1310](https://github.com/sider/runners/pull/1310)
+- Optimize git-blame [#1312](https://github.com/sider/runners/pull/1312)
 
 ## 0.30.0
 
