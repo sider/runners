@@ -165,9 +165,9 @@ module Runners
         sh! "git", "clone", "file://#{bare_dir}", smoke_dir, out: out
 
         Dir.chdir(smoke_dir) do
-          File.write(".keep", "")
-          sh! "git", "add", ".", out: out
-          sh! "git", "commit", "-m", "initial commit", out: out
+          sh! "git", "config", "user.name", "Foo", out: out
+          sh! "git", "config", "user.email", "foo@example.com", out: out
+          sh! "git", "commit", "--allow-empty", "-m", "initial commit", out: out
           base_commit, _ = sh! "git", "rev-parse", "HEAD", out: out
 
           FileUtils.copy_entry "#{smoke_target}/.", smoke_dir
