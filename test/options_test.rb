@@ -3,69 +3,6 @@ require_relative 'test_helper'
 class OptionsTest < Minitest::Test
   include TestHelper
 
-  def test_options_archive_source_full
-    source_params = {
-      head: 'http://example.com/head',
-      head_key: 'head_key',
-      base: 'http://example.com/base',
-      base_key: 'base_key',
-    }
-    with_runners_options_env(source: source_params) do
-      options = Runners::Options.new(stdout, stderr)
-      assert_instance_of Runners::Options::ArchiveSource, options.source
-      assert_equal source_params, options.source.to_h
-    end
-  end
-
-  def test_options_archive_source_head_only
-    source_params = {
-      head: 'http://example.com/head',
-      head_key: 'head_key',
-    }
-    with_runners_options_env(source: source_params) do
-      options = Runners::Options.new(stdout, stderr)
-      assert_instance_of Runners::Options::ArchiveSource, options.source
-      assert_equal source_params.merge(base: nil, base_key: nil), options.source.to_h
-    end
-  end
-
-  def test_options_archive_source_head_only_without_key
-    source_params = {
-      head: 'http://example.com/head',
-    }
-    with_runners_options_env(source: source_params) do
-      options = Runners::Options.new(stdout, stderr)
-      assert_instance_of Runners::Options::ArchiveSource, options.source
-      assert_equal source_params.merge(head_key: nil, base: nil, base_key: nil), options.source.to_h
-    end
-  end
-
-  def test_options_archive_source_full_source_without_base_key
-    source_params = {
-      head: 'http://example.com/head',
-      head_key: 'head_key',
-      base: 'http://example.com/base',
-    }
-    with_runners_options_env(source: source_params) do
-      options = Runners::Options.new(stdout, stderr)
-      assert_instance_of Runners::Options::ArchiveSource, options.source
-      assert_equal source_params.merge(base_key: nil), options.source.to_h
-    end
-  end
-
-  def test_options_archive_source_full_source_without_head_key
-    source_params = {
-      head: 'http://example.com/head',
-      base: 'http://example.com/base',
-      base_key: 'base_key',
-    }
-    with_runners_options_env(source: source_params) do
-      options = Runners::Options.new(stdout, stderr)
-      assert_instance_of Runners::Options::ArchiveSource, options.source
-      assert_equal source_params.merge(head_key: nil), options.source.to_h
-    end
-  end
-
   def test_options_git_source
     source_params = {
       head: 'head_commit',

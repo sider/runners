@@ -21,6 +21,10 @@ module Runners
 
     private
 
+    def git_source
+      options.source
+    end
+
     def prepare_base_source(_dest)
       # noop
     end

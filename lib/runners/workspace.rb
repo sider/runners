@@ -7,15 +7,10 @@ module Runners
     def self.prepare(options:, working_dir:, trace_writer:)
       source = options.source
       case source
-      when Options::ArchiveSource
-        case
-        when source.file?
-          Workspace::File.new(options: options, working_dir: working_dir, trace_writer: trace_writer)
-        else
-          raise ArgumentError, "The specified options #{options.inspect} is not supported"
-        end
       when Options::GitSource
         Workspace::Git.new(options: options, working_dir: working_dir, trace_writer: trace_writer)
+      else
+        raise ArgumentError, "The specified options #{options.inspect} is not supported"
       end
     end
 
@@ -61,30 +56,6 @@ module Runners
     end
 
     private
-
-    def archive_source
-      @archive_source ||=
-        begin
-          source = options.source
-          if source.instance_of?(Runners::Options::ArchiveSource)
-            source
-          else
-            raise "#{source.inspect} is not ArchiveSource"
-          end
-        end
-    end
-
-    def git_source
-      @git_source ||=
-        begin
-          source = options.source
-          if source.instance_of?(Runners::Options::GitSource)
-            source
-          else
-            raise "#{source.inspect} is not GitSource"
-          end
-        end
-    end
 
     def prepare_ssh
       ssh_key = options.ssh_key
