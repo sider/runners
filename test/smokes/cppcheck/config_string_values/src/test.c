@@ -1,8 +1,10 @@
 #include "テスト.hpp"
 
-int foo()
+#define MY_N 31
+
+void foo()
 {
-  const char *s;
-  const char *t = s;
-  return 0;
+  char buf[N];
+  buf[MY_N - 1] = 0;
+  buf[MY_N] = 0;
 }

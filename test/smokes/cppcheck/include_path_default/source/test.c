@@ -5,8 +5,8 @@
 
 int foo()
 {
-  const char *s;
-  const char *t = s;
-  const char *v = u; /* u is defined in test.tpp */
+  char buf[N];
+  buf[16] = 0;
+  buf[17] = 0;
   return 0;
 }

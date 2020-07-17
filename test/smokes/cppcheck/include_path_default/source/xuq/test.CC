@@ -5,7 +5,8 @@
 
 int foo()
 {
-  const char *s;
-  const char *t = s;
+  char s[N];
+  s[25] = 0;
+  s[24] = 0;
   return 0;
 }

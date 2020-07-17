@@ -837,23 +837,25 @@ s.add_test(
   type: "success",
   issues: [
     {
-      id: "uninitvar",
+      id: "arrayIndexOutOfBounds",
       path: "source/test.c++",
-      location: { start_line: 8, start_column: 19 },
-      message: "Uninitialized variable: s",
+      location: { start_line: 9, start_column: 7 },
+      message: "Array 'buf3[33]' accessed at index 33, which is out of bounds.",
       links: [],
       object: {
-        severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil
+        severity: "error", verbose: nil, inconclusive: false, cwe: "788", location_info: "Array index out of bounds"
       },
       git_blame_info: nil
     },
     {
-      id: "uninitvar",
+      id: "arrayIndexOutOfBounds",
       path: "source/サンプル/test.CPP",
-      location: { start_line: 9, start_column: 19 },
-      message: "Uninitialized variable: s",
+      location: { start_line: 10, start_column: 6 },
+      message: "Array 'buf[21]' accessed at index 21, which is out of bounds.",
       links: [],
-      object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
+      object: {
+        severity: "error", verbose: nil, inconclusive: false, cwe: "788", location_info: "Array index out of bounds"
+      },
       git_blame_info: nil
     }
   ],
@@ -865,32 +867,36 @@ s.add_test(
   type: "success",
   issues: [
     {
-      id: "uninitvar",
+      id: "arrayIndexOutOfBounds",
       path: "source/foo/テスト.cxx",
-      location: { start_line: 8, start_column: 20 },
-      message: "Uninitialized variable: a",
+      location: { start_line: 8, start_column: 8 },
+      message: "Array 'buf[25]' accessed at index 25, which is out of bounds.",
       links: [],
       object: {
-        severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil
+        severity: "error", verbose: nil, inconclusive: false, cwe: "788", location_info: "Array index out of bounds"
       },
       git_blame_info: nil
     },
     {
-      id: "uninitvar",
+      id: "arrayIndexOutOfBounds",
       path: "source/test.c",
-      location: { start_line: 9, start_column: 19 },
-      message: "Uninitialized variable: s",
+      location: { start_line: 10, start_column: 6 },
+      message: "Array 'buf[17]' accessed at index 17, which is out of bounds.",
       links: [],
-      object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
+      object: {
+        severity: "error", verbose: nil, inconclusive: false, cwe: "788", location_info: "Array index out of bounds"
+      },
       git_blame_info: nil
     },
     {
-      id: "uninitvar",
+      id: "arrayIndexOutOfBounds",
       path: "source/xuq/test.CC",
-      location: { start_line: 9, start_column: 19 },
-      message: "Uninitialized variable: s",
+      location: { start_line: 9, start_column: 4 },
+      message: "Array 's[25]' accessed at index 25, which is out of bounds.",
       links: [],
-      object: { severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil },
+      object: {
+        severity: "error", verbose: nil, inconclusive: false, cwe: "788", location_info: "Array index out of bounds"
+      },
       git_blame_info: nil
     }
   ],
@@ -902,13 +908,13 @@ s.add_test(
   type: "success",
   issues: [
     {
-      id: "uninitvar",
+      id: "arrayIndexOutOfBounds",
       path: "src/test.c",
-      location: { start_line: 6, start_column: 19 },
-      message: "Uninitialized variable: s",
+      location: { start_line: 9, start_column: 6 },
+      message: "Array 'buf[31]' accessed at index 31, which is out of bounds.",
       links: [],
       object: {
-        severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil
+        severity: "error", verbose: nil, inconclusive: false, cwe: "788", location_info: "Array index out of bounds"
       },
       git_blame_info: nil
     }

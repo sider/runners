@@ -2,3 +2,5 @@
 #include <stdlib.h>
 #include <string.h>
 #include <libfastjson/json.h>
+
+#define L 5

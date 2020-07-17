@@ -1,3 +1,3 @@
 #include <regex.h>
 
-const char *u;
+#define N ((M)+7)

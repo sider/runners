@@ -4,7 +4,9 @@
 
 int foo()
 {
-  const char *s;
-  const char *t = s;
-  return 0;
+  char buf3[N3], buf2[N2];
+  buf3[32] = 0;
+  buf3[33] = 0;
+  buf2[21] = 0;
+//  buf2[22] = 0;
 }

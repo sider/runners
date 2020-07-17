@@ -4,7 +4,8 @@
 
 int main()
 {
-    int a;
-    printf("%d\n", a);
+    char buf[N];
+    buf[25] = 0;
+    buf[24] = 0;
     return 0;
 }
