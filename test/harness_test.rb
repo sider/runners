@@ -49,7 +49,6 @@ class HarnessTest < Minitest::Test
   def test_run
     mktmpdir do |working_dir|
       with_options do |options|
-        mock.proxy(Workspace).prepare(options: options, working_dir: working_dir, trace_writer: trace_writer)
         harness = Harness.new(guid: SecureRandom.uuid, processor_class: TestProcessor,
                               options: options, working_dir: working_dir, trace_writer: trace_writer)
 

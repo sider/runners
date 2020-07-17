@@ -3,8 +3,10 @@ extends:
 
 plugins:
   - stylelint-scss
+  - stylelint-order
 
 rules:
   at-rule-no-unknown: null
   scss/at-rule-no-unknown: true
   scss/comment-no-empty: true
+  order/order: [custom-properties, declarations]

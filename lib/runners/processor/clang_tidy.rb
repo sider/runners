@@ -27,6 +27,7 @@ module Runners
 
     def analyze(changes)
       issues = []
+      analyzed_files = []
 
       changes
         .changed_paths
@@ -37,11 +38,12 @@ module Runners
           stdout, = capture3!(analyzer_bin, path.to_s, "--", *config_include_path,
             is_success: ->(status) { [0, 1].include?(status.exitstatus) })
           construct_result(stdout) { |issue| issues << issue }
+          analyzed_files << path
         end
 
-      Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        result.add_issue(*issues)
-      end
+      trace_writer.message analyzed_files.empty? ? "No files to analyze." : "#{analyzed_files.size} file(s) were analyzed."
+
+      Results::Success.new(guid: guid, analyzer: analyzer, issues: issues)
     end
 
     private
@@ -58,7 +60,9 @@ module Runners
           end
         end
 
-      unless packages.empty?
+      if packages.empty?
+        trace_writer.message "No packages to install."
+      else
         capture3!("sudo", "apt-get", "install", "-qq", "-y", "--no-install-recommends", *packages)
       end
     end

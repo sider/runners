@@ -46,13 +46,6 @@ type Runners::Schema::Types::failure_result = {
   analyzer: analyzer?
 }
 
-type Runners::Schema::Types::missing_files_result = {
-  guid: String,
-  timestamp: String,
-  type: "missing_files",
-  files: Array<String>
-}
-
 type Runners::Schema::Types::error_result = {
   guid: String,
   timestamp: String,
@@ -69,10 +62,9 @@ class Runners::Schema::Types::Result < StrongJSON
   def analyzer: -> StrongJSON::Type::Object<analyzer>
   def success: -> StrongJSON::Type::Object<success_result>
   def failure: -> StrongJSON::Type::Object<failure_result>
-  def missing_file_failure: -> StrongJSON::Type::Object<missing_files_result>
   def error: -> StrongJSON::Type::Object<error_result>
   def envelope: -> StrongJSON::Type::Object<{
-    result: success_result | failure_result | missing_files_result | error_result,
+    result: success_result | failure_result | error_result,
     warnings: Array<warning>,
     ci_config: any,
     version: String,

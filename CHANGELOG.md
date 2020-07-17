@@ -4,7 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.29.3...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.30.0...HEAD)
+
+- **Brakeman** Syntax highlight for warning message [#1309](https://github.com/sider/runners/pull/1309)
+- **stylelint** Add `stylelint-order` to pre-installed list [#1310](https://github.com/sider/runners/pull/1310)
+- Optimize git-blame [#1312](https://github.com/sider/runners/pull/1312)
+- Remove unused `Result::MissingFilesFailure` [#1315](https://github.com/sider/runners/pull/1315)
+
+## 0.30.0
+
+[Full diff](https://github.com/sider/runners/compare/0.29.3...0.30.0)
 
 New supported:
 
@@ -34,6 +43,7 @@ Misc:
 - Allow `location(start_line,start_column)` format [#1257](https://github.com/sider/runners/pull/1257)
 - Make deprecation warning messages more useful [#1292](https://github.com/sider/runners/pull/1292)
 - Prevent unexpected error when missing issue ID [#1301](https://github.com/sider/runners/pull/1301)
+- Avoid git-blame when base commit is not given [#1307](https://github.com/sider/runners/pull/1307)
 - **ESLint** Add `target` option instead of `dir` option [#1264](https://github.com/sider/runners/pull/1264)
 - **ESLint** Pre-install popular configs and plugins [#1271](https://github.com/sider/runners/pull/1271)
 - **ESLint** Update the default configuration [#1270](https://github.com/sider/runners/pull/1270)
