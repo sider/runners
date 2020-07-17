@@ -163,13 +163,17 @@ module Runners
         # Push a smoke test project to the bare directory
         smoke_dir = workdir.join("smoke").to_path
         sh! "git", "clone", "file://#{bare_dir}", smoke_dir, out: out
-        FileUtils.copy_entry "#{smoke_target}/.", smoke_dir
 
         Dir.chdir(smoke_dir) do
-          sh! "git", "commit", "--allow-empty", "-m", "initial commit", out: out
-          base_commit, _ = sh! "git", "rev-parse", "HEAD", out: out
+          File.write(".keep", "")
           sh! "git", "add", ".", out: out
-          sh! "git", "commit", "-m", "add all files", out: out
+          sh! "git", "commit", "-m", "initial commit", out: out
+          base_commit, _ = sh! "git", "rev-parse", "HEAD", out: out
+
+          FileUtils.copy_entry "#{smoke_target}/.", smoke_dir
+          sh! "git", "add", ".", out: out
+          sh! "git", "commit", "-m", "add all test files", out: out
+
           sh! "git", "push", out: out
           head_commit, _ = sh! "git", "rev-parse", "HEAD", out: out
 
