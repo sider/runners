@@ -21,11 +21,10 @@ module Runners
 
       let :success, object(guid: string, timestamp: string, type: literal("success"), issues: array(Issue.issue), analyzer: analyzer)
       let :failure, object(guid: string, timestamp: string, type: literal("failure"), message: string, analyzer: optional(analyzer))
-      let :missing_file_failure, object(guid: string, timestamp: string, type: literal("missing_files"), files: array(string))
       let :error, object(guid: string, timestamp: string, type: literal("error"), class: string, backtrace: array(string), inspect: string, analyzer: optional(analyzer))
 
       let :envelope, object(
-        result: enum(success, failure, missing_file_failure, error),
+        result: enum(success, failure, error),
         warnings: array(warning),
         ci_config: any?,
         version: string,
