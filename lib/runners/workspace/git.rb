@@ -55,6 +55,11 @@ module Runners
     end
 
     def remote_url
+      # For smoke test
+      if git_source.git_http_url.start_with? "file://"
+        return URI(git_source.git_http_url)
+      end
+
       @remote_url ||= URI.join(git_source.git_http_url, "#{git_source.owner}/#{git_source.repo}").tap do |uri|
         git_http_userinfo = git_source.git_http_userinfo
         uri.userinfo = git_http_userinfo if git_http_userinfo
