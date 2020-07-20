@@ -31,7 +31,7 @@ module Runners
 
       changes
         .changed_paths
-        .select { |path| is_source_file?(path) }
+        .select { |path| cpp_file?(path) }
         .map { |path| relative_path(working_dir / path, from: current_dir) }
         .reject { |path| path.to_s.start_with?("../") } # reject files outside the current_dir
         .each do |path|
