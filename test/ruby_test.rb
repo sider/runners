@@ -710,8 +710,7 @@ EOF
   end
 
   def test_install_gems_with_git_sources
-    with_workspace(head: data("foo.tgz"),
-                   ssh_key: data("ruby_private_gem_deploy_key").read) do |workspace|
+    with_workspace(ssh_key: data("ruby_private_gem_deploy_key").read) do |workspace|
       workspace.open do |git_ssh_path|
         processor = new_processor(workspace: workspace, git_ssh_path: git_ssh_path, config_yaml: <<~YAML)
           linter:

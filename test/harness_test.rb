@@ -16,13 +16,7 @@ class HarnessTest < Minitest::Test
 
   def with_harness(processor_class: TestProcessor)
     mktmpdir do |working_dir|
-      source = {
-        head: "cd33ab59ef3d75e54e6d49c000bc8f141d94d356",
-        git_http_url: "https://github.com",
-        owner: "sider",
-        repo: "runners_test",
-      }
-      with_runners_options_env(source: source) do
+      with_runners_options_env(source: new_source) do
         yield Harness.new(
           guid: "test-guid",
           processor_class: processor_class,
