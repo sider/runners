@@ -1,12 +1,12 @@
 > Explain a summary, purpose, or background for this change.
 
-> Link related issues, e.g. "Fix #<ISSUE_ID>", "Related to #<ISSUE_ID>", or "None."
+> Link related issues or pull requests, e.g. "Fix #<ISSUE_ID>", "Related to #<PULL_NUMBER>", or "None."
 
-> Check the following items.
+> Check the following items (remove a needless item).
 
 - [ ] Add a new [changelog](https://github.com/sider/runners/blob/master/CHANGELOG.md) entry if this change is notable.
 
-When adding a new runner (remove the list if needless):
+When adding a new runner:
 
 - [ ] Read and follow the [document](https://github.com/sider/runners/blob/master/docs/how-to-write-a-new-runner.md) for a new runner.
 - [ ] Add a new tool to [`analyzers.yml`](https://github.com/sider/runners/blob/master/analyzers.yml).
