@@ -17,7 +17,7 @@ class Runners::Workspace
   def extract: (Pathname, Pathname) -> void
   def archive_source: () -> Options::ArchiveSource
   def git_source: () -> Options::GitSource
-  def patches: () -> GitDiffParser::Patches?
+  def patches: () -> GitDiffParser::Patches
   def range_git_blame_info: (String, Integer, Integer) -> Array<GitBlameInfo>
 end
 
