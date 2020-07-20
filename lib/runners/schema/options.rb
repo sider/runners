@@ -3,8 +3,14 @@ module Runners
     Options = _ = StrongJSON.new do
       # @type self: Types::Options
 
-      let :source, enum(
-        object(head: string, base: string?, git_http_url: string, owner: string, repo: string, git_http_userinfo: string?, pull_number: number?),
+      let :source, object?(
+        head: string,
+        base: string?,
+        git_http_url: string,
+        git_http_userinfo: string?,
+        owner: string,
+        repo: string,
+        pull_number: number?,
       )
 
       let :payload, object(

@@ -16,7 +16,7 @@ class HarnessTest < Minitest::Test
     @trace_writer ||= new_trace_writer
   end
 
-  def with_options(head: data("foo.tgz"))
+  def with_options(head: "f63af751b6e4eea6f823bbfe5c8d44a55a5454b6")
     with_runners_options_env(source: { head: head }) do
       yield Runners::Options.new(StringIO.new, StringIO.new)
     end
