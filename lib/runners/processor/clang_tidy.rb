@@ -3,11 +3,7 @@ module Runners
     include CPlusPlus
 
     Schema = StrongJSON.new do
-      let :runner_config, Schema::BaseConfig.cplusplus.update_fields { |fields|
-        fields.merge!({
-          apt: enum?(string, array(string))
-        })
-      }
+      let :runner_config, Schema::BaseConfig.cplusplus
 
       let :issue, object(
         severity: string,
@@ -47,25 +43,6 @@ module Runners
     end
 
     private
-
-    def deploy_packages
-      # select development packages and report others as warning for security concerns
-      packages = Array(config_linter[:apt])
-        .select do |pkg|
-          if pkg.match?(/-dev(=.+)?$/)
-            true
-          else
-            add_warning "Installing the package `#{pkg}` is blocked.", file: config.path_name
-            false
-          end
-        end
-
-      if packages.empty?
-        trace_writer.message "No packages to install."
-      else
-        capture3!("sudo", "apt-get", "install", "-qq", "-y", "--no-install-recommends", *packages)
-      end
-    end
 
     def construct_result(stdout)
       # issue format

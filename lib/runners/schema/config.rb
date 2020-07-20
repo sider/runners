@@ -27,6 +27,7 @@ module Runners
 
       let :cplusplus, (base.update_fields { |fields|
         fields.merge!(
+          apt: enum?(string, array(string)),
           'include-path': enum?(string, array(string))
         )
       })
