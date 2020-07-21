@@ -26,8 +26,8 @@ module Runners
     DEFAULT_TARGET = ".".freeze
     DEFAULT_CONFIG_FILE = "goodcheck.yml".freeze
 
-    def analyzer_version
-      @analyzer_version ||= extract_version! ruby_analyzer_bin, "version"
+    def extract_version_option
+      "version"
     end
 
     def goodcheck_test
@@ -109,39 +109,19 @@ module Runners
       end
     end
 
-    def setup
-      ret = install_gems default_gem_specs, constraints: CONSTRAINTS do
-        yield
+    def setup(&block)
+      begin
+        install_gems default_gem_specs, constraints: CONSTRAINTS, &block
+      rescue InstallGemsFailure => exn
+        trace_writer.error exn.message
+        return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
       end
-
-      # NOTE: Exceptionally MissingFileFailure is treated as successful
-      if ret.instance_of? Results::MissingFilesFailure
-        trace_writer.error "File not found: goodcheck.yml"
-        add_warning(<<~MESSAGE)
-          Sider cannot find the required configuration file `goodcheck.yml`.
-          Please set up Goodcheck by following the instructions, or you can disable it in the repository settings.
-
-          - https://github.com/sider/goodcheck
-          - #{analyzer_doc}
-        MESSAGE
-        Results::Success.new(guid: guid, analyzer: analyzer)
-      else
-        ret
-      end
-    rescue InstallGemsFailure => exn
-      trace_writer.error exn.message
-      return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
     end
 
     def analyze(changes)
+      # NOTE: This check should be called after installing gems.
       if !config_linter[:config] && !File.exist?(DEFAULT_CONFIG_FILE)
-        add_warning <<~MSG, file: DEFAULT_CONFIG_FILE
-          Sider could not find the required configuration file `#{DEFAULT_CONFIG_FILE}`.
-          Please create the file according to the following documents:
-          - #{analyzer_github}
-          - #{analyzer_doc}
-        MSG
-        return Results::Success.new(guid: guid, analyzer: analyzer)
+        return missing_config_file_result(DEFAULT_CONFIG_FILE)
       end
 
       delete_unchanged_files(changes, except: ["*.yml", "*.yaml"])

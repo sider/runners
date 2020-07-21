@@ -143,4 +143,11 @@ class IssueTest < Minitest::Test
                    git_blame_info: { commit: "abe1cfc294c8d39de7484954bf8c3d7792fd8ad1", original_line: 137, final_line: 137, line_hash: "c57a7c8a63aa22b9aa40625f019fe097c3a23ab8" },
                  }, issue.as_json)
   end
+
+  def test_missing_id?
+    args = { message: "Foo", path: Pathname("foo.rb"), location: nil }
+    assert Issue.new(id: nil, **args).missing_id?
+    assert Issue.new(id: "", **args).missing_id?
+    refute Issue.new(id: "a", **args).missing_id?
+  end
 end

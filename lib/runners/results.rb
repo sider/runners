@@ -72,6 +72,19 @@ module Runners
           issue.add_git_blame_info(workspace)
         end
       end
+
+      def each_missing_id_warning
+        issues.each do |issue|
+          next unless issue.missing_id?
+
+          path = issue.path.to_path
+          line = issue&.location&.start_line || "-"
+          column = issue&.location&.start_column || "-"
+          message = issue.message
+
+          yield "Missing issue ID - #{path}:#{line}:#{column}: #{message}"
+        end
+      end
     end
 
     # Result to indicate that processing failed by some error.
@@ -97,30 +110,6 @@ module Runners
 
       def valid?
         super && message && ((a = analyzer) ? a.valid? : true)
-      end
-    end
-
-    # Result to indicate failure because of absent of files.
-    # At least one of given files must be present for analysis.
-    # Client programs may return this result.
-    class MissingFilesFailure < Base
-      # @dynamic files
-      attr_reader :files
-
-      def initialize(guid:, files:)
-        super(guid: guid)
-        @files = files
-      end
-
-      def as_json
-        super.tap do |json|
-          json[:type] = "missing_files"
-          json[:files] = files.map(&:to_s)
-        end
-      end
-
-      def valid?
-        super && !files.empty?
       end
     end
 

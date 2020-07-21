@@ -140,9 +140,8 @@ s.add_test(
   warnings: [
     {
       message: <<~MESSAGE.strip,
-        Sider cannot find the required configuration file(s): `phinder.yml`.
-        Please set up Phinder by following the instructions, or you can disable it in the repository settings.
-
+        Sider could not find the required configuration file `phinder.yml`.
+        Please create the file according to the following documents:
         - https://github.com/sider/phinder
         - https://help.sider.review/tools/php/phinder
       MESSAGE

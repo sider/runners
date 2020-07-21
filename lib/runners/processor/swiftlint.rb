@@ -26,8 +26,8 @@ module Runners
 
     register_config_schema(name: :swiftlint, schema: Schema.runner_config)
 
-    def analyzer_version
-      @analyzer_version ||= extract_version! analyzer_bin, 'version'
+    def extract_version_option
+      "version"
     end
 
     def setup

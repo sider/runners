@@ -32,11 +32,22 @@ module TestHelper
     end
   end
 
+  def new_source(**source)
+    {
+      head: "330716dcd50a7a2c7d8ff79d74035c05453528b4",
+      git_http_url: "https://github.com",
+      owner: "sider",
+      repo: "runners_test",
+      **source,
+    }
+  end
+
+  def base_commit
+    "cd33ab59ef3d75e54e6d49c000bc8f141d94d356"
+  end
+
   def with_workspace(ssh_key: nil, **source_params)
-    source = {
-      head: data("foo.tgz"),
-      **source_params
-    }.compact
+    source = new_source(**source_params)
 
     with_runners_options_env(source: source, ssh_key: ssh_key) do
       options = Runners::Options.new(StringIO.new, StringIO.new)

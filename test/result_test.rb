@@ -336,18 +336,4 @@ class ResultTest < Minitest::Test
                        analyzer: { name: "Foo", version: "1.2.3" },
                      })
   end
-
-  def test_missing_file_result
-    result = Results::MissingFilesFailure.new(guid: SecureRandom.uuid, files: [Pathname("querly.yml")])
-
-    assert result.valid?
-
-    assert_unifiable(result.as_json,
-                     {
-                      guid: result.guid,
-                      timestamp: result.timestamp.utc.iso8601,
-                      type: "missing_files",
-                      files: ["querly.yml"]
-                     })
-  end
 end

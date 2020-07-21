@@ -1,0 +1,3 @@
+linter:
+  clang_tidy:
+    apt: [libfastjson-dev=0.99.8-2, foobar, libgdbm-dev, bazqux-dev-bin=1.2.3-4]

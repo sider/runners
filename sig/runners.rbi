@@ -46,7 +46,6 @@ end
 
 type result = Runners::Results::Success
             | Runners::Results::Failure
-            | Runners::Results::MissingFilesFailure
             | Runners::Results::Error
 
 class Runners::Results::Base
@@ -66,17 +65,13 @@ class Runners::Results::Success < Runners::Results::Base
   def add_issue: (*Runners::Issue) -> void
   def filter_issues: (Changes) -> void
   def add_git_blame_info: (Workspace) -> void
+  def each_missing_id_warning: { (String) -> void } -> void
 end
 
 class Runners::Results::Failure < Runners::Results::Base
   attr_reader message: String
   attr_reader analyzer: Analyzer?
   def initialize: (guid: String, message: String, ?analyzer: Analyzer?) -> any
-end
-
-class Runners::Results::MissingFilesFailure < Runners::Results::Base
-  attr_reader files: Array<Pathname>
-  def initialize: (guid: String, files: Array<Pathname>) -> any
 end
 
 class Runners::Results::Error < Runners::Results::Base
@@ -119,8 +114,7 @@ class Runners::Processor
   def config_linter: () -> Hash<Symbol, any>
   def check_root_dir_exist: () -> result?
   def in_root_dir: <'x> { (Pathname) -> 'x } -> 'x
-  def ensure_files: (*Pathname) { (Pathname) -> result } -> result
-  def ensure_runner_config_schema: (any) { (any) -> result } -> result
+  def missing_config_file_result: (String) -> Results::Success
   def chdir: <'x> (Pathname) { (Pathname) -> 'x } -> 'x
   def current_dir: () -> Pathname
 
@@ -147,6 +141,7 @@ class Runners::Processor
   def analyzer_github: -> String
   def analyzer_bin: -> String
   def analyzer_version: -> String
+  def extract_version_option: () -> String
   def extract_version!: (String | Array<String>, ?(String | Array<String>), ?pattern: Regexp) -> String
   def config_field_path: (*_ToS) -> String
   def root_dir: -> Pathname

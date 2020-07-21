@@ -4,7 +4,20 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.29.3...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.30.0...HEAD)
+
+- **Brakeman** Syntax highlight for warning message [#1309](https://github.com/sider/runners/pull/1309)
+- **stylelint** Add `stylelint-order` to pre-installed list [#1310](https://github.com/sider/runners/pull/1310)
+- Optimize git-blame [#1312](https://github.com/sider/runners/pull/1312)
+- Remove unused `Result::MissingFilesFailure` [#1315](https://github.com/sider/runners/pull/1315)
+
+## 0.30.0
+
+[Full diff](https://github.com/sider/runners/compare/0.29.3...0.30.0)
+
+New supported:
+
+- **Clang-Tidy** [#1254](https://github.com/sider/runners/pull/1254)
 
 Updated environments:
 
@@ -29,6 +42,8 @@ Misc:
 - Increase :tries and :sleep of Retryable for git-fetch(1) [#1279](https://github.com/sider/runners/pull/1279)
 - Allow `location(start_line,start_column)` format [#1257](https://github.com/sider/runners/pull/1257)
 - Make deprecation warning messages more useful [#1292](https://github.com/sider/runners/pull/1292)
+- Prevent unexpected error when missing issue ID [#1301](https://github.com/sider/runners/pull/1301)
+- Avoid git-blame when base commit is not given [#1307](https://github.com/sider/runners/pull/1307)
 - **ESLint** Add `target` option instead of `dir` option [#1264](https://github.com/sider/runners/pull/1264)
 - **ESLint** Pre-install popular configs and plugins [#1271](https://github.com/sider/runners/pull/1271)
 - **ESLint** Update the default configuration [#1270](https://github.com/sider/runners/pull/1270)
@@ -36,6 +51,7 @@ Misc:
 - **Flake8** Support `target` and `config` options [#1287](https://github.com/sider/runners/pull/1287)
 - **GolangCI-Lint** Add `severity` and `replacement` to issue result [#1268](https://github.com/sider/runners/pull/1268)
 - **HAML-Lint** Add `target` option [#1265](https://github.com/sider/runners/pull/1265)
+- **HAML-Lint** Fix `line: 0` [#1306](https://github.com/sider/runners/pull/1306)
 - **Misspell** Support `ignore` option as array [#1255](https://github.com/sider/runners/pull/1255)
 - **PHP_CodeSniffer** Remove deprecated `version` option [#1291](https://github.com/sider/runners/pull/1291)
 - **PHPMD** Support the comma-separated list options as array [#1253](https://github.com/sider/runners/pull/1253)

@@ -24,17 +24,11 @@ module Runners
       "tyscan" => Constraint.new(">= 0.2.1", "< 1.0.0")
     }.freeze
 
-    def setup
-      if !(current_dir + 'tyscan.yml').exist? && config_linter[:config].nil?
-        msg = <<~MESSAGE.freeze
-          `tyscan.yml` does not exist in your repository.
+    DEFAULT_CONFIG_FILE = "tyscan.yml".freeze
 
-          To start performing analysis, `tyscan.yml` is required.
-          See also: #{analyzer_doc}
-        MESSAGE
-        trace_writer.error msg
-        add_warning msg
-        return Results::Success.new(guid: guid, analyzer: analyzer)
+    def setup
+      if !config_linter[:config] && !File.exist?(DEFAULT_CONFIG_FILE)
+        return missing_config_file_result(DEFAULT_CONFIG_FILE)
       end
 
       begin

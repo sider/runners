@@ -12,9 +12,6 @@ module Runners
       path.instance_of?(Pathname) or
         raise ArgumentError, "`path` must be a #{Pathname}: #{path.inspect}"
 
-      (id && !id.empty?) or
-        raise ArgumentError, "`id` must be required: #{id.inspect}"
-
       (message && !message.empty?) or
         raise ArgumentError, "`message` must be required: #{message.inspect}"
 
@@ -22,10 +19,16 @@ module Runners
 
       @path = path
       @location = location
-      @id = id
+      @missing_id = id.to_s.empty?
+      # @type var _: String
+      @id = _ = missing_id? ? Digest::SHA1.hexdigest(message) : id
       @message = message
       @links = links
       @object = object
+    end
+
+    def missing_id?
+      @missing_id
     end
 
     def ==(other)

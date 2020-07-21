@@ -26,8 +26,8 @@ module Runners
 
     DEFAULT_TARGET = ".".freeze
 
-    def analyzer_version
-      @analyzer_version ||= extract_version! analyzer_bin, '-v'
+    def extract_version_option
+      "-v"
     end
 
     def setup

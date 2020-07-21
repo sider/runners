@@ -1,9 +1,20 @@
 s = Runners::Testing::Smoke
 
+default_version = "8.0.0"
+
 s.add_test(
   "success",
   type: "success",
   issues: [
+    {
+      path: "readme.md",
+      location: { start_line: 5, start_column: 6 },
+      id: "2f2aa88b3c64e39930228cb265d844b1efc343d2",
+      message: "Numeric character references must be terminated by a semicolon",
+      links: [],
+      object: { severity: "warn" },
+      git_blame_info: nil
+    },
     {
       path: "readme.md",
       location: { start_line: 3, start_column: 1 },
@@ -23,10 +34,10 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "remark-lint", version: "8.0.0" }
+  analyzer: { name: "remark-lint", version: default_version }
 )
 
-s.add_test("no_files", type: "success", issues: [], analyzer: { name: "remark-lint", version: "8.0.0" })
+s.add_test("no_files", type: "success", issues: [], analyzer: { name: "remark-lint", version: default_version })
 
 s.add_test(
   "option_target",
@@ -51,7 +62,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "remark-lint", version: "8.0.0" }
+  analyzer: { name: "remark-lint", version: default_version }
 )
 
 s.add_test(
@@ -77,7 +88,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "remark-lint", version: "8.0.0" }
+  analyzer: { name: "remark-lint", version: default_version }
 )
 
 s.add_test(
@@ -94,7 +105,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "remark-lint", version: "8.0.0" }
+  analyzer: { name: "remark-lint", version: default_version }
 )
 
 s.add_test(
@@ -111,7 +122,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "remark-lint", version: "8.0.0" }
+  analyzer: { name: "remark-lint", version: default_version }
 )
 
 s.add_test(
@@ -137,7 +148,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "remark-lint", version: "8.0.0" }
+  analyzer: { name: "remark-lint", version: default_version }
 )
 
 s.add_test(
@@ -187,10 +198,10 @@ s.add_test(
   "broken_remarkrc",
   type: "failure",
   message: "2 error(s) reported. See the log for details.",
-  analyzer: { name: "remark-lint", version: "8.0.0" }
+  analyzer: { name: "remark-lint", version: default_version }
 )
 
-s.add_test("with_remark_lint_package", type: "success", issues: [], analyzer: { name: "remark-lint", version: "8.0.0" })
+s.add_test("with_remark_lint_package", type: "success", issues: [], analyzer: { name: "remark-lint", version: default_version })
 
 s.add_test(
   "without_remark_lint_package",
@@ -206,5 +217,5 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "remark-lint", version: "8.0.0" }
+  analyzer: { name: "remark-lint", version: default_version }
 )

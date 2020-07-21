@@ -25,12 +25,12 @@ s.add_test(
   warnings: [
     {
       message: <<~MESSAGE.strip,
-        `tyscan.yml` does not exist in your repository.
-
-        To start performing analysis, `tyscan.yml` is required.
-        See also: https://help.sider.review/tools/javascript/tyscan
+        Sider could not find the required configuration file `tyscan.yml`.
+        Please create the file according to the following documents:
+        - https://github.com/sider/TyScan
+        - https://help.sider.review/tools/javascript/tyscan
       MESSAGE
-      file: nil
+      file: "tyscan.yml"
     }
   ]
 )

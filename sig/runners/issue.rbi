@@ -9,11 +9,12 @@ class Runners::Issue
 
   def initialize: (path: Pathname,
                    location: Location?,
-                   id: String,
+                   id: String?,
                    message: String,
                    ?links: Array<String>,
                    ?object: any,
                    ?schema: any) -> void
+  def missing_id?: () -> bool
   def as_json: () -> any
   def add_git_blame_info: (Workspace) -> void
 end
