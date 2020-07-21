@@ -190,14 +190,14 @@ class ConfigTest < Minitest::Test
     end
   end
 
-  def test_ignore
+  def test_ignore_patterns
     mktmpdir do |path|
-      assert_equal [], Runners::Config.new(path).ignore
+      assert_equal [], Runners::Config.new(path).ignore_patterns
     end
 
     mktmpdir do |path|
       (path / "sider.yml").write("ignore: abc")
-      assert_equal %w[abc], Runners::Config.new(path).ignore
+      assert_equal %w[abc], Runners::Config.new(path).ignore_patterns
     end
 
     mktmpdir do |path|
@@ -206,7 +206,7 @@ class ConfigTest < Minitest::Test
           - "*.mp4"
           - docs/**/*.pdf
       YAML
-      assert_equal %w[*.mp4 docs/**/*.pdf], Runners::Config.new(path).ignore
+      assert_equal %w[*.mp4 docs/**/*.pdf], Runners::Config.new(path).ignore_patterns
     end
   end
 
