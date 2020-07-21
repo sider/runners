@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - Optimize git-blame [#1312](https://github.com/sider/runners/pull/1312)
 - Remove unused `Result::MissingFilesFailure` [#1315](https://github.com/sider/runners/pull/1315)
 - Avoid needless calculation of changed files [#1320](https://github.com/sider/runners/pull/1320)
+- Fix non-ascii filename on git-diff [#1323](https://github.com/sider/runners/pull/1323)
 
 ## 0.30.0
 
