@@ -1,0 +1,8 @@
+linter:
+  cppcheck:
+    root_dir: source
+    include-path:
+      - myinc/
+      - bar/include
+      - /usr/include/libfastjson
+      - baz/myinclude

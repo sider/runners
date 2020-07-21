@@ -831,3 +831,93 @@ s.add_test(
   ],
   analyzer: { name: "Cppcheck", version: default_version }
 )
+
+s.add_test(
+  "include_path",
+  type: "success",
+  issues: [
+    {
+      id: "arrayIndexOutOfBounds",
+      path: "source/test.c++",
+      location: { start_line: 9, start_column: 7 },
+      message: "Array 'buf3[33]' accessed at index 33, which is out of bounds.",
+      links: [],
+      object: {
+        severity: "error", verbose: nil, inconclusive: false, cwe: "788", location_info: "Array index out of bounds"
+      },
+      git_blame_info: nil
+    },
+    {
+      id: "arrayIndexOutOfBounds",
+      path: "source/サンプル/test.CPP",
+      location: { start_line: 10, start_column: 6 },
+      message: "Array 'buf[21]' accessed at index 21, which is out of bounds.",
+      links: [],
+      object: {
+        severity: "error", verbose: nil, inconclusive: false, cwe: "788", location_info: "Array index out of bounds"
+      },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "Cppcheck", version: default_version }
+)
+
+s.add_test(
+  "include_path_default",
+  type: "success",
+  issues: [
+    {
+      id: "arrayIndexOutOfBounds",
+      path: "source/foo/テスト.cxx",
+      location: { start_line: 8, start_column: 8 },
+      message: "Array 'buf[25]' accessed at index 25, which is out of bounds.",
+      links: [],
+      object: {
+        severity: "error", verbose: nil, inconclusive: false, cwe: "788", location_info: "Array index out of bounds"
+      },
+      git_blame_info: nil
+    },
+    {
+      id: "arrayIndexOutOfBounds",
+      path: "source/test.c",
+      location: { start_line: 10, start_column: 6 },
+      message: "Array 'buf[17]' accessed at index 17, which is out of bounds.",
+      links: [],
+      object: {
+        severity: "error", verbose: nil, inconclusive: false, cwe: "788", location_info: "Array index out of bounds"
+      },
+      git_blame_info: nil
+    },
+    {
+      id: "arrayIndexOutOfBounds",
+      path: "source/xuq/test.CC",
+      location: { start_line: 9, start_column: 4 },
+      message: "Array 's[25]' accessed at index 25, which is out of bounds.",
+      links: [],
+      object: {
+        severity: "error", verbose: nil, inconclusive: false, cwe: "788", location_info: "Array index out of bounds"
+      },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "Cppcheck", version: default_version }
+)
+
+s.add_test(
+  "config_string_values",
+  type: "success",
+  issues: [
+    {
+      id: "arrayIndexOutOfBounds",
+      path: "src/test.c",
+      location: { start_line: 9, start_column: 6 },
+      message: "Array 'buf[31]' accessed at index 31, which is out of bounds.",
+      links: [],
+      object: {
+        severity: "error", verbose: nil, inconclusive: false, cwe: "788", location_info: "Array index out of bounds"
+      },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "Cppcheck", version: default_version }
+)
