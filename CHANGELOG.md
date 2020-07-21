@@ -7,10 +7,11 @@ All notable changes to this project will be documented in this file.
 [Full diff](https://github.com/sider/runners/compare/0.30.0...HEAD)
 
 - **Brakeman** Syntax highlight for warning message [#1309](https://github.com/sider/runners/pull/1309)
+- **Cppcheck** Support `-I` option to handle include paths [#1314](https://github.com/sider/runners/pull/1314)
 - **stylelint** Add `stylelint-order` to pre-installed list [#1310](https://github.com/sider/runners/pull/1310)
 - Optimize git-blame [#1312](https://github.com/sider/runners/pull/1312)
 - Remove unused `Result::MissingFilesFailure` [#1315](https://github.com/sider/runners/pull/1315)
-- **Cppcheck** Support `-I` option to handle include paths [#1314](https://github.com/sider/runners/pull/1314)
+- Avoid needless calculation of changed files [#1320](https://github.com/sider/runners/pull/1320)
 
 ## 0.30.0
 
