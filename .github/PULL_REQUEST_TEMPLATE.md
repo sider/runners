@@ -1,6 +1,6 @@
 > Explain a summary, purpose, or background for this change.
 
-> Link related issues or pull requests, e.g. "Fix #<ISSUE_ID>", "Related to #<PULL_NUMBER>", or "None."
+> Link related issues or pull requests, e.g. `Fix #123`, `Related to #456`, or `None`.
 
 > Check the following items (please remove needless items).
 
@@ -15,4 +15,4 @@ If you are adding a new runner:
 - [ ] Provide option(s) that users can customize.
 - [ ] Write smoke test cases. E.g. all options, successful end, warnings, errors, etc.
 - [ ] Add a [CI setting](https://github.com/sider/runners/blob/master/.github/workflows/build.yml).
-- [ ] Write a [document](https://github.com/sider/sider-docs) and link the PR sider/sider-docs#<PULL_NUMBER>
+- [ ] Write a [document](https://github.com/sider/sider-docs) and link the pull request, e.g. `sider/sider-docs#789`

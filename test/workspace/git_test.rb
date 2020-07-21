@@ -87,7 +87,7 @@ class WorkspaceGitTest < Minitest::Test
   end
 
   def test_git_blame_info
-    with_workspace(base: base_commit) do |workspace|
+    with_workspace(head: "330716dcd50a7a2c7d8ff79d74035c05453528b4", base: "cd33ab59ef3d75e54e6d49c000bc8f141d94d356") do |workspace|
       workspace.send(:prepare_head_source, nil)
       actual = workspace.range_git_blame_info("README.md", 1, 2)
       expected = [

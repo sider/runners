@@ -16,8 +16,8 @@ class CLITest < Minitest::Test
   end
 
   def test_parsing_options
-    with_runners_options_env(source: { head: 'http://example.com/head' }) do
-      cli = CLI.new(argv: %w(--analyzer=rubocop test-guid), stdout: stdout, stderr: stderr)
+    with_runners_options_env(source: new_source) do
+      cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr)
 
       # Given parameters
       assert_equal "test-guid", cli.guid
@@ -27,22 +27,22 @@ class CLITest < Minitest::Test
   end
 
   def test_validate_options
-    with_runners_options_env(source: { head: 'http://example.com/head' }) do
+    with_runners_options_env(source: new_source) do
       assert_raises RuntimeError do
         # analyzer is missing
-        CLI.new(argv: %w(test-guid), stdout: stdout, stderr: stderr)
+        CLI.new(argv: ["test-guid"], stdout: stdout, stderr: stderr)
       end
 
       assert_raises RuntimeError do
         # Invalid analyzer
-        CLI.new(argv: %w(--analyzer=FOO test-guid), stdout: stdout, stderr: stderr)
+        CLI.new(argv: ["--analyzer=FOO", "test-guid"], stdout: stdout, stderr: stderr)
       end.tap do |error|
         assert_equal "Not found processor class with 'FOO'", error.message
       end
 
       assert_raises RuntimeError do
         # GUID is not set
-        CLI.new(argv: %w[--analyzer=rubocop], stdout: stdout, stderr: stderr)
+        CLI.new(argv: ["--analyzer=rubocop"], stdout: stdout, stderr: stderr)
       end.tap do |error|
         assert_equal "GUID is required", error.message
       end
@@ -73,74 +73,64 @@ class CLITest < Minitest::Test
   end
 
   def test_run
-    mktmpdir do |head_dir|
-      with_runners_options_env(source: { head: head_dir }) do
-        head_dir.join('sider.yml').write(<<~YAML)
-          ignore: 'special/files'
-        YAML
-        cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr)
-        cli.instance_variable_set(:@processor_class, TestProcessor)
-        cli.run
+    with_runners_options_env(source: new_source) do
+      cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr)
+      cli.instance_variable_set(:@processor_class, TestProcessor)
+      cli.run
 
-        # It write JSON objects to stdout
+      # It write JSON objects to stdout
 
-        output = stdout.string
-        reader = JSONSEQ::Reader.new(io: StringIO.new(output), decoder: -> (string) { JSON.parse(string, symbolize_names: true) })
-        objects = reader.each_object.to_a
+      output = stdout.string
+      reader = JSONSEQ::Reader.new(io: StringIO.new(output), decoder: -> (string) { JSON.parse(string, symbolize_names: true) })
+      objects = reader.each_object.to_a
 
-        assert objects.find { |hash| hash[:trace] == 'command_line' && hash[:command_line] == ["test", "command"] }
-        assert objects.find { |hash| hash[:trace] == 'status' && hash[:status] == 31 }
-        assert objects.find { |hash| hash[:trace] == 'warning' && hash[:message] == 'hogehogewarn' }
-        assert objects.find { |hash| hash[:warnings] == [{ message: 'hogehogewarn', file: nil }] }
-        assert objects.find { |hash| hash[:ci_config] == { linter: nil, ignore: "special/files", branches: nil } }
-      end
+      assert objects.any? { |hash| hash[:trace] == 'command_line' && hash[:command_line] == ["test", "command"] }
+      assert objects.any? { |hash| hash[:trace] == 'status' && hash[:status] == 31 }
+      assert objects.any? { |hash| hash[:trace] == 'warning' && hash[:message] == 'hogehogewarn' }
+      assert objects.any? { |hash| hash[:warnings] == [{ message: 'hogehogewarn', file: nil }] }
+      assert objects.any? { |hash| hash[:ci_config] == { linter: nil, ignore: [], branches: nil } }
     end
   end
 
   def test_run_when_sider_yml_is_broken
-    mktmpdir do |head_dir|
-      with_runners_options_env(source: { head: head_dir }) do
-        head_dir.join('sider.yml').write("1: 1:")
-        cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr)
-        cli.instance_variable_set(:@processor_class, TestProcessor)
-        cli.run
+    with_runners_options_env(source: new_source(head: "07aeaa0b17fb34063cbc3ed24d6d65f986c37884")) do
+      cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr)
+      cli.instance_variable_set(:@processor_class, TestProcessor)
+      cli.run
 
-        # It write JSON objects to stdout
+      # It write JSON objects to stdout
 
-        output = stdout.string
-        reader = JSONSEQ::Reader.new(io: StringIO.new(output), decoder: -> (string) { JSON.parse(string, symbolize_names: true) })
-        objects = reader.each_object.to_a
+      output = stdout.string
+      reader = JSONSEQ::Reader.new(io: StringIO.new(output), decoder: -> (string) { JSON.parse(string, symbolize_names: true) })
+      objects = reader.each_object.to_a
 
-        assert objects.find { |hash| hash.dig(:result, :type) == 'failure' }
-        assert objects.find { |hash| hash[:warnings] == [] }
-        assert objects.find { |hash| hash[:ci_config] == nil }
-      end
+      assert objects.any? { |hash| hash.dig(:result, :type) == 'failure' }
+      assert objects.any? { |hash| hash[:warnings] == [] }
+      assert objects.any? { |hash| hash[:ci_config] == nil }
     end
   end
 
   def test_run_when_download_error_happens
-    mktmpdir do |head_dir|
-      with_runners_options_env(source: { head: head_dir }) do
-        cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr)
-        cli.instance_variable_set(:@processor_class, TestProcessor)
-        any_instance_of(Runners::Workspace) do |instance|
-          mock(instance).open.with_any_args { raise Runners::Workspace::DownloadError }
-        end
-        cli.run
-
-        output = stdout.string
-        reader = JSONSEQ::Reader.new(io: StringIO.new(output), decoder: -> (string) { JSON.parse(string, symbolize_names: true) })
-        objects = reader.each_object.to_a
-
-        assert objects.find { |hash| hash.dig(:result, :type) == 'error' }
-        assert objects.find { |hash| hash.dig(:result, :class) == 'Runners::Workspace::DownloadError' }
+    with_runners_options_env(source: new_source) do
+      cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr)
+      cli.instance_variable_set(:@processor_class, TestProcessor)
+      any_instance_of(Runners::Workspace) do |instance|
+        mock(instance).open.with_any_args { raise Runners::Workspace::DownloadError }
       end
+      cli.run
+
+      output = stdout.string
+      reader = JSONSEQ::Reader.new(io: StringIO.new(output), decoder: -> (string) { JSON.parse(string, symbolize_names: true) })
+      objects = reader.each_object.to_a
+
+      assert objects.any? { |hash| hash.dig(:result, :type) == 'error' }
+      assert objects.any? { |hash| hash.dig(:result, :class) == 'Runners::Workspace::DownloadError' }
     end
   end
 
   def test_format_duration
-    with_runners_options_env(source: { head: 'http://example.com/head' }) do
-      cli = CLI.new(argv: %w[--analyzer=rubocop test-guid], stdout: stdout, stderr: stderr)
+    with_runners_options_env(source: new_source) do
+      cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr)
       assert_equal "0.0s", cli.format_duration(0.0)
       assert_equal "0.0s", cli.format_duration(0.000123)
       assert_equal "0.123s", cli.format_duration(0.1234567)
