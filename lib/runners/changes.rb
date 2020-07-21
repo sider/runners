@@ -17,7 +17,7 @@ module Runners
         .to_a
     end
 
-    def deletable?(dir, file, except, only)
+    private def deletable?(dir, file, except, only)
       flags = File::FNM_DOTMATCH | File::FNM_EXTGLOB
       if only.empty? || only.any? { |pattern| file.fnmatch?(pattern, flags) }
         if except.none? { |pattern| file.fnmatch?(pattern, flags) }
@@ -47,44 +47,28 @@ module Runners
       end
     end
 
-    def self.calculate(base_dir:, head_dir:, patches:)
-      return calculate_by_patches(head_dir, patches) if patches
+    def self.calculate(working_dir:)
+      new(changed_paths: all_files_in(working_dir).sort,
+          unchanged_paths: [],
+          patches: nil)
+    end
 
-      changed_paths = []
-      unchanged_paths = []
+    def self.calculate_by_patches(working_dir:, patches:)
+      all_files = all_files_in(working_dir)
+      changed_files = patches.files.map { |f| Pathname(f) }
 
-      head_dir.glob("**/*", File::FNM_DOTMATCH).filter(&:file?).each do |head_path|
-        relative_path = head_path.relative_path_from(head_dir)
-        base_path = base_dir / relative_path
+      new(changed_paths: changed_files.sort,
+          unchanged_paths: (all_files - changed_files).sort,
+          patches: patches)
+    end
 
-        if base_path.file?
-          head_digest = Digest::SHA1.new.file(head_path.to_s)
-          base_digest = Digest::SHA1.new.file(base_path.to_s)
-          if head_digest == base_digest
-            unchanged_paths << relative_path
-          else
-            changed_paths << relative_path
-          end
-        else
-          changed_paths << relative_path
+    def self.all_files_in(basedir)
+      basedir.glob("**/*", File::FNM_DOTMATCH).filter_map do |file|
+        if file.file? && !file.fnmatch?("**/.git/*", File::FNM_DOTMATCH)
+          file.relative_path_from(basedir)
         end
       end
-
-      new(changed_paths: changed_paths.sort!,
-          unchanged_paths: unchanged_paths.sort!,
-          patches: patches)
     end
-
-    def self.calculate_by_patches(working_dir, patches)
-      all_files = working_dir
-        .glob("**/*", File::FNM_DOTMATCH)
-        .filter_map { |f| f.relative_path_from(working_dir) if f.file? }
-
-      changed_paths = patches.files.map { |f| Pathname(f) }
-
-      new(changed_paths: changed_paths.sort!,
-          unchanged_paths: (all_files - changed_paths).sort!,
-          patches: patches)
-    end
+    private_class_method :all_files_in
   end
 end

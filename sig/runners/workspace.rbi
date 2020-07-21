@@ -15,7 +15,7 @@ class Runners::Workspace
   def decrypt: <'a> (Pathname, String?) { (Pathname) -> 'a } -> 'a
   def decrypt_by_openssl: (Pathname, String, Pathname) -> void
   def extract: (Pathname, Pathname) -> void
-  def patches: () -> GitDiffParser::Patches?
+  def patches: () -> GitDiffParser::Patches
   def range_git_blame_info: (String, Integer, Integer) -> Array<GitBlameInfo>
 end
 

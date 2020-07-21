@@ -30,8 +30,8 @@ class WorkspaceTest < Minitest::Test
         assert_path_exists workspace.working_dir / ".git"
         refute_path_exists workspace.working_dir / "README.markdown"
 
-        refute_empty changes.changed_paths
-        refute_empty changes.unchanged_paths
+        assert_equal Set[Pathname("README.md")], changes.changed_paths
+        assert_equal Set[], changes.unchanged_paths
       end
     end
   end
@@ -42,8 +42,8 @@ class WorkspaceTest < Minitest::Test
         assert_path_exists workspace.working_dir / "README.md"
         refute_path_exists workspace.working_dir / "README.markdown"
 
-        refute_empty changes.changed_paths
-        assert_empty changes.unchanged_paths
+        assert_equal Set[Pathname("README.md")], changes.changed_paths
+        assert_equal Set[], changes.unchanged_paths
       end
     end
   end

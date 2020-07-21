@@ -33,47 +33,48 @@ index 740c016..cc737a5 100644
     PATCH
   end
 
-  def test_changed_paths
-    mktmpdir do |base|
-      mktmpdir do |head|
-        (base / "unchanged_2.rb").write("hello world")
-        (head / "unchanged_2.rb").write("hello world")
+  def test_calculate
+    mktmpdir do |dir|
+      (dir / "changed_2.rb").write("hello world")
+      (dir / "changed_1.rb").write("hello world")
+      (dir / ".added_1.rb").write("")
+      (dir / ".git").mkpath
+      (dir / ".git" / "config").write("")
+      (dir / ".git" / "info").mkpath
+      (dir / ".git" / "info" / "refs").write("")
+      (dir / ".github").mkpath
+      (dir / ".github" / ".added_2.rb").write("")
+      (dir / "empty_dir").mkpath
 
-        (base / "unchanged_1.rb").write("hello world")
-        (head / "unchanged_1.rb").write("hello world")
+      changes = Changes.calculate(working_dir: dir)
 
-        (base / "changed_1.rb").write("Hello World")
-        (head / "changed_1.rb").write("Open sesame")
-
-        (head / ".added_1.rb").write("")
-
-        (head / ".github").mkpath
-        (head / ".github" / ".added_2.rb").write("")
-
-        (base / "empty_dir").mkpath
-        (head / "empty_dir").mkpath
-
-        changes = Changes.calculate(base_dir: base, head_dir: head, patches: nil)
-
-        assert_equal Set[Pathname(".added_1.rb"), Pathname(".github") / ".added_2.rb", Pathname("changed_1.rb")], changes.changed_paths
-        assert_equal Set[Pathname("unchanged_1.rb"), Pathname("unchanged_2.rb")], changes.unchanged_paths
-      end
+      assert_equal Set[Pathname(".added_1.rb"),
+                       Pathname(".github") / ".added_2.rb",
+                       Pathname("changed_1.rb"),
+                       Pathname("changed_2.rb")], changes.changed_paths
+      assert_equal Set[], changes.unchanged_paths
     end
   end
 
-  def test_changed_paths_with_empty_base
-    mktmpdir do |base|
-      mktmpdir do |head|
-        (head / "hello.rb").write("hello world")
-        (head / ".github").mkpath
-        (head / ".github" / "hi.rb").write("hi")
-        (head / "empty_dir").mkpath
+  def test_calculate_by_patches
+    mktmpdir do |dir|
+      (dir / "changed_2.rb").write("hello world")
+      (dir / "changed_1.rb").write("hello world")
+      (dir / ".added_1.rb").write("")
+      (dir / ".git").mkpath
+      (dir / ".git" / "config").write("")
+      (dir / ".github").mkpath
+      (dir / ".github" / ".added_2.rb").write("")
+      (dir / "empty_dir").mkpath
 
-        changes = Changes.calculate(base_dir: base, head_dir: head, patches: nil)
+      changes = Changes.calculate_by_patches(working_dir: dir, patches: patches)
 
-        assert_equal Set[Pathname(".github") / "hi.rb", Pathname("hello.rb")], changes.changed_paths
-        assert_equal Set[], changes.unchanged_paths
-      end
+      assert_equal Set[Pathname("group.rb"),
+                       Pathname("user.rb")], changes.changed_paths
+      assert_equal Set[Pathname(".added_1.rb"),
+                       Pathname(".github") / ".added_2.rb",
+                       Pathname("changed_1.rb"),
+                       Pathname("changed_2.rb")], changes.unchanged_paths
     end
   end
 
@@ -122,35 +123,56 @@ index 740c016..cc737a5 100644
   end
 
   def test_include
-    mktmpdir do |base|
-      mktmpdir do |head|
-        (head / "group.rb").write(<<~GROUP)
-          class Group
-            def a
-            end
+    mktmpdir do |dir|
+      (dir / "group.rb").write(<<~GROUP)
+        class Group
+          def a
           end
-        GROUP
-        (head / "user.rb").write(<<~USER)
-          class User
-            def foo
-            end
+        end
+      GROUP
+      (dir / "user.rb").write(<<~USER)
+        class User
+          def foo
           end
-        USER
+        end
+      USER
 
-        changes = Changes.calculate(base_dir: base, head_dir: head, patches: patches)
+      changes = Changes.calculate(working_dir: dir)
 
-        refute_includes changes, Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 1), id: "a", message: "a", links: [])
-        assert_includes changes, Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 2), id: "a", message: "a", links: [])
-        assert_includes changes, Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 3), id: "a", message: "a", links: [])
-        refute_includes changes, Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 4), id: "a", message: "a", links: [])
-        assert_includes changes, Issue.new(path: Pathname("user.rb"), location: nil, id: "a", message: "a", links: [])
-        refute_includes changes, Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 1), id: "a", message: "a", links: [])
-        assert_includes changes, Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 2), id: "a", message: "a", links: [])
-        refute_includes changes, Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 3), id: "a", message: "a", links: [])
-        refute_includes changes, Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 4), id: "a", message: "a", links: [])
-        refute_includes changes, Issue.new(path: Pathname("foo.rb"), location: nil, id: "a", message: "a", links: [])
-        refute_includes changes, Issue.new(path: Pathname("foo.rb"), location: Location.new(start_line: 2), id: "a", message: "a", links: [])
-      end
+      assert_includes changes, Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 1), id: "a", message: "a", links: [])
+      assert_includes changes, Issue.new(path: Pathname("user.rb"), location: nil, id: "a", message: "a", links: [])
+      refute_includes changes, Issue.new(path: Pathname("foo.rb"), location: nil, id: "a", message: "a", links: [])
+    end
+  end
+
+  def test_include_with_patches
+    mktmpdir do |dir|
+      (dir / "group.rb").write(<<~GROUP)
+        class Group
+          def a
+          end
+        end
+      GROUP
+      (dir / "user.rb").write(<<~USER)
+        class User
+          def foo
+          end
+        end
+      USER
+
+      changes = Changes.calculate_by_patches(working_dir: dir, patches: patches)
+
+      refute_includes changes, Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 1), id: "a", message: "a", links: [])
+      assert_includes changes, Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 2), id: "a", message: "a", links: [])
+      assert_includes changes, Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 3), id: "a", message: "a", links: [])
+      refute_includes changes, Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 4), id: "a", message: "a", links: [])
+      assert_includes changes, Issue.new(path: Pathname("user.rb"), location: nil, id: "a", message: "a", links: [])
+      refute_includes changes, Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 1), id: "a", message: "a", links: [])
+      assert_includes changes, Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 2), id: "a", message: "a", links: [])
+      refute_includes changes, Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 3), id: "a", message: "a", links: [])
+      refute_includes changes, Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 4), id: "a", message: "a", links: [])
+      refute_includes changes, Issue.new(path: Pathname("foo.rb"), location: nil, id: "a", message: "a", links: [])
+      refute_includes changes, Issue.new(path: Pathname("foo.rb"), location: Location.new(start_line: 2), id: "a", message: "a", links: [])
     end
   end
 end

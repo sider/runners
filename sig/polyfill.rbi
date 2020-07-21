@@ -39,10 +39,12 @@ end
 
 extension Module (Polyfill)
   def private: (*any) -> void
+  def private_class_method: (*Symbol) -> void
   def name: -> String
   def instance_method: (Symbol) -> UnboundMethod
   def define_method: (Symbol) { () -> any } -> Symbol
   def method_defined?: (Symbol, ?bool) -> bool
+  def private_constant: (*Symbol) -> self
 end
 
 extension String (Polyfill)
