@@ -12,15 +12,6 @@ class WorkspaceTest < Minitest::Test
       workspace = Workspace.prepare(options: options, trace_writer: new_trace_writer(filter: filter), working_dir: Pathname("/"))
       assert_instance_of Workspace::Git, workspace
     end
-
-    with_runners_options_env(source: { head: "ftp:///" }) do
-      options = Runners::Options.new(StringIO.new, StringIO.new)
-      filter = Runners::SensitiveFilter.new(options: options)
-      error = assert_raises(ArgumentError) do
-        Workspace.prepare(options: options, trace_writer: new_trace_writer(filter: filter), working_dir: Pathname("/"))
-      end
-      assert_equal "The specified options #{options.inspect} is not supported", error.message
-    end
   end
 
   def test_open

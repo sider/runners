@@ -5,8 +5,7 @@ module Runners
     class DownloadError < SystemError; end
 
     def self.prepare(options:, working_dir:, trace_writer:)
-      source = options.source
-      case source
+      case options.source
       when Options::GitSource
         Workspace::Git.new(options: options, working_dir: working_dir, trace_writer: trace_writer)
       else
