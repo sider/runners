@@ -63,16 +63,17 @@ class WorkspaceGitTest < Minitest::Test
     end
   end
 
-  def test_patches_returns_nil_because_base_is_nil
-    with_workspace do |workspace|
+  def test_patches_returns_nil
+    with_workspace(base: nil) do |workspace|
       assert_nil workspace.send(:patches)
     end
   end
 
-  def test_patches_returns_patches
-    with_workspace(base: base_commit) do |workspace|
+  def test_patches
+    with_workspace(head: "836880fdd04e5e1d7d82ed17dae838a16cfa50b2", base: base_commit) do |workspace|
       workspace.send(:prepare_head_source, nil)
-      assert_instance_of GitDiffParser::Patches, workspace.send(:patches)
+      patches = workspace.send(:patches)
+      assert_equal ["README.md", "sider.yml", "てすと.txt"], patches.files
     end
   end
 
