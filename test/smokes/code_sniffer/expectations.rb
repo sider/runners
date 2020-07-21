@@ -2,6 +2,8 @@ require_relative "phpcs3/expectations.rb"
 
 s = Runners::Testing::Smoke
 
+default_version = "3.5.5"
+
 s.add_test(
   "success",
   type: "success",
@@ -16,7 +18,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "PHP_CodeSniffer", version: "3.5.5" }
+  analyzer: { name: "PHP_CodeSniffer", version: default_version }
 )
 
 s.add_test(
@@ -33,7 +35,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "PHP_CodeSniffer", version: "3.5.5" },
+  analyzer: { name: "PHP_CodeSniffer", version: default_version },
   warnings: [
     {
       message: /The `linter.code_sniffer.options` option is deprecated/,
@@ -42,11 +44,7 @@ s.add_test(
   ]
 )
 
-# Regression test for large output
-# See https://github.com/sideci/runner_code_sniffer/pull/27
-s.add_test("sideci_php_sandbox", type: "success", issues: :_, analyzer: { name: "PHP_CodeSniffer", version: "3.5.5" })
-
-s.add_test("with_php_version", type: "success", issues: :_, analyzer: { name: "PHP_CodeSniffer", version: "3.5.5" })
+s.add_test("with_php_version", type: "success", issues: :_, analyzer: { name: "PHP_CodeSniffer", version: default_version })
 
 s.add_test(
   "broken_sideci_yml",
@@ -69,7 +67,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "PHP_CodeSniffer", version: "3.5.5" }
+  analyzer: { name: "PHP_CodeSniffer", version: default_version }
 )
 
 s.add_test(
@@ -95,5 +93,5 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "PHP_CodeSniffer", version: "3.5.5" }
+  analyzer: { name: "PHP_CodeSniffer", version: default_version }
 )

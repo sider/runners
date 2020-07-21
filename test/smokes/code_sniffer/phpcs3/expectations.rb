@@ -1,5 +1,7 @@
 s = Runners::Testing::Smoke
 
+default_version = "3.5.5"
+
 s.add_test(
   "phpcs3/success",
   type: "success",
@@ -14,7 +16,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "PHP_CodeSniffer", version: "3.5.5" }
+  analyzer: { name: "PHP_CodeSniffer", version: default_version }
 )
 
 s.add_test(
@@ -31,7 +33,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "PHP_CodeSniffer", version: "3.5.5" }
+  analyzer: { name: "PHP_CodeSniffer", version: default_version }
 )
 
 s.add_test(
@@ -57,7 +59,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "PHP_CodeSniffer", version: "3.5.5" }
+  analyzer: { name: "PHP_CodeSniffer", version: default_version }
 )
 
 s.add_test(
@@ -110,7 +112,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "PHP_CodeSniffer", version: "3.5.5" }
+  analyzer: { name: "PHP_CodeSniffer", version: default_version }
 )
 
 s.add_test(
@@ -137,7 +139,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "PHP_CodeSniffer", version: "3.5.5" }
+  analyzer: { name: "PHP_CodeSniffer", version: default_version }
 )
 
 s.add_test(
@@ -181,10 +183,10 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "PHP_CodeSniffer", version: "3.5.5" }
+  analyzer: { name: "PHP_CodeSniffer", version: default_version }
 )
 
 s.add_test(
   "phpcs3/with_php_version",
-  type: "success", issues: :_, analyzer: { name: "PHP_CodeSniffer", version: "3.5.5" }
+  type: "success", issues: :_, analyzer: { name: "PHP_CodeSniffer", version: default_version }
 )
