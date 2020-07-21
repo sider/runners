@@ -185,7 +185,7 @@ module Runners
         debug = ENV["DEBUG"]
 
         if debug
-          out.puts Rainbow("$ ").green.to_s + command.join(" ")
+          out.puts Rainbow("$ ").green.to_s + command.map { |s| s.include?(" ") ? "'#{s}'" : s }.join(" ")
         end
 
         stdout_str, stderr_str, status = Open3.capture3(*command)
