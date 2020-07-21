@@ -54,10 +54,6 @@ s.add_test(
   ]
 )
 
-# Regression test for large output
-# See https://github.com/sideci/runner_code_sniffer/pull/27
-s.add_test("sideci_php_sandbox", type: "success", issues: :_, analyzer: { name: "PHP_CodeSniffer", version: default_version })
-
 s.add_test("with_php_version", type: "success", issues: :_, analyzer: { name: "PHP_CodeSniffer", version: default_version })
 
 s.add_test(
