@@ -13,7 +13,7 @@ module Runners
     register_config_schema(name: :clang_tidy, schema: Schema.runner_config)
 
     def setup
-      deploy_packages
+      install_apt_packages
       yield
     end
 

@@ -1,7 +1,7 @@
 module Runners::CPlusPlus : Processor
   def config_include_path: () -> Array<String>
   def cpp_file?: (Pathname) -> bool
-  def deploy_packages: () -> any
+  def install_apt_packages: () -> any
 
   # private
   def find_paths_containing_headers: () -> Array<String>

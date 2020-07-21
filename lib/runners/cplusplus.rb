@@ -14,7 +14,9 @@ module Runners
       path.fnmatch?(CPP_SOURCES_GLOB, File::FNM_EXTGLOB | File::FNM_CASEFOLD)
     end
 
-    def deploy_packages
+    def install_apt_packages
+      trace_writer.message "Installing apt packages..."
+
       # select development packages and report others as warning for security concerns
       packages = Array(config_linter[:apt])
         .select do |pkg|
@@ -27,7 +29,7 @@ module Runners
         end
 
       if packages.empty?
-        trace_writer.message "No packages to install."
+        trace_writer.message "No apt packages to install."
       else
         capture3!("sudo", "apt-get", "install", "-qq", "-y", "--no-install-recommends", *packages)
       end
