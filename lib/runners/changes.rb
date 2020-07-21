@@ -64,7 +64,7 @@ module Runners
 
     def self.all_files_in(basedir)
       basedir.glob("**/*", File::FNM_DOTMATCH).filter_map do |file|
-        if file.file? && !file.fnmatch?("**/.git/**", File::FNM_DOTMATCH)
+        if file.file? && !file.fnmatch?("**/.git/*", File::FNM_DOTMATCH)
           file.relative_path_from(basedir)
         end
       end

@@ -40,6 +40,8 @@ index 740c016..cc737a5 100644
       (dir / ".added_1.rb").write("")
       (dir / ".git").mkpath
       (dir / ".git" / "config").write("")
+      (dir / ".git" / "info").mkpath
+      (dir / ".git" / "info" / "refs").write("")
       (dir / ".github").mkpath
       (dir / ".github" / ".added_2.rb").write("")
       (dir / "empty_dir").mkpath
