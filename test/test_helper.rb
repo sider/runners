@@ -34,7 +34,7 @@ module TestHelper
 
   def new_source(**source)
     {
-      head: "330716dcd50a7a2c7d8ff79d74035c05453528b4",
+      head: "6ba85479fc406a64b7202f7bc3ea8da3ada93084",
       git_http_url: "https://github.com",
       owner: "sider",
       repo: "runners_test",

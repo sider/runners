@@ -16,7 +16,7 @@ class HarnessTest < Minitest::Test
 
   def with_harness(processor_class: TestProcessor)
     mktmpdir do |working_dir|
-      with_runners_options_env(source: new_source) do
+      with_runners_options_env(source: new_source(head: "330716dcd50a7a2c7d8ff79d74035c05453528b4")) do
         yield Harness.new(
           guid: "test-guid",
           processor_class: processor_class,
@@ -162,38 +162,6 @@ class HarnessTest < Minitest::Test
       assert_instance_of Harness::InvalidResult, result.exception
       assert_equal "Invalid result: #{result.exception.result.inspect}", result.exception.message
       assert_equal [], trace_writer.writer
-    end
-  end
-
-  def test_setup_analyze
-    processor = Class.new(Processor) do
-      def analyzer_id
-        'test'
-      end
-
-      def analyzer_name
-        'Test'
-      end
-
-      def analyzer_version
-        '0.1.3'
-      end
-
-      def setup
-        (current_dir + "touch").write("#setup should be called before #analyze")
-        yield
-      end
-
-      def analyze(changes)
-        (current_dir + "touch").file? or raise
-        Results::Success.new(guid: guid, analyzer: analyzer)
-      end
-    end
-
-    with_harness do |harness|
-      result = harness.run
-      assert_instance_of Results::Success, result
-      refute trace_writer.writer.find { |record| record[:message]&.match(/\ADeleting specified files via the `ignore` option/) }
     end
   end
 

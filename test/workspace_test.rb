@@ -24,7 +24,7 @@ class WorkspaceTest < Minitest::Test
   end
 
   def test_open
-    with_workspace(base: base_commit) do |workspace|
+    with_workspace(head: "330716dcd50a7a2c7d8ff79d74035c05453528b4", base: "cd33ab59ef3d75e54e6d49c000bc8f141d94d356") do |workspace|
       workspace.open do |_git_ssh_path, changes|
         assert_path_exists workspace.working_dir / "README.md"
         assert_path_exists workspace.working_dir / ".git"
@@ -37,7 +37,7 @@ class WorkspaceTest < Minitest::Test
   end
 
   def test_open_without_base
-    with_workspace(base: nil) do |workspace|
+    with_workspace(head: "330716dcd50a7a2c7d8ff79d74035c05453528b4", base: nil) do |workspace|
       workspace.open do |_git_ssh_path, changes|
         assert_path_exists workspace.working_dir / "README.md"
         refute_path_exists workspace.working_dir / "README.markdown"
