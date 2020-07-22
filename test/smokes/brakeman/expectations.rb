@@ -14,7 +14,9 @@ s.add_test(
         "Rails 4.2.7 `content_tag` does not escape double quotes in attribute values (CVE-2016-6316). Upgrade to Rails 4.2.7.1",
       links: %w[https://groups.google.com/d/msg/ruby-security-ann/8B2iV2tPRSE/JkjCJkSoCgAJ],
       object: { severity: "Medium" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "667878ceb84268d96f51ee7b50cfa175ae86fe58", original_line: 81, final_line: 81
+      }
     },
     {
       path: "Gemfile.lock",
@@ -23,7 +25,9 @@ s.add_test(
       message: "loofah gem 2.0.3 is vulnerable (CVE-2018-8048). Upgrade to 2.2.1",
       links: %w[https://github.com/flavorjones/loofah/issues/144],
       object: { severity: "Medium" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "069308f321a2c3211a9df63a042da0612e168be7", original_line: 66, final_line: 66
+      }
     },
     {
       path: "Gemfile.lock",
@@ -32,7 +36,9 @@ s.add_test(
       message: "rails-html-sanitizer 1.0.3 is vulnerable (CVE-2018-3741). Upgrade to rails-html-sanitizer 1.0.4",
       links: %w[https://groups.google.com/d/msg/rubyonrails-security/tP7W3kLc5u4/uDy2Br7xBgAJ],
       object: { severity: "Medium" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "a8505d73b4be31c3c77772285bdc80b3f0c22b89", original_line: 98, final_line: 98
+      }
     },
     {
       path: "Gemfile.lock",
@@ -41,7 +47,9 @@ s.add_test(
       message: "Rails 4.2.7 contains a SQL injection vulnerability (CVE-2016-6317). Upgrade to Rails 4.2.7.1",
       links: %w[https://groups.google.com/d/msg/ruby-security-ann/WccgKSKiPZA/9DrsDVSoCgAJ],
       object: { severity: "High" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "667878ceb84268d96f51ee7b50cfa175ae86fe58", original_line: 81, final_line: 81
+      }
     }
   ],
   analyzer: { name: "Brakeman", version: default_version }
@@ -59,7 +67,9 @@ s.add_test(
         "Rails 4.2.7 `content_tag` does not escape double quotes in attribute values (CVE-2016-6316). Upgrade to Rails 4.2.7.1",
       links: %w[https://groups.google.com/d/msg/ruby-security-ann/8B2iV2tPRSE/JkjCJkSoCgAJ],
       object: { severity: "Medium" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "667878ceb84268d96f51ee7b50cfa175ae86fe58", original_line: 81, final_line: 81
+      }
     },
     {
       path: "rails_app/Gemfile.lock",
@@ -68,7 +78,9 @@ s.add_test(
       message: "loofah gem 2.0.3 is vulnerable (CVE-2018-8048). Upgrade to 2.2.1",
       links: %w[https://github.com/flavorjones/loofah/issues/144],
       object: { severity: "Medium" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "069308f321a2c3211a9df63a042da0612e168be7", original_line: 66, final_line: 66
+      }
     },
     {
       path: "rails_app/Gemfile.lock",
@@ -77,7 +89,9 @@ s.add_test(
       message: "rails-html-sanitizer 1.0.3 is vulnerable (CVE-2018-3741). Upgrade to rails-html-sanitizer 1.0.4",
       links: %w[https://groups.google.com/d/msg/rubyonrails-security/tP7W3kLc5u4/uDy2Br7xBgAJ],
       object: { severity: "Medium" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "a8505d73b4be31c3c77772285bdc80b3f0c22b89", original_line: 98, final_line: 98
+      }
     },
     {
       path: "rails_app/Gemfile.lock",
@@ -86,7 +100,9 @@ s.add_test(
       message: "Rails 4.2.7 contains a SQL injection vulnerability (CVE-2016-6317). Upgrade to Rails 4.2.7.1",
       links: %w[https://groups.google.com/d/msg/ruby-security-ann/WccgKSKiPZA/9DrsDVSoCgAJ],
       object: { severity: "High" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "667878ceb84268d96f51ee7b50cfa175ae86fe58", original_line: 81, final_line: 81
+      }
     }
   ],
   analyzer: { name: "Brakeman", version: default_version }
@@ -121,7 +137,9 @@ s.add_test(
         "Rails 4.2.7 content_tag does not escape double quotes in attribute values (CVE-2016-6316). Upgrade to 4.2.7.1",
       links: %w[https://groups.google.com/d/msg/ruby-security-ann/8B2iV2tPRSE/JkjCJkSoCgAJ],
       object: { severity: "Medium" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "667878ceb84268d96f51ee7b50cfa175ae86fe58", original_line: 63, final_line: 63
+      }
     },
     {
       path: "Gemfile.lock",
@@ -130,7 +148,9 @@ s.add_test(
       message: "Rails 4.2.7 contains a SQL injection vulnerability (CVE-2016-6317). Upgrade to 4.2.7.1",
       links: %w[https://groups.google.com/d/msg/ruby-security-ann/WccgKSKiPZA/9DrsDVSoCgAJ],
       object: { severity: "High" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "667878ceb84268d96f51ee7b50cfa175ae86fe58", original_line: 63, final_line: 63
+      }
     }
   ],
   analyzer: { name: "Brakeman", version: "4.0.0" }
@@ -150,7 +170,9 @@ s.add_test(
         "Rails 4.2.7 `content_tag` does not escape double quotes in attribute values (CVE-2016-6316). Upgrade to Rails 4.2.7.1",
       links: %w[https://groups.google.com/d/msg/ruby-security-ann/8B2iV2tPRSE/JkjCJkSoCgAJ],
       object: { severity: "Medium" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "667878ceb84268d96f51ee7b50cfa175ae86fe58", original_line: 63, final_line: 63
+      }
     },
     {
       path: "Gemfile.lock",
@@ -159,7 +181,9 @@ s.add_test(
       message: "Rails 4.2.7 contains a SQL injection vulnerability (CVE-2016-6317). Upgrade to Rails 4.2.7.1",
       links: %w[https://groups.google.com/d/msg/ruby-security-ann/WccgKSKiPZA/9DrsDVSoCgAJ],
       object: { severity: "High" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "667878ceb84268d96f51ee7b50cfa175ae86fe58", original_line: 63, final_line: 63
+      }
     }
   ],
   analyzer: { name: "Brakeman", version: "4.4.0" }
@@ -176,7 +200,9 @@ s.add_test(
       message: "Hardcoded value for `SECRET` in source code",
       links: %w[https://brakemanscanner.org/docs/warning_types/authentication/],
       object: { severity: "Medium" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "c12a13c2c8bf957567e1437f11fd7d5493ca348d", original_line: 2, final_line: 2
+      }
     }
   ],
   analyzer: { name: "Brakeman", version: default_version }

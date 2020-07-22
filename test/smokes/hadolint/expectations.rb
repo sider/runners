@@ -13,7 +13,9 @@ s.add_test(
       location: { start_line: 7, start_column: 1 },
       message: "Use only an allowed registry in the FROM image",
       object: { severity: "error" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "278b3d6f700478d9b4f4aa83d7f28c41c3327af2", original_line: 7, final_line: 7
+      }
     },
     {
       id: "SC2028",
@@ -22,7 +24,9 @@ s.add_test(
       location: { start_line: 10, start_column: 1 },
       message: "echo may not expand escape sequences. Use printf.",
       object: { severity: "info" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "70c4be007ce1997b606c977d7c7848b2cde751d5", original_line: 10, final_line: 10
+      }
     }
   ],
   analyzer: { name: "hadolint", version: default_version }
@@ -39,7 +43,9 @@ s.add_test(
       location: { start_line: 3, start_column: 1 },
       message: "Last USER should not be root",
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "da2e7862fe70b923317ff6e1618427fe9042e2f0", original_line: 3, final_line: 3
+      }
     },
     {
       id: "DL3003",
@@ -48,7 +54,9 @@ s.add_test(
       location: { start_line: 4, start_column: 1 },
       message: "Use WORKDIR to switch to a directory",
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "5ce64e3cdf80180d43ccdc2ad8ca56e7a3d5d678", original_line: 4, final_line: 4
+      }
     },
     {
       id: "SC2028",
@@ -57,7 +65,9 @@ s.add_test(
       location: { start_line: 6, start_column: 1 },
       message: "echo may not expand escape sequences. Use printf.",
       object: { severity: "info" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "70c4be007ce1997b606c977d7c7848b2cde751d5", original_line: 6, final_line: 6
+      }
     }
   ],
   analyzer: { name: "hadolint", version: default_version }
@@ -74,7 +84,9 @@ s.add_test(
       location: { start_line: 3, start_column: 1 },
       message: "Last USER should not be root",
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "da2e7862fe70b923317ff6e1618427fe9042e2f0", original_line: 3, final_line: 3
+      }
     },
     {
       id: "DL3002",
@@ -83,7 +95,9 @@ s.add_test(
       location: { start_line: 3, start_column: 1 },
       message: "Last USER should not be root",
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "da2e7862fe70b923317ff6e1618427fe9042e2f0", original_line: 3, final_line: 3
+      }
     },
     {
       id: "DL3002",
@@ -92,7 +106,9 @@ s.add_test(
       location: { start_line: 3, start_column: 1 },
       message: "Last USER should not be root",
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "da2e7862fe70b923317ff6e1618427fe9042e2f0", original_line: 3, final_line: 3
+      }
     }
   ],
   analyzer: { name: "hadolint", version: default_version }
@@ -120,7 +136,9 @@ s.add_test(
       location: { start_line: 4, start_column: 1 },
       message: "Use only an allowed registry in the FROM image",
       object: { severity: "error" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "278b3d6f700478d9b4f4aa83d7f28c41c3327af2", original_line: 4, final_line: 4
+      }
     }
   ],
   analyzer: { name: "hadolint", version: default_version }
@@ -137,7 +155,9 @@ s.add_test(
       location: { start_line: 7, start_column: 1 },
       message: "Use only an allowed registry in the FROM image",
       object: { severity: "error" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "278b3d6f700478d9b4f4aa83d7f28c41c3327af2", original_line: 7, final_line: 7
+      }
     }
   ],
   analyzer: { name: "hadolint", version: default_version }

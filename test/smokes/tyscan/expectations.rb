@@ -1,5 +1,7 @@
 s = Runners::Testing::Smoke
 
+default_version = "0.2.1"
+
 s.add_test(
   "success",
   type: "success",
@@ -11,10 +13,12 @@ s.add_test(
       message: "Note that the `name` is not full name, but nickname",
       links: [],
       object: { id: "com.example.user_name", message: "Note that the `name` is not full name, but nickname" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "f2ac2b1c90b987577202ad96cd4660145c5ae6ff", original_line: 14, final_line: 14
+      }
     }
   ],
-  analyzer: { name: "TyScan", version: "0.2.1" }
+  analyzer: { name: "TyScan", version: default_version }
 )
 
 s.add_test(
@@ -46,7 +50,9 @@ s.add_test(
       message: "Note that the `name` is not full name, but nickname",
       links: [],
       object: { id: "com.example.user_name", message: "Note that the `name` is not full name, but nickname" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "f2ac2b1c90b987577202ad96cd4660145c5ae6ff", original_line: 14, final_line: 14
+      }
     }
   ],
   analyzer: { name: "TyScan", version: "0.3.1" }
@@ -70,7 +76,9 @@ s.add_test(
       message: "Note that the `name` is not full name, but nickname",
       links: [],
       object: { id: "com.example.user_name", message: "Note that the `name` is not full name, but nickname" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "f2ac2b1c90b987577202ad96cd4660145c5ae6ff", original_line: 14, final_line: 14
+      }
     }
   ],
   analyzer: { name: "TyScan", version: "0.3.1" }
@@ -80,7 +88,7 @@ s.add_test(
   "invalid_pattern",
   type: "failure",
   message: "TyScan was failed with the exit status 1 since an unexpected error occurred.",
-  analyzer: { name: "TyScan", version: "0.2.1" },
+  analyzer: { name: "TyScan", version: default_version },
   warnings: [{ message: "`tyscan test` failed. It may cause an unintended match.", file: "tyscan.yml" }]
 )
 
@@ -95,7 +103,9 @@ s.add_test(
       message: "Note that the `name` is not full name, but nickname",
       links: [],
       object: { id: "com.example.user_name", message: "Note that the `name` is not full name, but nickname" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "f2ac2b1c90b987577202ad96cd4660145c5ae6ff", original_line: 14, final_line: 14
+      }
     },
     {
       path: "frontend/src/index.tsx",
@@ -104,10 +114,12 @@ s.add_test(
       message: "Note that the `name` is not full name, but nickname",
       links: [],
       object: { id: "com.example.user_name", message: "Note that the `name` is not full name, but nickname" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "f2ac2b1c90b987577202ad96cd4660145c5ae6ff", original_line: 14, final_line: 14
+      }
     }
   ],
-  analyzer: { name: "TyScan", version: "0.2.1" }
+  analyzer: { name: "TyScan", version: default_version }
 )
 
 s.add_test(
@@ -121,10 +133,12 @@ s.add_test(
       message: "Note that the `name` is not full name, but nickname",
       links: [],
       object: { id: "com.example.user_name", message: "Note that the `name` is not full name, but nickname" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "f2ac2b1c90b987577202ad96cd4660145c5ae6ff", original_line: 14, final_line: 14
+      }
     }
   ],
-  analyzer: { name: "TyScan", version: "0.2.1" },
+  analyzer: { name: "TyScan", version: default_version },
   warnings: [{ message: "`tyscan test` failed. It may cause an unintended match.", file: "tyscan.yml" }]
 )
 
@@ -133,14 +147,16 @@ s.add_test(
   type: "success",
   issues: [
     {
-      object: { id: "smoke.jsx", message: "Est-ce que nous avons confirmé français au le `id`." },
-      git_blame_info: nil,
       message: "Est-ce que nous avons confirmé français au le `id`.",
       links: [],
       id: "smoke.jsx",
       path: "index.tsx",
-      location: { start_line: 12, start_column: 7, end_line: 12, end_column: 43 }
+      location: { start_line: 12, start_column: 7, end_line: 12, end_column: 43 },
+      object: { id: "smoke.jsx", message: "Est-ce que nous avons confirmé français au le `id`." },
+      git_blame_info: {
+        commit: :_, line_hash: "1d2b2dfee020f2d6f386721830fec975d4d38953", original_line: 12, final_line: 12
+      }
     }
   ],
-  analyzer: { name: "TyScan", version: "0.2.1" }
+  analyzer: { name: "TyScan", version: default_version }
 )

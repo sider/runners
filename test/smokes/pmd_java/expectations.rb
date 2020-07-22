@@ -14,7 +14,9 @@ s.add_test(
       path: "src/Hello.java",
       location: { start_line: 17, start_column: 16, end_line: 17, end_column: 17 },
       object: { ruleset: "Performance", priority: "3" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "846dcdb29796bc0ef3e1c3b6c6ccd7ccd6c352f7", original_line: 17, final_line: 17
+      }
     },
     {
       message: "Avoid calling finalize() explicitly",
@@ -23,7 +25,9 @@ s.add_test(
       path: "src/Hello.java",
       location: { start_line: 16, start_column: 9, end_line: 16, end_column: 16 },
       object: { ruleset: "Error Prone", priority: "3" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "477c2ae2eb41ce1af10542ce1df1bcaf698305a8", original_line: 16, final_line: 16
+      }
     },
     {
       message: "Use block level rather than method level synchronization",
@@ -32,7 +36,9 @@ s.add_test(
       path: "src/Hello.java",
       location: { start_line: 20, start_column: 18, end_line: 20, end_column: 29 },
       object: { ruleset: "Multithreading", priority: "3" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "928fb2851e5777de1b2700b5b9950bf745e62197", original_line: 20, final_line: 20
+      }
     },
     {
       message: "Exceptions should not extend java.lang.Error",
@@ -41,7 +47,9 @@ s.add_test(
       path: "src/Hello.java",
       location: { start_line: 22, start_column: 23, end_line: 22, end_column: 37 },
       object: { ruleset: "Design", priority: "3" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "3f391715df8d8a300bb495b3986bca8226d80a7e", original_line: 22, final_line: 22
+      }
     },
     {
       message: "Do not use hard coded encryption keys",
@@ -50,7 +58,9 @@ s.add_test(
       path: "src/Hello.java",
       location: { start_line: 12, start_column: 27, end_line: 12, end_column: 42 },
       object: { ruleset: "Security", priority: "3" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "a7ec9e7adccc4fce30431f11e864f382c4d16e40", original_line: 12, final_line: 12
+      }
     },
     {
       message: "System.out.println is used",
@@ -59,7 +69,9 @@ s.add_test(
       path: "src/Hello.java",
       location: { start_line: 8, start_column: 9, end_line: 8, end_column: 26 },
       object: { ruleset: "Best Practices", priority: "2" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "addb4c033c4233fd7e9025796b0a22ff829782f9", original_line: 8, final_line: 8
+      }
     }
   ],
   warnings: [{ message: %r{PMDException: Error while parsing .+/src/Broken\.java}, file: "src/Broken.java" }]
@@ -78,7 +90,9 @@ s.add_test(
       path: "Main.java",
       location: { start_line: 5, start_column: 29, end_line: 5, end_column: 41 },
       object: { ruleset: "Code Style", priority: "3" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "97c8f652b768ead8c8ae633a28485000d16ad703", original_line: 5, final_line: 5
+      }
     }
   ],
   warnings: [
@@ -157,7 +171,9 @@ s.add_test(
       path: "src/Main.java",
       location: { start_line: 5, start_column: 29, end_line: 5, end_column: 41 },
       object: { ruleset: "Code Style", priority: "3" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "97c8f652b768ead8c8ae633a28485000d16ad703", original_line: 5, final_line: 5
+      }
     },
     {
       message: "Avoid short class names like Main",
@@ -166,7 +182,9 @@ s.add_test(
       path: "src/Main.java",
       location: { start_line: 3, start_column: 8, end_line: 8, end_column: 1 },
       object: { ruleset: "Code Style", priority: "4" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "b4aa7ff94732722c55d79ff3788d3d5f22b197b2", original_line: 3, final_line: 3
+      }
     }
   ]
 )
@@ -183,7 +201,9 @@ s.add_test(
       path: "Main.java",
       location: { start_line: 10, start_column: 1, end_line: 10, end_column: 2 },
       object: { ruleset: "Documentation", priority: "3" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "84519f7d9c8f7af9f1aac5704f35fb6111384bf8", original_line: 10, final_line: 10
+      }
     },
     {
       message: "Comment is too large: Too many lines",
@@ -192,7 +212,9 @@ s.add_test(
       path: "Main.java",
       location: { start_line: 10, start_column: 1, end_line: 34, end_column: 2 },
       object: { ruleset: "Documentation", priority: "3" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "84519f7d9c8f7af9f1aac5704f35fb6111384bf8", original_line: 10, final_line: 10
+      }
     }
   ]
 )
@@ -216,7 +238,9 @@ s.add_test(
       path: "Foo.java",
       location: { start_line: 3, start_column: 8, end_line: 3, end_column: 37 },
       object: { ruleset: "Custom Rules", priority: "3" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "ab68cab562b881e7b1a3f4c9dbeaff0ccb0e18ab", original_line: 3, final_line: 3
+      }
     }
   ],
   warnings: [
@@ -247,7 +271,9 @@ s.add_test(
       path: "AvoidDupliatedLiterals.java",
       location: { start_line: 3, start_column: 13, end_line: 3, end_column: 19 },
       object: { ruleset: "Error Prone", priority: "3" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "ec4c9c916d289e3e06472e6245a8bffb5882aa14", original_line: 3, final_line: 3
+      }
     }
   ],
   warnings: [

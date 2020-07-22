@@ -113,6 +113,7 @@ DEPENDENCIES
   locale
   minitest
   parallel
+  rainbow
   rake
   retryable
   rexml (>= 3.2, < 4.0)

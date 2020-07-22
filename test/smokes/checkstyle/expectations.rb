@@ -14,7 +14,9 @@ s.add_test(
       path: "src/Hello.java",
       location: { start_line: 5, start_column: 5 },
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "97c8f652b768ead8c8ae633a28485000d16ad703", original_line: 5, final_line: 5
+      }
     },
     {
       message: "'method def' child has incorrect indentation level 8, expected level should be 4.",
@@ -23,7 +25,9 @@ s.add_test(
       path: "src/Hello.java",
       location: { start_line: 6, start_column: 9 },
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "addb4c033c4233fd7e9025796b0a22ff829782f9", original_line: 6, final_line: 6
+      }
     },
     {
       message: "'method def rcurly' has incorrect indentation level 4, expected level should be 2.",
@@ -32,7 +36,9 @@ s.add_test(
       path: "src/Hello.java",
       location: { start_line: 7, start_column: 5 },
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "e266bf187351d458abacf0d6374d1c6659d82428", original_line: 7, final_line: 7
+      }
     },
     {
       message: "The name of the outer type and the file do not match.",
@@ -41,7 +47,9 @@ s.add_test(
       path: "src/Hello.java",
       location: { start_line: 3, start_column: 1 },
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "b4aa7ff94732722c55d79ff3788d3d5f22b197b2", original_line: 3, final_line: 3
+      }
     }
   ]
 )
@@ -58,7 +66,9 @@ s.add_test(
       path: "src/Main.java",
       location: { start_line: 5, start_column: 29 },
       object: { severity: "error" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "97c8f652b768ead8c8ae633a28485000d16ad703", original_line: 5, final_line: 5
+      }
     },
     {
       message: "Utility classes should not have a public or default constructor.",
@@ -67,7 +77,9 @@ s.add_test(
       path: "src/Main.java",
       location: { start_line: 3, start_column: 1 },
       object: { severity: "error" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "b4aa7ff94732722c55d79ff3788d3d5f22b197b2", original_line: 3, final_line: 3
+      }
     },
     {
       message: "Missing package-info.java file.",
@@ -76,7 +88,9 @@ s.add_test(
       path: "src/Main.java",
       location: { start_line: 1 },
       object: { severity: "error" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "cbce17a507d2e4fd00c89efee19480c0104e0932", original_line: 1, final_line: 1
+      }
     },
     {
       message: "Missing a Javadoc comment.",
@@ -85,7 +99,9 @@ s.add_test(
       path: "src/Main.java",
       location: { start_line: 5, start_column: 5 },
       object: { severity: "error" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "97c8f652b768ead8c8ae633a28485000d16ad703", original_line: 5, final_line: 5
+      }
     }
   ]
 )
@@ -116,7 +132,9 @@ s.add_test(
       path: "myruleset.xml",
       location: { start_line: 3 },
       object: { severity: "error" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "afa68b6d0a9c41c9f18d52c4ad28b1508fb24efd", original_line: 3, final_line: 3
+      }
     },
     {
       message: "Line is longer than 50 characters (found 63).",
@@ -125,7 +143,9 @@ s.add_test(
       path: "myruleset.xml",
       location: { start_line: 4 },
       object: { severity: "error" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "69049cc1cd8947386a9354a120e5f88e0abf3c6c", original_line: 4, final_line: 4
+      }
     },
     {
       message: "Line is longer than 50 characters (found 54).",
@@ -134,7 +154,9 @@ s.add_test(
       path: "myruleset.xml",
       location: { start_line: 8 },
       object: { severity: "error" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "e7a055561d4d474b6f7e7c701e34f1058cad6dab", original_line: 8, final_line: 8
+      }
     },
     {
       message: "Line is longer than 50 characters (found 67).",
@@ -143,7 +165,9 @@ s.add_test(
       path: "src/Main.java",
       location: { start_line: 3 },
       object: { severity: "error" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "871358cf483b1332891606601d5b7c90c6987be0", original_line: 3, final_line: 3
+      }
     }
   ],
   analyzer: { name: "Checkstyle", version: default_version }

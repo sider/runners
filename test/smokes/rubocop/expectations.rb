@@ -11,18 +11,22 @@ s.add_test(
       links: %w[https://docs.rubocop.org/rubocop/cops_lint.html#lintliteralascondition],
       id: "Lint/LiteralAsCondition",
       path: "app/controllers/users_controller.rb",
+      location: { start_line: 23, start_column: 8, end_line: 23, end_column: 11 },
       object: { severity: "warning", corrected: false },
-      git_blame_info: nil,
-      location: { start_line: 23, start_column: 8, end_line: 23, end_column: 11 }
+      git_blame_info: {
+        commit: :_, line_hash: "57d3f05dcf6eda436e8767ebacf7058380da0c36", original_line: 23, final_line: 23
+      }
     },
     {
       message: "Shadowing outer local variable - `v`.",
       links: %w[https://docs.rubocop.org/rubocop/cops_lint.html#lintshadowingouterlocalvariable],
       id: "Lint/ShadowingOuterLocalVariable",
       path: "app/controllers/users_controller.rb",
+      location: { start_line: 27, start_column: 30, end_line: 27, end_column: 30 },
       object: { severity: "warning", corrected: false },
-      git_blame_info: nil,
-      location: { start_line: 27, start_column: 30, end_line: 27, end_column: 30 }
+      git_blame_info: {
+        commit: :_, line_hash: "e0d6961a0bfecb1bc1b2ceab229ceeb47b19e800", original_line: 27, final_line: 27
+      }
     },
     {
       message: "Useless assignment to variable - `v`.",
@@ -32,9 +36,11 @@ s.add_test(
       ],
       id: "Lint/UselessAssignment",
       path: "app/controllers/users_controller.rb",
+      location: { start_line: 26, start_column: 5, end_line: 26, end_column: 5 },
       object: { severity: "warning", corrected: false },
-      git_blame_info: nil,
-      location: { start_line: 26, start_column: 5, end_line: 26, end_column: 5 }
+      git_blame_info: {
+        commit: :_, line_hash: "244264415175459d6469d72805cb5c39725b9b6c", original_line: 26, final_line: 26
+      }
     },
     {
       message: "Prefer symbols instead of strings as hash keys.",
@@ -44,9 +50,11 @@ s.add_test(
       ],
       id: "Style/StringHashKeys",
       path: "config/environments/development.rb",
+      location: { start_line: 21, start_column: 7, end_line: 21, end_column: 21 },
       object: { severity: "convention", corrected: false },
-      git_blame_info: nil,
-      location: { start_line: 21, start_column: 7, end_line: 21, end_column: 21 }
+      git_blame_info: {
+        commit: :_, line_hash: "3073614325db4219b001e4ce703a8b10ba8cc0d2", original_line: 21, final_line: 21
+      }
     },
     {
       message: "Prefer symbols instead of strings as hash keys.",
@@ -56,9 +64,11 @@ s.add_test(
       ],
       id: "Style/StringHashKeys",
       path: "config/environments/test.rb",
+      location: { start_line: 18, start_column: 5, end_line: 18, end_column: 19 },
       object: { severity: "convention", corrected: false },
-      git_blame_info: nil,
-      location: { start_line: 18, start_column: 5, end_line: 18, end_column: 19 }
+      git_blame_info: {
+        commit: :_, line_hash: "7ecd987ce8c7d9a7d7279b2b956b79644ee0083f", original_line: 18, final_line: 18
+      }
     }
   ],
   analyzer: { name: "RuboCop", version: default_version }
@@ -69,25 +79,29 @@ s.add_test(
   type: "success",
   issues: [
     {
-      "message": "Missing top-level class documentation comment.",
-      "links": %w[https://docs.rubocop.org/rubocop/cops_style.html#styledocumentation],
-      "id": "Style/Documentation",
-      "path": "app.rb",
-      "location": { "start_line": 3, "start_column": 1, "end_line": 3, "end_column": 5 },
-      "object": { "severity": "convention", "corrected": false },
-      "git_blame_info": nil
+      message: "Missing top-level class documentation comment.",
+      links: %w[https://docs.rubocop.org/rubocop/cops_style.html#styledocumentation],
+      id: "Style/Documentation",
+      path: "app.rb",
+      location: { start_line: 3, start_column: 1, end_line: 3, end_column: 5 },
+      object: { severity: "convention", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "11d2b5872a5f698502da96fb40bac6646c939b27", original_line: 3, final_line: 3
+      }
     },
     {
-      "message": "Put empty method definitions on a single line.",
-      "links": %w[
+      message: "Put empty method definitions on a single line.",
+      links: %w[
         https://rubystyle.guide#no-single-line-methods
         https://docs.rubocop.org/rubocop/cops_style.html#styleemptymethod
       ],
-      "id": "Style/EmptyMethod",
-      "path": "app.rb",
-      "location": { "start_line": 4, "start_column": 3, "end_line": 5, "end_column": 5 },
-      "object": { "severity": "convention", "corrected": false },
-      "git_blame_info": nil
+      id: "Style/EmptyMethod",
+      path: "app.rb",
+      location: { start_line: 4, start_column: 3, end_line: 5, end_column: 5 },
+      object: { severity: "convention", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "22b4f311c3c0f05af882d9168396e6eb4ff3d7d6", original_line: 4, final_line: 4
+      }
     }
   ],
   analyzer: { name: "RuboCop", version: default_version }
@@ -105,9 +119,11 @@ s.add_test(
       ],
       id: "Layout/IndentationWidth",
       path: "test.rb",
+      location: { start_line: 2, start_column: 1, end_line: 2, end_column: 1 },
       object: { severity: "convention", corrected: false },
-      git_blame_info: nil,
-      location: { start_line: 2, start_column: 1, end_line: 2, end_column: 1 }
+      git_blame_info: {
+        commit: :_, line_hash: "ae6db0dfbd48186e8c57314071e7ed72d24011ca", original_line: 2, final_line: 2
+      }
     },
     {
       message: "Tab detected.",
@@ -117,9 +133,11 @@ s.add_test(
       ],
       id: "Layout/Tab",
       path: "test.rb",
+      location: { start_line: 2, start_column: 1, end_line: 2, end_column: 1 },
       object: { severity: "convention", corrected: false },
-      git_blame_info: nil,
-      location: { start_line: 2, start_column: 1, end_line: 2, end_column: 1 }
+      git_blame_info: {
+        commit: :_, line_hash: "ae6db0dfbd48186e8c57314071e7ed72d24011ca", original_line: 2, final_line: 2
+      }
     },
     {
       path: "Gemfile",
@@ -128,7 +146,9 @@ s.add_test(
       message: "Missing magic comment `# frozen_string_literal: true`.",
       links: %w[https://docs.rubocop.org/rubocop/cops_style.html#stylefrozenstringliteralcomment],
       object: { severity: "convention", corrected: false },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "480be6c99925724ea2ad584a1cf6a075724bd29c", original_line: 1, final_line: 1
+      }
     },
     {
       path: "test.rb",
@@ -137,7 +157,9 @@ s.add_test(
       message: "Missing magic comment `# frozen_string_literal: true`.",
       links: %w[https://docs.rubocop.org/rubocop/cops_style.html#stylefrozenstringliteralcomment],
       object: { severity: "convention", corrected: false },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "a56cfa66045cc9bb9983be19974153631bbce34a", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "RuboCop", version: "0.79.0" },
@@ -156,9 +178,11 @@ s.add_test(
       ],
       id: "Layout/LineLength",
       path: "cat.rb",
+      location: { start_line: 3, start_column: 201, end_line: 3, end_column: 218 },
       object: { severity: "convention", corrected: false },
-      git_blame_info: nil,
-      location: { start_line: 3, start_column: 201, end_line: 3, end_column: 218 }
+      git_blame_info: {
+        commit: :_, line_hash: "511481791f8837a45b800975920a1b91e36a9824", original_line: 3, final_line: 3
+      }
     }
   ],
   analyzer: { name: "RuboCop", version: "0.79.0" }
@@ -173,9 +197,11 @@ s.add_test(
       links: %w[https://docs.rubocop.org/rubocop/cops_lint.html#lintmultiplecomparison],
       id: "Lint/MultipleComparison",
       path: "test.rb",
+      location: { start_line: 2, start_column: 4, end_line: 2, end_column: 14 },
       object: { severity: "warning", corrected: false },
-      git_blame_info: nil,
-      location: { start_line: 2, start_column: 4, end_line: 2, end_column: 14 }
+      git_blame_info: {
+        commit: :_, line_hash: "c531a809c818b12596f956691930f7ec152d0a32", original_line: 2, final_line: 2
+      }
     }
   ],
   analyzer: { name: "RuboCop", version: default_version }
@@ -207,7 +233,9 @@ s.add_test(
       path: "drink.rb",
       location: { start_line: 12, start_column: 3, end_line: 12, end_column: 8 },
       object: { severity: "warning", corrected: false },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "0eee5f8e262670825a864acd4e0c0b96923c9f92", original_line: 12, final_line: 12
+      }
     },
     {
       message: "Do not chain ordinary method call after safe navigation operator.",
@@ -216,7 +244,9 @@ s.add_test(
       path: "drink.rb",
       location: { start_line: 18, start_column: 21, end_line: 18, end_column: 27 },
       object: { severity: "warning", corrected: false },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "e78757546aea0e7ddb7aa4dabf48b7bf1d02780a", original_line: 18, final_line: 18
+      }
     }
   ],
   analyzer: { name: "RuboCop", version: default_version },
@@ -243,7 +273,9 @@ s.add_test(
       path: "cat.rb",
       location: { start_line: 3, start_column: 201, end_line: 3, end_column: 218 },
       object: { severity: "convention", corrected: false },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "511481791f8837a45b800975920a1b91e36a9824", original_line: 3, final_line: 3
+      }
     }
   ],
   analyzer: { name: "RuboCop", version: "0.71.0" },
@@ -269,7 +301,9 @@ s.add_test(
       path: "cat.rb",
       location: { start_line: 3, start_column: 201, end_line: 3, end_column: 218 },
       object: { severity: "convention", corrected: false },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "511481791f8837a45b800975920a1b91e36a9824", original_line: 3, final_line: 3
+      }
     }
   ],
   analyzer: { name: "RuboCop", version: "0.72.0" }
@@ -289,7 +323,9 @@ s.add_test(
       path: "cat.rb",
       location: { start_line: 3, start_column: 201, end_line: 3, end_column: 218 },
       object: { severity: "convention", corrected: false },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "511481791f8837a45b800975920a1b91e36a9824", original_line: 3, final_line: 3
+      }
     }
   ],
   analyzer: { name: "RuboCop", version: "0.72.0" },
@@ -315,7 +351,9 @@ s.add_test(
       path: "app/foo.rb",
       location: { start_line: 1, start_column: 1, end_line: 1, end_column: 9 },
       object: { severity: "convention", corrected: false },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "fe92bb5dae6d7be67a342a59856bf1f6b3041df4", original_line: 1, final_line: 1
+      }
     },
     {
       message: "Do not use `exit` in Rails applications.",
@@ -324,7 +362,9 @@ s.add_test(
       path: "app/foo.rb",
       location: { start_line: 3, start_column: 1, end_line: 3, end_column: 4 },
       object: { severity: "convention", corrected: false },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "2e20974092d62be36eda46801fa74cf5dfd6939a", original_line: 3, final_line: 3
+      }
     },
     {
       message: "Please use `Rails.root.join('path', 'to')` instead.",
@@ -333,7 +373,9 @@ s.add_test(
       path: "app/foo.rb",
       location: { start_line: 2, start_column: 1, end_line: 2, end_column: 33 },
       object: { severity: "convention", corrected: false },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "13439c14669d33564a10377f854d42d8b9a9ffd8", original_line: 2, final_line: 2
+      }
     }
   ],
   analyzer: { name: "RuboCop", version: "0.79.0" }
@@ -350,7 +392,9 @@ s.add_test(
       path: "app/foo.rb",
       location: { start_line: 1, start_column: 1, end_line: 1, end_column: 9 },
       object: { severity: "convention", corrected: false },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "fe92bb5dae6d7be67a342a59856bf1f6b3041df4", original_line: 1, final_line: 1
+      }
     },
     {
       message: "Do not use `exit` in Rails applications.",
@@ -359,7 +403,9 @@ s.add_test(
       path: "app/foo.rb",
       location: { start_line: 3, start_column: 1, end_line: 3, end_column: 4 },
       object: { severity: "convention", corrected: false },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "2e20974092d62be36eda46801fa74cf5dfd6939a", original_line: 3, final_line: 3
+      }
     },
     {
       message: "Please use `Rails.root.join('path', 'to')` instead.",
@@ -368,7 +414,9 @@ s.add_test(
       path: "app/foo.rb",
       location: { start_line: 2, start_column: 1, end_line: 2, end_column: 33 },
       object: { severity: "convention", corrected: false },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "13439c14669d33564a10377f854d42d8b9a9ffd8", original_line: 2, final_line: 2
+      }
     }
   ],
   analyzer: { name: "RuboCop", version: "0.67.0" }

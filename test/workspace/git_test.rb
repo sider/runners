@@ -63,16 +63,17 @@ class WorkspaceGitTest < Minitest::Test
     end
   end
 
-  def test_patches_returns_nil_because_base_is_nil
-    with_workspace do |workspace|
+  def test_patches_returns_nil
+    with_workspace(base: nil) do |workspace|
       assert_nil workspace.send(:patches)
     end
   end
 
-  def test_patches_returns_patches
-    with_workspace(base: base_commit) do |workspace|
+  def test_patches
+    with_workspace(head: "836880fdd04e5e1d7d82ed17dae838a16cfa50b2", base: base_commit) do |workspace|
       workspace.send(:prepare_head_source, nil)
-      assert_instance_of GitDiffParser::Patches, workspace.send(:patches)
+      patches = workspace.send(:patches)
+      assert_equal ["README.md", "sider.yml", "てすと.txt"], patches.files
     end
   end
 
@@ -87,7 +88,7 @@ class WorkspaceGitTest < Minitest::Test
   end
 
   def test_git_blame_info
-    with_workspace(base: base_commit) do |workspace|
+    with_workspace(head: "330716dcd50a7a2c7d8ff79d74035c05453528b4", base: "cd33ab59ef3d75e54e6d49c000bc8f141d94d356") do |workspace|
       workspace.send(:prepare_head_source, nil)
       actual = workspace.range_git_blame_info("README.md", 1, 2)
       expected = [

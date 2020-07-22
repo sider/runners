@@ -5,19 +5,11 @@ module Runners
     class DownloadError < SystemError; end
 
     def self.prepare(options:, working_dir:, trace_writer:)
-      source = options.source
-      case source
-      when Options::ArchiveSource
-        case
-        when source.http?
-          Workspace::HTTP.new(options: options, working_dir: working_dir, trace_writer: trace_writer)
-        when source.file?
-          Workspace::File.new(options: options, working_dir: working_dir, trace_writer: trace_writer)
-        else
-          raise ArgumentError, "The specified options #{options.inspect} is not supported"
-        end
+      case options.source
       when Options::GitSource
         Workspace::Git.new(options: options, working_dir: working_dir, trace_writer: trace_writer)
+      else
+        raise ArgumentError, "The specified options #{options.inspect} is not supported"
       end
     end
 
@@ -39,19 +31,23 @@ module Runners
       prepare_ssh do |git_ssh_path|
         trace_writer.header "Set up source code"
 
-        mktmpdir do |base_path|
-          if options.source.base
-            trace_writer.message "Preparing base commit tree..."
-            prepare_base_source(base_path)
-          end
-
+        mktmpdir do |base_dir|
           trace_writer.message "Preparing head commit tree..."
           prepare_head_source(working_dir)
 
-          msg = options.source.base ? "Calculating changes between head and base..." : "Calculating changes..."
-          changes = trace_writer.message msg do
-            Changes.calculate(base_dir: base_path, head_dir: working_dir, patches: patches)
-          end
+          changes =
+            if options.source.base
+              trace_writer.message "Preparing base commit tree..."
+              prepare_base_source(base_dir)
+
+              trace_writer.message "Calculating changes between head and base..." do
+                Changes.calculate_by_patches(working_dir: working_dir, patches: patches)
+              end
+            else
+              trace_writer.message "Calculating changes..." do
+                Changes.calculate(working_dir: working_dir)
+              end
+            end
 
           yield git_ssh_path, changes
         end
@@ -63,30 +59,6 @@ module Runners
     end
 
     private
-
-    def archive_source
-      @archive_source ||=
-        begin
-          source = options.source
-          if source.instance_of?(Runners::Options::ArchiveSource)
-            source
-          else
-            raise "#{source.inspect} is not ArchiveSource"
-          end
-        end
-    end
-
-    def git_source
-      @git_source ||=
-        begin
-          source = options.source
-          if source.instance_of?(Runners::Options::GitSource)
-            source
-          else
-            raise "#{source.inspect} is not GitSource"
-          end
-        end
-    end
 
     def prepare_ssh
       ssh_key = options.ssh_key
@@ -168,7 +140,7 @@ module Runners
     end
 
     def patches
-      nil
+      raise NotImplementedError
     end
   end
 end

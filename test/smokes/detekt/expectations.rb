@@ -35,7 +35,9 @@ s.add_test(
       message: "The class or object FilteredClass is empty.",
       links: [],
       object: { severity: "info" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "7494b1780aef71f48580c650d038aaac5f785284", original_line: 2, final_line: 2
+      }
     },
     {
       id: "detekt.ForEachOnRange",
@@ -44,7 +46,9 @@ s.add_test(
       message: "Using the forEach method on ranges has a heavy performance cost. Prefer using simple for loops.",
       links: [],
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "1bf72cecb9822789d23028a44c47ea56fae147ab", original_line: 44, final_line: 44
+      }
     },
     {
       id: "detekt.FunctionOnlyReturningConstant",
@@ -53,7 +57,9 @@ s.add_test(
       message: "get is returning a constant. Prefer declaring a constant instead.",
       links: [],
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "6619184f836068051c8c20ecda475e7f8c99ca76", original_line: 8, final_line: 8
+      }
     },
     {
       id: "detekt.NestedBlockDepth",
@@ -62,7 +68,9 @@ s.add_test(
       message: "Function complex is nested too deeply.",
       links: [],
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "dd9e211e3f4dc188f60577b9aa455e52ff083a00", original_line: 9, final_line: 9
+      }
     }
   ]
 )
@@ -79,7 +87,9 @@ s.add_test(
       message: "The class or object FilteredClass is empty.",
       links: [],
       object: { severity: "info" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "7494b1780aef71f48580c650d038aaac5f785284", original_line: 2, final_line: 2
+      }
     },
     {
       id: "detekt.ForEachOnRange",
@@ -88,7 +98,9 @@ s.add_test(
       message: "Using the forEach method on ranges has a heavy performance cost. Prefer using simple for loops.",
       links: [],
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "1bf72cecb9822789d23028a44c47ea56fae147ab", original_line: 44, final_line: 44
+      }
     },
     {
       id: "detekt.FunctionOnlyReturningConstant",
@@ -97,7 +109,9 @@ s.add_test(
       message: "get is returning a constant. Prefer declaring a constant instead.",
       links: [],
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "6619184f836068051c8c20ecda475e7f8c99ca76", original_line: 8, final_line: 8
+      }
     },
     {
       id: "detekt.MagicNumber",
@@ -106,7 +120,9 @@ s.add_test(
       message: "This expression contains a magic number. Consider defining it to a well named constant.",
       links: [],
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "1bf72cecb9822789d23028a44c47ea56fae147ab", original_line: 44, final_line: 44
+      }
     },
     {
       id: "detekt.MagicNumber",
@@ -115,7 +131,9 @@ s.add_test(
       message: "This expression contains a magic number. Consider defining it to a well named constant.",
       links: [],
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "b930ea0a6f1a6f2812304a3a77152a39face0b43", original_line: 48, final_line: 48
+      }
     },
     {
       id: "detekt.NestedBlockDepth",
@@ -124,7 +142,9 @@ s.add_test(
       message: "Function complex is nested too deeply.",
       links: [],
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "dd9e211e3f4dc188f60577b9aa455e52ff083a00", original_line: 9, final_line: 9
+      }
     },
     {
       id: "detekt.TooGenericExceptionCaught",
@@ -134,7 +154,9 @@ s.add_test(
         "Caught exception is too generic. Prefer catching specific exceptions to the case that is currently handled.",
       links: [],
       object: { severity: "error" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "403615509fbd2f0a1f09f74d9340fc82687c40ee", original_line: 19, final_line: 19
+      }
     },
     {
       id: "detekt.TooGenericExceptionCaught",
@@ -144,7 +166,9 @@ s.add_test(
         "Caught exception is too generic. Prefer catching specific exceptions to the case that is currently handled.",
       links: [],
       object: { severity: "error" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "3e7fe77bad13349be1e389420c32c32f522bb0ee", original_line: 22, final_line: 22
+      }
     },
     {
       id: "detekt.TooGenericExceptionCaught",
@@ -154,7 +178,9 @@ s.add_test(
         "Caught exception is too generic. Prefer catching specific exceptions to the case that is currently handled.",
       links: [],
       object: { severity: "error" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "3e7fe77bad13349be1e389420c32c32f522bb0ee", original_line: 34, final_line: 34
+      }
     }
   ]
 )
@@ -171,7 +197,9 @@ s.add_test(
       message: "The class or object App is empty.",
       links: [],
       object: { severity: "info" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "4df53f8376184b33e336e5c2d1c675ab922efef8", original_line: 1, final_line: 1
+      }
     }
   ]
 )

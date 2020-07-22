@@ -21,6 +21,10 @@ module Runners
 
     private
 
+    def git_source
+      options.source
+    end
+
     def prepare_base_source(_dest)
       # noop
     end
@@ -39,6 +43,7 @@ module Runners
       shell.capture3!("git", "init")
       shell.capture3!("git", "config", "gc.auto", "0")
       shell.capture3!("git", "config", "advice.detachedHead", "false")
+      shell.capture3!("git", "config", "core.quotePath", "false")
       shell.capture3!("git", "remote", "add", "origin", remote_url.to_s)
 
       begin
@@ -55,6 +60,11 @@ module Runners
     end
 
     def remote_url
+      # For smoke test
+      if git_source.git_http_url.start_with? "file://"
+        return URI(git_source.git_http_url)
+      end
+
       @remote_url ||= URI.join(git_source.git_http_url, "#{git_source.owner}/#{git_source.repo}").tap do |uri|
         git_http_userinfo = git_source.git_http_userinfo
         uri.userinfo = git_http_userinfo if git_http_userinfo

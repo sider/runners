@@ -1,7 +1,7 @@
 class Runners::Options
   attr_reader stdout: ::IO
   attr_reader stderr: ::IO
-  attr_reader source: Options::GitSource | Options::ArchiveSource
+  attr_reader source: Options::GitSource
   attr_reader head_key: String?
   attr_reader base: String?
   attr_reader base_key: String?
@@ -24,15 +24,4 @@ class Runners::Options::GitSource
 
   def initialize: (head: String, ?base: String, git_http_url: String,
                    owner: String, repo: String, ?git_http_userinfo: String, ?pull_number: Integer) -> any
-end
-
-class Runners::Options::ArchiveSource
-  attr_accessor head: String
-  attr_accessor head_key: String?
-  attr_accessor base: String?
-  attr_accessor base_key: String?
-
-  def initialize: (head: String, ?head_key: String, ?base: String, ?base_key: String) -> any
-  def http?: () -> bool
-  def file?: () -> bool
 end

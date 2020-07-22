@@ -1,5 +1,7 @@
 s = Runners::Testing::Smoke
 
+default_version = "1.16.0"
+
 s.add_test(
   "success",
   type: "success",
@@ -11,7 +13,9 @@ s.add_test(
       path: "test.coffee",
       location: { start_line: 3 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "b084c1fd1e628624a50119e7b7ef7db1fcfa15aa", original_line: 3, final_line: 3
+      }
     },
     {
       message: "Line exceeds maximum allowed length Length is 84, max is 80",
@@ -20,7 +24,9 @@ s.add_test(
       path: "test.coffee",
       location: { start_line: 1 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "af5df32577b5771638da7d9919d55433f420248d", original_line: 1, final_line: 1
+      }
     },
     {
       message: "Line ends with trailing whitespace",
@@ -29,19 +35,26 @@ s.add_test(
       path: "test.coffee",
       location: { start_line: 2 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "3cba81bcb0c193fbff10c92439a0ace9d462a627", original_line: 2, final_line: 2
+      }
     }
   ],
-  analyzer: { name: "CoffeeLint", version: "1.16.0" }
+  analyzer: { name: "CoffeeLint", version: default_version }
 )
 
-s.add_test("with_config", type: "success", issues: [], analyzer: { name: "CoffeeLint", version: "1.16.0" })
+s.add_test(
+  "with_config",
+  type: "success",
+  issues: [],
+  analyzer: { name: "CoffeeLint", version: default_version }
+)
 
 s.add_test(
   "with_config_deprecated",
   type: "success",
   issues: [],
-  analyzer: { name: "CoffeeLint", version: "1.16.0" },
+  analyzer: { name: "CoffeeLint", version: default_version },
   warnings: [
     {
       message: /The `linter.coffeelint.options` option is deprecated/,
@@ -61,7 +74,9 @@ s.add_test(
       path: "test.coffee",
       location: { start_line: 3 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "b084c1fd1e628624a50119e7b7ef7db1fcfa15aa", original_line: 3, final_line: 3
+      }
     },
     {
       message: "[stdin]:1:7: error: unexpected <\n" + "foo = <%= something %>\n" + "      ^",
@@ -70,7 +85,9 @@ s.add_test(
       path: "er.coffee",
       location: { start_line: 1 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "90c97a042d3ed72698abee8fc4a891fdcc6749b4", original_line: 1, final_line: 1
+      }
     },
     {
       message: "Line exceeds maximum allowed length Length is 84, max is 80",
@@ -79,7 +96,9 @@ s.add_test(
       path: "test.coffee",
       location: { start_line: 1 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "af5df32577b5771638da7d9919d55433f420248d", original_line: 1, final_line: 1
+      }
     },
     {
       message: "Line ends with trailing whitespace",
@@ -88,10 +107,12 @@ s.add_test(
       path: "test.coffee",
       location: { start_line: 2 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "3cba81bcb0c193fbff10c92439a0ace9d462a627", original_line: 2, final_line: 2
+      }
     }
   ],
-  analyzer: { name: "CoffeeLint", version: "1.16.0" }
+  analyzer: { name: "CoffeeLint", version: default_version }
 )
 
 s.add_test(
@@ -105,7 +126,9 @@ s.add_test(
       path: "test.coffee",
       location: { start_line: 3 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "b084c1fd1e628624a50119e7b7ef7db1fcfa15aa", original_line: 3, final_line: 3
+      }
     },
     {
       message: "Line exceeds maximum allowed length Length is 84, max is 80",
@@ -114,7 +137,9 @@ s.add_test(
       path: "test.coffee",
       location: { start_line: 1 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "af5df32577b5771638da7d9919d55433f420248d", original_line: 1, final_line: 1
+      }
     },
     {
       message: "Line ends with trailing whitespace",
@@ -123,7 +148,9 @@ s.add_test(
       path: "test.coffee",
       location: { start_line: 2 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "3cba81bcb0c193fbff10c92439a0ace9d462a627", original_line: 2, final_line: 2
+      }
     }
   ],
   analyzer: { name: "CoffeeLint", version: "2.0.6" }
@@ -140,7 +167,9 @@ s.add_test(
       path: "test.coffee",
       location: { start_line: 1 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "b084c1fd1e628624a50119e7b7ef7db1fcfa15aa", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "CoffeeLint", version: "2.0.3" }
@@ -157,7 +186,9 @@ s.add_test(
       path: "test.coffee",
       location: { start_line: 1 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "b084c1fd1e628624a50119e7b7ef7db1fcfa15aa", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "CoffeeLint", version: "1.16.2" }
@@ -174,7 +205,9 @@ s.add_test(
       path: "test.coffee",
       location: { start_line: 1 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "b084c1fd1e628624a50119e7b7ef7db1fcfa15aa", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "CoffeeLint", version: "2.0.5" }

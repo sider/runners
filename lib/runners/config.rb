@@ -35,8 +35,8 @@ module Runners
       path
     end
 
-    def ignore
-      @ignore ||= Array(content[:ignore])
+    def ignore_patterns
+      @ignore_patterns ||= Array(content[:ignore])
     end
 
     def linter(id)

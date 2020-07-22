@@ -13,7 +13,9 @@ s.add_test(
       path: "test.haml",
       location: { start_line: 4 },
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "2f024a2bdf291a1ab61e026140f7e709028266a8", original_line: 4, final_line: 4
+      }
     }
   ],
   analyzer: { name: "HAML-Lint", version: default_version }
@@ -30,7 +32,9 @@ s.add_test(
       path: "test.haml",
       location: { start_line: 4 },
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "2f024a2bdf291a1ab61e026140f7e709028266a8", original_line: 4, final_line: 4
+      }
     }
   ],
   analyzer: { name: "HAML-Lint", version: default_version },
@@ -61,7 +65,9 @@ s.add_test(
       path: "test.haml",
       location: { start_line: 3 },
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "d5c5462372be75aeed8a878e413ce34e69e38e58", original_line: 3, final_line: 3
+      }
     }
   ],
   analyzer: { name: "HAML-Lint", version: default_version }
@@ -79,7 +85,9 @@ s.add_test(
       path: "test.haml",
       location: { start_line: 3 },
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "d5c5462372be75aeed8a878e413ce34e69e38e58", original_line: 3, final_line: 3
+      }
     }
   ],
   analyzer: { name: "HAML-Lint", version: "0.34.0" }
@@ -96,7 +104,9 @@ s.add_test(
       path: "test.haml",
       location: { start_line: 4 },
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "2f024a2bdf291a1ab61e026140f7e709028266a8", original_line: 4, final_line: 4
+      }
     },
     {
       path: "test.haml",
@@ -105,7 +115,9 @@ s.add_test(
       message: "Performance/FlatMap: Use `flat_map` instead of `map...flatten`.",
       links: %W[https://github.com/sds/haml-lint/blob/v#{default_version}/lib/haml_lint/linter#rubocop],
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "fbeff8480acd0bfaa22199218b67510fdfa9c389", original_line: 5, final_line: 5
+      }
     }
   ],
   analyzer: { name: "HAML-Lint", version: default_version }
@@ -122,7 +134,9 @@ s.add_test(
       path: "hello.haml",
       location: { start_line: 2 },
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "da7cbdf991191af285867e39fd1239b6a030b465", original_line: 2, final_line: 2
+      }
     },
     {
       message: "Illegal nesting: content can't be both given on the same line as %span and nested within it.",
@@ -131,7 +145,9 @@ s.add_test(
       path: "test.haml",
       location: { start_line: 3 },
       object: { severity: "error" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "548868ef1457d72c2cf9dc8b7fec98642332e40a", original_line: 3, final_line: 3
+      }
     }
   ],
   analyzer: { name: "HAML-Lint", version: default_version }
@@ -156,7 +172,9 @@ s.add_test(
       path: "test.haml",
       location: { start_line: 4 },
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "2f024a2bdf291a1ab61e026140f7e709028266a8", original_line: 4, final_line: 4
+      }
     }
   ],
   analyzer: { name: "HAML-Lint", version: "0.26.0" }
@@ -183,7 +201,9 @@ s.add_test(
       path: "test.haml",
       location: { start_line: 4 },
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "2f024a2bdf291a1ab61e026140f7e709028266a8", original_line: 4, final_line: 4
+      }
     }
   ],
   analyzer: { name: "HAML-Lint", version: "0.28.0" }
@@ -202,7 +222,9 @@ s.add_test(
       path: "test.haml",
       location: { start_line: 4 },
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "2f024a2bdf291a1ab61e026140f7e709028266a8", original_line: 4, final_line: 4
+      }
     }
   ],
   analyzer: { name: "HAML-Lint", version: "0.32.0" }
@@ -224,7 +246,9 @@ s.add_test(
       path: "test.haml",
       location: { start_line: 1 },
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "44947cfd037e9e7da2b3c820c05f5724230f12c7", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "HAML-Lint", version: "0.34.2" },
@@ -242,7 +266,9 @@ s.add_test(
       path: "foo.haml",
       location: { start_line: 1 },
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "2f024a2bdf291a1ab61e026140f7e709028266a8", original_line: 1, final_line: 1
+      }
     },
     {
       message: "Avoid defining `class` in attributes hash for static class names",
@@ -251,7 +277,9 @@ s.add_test(
       path: "src/bar.haml",
       location: { start_line: 1 },
       object: { severity: "warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "2f024a2bdf291a1ab61e026140f7e709028266a8", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "HAML-Lint", version: default_version }

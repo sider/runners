@@ -3,69 +3,6 @@ require_relative 'test_helper'
 class OptionsTest < Minitest::Test
   include TestHelper
 
-  def test_options_archive_source_full
-    source_params = {
-      head: 'http://example.com/head',
-      head_key: 'head_key',
-      base: 'http://example.com/base',
-      base_key: 'base_key',
-    }
-    with_runners_options_env(source: source_params) do
-      options = Runners::Options.new(stdout, stderr)
-      assert_instance_of Runners::Options::ArchiveSource, options.source
-      assert_equal source_params, options.source.to_h
-    end
-  end
-
-  def test_options_archive_source_head_only
-    source_params = {
-      head: 'http://example.com/head',
-      head_key: 'head_key',
-    }
-    with_runners_options_env(source: source_params) do
-      options = Runners::Options.new(stdout, stderr)
-      assert_instance_of Runners::Options::ArchiveSource, options.source
-      assert_equal source_params.merge(base: nil, base_key: nil), options.source.to_h
-    end
-  end
-
-  def test_options_archive_source_head_only_without_key
-    source_params = {
-      head: 'http://example.com/head',
-    }
-    with_runners_options_env(source: source_params) do
-      options = Runners::Options.new(stdout, stderr)
-      assert_instance_of Runners::Options::ArchiveSource, options.source
-      assert_equal source_params.merge(head_key: nil, base: nil, base_key: nil), options.source.to_h
-    end
-  end
-
-  def test_options_archive_source_full_source_without_base_key
-    source_params = {
-      head: 'http://example.com/head',
-      head_key: 'head_key',
-      base: 'http://example.com/base',
-    }
-    with_runners_options_env(source: source_params) do
-      options = Runners::Options.new(stdout, stderr)
-      assert_instance_of Runners::Options::ArchiveSource, options.source
-      assert_equal source_params.merge(base_key: nil), options.source.to_h
-    end
-  end
-
-  def test_options_archive_source_full_source_without_head_key
-    source_params = {
-      head: 'http://example.com/head',
-      base: 'http://example.com/base',
-      base_key: 'base_key',
-    }
-    with_runners_options_env(source: source_params) do
-      options = Runners::Options.new(stdout, stderr)
-      assert_instance_of Runners::Options::ArchiveSource, options.source
-      assert_equal source_params.merge(head_key: nil), options.source.to_h
-    end
-  end
-
   def test_options_git_source
     source_params = {
       head: 'head_commit',
@@ -132,23 +69,21 @@ class OptionsTest < Minitest::Test
   end
 
   def test_options_with_ssh_key
-    with_runners_options_env(source: { head: 'http://example.com/head' },
-                             ssh_key: 'ssh') do
+    with_runners_options_env(ssh_key: 'ssh', source: new_source) do
       options = Runners::Options.new(stdout, stderr)
       assert_equal 'ssh', options.ssh_key
     end
   end
 
   def test_options_without_ssh_key
-    with_runners_options_env(source: { head: 'http://example.com/head' }) do
+    with_runners_options_env(ssh_key: nil, source: new_source) do
       options = Runners::Options.new(stdout, stderr)
       assert_nil options.ssh_key
     end
   end
 
   def test_options_with_outputs
-    with_runners_options_env(source: { head: 'http://example.com/head' },
-                             outputs: %w[stdout stderr]) do
+    with_runners_options_env(outputs: %w[stdout stderr], source: new_source) do
       options = Runners::Options.new(stdout, stderr)
       assert_instance_of(Runners::IO, options.io)
       assert_equal [stdout, stderr], options.io.ios
@@ -156,8 +91,7 @@ class OptionsTest < Minitest::Test
   end
 
   def test_options_with_outputs_s3_url
-    with_runners_options_env(source: { head: 'http://example.com/head' },
-                             outputs: %w[stdout s3://bucket/abc]) do
+    with_runners_options_env(outputs: %w[stdout s3://bucket/abc], source: new_source) do
       s3_mock = Object.new
       stub(s3_mock).write
       stub(s3_mock).flush
@@ -172,7 +106,7 @@ class OptionsTest < Minitest::Test
   end
 
   def test_options_without_outputs
-    with_runners_options_env(source: { head: 'http://example.com/head' }) do
+    with_runners_options_env(outputs: nil, source: new_source) do
       options = Runners::Options.new(stdout, stderr)
       assert_instance_of(Runners::IO, options.io)
       assert_equal [stdout], options.io.ios

@@ -2,18 +2,6 @@ module Runners
   class Options
     GitSource = Struct.new(:head, :base, :git_http_url, :owner, :repo, :git_http_userinfo, :pull_number, keyword_init: true)
 
-    ArchiveSource = Struct.new(:head, :head_key, :base, :base_key, keyword_init: true) do
-      def http?
-        scheme = URI.parse(head).scheme
-        %w[http https].include?(scheme)
-      end
-
-      def file?
-        scheme = URI.parse(head).scheme
-        scheme.nil? || scheme == 'file'
-      end
-    end
-
     # @dynamic stdout, stderr, source, ssh_key, io
     attr_reader :stdout, :stderr, :source, :ssh_key, :io
 
@@ -23,12 +11,7 @@ module Runners
 
       options = parse_options
       outputs = options[:outputs] || []
-      source_params = options[:source]
-      @source = if source_params.key?(:git_http_url)
-                  GitSource.new(**source_params)
-                else
-                  ArchiveSource.new(**source_params)
-                end
+      @source = GitSource.new(**options[:source])
       @ssh_key = options[:ssh_key]
       @io = if outputs.empty?
               Runners::IO.new(stdout)

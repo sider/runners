@@ -1,59 +1,26 @@
 module Runners
   class Ignoring
-    # @dynamic working_dir, trace_writer, config
-    attr_reader :working_dir, :trace_writer, :config
+    attr_reader :workspace, :ignore_patterns
 
-    def initialize(working_dir:, trace_writer:, config:)
-      @working_dir = working_dir
-      @trace_writer = trace_writer
-      @config = config
+    def initialize(workspace:, ignore_patterns:)
+      @workspace = workspace
+      @ignore_patterns = ignore_patterns
     end
 
     def delete_ignored_files!
-      return [] if ignores.empty?
-
-      # @type var deleted_files: Array[String]
-      deleted_files = []
-
-      trace_writer.message("Deleting ignored files...") do
-        each_ignored_file do |file|
-          (working_dir / file).delete
-          deleted_files << file
-        end
-        trace_writer.message "Successfully deleted #{deleted_files.size} file(s)"
-      end
-
-      deleted_files
-    end
-
-    private
-
-    def ignores
-      config.ignore
-    end
-
-    def each_ignored_file(&block)
-      Tempfile.create("gitignore-") do |file|
-        gitignore = file.path
-        File.write gitignore, ignores.join("\n")
-
-        shell = Shell.new(current_dir: working_dir, trace_writer: trace_writer, env_hash: {})
-        shell.capture3! "git", "init"
-        shell.capture3! "git", "add", "."
-
-        # @see https://git-scm.com/docs/git-config#Documentation/git-config.txt-corequotePath
-        shell.capture3! "git", "config", "core.quotePath", "false"
+      Tempfile.create("gitignore-") do |gitignore|
+        File.write gitignore, ignore_patterns.join("\n")
 
         # @see https://git-scm.com/docs/git-ls-files
-        ignored_files, = shell.capture3!(
-          "git", "ls-files", "--ignored", "--exclude-from", gitignore,
-          trace_command_line: true,
+        ignored_files, _ = workspace.shell.capture3!(
+          "git", "ls-files", "--ignored", "--exclude-from", gitignore.path,
           trace_stdout: false,
         )
 
-        shell.capture3! "git", "config", "--unset", "core.quotePath" # restore
-
-        ignored_files.each_line(chomp: true, &block)
+        ignored_files.lines(chomp: true).map do |file|
+          (workspace.working_dir / file).delete
+          file
+        end
       end
     end
   end

@@ -1,5 +1,7 @@
 s = Runners::Testing::Smoke
 
+default_version = "6.1.2"
+
 s.add_test(
   "success",
   type: "success",
@@ -11,7 +13,9 @@ s.add_test(
       message: "Calls to 'console.log' are not allowed.",
       links: [],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "a15267ba25fe1ccc78990ac24cd307c1b10d7a68", original_line: 11, final_line: 11
+      }
     },
     {
       id: "no-shadowed-variable",
@@ -20,10 +24,12 @@ s.add_test(
       message: "Shadowed name: 'range'",
       links: [],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "13aa5b6fac6f6cd30d688f141dc02da60aad8079", original_line: 1, final_line: 1
+      }
     }
   ],
-  analyzer: { name: "TSLint", version: "6.1.2" },
+  analyzer: { name: "TSLint", version: default_version },
   warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }]
 )
 
@@ -38,10 +44,12 @@ s.add_test(
       message: "Missing trailing comma",
       links: [],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "59a44f8e51296f57d8cb1a11c068b15469d2f7ee", original_line: 8, final_line: 8
+      }
     }
   ],
-  analyzer: { name: "TSLint", version: "6.1.2" },
+  analyzer: { name: "TSLint", version: default_version },
   warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }]
 )
 
@@ -56,7 +64,9 @@ s.add_test(
       message: "interface name must start with a capitalized I",
       links: [],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "c882a2e6258a7f201292257388917570591d3ef5", original_line: 3, final_line: 3
+      }
     },
     {
       id: "jsx-self-close",
@@ -65,7 +75,9 @@ s.add_test(
       message: "JSX elements with no children must be self-closing",
       links: [],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "75d9a1c7d977206aef6297767f3ec7083cef602e", original_line: 12, final_line: 12
+      }
     },
     {
       id: "member-access",
@@ -74,7 +86,9 @@ s.add_test(
       message: "The class method 'render' must be marked either 'private', 'public', or 'protected'",
       links: [],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "81136f795d06ef75a88fa3f209eac8f4aae40925", original_line: 8, final_line: 8
+      }
     }
   ],
   analyzer: { name: "TSLint", version: "5.2.0" },
@@ -92,7 +106,9 @@ s.add_test(
       message: "Meow!",
       links: [],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "d024389e623260a504954be3bf30211fb019bd0d", original_line: 11, final_line: 11
+      }
     }
   ],
   analyzer: { name: "TSLint", version: "5.4.3" },
@@ -110,7 +126,9 @@ s.add_test(
       message: "Calls to 'console.log' are not allowed.",
       links: [],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "a15267ba25fe1ccc78990ac24cd307c1b10d7a68", original_line: 11, final_line: 11
+      }
     },
     {
       id: "no-shadowed-variable",
@@ -119,10 +137,12 @@ s.add_test(
       message: "Shadowed name: 'range'",
       links: [],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "e7fb7c6bd23ab8335453709ebc056413e9c86fc8", original_line: 1, final_line: 1
+      }
     }
   ],
-  analyzer: { name: "TSLint", version: "6.1.2" },
+  analyzer: { name: "TSLint", version: default_version },
   warnings: [{ message: /The support for TSLint is deprecated/, file: "sideci.yml" }]
 )
 
@@ -137,7 +157,7 @@ s.add_test(
     Error at range.ts:2:63: Property 'max' does not exist on type 'string'.
     Error at range.ts:11:24: Argument of type '{ min: number; middle: number; max: number; }' is not assignable to parameter of type 'string'.
   MESSAGE
-  analyzer: { name: "TSLint", version: "6.1.2" },
+  analyzer: { name: "TSLint", version: default_version },
   warnings: [
     {
       message: <<~MSG.strip,
@@ -161,7 +181,9 @@ s.add_test(
       message: "'a' is declared but its value is never read.",
       links: [],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "ff081cb5415eddf6d26903d04f001dfc79d24c6b", original_line: 2, final_line: 2
+      }
     },
     {
       id: "no-unused-variable",
@@ -170,7 +192,9 @@ s.add_test(
       message: "'b' is declared but its value is never read.",
       links: [],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "ff081cb5415eddf6d26903d04f001dfc79d24c6b", original_line: 2, final_line: 2
+      }
     },
     {
       id: "no-unused-variable",
@@ -179,7 +203,9 @@ s.add_test(
       message: "All destructured elements are unused.",
       links: [],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "4e197a6014833e2daea6234c92a9a9fe7c604bb9", original_line: 5, final_line: 5
+      }
     }
   ],
   analyzer: { name: "TSLint", version: "5.11.0" },
@@ -204,7 +230,9 @@ s.add_test(
       path: "src/range.ts",
       location: { start_line: 1, end_line: 1 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "13aa5b6fac6f6cd30d688f141dc02da60aad8079", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "TSLint", version: "5.15.0" },
@@ -222,7 +250,9 @@ s.add_test(
       message: "Meow!",
       links: [],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "d024389e623260a504954be3bf30211fb019bd0d", original_line: 11, final_line: 11
+      }
     }
   ],
   analyzer: { name: "TSLint", version: "5.15.0" },
@@ -240,7 +270,9 @@ s.add_test(
       path: "cat.ts",
       location: { start_line: 11, end_line: 16 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "d024389e623260a504954be3bf30211fb019bd0d", original_line: 11, final_line: 11
+      }
     },
     {
       message: "Bow!",
@@ -249,7 +281,9 @@ s.add_test(
       path: "dog.ts",
       location: { start_line: 11, end_line: 16 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "0201bf4912745003e0006214b745f6b1857092ee", original_line: 11, final_line: 11
+      }
     }
   ],
   analyzer: { name: "TSLint", version: "5.15.0" },
@@ -268,7 +302,7 @@ s.add_test(
   "without-tslint-in-package-json",
   type: "success",
   issues: [],
-  analyzer: { name: "TSLint", version: "6.1.2" },
+  analyzer: { name: "TSLint", version: default_version },
   warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }]
 )
 
@@ -276,7 +310,7 @@ s.add_test(
   "without-tslint-and-with-typescript-in-package-json",
   type: "success",
   issues: [],
-  analyzer: { name: "TSLint", version: "6.1.2" },
+  analyzer: { name: "TSLint", version: default_version },
   warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }]
 )
 
@@ -299,7 +333,9 @@ s.add_test(
       message: "Calls to 'console.log' are not allowed.",
       links: [],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "2972476e78a4fa70fb92bc19e8191c736906cfdb", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "TSLint", version: "6.0.0" },

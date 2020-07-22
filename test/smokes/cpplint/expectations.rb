@@ -22,7 +22,9 @@ s.add_test(
       message: "{ should almost always be at the end of the previous line",
       links: [],
       object: { confidence: "4" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "60ba4b2daa4ed4d070fec06687e249e0e6f9ee45", original_line: 3, final_line: 3
+      }
     },
     {
       id: "whitespace/tab",
@@ -31,7 +33,9 @@ s.add_test(
       message: "Tab found; better to use spaces",
       links: [],
       object: { confidence: "1" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "b9775569ad4e31a2a62d00e88db762323dcbbc0e", original_line: 4, final_line: 4
+      }
     }
   ],
   analyzer: { name: "cpplint", version: default_version }
@@ -56,7 +60,9 @@ s.add_test(
       message: "{ should almost always be at the end of the previous line",
       links: [],
       object: { confidence: "4" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "60ba4b2daa4ed4d070fec06687e249e0e6f9ee45", original_line: 2, final_line: 2
+      }
     }
   ],
   analyzer: { name: "cpplint", version: default_version }
@@ -84,7 +90,9 @@ s.add_test(
       message: "Lines should be <= 50 characters long",
       links: [],
       object: { confidence: "2" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "9597f8916909a9b4b22b3a6dfb16bf3f1086ce4e", original_line: 2, final_line: 2
+      }
     }
   ],
   analyzer: { name: "cpplint", version: default_version }
@@ -101,7 +109,9 @@ s.add_test(
       message: "Missing space before {",
       links: [],
       object: { confidence: "5" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "5f30b34970f367361178d89e85cd4768bbfbf48a", original_line: 2, final_line: 2
+      }
     }
   ],
   analyzer: { name: "cpplint", version: default_version }
@@ -118,7 +128,9 @@ s.add_test(
       message: "Missing space before {",
       links: [],
       object: { confidence: "5" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "c70ea1a0346a4301826190f7977cc2edb3b0f98e", original_line: 2, final_line: 2
+      }
     },
     {
       id: "whitespace/braces",
@@ -127,7 +139,9 @@ s.add_test(
       message: "Missing space before {",
       links: [],
       object: { confidence: "5" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "5f30b34970f367361178d89e85cd4768bbfbf48a", original_line: 2, final_line: 2
+      }
     }
   ],
   analyzer: { name: "cpplint", version: default_version }

@@ -13,7 +13,9 @@ s.add_test(
       message: "`Cat#self.call` calls 'self.new.call' 3 times",
       links: %W[https://github.com/troessner/reek/blob/v#{default_version}/docs/Duplicate-Method-Call.md],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "8310170ff48fad2a764799f18dfefa31bf95ad6d", original_line: 4, final_line: 4
+      }
     },
     {
       path: "cat.rb",
@@ -22,7 +24,9 @@ s.add_test(
       message: "`Cat#self.call` calls 'self.new.call' 3 times",
       links: %W[https://github.com/troessner/reek/blob/v#{default_version}/docs/Duplicate-Method-Call.md],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "8310170ff48fad2a764799f18dfefa31bf95ad6d", original_line: 5, final_line: 5
+      }
     },
     {
       path: "cat.rb",
@@ -31,7 +35,9 @@ s.add_test(
       message: "`Cat#self.call` calls 'self.new.call' 3 times",
       links: %W[https://github.com/troessner/reek/blob/v#{default_version}/docs/Duplicate-Method-Call.md],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "8310170ff48fad2a764799f18dfefa31bf95ad6d", original_line: 6, final_line: 6
+      }
     }
   ],
   analyzer: { name: "Reek", version: default_version }
@@ -48,7 +54,9 @@ s.add_test(
       message: "`Cat` has initialize method",
       links: %W[https://github.com/troessner/reek/blob/v#{default_version}/docs/Module-Initialize.md],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "f8045e8bf6285f3a998c455875388663da81d636", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "Reek", version: default_version }
@@ -65,7 +73,9 @@ s.add_test(
       message: "`Cat` has initialize method",
       links: %W[https://github.com/troessner/reek/blob/v#{default_version}/docs/Module-Initialize.md],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "f8045e8bf6285f3a998c455875388663da81d636", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "Reek", version: default_version },
@@ -83,7 +93,9 @@ s.add_test(
       path: "summer.rb",
       location: { start_line: 7 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "2ba2efdc0e35f2f2c2f51c2852f44c20aefb5080", original_line: 7, final_line: 7
+      }
     },
     {
       message: "`Summer#summer_vacation` performs a nil-check",
@@ -92,7 +104,9 @@ s.add_test(
       path: "summer.rb",
       location: { start_line: 12 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "d8ea918d9ca033f27ca457e1c3318b9dc99d09c0", original_line: 12, final_line: 12
+      }
     }
   ],
   analyzer: { name: "Reek", version: default_version }
@@ -127,7 +141,9 @@ s.add_test(
       path: "world_cup.rb",
       location: { start_line: 3 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "9d9bf2ed887527f1cbd89c433c812c10be0c38cf", original_line: 3, final_line: 3
+      }
     }
   ],
   analyzer: { name: "Reek", version: default_version }
@@ -144,7 +160,9 @@ s.add_test(
       message: "`Cat` has initialize method",
       links: %w[https://github.com/troessner/reek/blob/master/docs/Module-Initialize.md],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "f8045e8bf6285f3a998c455875388663da81d636", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "Reek", version: "4.4.0" }
@@ -161,7 +179,9 @@ s.add_test(
       message: "`Cat` has initialize method",
       links: %W[https://github.com/troessner/reek/blob/v#{default_version}/docs/Module-Initialize.md],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "f8045e8bf6285f3a998c455875388663da81d636", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "Reek", version: default_version },
@@ -191,7 +211,9 @@ s.add_test(
       path: "app/models/seasons/test/summer.rb",
       location: { start_line: 8 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "b6e570adb89bce0cdc6c8621d1a5d53121f40611", original_line: 8, final_line: 8
+      }
     }
   ],
   analyzer: { name: "Reek", version: default_version }
@@ -208,7 +230,9 @@ s.add_test(
       path: "lib/a.rb",
       location: { start_line: 1 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "12e95c91a02b22203af6124dfc649bfc2208784f", original_line: 1, final_line: 1
+      }
     },
     {
       message: "`Sub::B` has initialize method",
@@ -217,7 +241,9 @@ s.add_test(
       path: "lib/sub/b.rb",
       location: { start_line: 1 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "e338f20e54f1fd368948a287f18c446f9c96d5a0", original_line: 1, final_line: 1
+      }
     },
     {
       message: "`TargetTest` has initialize method",
@@ -226,7 +252,9 @@ s.add_test(
       path: "test/target_test.rb",
       location: { start_line: 1 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "a208ef4a2876c0fa501f66268fff846e30aaad3a", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "Reek", version: default_version }
@@ -243,7 +271,9 @@ s.add_test(
       path: "a.rb",
       location: { start_line: 2 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "a157412cecba53223bbc4b8ceb54992a6fba7de6", original_line: 2, final_line: 2
+      }
     }
   ],
   analyzer: { name: "Reek", version: default_version }

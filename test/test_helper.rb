@@ -34,7 +34,7 @@ module TestHelper
 
   def new_source(**source)
     {
-      head: "330716dcd50a7a2c7d8ff79d74035c05453528b4",
+      head: "6ba85479fc406a64b7202f7bc3ea8da3ada93084",
       git_http_url: "https://github.com",
       owner: "sider",
       repo: "runners_test",
@@ -54,6 +54,14 @@ module TestHelper
       filter = Runners::SensitiveFilter.new(options: options)
       mktmpdir do |dir|
         yield Runners::Workspace.prepare(options: options, working_dir: dir, trace_writer: new_trace_writer(filter: filter))
+      end
+    end
+  end
+
+  def with_workspace_open(**params)
+    with_workspace(**params) do |workspace|
+      workspace.open do
+        yield workspace
       end
     end
   end

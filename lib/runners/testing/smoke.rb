@@ -3,6 +3,7 @@ require "unification_assertion"
 require "pp"
 require 'parallel'
 require "amazing_print"
+require "rainbow"
 
 module Runners
   module Testing
@@ -10,8 +11,6 @@ module Runners
       include Minitest::Assertions
       include UnificationAssertion
       include Tmpdir
-
-      PROJECT_PATH = "/project".freeze
 
       TestParams = Struct.new(:name, :pattern, :offline, keyword_init: true)
 
@@ -35,19 +34,25 @@ module Runners
 
       def run
         start = Time.now
-        jobs = ENV["JOBS"]&.to_i
-        if jobs
-          puts "Running smoke tests with #{jobs} jobs..."
-        else
-          puts "Running smoke tests..."
-        end
 
         load expectations.to_s
 
+        jobs = ENV["JOBS"] ? Integer(ENV["JOBS"]) : nil
+        "Running #{Rainbow(self.class.tests.size.to_s).bright} smoke tests".tap do |msg|
+          msg << " with #{Rainbow(jobs.to_s).bright} jobs" if jobs
+          puts "#{msg}..."
+        end
+
+        marks = { passed: '✅', failed: '❌' }
+
         task = ->(params) {
+          start_per_test = Time.now
           out = StringIO.new(''.dup)
           result = run_test(params, out)
           print out.string
+          duration_per_test = (Time.now - start_per_test).round(1)
+          puts "#{marks[result]} #{Rainbow(params.name).bright.underline}" + \
+               Rainbow(" (#{duration_per_test}s)").darkgray.to_s
           [result, params.name]
         }
 
@@ -64,24 +69,33 @@ module Runners
         failed = results.count { |result,| result == :failed }
         total = results.count
         duration = (Time.now - start).round(1)
-        summary = "#{passed} passed, #{failed} failed, #{total} total in #{duration} seconds"
 
         puts ""
         if failed == 0
-          puts "❤️  Smoke tests passed! -- #{summary}"
+          puts Rainbow("#{marks[:passed]} All #{passed} tests passed!").bright.green.to_s + \
+               " (#{duration} seconds)"
         else
-          puts "❌ Smoke tests failed! -- #{summary}"
-          marks = { passed: '✅', failed: '❌' }
-          results.each { |result, name| puts "--> #{marks.fetch(result)} #{name}" }
+          puts "#{marks.fetch(:failed)} " + \
+               Rainbow("#{passed} passed").green.to_s + ", " + \
+               Rainbow("#{failed} failed").red.to_s + ", " + \
+               Rainbow("#{total} total").aqua.to_s + \
+               " (#{duration} seconds)"
           exit 1
         end
       end
 
       def run_test(params, out)
-        cmd = command_line(params)
-        out.puts
-        out.puts "$ #{cmd}"
-        reader = JSONSEQ::Reader.new(io: StringIO.new(`#{cmd}`), decoder: -> (json) { JSON.parse(json, symbolize_names: true) })
+        command_output, _ = Dir.mktmpdir do |dir|
+          repo_dir, base, head = prepare_git_repository(
+            workdir: Pathname(dir).realpath,
+            smoke_target: expectations.parent.join(params.name).realpath,
+            out: out,
+          )
+          cmd = command_line(params: params, repo_dir: repo_dir, base: base, head: head)
+          sh!(*cmd, out: out, exception: false)
+        end
+
+        reader = JSONSEQ::Reader.new(io: StringIO.new(command_output), decoder: -> (json) { JSON.parse(json, symbolize_names: true) })
         traces = reader.each_object.to_a
         if ENV['SHOW_TRACE']
           traces.each do |trace|
@@ -113,21 +127,76 @@ module Runners
             end
           end
         end
-        out.puts colored_pretty_inspect(result) unless ok
+        out.puts colored_pretty_inspect(result) if !ok && debug?
 
         ok
       end
 
-      def command_line(params)
-        smoke_target = (expectations.parent / params.name).realpath
-        runners_options = JSON.dump({ source: { head: PROJECT_PATH } })
-        commands = %w[docker run --rm]
-        commands << "--mount" << "type=bind,source=#{smoke_target},target=#{PROJECT_PATH}"
-        commands << "--env" << "RUNNERS_OPTIONS='#{runners_options}'"
+      def command_line(params:, repo_dir:, base:, head:)
+        project_dir = "/project"
+        source = {
+          head: head,
+          base: base,
+          git_http_url: "file://#{project_dir}",
+          owner: "smoke",
+          repo: params.name,
+        }
+        runners_options = JSON.dump({ source: source })
+        commands = ["docker", "run"]
+        commands << "--rm"
+        commands << "--mount" << "type=bind,source=#{repo_dir},target=#{project_dir}"
+        commands << "--env" << "RUNNERS_OPTIONS=#{runners_options}"
         commands << "--network=none" if params.offline
         commands << docker_image
         commands << params.pattern.dig(:result, :guid)
-        commands.join(" ")
+        commands
+      end
+
+      def prepare_git_repository(workdir:, smoke_target:, out:)
+        # Create a bare repository
+        bare_dir = workdir.join("bare").to_path
+        sh! "git", "init", "--bare", bare_dir, out: out
+
+        # Push a smoke test project to the bare directory
+        smoke_dir = workdir.join("smoke").to_path
+        sh! "git", "clone", "file://#{bare_dir}", smoke_dir, out: out
+
+        Dir.chdir(smoke_dir) do
+          sh! "git", "config", "user.name", "Foo", out: out
+          sh! "git", "config", "user.email", "foo@example.com", out: out
+          sh! "git", "commit", "--allow-empty", "-m", "initial commit", out: out
+          base_commit, _ = sh! "git", "rev-parse", "HEAD", out: out
+
+          FileUtils.copy_entry "#{smoke_target}/.", smoke_dir
+          sh! "git", "add", ".", out: out
+          sh! "git", "commit", "-m", "add all test files", out: out
+
+          sh! "git", "push", out: out
+          head_commit, _ = sh! "git", "rev-parse", "HEAD", out: out
+
+          [bare_dir, base_commit.chomp, head_commit.chomp]
+        end
+      end
+
+      def debug?
+        ENV["DEBUG"]
+      end
+
+      def sh!(*command, out:, exception: true)
+        if debug?
+          out.puts Rainbow("$ ").green.to_s + command.map { |s| s.include?(" ") ? "'#{s}'" : s }.join(" ")
+        end
+
+        stdout_str, stderr_str, status = Open3.capture3(*command)
+        if debug?
+          out.puts Rainbow(stdout_str).darkgray unless stdout_str.empty?
+          out.puts Rainbow(stderr_str).darkgray unless stderr_str.empty?
+        end
+        if exception && !status.success?
+          raise "ERROR: #{command} exited with #{status.exitstatus.inspect}"
+        end
+
+        [stdout_str, stderr_str]
       end
 
       def colored_pretty_inspect(hash)

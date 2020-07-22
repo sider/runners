@@ -19,7 +19,9 @@ s.add_test(
         justifications: [],
         examples: []
       },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "0a7838ed4989aa2a34c01672dcf2f2bac3f4dcc8", original_line: 4, final_line: 4
+      }
     },
     {
       path: "foo.rb",
@@ -33,7 +35,9 @@ s.add_test(
         justifications: ["Want to write this code."],
         examples: [{ before: 'Pathname.new("path")', after: 'Pathname("path")' }]
       },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "74914cec8fb77f151285a32e82e35c2c28e584e6", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "Querly", version: default_version }
@@ -68,7 +72,9 @@ s.add_test(
       message: "Use Pathname method instead",
       links: [],
       object: { id: "com.test.pathname", messages: ["Use Pathname method instead"], justifications: [], examples: [] },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "74914cec8fb77f151285a32e82e35c2c28e584e6", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "Querly", version: default_version },
@@ -86,7 +92,9 @@ s.add_test(
       message: "link_to\n\nSome message.\n",
       links: [],
       object: { id: "link_to", messages: ["link_to\n\nSome message.\n"], justifications: [], examples: [] },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "cec497185c1b1353ac6f6b5c355faee48b0489b3", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "Querly", version: default_version }
@@ -103,7 +111,9 @@ s.add_test(
       message: "link_to\n\nSome message.\n",
       links: [],
       object: { id: "link_to", messages: ["link_to\n\nSome message.\n"], justifications: [], examples: [] },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "8fad4ba7485f1b433d443677fe6477802190c25f", original_line: 2, final_line: 2
+      }
     }
   ],
   analyzer: { name: "Querly", version: default_version }
@@ -125,7 +135,9 @@ s.add_test(
         justifications: ["Want to write this code."],
         examples: [{ before: 'Pathname.new("path")', after: 'Pathname("path")' }]
       },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "74914cec8fb77f151285a32e82e35c2c28e584e6", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "Querly", version: "0.5.0" }
@@ -147,7 +159,9 @@ s.add_test(
         justifications: [],
         examples: []
       },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "069db69f69749c90822b57523c2520f256008e3e", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "Querly", version: default_version }
@@ -169,7 +183,9 @@ s.add_test(
         justifications: [],
         examples: []
       },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "3c061f52aea718c14c209c91cec7e42536b5c368", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "Querly", version: default_version },

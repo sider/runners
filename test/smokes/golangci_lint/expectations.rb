@@ -13,7 +13,9 @@ s.add_test(
       message: "Error return value of `validate` is not checked",
       links: [],
       object: { severity: "", replacement: nil },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "ee2b3811c4ffa606f0741a79c2a116c426f0a634", original_line: 9, final_line: 9
+      }
     },
     {
       path: "dir2/src/sample.go",
@@ -22,7 +24,9 @@ s.add_test(
       message: "Error return value of `validate` is not checked",
       links: [],
       object: { severity: "", replacement: nil },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "ee2b3811c4ffa606f0741a79c2a116c426f0a634", original_line: 9, final_line: 9
+      }
     }
   ],
   analyzer: { name: "GolangCI-Lint", version: default_version }
@@ -39,7 +43,9 @@ s.add_test(
       message: "response body must be closed",
       links: [],
       object: { severity: "", replacement: nil },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "eb0289be3964dc127bace61751fc7ef20ada1884", original_line: 11, final_line: 11
+      }
     }
   ],
   analyzer: { name: "GolangCI-Lint", version: default_version }
@@ -67,7 +73,9 @@ s.add_test(
       message: "line is 188 characters",
       links: [],
       object: { severity: "", replacement: nil },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "0fb5ba61bf27e1fb9f6a0be47181ae08e5d79b75", original_line: 17, final_line: 17
+      }
     },
     {
       path: "sample.go",
@@ -76,7 +84,9 @@ s.add_test(
       message: "`birthDay` is unused",
       links: [],
       object: { severity: "", replacement: nil },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "792a9984934b518ba5c0ed58bc266c98bb20c72b", original_line: 11, final_line: 11
+      }
     }
   ],
   analyzer: { name: "GolangCI-Lint", version: default_version }
@@ -93,7 +103,9 @@ s.add_test(
       message: "`unused` is unused",
       links: [],
       object: { severity: "", replacement: nil },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "72e52c53dc19bdd90af601902bd01e531ff6b53f", original_line: 8, final_line: 8
+      }
     }
   ],
   analyzer: { name: "GolangCI-Lint", version: default_version }
@@ -117,7 +129,9 @@ s.add_test(
           Inline: { StartCol: 13, Length: 7, NewString: "America" }
         }
       },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "cb6922ca9909e0da5cd9d3f9256feba2307aecb9", original_line: 8, final_line: 8
+      }
     }
   ],
   analyzer: { name: "GolangCI-Lint", version: default_version }
@@ -134,7 +148,9 @@ s.add_test(
       message: "var `unused` is unused",
       links: [],
       object: { severity: "", replacement: nil },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "72e52c53dc19bdd90af601902bd01e531ff6b53f", original_line: 8, final_line: 8
+      }
     }
   ],
   analyzer: { name: "GolangCI-Lint", version: default_version }
@@ -179,7 +195,9 @@ s.add_test(
       message: "appendCombine: can combine chain of 2 appends into one",
       links: [],
       object: { severity: "", replacement: nil },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "8abf46730f036b67189413c4bfbe61ea8becf86c", original_line: 20, final_line: 20
+      }
     },
     {
       path: "sample.go",
@@ -188,7 +206,9 @@ s.add_test(
       message: "commentFormatting: put a space between `//` and comment text",
       links: [],
       object: { severity: "", replacement: nil },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "ef19521a896127462566159683262d30dcac3278", original_line: 17, final_line: 17
+      }
     },
     {
       path: "sample.go",
@@ -197,7 +217,9 @@ s.add_test(
       message: "don't use underscores in Go names; func redundant_append should be redundantAppend",
       links: [],
       object: { severity: "", replacement: nil },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "b37fc2311b8bf5c18ed289e9bb6709cd402f0abe", original_line: 18, final_line: 18
+      }
     },
     {
       path: "sample.go",
@@ -206,7 +228,9 @@ s.add_test(
       message: "G401: Use of weak cryptographic primitive",
       links: [],
       object: { severity: "", replacement: nil },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "1056c694976d9365e4ef62b0782382c867d6498c", original_line: 13, final_line: 13
+      }
     },
     {
       path: "sample.go",
@@ -215,7 +239,9 @@ s.add_test(
       message: "G505: Blacklisted import `crypto/sha1`: weak cryptographic primitive",
       links: [],
       object: { severity: "", replacement: nil },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "04da869dc84f676ebb231fa99e070dc4a23134d2", original_line: 4, final_line: 4
+      }
     },
     {
       path: "sample.go",
@@ -224,7 +250,9 @@ s.add_test(
       message: "S1002: should omit comparison to bool constant, can be simplified to `x`",
       links: [],
       object: { severity: "", replacement: nil },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "dc87571f33be1d39d3136452e5b1f44946daceac", original_line: 10, final_line: 10
+      }
     },
     {
       path: "sample.go",
@@ -233,7 +261,9 @@ s.add_test(
       message: "SA9003: empty branch",
       links: [],
       object: { severity: "", replacement: nil },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "dc87571f33be1d39d3136452e5b1f44946daceac", original_line: 10, final_line: 10
+      }
     }
   ],
   analyzer: { name: "GolangCI-Lint", version: default_version }
@@ -252,7 +282,9 @@ s.add_test(
       message: "`unused` is unused",
       links: [],
       object: { severity: "", replacement: nil },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "c02fd689ae94e73f9b0d984ede5449deede9bf0d", original_line: 8, final_line: 8
+      }
     }
   ],
   analyzer: { name: "GolangCI-Lint", version: default_version }
@@ -276,7 +308,9 @@ s.add_test(
           Inline: nil
         }
       },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "36402d95a34f3cba6826c498785c8b2e82b66437", original_line: 4, final_line: 4
+      }
     },
     {
       path: "sample.go",
@@ -285,7 +319,9 @@ s.add_test(
       message: "File is not `gofumpt`-ed",
       links: [],
       object: { severity: "", replacement: nil },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "c2b7df6201fdd3362399091f0a29550df3505b6a", original_line: 22, final_line: 22
+      }
     }
   ],
   analyzer: { name: "GolangCI-Lint", version: default_version }
@@ -318,7 +354,9 @@ s.add_test(
       message: "Error return value of `validate` is not checked",
       links: [],
       object: { severity: "", replacement: nil },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "ee2b3811c4ffa606f0741a79c2a116c426f0a634", original_line: 9, final_line: 9
+      }
     }
   ],
   analyzer: { name: "GolangCI-Lint", version: default_version }
@@ -337,7 +375,9 @@ s.add_test(
       message: "Error return value of `validate` is not checked",
       links: [],
       object: { severity: "", replacement: nil },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "ee2b3811c4ffa606f0741a79c2a116c426f0a634", original_line: 9, final_line: 9
+      }
     }
   ],
   analyzer: { name: "GolangCI-Lint", version: default_version }
@@ -363,7 +403,9 @@ s.add_test(
       message: "`unused` is unused",
       links: [],
       object: { severity: "error", replacement: nil },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "72e52c53dc19bdd90af601902bd01e531ff6b53f", original_line: 3, final_line: 3
+      }
     },
     {
       path: "test.go",
@@ -372,7 +414,9 @@ s.add_test(
       message: "File is not `gofmt`-ed with `-s`",
       links: [],
       object: { severity: "warning", replacement: :_ },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "19c8a5cdef0f37df1bfbc1c66d27412754169588", original_line: 6, final_line: 6
+      }
     }
   ],
   analyzer: { name: "GolangCI-Lint", version: default_version }

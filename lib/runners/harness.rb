@@ -36,7 +36,12 @@ module Runners
         workspace.open do |git_ssh_path, changes|
           @config = conf = Config.new(workspace.working_dir)
 
-          Ignoring.new(working_dir: working_dir, trace_writer: trace_writer, config: conf).delete_ignored_files!
+          unless conf.ignore_patterns.empty?
+            trace_writer.message "Deleting ignored files..." do
+              files = Ignoring.new(workspace: workspace, ignore_patterns: conf.ignore_patterns).delete_ignored_files!
+              trace_writer.message "Successfully deleted #{files.size} file(s)"
+            end
+          end
 
           begin
             processor = processor_class.new(guid: guid, working_dir: working_dir, config: conf, git_ssh_path: git_ssh_path, trace_writer: trace_writer)
