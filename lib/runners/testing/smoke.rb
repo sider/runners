@@ -43,13 +43,15 @@ module Runners
           puts "#{msg}..."
         end
 
+        marks = { passed: '✅', failed: '❌' }
+
         task = ->(params) {
           start_per_test = Time.now
           out = StringIO.new(''.dup)
           result = run_test(params, out)
           print out.string
           duration_per_test = (Time.now - start_per_test).round(1)
-          puts Rainbow(" => #{Rainbow(params.name).underline}").darkgray.to_s + \
+          puts "#{marks[result]} #{Rainbow(params.name).bright.underline}" + \
                Rainbow(" (#{duration_per_test}s)").darkgray.to_s
           [result, params.name]
         }
@@ -68,22 +70,16 @@ module Runners
         total = results.count
         duration = (Time.now - start).round(1)
 
-        marks = { passed: '✅', failed: '❌' }
         puts ""
         if failed == 0
-          puts Rainbow("#{marks[:passed]} All #{passed} tests passed!").bright.green.to_s + " (#{duration} seconds)"
+          puts Rainbow("#{marks[:passed]} All #{passed} tests passed!").bright.green.to_s + \
+               " (#{duration} seconds)"
         else
-          "".tap do |s|
-            s << marks.fetch(:failed) + " "
-            s << Rainbow("#{passed} passed").green.to_s + ", "
-            s << Rainbow("#{failed} failed").red.to_s + ", "
-            s << Rainbow("#{total} total").aqua.to_s + " "
-            s << "(in #{duration} seconds)"
-            puts s
-          end
-          results.each do |result, name|
-            puts " => #{marks[result]} #{Rainbow(name).underline}"
-          end
+          puts "#{marks.fetch(:failed)} " + \
+               Rainbow("#{passed} passed").green.to_s + ", " + \
+               Rainbow("#{failed} failed").red.to_s + ", " + \
+               Rainbow("#{total} total").aqua.to_s + \
+               " (#{duration} seconds)"
           exit 1
         end
       end
@@ -131,7 +127,7 @@ module Runners
             end
           end
         end
-        out.puts colored_pretty_inspect(result) unless ok
+        out.puts colored_pretty_inspect(result) if !ok && debug?
 
         ok
       end
@@ -182,15 +178,17 @@ module Runners
         end
       end
 
-      def sh!(*command, out:, exception: true)
-        debug = ENV["DEBUG"]
+      def debug?
+        ENV["DEBUG"]
+      end
 
-        if debug
+      def sh!(*command, out:, exception: true)
+        if debug?
           out.puts Rainbow("$ ").green.to_s + command.map { |s| s.include?(" ") ? "'#{s}'" : s }.join(" ")
         end
 
         stdout_str, stderr_str, status = Open3.capture3(*command)
-        if debug
+        if debug?
           out.puts Rainbow(stdout_str).darkgray unless stdout_str.empty?
           out.puts Rainbow(stderr_str).darkgray unless stderr_str.empty?
         end

@@ -17,6 +17,7 @@ class Runners::Testing::Smoke
   def with_data_container: <'x> { () -> 'x } -> 'x
   def command_line: (params: TestParams, repo_dir: String, base: String, head: String) -> Array<String>
   def prepare_git_repository: (workdir: Pathname, smoke_target: Pathname, out: StringIO) -> Array<String>
+  def debug?: () -> bool
   def sh!: (*String, out: StringIO, ?exception: bool) -> [String, String]
   def colored_pretty_inspect: (any) -> String
 
