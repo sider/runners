@@ -13,7 +13,9 @@ s.add_test(
       message: "Avoid unused local variables such as '$hoge'.",
       links: %w[https://phpmd.org/rules/unusedcode.html#unusedlocalvariable],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "61641764da77c5a5fefa70f73a5685898dc0a081", original_line: 5, final_line: 5
+      }
     }
   ],
   analyzer: { name: "PHPMD", version: default_version }
@@ -36,7 +38,9 @@ s.add_test(
         "The method bar has a boolean flag argument $flag, which is a certain sign of a Single Responsibility Principle violation.",
       links: %w[https://phpmd.org/rules/cleancode.html#booleanargumentflag],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "091c9d13217fda53898937e9d01a3d7142732e1c", original_line: 23, final_line: 23
+      }
     },
     {
       path: "app/index.php",
@@ -45,7 +49,9 @@ s.add_test(
       message: "Avoid unused local variables such as '$hoge'.",
       links: %w[https://phpmd.org/rules/unusedcode.html#unusedlocalvariable],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "61641764da77c5a5fefa70f73a5685898dc0a081", original_line: 20, final_line: 20
+      }
     },
     {
       path: "foo.phtml",
@@ -54,7 +60,9 @@ s.add_test(
       message: "Avoid unused local variables such as '$var'.",
       links: %w[https://phpmd.org/rules/unusedcode.html#unusedlocalvariable],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "c2aa966ad8070d426963e2f39b6de123dc586db7", original_line: 5, final_line: 5
+      }
     }
   ],
   analyzer: { name: "PHPMD", version: default_version },
@@ -82,7 +90,9 @@ s.add_test(
       message: "Avoid unused private fields such as '$unusedVariable'.",
       links: %w[https://phpmd.org/rules/unusedcode.html#unusedprivatefield],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "037cc9f1e1e3dfe9a9f80adb7f04ec61c33479b4", original_line: 11, final_line: 11
+      }
     }
   ],
   analyzer: { name: "PHPMD", version: default_version }
@@ -99,7 +109,9 @@ s.add_test(
       message: "Avoid unused local variables such as '$hoge'.",
       links: %w[https://phpmd.org/rules/unusedcode.html#unusedlocalvariable],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "d16fdf5e86fd8d7c574435b5246615635201fbf0", original_line: 7, final_line: 7
+      }
     }
   ],
   analyzer: { name: "PHPMD", version: default_version }
@@ -126,7 +138,9 @@ s.add_test(
       message: "Please do not use functions.",
       links: %w[https://example.com/phpmd/rules/no-functions],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "47e7cf244e8c71f8c20bf148eb5416b7ba43010c", original_line: 3, final_line: 3
+      }
     },
     {
       path: "Custom_NoFunctions.php",
@@ -135,7 +149,9 @@ s.add_test(
       message: "Please do not use methods.",
       links: [],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "b23bca1d2b90b0a23d6ad65d44b9b70a198f796c", original_line: 6, final_line: 6
+      }
     },
     {
       path: "custom/rules/NoMethods.php",
@@ -144,7 +160,9 @@ s.add_test(
       message: "Please do not use methods.",
       links: [],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "b23bca1d2b90b0a23d6ad65d44b9b70a198f796c", original_line: 8, final_line: 8
+      }
     }
   ],
   analyzer: { name: "PHPMD", version: default_version }
@@ -168,7 +186,9 @@ s.add_test(
       message: "Avoid unused local variables such as '$var'.",
       links: %w[https://phpmd.org/rules/unusedcode.html#unusedlocalvariable],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "c2aa966ad8070d426963e2f39b6de123dc586db7", original_line: 5, final_line: 5
+      }
     }
   ],
   analyzer: { name: "PHPMD", version: default_version }
