@@ -14,10 +14,7 @@ s.add_test(
       links: [],
       object: { type: "ERROR", severity: 5, fixable: true },
       git_blame_info: {
-        commit: :_,
-        line_hash: "48ee9fdb6490aadc28bbb90cee75350be54532de",
-        original_line: 6,
-        final_line: 6
+        commit: :_, line_hash: "48ee9fdb6490aadc28bbb90cee75350be54532de", original_line: 6, final_line: 6
       }
     }
   ],
@@ -36,10 +33,7 @@ s.add_test(
       links: [],
       object: { type: "ERROR", severity: 5, fixable: true },
       git_blame_info: {
-        commit: :_,
-        line_hash: "48ee9fdb6490aadc28bbb90cee75350be54532de",
-        original_line: 6,
-        final_line: 6
+        commit: :_, line_hash: "48ee9fdb6490aadc28bbb90cee75350be54532de", original_line: 6, final_line: 6
       }
     }
   ],
@@ -58,10 +52,7 @@ s.add_test(
       links: [],
       object: { type: "ERROR", severity: 5, fixable: false },
       git_blame_info: {
-        commit: :_,
-        line_hash: "da39a3ee5e6b4b0d3255bfef95601890afd80709",
-        original_line: 2,
-        final_line: 2
+        commit: :_, line_hash: "da39a3ee5e6b4b0d3255bfef95601890afd80709", original_line: 2, final_line: 2
       }
     },
     {
@@ -72,10 +63,7 @@ s.add_test(
       links: [],
       object: { type: "ERROR", severity: 5, fixable: true },
       git_blame_info: {
-        commit: :_,
-        line_hash: "48ee9fdb6490aadc28bbb90cee75350be54532de",
-        original_line: 8,
-        final_line: 8
+        commit: :_, line_hash: "48ee9fdb6490aadc28bbb90cee75350be54532de", original_line: 8, final_line: 8
       }
     }
   ],
@@ -94,10 +82,7 @@ s.add_test(
       links: [],
       object: { type: "ERROR", severity: 5, fixable: true },
       git_blame_info: {
-        commit: :_,
-        line_hash: "fe2f6bada61f4694b7151b8639de2e4c6f2b8b2c",
-        original_line: 2,
-        final_line: 2
+        commit: :_, line_hash: "fe2f6bada61f4694b7151b8639de2e4c6f2b8b2c", original_line: 2, final_line: 2
       }
     },
     {
@@ -108,10 +93,7 @@ s.add_test(
       links: [],
       object: { type: "ERROR", severity: 5, fixable: true },
       git_blame_info: {
-        commit: :_,
-        line_hash: "fe2f6bada61f4694b7151b8639de2e4c6f2b8b2c",
-        original_line: 6,
-        final_line: 6
+        commit: :_, line_hash: "fe2f6bada61f4694b7151b8639de2e4c6f2b8b2c", original_line: 6, final_line: 6
       }
     },
     {
@@ -122,10 +104,7 @@ s.add_test(
       links: [],
       object: { type: "ERROR", severity: 5, fixable: true },
       git_blame_info: {
-        commit: :_,
-        line_hash: "192a1cecbb4c97e96d633959f8647bf7840bdf79",
-        original_line: 13,
-        final_line: 13
+        commit: :_, line_hash: "192a1cecbb4c97e96d633959f8647bf7840bdf79", original_line: 13, final_line: 13
       }
     },
     {
@@ -136,10 +115,7 @@ s.add_test(
       links: [],
       object: { type: "ERROR", severity: 5, fixable: true },
       git_blame_info: {
-        commit: :_,
-        line_hash: "3e409f60925aba65bf78a9bbbcb735e076d1abac",
-        original_line: 19,
-        final_line: 19
+        commit: :_, line_hash: "3e409f60925aba65bf78a9bbbcb735e076d1abac", original_line: 19, final_line: 19
       }
     },
     {
@@ -150,10 +126,7 @@ s.add_test(
       links: [],
       object: { type: "ERROR", severity: 5, fixable: true },
       git_blame_info: {
-        commit: :_,
-        line_hash: "68f7bcc539b5ba5aa7e78a9957c469885db007ff",
-        original_line: 5,
-        final_line: 5
+        commit: :_, line_hash: "68f7bcc539b5ba5aa7e78a9957c469885db007ff", original_line: 5, final_line: 5
       }
     }
   ],
@@ -172,10 +145,7 @@ s.add_test(
       links: [],
       object: { type: "ERROR", severity: 5, fixable: false },
       git_blame_info: {
-        commit: :_,
-        line_hash: "26c1031dd7d15deedfd22038f1641ca2e884601b",
-        original_line: 1,
-        final_line: 1
+        commit: :_, line_hash: "26c1031dd7d15deedfd22038f1641ca2e884601b", original_line: 1, final_line: 1
       }
     },
     {
@@ -187,10 +157,7 @@ s.add_test(
       links: [],
       object: { type: "WARNING", severity: 5, fixable: false },
       git_blame_info: {
-        commit: :_,
-        line_hash: "26c1031dd7d15deedfd22038f1641ca2e884601b",
-        original_line: 1,
-        final_line: 1
+        commit: :_, line_hash: "26c1031dd7d15deedfd22038f1641ca2e884601b", original_line: 1, final_line: 1
       }
     }
   ],
@@ -209,10 +176,7 @@ s.add_test(
       links: [],
       object: { type: "WARNING", severity: 5, fixable: false },
       git_blame_info: {
-        commit: :_,
-        line_hash: "c8cb27af37b77942435528b680ac46bde70da647",
-        original_line: 5,
-        final_line: 5
+        commit: :_, line_hash: "c8cb27af37b77942435528b680ac46bde70da647", original_line: 5, final_line: 5
       }
     },
     {
@@ -223,10 +187,7 @@ s.add_test(
       links: [],
       object: { type: "WARNING", severity: 5, fixable: false },
       git_blame_info: {
-        commit: :_,
-        line_hash: "c8cb27af37b77942435528b680ac46bde70da647",
-        original_line: 14,
-        final_line: 14
+        commit: :_, line_hash: "c8cb27af37b77942435528b680ac46bde70da647", original_line: 14, final_line: 14
       }
     },
     {
@@ -237,10 +198,7 @@ s.add_test(
       links: [],
       object: { type: "WARNING", severity: 5, fixable: false },
       git_blame_info: {
-        commit: :_,
-        line_hash: "6b3e66adebe67fa065b05c96d889662dbd7f5207",
-        original_line: 21,
-        final_line: 21
+        commit: :_, line_hash: "6b3e66adebe67fa065b05c96d889662dbd7f5207", original_line: 21, final_line: 21
       }
     },
     {
@@ -251,10 +209,7 @@ s.add_test(
       links: [],
       object: { type: "ERROR", severity: 5, fixable: false },
       git_blame_info: {
-        commit: :_,
-        line_hash: "c4d2345910e458556d6f2ac40076d795da6350c1",
-        original_line: 4,
-        final_line: 4
+        commit: :_, line_hash: "c4d2345910e458556d6f2ac40076d795da6350c1", original_line: 4, final_line: 4
       }
     }
   ],
