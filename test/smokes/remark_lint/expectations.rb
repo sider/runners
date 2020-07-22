@@ -13,7 +13,9 @@ s.add_test(
       message: "Numeric character references must be terminated by a semicolon",
       links: [],
       object: { severity: "warn" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "e424cc2640c3188bde8ad4479dca7c71046690fc", original_line: 5, final_line: 5
+      }
     },
     {
       path: "readme.md",
@@ -22,7 +24,9 @@ s.add_test(
       message: "Found reference to undefined definition",
       links: [],
       object: { severity: "warn" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "11c9e17a625f0f49ee882984b899de6138aaf42a", original_line: 3, final_line: 3
+      }
     },
     {
       path: "docs/zzz.markdown",
@@ -31,7 +35,9 @@ s.add_test(
       message: "Found unused definition",
       links: [],
       object: { severity: "warn" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "6a1ffe4280b5ec6d4163a2645edc897b9ac925ec", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "remark-lint", version: default_version }
@@ -50,7 +56,9 @@ s.add_test(
       message: "Heading levels should increment by one level at a time",
       links: [],
       object: { severity: "warn" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "72b6cc4a9c09c56769437494c7927618eaf3487a", original_line: 3, final_line: 3
+      }
     },
     {
       path: "docs/bar.md",
@@ -59,7 +67,9 @@ s.add_test(
       message: "All automatic links must start with a protocol",
       links: [],
       object: { severity: "warn" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "199e2f13f55a8fb033b64171aa00876a1ecbee25", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "remark-lint", version: default_version }
@@ -76,7 +86,9 @@ s.add_test(
       message: "All automatic links must start with a protocol",
       links: [],
       object: { severity: "warn" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "199e2f13f55a8fb033b64171aa00876a1ecbee25", original_line: 1, final_line: 1
+      }
     },
     {
       path: "readme.mdown",
@@ -85,7 +97,9 @@ s.add_test(
       message: "All automatic links must start with a protocol",
       links: [],
       object: { severity: "warn" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "199e2f13f55a8fb033b64171aa00876a1ecbee25", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "remark-lint", version: default_version }
@@ -102,7 +116,9 @@ s.add_test(
       message: "All automatic links must start with a protocol",
       links: [],
       object: { severity: "error" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "199e2f13f55a8fb033b64171aa00876a1ecbee25", original_line: 4, final_line: 4
+      }
     }
   ],
   analyzer: { name: "remark-lint", version: default_version }
@@ -119,7 +135,9 @@ s.add_test(
       message: "All automatic links must start with a protocol",
       links: [],
       object: { severity: "warn" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "199e2f13f55a8fb033b64171aa00876a1ecbee25", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "remark-lint", version: default_version }
@@ -145,7 +163,9 @@ s.add_test(
       message: "Don’t add a trailing `:` to headings",
       links: [],
       object: { severity: "warn" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "b302e4ad618d311735a3632a6522deed8cc77e48", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "remark-lint", version: default_version }
@@ -162,7 +182,9 @@ s.add_test(
       message: "Missing PDF indication",
       links: [],
       object: { severity: "warn" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "5b09ffad31eb4e8aa382ff7801b829b6824db8d3", original_line: 1, final_line: 1
+      }
     },
     {
       path: "readme.md",
@@ -171,7 +193,9 @@ s.add_test(
       message: "Missing a space before author",
       links: [],
       object: { severity: "warn" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "5b09ffad31eb4e8aa382ff7801b829b6824db8d3", original_line: 1, final_line: 1
+      }
     },
     {
       path: "readme.md",
@@ -180,7 +204,9 @@ s.add_test(
       message: "Missing PDF indication",
       links: [],
       object: { severity: "warn" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "00dc69ad287eb73cf52438760d9cc0c49571bd59", original_line: 2, final_line: 2
+      }
     }
   ],
   analyzer: { name: "remark-lint", version: "7.0.0" }
@@ -214,7 +240,9 @@ s.add_test(
       message: "First heading level should be `1`",
       links: [],
       object: { severity: "warn" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "18c2ad20474bed96b6a042d5cbc1aec43ae7b65a", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "remark-lint", version: default_version }
