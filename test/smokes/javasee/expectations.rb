@@ -1,9 +1,11 @@
 s = Runners::Testing::Smoke
 
+default_version = "0.1.3"
+
 s.add_test(
   "success",
   type: "success",
-  analyzer: { name: "JavaSee", version: "0.1.3" },
+  analyzer: { name: "JavaSee", version: default_version },
   issues: [
     {
       id: "hello",
@@ -12,7 +14,9 @@ s.add_test(
       message: "Hello world\n",
       links: [],
       object: { id: "hello", message: "Hello world\n", justifications: [] },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "addb4c033c4233fd7e9025796b0a22ff829782f9", original_line: 6, final_line: 6
+      }
     }
   ]
 )
@@ -20,7 +24,7 @@ s.add_test(
 s.add_test(
   "config",
   type: "success",
-  analyzer: { name: "JavaSee", version: :_ },
+  analyzer: { name: "JavaSee", version: default_version },
   issues: [
     {
       id: "hello",
@@ -29,7 +33,9 @@ s.add_test(
       message: "Hello world\n",
       links: [],
       object: { id: "hello", message: "Hello world\n", justifications: [] },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "addb4c033c4233fd7e9025796b0a22ff829782f9", original_line: 6, final_line: 6
+      }
     }
   ]
 )
@@ -37,7 +43,7 @@ s.add_test(
 s.add_test(
   "failure",
   type: "failure",
-  analyzer: { name: "JavaSee", version: :_ },
+  analyzer: { name: "JavaSee", version: default_version },
   message: /java.lang.ClassCastException: class java.lang.Integer cannot be cast/
 )
 
@@ -51,7 +57,7 @@ s.add_test(
 s.add_test(
   "no_config_file",
   type: "success",
-  analyzer: { name: "JavaSee", version: :_ },
+  analyzer: { name: "JavaSee", version: default_version },
   issues: [],
   warnings: [
     {
@@ -66,4 +72,4 @@ s.add_test(
   ]
 )
 
-s.add_test("no_linting_files", type: "success", analyzer: { name: "JavaSee", version: :_ }, issues: [])
+s.add_test("no_linting_files", type: "success", analyzer: { name: "JavaSee", version: default_version }, issues: [])
