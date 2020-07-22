@@ -97,7 +97,7 @@ module Runners
 
         reader = JSONSEQ::Reader.new(io: StringIO.new(command_output), decoder: -> (json) { JSON.parse(json, symbolize_names: true) })
         traces = reader.each_object.to_a
-        if ENV['SHOW_TRACE']
+        if debug_trace?
           traces.each do |trace|
             out.puts colored_pretty_inspect(trace)
           end
@@ -127,7 +127,7 @@ module Runners
             end
           end
         end
-        out.puts colored_pretty_inspect(result) if !ok && debug?
+        out.puts colored_pretty_inspect(result, multiline: true) if !ok && debug?
 
         ok
       end
@@ -179,7 +179,11 @@ module Runners
       end
 
       def debug?
-        ENV["DEBUG"]
+        ENV["DEBUG"] == "true"
+      end
+
+      def debug_trace?
+        ENV["DEBUG"] == "trace"
       end
 
       def sh!(*command, out:, exception: true)
@@ -199,8 +203,8 @@ module Runners
         [stdout_str, stderr_str]
       end
 
-      def colored_pretty_inspect(hash)
-        hash.awesome_inspect(indent: 2, index: false)
+      def colored_pretty_inspect(obj, multiline: false)
+        obj.awesome_inspect(indent: 2, index: false, multiline: multiline)
       end
 
       @tests = []
