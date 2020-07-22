@@ -1,9 +1,11 @@
 s = Runners::Testing::Smoke
 
+default_version = "0.39.2"
+
 s.add_test(
   "success",
   type: "success",
-  analyzer: { name: "SwiftLint", version: "0.39.2" },
+  analyzer: { name: "SwiftLint", version: default_version },
   issues: [
     {
       path: "test.swift",
@@ -12,7 +14,9 @@ s.add_test(
       message: "Function name should start with a lowercase character: 'Hello田()'",
       links: %w[https://realm.github.io/SwiftLint/identifier_name.html],
       object: { severity: "Error" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "6211d2086ae586f782f4c3668f2fdb3d767aff58", original_line: 1, final_line: 1
+      }
     }
   ]
 )
@@ -20,7 +24,7 @@ s.add_test(
 s.add_test(
   "sideciyml",
   type: "success",
-  analyzer: { name: "SwiftLint", version: "0.39.2" },
+  analyzer: { name: "SwiftLint", version: default_version },
   issues: [
     {
       path: "test.swift",
@@ -29,7 +33,9 @@ s.add_test(
       message: "Delegate protocols should be class-only so they can be weakly referenced.",
       links: %w[https://realm.github.io/SwiftLint/class_delegate_protocol.html],
       object: { severity: "Warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "1e7497ffa950f6e47ae1ef020fd1c1730fc35bc6", original_line: 1, final_line: 1
+      }
     },
     {
       path: "test.swift",
@@ -38,7 +44,9 @@ s.add_test(
       message: "Closure parameters should be on the same line as opening brace.",
       links: %w[https://realm.github.io/SwiftLint/closure_parameter_position.html],
       object: { severity: "Warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "79d8a9208644b10d765dafa9cc02c9bf4160e6ba", original_line: 6, final_line: 6
+      }
     },
     {
       path: "test.swift",
@@ -47,7 +55,9 @@ s.add_test(
       message: "All declarations should specify Access Control Level keywords explicitly.",
       links: %w[https://realm.github.io/SwiftLint/explicit_acl.html],
       object: { severity: "Warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "1e7497ffa950f6e47ae1ef020fd1c1730fc35bc6", original_line: 1, final_line: 1
+      }
     },
     {
       path: "test.swift",
@@ -56,7 +66,9 @@ s.add_test(
       message: "Top-level declarations should specify Access Control Level keywords explicitly.",
       links: %w[https://realm.github.io/SwiftLint/explicit_top_level_acl.html],
       object: { severity: "Warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "1e7497ffa950f6e47ae1ef020fd1c1730fc35bc6", original_line: 1, final_line: 1
+      }
     },
     {
       path: "test.swift",
@@ -65,7 +77,9 @@ s.add_test(
       message: "File name should match a type or extension declared in the file (if any).",
       links: %w[https://realm.github.io/SwiftLint/file_name.html],
       object: { severity: "Warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "1e7497ffa950f6e47ae1ef020fd1c1730fc35bc6", original_line: 1, final_line: 1
+      }
     },
     {
       path: "test.swift",
@@ -74,7 +88,9 @@ s.add_test(
       message: "Code should be indented using one tab or 4 spaces.",
       links: %w[https://realm.github.io/SwiftLint/indentation_width.html],
       object: { severity: "Warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "79d8a9208644b10d765dafa9cc02c9bf4160e6ba", original_line: 6, final_line: 6
+      }
     },
     {
       path: "test.swift",
@@ -83,7 +99,9 @@ s.add_test(
       message: "Multiline arguments should have their surrounding brackets in a new line.",
       links: %w[https://realm.github.io/SwiftLint/multiline_arguments_brackets.html],
       object: { severity: "Warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "903490f92542354782d176c30d8eaa93cf83ef60", original_line: 8, final_line: 8
+      }
     },
     {
       path: "test.swift",
@@ -92,7 +110,9 @@ s.add_test(
       message: "Trailing closure syntax should be used whenever possible.",
       links: %w[https://realm.github.io/SwiftLint/trailing_closure.html],
       object: { severity: "Warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "5d4df678eddc97f02258547e2cac78ee2a5feea9", original_line: 5, final_line: 5
+      }
     },
     {
       path: "test.swift",
@@ -101,7 +121,9 @@ s.add_test(
       message: "Lines should not have trailing whitespace.",
       links: %w[https://realm.github.io/SwiftLint/trailing_whitespace.html],
       object: { severity: "Warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "099600a10a944114aac406d136b625fb416dd779", original_line: 2, final_line: 2
+      }
     },
     {
       path: "test.swift",
@@ -110,7 +132,9 @@ s.add_test(
       message: "Don't include vertical whitespace (empty line) before closing braces.",
       links: %w[https://realm.github.io/SwiftLint/vertical_whitespace_closing_braces.html],
       object: { severity: "Warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "099600a10a944114aac406d136b625fb416dd779", original_line: 2, final_line: 2
+      }
     },
     {
       path: "test.swift",
@@ -119,7 +143,9 @@ s.add_test(
       message: "Don't include vertical whitespace (empty line) after opening braces.",
       links: %w[https://realm.github.io/SwiftLint/vertical_whitespace_opening_braces.html],
       object: { severity: "Warning" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "099600a10a944114aac406d136b625fb416dd779", original_line: 2, final_line: 2
+      }
     }
   ]
 )
@@ -127,7 +153,7 @@ s.add_test(
 s.add_test(
   "ignore_warnings",
   type: "success",
-  analyzer: { name: "SwiftLint", version: "0.39.2" },
+  analyzer: { name: "SwiftLint", version: default_version },
   issues: [
     {
       path: "test.swift",
@@ -136,18 +162,20 @@ s.add_test(
       message: "Force casts should be avoided.",
       links: %w[https://realm.github.io/SwiftLint/force_cast.html],
       object: { severity: "Error" },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "2befe6e35cfbdd67cda2cd3be9f4660634d39463", original_line: 3, final_line: 3
+      }
     }
   ]
 )
 
-s.add_test("no_swift_file", type: "success", issues: [], analyzer: { name: "SwiftLint", version: "0.39.2" })
+s.add_test("no_swift_file", type: "success", issues: [], analyzer: { name: "SwiftLint", version: default_version })
 
 s.add_test(
   "no_config_file",
   type: "failure",
   message: "Could not read configuration file at path 'not_found.yml'.",
-  analyzer: { name: "SwiftLint", version: "0.39.2" },
+  analyzer: { name: "SwiftLint", version: default_version },
   warnings: [
     {
       message: /The `linter.swiftlint.options` option is deprecated/,
@@ -168,11 +196,11 @@ s.add_test(
 s.add_test(
   "wrong_swiftlint_version_set",
   type: "failure",
-  message: "Currently running SwiftLint 0.39.2 but configuration specified version 0.0.0.",
-  analyzer: { name: "SwiftLint", version: "0.39.2" }
+  message: "Currently running SwiftLint #{default_version} but configuration specified version 0.0.0.",
+  analyzer: { name: "SwiftLint", version: default_version }
 )
 
 # NOTE: `unused_import` rule is for `swiftlint analyze` and is not reported with `swiftlint lint`
 #
 # @see https://realm.github.io/SwiftLint/unused_import.html
-s.add_test("unused_import", type: "success", issues: [], analyzer: { name: "SwiftLint", version: "0.39.2" })
+s.add_test("unused_import", type: "success", issues: [], analyzer: { name: "SwiftLint", version: default_version })
