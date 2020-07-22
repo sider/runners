@@ -7,7 +7,7 @@ class Runners::Config
   def raw_content!: () -> String
   def path_name: -> String
   def path_exist?: -> bool
-  def ignore: -> Array<String>
+  def ignore_patterns: -> Array<String>
   def linter: (String) -> Hash<Symbol, any>
   def linter?: (String) -> bool
   def path: -> Pathname?

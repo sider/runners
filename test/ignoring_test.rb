@@ -9,12 +9,6 @@ class IgnoringTest < Minitest::Test
     @trace_writer ||= new_trace_writer
   end
 
-  def new_config(yaml, dir:)
-    path = dir / "sider.yml"
-    path.write yaml
-    Runners::Config.new(dir)
-  end
-
   def new_file(path, content: "")
     path.tap do |f|
       f.parent.mkpath
@@ -23,15 +17,15 @@ class IgnoringTest < Minitest::Test
   end
 
   def test_delete_ignored_files
-    mktmpdir do |dir|
-      config = new_config <<~YAML, dir: dir
-        ignore:
-          - examples/**/out
-          - test/**/out*
-          - ".idea"
-          - "*.log"
-      YAML
+    with_workspace do |workspace|
+      patterns = [
+        "examples/**/out",
+        "test/**/out*",
+        ".idea",
+        "*.log",
+      ]
 
+      dir = workspace.working_dir
       new_file dir / "examples/foo/out/index.html"
       new_file dir / "examples/bar/out/index.html"
       new_file dir / "examples/bar/pub/index.html"
@@ -47,7 +41,7 @@ class IgnoringTest < Minitest::Test
       new_file dir / "npm.log.bak"
       new_file dir / "てすと.log"
 
-      subject = Ignoring.new(working_dir: dir, trace_writer: trace_writer, config: config)
+      subject = Ignoring.new(workspace: workspace, ignore_patterns: patterns)
       assert_equal [
         ".idea/workspace.xml",
         "examples/bar/out/index.html",
@@ -79,27 +73,23 @@ class IgnoringTest < Minitest::Test
   end
 
   def test_delete_ignored_files_when_the_specified_files_do_not_exist
-    mktmpdir do |dir|
-      config = new_config <<~YAML, dir: dir
-        ignore: "a/b/c/d/**.txt"
-      YAML
-
-      subject = Ignoring.new(working_dir: dir, trace_writer: trace_writer, config: config)
+    with_workspace do |workspace|
+      patterns = ["a/b/c/d/**.txt"]
+      subject = Ignoring.new(workspace: workspace, ignore_patterns: patterns)
       assert_empty subject.delete_ignored_files!
     end
   end
 
   def test_delete_ignored_files_when_users_gitignore_exists
-    mktmpdir do |dir|
+    with_workspace do |workspace|
+      patterns = ["bar"]
+
+      dir = workspace.working_dir
       new_file dir / ".gitignore", content: "foo"
       new_file dir / "foo"
       new_file dir / "bar"
 
-      config = new_config <<~YAML, dir: dir
-        ignore: "bar"
-      YAML
-
-      subject = Ignoring.new(working_dir: dir, trace_writer: trace_writer, config: config)
+      subject = Ignoring.new(workspace: workspace, ignore_patterns: patterns)
       assert_equal ["bar"], subject.delete_ignored_files!
     end
   end
