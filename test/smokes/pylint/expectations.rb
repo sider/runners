@@ -25,7 +25,9 @@ s.add_test(
         obj: ""
       },
       links: [],
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "5df189fd2c155c1bd4dd79caaebc092d69a59b71", original_line: 3, final_line: 3
+      }
     },
     {
       id: "missing-module-docstring",
@@ -39,7 +41,9 @@ s.add_test(
         obj: ""
       },
       links: [],
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "8c8f23cfb0c26eaf47a78c98f6e90533b229116a", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "Pylint", version: default_version }
@@ -61,7 +65,9 @@ s.add_test(
         obj: ""
       },
       links: [],
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "272701334ce58ed8041b1b1e0216b9431842025c", original_line: 1, final_line: 1
+      }
     },
     {
       id: "missing-module-docstring",
@@ -75,7 +81,9 @@ s.add_test(
         obj: ""
       },
       links: [],
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "272701334ce58ed8041b1b1e0216b9431842025c", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "Pylint", version: default_version }
@@ -104,7 +112,9 @@ s.add_test(
         obj: ""
       },
       links: [],
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "8c8f23cfb0c26eaf47a78c98f6e90533b229116a", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "Pylint", version: default_version }
@@ -126,7 +136,9 @@ s.add_test(
         obj: "TestFile.temp_method"
       },
       links: [],
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "220bf0aa0692d91f99ee0790fa61938fc09c2c4d", original_line: 4, final_line: 4
+      }
     },
     {
       id: "undefined-variable",
@@ -140,7 +152,9 @@ s.add_test(
         obj: "TestFile"
       },
       links: [],
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "6af676d6e34026fd28cc6bc81c840bd76ac0d3f2", original_line: 2, final_line: 2
+      }
     }
   ],
   analyzer: { name: "Pylint", version: default_version }
@@ -162,7 +176,9 @@ s.add_test(
         obj: "hello_world"
       },
       links: [],
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "a3a7f8f418d186dcf9849a0109ed2cfb1c24c0c6", original_line: 6, final_line: 6
+      }
     },
     {
       id: "missing-module-docstring",
@@ -176,7 +192,9 @@ s.add_test(
         obj: ""
       },
       links: [],
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "cc9c88711b0517823e90ce00baaa3863a4bfba30", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "Pylint", version: default_version }
@@ -198,7 +216,9 @@ s.add_test(
         obj: "main"
       },
       links: [],
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "96d7a1723fd96637fe38d110e9e262372287d404", original_line: 10, final_line: 10
+      }
     }
   ],
   analyzer: { name: "Pylint", version: default_version }
@@ -220,7 +240,9 @@ s.add_test(
         obj: ""
       },
       links: [],
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "e142e4ed031418d66622829a170aaf5acbefa151", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "Pylint", version: default_version }
@@ -242,7 +264,9 @@ s.add_test(
         obj: ""
       },
       links: [],
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "10a66dce57db9d83a6f85691b6412012c7699632", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "Pylint", version: default_version }
@@ -264,7 +288,9 @@ s.add_test(
         obj: ""
       },
       links: [],
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "2b51dcf04711ede250a847c5e503850d6e9b8ad0", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "Pylint", version: default_version }
