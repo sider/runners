@@ -14,10 +14,7 @@ s.add_offline_test(
       links: [],
       object: { id: "com.goodcheck.hello", message: "foo is not a good name...", justifications: [] },
       git_blame_info: {
-        commit: :_,
-        line_hash: "74914cec8fb77f151285a32e82e35c2c28e584e6",
-        original_line: 1,
-        final_line: 1
+        commit: :_, line_hash: "74914cec8fb77f151285a32e82e35c2c28e584e6", original_line: 1, final_line: 1
       }
     }
   ],
@@ -29,18 +26,15 @@ s.add_offline_test(
   type: "success",
   issues: [
     {
-      object: { id: "com.sample", message: "Foo", justifications: [] },
-      git_blame_info: {
-        commit: :_,
-        line_hash: "3c061f52aea718c14c209c91cec7e42536b5c368",
-        original_line: 1,
-        final_line: 1
-      },
       message: "Foo",
       links: [],
       id: "com.sample",
       path: "app/foo.rb",
-      location: { start_line: 1, start_column: 0, end_line: 1, end_column: 3 }
+      location: { start_line: 1, start_column: 0, end_line: 1, end_column: 3 },
+      object: { id: "com.sample", message: "Foo", justifications: [] },
+      git_blame_info: {
+        commit: :_, line_hash: "3c061f52aea718c14c209c91cec7e42536b5c368", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "Goodcheck", version: default_version }
@@ -113,10 +107,7 @@ s.add_test(
       links: [],
       object: { id: "com.goodcheck.hello", message: "foo is not a good name...", justifications: [] },
       git_blame_info: {
-        commit: :_,
-        line_hash: "74914cec8fb77f151285a32e82e35c2c28e584e6",
-        original_line: 1,
-        final_line: 1
+        commit: :_, line_hash: "74914cec8fb77f151285a32e82e35c2c28e584e6", original_line: 1, final_line: 1
       }
     }
   ],
