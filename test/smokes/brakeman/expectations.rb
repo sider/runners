@@ -15,7 +15,7 @@ s.add_test(
       links: %w[https://groups.google.com/d/msg/ruby-security-ann/8B2iV2tPRSE/JkjCJkSoCgAJ],
       object: { severity: "Medium" },
       git_blame_info: {
-        commit: :_,        line_hash: "667878ceb84268d96f51ee7b50cfa175ae86fe58",        original_line: 81,        final_line: 81
+        commit: :_, line_hash: "667878ceb84268d96f51ee7b50cfa175ae86fe58", original_line: 81, final_line: 81
       }
     },
     {
@@ -26,7 +26,7 @@ s.add_test(
       links: %w[https://github.com/flavorjones/loofah/issues/144],
       object: { severity: "Medium" },
       git_blame_info: {
-        commit: :_,        line_hash: "069308f321a2c3211a9df63a042da0612e168be7",        original_line: 66,        final_line: 66
+        commit: :_, line_hash: "069308f321a2c3211a9df63a042da0612e168be7", original_line: 66, final_line: 66
       }
     },
     {
@@ -37,7 +37,7 @@ s.add_test(
       links: %w[https://groups.google.com/d/msg/rubyonrails-security/tP7W3kLc5u4/uDy2Br7xBgAJ],
       object: { severity: "Medium" },
       git_blame_info: {
-        commit: :_,        line_hash: "a8505d73b4be31c3c77772285bdc80b3f0c22b89",        original_line: 98,        final_line: 98
+        commit: :_, line_hash: "a8505d73b4be31c3c77772285bdc80b3f0c22b89", original_line: 98, final_line: 98
       }
     },
     {
@@ -48,7 +48,7 @@ s.add_test(
       links: %w[https://groups.google.com/d/msg/ruby-security-ann/WccgKSKiPZA/9DrsDVSoCgAJ],
       object: { severity: "High" },
       git_blame_info: {
-        commit: :_,        line_hash: "667878ceb84268d96f51ee7b50cfa175ae86fe58",        original_line: 81, final_line: 81
+        commit: :_, line_hash: "667878ceb84268d96f51ee7b50cfa175ae86fe58", original_line: 81, final_line: 81
       }
     }
   ],
@@ -68,7 +68,7 @@ s.add_test(
       links: %w[https://groups.google.com/d/msg/ruby-security-ann/8B2iV2tPRSE/JkjCJkSoCgAJ],
       object: { severity: "Medium" },
       git_blame_info: {
-        commit: :_,        line_hash: "667878ceb84268d96f51ee7b50cfa175ae86fe58",        original_line: 81, final_line: 81
+        commit: :_, line_hash: "667878ceb84268d96f51ee7b50cfa175ae86fe58", original_line: 81, final_line: 81
       }
     },
     {
@@ -79,7 +79,7 @@ s.add_test(
       links: %w[https://github.com/flavorjones/loofah/issues/144],
       object: { severity: "Medium" },
       git_blame_info: {
-        commit: :_,        line_hash: "069308f321a2c3211a9df63a042da0612e168be7",        original_line: 66,        final_line: 66
+        commit: :_, line_hash: "069308f321a2c3211a9df63a042da0612e168be7", original_line: 66, final_line: 66
       }
     },
     {
@@ -90,7 +90,7 @@ s.add_test(
       links: %w[https://groups.google.com/d/msg/rubyonrails-security/tP7W3kLc5u4/uDy2Br7xBgAJ],
       object: { severity: "Medium" },
       git_blame_info: {
-        commit: :_,        line_hash: "a8505d73b4be31c3c77772285bdc80b3f0c22b89",        original_line: 98,        final_line: 98
+        commit: :_, line_hash: "a8505d73b4be31c3c77772285bdc80b3f0c22b89", original_line: 98, final_line: 98
       }
     },
     {
@@ -101,7 +101,7 @@ s.add_test(
       links: %w[https://groups.google.com/d/msg/ruby-security-ann/WccgKSKiPZA/9DrsDVSoCgAJ],
       object: { severity: "High" },
       git_blame_info: {
-        commit: :_,        line_hash: "667878ceb84268d96f51ee7b50cfa175ae86fe58",        original_line: 81,        final_line: 81
+        commit: :_, line_hash: "667878ceb84268d96f51ee7b50cfa175ae86fe58", original_line: 81, final_line: 81
       }
     }
   ],
@@ -138,7 +138,7 @@ s.add_test(
       links: %w[https://groups.google.com/d/msg/ruby-security-ann/8B2iV2tPRSE/JkjCJkSoCgAJ],
       object: { severity: "Medium" },
       git_blame_info: {
-        commit: :_,        line_hash: "667878ceb84268d96f51ee7b50cfa175ae86fe58", original_line: 63, final_line: 63
+        commit: :_, line_hash: "667878ceb84268d96f51ee7b50cfa175ae86fe58", original_line: 63, final_line: 63
       }
     },
     {
@@ -149,7 +149,7 @@ s.add_test(
       links: %w[https://groups.google.com/d/msg/ruby-security-ann/WccgKSKiPZA/9DrsDVSoCgAJ],
       object: { severity: "High" },
       git_blame_info: {
-        commit: :_,        line_hash: "667878ceb84268d96f51ee7b50cfa175ae86fe58", original_line: 63, final_line: 63
+        commit: :_, line_hash: "667878ceb84268d96f51ee7b50cfa175ae86fe58", original_line: 63, final_line: 63
       }
     }
   ],
@@ -171,7 +171,7 @@ s.add_test(
       links: %w[https://groups.google.com/d/msg/ruby-security-ann/8B2iV2tPRSE/JkjCJkSoCgAJ],
       object: { severity: "Medium" },
       git_blame_info: {
-        commit: :_,        line_hash: "667878ceb84268d96f51ee7b50cfa175ae86fe58",        original_line: 63,        final_line: 63
+        commit: :_, line_hash: "667878ceb84268d96f51ee7b50cfa175ae86fe58", original_line: 63, final_line: 63
       }
     },
     {
@@ -182,7 +182,7 @@ s.add_test(
       links: %w[https://groups.google.com/d/msg/ruby-security-ann/WccgKSKiPZA/9DrsDVSoCgAJ],
       object: { severity: "High" },
       git_blame_info: {
-        commit: :_,        line_hash: "667878ceb84268d96f51ee7b50cfa175ae86fe58",        original_line: 63,        final_line: 63
+        commit: :_, line_hash: "667878ceb84268d96f51ee7b50cfa175ae86fe58", original_line: 63, final_line: 63
       }
     }
   ],
@@ -201,7 +201,7 @@ s.add_test(
       links: %w[https://brakemanscanner.org/docs/warning_types/authentication/],
       object: { severity: "Medium" },
       git_blame_info: {
-        commit: :_,        line_hash: "c12a13c2c8bf957567e1437f11fd7d5493ca348d",        original_line: 2, final_line: 2
+        commit: :_, line_hash: "c12a13c2c8bf957567e1437f11fd7d5493ca348d", original_line: 2, final_line: 2
       }
     }
   ],
