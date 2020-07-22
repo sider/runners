@@ -14,10 +14,7 @@ s.add_test(
       location: { start_line: 3 },
       object: nil,
       git_blame_info: {
-        commit: :_,
-        line_hash: "b084c1fd1e628624a50119e7b7ef7db1fcfa15aa",
-        original_line: 3,
-        final_line: 3
+        commit: :_, line_hash: "b084c1fd1e628624a50119e7b7ef7db1fcfa15aa", original_line: 3, final_line: 3
       }
     },
     {
@@ -28,10 +25,7 @@ s.add_test(
       location: { start_line: 1 },
       object: nil,
       git_blame_info: {
-        commit: :_,
-        line_hash: "af5df32577b5771638da7d9919d55433f420248d",
-        original_line: 1,
-        final_line: 1
+        commit: :_, line_hash: "af5df32577b5771638da7d9919d55433f420248d", original_line: 1, final_line: 1
       }
     },
     {
@@ -42,10 +36,7 @@ s.add_test(
       location: { start_line: 2 },
       object: nil,
       git_blame_info: {
-        commit: :_,
-        line_hash: "3cba81bcb0c193fbff10c92439a0ace9d462a627",
-        original_line: 2,
-        final_line: 2
+        commit: :_, line_hash: "3cba81bcb0c193fbff10c92439a0ace9d462a627", original_line: 2, final_line: 2
       }
     }
   ],
@@ -84,10 +75,7 @@ s.add_test(
       location: { start_line: 3 },
       object: nil,
       git_blame_info: {
-        commit: :_,
-        line_hash: "b084c1fd1e628624a50119e7b7ef7db1fcfa15aa",
-        original_line: 3,
-        final_line: 3
+        commit: :_, line_hash: "b084c1fd1e628624a50119e7b7ef7db1fcfa15aa", original_line: 3, final_line: 3
       }
     },
     {
@@ -98,10 +86,7 @@ s.add_test(
       location: { start_line: 1 },
       object: nil,
       git_blame_info: {
-        commit: :_,
-        line_hash: "90c97a042d3ed72698abee8fc4a891fdcc6749b4",
-        original_line: 1,
-        final_line: 1
+        commit: :_, line_hash: "90c97a042d3ed72698abee8fc4a891fdcc6749b4", original_line: 1, final_line: 1
       }
     },
     {
@@ -112,10 +97,7 @@ s.add_test(
       location: { start_line: 1 },
       object: nil,
       git_blame_info: {
-        commit: :_,
-        line_hash: "af5df32577b5771638da7d9919d55433f420248d",
-        original_line: 1,
-        final_line: 1
+        commit: :_, line_hash: "af5df32577b5771638da7d9919d55433f420248d", original_line: 1, final_line: 1
       }
     },
     {
@@ -126,10 +108,7 @@ s.add_test(
       location: { start_line: 2 },
       object: nil,
       git_blame_info: {
-        commit: :_,
-        line_hash: "3cba81bcb0c193fbff10c92439a0ace9d462a627",
-        original_line: 2,
-        final_line: 2
+        commit: :_, line_hash: "3cba81bcb0c193fbff10c92439a0ace9d462a627", original_line: 2, final_line: 2
       }
     }
   ],
@@ -148,10 +127,7 @@ s.add_test(
       location: { start_line: 3 },
       object: nil,
       git_blame_info: {
-        commit: :_,
-        line_hash: "b084c1fd1e628624a50119e7b7ef7db1fcfa15aa",
-        original_line: 3,
-        final_line: 3
+        commit: :_, line_hash: "b084c1fd1e628624a50119e7b7ef7db1fcfa15aa", original_line: 3, final_line: 3
       }
     },
     {
@@ -162,10 +138,7 @@ s.add_test(
       location: { start_line: 1 },
       object: nil,
       git_blame_info: {
-        commit: :_,
-        line_hash: "af5df32577b5771638da7d9919d55433f420248d",
-        original_line: 1,
-        final_line: 1
+        commit: :_, line_hash: "af5df32577b5771638da7d9919d55433f420248d", original_line: 1, final_line: 1
       }
     },
     {
@@ -176,10 +149,7 @@ s.add_test(
       location: { start_line: 2 },
       object: nil,
       git_blame_info: {
-        commit: :_,
-        line_hash: "3cba81bcb0c193fbff10c92439a0ace9d462a627",
-        original_line: 2,
-        final_line: 2
+        commit: :_, line_hash: "3cba81bcb0c193fbff10c92439a0ace9d462a627", original_line: 2, final_line: 2
       }
     }
   ],
@@ -198,10 +168,7 @@ s.add_test(
       location: { start_line: 1 },
       object: nil,
       git_blame_info: {
-        commit: :_,
-        line_hash: "b084c1fd1e628624a50119e7b7ef7db1fcfa15aa",
-        original_line: 1,
-        final_line: 1
+        commit: :_, line_hash: "b084c1fd1e628624a50119e7b7ef7db1fcfa15aa", original_line: 1, final_line: 1
       }
     }
   ],
@@ -220,10 +187,7 @@ s.add_test(
       location: { start_line: 1 },
       object: nil,
       git_blame_info: {
-        commit: :_,
-        line_hash: "b084c1fd1e628624a50119e7b7ef7db1fcfa15aa",
-        original_line: 1,
-        final_line: 1
+        commit: :_, line_hash: "b084c1fd1e628624a50119e7b7ef7db1fcfa15aa", original_line: 1, final_line: 1
       }
     }
   ],
@@ -242,10 +206,7 @@ s.add_test(
       location: { start_line: 1 },
       object: nil,
       git_blame_info: {
-        commit: :_,
-        line_hash: "b084c1fd1e628624a50119e7b7ef7db1fcfa15aa",
-        original_line: 1,
-        final_line: 1
+        commit: :_, line_hash: "b084c1fd1e628624a50119e7b7ef7db1fcfa15aa", original_line: 1, final_line: 1
       }
     }
   ],
