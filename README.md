@@ -143,11 +143,13 @@ $ bundle exec rake test TEST=test/cli_test.rb TESTOPTS='--name=test_parsing_opti
 You can run smoke tests via the `rake docker:smoke` command as follow:
 
 ```shell-session
-$ bundle exec rake docker:smoke ANALYZER=rubocop [ONLY=test1,test2,...] [SHOW_TRACE=true]
+$ bundle exec rake docker:smoke ANALYZER=rubocop [ONLY=test1,test2,...] [DEBUG=(true|trace)]
 ```
 
 - `ONLY`: Specify test name(s). You can specify a comma-separated list.
-- `SHOW_TRACE`: Show trace log to console. Useful to debug.
+- `DEBUG`: Show debug log to your console.
+  - `DEBUG=true`: All log.
+  - `DEBUG=trace`: Only trace log (colored).
 
 If you want to run tests right after changing code, you can run one command as follow:
 
