@@ -13,7 +13,9 @@ s.add_test(
       message: "always add db index (users => [group_id])",
       links: %w[https://rails-bestpractices.com/posts/2010/07/24/always-add-db-index/],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "98994155753561cf98e9e06cdc415ae12f92d2bb", original_line: 25, final_line: 25
+      }
     },
     {
       path: "app/models/user.rb",
@@ -22,7 +24,9 @@ s.add_test(
       message: "default_scope is evil",
       links: %w[https://rails-bestpractices.com/posts/2013/06/15/default_scope-is-evil/],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "582bbb9e448787fead615d16e842089477b84e81", original_line: 3, final_line: 3
+      }
     },
     {
       path: "app/helpers/users_helper.rb",
@@ -31,7 +35,9 @@ s.add_test(
       message: "remove empty helpers",
       links: %w[https://rails-bestpractices.com/posts/2011/04/09/remove-empty-helpers/],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "f8ea15a887906570f24c7ea0fafae3ebbc57cd3f", original_line: 1, final_line: 1
+      }
     },
     {
       path: "config/routes.rb",
@@ -40,7 +46,9 @@ s.add_test(
       message: "restrict auto-generated routes users (except: [:new, :create])",
       links: %w[https://rails-bestpractices.com/posts/2011/08/19/restrict-auto-generated-routes/],
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "71c527a4577a4addd9131807a83a0ab943db59ec", original_line: 3, final_line: 3
+      }
     }
   ],
   analyzer: { name: "Rails Best Practices", version: default_version }
@@ -66,7 +74,9 @@ s.add_test(
       path: "a.rb",
       location: { start_line: 5 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "447fdabd4b419ac0393028c89e4f596d888c3600", original_line: 5, final_line: 5
+      }
     }
   ],
   warnings: [
@@ -89,7 +99,9 @@ s.add_test(
       path: "app/views/index.html.erb",
       location: { start_line: 2 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "217e22edefa9ea4f0760e392ca561336a35aa70a", original_line: 2, final_line: 2
+      }
     },
     {
       message: "simplify render in views",
@@ -98,7 +110,9 @@ s.add_test(
       path: "app/views/index.html.haml",
       location: { start_line: 2 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "61c189f0538de4fecb11e837da23a468287153e4", original_line: 2, final_line: 2
+      }
     },
     {
       message: "simplify render in views",
@@ -107,7 +121,9 @@ s.add_test(
       path: "app/views/index.html.slim",
       location: { start_line: 2 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "61c189f0538de4fecb11e837da23a468287153e4", original_line: 2, final_line: 2
+      }
     }
   ]
 )
@@ -124,7 +140,9 @@ s.add_test(
       path: "app/models/box.rb",
       location: { start_line: 5 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "447fdabd4b419ac0393028c89e4f596d888c3600", original_line: 5, final_line: 5
+      }
     }
   ]
 )
@@ -141,7 +159,9 @@ s.add_test(
       path: "app/views/index.html.slim",
       location: { start_line: 2 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "61c189f0538de4fecb11e837da23a468287153e4", original_line: 2, final_line: 2
+      }
     },
     {
       message: "simplify render in views",
@@ -150,7 +170,9 @@ s.add_test(
       path: "app/views/show.html.slim",
       location: { start_line: 2 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "ad616b1216619ed7daec388fdd0c2f0d890f6ffb", original_line: 2, final_line: 2
+      }
     }
   ]
 )
@@ -167,7 +189,9 @@ s.add_test(
       path: "app/views/index.html.slim",
       location: { start_line: 2 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "61c189f0538de4fecb11e837da23a468287153e4", original_line: 2, final_line: 2
+      }
     }
   ]
 )
@@ -184,7 +208,9 @@ s.add_test(
       path: "app/models/box.rb",
       location: { start_line: 5 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "447fdabd4b419ac0393028c89e4f596d888c3600", original_line: 5, final_line: 5
+      }
     }
   ],
   warnings: [
@@ -214,7 +240,9 @@ s.add_test(
       path: "vendor/a.rb",
       location: { start_line: 3 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "e9e0a3f0be9cd433b81aaef2ab5775fedb5832cf", original_line: 3, final_line: 3
+      }
     }
   ]
 )
@@ -231,7 +259,9 @@ s.add_test(
       path: "features/a.rb",
       location: { start_line: 3 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "e9e0a3f0be9cd433b81aaef2ab5775fedb5832cf", original_line: 3, final_line: 3
+      }
     },
     {
       message: "Don't rescue Exception",
@@ -240,7 +270,9 @@ s.add_test(
       path: "spec/a.rb",
       location: { start_line: 3 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "e9e0a3f0be9cd433b81aaef2ab5775fedb5832cf", original_line: 3, final_line: 3
+      }
     },
     {
       message: "Don't rescue Exception",
@@ -249,7 +281,9 @@ s.add_test(
       path: "test/a.rb",
       location: { start_line: 3 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "e9e0a3f0be9cd433b81aaef2ab5775fedb5832cf", original_line: 3, final_line: 3
+      }
     }
   ]
 )
@@ -266,7 +300,9 @@ s.add_test(
       path: "foo.rb",
       location: { start_line: 3 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "e9e0a3f0be9cd433b81aaef2ab5775fedb5832cf", original_line: 3, final_line: 3
+      }
     }
   ]
 )
@@ -283,7 +319,9 @@ s.add_test(
       path: "app/views/articles/show.html.erb",
       location: { start_line: 1 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "c9a4160e27053d6c94f1fd150c987209de514948", original_line: 1, final_line: 1
+      }
     },
     {
       message: "move code into model (article use_count > 2)",
@@ -292,7 +330,9 @@ s.add_test(
       path: "app/views/articles/show.html.erb",
       location: { start_line: 5 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "7400224de590d513ee50d93636c719fb9488df59", original_line: 5, final_line: 5
+      }
     },
     {
       message: "move code into model (post use_count > 2)",
@@ -301,7 +341,9 @@ s.add_test(
       path: "app/views/articles/show.html.erb",
       location: { start_line: 9 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "d1b3976f70a20f4b57661af2ffdb76dc27004610", original_line: 9, final_line: 9
+      }
     },
     {
       message: "move code into model (Time use_count > 2)",
@@ -310,7 +352,9 @@ s.add_test(
       path: "app/views/articles/show.html.erb",
       location: { start_line: 13 },
       object: nil,
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "599ff60112099528b8b997ccc1075dc439b789ec", original_line: 13, final_line: 13
+      }
     }
   ]
 )
