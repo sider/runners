@@ -1,4 +1,9 @@
 class Runners::Harness
+  class InvalidResult < SystemError
+    attr_reader result: untyped
+    def initialize: (result: untyped) -> void
+  end
+
   include Tmpdir
 
   attr_reader guid: String
@@ -18,10 +23,4 @@ class Runners::Harness
   def ensure_result: () { () -> untyped } -> untyped
   def handle_error: (Exception exn) -> void
   def exclude_special_dirs: [X] { () -> X } -> X
-end
-
-class Runners::Harness::InvalidResult < SystemError
-  attr_reader result: untyped
-
-  def initialize: (result: untyped) -> void
 end

@@ -12,7 +12,15 @@ module Runners
       include UnificationAssertion
       include Tmpdir
 
-      TestParams = Struct.new(:name, :pattern, :offline, keyword_init: true)
+      class TestParams
+        attr_reader :name, :pattern, :offline
+
+        def initialize(name:, pattern:, offline:)
+          @name = name
+          @pattern = pattern
+          @offline = offline
+        end
+      end
 
       attr_reader :argv
 

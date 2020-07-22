@@ -1,9 +1,11 @@
-class Bundler::LazySpecification
-  attr_reader name: String
-  attr_reader version: Gem::Version
-end
+module Bundler
+  class LazySpecification
+    attr_reader name: String
+    attr_reader version: Gem::Version
+  end
 
-class Bundler::LockfileParser
-  def initialize: (String) -> void
-  def specs: -> Array[Bundler::LazySpecification]
+  class LockfileParser
+    def initialize: (String) -> void
+    def specs: -> Array[LazySpecification]
+  end
 end

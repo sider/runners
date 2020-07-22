@@ -1,6 +1,8 @@
 class Runners::IO::AwsS3
   include _IO
 
+  BUFFER_SIZE: Integer
+
   def self.parse_s3_uri!: (String s3_uri) -> [String, String]
 
   attr_reader uri: String
@@ -16,5 +18,3 @@ class Runners::IO::AwsS3
   private
   def flush_to_s3!: () -> void
 end
-
-Runners::IO::AwsS3::BUFFER_SIZE: Integer

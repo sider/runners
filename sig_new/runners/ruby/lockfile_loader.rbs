@@ -1,17 +1,21 @@
-class Runners::Ruby::LockfileLoader
-  include Tmpdir
+module Runners
+  module Ruby
+    class LockfileLoader
+      include Tmpdir
 
-  attr_reader root_dir: Pathname
-  attr_reader shell: Shell
+      class InvalidGemfileLock < InstallGemsFailure
+      end
 
-  def initialize: (root_dir: Pathname, shell: Shell) -> void
-  def ensure_lockfile: [X] () { (Lockfile) -> [X] } -> [X]
+      attr_reader root_dir: Pathname
+      attr_reader shell: Shell
 
-  private
-  def gemfile_path: () -> Pathname
-  def gemfile_lock_path: () -> Pathname
-  def generate_lockfile: (Pathname) -> Pathname?
-end
+      def initialize: (root_dir: Pathname, shell: Shell) -> void
+      def ensure_lockfile: [X] () { (Lockfile) -> [X] } -> [X]
 
-class Runners::Ruby::LockfileLoader::InvalidGemfileLock < InstallGemsFailure
+      private
+      def gemfile_path: () -> Pathname
+      def gemfile_lock_path: () -> Pathname
+      def generate_lockfile: (Pathname) -> Pathname?
+    end
+  end
 end

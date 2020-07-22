@@ -1,3 +1,83 @@
-class Runners::Schema::Result
-  def self.envelope: () -> untyped
+module Runners
+  module Schema
+    type location = {
+      start_line: Integer,
+      start_column: Integer?,
+      end_line: Integer?,
+      end_column: Integer?
+    }
+
+    type git_blame_info = {
+      commit: String,
+      line_hash: String,
+      original_line: Integer,
+      final_line: Integer
+    }
+
+    type issue = {
+      id: String,
+      path: String,
+      location: location,
+      message: String,
+      links: Array[String],
+      object: untyped?,
+      git_blame_info: git_blame_info?
+    }
+
+    type analyzer = {
+      name: String,
+      version: String
+    }
+
+    type success_result = {
+      guid: String,
+      timestamp: String,
+      :type => "success",
+      issues: Array[issue],
+      analyzer: analyzer
+    }
+
+    type failure_result = {
+      guid: String,
+      timestamp: String,
+      :type => "failure",
+      message: String,
+      analyzer: analyzer?
+    }
+
+    type error_result = {
+      guid: String,
+      timestamp: String,
+      :type => "error",
+      :class => String,
+      backtrace: Array[String],
+      inspect: String
+    }
+
+    type warning = {
+      message: String,
+      file: String?
+    }
+
+    type envelope = {
+      result: success_result | failure_result | error_result,
+      warnings: Array[warning],
+      ci_config: Hash[Symbol, untyped]?,
+      version: String
+    }
+
+    class Issue < StrongJSON
+      def location: -> StrongJSON::Type::Enum[location]
+      def git_blame_info: -> StrongJSON::Type::Object[git_blame_info]
+      def issue: -> StrongJSON::Type::Object[issue]
+    end
+
+    class Result < StrongJSON
+      def analyzer: -> StrongJSON::Type::Object[analyzer]
+      def success: -> StrongJSON::Type::Object[success_result]
+      def failure: -> StrongJSON::Type::Object[failure_result]
+      def error: -> StrongJSON::Type::Object[error_result]
+      def envelope: -> StrongJSON::Type::Object[envelope]
+    end
+  end
 end

@@ -1,3 +1,7 @@
-module Runners::Ruby::LockfileParser
-  def self.parse: (String) -> ::Bundler::LockfileParser
+module Runners
+  module Ruby
+    module LockfileParser
+      def self.parse: (String) -> ::Bundler::LockfileParser
+    end
+  end
 end

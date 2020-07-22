@@ -1,33 +1,37 @@
-class Runners::Ruby::GemInstaller
-  attr_reader gem_home: Pathname
-  attr_reader specs: Array[Spec]
-  attr_reader trace_writer: TraceWriter
-  attr_reader shell: Shell
-  attr_reader constraints: Hash[String, Array[String]]
-  attr_reader config_path_name: String
-  attr_reader use_local: bool
+module Runners
+  module Ruby
+    class GemInstaller
+      class InstallationFailure < InstallGemsFailure
+      end
 
-  def initialize: (shell: Shell,
-                   home: Pathname,
-                   config_path_name: String,
-                   specs: Array[Spec],
-                   constraints: Hash[String, Array[String]],
-                   trace_writer: TraceWriter,
-                   use_local: bool) -> void
-  def gemfile_path: () -> Pathname
-  def lockfile_path: () -> Pathname
-  def install!: [X] { (Hash[String, String]) -> X } -> X
-  def gemfile_content: () -> String
+      DEFAULT_SOURCE: ::String
 
-  private
-  def group_specs: () -> Array[[Source, Array[Spec]]]
-  def gem: (Spec, Array[String]) -> String
-  def gem_constraints: (Spec, source_type) -> Array[String]
+      type source_type = Source::Rubygems | Source::Git
+
+      attr_reader gem_home: Pathname
+      attr_reader specs: Array[Spec]
+      attr_reader trace_writer: TraceWriter
+      attr_reader shell: Shell
+      attr_reader constraints: Hash[String, Array[String]]
+      attr_reader config_path_name: String
+      attr_reader use_local: bool
+
+      def initialize: (shell: Shell,
+                       home: Pathname,
+                       config_path_name: String,
+                       specs: Array[Spec],
+                       constraints: Hash[String, Array[String]],
+                       trace_writer: TraceWriter,
+                       use_local: bool) -> void
+      def gemfile_path: () -> Pathname
+      def lockfile_path: () -> Pathname
+      def install!: [X] { (Hash[String, String]) -> X } -> X
+      def gemfile_content: () -> String
+
+      private
+      def group_specs: () -> Array[[Source, Array[Spec]]]
+      def gem: (Spec, Array[String]) -> String
+      def gem_constraints: (Spec, source_type) -> Array[String]
+    end
+  end
 end
-
-class Runners::Ruby::GemInstaller::InstallationFailure < InstallGemsFailure
-end
-
-Runners::Ruby::GemInstaller::DEFAULT_SOURCE: ::String
-
-type Runners::Ruby::GemInstaller::source_type = Source::Rubygems | Source::Git

@@ -1,3 +1,4 @@
-module Runners::PHP : Processor
-  def show_runtime_versions: () -> void
+module Runners
+  module PHP : Processor
+  end
 end

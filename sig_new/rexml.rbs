@@ -1,7 +1,9 @@
-class REXML::Document
-  def initialize: (String) -> void
-  def root: () -> REXML::Element?
-end
+module REXML
+  class Document
+    def initialize: (String) -> void
+    def root: () -> Element?
+  end
 
-class REXML::Element
+  class Element
+  end
 end

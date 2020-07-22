@@ -1,12 +1,11 @@
 module JSONSEQ
-end
+  interface _WriteIO
+    def write: (String) -> void
+    def flush: () -> void
+  end
 
-interface JSONSEQ::_WriteIO
-  def write: (String) -> void
-  def flush: () -> void
-end
-
-class JSONSEQ::Writer
-  def initialize: (io: _WriteIO) -> void
-  def <<: (untyped) -> void
+  class Writer
+    def initialize: (io: _WriteIO) -> void
+    def <<: (untyped) -> void
+  end
 end

@@ -1,6 +1,8 @@
-module Runners::Tmpdir
-  include Kernel
+module Runners
+  module Tmpdir
+    include Kernel
 
-  def mktmpdir: [X] { (Pathname) -> X } -> X
-  def mktmpdir_as_pathname: -> Pathname
+    def mktmpdir: [X] { (Pathname) -> X } -> X
+    def mktmpdir_as_pathname: -> Pathname
+  end
 end

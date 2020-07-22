@@ -1,26 +1,28 @@
-module Runners::Ruby : Processor
-  def install_gems: [X] (Array[GemInstaller::Spec], ?optionals: Array[GemInstaller::Spec], constraints: Hash[String, Array[String]]) { (Hash[String, String]) -> X } -> X
-  def default_specs: (Array[GemInstaller::Spec], Hash[String, Array[String]], LockfileLoader::Lockfile) -> Array[GemInstaller::Spec]
-  def optional_specs: (Array[GemInstaller::Spec], LockfileLoader::Lockfile) -> Array[GemInstaller::Spec]
-  def user_specs: (Array[GemInstaller::Spec], LockfileLoader::Lockfile) -> Array[GemInstaller::Spec]
-  def ruby_analyzer_bin: () -> Array[String]
-  def installed_gem_versions: (String, *String, ?exception: bool) -> Hash[String, Array[String]]
-  def default_gems: (?String, *String) -> Array[GemInstaller::Spec]
+module Runners
+  module Ruby : Processor
+    type gems_item = {
+      name: String,
+      version: String?,
+      source: String?,
+      git: git_source?
+    }
+
+    type git_source = {
+      repo: String,
+      ref: String?,
+      branch: String?,
+      tag: String?
+    }
+
+    class InstallGemsFailure < UserError
+    end
+
+    def install_gems: [X] (Array[GemInstaller::Spec], ?optionals: Array[GemInstaller::Spec], constraints: Hash[String, Array[String]]) { (Hash[String, String]) -> X } -> X
+    def default_specs: (Array[GemInstaller::Spec], Hash[String, Array[String]], LockfileLoader::Lockfile) -> Array[GemInstaller::Spec]
+    def optional_specs: (Array[GemInstaller::Spec], LockfileLoader::Lockfile) -> Array[GemInstaller::Spec]
+    def user_specs: (Array[GemInstaller::Spec], LockfileLoader::Lockfile) -> Array[GemInstaller::Spec]
+    def ruby_analyzer_bin: () -> Array[String]
+    def installed_gem_versions: (String, *String, ?exception: bool) -> Hash[String, Array[String]]
+    def default_gems: (?String, *String) -> Array[GemInstaller::Spec]
+  end
 end
-
-class Runners::Ruby::InstallGemsFailure < UserError
-end
-
-type Runners::Ruby::gems_item = {
-  name: String,
-  version: String?,
-  source: String?,
-  git: git_source?
-}
-
-type Runners::Ruby::git_source = {
-  repo: String,
-  ref: String?,
-  branch: String?,
-  tag: String?
-}

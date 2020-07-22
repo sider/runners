@@ -1,0 +1,78 @@
+module Runners
+  module Schema
+    type one_or_more_string = String | Array[String]
+
+    type base_runner_config = {
+      root_dir: String?
+    }
+
+    type git_branch_runner_config = {
+      repo: String,
+      branch: String
+    }
+
+    type git_tag_runner_config = {
+      repo: String,
+      tag: String
+    }
+
+    type git_ref_runner_config = {
+      repo: String,
+      ref: String
+    }
+
+    type git_runner_config = git_branch_runner_config
+                           | git_tag_runner_config
+                           | git_ref_runner_config
+
+    type gem_source_runner_config = {
+      name: String,
+      version: String,
+      source: String?
+    }
+
+    type gem_git_runner_config = {
+      name: String,
+      git: git_runner_config
+    }
+
+    type gem_runner_config = String | gem_source_runner_config | gem_git_runner_config
+
+    type ruby_runner_config = {
+      gems: Array[gem_runner_config]?
+    }
+
+    type cplusplus_runner_config = {
+      apt: one_or_more_string?,
+      "include-path" => one_or_more_string?
+    }
+
+    type npm_install_runner_config = bool | "development" | "production"
+
+    type npm_runner_config = {
+      npm_install: npm_install_runner_config?
+    }
+
+    type config_payload = {
+      linter: StrongJSON::Type::Object?,
+      ignore: StrongJSON::Type::Enum[one_or_more_string]?,
+      branches: StrongJSON::Type::Object[{
+        exclude: StrongJSON::Type::Enum[one_or_more_string]?
+      }]?
+    }
+
+    class BaseConfig < StrongJSON
+      def base: () -> StrongJSON::Type::Object[base_runner_config]
+      def git: () -> StrongJSON::Type::Enum[git_runner_config]
+      def ruby: () -> StrongJSON::Type::Object[ruby_runner_config]
+      def cplusplus: () -> StrongJSON::Type::Object[cplusplus_runner_config]
+      def npm_install: () -> StrongJSON::Type::Enum[npm_install_runner_config]
+      def npm: () -> StrongJSON::Type::Object[npm_runner_config]
+    end
+
+    class Config < StrongJSON
+      def payload: () -> StrongJSON::Type::Object[config_payload]
+      def register: (name: Symbol, schema: untyped) -> void
+    end
+  end
+end

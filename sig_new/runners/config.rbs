@@ -1,4 +1,19 @@
 class Runners::Config
+  class Error < UserError
+    attr_reader raw_content: String
+
+    def initialize: (String message, String raw_content) -> void
+  end
+
+  class BrokenYAML < Error
+  end
+
+  class InvalidConfiguration < Error
+  end
+
+  CONFIG_FILE_NAME: String
+  OLD_CONFIG_FILE_NAME: String
+
   attr_reader working_dir: Pathname
   attr_reader raw_content: String?
   attr_reader content: Hash[Symbol, untyped]
@@ -16,18 +31,3 @@ class Runners::Config
   def parse_yaml: () -> String?
   def check_schema: (String? object) -> Hash[Symbol, untyped]
 end
-
-class Runners::Config::Error < Runners::UserError
-  attr_reader raw_content: String
-
-  def initialize: (String message, String raw_content) -> void
-end
-
-class Runners::Config::BrokenYAML < Runners::Config::Error
-end
-
-class Runners::Config::InvalidConfiguration < Runners::Config::Error
-end
-
-Runners::Config::CONFIG_FILE_NAME: String
-Runners::Config::OLD_CONFIG_FILE_NAME: String

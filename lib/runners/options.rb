@@ -1,8 +1,26 @@
 module Runners
   class Options
-    GitSource = Struct.new(:head, :base, :git_http_url, :owner, :repo, :git_http_userinfo, :pull_number, keyword_init: true)
+    class GitSource
+      attr_reader :head, :base, :git_http_url, :git_http_userinfo, :owner, :repo, :pull_number
 
-    # @dynamic stdout, stderr, source, ssh_key, io
+      def initialize(head:, base:, git_http_url:, git_http_userinfo:, owner:, repo:, pull_number:)
+        @head = head
+        @base = base
+        @git_http_url = git_http_url
+        @git_http_userinfo = git_http_userinfo
+        @owner = owner
+        @repo = repo
+        @pull_number = pull_number
+      end
+
+      def to_h
+        {
+          head: head, base: base, git_http_url: git_http_url, git_http_userinfo: git_http_userinfo,
+          owner: owner, repo: repo, pull_number: pull_number,
+        }
+      end
+    end
+
     attr_reader :stdout, :stderr, :source, :ssh_key, :io
 
     def initialize(stdout, stderr)

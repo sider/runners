@@ -1,43 +1,40 @@
-type Runners::result = Runners::Results::Success
-            | Runners::Results::Failure
-            | Runners::Results::MissingFilesFailure
-            | Runners::Results::Error
+module Runners
+  type result = Results::Success
+              | Results::Failure
+              | Results::Error
 
-class Runners::Results::Base
-  attr_reader guid: String
-  attr_reader timestamp: Time
+  module Results
+    class Base
+      attr_reader guid: String
+      attr_reader timestamp: Time
 
-  def initialize: (guid: String) -> void
-  def as_json: () -> Hash[untyped, untyped]
-  def valid?: () -> bool
-end
+      def initialize: (guid: String) -> void
+      def as_json: () -> Hash[untyped, untyped]
+      def valid?: () -> bool
+    end
 
-class Runners::Results::Success < Runners::Results::Base
-  attr_reader issues: Array[Issue]
-  attr_reader analyzer: Analyzer
+    class Success < Base
+      attr_reader issues: Array[Issue]
+      attr_reader analyzer: Analyzer
 
-  def initialize: (guid: String, analyzer: Analyzer, ?issues: Array[Issue]) -> void
-  def add_issue: (*Issue) -> void
-  def filter_issues: (Changes) -> void
-  def add_git_blame_info: (Workspace) -> void
-end
+      def initialize: (guid: String, analyzer: Analyzer, ?issues: Array[Issue]) -> void
+      def add_issue: (*Issue) -> void
+      def filter_issues: (Changes) -> void
+      def add_git_blame_info: (Workspace) -> void
+    end
 
-class Runners::Results::Failure < Runners::Results::Base
-  attr_reader message: String
-  attr_reader analyzer: Analyzer?
+    class Failure < Base
+      attr_reader message: String
+      attr_reader analyzer: Analyzer?
 
-  def initialize: (guid: String, message: String, ?analyzer: Analyzer?) -> void
-end
+      def initialize: (guid: String, message: String, ?analyzer: Analyzer?) -> void
+    end
 
-class Runners::Results::MissingFilesFailure < Runners::Results::Base
-  attr_reader files: Array[Pathname]
+    class Error < Base
+      attr_reader exception: Exception
+      attr_reader analyzer: Analyzer?
 
-  def initialize: (guid: String, files: Array[Pathname]) -> void
-end
-
-class Runners::Results::Error < Runners::Results::Base
-  attr_reader exception: Exception
-  attr_reader analyzer: Analyzer?
-
-  def initialize: (guid: String, exception: Exception, analyzer: Analyzer?) -> void
+      def initialize: (guid: String, exception: Exception, analyzer: Analyzer?) -> void
+    end
+  end
 end

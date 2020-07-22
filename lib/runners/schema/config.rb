@@ -1,7 +1,7 @@
 module Runners
   module Schema
     BaseConfig = _ = StrongJSON.new do
-      # @type self: Types::BaseConfig
+      # @type self: BaseConfig
 
       let :base, object(
         root_dir: string?,
@@ -40,7 +40,7 @@ module Runners
     end
 
     Config = _ = StrongJSON.new do
-      # @type self: Types::Config
+      # @type self: Config
 
       @linter = {}
 
