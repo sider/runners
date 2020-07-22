@@ -337,7 +337,9 @@ s.add_test(
       message: "Use $(...) notation instead of legacy backticked `...`.",
       links: %w[https://github.com/koalaman/shellcheck/wiki/SC2006],
       object: { code: 2_006, severity: "style", fix: { replacements: :_ } },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "6349a055fa89495662ad06e698cbbff2cb10f333", original_line: 3, final_line: 3
+      }
     },
     {
       path: "abc.sh",
@@ -346,7 +348,9 @@ s.add_test(
       message: "Use $(...) notation instead of legacy backticked `...`.",
       links: %w[https://github.com/koalaman/shellcheck/wiki/SC2006],
       object: { code: 2_006, severity: "style", fix: { replacements: :_ } },
-      git_blame_info: nil
+      git_blame_info: {
+        commit: :_, line_hash: "6349a055fa89495662ad06e698cbbff2cb10f333", original_line: 3, final_line: 3
+      }
     }
   ],
   analyzer: { name: "ShellCheck", version: "0.7.1" }
