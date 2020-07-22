@@ -5,10 +5,6 @@ class IgnoringTest < Minitest::Test
 
   Ignoring = Runners::Ignoring
 
-  def trace_writer
-    @trace_writer ||= new_trace_writer
-  end
-
   def new_file(path, content: "")
     path.tap do |f|
       f.parent.mkpath
@@ -17,7 +13,7 @@ class IgnoringTest < Minitest::Test
   end
 
   def test_delete_ignored_files
-    with_workspace do |workspace|
+    with_workspace_open do |workspace|
       patterns = [
         "examples/**/out",
         "test/**/out*",
@@ -40,6 +36,7 @@ class IgnoringTest < Minitest::Test
       new_file dir / "yarn.log"
       new_file dir / "npm.log.bak"
       new_file dir / "てすと.log"
+      workspace.shell.capture3! "git", "add", "."
 
       subject = Ignoring.new(workspace: workspace, ignore_patterns: patterns)
       assert_equal [
@@ -73,7 +70,7 @@ class IgnoringTest < Minitest::Test
   end
 
   def test_delete_ignored_files_when_the_specified_files_do_not_exist
-    with_workspace do |workspace|
+    with_workspace_open do |workspace|
       patterns = ["a/b/c/d/**.txt"]
       subject = Ignoring.new(workspace: workspace, ignore_patterns: patterns)
       assert_empty subject.delete_ignored_files!
@@ -81,13 +78,14 @@ class IgnoringTest < Minitest::Test
   end
 
   def test_delete_ignored_files_when_users_gitignore_exists
-    with_workspace do |workspace|
+    with_workspace_open do |workspace|
       patterns = ["bar"]
 
       dir = workspace.working_dir
       new_file dir / ".gitignore", content: "foo"
       new_file dir / "foo"
       new_file dir / "bar"
+      workspace.shell.capture3! "git", "add", "."
 
       subject = Ignoring.new(workspace: workspace, ignore_patterns: patterns)
       assert_equal ["bar"], subject.delete_ignored_files!

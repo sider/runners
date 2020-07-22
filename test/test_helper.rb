@@ -58,6 +58,14 @@ module TestHelper
     end
   end
 
+  def with_workspace_open(**params)
+    with_workspace(**params) do |workspace|
+      workspace.open do
+        yield workspace
+      end
+    end
+  end
+
   def config(yaml = nil)
     mktmpdir do |path|
       (path / 'sider.yml').write(yaml) if yaml
