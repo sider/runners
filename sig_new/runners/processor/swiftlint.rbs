@@ -1,0 +1,16 @@
+module Runners
+  class Processor::Swiftlint < Processor
+    include Swift
+
+    Schema: untyped
+
+    private
+    def ignore_warnings?: () -> untyped
+    def cli_path: () -> untyped
+    def cli_config: () -> untyped
+    def cli_lenient: () -> untyped
+    def cli_enable_all_rules: () -> untyped
+    def parse_result: (untyped output) -> untyped
+    def run_analyzer: () -> untyped
+  end
+end

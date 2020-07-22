@@ -1,0 +1,13 @@
+module Runners
+  class Processor::Coffeelint < Processor
+    include Nodejs
+
+    Schema: untyped
+    CONSTRAINTS: Hash[String, Constraint]
+
+    private
+    def check_runner_config: () { (untyped) -> untyped } -> untyped
+    def file: () -> untyped
+    def run_analyzer: (untyped options) -> untyped
+  end
+end

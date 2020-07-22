@@ -1,0 +1,25 @@
+module Runners
+  class Processor::Ktlint < Processor
+    include Java
+    include Kotlin
+
+    Schema: untyped
+
+    private
+    def ktlint_config: () -> untyped
+    def cli_config: () -> untyped
+    def gradle_config: () -> untyped
+    def maven_config: () -> untyped
+    def run_cli: () -> untyped
+    def run_gradle: () -> untyped
+    def run_maven: () -> untyped
+    def extract_ktlint_version_for_gradle: () -> untyped
+    def extract_ktlint_version_for_maven: () -> (nil | untyped)
+    def construct_result: (untyped reporter, untyped output) -> untyped
+    def construct_issue: (file: untyped file, line: untyped line, column: untyped column, message: untyped message, ?rule: untyped? rule) -> untyped
+    def construct_json_result: (untyped output) -> untyped
+    def construct_checkstyle_result: (untyped output) -> untyped
+    def construct_plain_result: (untyped output) -> untyped
+    def check_runner_config: () { (gradle: untyped, maven: untyped, cli: untyped) -> untyped } -> untyped
+  end
+end

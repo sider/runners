@@ -1,0 +1,14 @@
+module Runners
+  class Processor::ScssLint < Processor
+    include Ruby
+
+    Schema: untyped
+
+    EXIT_CODE_FILES_NOT_EXIST: Integer
+
+    private
+    def scss_lint_config: () -> untyped
+    def parse_result: (untyped stdout) -> untyped
+    def run_analyzer: (untyped options) -> untyped
+  end
+end

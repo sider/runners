@@ -1,0 +1,10 @@
+module Runners
+  class Processor::ClangTidy < Processor
+    include CPlusPlus
+
+    Schema: untyped
+
+    private
+    def construct_result: (untyped stdout) { (untyped) -> untyped } -> untyped
+  end
+end

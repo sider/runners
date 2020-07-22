@@ -21,7 +21,7 @@ module Runners
 
     DEFAULT_RULE_FILE = "phinder.yml".freeze
 
-    def test_phinder_config
+    private def test_phinder_config
       args = []
       args.push("--config", config_linter[:rule]) if config_linter[:rule]
 
@@ -52,7 +52,7 @@ module Runners
       end
     end
 
-    def run_phinder
+    private def run_phinder
       args = []
       args.push("--config", config_linter[:rule]) if config_linter[:rule]
       args << config_linter[:php] if config_linter[:php]

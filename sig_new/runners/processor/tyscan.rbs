@@ -1,0 +1,14 @@
+module Runners
+  class Processor::Tyscan < Processor
+    include Nodejs
+
+    Schema: untyped
+
+    CONSTRAINTS: Hash[String, Constraint]
+    DEFAULT_CONFIG_FILE: String
+
+    private
+    def tyscan_test: () -> untyped
+    def tyscan_scan: () -> untyped
+  end
+end

@@ -1,0 +1,16 @@
+module Runners
+  class Processor::GolangCiLint < Processor
+    include Go
+
+    Schema: untyped
+
+    DEFAULT_TARGET: String
+
+    private
+    def run_analyzer: () -> untyped
+    def analyzer_options: () -> untyped
+    def path_to_config: () -> (untyped | nil)
+    def analysis_targets: () -> untyped
+    def parse_result: (untyped output) { (untyped) -> untyped } -> untyped
+  end
+end

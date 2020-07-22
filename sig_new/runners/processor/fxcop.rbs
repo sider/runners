@@ -1,0 +1,8 @@
+module Runners
+  class Processor::FxCop < Processor
+    Schema: untyped
+
+    private
+    def construct_result: (untyped result, untyped json) -> untyped
+  end
+end

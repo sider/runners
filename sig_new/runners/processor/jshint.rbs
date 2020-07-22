@@ -1,0 +1,14 @@
+module Runners
+  class Processor::Jshint < Processor
+    include Nodejs
+
+    Schema: untyped
+
+    private
+    def prepare_config: () -> (nil | untyped)
+    def jshintrc_exist?: () -> bool
+    def config_path: () -> untyped
+    def parse_result: (untyped output) { (untyped) -> untyped } -> untyped
+    def run_analyzer: () -> untyped
+  end
+end

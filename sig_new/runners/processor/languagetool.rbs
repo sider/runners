@@ -1,0 +1,35 @@
+module Runners
+  class Processor::LanguageTool < Processor
+    include Java
+
+    Schema: untyped
+
+    DEFAULT_TARGET: String
+    DEFAULT_EXT: Array[String]
+    DEFAULT_EXCLUDE: Array[String]
+    DEFAULT_LANGUAGE: String
+    DEFAULT_ENCODING: String
+    DEFAULT_DISABLE: Array[String]
+    DEFAULT_ENABLE: Array[String]
+    DEFAULT_DISABLECATEGORIES: Array[String]
+    DEFAULT_ENABLECATEGORIES: Array[String]
+
+    private
+    def delete_files_except_targets: () -> untyped
+    def config_target: () -> untyped
+    def config_ext: () -> untyped
+    def config_exclude: () -> untyped
+    def config_language: () -> untyped
+    def config_encoding: () -> untyped
+    def cli_comma_separated_list: (untyped config_option, untyped default_value, untyped cli_option) -> untyped
+    def cli_disable: () -> untyped
+    def cli_enable: () -> untyped
+    def cli_enabledonly: () -> untyped
+    def cli_disablecategories: () -> untyped
+    def cli_enablecategories: () -> untyped
+    def cli_args: () -> untyped
+    def run_analyzer: () -> untyped
+    def parse_output: (untyped output) { (untyped, untyped) -> untyped } -> (nil | untyped)
+    def offset_ranges_per_line: (untyped lines) -> untyped
+  end
+end

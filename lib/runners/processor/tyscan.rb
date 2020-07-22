@@ -2,7 +2,6 @@ module Runners
   class Processor::Tyscan < Processor
     include Nodejs
 
-    # Define schema in sider.yml
     Schema = StrongJSON.new do
       let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
         fields.merge!({
@@ -44,6 +43,8 @@ module Runners
       tyscan_test
       tyscan_scan
     end
+
+    private
 
     def tyscan_test
       args = []

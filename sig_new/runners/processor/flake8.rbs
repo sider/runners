@@ -1,0 +1,23 @@
+module Runners
+  class Processor::Flake8 < Processor
+    include Python
+
+    Schema: untyped
+
+    OUTPUT_FORMAT: String
+    OUTPUT_PATTERN: String
+    DEFAULT_TARGET: String
+
+    private
+    def prepare_config: () -> untyped
+    def prepare_plugins: () -> untyped
+    def detected_python_version: () -> untyped
+    def specified_python_version: () -> untyped
+    def specified_python_version_via_pyenv: () -> untyped
+    def ignored_config_path: () -> untyped
+    def python2_version: () -> untyped
+    def python3_version: () -> untyped
+    def parse_result: (untyped output) { (untyped) -> untyped } -> untyped
+    def run_analyzer: () -> untyped
+  end
+end

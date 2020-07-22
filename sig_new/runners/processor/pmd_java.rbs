@@ -1,0 +1,19 @@
+module Runners
+  class Processor::PmdJava < Processor
+    include Java
+
+    Schema: untyped
+
+    DEFAULT_RULESET: String
+    DEFAULT_DIR: String
+
+    private
+    def cli_args: () -> untyped
+    def run_analyzer: () -> untyped
+    def construct_result: (untyped xml) { (untyped) -> untyped } -> untyped
+    def rulesets: () -> untyped
+    def dir: () -> untyped
+    def encoding: () -> untyped
+    def min_priority: () -> untyped
+  end
+end

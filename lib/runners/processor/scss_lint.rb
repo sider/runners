@@ -41,12 +41,13 @@ module Runners
       run_analyzer(options)
     end
 
+    private
+
     def scss_lint_config
       config = config_linter[:config] || config_linter.dig(:options, :config)
       "--config=#{config}" if config
     end
 
-    # @param stdout [String]
     def parse_result(stdout)
       JSON.parse(stdout, symbolize_names: true).flat_map do |file, issues|
         path = relative_path(file.to_s)

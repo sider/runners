@@ -1,0 +1,19 @@
+module Runners
+  class Processor::Checkstyle < Processor
+    include Java
+
+    Schema: untyped
+    OFFICIAL_RULE_NAMESPACE: String
+
+    private
+    def checkstyle_args: () -> untyped
+    def construct_result: (untyped xml_root) { (untyped) -> untyped } -> untyped
+    def normalize_id: (untyped rule_id) -> untyped
+    def build_links: (untyped rule_id) -> Array[String]
+    def config_file: () -> untyped
+    def check_directory: () -> untyped
+    def excluded_directories: () -> untyped
+    def ignored_severities: () -> untyped
+    def array: (untyped value) -> untyped
+  end
+end

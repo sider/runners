@@ -1,0 +1,17 @@
+module Runners
+  class Processor::Querly < Processor
+    include Ruby
+
+    Schema: untyped
+
+    OPTIONAL_GEMS: Array[GemInstaller::Spec]
+    CONSTRAINTS: Hash[String, Array[String]]
+    CONFIG_FILE: String
+    CONFIG_FILES_GLOB: String
+
+    private
+    def config_file: () -> untyped
+    def default_config_file: () -> untyped
+    def test_config_file: () -> untyped
+  end
+end

@@ -1,0 +1,18 @@
+module Runners
+  class Processor::CodeSniffer < Processor
+    include PHP
+
+    Schema: untyped
+
+    private
+    def additional_options: () -> untyped
+    def standard_option: () -> String
+    def extensions_option: () -> String
+    def encoding_option: () -> untyped
+    def ignore_option: () -> untyped
+    def directory: () -> untyped
+    def default_sideci_options: () -> untyped
+    def php_framework: () -> untyped
+    def run_analyzer: (untyped options, untyped target) -> untyped
+  end
+end

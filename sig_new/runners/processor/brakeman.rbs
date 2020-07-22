@@ -1,0 +1,9 @@
+module Runners
+  class Processor::Brakeman < Processor
+    include Ruby
+
+    Schema: untyped
+
+    CONSTRAINTS: Hash[String, Array[String]]
+  end
+end

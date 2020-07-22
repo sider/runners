@@ -30,7 +30,7 @@ module Runners
       "version"
     end
 
-    def goodcheck_test
+    private def goodcheck_test
       # NOTE: Suppress Ruby 2.7 warning to prevent `stderr` from getting dirty.
       #       See https://www.ruby-lang.org/en/news/2019/12/25/ruby-2-7-0-released
       stdout, stderr, status = push_env_hash({ "RUBYOPT" => "-W:no-deprecated" }) do
@@ -53,7 +53,7 @@ module Runners
       end
     end
 
-    def goodcheck_check
+    private def goodcheck_check
       stdout, stderr, _ = capture3(
         *ruby_analyzer_bin,
         "check",

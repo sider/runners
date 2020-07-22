@@ -1,0 +1,21 @@
+module Runners
+  class Processor::RailsBestPractices < Processor
+    include Ruby
+
+    Schema: untyped
+
+    OPTIONAL_GEMS: Array[GemInstaller::Spec]
+    CONSTRAINTS: Hash[String, Array[String]]
+
+    private
+    def vendor: () -> untyped
+    def spec: () -> untyped
+    def test: () -> untyped
+    def features: () -> untyped
+    def exclude: () -> untyped
+    def only: () -> untyped
+    def config_option: () -> untyped
+    def prepare_config: () -> (nil | untyped)
+    def run_analyzer: (untyped options) -> untyped
+  end
+end

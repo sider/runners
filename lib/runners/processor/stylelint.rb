@@ -100,7 +100,6 @@ module Runners
       "--quiet" if quiet
     end
 
-    # @param stdout [String]
     def parse_result(stdout)
       JSON.parse(stdout, symbolize_names: true).flat_map do |file|
         check_warning(file[:deprecations])

@@ -54,6 +54,8 @@ module Runners
       end
     end
 
+    private
+
     def analysis_targets
       targets = Array(config_linter[:target])
       targets.empty? ? [DEFAULT_TARGET] : targets

@@ -1,0 +1,28 @@
+module Runners
+  class Processor::Stylelint < Processor
+    include Nodejs
+
+    Schema: untyped
+
+    CONSTRAINTS: Hash[String, Constraint]
+    DEFAULT_TARGET_FILES: String
+    DEFAULT_GLOB: String
+
+    private
+    def glob: () -> untyped
+    def stylelint_config: () -> untyped
+    def syntax: () -> untyped
+    def ignore_path: () -> untyped
+    def ignore_disables: () -> untyped
+    def report_needless_disables: () -> untyped
+    def quiet: () -> untyped
+    def parse_result: (untyped stdout) -> untyped
+    def normalize_message: (untyped id, untyped message) -> untyped
+    def rule_doc_urls: () -> untyped
+    def prepare_config_file: () -> (nil | untyped)
+    def prepare_ignore_file: () -> (nil | untyped)
+    def config_file_path: () -> untyped
+    def check_warning: (untyped deprecations) -> untyped
+    def run_analyzer: (untyped glob, untyped additional_options) -> untyped
+  end
+end

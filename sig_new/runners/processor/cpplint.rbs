@@ -1,0 +1,12 @@
+module Runners
+  class Processor::Cpplint < Processor
+    Schema: untyped
+
+    DEFAULT_TARGET: String
+
+    private
+    def analyzer_options: () -> untyped
+    def run_analyzer: () -> untyped
+    def parse_result: (untyped xml_doc) { (untyped) -> untyped } -> untyped
+  end
+end

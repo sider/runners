@@ -1,0 +1,12 @@
+module Runners
+  class Processor::Javasee < Processor
+    include Java
+
+    Schema: untyped
+
+    DEFAULT_CONFIG_FILE: String
+
+    private
+    def construct_result: (untyped result, untyped stdout, untyped stderr) -> untyped
+  end
+end

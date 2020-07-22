@@ -1,0 +1,13 @@
+module Runners
+  class Processor::Phinder < Processor
+    include PHP
+
+    Schema: untyped
+
+    DEFAULT_RULE_FILE: String
+
+    private
+    def test_phinder_config: () -> untyped
+    def run_phinder: () -> untyped
+  end
+end

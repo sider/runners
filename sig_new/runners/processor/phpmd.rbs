@@ -1,0 +1,20 @@
+module Runners
+  class Processor::Phpmd < Processor
+    include PHP
+
+    Schema: untyped
+
+    DEFAULT_TARGET: String
+    DEFAULT_CONFIG_FILE: String
+
+    private
+    def target_files: () -> untyped
+    def rule: () -> untyped
+    def target_dirs: () -> untyped
+    def minimumpriority: () -> untyped
+    def suffixes: () -> untyped
+    def exclude: () -> untyped
+    def strict: () -> untyped
+    def run_analyzer: (untyped changes) -> untyped
+  end
+end

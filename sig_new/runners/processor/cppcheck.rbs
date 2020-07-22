@@ -1,0 +1,23 @@
+module Runners
+  class Processor::Cppcheck < Processor
+    include CPlusPlus
+
+    Schema: untyped
+    DEFAULT_TARGET: String
+    DEFAULT_IGNORE: Array[String]
+
+    private
+    def target: () -> untyped
+    def ignore: () -> untyped
+    def addon: () -> untyped
+    def enable: () -> untyped
+    def std: () -> untyped
+    def project: () -> untyped
+    def language: () -> untyped
+    def args_normal: () -> untyped
+    def args_bughunting: () -> untyped
+    def run_analyzer: () -> untyped
+    def step_analyzer: (*untyped args) -> (:no_target_files | untyped)
+    def parse_result: (untyped xml_doc) { (untyped) -> untyped } -> untyped
+  end
+end
