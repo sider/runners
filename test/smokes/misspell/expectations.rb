@@ -69,8 +69,7 @@ s.add_offline_test(
       location: { start_line: 3, start_column: 2, end_line: 3, end_column: 9 },
       object: { correct: "receive", incorrect: "recieve" },
       git_blame_info: {
-        commit: :_, line_hash: "b91a909a91c32be0ac14d77b4c4ea2c117dd6204
-", original_line: 3, final_line: 3
+        commit: :_, line_hash: "b91a909a91c32be0ac14d77b4c4ea2c117dd6204", original_line: 3, final_line: 3
       }
     }
   ],
