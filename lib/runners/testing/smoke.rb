@@ -42,14 +42,15 @@ module Runners
           msg << " with #{Rainbow(jobs.to_s).bright} jobs" if jobs
           puts "#{msg}..."
         end
-        self.class.tests.each do |t|
-          puts Rainbow(" => #{Rainbow(t.name).underline}").darkgray
-        end
 
         task = ->(params) {
+          start_per_test = Time.now
           out = StringIO.new(''.dup)
           result = run_test(params, out)
           print out.string
+          duration_per_test = (Time.now - start_per_test).round(1)
+          puts Rainbow(" => #{Rainbow(params.name).underline}").darkgray.to_s + \
+               Rainbow(" (#{duration_per_test}s)").darkgray.to_s
           [result, params.name]
         }
 
@@ -70,7 +71,7 @@ module Runners
         marks = { passed: '✅', failed: '❌' }
         puts ""
         if failed == 0
-          puts Rainbow("#{marks[:passed]} All #{passed} tests passed!").bright.green.to_s + " (in #{duration} seconds)"
+          puts Rainbow("#{marks[:passed]} All #{passed} tests passed!").bright.green.to_s + " (#{duration} seconds)"
         else
           "".tap do |s|
             s << marks.fetch(:failed) + " "
