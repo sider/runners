@@ -23,7 +23,7 @@ class WorkspaceGitTest < Minitest::Test
 
   def test_prepare_head_source
     with_workspace do |workspace|
-      workspace.send(:prepare_head_source, nil)
+      workspace.prepare_head_source
 
       dest = workspace.working_dir
       refute_empty dest.children
@@ -71,7 +71,7 @@ class WorkspaceGitTest < Minitest::Test
 
   def test_patches
     with_workspace(head: "836880fdd04e5e1d7d82ed17dae838a16cfa50b2", base: base_commit) do |workspace|
-      workspace.send(:prepare_head_source, nil)
+      workspace.prepare_head_source
       patches = workspace.send(:patches)
       assert_equal ["README.md", "sider.yml", "てすと.txt"], patches.files
     end
@@ -79,7 +79,7 @@ class WorkspaceGitTest < Minitest::Test
 
   def test_patches_not_calling_git_diff_twice
     with_workspace(base: base_commit) do |workspace|
-      workspace.send(:prepare_head_source, nil)
+      workspace.prepare_head_source
       p1 = workspace.send(:patches)
       p2 = workspace.send(:patches)
       assert_same p1, p2
@@ -89,7 +89,7 @@ class WorkspaceGitTest < Minitest::Test
 
   def test_git_blame_info
     with_workspace(head: "330716dcd50a7a2c7d8ff79d74035c05453528b4", base: "cd33ab59ef3d75e54e6d49c000bc8f141d94d356") do |workspace|
-      workspace.send(:prepare_head_source, nil)
+      workspace.prepare_head_source
       actual = workspace.range_git_blame_info("README.md", 1, 2)
       expected = [
         GitBlameInfo.new(commit: "cd33ab59ef3d75e54e6d49c000bc8f141d94d356", original_line: 1, final_line: 1, line_hash: "82c89d4ea306d31642e44c10609b686671e485dc"),
@@ -106,7 +106,7 @@ class WorkspaceGitTest < Minitest::Test
 
   def test_git_blame_info_failed
     with_workspace do |workspace|
-      workspace.send(:prepare_head_source, nil)
+      workspace.prepare_head_source
       (workspace.working_dir / ".git").rmtree
 
       error = assert_raises(Runners::Workspace::Git::BlameFailed) do
@@ -119,7 +119,7 @@ class WorkspaceGitTest < Minitest::Test
   def test_git_fetch_failed
     with_workspace(pull_number: 999999999) do |workspace|
       error = assert_raises(Runners::Workspace::Git::FetchFailed) do
-        workspace.send(:prepare_head_source, nil)
+        workspace.prepare_head_source
       end
       assert_match %r{\Agit-fetch failed: fatal: couldn't find remote ref refs/pull/999999999/head}, error.message
     end
@@ -128,7 +128,7 @@ class WorkspaceGitTest < Minitest::Test
   def test_git_checkout_failed
     with_workspace(head: "invalid_commit") do |workspace|
       error = assert_raises(Runners::Workspace::Git::CheckoutFailed) do
-        workspace.send(:prepare_head_source, nil)
+        workspace.prepare_head_source
       end
       assert_match %r{\Agit-checkout failed: error: pathspec 'invalid_commit' did not match any file\(s\) known to git}, error.message
     end

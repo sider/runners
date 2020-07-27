@@ -10,11 +10,7 @@ class Runners::Workspace
   def initialize: (options: Options, working_dir: Pathname, trace_writer: TraceWriter) -> any
   def open: <'a> () { (Pathname?, Changes) -> 'a } -> 'a
   def prepare_ssh: <'a> () { (Pathname?) -> 'a } -> 'a
-  def prepare_base_source: (Pathname) -> void
-  def prepare_head_source: (Pathname) -> void
-  def decrypt: <'a> (Pathname, String?) { (Pathname) -> 'a } -> 'a
-  def decrypt_by_openssl: (Pathname, String, Pathname) -> void
-  def extract: (Pathname, Pathname) -> void
+  def prepare_head_source: () -> void
   def patches: () -> GitDiffParser::Patches
   def range_git_blame_info: (String, Integer, Integer) -> Array<GitBlameInfo>
 end
@@ -22,8 +18,6 @@ end
 class Runners::Workspace::Git < Workspace
   # private
   def git_source: () -> Options::GitSource
-  def prepare_base_source: (Pathname) -> void
-  def prepare_head_source: (Pathname) -> void
   def remote_url: () -> URI
   def git_fetch_args: () -> Array<String>
   def try_count: () -> Integer

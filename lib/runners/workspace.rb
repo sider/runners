@@ -15,9 +15,6 @@ module Runners
 
     attr_reader :options, :working_dir, :trace_writer, :shell
 
-    # @param options [Options]
-    # @param working_dir [Pathname]
-    # @param trace_writer [Runners::TraceWriter]
     def initialize(options:, working_dir:, trace_writer:)
       @options = options
       @working_dir = working_dir
@@ -25,40 +22,31 @@ module Runners
       @shell = Shell.new(current_dir: working_dir, trace_writer: trace_writer, env_hash: {})
     end
 
-    # @yieldparam git_ssh_path [Pathname, nil]
-    # @yieldparam changes [Runners::Changes]
     def open
       prepare_ssh do |git_ssh_path|
         trace_writer.header "Set up source code"
 
-        mktmpdir do |base_dir|
-          trace_writer.message "Preparing head commit tree..."
-          prepare_head_source(working_dir)
+        trace_writer.message "Preparing head commit tree..."
+        prepare_head_source
 
-          changes =
-            if options.source.base
-              trace_writer.message "Preparing base commit tree..."
-              prepare_base_source(base_dir)
-
-              trace_writer.message "Calculating changes between head and base..." do
-                Changes.calculate_by_patches(working_dir: working_dir, patches: patches)
-              end
-            else
-              trace_writer.message "Calculating changes..." do
-                Changes.calculate(working_dir: working_dir)
-              end
+        changes =
+          if options.source.base
+            trace_writer.message "Calculating changes between head and base..." do
+              Changes.calculate_by_patches(working_dir: working_dir, patches: patches)
             end
+          else
+            trace_writer.message "Calculating changes..." do
+              Changes.calculate(working_dir: working_dir)
+            end
+          end
 
-          yield git_ssh_path, changes
-        end
+        yield git_ssh_path, changes
       end
     end
 
     def range_git_blame_info(path_string, start_line, end_line)
       []
     end
-
-    private
 
     def prepare_ssh
       ssh_key = options.ssh_key
@@ -93,50 +81,8 @@ module Runners
       end
     end
 
-    def prepare_base_source(dest)
+    def prepare_head_source
       raise NotImplementedError
-    end
-
-    def prepare_head_source(dest)
-      raise NotImplementedError
-    end
-
-    def decrypt(archive, key)
-      mktmpdir do |tmppath|
-        if key
-          decrypted_path = tmppath.join(SecureRandom.uuid)
-
-          trace_writer.message "Encryption key is given; decrypting..." do
-            decrypt_by_openssl(archive, key, decrypted_path)
-          end
-
-          yield decrypted_path
-        else
-          yield archive
-        end
-      end
-    end
-
-    def decrypt_by_openssl(archive, password, out_path)
-      dec = OpenSSL::Cipher.new("AES-256-CBC")
-      dec.decrypt
-      archive.open do |f|
-        salt = f.read(dec.iv_len).force_encoding('ASCII-8BIT')[8, dec.iv_len]
-        dec.pkcs5_keyivgen(password, salt, 1, 'md5')
-
-        out_path.open('w') do |out|
-          while data = f.read(100_000_000)&.force_encoding('ASCII-8BIT')
-            out.write(dec.update(data))
-          end
-          out.write(dec.final)
-        end
-      end
-    end
-
-    def extract(archive, dir)
-      trace_writer.message "Extracting archive to directory..." do
-        shell.capture3! "tar", "-xf", archive.to_path, "-C", dir.to_path
-      end
     end
 
     def patches
