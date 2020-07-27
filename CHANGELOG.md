@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 Updated tools:
 
 - **PMD Java** 6.25.0 -> 6.26.0 [#1329](https://github.com/sider/runners/pull/1329)
+- **RuboCop** 0.87.1 -> 0.88.0 [#1328](https://github.com/sider/runners/pull/1328)
 
 Misc:
 
