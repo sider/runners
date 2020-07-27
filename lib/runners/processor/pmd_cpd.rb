@@ -83,13 +83,10 @@ module Runners
       languages.each do |language|
         stdout, stderr = capture3!(analyzer_bin, *cli_options(language))
         raise_warnings(stderr)
-        ret = construct_result(stdout)
-        issues.push(*ret)
+        construct_result(stdout) { |issue| issues << issue }
       end
 
-      Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        result.add_issue(*issues)
-      end
+      Results::Success.new(guid: guid, analyzer: analyzer, issues: issues)
     end
 
     def raise_warnings(stderr)
@@ -105,14 +102,12 @@ module Runners
       #       The PMD CPD writes an XML report as UTF-8 with the inconsistent encoding attribute value when the --encoding option is specified.
       stdout.sub!(/<\?xml version="1\.0" encoding=".+"\?>/, '<?xml version="1.0" encoding="UTF-8"?>')
 
-      issues = []
-
       REXML::Document.new(stdout).each_element('pmd-cpd/duplication') do |elem_dupli|
         files = elem_dupli.get_elements('file').map{ |f| to_fileinfo(f) }
         issueobj = create_issue_object(elem_dupli, files)
 
         files.each do |file|
-          issues << Issue.new(
+          yield Issue.new(
             id: file[:id],
             path: file[:path],
             location: file[:location],
@@ -122,8 +117,6 @@ module Runners
           )
         end
       end
-
-      issues
     end
 
     def to_fileinfo(elem_file)
@@ -147,6 +140,10 @@ module Runners
       lines = Integer(elem_dupli[:lines])
       tokens = Integer(elem_dupli[:tokens])
       codefragment = elem_dupli.elements['codefragment'].cdatas[0].value
+
+      # @see https://github.com/pmd/pmd/pull/2633
+      codefragment = CGI.unescape_html(codefragment)
+
       fileobjs = files.map { |f| {
         id: f[:id],
         path: f[:path].to_s,
