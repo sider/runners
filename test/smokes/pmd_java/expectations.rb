@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "6.25.0"
+default_version = "6.26.0"
 
 s.add_test(
   "success",
@@ -23,7 +23,7 @@ s.add_test(
       links: %W[https://pmd.github.io/pmd-#{default_version}/pmd_rules_java_errorprone.html#avoidcallingfinalize],
       id: "AvoidCallingFinalize",
       path: "src/Hello.java",
-      location: { start_line: 16, start_column: 9, end_line: 16, end_column: 16 },
+      location: { start_line: 16, start_column: 9, end_line: 16, end_column: 18 },
       object: { ruleset: "Error Prone", priority: "3" },
       git_blame_info: {
         commit: :_, line_hash: "477c2ae2eb41ce1af10542ce1df1bcaf698305a8", original_line: 16, final_line: 16
