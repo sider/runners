@@ -2,7 +2,6 @@ require "bundler"
 require "base64"
 require "pathname"
 require "open3"
-require 'openssl'
 require "json"
 require "securerandom"
 require "tmpdir"
