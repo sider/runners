@@ -6,6 +6,12 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.30.0...HEAD)
 
+Updated tools:
+
+- **PMD Java** 6.25.0 -> 6.26.0 [#1329](https://github.com/sider/runners/pull/1329)
+
+Misc:
+
 - **Brakeman** Syntax highlight for warning message [#1309](https://github.com/sider/runners/pull/1309)
 - **Cppcheck** Support `-I` option to handle include paths [#1314](https://github.com/sider/runners/pull/1314)
 - **stylelint** Add `stylelint-order` to pre-installed list [#1310](https://github.com/sider/runners/pull/1310)
