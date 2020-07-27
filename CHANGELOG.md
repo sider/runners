@@ -12,6 +12,7 @@ Updated tools:
 - **cpplint** 1.5.2 -> 1.5.3 [#1346](https://github.com/sider/runners/pull/1346)
 - **ESLint** 7.4.0 -> 7.5.0 [#1344](https://github.com/sider/runners/pull/1344)
 - **GolangCI-Lint** 1.28.3 -> 1.29.0 [#1340](https://github.com/sider/runners/pull/1340)
+- **PMD CPD** 6.25.0 -> 6.26.0 [#1333](https://github.com/sider/runners/pull/1333)
 - **PMD Java** 6.25.0 -> 6.26.0 [#1329](https://github.com/sider/runners/pull/1329)
 - **remark-lint** 8.0.0 -> 8.0.1 [#1337](https://github.com/sider/runners/pull/1337)
 - **RuboCop** 0.87.1 -> 0.88.0 [#1328](https://github.com/sider/runners/pull/1328)
