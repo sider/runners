@@ -201,7 +201,7 @@ s.add_test(
       links: %w[https://eslint.org/docs/rules/max-len],
       id: "max-len",
       path: "app.js",
-      location: { start_line: 1, start_column: 1 },
+      location: { start_line: 1, start_column: 1, end_line: 1, end_column: 83 },
       object: { severity: "warn", category: "Stylistic Issues", recommended: false },
       git_blame_info: {
         commit: :_, line_hash: "04578e6c1c3221c3a3ac0da2f69ddace55b594ec", original_line: 1, final_line: 1
