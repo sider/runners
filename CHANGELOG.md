@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 Updated tools:
 
 - **Checkstyle** 8.34 -> 8.35 [#1331](https://github.com/sider/runners/pull/1331)
+- **cpplint** 1.5.2 -> 1.5.3 [#1346](https://github.com/sider/runners/pull/1346)
 - **PMD Java** 6.25.0 -> 6.26.0 [#1329](https://github.com/sider/runners/pull/1329)
 - **RuboCop** 0.87.1 -> 0.88.0 [#1328](https://github.com/sider/runners/pull/1328)
 
