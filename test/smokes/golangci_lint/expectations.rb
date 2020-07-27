@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "1.28.3"
+default_version = "1.29.0"
 
 s.add_test(
   "target",
@@ -310,17 +310,6 @@ s.add_test(
       },
       git_blame_info: {
         commit: :_, line_hash: "36402d95a34f3cba6826c498785c8b2e82b66437", original_line: 4, final_line: 4
-      }
-    },
-    {
-      path: "sample.go",
-      location: { start_line: 22, start_column: 0 },
-      id: "gofumpt",
-      message: "File is not `gofumpt`-ed",
-      links: [],
-      object: { severity: "", replacement: nil },
-      git_blame_info: {
-        commit: :_, line_hash: "c2b7df6201fdd3362399091f0a29550df3505b6a", original_line: 22, final_line: 22
       }
     }
   ],
