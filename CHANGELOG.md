@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 Updated tools:
 
+- **Checkstyle** 8.34 -> 8.35 [#1331](https://github.com/sider/runners/pull/1331)
 - **PMD Java** 6.25.0 -> 6.26.0 [#1329](https://github.com/sider/runners/pull/1329)
 
 Misc:
