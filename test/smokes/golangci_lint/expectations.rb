@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "1.28.3"
+default_version = "1.29.0"
 
 s.add_test(
   "target",
