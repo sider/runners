@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "7.4.0"
+default_version = "7.5.0"
 
 s.add_test(
   "no_config",
@@ -201,7 +201,7 @@ s.add_test(
       links: %w[https://eslint.org/docs/rules/max-len],
       id: "max-len",
       path: "app.js",
-      location: { start_line: 1, start_column: 1 },
+      location: { start_line: 1, start_column: 1, end_line: 1, end_column: 83 },
       object: { severity: "warn", category: "Stylistic Issues", recommended: false },
       git_blame_info: {
         commit: :_, line_hash: "04578e6c1c3221c3a3ac0da2f69ddace55b594ec", original_line: 1, final_line: 1
@@ -416,7 +416,7 @@ s.add_test(
       id: "@typescript-eslint/no-unused-vars",
       message: "'x' is assigned a value but never used.",
       links: %w[
-        https://github.com/typescript-eslint/typescript-eslint/blob/v3.6.0/packages/eslint-plugin/docs/rules/no-unused-vars.md
+        https://github.com/typescript-eslint/typescript-eslint/blob/v3.7.0/packages/eslint-plugin/docs/rules/no-unused-vars.md
       ],
       path: "index.ts",
       location: { start_line: 1, start_column: 7, end_line: 1, end_column: 8 },

@@ -39,7 +39,7 @@ module Runners
           unless conf.ignore_patterns.empty?
             trace_writer.message "Deleting ignored files..." do
               files = Ignoring.new(workspace: workspace, ignore_patterns: conf.ignore_patterns).delete_ignored_files!
-              trace_writer.message "Successfully deleted #{files.size} file(s)"
+              trace_writer.message(files.empty? ? "No deleted files." : "Successfully deleted #{files.size} file(s)")
             end
           end
 

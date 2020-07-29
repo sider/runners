@@ -19,27 +19,7 @@ module Runners
       raise BlameFailed, "git-blame failed: #{exn.stderr_str}"
     end
 
-    private
-
-    def git_source
-      options.source
-    end
-
-    def prepare_base_source(_dest)
-      # noop
-    end
-
-    # for testing
-    def try_count
-      10
-    end
-
-    # for testing
-    def sleep_lambda
-      -> (n) { n ** 2.5 }
-    end
-
-    def prepare_head_source(_dest)
+    def prepare_head_source
       shell.capture3!("git", "init")
       shell.capture3!("git", "config", "gc.auto", "0")
       shell.capture3!("git", "config", "advice.detachedHead", "false")
@@ -57,6 +37,22 @@ module Runners
       rescue Shell::ExecError => exn
         raise CheckoutFailed, "git-checkout failed: #{exn.stderr_str}"
       end
+    end
+
+    private
+
+    def git_source
+      options.source
+    end
+
+    # for testing
+    def try_count
+      10
+    end
+
+    # for testing
+    def sleep_lambda
+      -> (n) { n ** 2.5 }
     end
 
     def remote_url

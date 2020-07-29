@@ -2,9 +2,9 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM golangci/golangci-lint:v1.28.3 as golangci-lint
+FROM golangci/golangci-lint:v1.29.0 as golangci-lint
 
-FROM sider/devon_rex_go:2.22.0
+FROM sider/devon_rex_go:2.23.0
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=golangci-lint /usr/bin/golangci-lint ${RUNNER_USER_HOME}/bin/
 

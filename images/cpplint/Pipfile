@@ -4,4 +4,4 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [packages]
-cpplint = "==1.5.2"
+cpplint = "==1.5.3"

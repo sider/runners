@@ -161,28 +161,6 @@ module SecureRandom
   def self.uuid: -> String
 end
 
-class OpenSSL::Cipher
-  def self.ciphers: -> Array<String>
-  def initialize: (String) -> any
-  def block_size: -> Integer
-  def decrypt: (?String, ?String?) -> self
-  def encrypt: () -> self
-             | (String, ?String?) -> self
-  def final: -> String
-  def iv=: (String) -> String
-  def iv_len: -> Integer
-  def key=: (String) -> String
-  def key_len: -> Integer
-  def key_len=: (Integer) -> Integer
-  def name: -> String
-  def padding=: (0|1) -> (0|1)
-  def pkcs5_keyivgen: (String, ?String?, ?Integer, ?String) -> void
-  def random_iv: -> String
-  def random_key: -> String
-  def reset: -> self
-  def update: (String) -> String
-end
-
 class Net::OpenTimeout
 end
 

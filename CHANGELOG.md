@@ -4,7 +4,28 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.30.0...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.31.0...HEAD)
+
+## 0.31.0
+
+[Full diff](https://github.com/sider/runners/compare/0.30.0...0.31.0)
+
+Updated environments:
+
+- **devon_rex** 2.22.0 -> 2.23.0 [#1348](https://github.com/sider/runners/pull/1348)
+
+Updated tools:
+
+- **Checkstyle** 8.34 -> 8.35 [#1331](https://github.com/sider/runners/pull/1331)
+- **cpplint** 1.5.2 -> 1.5.3 [#1346](https://github.com/sider/runners/pull/1346)
+- **ESLint** 7.4.0 -> 7.5.0 [#1344](https://github.com/sider/runners/pull/1344)
+- **GolangCI-Lint** 1.28.3 -> 1.29.0 [#1340](https://github.com/sider/runners/pull/1340)
+- **PMD CPD** 6.25.0 -> 6.26.0 [#1333](https://github.com/sider/runners/pull/1333)
+- **PMD Java** 6.25.0 -> 6.26.0 [#1329](https://github.com/sider/runners/pull/1329)
+- **remark-lint** 8.0.0 -> 8.0.1 [#1337](https://github.com/sider/runners/pull/1337)
+- **RuboCop** 0.87.1 -> 0.88.0 [#1328](https://github.com/sider/runners/pull/1328)
+
+Misc:
 
 - **Brakeman** Syntax highlight for warning message [#1309](https://github.com/sider/runners/pull/1309)
 - **Cppcheck** Support `-I` option to handle include paths [#1314](https://github.com/sider/runners/pull/1314)
