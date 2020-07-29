@@ -179,3 +179,60 @@ s.add_test(
   message: "Analysis failed. See the log for details.",
   analyzer: { name: "Checkstyle", version: default_version }
 )
+
+s.add_test(
+  "deps",
+  type: "success",
+  issues: [
+    {
+      message: "Incorrect target: 'CLASS_DEF' for annotation: 'XXX'.",
+      links: [],
+      id: "com.github.sevntu.checkstyle.checks.annotation.ForbidAnnotationCheck",
+      path: "Foo.java",
+      location: { start_line: 1, start_column: 1 },
+      object: { severity: "error" },
+      git_blame_info: {
+        commit: :_, line_hash: "1dc0736e1e427ace652a896ca5c096be7acd8133", original_line: 1, final_line: 1
+      }
+    }
+  ],
+  analyzer: { name: "Checkstyle", version: default_version }
+)
+
+s.add_test(
+  "deps_not_default",
+  type: "success",
+  issues: [
+    {
+      message: "Lambda argument has unnecessary parentheses.",
+      links: [],
+      id: "io.spring.javaformat.checkstyle.check.SpringLambdaCheck",
+      path: "Foo.java",
+      location: { start_line: 3, start_column: 21 },
+      object: { severity: "error" },
+      git_blame_info: {
+        commit: :_, line_hash: "8dedd49bab7f8372d3784a0d03ee1e6cfa8a61e4", original_line: 3, final_line: 3
+      }
+    }
+  ],
+  analyzer: { name: "Checkstyle", version: "8.32" }
+)
+
+s.add_test(
+  "deps_invalid_format",
+  type: "failure",
+  message: <<~MSG,
+    An invalid dependency is found in your `sider.yml`: `["com.github.sevntu-checkstyle", "sevntu-checks"]`
+    Dependencies should be of the form: `[group, name, version]`
+  MSG
+  analyzer: :_
+)
+
+s.add_test(
+  "deps_invalid_definition",
+  type: "error",
+  class: "Runners::Shell::ExecError",
+  backtrace: :_,
+  inspect: /#<Runners::Shell::ExecError: type=capture3, args=\["gradle", "--no-build-cache",/,
+  analyzer: :_
+)

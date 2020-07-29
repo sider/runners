@@ -1,0 +1,4 @@
+linter:
+  checkstyle:
+    jvm_deps:
+      - [com.github.sevntu-checkstyle, sevntu-checks]

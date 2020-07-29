@@ -1,0 +1,5 @@
+linter:
+  checkstyle:
+    jvm_deps:
+      - [com.github.sevntu-checkstyle, sevntu-checks, 1.37.1]
+    config: checkstyle.xml
