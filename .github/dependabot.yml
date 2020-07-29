@@ -46,21 +46,21 @@ updates:
     open-pull-requests-limit: 10
 
   # Java
-  - package-ecosystem: maven
+  - package-ecosystem: gradle
     directory: "/images/checkstyle"
     schedule:
       interval: weekly
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
-  - package-ecosystem: maven
+  - package-ecosystem: gradle
     directory: "/images/pmd_cpd"
     schedule:
       interval: weekly
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
-  - package-ecosystem: maven
+  - package-ecosystem: gradle
     directory: "/images/pmd_java"
     schedule:
       interval: weekly
@@ -69,14 +69,14 @@ updates:
     open-pull-requests-limit: 10
 
   # Java (Kotlin)
-  - package-ecosystem: maven
+  - package-ecosystem: gradle
     directory: "/images/detekt"
     schedule:
       interval: weekly
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
-  - package-ecosystem: maven
+  - package-ecosystem: gradle
     directory: "/images/ktlint"
     schedule:
       interval: weekly

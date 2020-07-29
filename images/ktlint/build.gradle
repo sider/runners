@@ -1,0 +1,11 @@
+plugins {
+    id "java"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "com.pinterest:ktlint:0.37.2"
+}

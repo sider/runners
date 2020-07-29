@@ -2,20 +2,34 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM sider/devon_rex_java:2.23.0 AS builder
-
-# NOTE: Download required dependency JAR files via maven-dependency-plugin.
-#       Also, this image uses a build layer because Maven downloads too many files to `~/.m2` directory.
-#
-#       See https://maven.apache.org/plugins/maven-dependency-plugin/copy-dependencies-mojo.html
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/checkstyle/pom.xml ${RUNNER_USER_HOME}/checkstyle/pom.xml
-RUN cd "${RUNNER_USER_HOME}/checkstyle" && \
-    mvn --no-transfer-progress --batch-mode --threads 4 dependency:copy-dependencies -DoutputDirectory=.
-
 FROM sider/devon_rex_java:2.23.0
 
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=builder ${RUNNER_USER_HOME}/checkstyle/*.jar ${RUNNER_USER_HOME}/checkstyle/
-ENV CLASSPATH ${RUNNER_USER_HOME}/checkstyle/*:${CLASSPATH}
+# Install Gradle
+ENV PATH ${RUNNER_USER_HOME}/gradle/bin:${PATH}
+ARG GRADLE_VERSION=6.5.1
+ARG GRADLE_BINARY_FILE=gradle-${GRADLE_VERSION}-bin.zip
+ARG GRADLE_BINARY_URL=https://services.gradle.org/distributions/${GRADLE_BINARY_FILE}
+RUN cd "${RUNNER_USER_HOME}" && \
+    curl -fsSLO --compressed "${GRADLE_BINARY_URL}" && \
+    curl -fsSL  --compressed "${GRADLE_BINARY_URL}.sha256" | \
+      xargs -I {} echo "{} *${GRADLE_BINARY_FILE}" | \
+      sha256sum --check --strict && \
+    unzip -q "${GRADLE_BINARY_FILE}" && \
+    mv "gradle-${GRADLE_VERSION}" gradle && \
+    rm "${GRADLE_BINARY_FILE}" && \
+    gradle -v
+
+# Install dependencies via Gradle
+ARG DEPS_DIR=${RUNNER_USER_HOME}/dependencies
+ENV CLASSPATH ${DEPS_DIR}/*:${CLASSPATH}
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/checkstyle/build.gradle ${DEPS_DIR}/
+RUN cd "${DEPS_DIR}" && \
+    echo 'task deps(type: Copy) {' >> build.gradle && \
+    echo '  from configurations.runtimeClasspath' >> build.gradle && \
+    echo '  into "."' >> build.gradle && \
+    echo '}' >> build.gradle && \
+    gradle --no-build-cache --parallel --quiet deps && \
+    rm build.gradle
 
 COPY images/checkstyle/checkstyle /usr/local/bin/
 

@@ -1,0 +1,11 @@
+plugins {
+    id "java"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "com.puppycrawl.tools:checkstyle:8.35"
+}

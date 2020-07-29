@@ -1,0 +1,11 @@
+plugins {
+    id "java"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "net.sourceforge.pmd:pmd-java:6.26.0"
+}
