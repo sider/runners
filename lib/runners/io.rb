@@ -1,21 +1,17 @@
 module Runners
   class IO
-    REQUIRED_METHODS_FOR_IOS = %i[write flush].freeze
-
     attr_reader :ios
 
     def initialize(*ios)
-      @ios = ios.each do |io|
-        raise ArgumentError unless REQUIRED_METHODS_FOR_IOS.all? { |method| io.respond_to?(method) }
-      end
+      @ios = ios
     end
 
     def write(*args)
       ios.each { |io| io.write(*args) }
     end
 
-    def flush(*args)
-      ios.each { |io| io.flush(*args) }
+    def flush
+      ios.each { |io| io.flush }
     end
 
     def flush!

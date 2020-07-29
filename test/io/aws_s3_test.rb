@@ -44,11 +44,11 @@ class AwsS3Test < Minitest::Test
                               instance_profile_credentials_timeout: is_a(Numeric))
     io = Runners::IO::AwsS3.new('s3://bucket_name/object_name')
 
-    2.times { io.write }
+    2.times { io.write("a") }
     assert_equal 2, io.written_items
     refute io.should_flush?
 
-    300.times { io.write }
+    300.times { io.write("b") }
     assert 302, io.written_items
     assert io.should_flush?
   end
@@ -60,7 +60,7 @@ class AwsS3Test < Minitest::Test
                               instance_profile_credentials_timeout: is_a(Numeric)) { mock_object }
     mock(mock_object).put_object(bucket: 'bucket_name', key: 'object_name', body: instance_of(Tempfile))
     io = Runners::IO::AwsS3.new('s3://bucket_name/object_name')
-    io.write
+    io.write("a")
     assert_equal 1, io.written_items
 
     io.flush!
