@@ -1,6 +1,6 @@
 module Runners
   interface _IO
-    def write: (String) -> void
+    def write: (*_ToS) -> void
     def flush: () -> void
     def flush!: () -> void
     def respond_to?: (Symbol) -> bool
@@ -10,7 +10,7 @@ module Runners
     attr_reader ios: Array[::IO | _IO]
 
     def initialize: (*(::IO | _IO)) -> void
-    def write: (String) -> void
+    def write: (*_ToS) -> void
     def flush: () -> void
     def flush!: () -> void
   end

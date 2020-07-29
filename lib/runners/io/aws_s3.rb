@@ -38,9 +38,9 @@ module Runners
       @client = Aws::S3::Client.new(**args)
     end
 
-    def write(string)
+    def write(*args)
       @written_items += 1
-      tempfile.write(string)
+      tempfile.write(*args)
     end
 
     def flush

@@ -6,8 +6,8 @@ module Runners
       @ios = ios
     end
 
-    def write(string)
-      ios.each { |io| io.write(string) }
+    def write(*args)
+      ios.each { |io| io.write(*args) }
     end
 
     def flush
