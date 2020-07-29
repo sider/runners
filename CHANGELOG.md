@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.31.0...HEAD)
 
+- Download JVM dependencies via Gradle [#1352](https://github.com/sider/runners/pull/1352)
+
 ## 0.31.0
 
 [Full diff](https://github.com/sider/runners/compare/0.30.0...0.31.0)
