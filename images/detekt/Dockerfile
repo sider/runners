@@ -4,6 +4,8 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM sider/devon_rex_java:2.23.0
 
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 # Install Gradle
 ENV PATH ${RUNNER_USER_HOME}/gradle/bin:${PATH}
 ARG GRADLE_VERSION=6.5.1
