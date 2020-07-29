@@ -31,7 +31,6 @@ RUN cd "${DEPS_DIR}" && \
     gradle --no-build-cache --parallel --quiet deps && \
     rm build.gradle
 
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/detekt/pom.xml ${RUNNER_USER_HOME}/detekt/pom.xml
 COPY images/detekt/detekt /usr/local/bin/
 
 
