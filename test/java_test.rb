@@ -23,6 +23,8 @@ class JavaTest < Minitest::Test
         }
         repositories {
           mavenCentral()
+          jcenter()
+          google()
         }
         dependencies {
           implementation 'com.foo:bar:1.2.3'

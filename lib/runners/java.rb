@@ -52,6 +52,9 @@ module Runners
     def generate_jvm_deps_file
       filename = "build.gradle"
 
+      # @see https://docs.gradle.org/current/userguide/declaring_repositories.html
+      repos = ["mavenCentral()", "jcenter()", "google()"].map { |repo| "  #{repo}" }.join("\n")
+
       trace_writer.message "Generating #{filename}..." do
         deps = config_jvm_deps.map { |dep| "  implementation '#{dep.join(":")}'" }.join("\n")
         content = <<~GRADLE
@@ -59,7 +62,7 @@ module Runners
             id 'java'
           }
           repositories {
-            mavenCentral()
+          #{repos}
           }
           dependencies {
           #{deps}
