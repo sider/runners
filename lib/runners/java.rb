@@ -68,7 +68,7 @@ module Runners
           #{deps}
           }
           task deps(type: Copy) {
-            from configurations.runtimeClasspath
+            from configurations.compileClasspath
             into '.'
           }
         GRADLE

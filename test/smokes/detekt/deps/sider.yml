@@ -1,0 +1,5 @@
+linter:
+  detekt:
+    jvm_deps:
+      - [io.gitlab.arturbosch.detekt, detekt-sample-extensions, 1.10.0]
+    config: detekt.yml
