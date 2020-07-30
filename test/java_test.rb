@@ -31,7 +31,8 @@ class JavaTest < Minitest::Test
           implementation 'org.foo:baz:4.9'
         }
         task deps(type: Copy) {
-          from configurations.compileClasspath
+          from configurations.compile
+"Classpath
           into '.'
         }
       GRADLE
