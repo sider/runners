@@ -39,7 +39,7 @@ module Runners
       })
 
       let :java, (base.update_fields { |fields|
-        fields.merge!(jvm_deps: array?(array(string)))
+        fields.merge!(jvm_deps: array?(array(enum(string, number))))
       })
     end
 

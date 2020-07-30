@@ -10,7 +10,7 @@ class JavaTest < Minitest::Test
           checkstyle:
             jvm_deps:
               - [com.foo, bar, 1.2.3]
-              - [org.foo, baz, 0.5.1]
+              - [org.foo, baz, 4.9]
       YAML
 
       processor.install_jvm_deps
@@ -26,7 +26,7 @@ class JavaTest < Minitest::Test
         }
         dependencies {
           implementation 'com.foo:bar:1.2.3'
-          implementation 'org.foo:baz:0.5.1'
+          implementation 'org.foo:baz:4.9'
         }
         task deps(type: Copy) {
           from configurations.runtimeClasspath
@@ -37,7 +37,7 @@ class JavaTest < Minitest::Test
       assert_includes trace_messages, <<~MSG.strip
         Successfully installed 2 dependencies:
         * com.foo:bar:1.2.3
-        * org.foo:baz:0.5.1
+        * org.foo:baz:4.9
       MSG
     end
   end
@@ -88,7 +88,7 @@ class JavaTest < Minitest::Test
           linter:
             checkstyle:
               jvm_deps:
-                - [a, b, 10]
+                - [a, b, false]
         YAML
       end
       assert_includes error.message, "`linter.checkstyle.jvm_deps[0][2]`"
