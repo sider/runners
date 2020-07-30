@@ -15,13 +15,13 @@ EXIT_STATUS_FOR_SIGTERM = 126
 Bugsnag.configure do |config|
   config.app_version = ENV["RUNNERS_VERSION"]
   config.release_stage = ENV["BUGSNAG_RELEASE_STAGE"]
-end
 
-# @see https://docs.bugsnag.com/platforms/ruby/customizing-error-reports/#adding-callbacks
-Bugsnag.before_notify_callbacks << ->(report) {
-  report.add_tab(:task_guid, ENV["TASK_GUID"]) if ENV["TASK_GUID"]
-  report.add_tab(:arguments, ARGV)
-}
+  # @see https://docs.bugsnag.com/platforms/ruby/customizing-error-reports/#adding-callbacks
+  config.add_on_error(proc do |report|
+    report.add_tab(:task_guid, ENV["TASK_GUID"]) if ENV["TASK_GUID"]
+    report.add_tab(:arguments, ARGV)
+  end)
+end
 
 trap('SIGTERM') do
   Bugsnag.notify(RunnersTimeoutError.new)
