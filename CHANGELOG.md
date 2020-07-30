@@ -6,6 +6,12 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.31.0...HEAD)
 
+Updated tools:
+
+- **TyScan** 0.3.1 -> 0.3.2 [#1354](https://github.com/sider/runners/pull/1354)
+
+Misc:
+
 - Download JVM dependencies via Gradle [#1352](https://github.com/sider/runners/pull/1352)
 
 ## 0.31.0
