@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "3.7.0",
-    "@typescript-eslint/parser": "3.7.0",
+    "@typescript-eslint/parser": "3.7.1",
     "eslint": "7.5.0",
     "eslint-config-airbnb": "18.2.0",
     "eslint-config-prettier": "6.11.0",
