@@ -284,3 +284,22 @@ s.add_test(
     }
   ]
 )
+
+s.add_test(
+  "deps",
+  type: "success",
+  analyzer: { name: "PMD Java", version: "6.15.0" },
+  issues: [
+    {
+      message: "使用了new BigDecimal(double)构造函数",
+      links: [],
+      id: "BigDecimalAvoidDoubleConstructorRule",
+      path: "Foo.java",
+      location: { start_line: 5, start_column: 22, end_line: 5, end_column: 40 },
+      object: { ruleset: "AlibabaJavaOop", priority: "3" },
+      git_blame_info: {
+        commit: :_, line_hash: "3c5a62ddee69a8abdd787478563feaea8a7fa1f7", original_line: 5, final_line: 5
+      }
+    }
+  ]
+)
