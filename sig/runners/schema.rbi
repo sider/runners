@@ -67,6 +67,7 @@ class Runners::Schema::Types::Result < StrongJSON
     result: success_result | failure_result | error_result,
     warnings: Array<warning>,
     ci_config: any,
+    config_file: String?,
     version: String,
   }>
 end

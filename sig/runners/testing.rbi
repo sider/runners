@@ -23,32 +23,22 @@ class Runners::Testing::Smoke
   def colored_pretty_inspect: (any, ?multiline: bool) -> String
 
   def self.only?: (String) -> bool
-  def self.add_test: (String, type: String,
-                      ?guid: String | Symbol,
-                      ?timestamp: String | Symbol,
-                      ?issues: Array<Hash<Symbol, any>> | Symbol | nil,
-                      ?message: String | Symbol | Regexp | nil,
-                      ?analyzer: Hash<Symbol, any> | Symbol | nil,
-                      ?class: String | Symbol | nil,
-                      ?backtrace: Array<String> | Symbol | nil,
-                      ?inspect: String | Regexp | Symbol | nil,
-                      ?warnings: Array<Hash<Symbol, any>>,
-                      ?ci_config: Hash<Symbol, any> | Symbol,
-                      ?version: String | Symbol) -> void
-  def self.add_offline_test: (String, type: String,
-                              ?guid: String | Symbol,
-                              ?timestamp: String | Symbol,
-                              ?issues: Array<Hash<Symbol, any>> | Symbol | nil,
-                              ?message: String | Symbol | Regexp | nil,
-                              ?analyzer: Hash<Symbol, any> | Symbol | nil,
-                              ?class: String | Symbol | nil,
-                              ?backtrace: Array<String> | Symbol | nil,
-                              ?inspect: String | Regexp | Symbol | nil,
-                              ?warnings: Array<Hash<Symbol, any>>,
-                              ?ci_config: Hash<Symbol, any> | Symbol,
-                              ?version: String | Symbol) -> void
+  def self.add_test: (String, **any) -> void
+  def self.add_offline_test: (String, **any) -> void
   def self.check_duplicate: (String) -> void
-  def self.build_pattern: (**any) -> Hash<Symbol, any>
+  def self.build_pattern: (type: String,
+                           ?guid: String | Symbol,
+                           ?timestamp: String | Symbol,
+                           ?issues: Array<Hash<Symbol, any>> | Symbol | nil,
+                           ?message: String | Symbol | Regexp | nil,
+                           ?analyzer: Hash<Symbol, any> | Symbol | nil,
+                           ?class: String | Symbol | nil,
+                           ?backtrace: Array<String> | Symbol | nil,
+                           ?inspect: String | Regexp | Symbol | nil,
+                           ?warnings: Array<Hash<Symbol, any>>,
+                           ?ci_config: Hash<Symbol, any> | Symbol,
+                           ?config_file: String | Symbol,
+                           ?version: String | Symbol) -> Hash<Symbol, any>
   def self.tests: -> Array<TestParams>
 end
 
