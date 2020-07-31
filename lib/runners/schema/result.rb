@@ -27,6 +27,7 @@ module Runners
         result: enum(success, failure, error),
         warnings: array(warning),
         ci_config: any?,
+        config_file: string?,
         version: string,
       )
     end

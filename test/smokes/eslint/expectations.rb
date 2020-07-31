@@ -189,7 +189,8 @@ s.add_test(
       message: /The `linter.eslint.options` option is deprecated/,
       file: "sideci.yml"
     }
-  ]
+  ],
+  config_file: "sideci.yml"
 )
 
 s.add_test(
@@ -483,5 +484,6 @@ s.add_test(
       }
     }
   ],
-  analyzer: { name: "ESLint", version: default_version }
+  analyzer: { name: "ESLint", version: default_version },
+  config_file: "sider.yml"
 )

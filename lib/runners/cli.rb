@@ -70,6 +70,7 @@ module Runners
           result: result.as_json,
           warnings: warnings,
           ci_config: config&.content,
+          config_file: config&.path_name,
           version: VERSION,
         }
 

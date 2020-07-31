@@ -223,39 +223,18 @@ module Runners
         end
       end
 
-      def self.add_test(name, type:, guid: "test-guid", timestamp: :_,
-                        issues: nil, message: nil, analyzer: nil,
-                        class: nil, backtrace: nil, inspect: nil,
-                        warnings: [], ci_config: :_, version: :_)
+      def self.add_test(name, **pattern)
         return unless only? name
 
         check_duplicate name
-
-        pattern = build_pattern(type: type, guid: guid, timestamp: timestamp,
-          issues: issues, message: message, analyzer: analyzer,
-          class: binding.local_variable_get(:class), backtrace: backtrace, inspect: inspect,
-          warnings: warnings, ci_config: ci_config, version: version
-        )
-
-        tests << TestParams.new(name: name, pattern: pattern, offline: false)
+        tests << TestParams.new(name: name, pattern: build_pattern(**pattern), offline: false)
       end
 
-      def self.add_offline_test(name, type:, guid: "test-guid", timestamp: :_,
-                                issues: nil, message: nil, analyzer: nil,
-                                class: nil, backtrace: nil, inspect: nil,
-                                warnings: [], ci_config: :_, version: :_)
+      def self.add_offline_test(name, **pattern)
         return unless only? name
 
         check_duplicate name
-
-        pattern = build_pattern(
-          type: type, guid: guid, timestamp: timestamp,
-          issues: issues, message: message, analyzer: analyzer,
-          class: binding.local_variable_get(:class), backtrace: backtrace, inspect: inspect,
-          warnings: warnings, ci_config: ci_config, version: version
-        )
-
-        tests << TestParams.new(name: name, pattern: pattern, offline: true)
+        tests << TestParams.new(name: name, pattern: build_pattern(**pattern), offline: true)
       end
 
       def self.check_duplicate(name)
@@ -264,21 +243,37 @@ module Runners
         end
       end
 
-      def self.build_pattern(**fields)
-        optional = {
-          issues: fields.fetch(:issues),
-          message: fields.fetch(:message),
-          analyzer: fields.fetch(:analyzer),
-          class: fields.fetch(:class),
-          backtrace: fields.fetch(:backtrace),
-          inspect: fields.fetch(:inspect),
-        }.compact
-
+      def self.build_pattern(type:,
+                             guid: "test-guid",
+                             timestamp: :_,
+                             issues: nil,
+                             message: nil,
+                             analyzer: nil,
+                             class: nil,
+                             backtrace: nil,
+                             inspect: nil,
+                             warnings: [],
+                             ci_config: :_,
+                             config_file: :_,
+                             version: :_)
         {
-          result: { guid: fields.fetch(:guid), timestamp: fields.fetch(:timestamp), type: fields.fetch(:type), **optional },
-          warnings: fields.fetch(:warnings),
-          ci_config: fields.fetch(:ci_config),
-          version: fields.fetch(:version),
+          result: {
+            type: type,
+            guid: guid,
+            timestamp: timestamp,
+            **({
+              issues: issues,
+              message: message,
+              analyzer: analyzer,
+              class: binding.local_variable_get(:class),
+              backtrace: backtrace,
+              inspect: inspect,
+            }.compact),
+          },
+          warnings: warnings,
+          ci_config: ci_config,
+          config_file: config_file,
+          version: version,
         }
       end
     end
