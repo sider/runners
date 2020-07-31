@@ -14,6 +14,7 @@ Misc:
 
 - Download JVM dependencies via Gradle [#1352](https://github.com/sider/runners/pull/1352)
 - Install 3rd-party JVM dependencies via `sider.yml` [#1361](https://github.com/sider/runners/pull/1361)
+- Add `config_file` to result [#1363](https://github.com/sider/runners/pull/1363)
 
 ## 0.31.0
 
