@@ -1,7 +1,7 @@
 module Runners
   module Schema
     Issue = _ = StrongJSON.new do
-      # @type self: Issue
+      # @type self: Types::Issue
 
       let :location, enum?(object(start_line: integer, start_column: integer, end_line: integer, end_column: integer),
                            object(start_line: integer, start_column: integer),
@@ -14,23 +14,20 @@ module Runners
     end
 
     Result = _ = StrongJSON.new do
-      # @type self: Result
+      # @type self: Types::Result
 
+      let :warning, object(message: string, file: string?)
       let :analyzer, object(name: string, version: string)
-      let :success, object(
-        guid: string, timestamp: string, type: literal("success"),
-        issues: array(Issue.issue), analyzer: analyzer)
-      let :failure, object(
-        guid: string, timestamp: string, type: literal("failure"),
-        message: string, analyzer: optional(analyzer))
-      let :error, object(
-        guid: string, timestamp: string, type: literal("error"),
-        class: string, backtrace: array(string), inspect: string, analyzer: optional(analyzer))
+
+      let :success, object(guid: string, timestamp: string, type: literal("success"), issues: array(Issue.issue), analyzer: analyzer)
+      let :failure, object(guid: string, timestamp: string, type: literal("failure"), message: string, analyzer: optional(analyzer))
+      let :error, object(guid: string, timestamp: string, type: literal("error"), class: string, backtrace: array(string), inspect: string, analyzer: optional(analyzer))
 
       let :envelope, object(
         result: enum(success, failure, error),
-        warnings: array(object(message: string, file: string?)),
-        ci_config: object?,
+        warnings: array(warning),
+        ci_config: any?,
+        config_file: string?,
         version: string,
       )
     end
