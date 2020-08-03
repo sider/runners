@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 Updated tools:
 
+- **ESLint** 7.5.0 -> 7.6.0 [#1368](https://github.com/sider/runners/pull/1368)
 - **TyScan** 0.3.1 -> 0.3.2 [#1354](https://github.com/sider/runners/pull/1354)
 
 Misc:
