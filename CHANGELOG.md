@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 Updated tools:
 
+- **JSHint** 2.11.1 -> 2.11.2 [#1366](https://github.com/sider/runners/pull/1366)
 - **TyScan** 0.3.1 -> 0.3.2 [#1354](https://github.com/sider/runners/pull/1354)
 
 Misc:
