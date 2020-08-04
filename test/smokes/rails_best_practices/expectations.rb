@@ -358,3 +358,10 @@ s.add_test(
     }
   ]
 )
+
+s.add_test(
+  "no_issues",
+  type: "success",
+  analyzer: { name: "Rails Best Practices", version: default_version },
+  issues: []
+)
