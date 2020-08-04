@@ -10,6 +10,10 @@ Breaking changes:
 
 - **ktlint** Support `jvm_deps` and remove `cli`, `gradle`, `maven` [#1364](https://github.com/sider/runners/pull/1364)
 
+Updated environments:
+
+- **devon_rex** 2.23.0 -> 2.24.0 [#1370](https://github.com/sider/runners/pull/1370)
+
 Updated tools:
 
 - **ESLint** 7.5.0 -> 7.6.0 [#1368](https://github.com/sider/runners/pull/1368)
