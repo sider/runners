@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.32.1...HEAD)
 
+- **PHPMD** Improve runtime error message [#1383](https://github.com/sider/runners/pull/1383)
+
 ## 0.32.1
 
 [Full diff](https://github.com/sider/runners/compare/0.32.0...0.32.1)
