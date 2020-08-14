@@ -1,0 +1,12 @@
+linter:
+  ktlint:
+    jvm_deps: [] # NOTE: No way to test `ruleset` easily.
+    target:
+      - "src/**/*.kt"
+      - "!src/**/*Test.kt"
+    ruleset: [] # NOTE: No way to test `ruleset` easily.
+    disabled_rules:
+      - no-wildcard-imports
+      - indent
+      - experimental:indent
+    experimental: true

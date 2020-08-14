@@ -1,0 +1,5 @@
+linter:
+  checkstyle:
+    jvm_deps:
+      - [io.spring.javaformat, spring-javaformat-checkstyle, 0.0.23]
+    config: checkstyle.xml

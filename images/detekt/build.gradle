@@ -1,0 +1,15 @@
+plugins {
+    id "java"
+}
+
+repositories {
+    mavenCentral()
+
+    // NOTE: Some dependencies are not present in the Maven central.
+    // See https://github.com/detekt/detekt/issues/2146
+    jcenter()
+}
+
+dependencies {
+    implementation "io.gitlab.arturbosch.detekt:detekt-cli:1.10.0"
+}

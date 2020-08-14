@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "0.2.1"
+default_version = "0.3.2"
 
 s.add_test(
   "success",
@@ -18,14 +18,14 @@ s.add_test(
       }
     }
   ],
-  analyzer: { name: "TyScan", version: default_version }
+  analyzer: { name: "TyScan", version: "0.2.1" }
 )
 
 s.add_test(
   "default_config_not_found",
   type: "success",
   issues: [],
-  analyzer: { name: "TyScan", version: "0.3.1" },
+  analyzer: { name: "TyScan", version: default_version },
   warnings: [
     {
       message: <<~MESSAGE.strip,
@@ -55,7 +55,7 @@ s.add_test(
       }
     }
   ],
-  analyzer: { name: "TyScan", version: "0.3.1" }
+  analyzer: { name: "TyScan", version: default_version }
 )
 
 s.add_test(
@@ -81,7 +81,7 @@ s.add_test(
       }
     }
   ],
-  analyzer: { name: "TyScan", version: "0.3.1" }
+  analyzer: { name: "TyScan", version: default_version }
 )
 
 s.add_test(

@@ -111,23 +111,30 @@ module Runners
     end
 
     def run_analyzer(options)
+      # NOTE: rails_best_practices exit with status code n (issue count)
+      #       when some issues are found.
+      #       We use `capture3` instead of `capture3!`
+      capture3(
+        *ruby_analyzer_bin,
+        '--without-color',
+        '--silent',
+        '--output-file', report_file,
+        '--format=yaml',
+        *options
+      )
+
+      # NOTE: rails_best_practices returns top-level YAML array with tags.
+      #       We want to just parse a YAML, so we remove YAML tags before passing.
+      output = read_report_file
+      output.gsub!('- !ruby/object:RailsBestPractices::Core::Error', '-')
+
+      issues = YAML.safe_load(output, symbolize_names: true, filename: report_file)
+      unless issues.is_a? Array
+        raise "Invalid YAML result: `#{issues.inspect}`"
+      end
+
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        # NOTE: rails_best_practices exit with status code n (issue count)
-        #       when some issues are found.
-        #       We use `capture3` instead of `capture3!`
-        capture3(
-          *ruby_analyzer_bin,
-          '--without-color',
-          '--silent',
-          '--output-file', report_file,
-          '--format=yaml',
-          *options
-        )
-        # NOTE: rails_best_practices returns top-level YAML array with tags.
-        #       We want to just parse a YAML, so we remove YAML tags before passing.
-        output = read_report_file
-        output.gsub!('- !ruby/object:RailsBestPractices::Core::Error', '-')
-        YAML.safe_load(output, symbolize_names: true, filename: report_file).each do |issue|
+        issues.each do |issue|
           # HACK: `line_number` sometimes is not a number.
           line_number = issue.fetch(:line_number)
           start_line = Integer(line_number, exception: false)

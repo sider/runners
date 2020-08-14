@@ -37,6 +37,10 @@ module Runners
       let :npm, (base.update_fields { |fields|
         fields.merge!(npm_install: optional(npm_install))
       })
+
+      let :java, (base.update_fields { |fields|
+        fields.merge!(jvm_deps: array?(array(enum(string, number))))
+      })
     end
 
     Config = _ = StrongJSON.new do

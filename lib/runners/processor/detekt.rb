@@ -4,18 +4,16 @@ module Runners
     include Kotlin
 
     Schema = StrongJSON.new do
-      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
-        fields.merge!(
-          {
-            baseline: string?,
-            config: enum?(string, array(string)),
-            "config-resource": enum?(string, array(string)),
-            "disable-default-rulesets": boolean?,
-            excludes: enum?(string, array(string)),
-            includes: enum?(string, array(string)),
-            input: enum?(string, array(string)),
-          }
-        )
+      let :runner_config, Schema::BaseConfig.java.update_fields { |fields|
+        fields.merge!({
+          baseline: string?,
+          config: enum?(string, array(string)),
+          "config-resource": enum?(string, array(string)),
+          "disable-default-rulesets": boolean?,
+          excludes: enum?(string, array(string)),
+          includes: enum?(string, array(string)),
+          input: enum?(string, array(string)),
+        })
       }
 
       let :issue, object(
@@ -24,6 +22,16 @@ module Runners
     end
 
     register_config_schema(name: :detekt, schema: Schema.runner_config)
+
+    def setup
+      begin
+        install_jvm_deps
+      rescue UserError => exn
+        return Results::Failure.new(guid: guid, message: exn.message)
+      end
+
+      yield
+    end
 
     def analyze(changes)
       delete_unchanged_files changes, only: kotlin_file_extensions

@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "7.5.0"
+default_version = "7.6.0"
 
 s.add_test(
   "no_config",
@@ -189,7 +189,8 @@ s.add_test(
       message: /The `linter.eslint.options` option is deprecated/,
       file: "sideci.yml"
     }
-  ]
+  ],
+  config_file: "sideci.yml"
 )
 
 s.add_test(
@@ -416,7 +417,7 @@ s.add_test(
       id: "@typescript-eslint/no-unused-vars",
       message: "'x' is assigned a value but never used.",
       links: %w[
-        https://github.com/typescript-eslint/typescript-eslint/blob/v3.7.0/packages/eslint-plugin/docs/rules/no-unused-vars.md
+        https://github.com/typescript-eslint/typescript-eslint/blob/v3.7.1/packages/eslint-plugin/docs/rules/no-unused-vars.md
       ],
       path: "index.ts",
       location: { start_line: 1, start_column: 7, end_line: 1, end_column: 8 },
@@ -483,5 +484,6 @@ s.add_test(
       }
     }
   ],
-  analyzer: { name: "ESLint", version: default_version }
+  analyzer: { name: "ESLint", version: default_version },
+  config_file: "sider.yml"
 )

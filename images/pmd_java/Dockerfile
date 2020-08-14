@@ -2,20 +2,19 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM sider/devon_rex_java:2.23.0 AS builder
+FROM sider/devon_rex_java:2.24.0
 
-# NOTE: Download required dependency JAR files via maven-dependency-plugin.
-#       Also, this image uses a build layer because Maven downloads too many files to `~/.m2` directory.
-#
-#       See https://maven.apache.org/plugins/maven-dependency-plugin/copy-dependencies-mojo.html
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/pom.xml ${RUNNER_USER_HOME}/pmd_java/pom.xml
-RUN cd "${RUNNER_USER_HOME}/pmd_java" && \
-    mvn --no-transfer-progress --batch-mode --threads 4 dependency:copy-dependencies -DoutputDirectory=.
-
-FROM sider/devon_rex_java:2.23.0
-
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=builder ${RUNNER_USER_HOME}/pmd_java/*.jar ${RUNNER_USER_HOME}/pmd_java/
-ENV CLASSPATH ${RUNNER_USER_HOME}/pmd_java/*:${CLASSPATH}
+# Install dependencies via Gradle
+ARG DEPS_DIR=${RUNNER_USER_HOME}/dependencies
+ENV CLASSPATH ${DEPS_DIR}/*:${CLASSPATH}
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/build.gradle ${DEPS_DIR}/
+RUN cd "${DEPS_DIR}" && \
+    echo 'task deps(type: Copy) {' >> build.gradle && \
+    echo '  from configurations.runtimeClasspath' >> build.gradle && \
+    echo '  into "."' >> build.gradle && \
+    echo '}' >> build.gradle && \
+    gradle --no-build-cache --parallel --quiet deps && \
+    rm build.gradle
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 

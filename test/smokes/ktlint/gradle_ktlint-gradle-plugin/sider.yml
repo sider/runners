@@ -1,6 +1,0 @@
-linter:
-  ktlint:
-    gradle:
-      task: ktlintCheck
-      reporter: checkstyle
-      output: build/reports/ktlint/ktlintMainSourceSetCheck.xml

@@ -205,3 +205,33 @@ s.add_test(
 )
 
 s.add_test("no_files", type: "success", analyzer: { name: "detekt", version: default_version }, issues: [])
+
+s.add_test(
+  "deps",
+  type: "success",
+  analyzer: { name: "detekt", version: default_version },
+  issues: [
+    {
+      id: "detekt.TooManyFunctions",
+      path: "Foo.kt",
+      location: { start_line: 1, start_column: 1 },
+      message: "The file Foo.kt has 11 function declarations. Threshold is specified with 10.",
+      links: [],
+      object: { severity: "warning" },
+      git_blame_info: {
+        commit: :_, line_hash: "1e643aae3d233605968d1478dacf8c5d2aa2d8f9", original_line: 1, final_line: 1
+      }
+    },
+    {
+      id: "detekt.TooManyFunctionsTwo",
+      path: "Foo.kt",
+      location: { start_line: 1, start_column: 1 },
+      message: "The file Foo.kt has 11 function declarations. Threshold is specified with 10.",
+      links: [],
+      object: { severity: "warning" },
+      git_blame_info: {
+        commit: :_, line_hash: "1e643aae3d233605968d1478dacf8c5d2aa2d8f9", original_line: 1, final_line: 1
+      }
+    }
+  ]
+)

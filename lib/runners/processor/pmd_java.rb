@@ -3,13 +3,13 @@ module Runners
     include Java
 
     Schema = StrongJSON.new do
-      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
+      let :runner_config, Schema::BaseConfig.java.update_fields { |fields|
         fields.merge!({
-                        dir: string?,
-                        rulesets: enum?(string, array(string)),
-                        encoding: string?,
-                        min_priority: numeric?
-                      })
+          dir: string?,
+          rulesets: enum?(string, array(string)),
+          encoding: string?,
+          min_priority: numeric?,
+        })
       }
 
       let :issue, object(
@@ -29,6 +29,16 @@ module Runners
 
     def analyzer_bin
       "pmd"
+    end
+
+    def setup
+      begin
+        install_jvm_deps
+      rescue UserError => exn
+        return Results::Failure.new(guid: guid, message: exn.message)
+      end
+
+      yield
     end
 
     def analyze(changes)

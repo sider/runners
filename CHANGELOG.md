@@ -4,7 +4,38 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.31.0...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.32.1...HEAD)
+
+## 0.32.1
+
+[Full diff](https://github.com/sider/runners/compare/0.32.0...0.32.1)
+
+- **Rails Best Practices** Improve error message [#1371](https://github.com/sider/runners/pull/1371)
+
+## 0.32.0
+
+[Full diff](https://github.com/sider/runners/compare/0.31.0...0.32.0)
+
+Breaking changes:
+
+- **ktlint** Support `jvm_deps` and remove `cli`, `gradle`, `maven` [#1364](https://github.com/sider/runners/pull/1364)
+
+Updated environments:
+
+- **devon_rex** 2.23.0 -> 2.24.0 [#1370](https://github.com/sider/runners/pull/1370)
+
+Updated tools:
+
+- **ESLint** 7.5.0 -> 7.6.0 [#1368](https://github.com/sider/runners/pull/1368)
+- **JSHint** 2.11.1 -> 2.11.2 [#1366](https://github.com/sider/runners/pull/1366)
+- **TSLint** 6.1.2 -> 6.1.3 [#1369](https://github.com/sider/runners/pull/1369)
+- **TyScan** 0.3.1 -> 0.3.2 [#1354](https://github.com/sider/runners/pull/1354)
+
+Misc:
+
+- Download JVM dependencies via Gradle [#1352](https://github.com/sider/runners/pull/1352)
+- Install 3rd-party JVM dependencies via `sider.yml` [#1361](https://github.com/sider/runners/pull/1361)
+- Add `config_file` to result [#1363](https://github.com/sider/runners/pull/1363)
 
 ## 0.31.0
 

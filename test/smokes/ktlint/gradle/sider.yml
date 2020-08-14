@@ -1,5 +1,0 @@
-linter:
-  ktlint:
-    gradle:
-      task: ktlint
-      reporter: plain
