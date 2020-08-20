@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 Updated tools:
 
 - **Brakeman** 4.8.2 -> 4.9.0 [#1376](https://github.com/sider/runners/pull/1376)
+- **ESLint** 7.6.0 -> 7.7.0 [#1393](https://github.com/sider/runners/pull/1393)
 - **JSHint** 2.11.2 -> 2.12.0 [#1379](https://github.com/sider/runners/pull/1379)
 - **RuboCop** 0.88.0 -> 0.89.1 [#1381](https://github.com/sider/runners/pull/1381)
 
