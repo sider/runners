@@ -6,6 +6,16 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.32.2...HEAD)
 
+Updated tools:
+
+- **Brakeman** 4.8.2 -> 4.9.0 [#1376](https://github.com/sider/runners/pull/1376)
+- **JSHint** 2.11.2 -> 2.12.0 [#1379](https://github.com/sider/runners/pull/1379)
+- **RuboCop** 0.88.0 -> 0.89.1 [#1381](https://github.com/sider/runners/pull/1381)
+
+Misc:
+
+- **stylelint** Add `stylelint-config-prettier` as pre-installed package [#1396](https://github.com/sider/runners/pull/1396)
+
 ## 0.32.2
 
 [Full diff](https://github.com/sider/runners/compare/0.32.1...0.32.2)
