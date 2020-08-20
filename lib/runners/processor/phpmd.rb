@@ -95,8 +95,10 @@ module Runners
       unless status.success?
         if stderr.include? "Cannot find specified rule-set"
           return Results::Failure.new(guid: guid, analyzer: analyzer, message: "Invalid rule: #{rule.inspect}")
-        else
+        elsif !stderr.empty?
           raise stderr
+        else
+          raise status.inspect
         end
       end
 
