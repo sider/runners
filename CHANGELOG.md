@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.32.1...HEAD)
 
+Updated tools:
+
+- **JSHint** 2.11.2 -> 2.12.0 [#1379](https://github.com/sider/runners/pull/1379)
+
 ## 0.32.1
 
 [Full diff](https://github.com/sider/runners/compare/0.32.0...0.32.1)
