@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.32.2...HEAD)
 
+- **stylelint** Add `stylelint-config-prettier` as pre-installed package [#1396](https://github.com/sider/runners/pull/1396)
+
 ## 0.32.2
 
 [Full diff](https://github.com/sider/runners/compare/0.32.1...0.32.2)
