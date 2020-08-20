@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "4.8.2"
+default_version = "4.9.0"
 
 s.add_test(
   "success",
@@ -9,9 +9,20 @@ s.add_test(
     {
       path: "Gemfile.lock",
       location: { start_line: 81 },
-      id: "Cross-Site Scripting-102",
+      id: "Cross-Site Request Forgery-116",
       message:
-        "Rails 4.2.7 `content_tag` does not escape double quotes in attribute values (CVE-2016-6316). Upgrade to Rails 4.2.7.1",
+        "Rails 4.2.7 has a vulnerability that may allow CSRF token forgery. Upgrade to Rails 5.2.4.3 or patch",
+      links: %w[https://groups.google.com/g/rubyonrails-security/c/NOjKiGeXUgw],
+      object: { severity: "Medium" },
+      git_blame_info: {
+        commit: :_, line_hash: "667878ceb84268d96f51ee7b50cfa175ae86fe58", original_line: 81, final_line: 81
+      }
+    },
+    {
+      path: "Gemfile.lock",
+      location: { start_line: 81 },
+      id: "Cross-Site Scripting-102",
+      message: "Rails 4.2.7 `content_tag` does not escape double quotes in attribute values (CVE-2016-6316). Upgrade to Rails 4.2.7.1",
       links: %w[https://groups.google.com/d/msg/ruby-security-ann/8B2iV2tPRSE/JkjCJkSoCgAJ],
       object: { severity: "Medium" },
       git_blame_info: {
@@ -59,6 +70,18 @@ s.add_test(
   "subdir",
   type: "success",
   issues: [
+    {
+      path: "rails_app/Gemfile.lock",
+      location: { start_line: 81 },
+      id: "Cross-Site Request Forgery-116",
+      message:
+        "Rails 4.2.7 has a vulnerability that may allow CSRF token forgery. Upgrade to Rails 5.2.4.3 or patch",
+      links: %w[https://groups.google.com/g/rubyonrails-security/c/NOjKiGeXUgw],
+      object: { severity: "Medium" },
+      git_blame_info: {
+        commit: :_, line_hash: "667878ceb84268d96f51ee7b50cfa175ae86fe58", original_line: 81, final_line: 81
+      }
+    },
     {
       path: "rails_app/Gemfile.lock",
       location: { start_line: 81 },
