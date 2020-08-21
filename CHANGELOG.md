@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.32.2...HEAD)
 
+Updated environments:
+
+- **devon_rex** 2.24.0 -> master [#1404](https://github.com/sider/runners/pull/1404)
+
 Updated tools:
 
 - **Brakeman** 4.8.2 -> 4.9.0 [#1376](https://github.com/sider/runners/pull/1376)
