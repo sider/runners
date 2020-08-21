@@ -5,9 +5,13 @@ plugins {
 repositories {
     mavenCentral()
 
-    // NOTE: Some dependencies are not present in the Maven central.
-    // See https://github.com/detekt/detekt/issues/2146
-    jcenter()
+    jcenter {
+        content {
+            // just allow to include kotlinx projects
+            // detekt needs 'kotlinx-html' for the html report
+            includeGroup "org.jetbrains.kotlinx"
+        }
+    }
 }
 
 dependencies {
