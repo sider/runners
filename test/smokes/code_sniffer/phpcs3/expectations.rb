@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "3.5.5"
+default_version = "3.5.6"
 
 s.add_test(
   "phpcs3/success",
