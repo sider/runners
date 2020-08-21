@@ -12,6 +12,7 @@ Updated tools:
 - **cpplint** 1.5.3 -> 1.5.4 [#1401](https://github.com/sider/runners/pull/1401)
 - **detekt** 1.10.0 -> 1.11.2 [#1399](https://github.com/sider/runners/pull/1399)
 - **ESLint** 7.6.0 -> 7.7.0 [#1393](https://github.com/sider/runners/pull/1393)
+- **FxCop** 3.0.0 -> 3.3.0 [#1384](https://github.com/sider/runners/pull/1384)
 - **GolangCI-Lint** 1.29.0 -> 1.30.0 [#1372](https://github.com/sider/runners/pull/1372)
 - **JSHint** 2.11.2 -> 2.12.0 [#1379](https://github.com/sider/runners/pull/1379)
 - **PHP_CodeSniffer** 3.5.5 -> 3.5.6 [#1389](https://github.com/sider/runners/pull/1389)
