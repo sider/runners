@@ -21,6 +21,7 @@ Updated tools:
 Misc:
 
 - **stylelint** Add `stylelint-config-prettier` as pre-installed package [#1396](https://github.com/sider/runners/pull/1396)
+- **stylelint** Add `stylelint-prettier` as a pre-installed package [#1402](https://github.com/sider/runners/pull/1402)
 
 ## 0.32.2
 
