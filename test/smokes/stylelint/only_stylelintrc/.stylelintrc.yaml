@@ -5,6 +5,7 @@ extends:
 plugins:
   - stylelint-scss
   - stylelint-order
+  - stylelint-prettier
 
 rules:
   at-rule-no-unknown: null
