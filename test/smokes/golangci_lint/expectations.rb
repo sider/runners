@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "1.29.0"
+default_version = "1.30.0"
 
 s.add_test(
   "target",
@@ -236,7 +236,7 @@ s.add_test(
       path: "sample.go",
       location: { start_line: 4, start_column: 2 },
       id: "gosec:G505",
-      message: "G505: Blacklisted import `crypto/sha1`: weak cryptographic primitive",
+      message: "G505: Blocklisted import crypto/sha1: weak cryptographic primitive",
       links: [],
       object: { severity: "", replacement: nil },
       git_blame_info: {

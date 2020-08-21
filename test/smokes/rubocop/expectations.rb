@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "0.88.0"
+default_version = "0.89.1"
 
 s.add_test(
   "sandbox_rails",
@@ -453,6 +453,40 @@ s.add_test(
   ]
 )
 
-s.add_test("old_bundler_via_gemspec", type: "success", issues: [], analyzer: { name: "RuboCop", version: default_version })
+s.add_test(
+  "old_bundler_via_gemspec",
+  type: "success",
+  issues: [
+    {
+      path: "foo.gemspec",
+      location: { start_line: 1, start_column: 1, end_line: 1, end_column: 1 },
+      id: "Gemspec/RequiredRubyVersion",
+      message: "`required_ruby_version` should be specified.",
+      links: %w[https://docs.rubocop.org/rubocop/cops_gemspec.html#gemspecrequiredrubyversion],
+      object: { severity: "convention", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "78b32896d155565a3927c81aa4816e5512821df2", original_line: 1, final_line: 1
+      }
+    }
+  ],
+  analyzer: { name: "RuboCop", version: default_version }
+)
 
-s.add_test("latest_bundler_via_gemspec", type: "success", issues: [], analyzer: { name: "RuboCop", version: default_version })
+s.add_test(
+  "latest_bundler_via_gemspec",
+  type: "success",
+  issues: [
+    {
+      path: "foo.gemspec",
+      location: { start_line: 1, start_column: 1, end_line: 1, end_column: 1 },
+      id: "Gemspec/RequiredRubyVersion",
+      message: "`required_ruby_version` should be specified.",
+      links: %w[https://docs.rubocop.org/rubocop/cops_gemspec.html#gemspecrequiredrubyversion],
+      object: { severity: "convention", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "78b32896d155565a3927c81aa4816e5512821df2", original_line: 1, final_line: 1
+      }
+    }
+  ],
+  analyzer: { name: "RuboCop", version: default_version }
+)
