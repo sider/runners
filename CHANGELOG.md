@@ -14,6 +14,7 @@ Updated tools:
 - **JSHint** 2.11.2 -> 2.12.0 [#1379](https://github.com/sider/runners/pull/1379)
 - **PHP_CodeSniffer** 3.5.5 -> 3.5.6 [#1389](https://github.com/sider/runners/pull/1389)
 - **RuboCop** 0.88.0 -> 0.89.1 [#1381](https://github.com/sider/runners/pull/1381)
+- **SwiftLint** 0.39.2 -> 0.40.0 [#1385](https://github.com/sider/runners/pull/1385)
 
 Misc:
 
