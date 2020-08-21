@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 Updated tools:
 
 - **Brakeman** 4.8.2 -> 4.9.0 [#1376](https://github.com/sider/runners/pull/1376)
+- **cpplint** 1.5.3 -> 1.5.4 [#1401](https://github.com/sider/runners/pull/1401)
 - **detekt** 1.10.0 -> 1.11.2 [#1399](https://github.com/sider/runners/pull/1399)
 - **ESLint** 7.6.0 -> 7.7.0 [#1393](https://github.com/sider/runners/pull/1393)
 - **GolangCI-Lint** 1.29.0 -> 1.30.0 [#1372](https://github.com/sider/runners/pull/1372)
