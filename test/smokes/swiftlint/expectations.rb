@@ -94,17 +94,6 @@ s.add_test(
     },
     {
       path: "test.swift",
-      location: { start_line: 8 },
-      id: "multiline_arguments_brackets",
-      message: "Multiline arguments should have their surrounding brackets in a new line.",
-      links: %w[https://realm.github.io/SwiftLint/multiline_arguments_brackets.html],
-      object: { severity: "Warning" },
-      git_blame_info: {
-        commit: :_, line_hash: "903490f92542354782d176c30d8eaa93cf83ef60", original_line: 8, final_line: 8
-      }
-    },
-    {
-      path: "test.swift",
       location: { start_line: 5 },
       id: "trailing_closure",
       message: "Trailing closure syntax should be used whenever possible.",
