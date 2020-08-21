@@ -19,6 +19,6 @@ jobs:
       - run: |
           bundle exec rake bump:analyzers
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.SIDERBOT_PERSONAL_ACCESS_TOKEN }}
           GITHUB_AUTHOR_NAME: GitHub Actions
           GITHUB_AUTHOR_EMAIL: actions@github.com
