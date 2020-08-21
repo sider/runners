@@ -1,17 +1,19 @@
 s = Runners::Testing::Smoke
 
-default_version = "1.10.0"
+default_version = "1.11.2"
 
 s.add_test(
   "with_broken_sider_yml",
   type: "failure",
-  analyzer: :_,
-  message: "The attribute `linter.detekt.cli` in your `sider.yml` is unsupported. Please fix and retry."
+  message: "The attribute `linter.detekt.cli` in your `sider.yml` is unsupported. Please fix and retry.",
+  analyzer: :_
 )
 
 s.add_test(
   "with_invalid_detekt_config",
-  type: "failure", analyzer: { name: "detekt", version: default_version }, message: "Your detekt configuration is invalid"
+  type: "failure",
+  message: "Your detekt configuration is invalid",
+  analyzer: { name: "detekt", version: default_version }
 )
 
 s.add_test(
@@ -209,13 +211,13 @@ s.add_test("no_files", type: "success", analyzer: { name: "detekt", version: def
 s.add_test(
   "deps",
   type: "success",
-  analyzer: { name: "detekt", version: default_version },
+  analyzer: { name: "detekt", version: "1.11.0" },
   issues: [
     {
       id: "detekt.TooManyFunctions",
       path: "Foo.kt",
       location: { start_line: 1, start_column: 1 },
-      message: "The file Foo.kt has 11 function declarations. Threshold is specified with 10.",
+      message: %r{The file .+/Foo.kt has 11 function declarations. Threshold is specified with 10.},
       links: [],
       object: { severity: "warning" },
       git_blame_info: {
@@ -226,7 +228,7 @@ s.add_test(
       id: "detekt.TooManyFunctionsTwo",
       path: "Foo.kt",
       location: { start_line: 1, start_column: 1 },
-      message: "The file Foo.kt has 11 function declarations. Threshold is specified with 10.",
+      message: %r{The file .+/Foo.kt has 11 function declarations. Threshold is specified with 10.},
       links: [],
       object: { severity: "warning" },
       git_blame_info: {
