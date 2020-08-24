@@ -16,7 +16,7 @@ module Runners
       def self.only?: (String) -> bool
       def self.add_test: (String, **Hash[Symbol, untyped]) -> void
       def self.add_offline_test: (String, **Hash[Symbol, untyped]) -> void
-      def self.check_duplicate: (String) -> void
+      def self.add_test_helper: (TestParams) -> void
       def self.build_pattern: (type: String,
                                ?guid: String,
                                ?timestamp: Symbol,
