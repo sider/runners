@@ -6,13 +6,12 @@ module Runners
     def respond_to?: (Symbol) -> bool
   end
 
-  # TODO: Avoid the error `DuplicatedDefinitionError: name=::Runners::IO`
-  # class IO
-  #   attr_reader ios: Array[::IO | _IO]
+  class IO
+    attr_reader ios: Array[::IO | _IO]
 
-  #   def initialize: (*(::IO | _IO)) -> void
-  #   def write: (*_ToS) -> void
-  #   def flush: () -> void
-  #   def flush!: () -> void
-  # end
+    def initialize: (*(::IO | _IO)) -> void
+    def write: (*_ToS) -> void
+    def flush: () -> void
+    def flush!: () -> void
+  end
 end

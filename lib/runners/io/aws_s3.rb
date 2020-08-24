@@ -10,7 +10,7 @@ module Runners
       bucket = uri.host&.then { |s| s.empty? ? nil : s }
       object = uri.path&.then { |s| s.empty? ? nil : s }
       if uri.scheme == "s3" && bucket && object
-        [bucket, object.delete_prefix("/")]
+        { bucket: bucket, object: object.delete_prefix("/") }
       else
         raise "The specified S3 URI is not valid. You specified with '#{s3_uri}'"
       end
@@ -20,7 +20,9 @@ module Runners
 
     def initialize(uri)
       @uri = uri
-      @bucket_name, @object_name = self.class.parse_s3_uri!(uri)
+      parsed = self.class.parse_s3_uri!(uri)
+      @bucket_name = parsed.fetch(:bucket)
+      @object_name = parsed.fetch(:object)
       @tempfile = Tempfile.new
       @written_items = 0
 
