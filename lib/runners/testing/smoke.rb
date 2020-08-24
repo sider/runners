@@ -137,7 +137,7 @@ module Runners
         source = {
           head: head,
           base: base,
-          git_url: URI.join("file:///", (Pathname(project_dir) / 'smoke' / params.name).to_path).to_s,
+          git_url: URI.join("file:///", project_dir).to_s,
         }
         runners_options = JSON.dump({ source: source })
         commands = ["docker", "run"]
