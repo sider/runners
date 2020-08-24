@@ -11,4 +11,6 @@ module GitDiffParser
   class Line
     attr_reader number: Integer
   end
+
+  def self.parse: (String) -> Patches
 end

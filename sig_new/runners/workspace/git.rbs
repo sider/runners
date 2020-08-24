@@ -2,6 +2,7 @@ module Runners
   class Workspace
     class Git < Workspace
       private
+      def git_source: () -> Options::GitSource
       def try_count: () -> Integer
       def sleep_lambda: () -> ^(Integer) -> Numeric
       def remote_url: () -> URI

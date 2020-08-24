@@ -11,14 +11,11 @@ module Runners
 
     def initialize: (options: Options, working_dir: Pathname, trace_writer: TraceWriter) -> void
     def open: [X] () { (Pathname?, Changes) -> X } -> X
-    def prepare_ssh: [X] () { (Pathname?) -> X } -> X
-    def prepare_base_source: (Pathname) -> void
-    def prepare_head_source: (Pathname) -> void
-    def decrypt: [X] (Pathname, String?) { (Pathname) -> X } -> X
-    def decrypt_by_openssl: (Pathname, String, Pathname) -> void
-    def extract: (Pathname, Pathname) -> void
-    def git_source: () -> Options::GitSource
-    def patches: () -> GitDiffParser::Patches
     def range_git_blame_info: (String, Integer, Integer) -> Array[GitBlameInfo]
+    def prepare_head_source: () -> void
+    def patches: () -> GitDiffParser::Patches
+
+    private
+    def prepare_ssh: [X] () { (Pathname?) -> X } -> X
   end
 end

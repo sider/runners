@@ -56,7 +56,7 @@ module Runners
     end
 
     def remote_url
-      @remote_url ||= URI(git_source.git_url).tap do |uri|
+      @remote_url ||= URI.parse(git_source.git_url).tap do |uri|
         git_url_userinfo = git_source.git_url_userinfo
         uri.userinfo = git_url_userinfo if git_url_userinfo
       end
