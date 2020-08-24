@@ -6,10 +6,8 @@ module Runners
       let :source, object?(
         head: string,
         base: string?,
-        git_http_url: string,
-        git_http_userinfo: string?,
-        owner: string,
-        repo: string,
+        git_url: string,
+        git_url_userinfo: string?,
         pull_number: number?,
       )
 

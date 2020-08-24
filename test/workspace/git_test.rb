@@ -39,7 +39,7 @@ class WorkspaceGitTest < Minitest::Test
   end
 
   def test_remote_url_with_token
-    with_workspace(git_http_userinfo: "x-access-token:v1.aaabbbcccdddeeefffgggbc06400127f248a82ac") do |workspace|
+    with_workspace(git_url_userinfo: "x-access-token:v1.aaabbbcccdddeeefffgggbc06400127f248a82ac") do |workspace|
       assert_equal URI("https://x-access-token:v1.aaabbbcccdddeeefffgggbc06400127f248a82ac@github.com/sider/runners_test"), workspace.send(:remote_url)
     end
   end

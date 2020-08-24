@@ -6,7 +6,7 @@ class WorkspaceTest < Minitest::Test
   Workspace = Runners::Workspace
 
   def test_prepare
-    with_runners_options_env(source: { head: "commit", git_http_url: "https://github.com", owner: "foo", repo: "bar" }) do
+    with_runners_options_env(source: { head: "commit", git_url: "https://github.com/foo/bar" }) do
       options = Runners::Options.new(StringIO.new, StringIO.new)
       filter = Runners::SensitiveFilter.new(options: options)
       workspace = Workspace.prepare(options: options, trace_writer: new_trace_writer(filter: filter), working_dir: Pathname("/"))

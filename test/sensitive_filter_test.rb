@@ -12,10 +12,8 @@ class SensitiveFilterTest < Minitest::Test
     source = {
       head: "123abc",
       base: "456def",
-      git_http_url: "https://github.com",
-      owner: "foo",
-      repo: "bar",
-      git_http_userinfo: "user:secret",
+      git_url: "https://github.com/foo/bar",
+      git_url_userinfo: "user:secret",
       pull_number: 105,
     }
     with_runners_options_env(source: source) do
