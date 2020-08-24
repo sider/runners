@@ -6,6 +6,11 @@ module Runners
     # @type const BUFFER_SIZE: Integer
     BUFFER_SIZE = 300
 
+    # Only for test
+    def self.stub?
+      false
+    end
+
     attr_reader :uri, :bucket_name, :object_name, :tempfile, :written_items, :client
 
     def initialize(uri, endpoint: nil)
@@ -25,6 +30,7 @@ module Runners
         instance_profile_credentials_timeout: 3,
         endpoint: endpoint,
         force_path_style: endpoint ? true : false,
+        stub_responses: self.class.stub?,
       }.compact)
     end
 
