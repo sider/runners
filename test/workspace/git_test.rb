@@ -51,7 +51,7 @@ class WorkspaceGitTest < Minitest::Test
   end
 
   def test_git_fetch_args
-    with_workspace(refspecs: ["+refs/pull/533/head:refs/remotes/pull/533/head"]) do |workspace|
+    with_workspace(refspec: "+refs/pull/533/head:refs/remotes/pull/533/head") do |workspace|
       assert_equal %w[
         --quiet --no-tags --no-recurse-submodules origin
         +refs/heads/*:refs/remotes/origin/*
@@ -61,7 +61,7 @@ class WorkspaceGitTest < Minitest::Test
   end
 
   def test_git_fetch_args_with_multiple_refspecs
-    with_workspace(refspecs: ["+refs/pull/533/head:refs/remotes/pull/533/head", "+refs/foo/533/head:refs/remotes/foo/533/head"]) do |workspace|
+    with_workspace(refspec: ["+refs/pull/533/head:refs/remotes/pull/533/head", "+refs/foo/533/head:refs/remotes/foo/533/head"]) do |workspace|
       assert_equal %w[
         --quiet --no-tags --no-recurse-submodules origin
         +refs/heads/*:refs/remotes/origin/*
@@ -134,7 +134,7 @@ class WorkspaceGitTest < Minitest::Test
   end
 
   def test_git_fetch_failed
-    with_workspace(refspecs: ["+refs/pull/999999999/head:refs/remotes/pull/999999999/head"]) do |workspace|
+    with_workspace(refspec: "+refs/pull/999999999/head:refs/remotes/pull/999999999/head") do |workspace|
       error = assert_raises(Runners::Workspace::Git::FetchFailed) do
         workspace.prepare_head_source
       end

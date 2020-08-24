@@ -1,6 +1,6 @@
 module Runners
   class Options
-    GitSource = Struct.new(:head, :base, :git_url, :git_url_userinfo, :refspecs, keyword_init: true)
+    GitSource = Struct.new(:head, :base, :git_url, :git_url_userinfo, :refspec, keyword_init: true)
 
     # @dynamic stdout, stderr, source, ssh_key, io
     attr_reader :stdout, :stderr, :source, :ssh_key, :io

@@ -9,10 +9,7 @@ class OptionsTest < Minitest::Test
       base: 'base_commit',
       git_url: 'https://github.com/foo/bar',
       git_url_userinfo: 'user:secret',
-      refspecs: [
-        "+refs/pull/1234/head:refs/remotes/pull/1234/head",
-        "+refs/foo/1234/head:refs/remotes/foo/1234/head",
-      ],
+      refspec: "+refs/pull/1234/head:refs/remotes/pull/1234/head",
     }
     with_runners_options_env(source: source_params) do
       options = Runners::Options.new(stdout, stderr)
@@ -26,10 +23,7 @@ class OptionsTest < Minitest::Test
       head: 'head_commit',
       git_url: 'https://github.com/foo/bar',
       git_url_userinfo: 'user:secret',
-      refspecs: [
-        "+refs/pull/1234/head:refs/remotes/pull/1234/head",
-        "+refs/foo/1234/head:refs/remotes/foo/1234/head",
-      ],
+      refspec: "+refs/pull/1234/head:refs/remotes/pull/1234/head",
     }
     with_runners_options_env(source: source_params) do
       options = Runners::Options.new(stdout, stderr)
@@ -43,10 +37,7 @@ class OptionsTest < Minitest::Test
       head: 'head_commit',
       base: 'base',
       git_url: 'https://github.com/foo/bar',
-      refspecs: [
-        "+refs/pull/1234/head:refs/remotes/pull/1234/head",
-        "+refs/foo/1234/head:refs/remotes/foo/1234/head",
-      ],
+      refspec: "+refs/pull/1234/head:refs/remotes/pull/1234/head",
     }
     with_runners_options_env(source: source_params) do
       options = Runners::Options.new(stdout, stderr)
@@ -65,7 +56,7 @@ class OptionsTest < Minitest::Test
     with_runners_options_env(source: source_params) do
       options = Runners::Options.new(stdout, stderr)
       assert_instance_of Runners::Options::GitSource, options.source
-      assert_equal source_params.merge(refspecs: nil), options.source.to_h
+      assert_equal source_params.merge(refspec: nil), options.source.to_h
     end
   end
 
