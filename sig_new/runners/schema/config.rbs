@@ -61,7 +61,7 @@ module Runners
       }]?
     }
 
-    class BaseConfig < StrongJSON
+    class BaseConfigSchema < StrongJSON
       def base: () -> StrongJSON::Type::Object[base_runner_config]
       def git: () -> StrongJSON::Type::Enum[git_runner_config]
       def ruby: () -> StrongJSON::Type::Object[ruby_runner_config]
@@ -69,10 +69,12 @@ module Runners
       def npm_install: () -> StrongJSON::Type::Enum[npm_install_runner_config]
       def npm: () -> StrongJSON::Type::Object[npm_runner_config]
     end
+    BaseConfig: BaseConfigSchema
 
-    class Config < StrongJSON
+    class ConfigSchema < StrongJSON
       def payload: () -> StrongJSON::Type::Object[config_payload]
       def register: (name: Symbol, schema: untyped) -> void
     end
+    Config: ConfigSchema
   end
 end

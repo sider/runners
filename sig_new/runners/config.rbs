@@ -29,7 +29,7 @@ module Runners
 
     private
     def path: () -> Pathname?
-    def parse_yaml: () -> String?
-    def check_schema: (String? object) -> Hash[Symbol, untyped]
+    def parse_yaml: () -> Hash[untyped, untyped]?
+    def check_schema: (Hash[untyped, untyped]? object) -> Hash[untyped, untyped]
   end
 end
