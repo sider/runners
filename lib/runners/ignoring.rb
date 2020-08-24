@@ -14,7 +14,7 @@ module Runners
 
         # @see https://git-scm.com/docs/git-ls-files
         ignored_files, _ = workspace.shell.capture3!(
-          "git", "ls-files", "--ignored", "--exclude-from", ignore_path,
+          "git", "ls-files", "--ignored", "--exclude-from", gitignore.path,
           trace_stdout: false,
         )
 
