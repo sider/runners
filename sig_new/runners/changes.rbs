@@ -1,13 +1,15 @@
-class Runners::Changes
-  def self.calculate: (base_dir: Pathname, head_dir: Pathname, patches: GitDiffParser::Patches | nil) -> Changes
-  def self.calculate_by_patches: (Pathname, GitDiffParser::Patches) -> Changes
+module Runners
+  class Changes
+    def self.calculate: (base_dir: Pathname, head_dir: Pathname, patches: GitDiffParser::Patches | nil) -> Changes
+    def self.calculate_by_patches: (Pathname, GitDiffParser::Patches) -> Changes
 
-  attr_reader changed_paths: Set[Pathname]
-  attr_reader unchanged_paths: Set[Pathname]
-  attr_reader patches: GitDiffParser::Patches | nil
+    attr_reader changed_paths: Set[Pathname]
+    attr_reader unchanged_paths: Set[Pathname]
+    attr_reader patches: GitDiffParser::Patches | nil
 
-  def initialize: (changed_paths: Array[Pathname], unchanged_paths: Array[Pathname], patches: GitDiffParser::Patches | nil) -> void
-  def delete_unchanged: (dir: Pathname, ?except: Array[String], ?only: Array[String]) -> Array[Pathname]
-  def deletable?: (Pathname, Pathname, Array[String], Array[String]) -> bool
-  def include?: (Issue) -> bool
+    def initialize: (changed_paths: Array[Pathname], unchanged_paths: Array[Pathname], patches: GitDiffParser::Patches | nil) -> void
+    def delete_unchanged: (dir: Pathname, ?except: Array[String], ?only: Array[String]) -> Array[Pathname]
+    def deletable?: (Pathname, Pathname, Array[String], Array[String]) -> bool
+    def include?: (Issue) -> bool
+  end
 end

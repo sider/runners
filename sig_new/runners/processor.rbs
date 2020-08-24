@@ -1,5 +1,5 @@
 module Runners
-  class Runners::Processor
+  class Processor
     extend Forwardable
     include Tmpdir
 

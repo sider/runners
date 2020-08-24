@@ -4,8 +4,8 @@ module Runners
 
     Schema: untyped
 
-    OFFICIAL_RUBOCOP_PLUGINS: Array[GemInstaller::Spec]
-    OPTIONAL_GEMS: Array[GemInstaller::Spec]
+    OFFICIAL_RUBOCOP_PLUGINS: Array[Ruby::GemInstaller::Spec]
+    OPTIONAL_GEMS: Array[Ruby::GemInstaller::Spec]
     CONSTRAINTS: Hash[String, Array[String]]
 
     private

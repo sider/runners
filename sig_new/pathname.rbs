@@ -1,3 +1,0 @@
-class Pathname
-  def write: (String, ?perm: Integer) -> Integer
-end

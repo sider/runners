@@ -1,0 +1,13 @@
+module Runners
+  module CPlusPlus
+    CPP_SOURCES_GLOB: String
+    CPP_HEADERS_GLOB: String
+
+    def config_include_path: () -> Array[String]
+    def cpp_file?: (Pathname path) -> bool
+    def install_apt_packages: () -> void
+
+    private
+    def find_paths_containing_headers: () -> Array[Pathname]
+  end
+end

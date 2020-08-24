@@ -1,3 +1,7 @@
-class Aws::S3::Client
-  def put_object: (bucket: String, key: String, body: String | nil) -> void
+module Aws
+  module S3
+    class Client
+      def put_object: (bucket: String, key: String, body: String | nil) -> void
+    end
+  end
 end

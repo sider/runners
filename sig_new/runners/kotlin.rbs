@@ -1,0 +1,5 @@
+module Runners
+  module Kotlin
+    def kotlin_file_extensions: () -> Array[String]
+  end
+end

@@ -1,7 +1,7 @@
 module Runners
   module Schema
     Options = _ = StrongJSON.new do
-      # @type self: Types::Options
+      # @type self: Options
 
       let :source, object?(
         head: string,

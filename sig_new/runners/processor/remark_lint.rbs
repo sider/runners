@@ -4,7 +4,7 @@ module Runners
 
     Schema: untyped
 
-    CONSTRAINTS: Hash[String, Constraints]
+    CONSTRAINTS: Hash[String, Nodejs::Constraint]
     DEFAULT_TARGET: String
     DEFAULT_PRESET: String
 

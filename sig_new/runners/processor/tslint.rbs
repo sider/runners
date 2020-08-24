@@ -4,7 +4,7 @@ module Runners
 
     Schema: untyped
 
-    CONSTRAINTS: Hash[String, Constraint]
+    CONSTRAINTS: Hash[String, Nodejs::Constraint]
 
     private
     def target_glob: () -> untyped

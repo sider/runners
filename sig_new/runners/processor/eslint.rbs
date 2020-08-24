@@ -3,7 +3,7 @@ module Runners
     include Nodejs
 
     Schema: untyped
-    CONSTRAINTS: Hash[String, Constraint]
+    CONSTRAINTS: Hash[String, Nodejs::Constraint]
     CUSTOM_FORMATTER: String
     DEFAULT_ESLINT_CONFIG: String
     DEFAULT_TARGET: String

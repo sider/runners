@@ -4,7 +4,7 @@ module Runners
 
     Schema: untyped
 
-    CONSTRAINTS: Hash[String, Constraint]
+    CONSTRAINTS: Hash[String, Nodejs::Constraint]
     DEFAULT_CONFIG_FILE: String
 
     private

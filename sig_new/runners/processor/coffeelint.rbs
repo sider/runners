@@ -3,7 +3,7 @@ module Runners
     include Nodejs
 
     Schema: untyped
-    CONSTRAINTS: Hash[String, Constraint]
+    CONSTRAINTS: Hash[String, Nodejs::Constraint]
 
     private
     def check_runner_config: () { (untyped) -> untyped } -> untyped
