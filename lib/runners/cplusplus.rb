@@ -20,7 +20,7 @@ module Runners
       # select development packages and report others as warning for security concerns
       packages = Array(config_linter[:apt])
         .select do |pkg|
-          if pkg.match?(/-dev(=.+)?$/)
+          if /-dev(=.+)?$/.match?(pkg)
             true
           else
             add_warning "Installing the package `#{pkg}` is blocked.", file: config.path_name
@@ -38,7 +38,8 @@ module Runners
     private
 
     def find_paths_containing_headers
-      Pathname.glob(CPP_HEADERS_GLOB, File::FNM_EXTGLOB | File::FNM_CASEFOLD)
+      # @type var _: Array[Pathname]
+      _ = Pathname.glob(CPP_HEADERS_GLOB, File::FNM_EXTGLOB | File::FNM_CASEFOLD)
         .filter_map { |path| path.parent.to_path if path.file? }
         .uniq
     end

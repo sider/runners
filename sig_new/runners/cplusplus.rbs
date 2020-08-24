@@ -1,5 +1,5 @@
 module Runners
-  module CPlusPlus
+  module CPlusPlus : Processor
     CPP_SOURCES_GLOB: String
     CPP_HEADERS_GLOB: String
 
