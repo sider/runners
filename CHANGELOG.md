@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 Breaking changes:
 
 - Remove :owner and :repo, and rename :git_http_url and :git_http_userinfo [#1411](https://github.com/sider/runners/pull/1411)
+- Replace :pull_number with :refspecs [#1412](https://github.com/sider/runners/pull/1412)
 
 ## 0.33.0
 
