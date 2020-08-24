@@ -20,6 +20,11 @@ module Runners
           @pattern = pattern
           @offline = offline
         end
+
+        def ==(other)
+          self.class == other.class && name == other.name
+        end
+        alias eql? ==
       end
 
       attr_reader :argv
@@ -231,22 +236,20 @@ module Runners
       end
 
       def self.add_test(name, **pattern)
-        return unless only? name
-
-        check_duplicate name
-        tests << TestParams.new(name: name, pattern: build_pattern(**pattern), offline: false)
+        add_test_helper TestParams.new(name: name, pattern: build_pattern(**pattern), offline: false)
       end
 
       def self.add_offline_test(name, **pattern)
-        return unless only? name
-
-        check_duplicate name
-        tests << TestParams.new(name: name, pattern: build_pattern(**pattern), offline: true)
+        add_test_helper TestParams.new(name: name, pattern: build_pattern(**pattern), offline: true)
       end
 
-      def self.check_duplicate(name)
-        if tests.find { |t| t.name === name }
-          raise ArgumentError, "Smoke test #{name.inspect} is duplicate"
+      def self.add_test_helper(test)
+        return unless only? test.name
+
+        if tests.include? test
+          raise ArgumentError, "Smoke test #{test.name.inspect} is duplicate"
+        else
+          tests << test
         end
       end
 
