@@ -2,13 +2,7 @@ module Aws
   module S3
     # @see https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3/Client.html
     class Client
-      def initialize: (retry_limit: Integer,
-                       retry_base_delay: Float,
-                       instance_profile_credentials_retries: Integer,
-                       instance_profile_credentials_timeout: Integer,
-                       ?endpoint: String?,
-                       ?force_path_style: bool?,
-                      ) -> void
+      def initialize: (Hash[Symbol, untyped]) -> void
       def put_object: (bucket: String, key: String, body: String | nil) -> void
     end
   end

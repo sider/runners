@@ -12,7 +12,7 @@ module Runners
       attr_reader written_items: Integer
       attr_reader client: Aws::S3::Client
 
-      def initialize: (String uri) -> void
+      def initialize: (String uri, ?endpoint: String?) -> void
       def should_flush?: () -> bool
 
       private

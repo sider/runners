@@ -12,7 +12,7 @@ module Runners
       if uri.scheme == "s3" && bucket && object
         { bucket: bucket, object: object.delete_prefix("/") }
       else
-        raise "The specified S3 URI is not valid. You specified with '#{s3_uri}'"
+        raise "The specified S3 URI is not valid. You specified with `#{s3_uri.inspect}`"
       end
     end
 
@@ -26,18 +26,14 @@ module Runners
       @tempfile = Tempfile.new
       @written_items = 0
 
-      # @type var args: Hash[Symbol, Integer | Float | String | bool]
-      args = {
+      @client = Aws::S3::Client.new({
         retry_limit: 5,
         retry_base_delay: 1.2,
         instance_profile_credentials_retries: 5,
         instance_profile_credentials_timeout: 3,
-      }
-      if endpoint
-        args[:endpoint] = endpoint
-        args[:force_path_style] = true
-      end
-      @client = Aws::S3::Client.new(**args)
+        endpoint: endpoint,
+        force_path_style: endpoint ? true : false,
+      }.compact)
     end
 
     def write(*args)
