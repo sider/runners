@@ -7,6 +7,7 @@ module Runners
     BUFFER_SIZE = 300
 
     # Only for test
+    # @see https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ClientStubs.html
     def self.stub?
       false
     end
