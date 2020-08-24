@@ -17,7 +17,7 @@ module Runners
     def initialize(uri, endpoint: nil)
       @uri = uri
 
-      parsed = parse_s3_uri!(uri)
+      parsed = parse_s3_uri(uri)
       @bucket_name = parsed.fetch(:bucket)
       @object_name = parsed.fetch(:object)
 
@@ -55,7 +55,7 @@ module Runners
 
     private
 
-    def parse_s3_uri!(s3_uri)
+    def parse_s3_uri(s3_uri)
       uri = URI.parse(s3_uri)
       bucket = uri.host&.then { |s| s.empty? ? nil : s }
       object = uri.path&.then { |s| s.empty? ? nil : s }
