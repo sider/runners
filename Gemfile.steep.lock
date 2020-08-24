@@ -28,7 +28,7 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rbs (0.10.0)
-    steep (0.24.0)
+    steep (0.25.0)
       activesupport (>= 5.1)
       ast_utils (~> 0.3.0)
       language_server-protocol (~> 3.14.0.2)
