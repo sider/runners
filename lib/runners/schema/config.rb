@@ -1,7 +1,7 @@
 module Runners
   module Schema
     BaseConfig = _ = StrongJSON.new do
-      # @type self: BaseConfig
+      # @type self: BaseConfigSchema
 
       let :base, object(
         root_dir: string?,
@@ -44,7 +44,7 @@ module Runners
     end
 
     Config = _ = StrongJSON.new do
-      # @type self: Config
+      # @type self: ConfigSchema
 
       @linter = {}
 
@@ -54,7 +54,7 @@ module Runners
         branches: object?(exclude: enum?(string, array(string))),
       )
 
-      def register(name:, schema:)
+      def self.register(name:, schema:)
         if @linter.include? name
           raise ArgumentError, "#{name.inspect} is already registered"
         end

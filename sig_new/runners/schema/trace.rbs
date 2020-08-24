@@ -65,7 +65,7 @@ module Runners
                    | ci_config_trace
                    | error_trace
 
-    class Trace < StrongJSON
+    class TraceSchema < StrongJSON
       def command_line: () -> StrongJSON::Type::Object[command_line_trace]
       def status: () -> StrongJSON::Type::Object[status_trace]
       def stdout: () -> StrongJSON::Type::Object[stdout_trace]
@@ -77,5 +77,6 @@ module Runners
       def error: () -> StrongJSON::Type::Object[error_trace]
       def anything: () -> StrongJSON::Type::Enum[any_trace]
     end
+    Trace: TraceSchema
   end
 end

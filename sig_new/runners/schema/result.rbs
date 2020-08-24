@@ -66,18 +66,21 @@ module Runners
       version: String
     }
 
-    class Issue < StrongJSON
+    class IssueSchema < StrongJSON
       def location: -> StrongJSON::Type::Enum[location]
       def git_blame_info: -> StrongJSON::Type::Object[git_blame_info]
       def issue: -> StrongJSON::Type::Object[issue]
     end
+    Issue: IssueSchema
 
-    class Result < StrongJSON
+    class ResultSchema < StrongJSON
+      def warning: -> StrongJSON::Type::Object[warning]
       def analyzer: -> StrongJSON::Type::Object[analyzer]
       def success: -> StrongJSON::Type::Object[success_result]
       def failure: -> StrongJSON::Type::Object[failure_result]
       def error: -> StrongJSON::Type::Object[error_result]
       def envelope: -> StrongJSON::Type::Object[envelope]
     end
+    Result: ResultSchema
   end
 end
