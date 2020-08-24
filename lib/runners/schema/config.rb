@@ -49,7 +49,7 @@ module Runners
       @linter = {}
 
       let :payload, object(
-        linter: optional(object(@linter)),
+        linter: object?(@linter),
         ignore: enum?(string, array(string)),
         branches: object?(exclude: enum?(string, array(string))),
       )

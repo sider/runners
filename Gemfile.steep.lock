@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/ybiquitous/strong_json.git
+  revision: 766661688ac2a62a346dfb9d2dda4098672ed842
+  branch: fix-steep-failures
+  specs:
+    strong_json (2.1.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -36,7 +43,6 @@ GEM
       parser (~> 2.7.0)
       rainbow (>= 2.2.2, < 4.0)
       rbs (~> 0.10.0)
-    strong_json (2.1.1)
     thor (1.0.1)
     thread_safe (0.3.6)
     tzinfo (1.2.7)
@@ -49,7 +55,7 @@ PLATFORMS
 DEPENDENCIES
   rake
   steep
-  strong_json
+  strong_json!
 
 BUNDLED WITH
    2.1.4

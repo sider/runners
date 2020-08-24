@@ -54,7 +54,7 @@ module Runners
     }
 
     type config_payload = {
-      linter: StrongJSON::Type::Object?,
+      linter: StrongJSON::Type::Object[untyped]?,
       ignore: StrongJSON::Type::Enum[one_or_more_string]?,
       branches: StrongJSON::Type::Object[{
         exclude: StrongJSON::Type::Enum[one_or_more_string]?
