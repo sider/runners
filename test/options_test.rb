@@ -7,10 +7,8 @@ class OptionsTest < Minitest::Test
     source_params = {
       head: 'head_commit',
       base: 'base_commit',
-      git_http_url: 'https://github.com',
-      owner: 'foo',
-      repo: 'bar',
-      git_http_userinfo: 'user:secret',
+      git_url: 'https://github.com/foo/bar',
+      git_url_userinfo: 'user:secret',
       pull_number: 1234,
     }
     with_runners_options_env(source: source_params) do
@@ -23,10 +21,8 @@ class OptionsTest < Minitest::Test
   def test_options_git_source_without_base
     source_params = {
       head: 'head_commit',
-      git_http_url: 'https://github.com',
-      owner: 'foo',
-      repo: 'bar',
-      git_http_userinfo: 'user:secret',
+      git_url: 'https://github.com/foo/bar',
+      git_url_userinfo: 'user:secret',
       pull_number: 1234,
     }
     with_runners_options_env(source: source_params) do
@@ -40,15 +36,13 @@ class OptionsTest < Minitest::Test
     source_params = {
       head: 'head_commit',
       base: 'base',
-      git_http_url: 'https://github.com',
-      owner: 'foo',
-      repo: 'bar',
+      git_url: 'https://github.com/foo/bar',
       pull_number: 1234,
     }
     with_runners_options_env(source: source_params) do
       options = Runners::Options.new(stdout, stderr)
       assert_instance_of Runners::Options::GitSource, options.source
-      assert_equal source_params.merge(git_http_userinfo: nil), options.source.to_h
+      assert_equal source_params.merge(git_url_userinfo: nil), options.source.to_h
     end
   end
 
@@ -56,10 +50,8 @@ class OptionsTest < Minitest::Test
     source_params = {
       head: 'head_commit',
       base: 'base',
-      git_http_url: 'https://github.com',
-      owner: 'foo',
-      repo: 'bar',
-      git_http_userinfo: 'user:secret',
+      git_url: 'https://github.com/foo/bar',
+      git_url_userinfo: 'user:secret',
     }
     with_runners_options_env(source: source_params) do
       options = Runners::Options.new(stdout, stderr)

@@ -1,22 +1,23 @@
 module Runners
   class Options
     class GitSource
-      attr_reader :head, :base, :git_http_url, :git_http_userinfo, :owner, :repo, :pull_number
+      attr_reader :head, :base, :git_url, :git_url_userinfo, :pull_number
 
-      def initialize(head:, base:, git_http_url:, git_http_userinfo:, owner:, repo:, pull_number:)
+      def initialize(head:, base:, git_url:, git_url_userinfo:, pull_number:)
         @head = head
         @base = base
-        @git_http_url = git_http_url
-        @git_http_userinfo = git_http_userinfo
-        @owner = owner
-        @repo = repo
+        @git_url = git_url
+        @git_url_userinfo = git_url_userinfo
         @pull_number = pull_number
       end
 
       def to_h
         {
-          head: head, base: base, git_http_url: git_http_url, git_http_userinfo: git_http_userinfo,
-          owner: owner, repo: repo, pull_number: pull_number,
+          head: head,
+          base: base,
+          git_url: git_url,
+          git_url_userinfo: git_url_userinfo,
+          pull_number: pull_number,
         }
       end
     end

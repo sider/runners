@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.33.0...HEAD)
 
+Breaking changes:
+
+- Remove :owner and :repo, and rename :git_http_url and :git_http_userinfo [#1411](https://github.com/sider/runners/pull/1411)
+
 ## 0.33.0
 
 [Full diff](https://github.com/sider/runners/compare/0.32.2...0.33.0)
