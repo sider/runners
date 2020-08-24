@@ -20,7 +20,7 @@ module Runners
       location: location,
       message: String,
       links: Array[String],
-      object: untyped?,
+      object: Hash[Symbol, untyped]?,
       git_blame_info: git_blame_info?
     }
 

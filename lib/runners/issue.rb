@@ -15,7 +15,10 @@ module Runners
       (message && !message.empty?) or
         raise ArgumentError, "`message` must be required: #{message.inspect}"
 
-      schema.coerce(object) if object && schema
+      if object && schema
+        # @type var _: StrongJSON::Type::Object[Hash[Symbol, untyped]]
+        (_ = schema).coerce(object)
+      end
 
       @path = path
       @location = location

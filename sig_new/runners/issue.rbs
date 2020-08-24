@@ -5,12 +5,19 @@ module Runners
     attr_reader id: String
     attr_reader message: String
     attr_reader links: Array[String]
-    attr_reader object: untyped
+    attr_reader object: Hash[Symbol, untyped]?
     attr_reader git_blame_info: GitBlameInfo?
 
-    def initialize: (path: Pathname, location: Location?, id: String, message: String,
-                     ?links: Array[String], ?object: untyped, ?schema: untyped) -> void
-    def as_json: () -> untyped
+    def initialize: (path: Pathname,
+                     location: Location?,
+                     id: String,
+                     message: String,
+                     ?links: Array[String],
+                     ?object: Hash[Symbol, untyped]?,
+                     ?schema: StrongJSON::Type::Object[Hash[Symbol, untyped]]?,
+                    ) -> void
+    def missing_id?: () -> bool
+    def as_json: () -> Schema::issue
     def add_git_blame_info: (Workspace) -> void
   end
 end
