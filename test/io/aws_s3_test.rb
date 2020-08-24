@@ -3,6 +3,15 @@ require_relative "../test_helper"
 class AwsS3Test < Minitest::Test
   include TestHelper
 
+  def setup
+    @backup_aws_region = ENV['AWS_REGION']
+    ENV['AWS_REGION'] = 'af-south-1'
+  end
+
+  def teadown
+    ENV['AWS_REGION'] = @backup_aws_region if @backup_aws_region
+  end
+
   def test_initialize
     subject = Runners::IO::AwsS3.new('s3://a_bucket/an_object')
 
@@ -17,7 +26,7 @@ class AwsS3Test < Minitest::Test
     assert_equal 1.2, config.retry_base_delay
     assert_equal 5, config.instance_profile_credentials_retries
     assert_equal 3, config.instance_profile_credentials_timeout
-    assert_equal URI('https://s3.us-east-1.amazonaws.com'), config.endpoint
+    assert_equal URI('https://s3.af-south-1.amazonaws.com'), config.endpoint
     assert_equal false, config.force_path_style
   end
 
