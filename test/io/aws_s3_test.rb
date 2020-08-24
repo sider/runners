@@ -4,20 +4,18 @@ class AwsS3Test < Minitest::Test
   include TestHelper
 
   def test_initialize
-    with_stubbed_env('S3_ENDPOINT', nil) do
-      mock(Aws::S3::Client).new(retry_limit: is_a(Numeric), retry_base_delay: is_a(Numeric),
-                                instance_profile_credentials_retries: is_a(Numeric),
-                                instance_profile_credentials_timeout: is_a(Numeric))
-      Runners::IO::AwsS3.new('s3://bucket_name/object_name')
-    end
+    mock(Aws::S3::Client).new(retry_limit: is_a(Numeric), retry_base_delay: is_a(Numeric),
+                              instance_profile_credentials_retries: is_a(Numeric),
+                              instance_profile_credentials_timeout: is_a(Numeric))
+    Runners::IO::AwsS3.new('s3://bucket_name/object_name')
+  end
 
-    with_stubbed_env('S3_ENDPOINT', 'https://s3.example.com') do
-      mock(Aws::S3::Client).new(retry_limit: is_a(Numeric), retry_base_delay: is_a(Numeric),
-                                instance_profile_credentials_retries: is_a(Numeric),
-                                instance_profile_credentials_timeout: is_a(Numeric),
-                                endpoint: 'https://s3.example.com', force_path_style: true)
-      Runners::IO::AwsS3.new('s3://bucket_name/object_name')
-    end
+  def test_initialize_with_endpoint
+    mock(Aws::S3::Client).new(retry_limit: is_a(Numeric), retry_base_delay: is_a(Numeric),
+                              instance_profile_credentials_retries: is_a(Numeric),
+                              instance_profile_credentials_timeout: is_a(Numeric),
+                              endpoint: 'https://s3.example.com', force_path_style: true)
+    Runners::IO::AwsS3.new('s3://bucket_name/object_name', endpoint: 'https://s3.example.com')
   end
 
   def test_parse_s3_uri

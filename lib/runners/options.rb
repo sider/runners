@@ -23,7 +23,7 @@ module Runners
                 when 'stderr'
                   stderr
                 when /^s3:/
-                  Runners::IO::AwsS3.new(output)
+                  Runners::IO::AwsS3.new(output, endpoint: options.dig(:s3, :endpoint))
                 else
                   raise "Invalid output option. You included '#{output}'"
                 end

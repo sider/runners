@@ -15,6 +15,7 @@ module Runners
         source: source,
         outputs: array?(string),
         ssh_key: string?,
+        s3: object?(endpoint: string),
       )
     end
   end

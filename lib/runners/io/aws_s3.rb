@@ -19,7 +19,7 @@ module Runners
 
     attr_reader :uri, :bucket_name, :object_name, :tempfile, :written_items, :client
 
-    def initialize(uri)
+    def initialize(uri, endpoint: nil)
       @uri = uri
       @bucket_name, @object_name = self.class.parse_s3_uri!(uri)
       @tempfile = Tempfile.new
@@ -31,8 +31,8 @@ module Runners
         instance_profile_credentials_retries: 5,
         instance_profile_credentials_timeout: 3,
       }
-      if ENV["S3_ENDPOINT"]
-        args[:endpoint] = ENV["S3_ENDPOINT"]
+      if endpoint
+        args[:endpoint] = endpoint
         args[:force_path_style] = true
       end
       @client = Aws::S3::Client.new(**args)
