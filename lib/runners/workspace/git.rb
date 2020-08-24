@@ -63,12 +63,14 @@ module Runners
     end
 
     def git_fetch_args
-      @git_fetch_args ||= %w[--quiet --no-tags --no-recurse-submodules origin].tap do |command|
-        command << "+refs/heads/*:refs/remotes/origin/*"
-
-        num = git_source.pull_number
-        command << "+refs/pull/#{num}/head:refs/remotes/pull/#{num}/head" if num
-      end
+      @git_fetch_args ||= [
+        '--quiet',
+        '--no-tags',
+        '--no-recurse-submodules',
+        'origin',
+        '+refs/heads/*:refs/remotes/origin/*',
+        *Array(git_source.refspec),
+      ].freeze
     end
 
     def patches

@@ -18,8 +18,8 @@ class Runners::Options::GitSource
   attr_accessor base: String?
   attr_accessor git_url: String
   attr_accessor git_url_userinfo: String?
-  attr_accessor pull_number: Integer?
+  attr_accessor refspec: (Array<String>? | String?)
 
   def initialize: (head: String, ?base: String, git_url: String,
-                   ?git_url_userinfo: String, ?pull_number: Integer) -> any
+                   ?git_url_userinfo: String, ?refspec: Array<String> | String) -> any
 end

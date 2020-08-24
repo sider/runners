@@ -77,7 +77,7 @@ module TestHelper
       base: "456def",
       git_url: "https://github.com/foo/bar",
       git_url_userinfo: "user:secret",
-      pull_number: 105,
+      refspec: "+refs/pull/1234/head:refs/remotes/pull/1234/head",
     }
     with_runners_options_env(source: source) do
       options = Runners::Options.new(StringIO.new, StringIO.new)

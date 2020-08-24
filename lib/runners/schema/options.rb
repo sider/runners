@@ -8,13 +8,14 @@ module Runners
         base: string?,
         git_url: string,
         git_url_userinfo: string?,
-        pull_number: number?,
+        refspec: enum?(string, array(string)),
       )
 
       let :payload, object(
         source: source,
         outputs: array?(string),
         ssh_key: string?,
+        s3: object?(endpoint: string),
       )
     end
   end

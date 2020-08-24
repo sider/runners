@@ -9,7 +9,7 @@ class OptionsTest < Minitest::Test
       base: 'base_commit',
       git_url: 'https://github.com/foo/bar',
       git_url_userinfo: 'user:secret',
-      pull_number: 1234,
+      refspec: "+refs/pull/1234/head:refs/remotes/pull/1234/head",
     }
     with_runners_options_env(source: source_params) do
       options = Runners::Options.new(stdout, stderr)
@@ -23,7 +23,7 @@ class OptionsTest < Minitest::Test
       head: 'head_commit',
       git_url: 'https://github.com/foo/bar',
       git_url_userinfo: 'user:secret',
-      pull_number: 1234,
+      refspec: "+refs/pull/1234/head:refs/remotes/pull/1234/head",
     }
     with_runners_options_env(source: source_params) do
       options = Runners::Options.new(stdout, stderr)
@@ -37,7 +37,7 @@ class OptionsTest < Minitest::Test
       head: 'head_commit',
       base: 'base',
       git_url: 'https://github.com/foo/bar',
-      pull_number: 1234,
+      refspec: "+refs/pull/1234/head:refs/remotes/pull/1234/head",
     }
     with_runners_options_env(source: source_params) do
       options = Runners::Options.new(stdout, stderr)
@@ -46,7 +46,7 @@ class OptionsTest < Minitest::Test
     end
   end
 
-  def test_options_git_source_without_pull_number
+  def test_options_git_source_without_refspecs
     source_params = {
       head: 'head_commit',
       base: 'base',
@@ -56,7 +56,7 @@ class OptionsTest < Minitest::Test
     with_runners_options_env(source: source_params) do
       options = Runners::Options.new(stdout, stderr)
       assert_instance_of Runners::Options::GitSource, options.source
-      assert_equal source_params.merge(pull_number: nil), options.source.to_h
+      assert_equal source_params.merge(refspec: nil), options.source.to_h
     end
   end
 
@@ -88,7 +88,7 @@ class OptionsTest < Minitest::Test
       stub(s3_mock).write
       stub(s3_mock).flush
       stub(s3_mock).flush!
-      mock(Runners::IO::AwsS3).new("s3://bucket/abc") { s3_mock }
+      mock(Runners::IO::AwsS3).new("s3://bucket/abc", endpoint: nil) { s3_mock }
       mock.proxy(Runners::IO).new(stdout, s3_mock)
 
       options = Runners::Options.new(stdout, stderr)

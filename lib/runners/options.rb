@@ -1,14 +1,14 @@
 module Runners
   class Options
     class GitSource
-      attr_reader :head, :base, :git_url, :git_url_userinfo, :pull_number
+      attr_reader :head, :base, :git_url, :git_url_userinfo, :refspec
 
-      def initialize(head:, base:, git_url:, git_url_userinfo:, pull_number:)
+      def initialize(head:, base:, git_url:, git_url_userinfo:, refspec:)
         @head = head
         @base = base
         @git_url = git_url
         @git_url_userinfo = git_url_userinfo
-        @pull_number = pull_number
+        @refspec = refspec
       end
 
       def to_h
@@ -17,7 +17,7 @@ module Runners
           base: base,
           git_url: git_url,
           git_url_userinfo: git_url_userinfo,
-          pull_number: pull_number,
+          refspec: refspec,
         }
       end
     end
@@ -42,7 +42,7 @@ module Runners
                 when 'stderr'
                   stderr
                 when /^s3:/
-                  Runners::IO::AwsS3.new(output)
+                  Runners::IO::AwsS3.new(output, endpoint: options.dig(:s3, :endpoint))
                 else
                   raise "Invalid output option. You included '#{output}'"
                 end
