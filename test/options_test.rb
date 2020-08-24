@@ -88,7 +88,7 @@ class OptionsTest < Minitest::Test
       stub(s3_mock).write
       stub(s3_mock).flush
       stub(s3_mock).flush!
-      mock(Runners::IO::AwsS3).new("s3://bucket/abc") { s3_mock }
+      mock(Runners::IO::AwsS3).new("s3://bucket/abc", endpoint: nil) { s3_mock }
       mock.proxy(Runners::IO).new(stdout, s3_mock)
 
       options = Runners::Options.new(stdout, stderr)
