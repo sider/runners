@@ -11,7 +11,7 @@ module Runners
     def install_jvm_deps
       return if config_jvm_deps.empty?
 
-      chdir jvm_deps_dir do
+      chdir jvm_deps_dir do |_dir|
         generate_jvm_deps_file
 
         trace_writer.message "Install dependencies..." do
@@ -39,6 +39,7 @@ module Runners
       @config_jvm_deps ||= Array(config_linter[:jvm_deps]).each do |dep|
         group, name, version = dep
         unless group && name && version
+          # @type var dep: untyped
           message = <<~MSG
             An invalid dependency is found in your `#{config.path_name}`: `#{dep.inspect}`
             Dependencies should be of the form: `[group, name, version]`

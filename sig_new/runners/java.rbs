@@ -1,4 +1,14 @@
 module Runners
   module Java : Processor
+    class InvalidDependency < UserError
+    end
+
+    def install_jvm_deps: () -> void
+
+    private
+    def jvm_deps_dir: () -> Pathname
+    def fetch_deps_via_gradle!: () -> void
+    def config_jvm_deps: () -> Array[Array[String]]
+    def generate_jvm_deps_file: () -> void
   end
 end
