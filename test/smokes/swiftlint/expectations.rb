@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "0.39.2"
+default_version = "0.40.0"
 
 s.add_test(
   "success",
@@ -90,17 +90,6 @@ s.add_test(
       object: { severity: "Warning" },
       git_blame_info: {
         commit: :_, line_hash: "79d8a9208644b10d765dafa9cc02c9bf4160e6ba", original_line: 6, final_line: 6
-      }
-    },
-    {
-      path: "test.swift",
-      location: { start_line: 8 },
-      id: "multiline_arguments_brackets",
-      message: "Multiline arguments should have their surrounding brackets in a new line.",
-      links: %w[https://realm.github.io/SwiftLint/multiline_arguments_brackets.html],
-      object: { severity: "Warning" },
-      git_blame_info: {
-        commit: :_, line_hash: "903490f92542354782d176c30d8eaa93cf83ef60", original_line: 8, final_line: 8
       }
     },
     {

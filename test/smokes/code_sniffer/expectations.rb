@@ -2,7 +2,7 @@ require_relative "phpcs3/expectations.rb"
 
 s = Runners::Testing::Smoke
 
-default_version = "3.5.5"
+default_version = "3.5.6"
 
 s.add_test(
   "success",

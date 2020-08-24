@@ -4,7 +4,39 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.32.1...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.33.0...HEAD)
+
+## 0.33.0
+
+[Full diff](https://github.com/sider/runners/compare/0.32.2...0.33.0)
+
+Updated environments:
+
+- **devon_rex** 2.24.0 -> 2.25.0 [#1404](https://github.com/sider/runners/pull/1404) [#1405](https://github.com/sider/runners/pull/1405)
+
+Updated tools:
+
+- **Brakeman** 4.8.2 -> 4.9.0 [#1376](https://github.com/sider/runners/pull/1376)
+- **cpplint** 1.5.3 -> 1.5.4 [#1401](https://github.com/sider/runners/pull/1401)
+- **detekt** 1.10.0 -> 1.11.2 [#1399](https://github.com/sider/runners/pull/1399)
+- **ESLint** 7.6.0 -> 7.7.0 [#1393](https://github.com/sider/runners/pull/1393)
+- **FxCop** 3.0.0 -> 3.3.0 [#1384](https://github.com/sider/runners/pull/1384)
+- **GolangCI-Lint** 1.29.0 -> 1.30.0 [#1372](https://github.com/sider/runners/pull/1372)
+- **JSHint** 2.11.2 -> 2.12.0 [#1379](https://github.com/sider/runners/pull/1379)
+- **PHP_CodeSniffer** 3.5.5 -> 3.5.6 [#1389](https://github.com/sider/runners/pull/1389)
+- **RuboCop** 0.88.0 -> 0.89.1 [#1381](https://github.com/sider/runners/pull/1381)
+- **SwiftLint** 0.39.2 -> 0.40.0 [#1385](https://github.com/sider/runners/pull/1385)
+
+Misc:
+
+- **stylelint** Add `stylelint-config-prettier` as pre-installed package [#1396](https://github.com/sider/runners/pull/1396)
+- **stylelint** Add `stylelint-prettier` as a pre-installed package [#1402](https://github.com/sider/runners/pull/1402)
+
+## 0.32.2
+
+[Full diff](https://github.com/sider/runners/compare/0.32.1...0.32.2)
+
+- **PHPMD** Improve runtime error message [#1383](https://github.com/sider/runners/pull/1383)
 
 ## 0.32.1
 

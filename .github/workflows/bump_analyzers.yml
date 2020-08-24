@@ -3,6 +3,8 @@ name: Bump analyzers
 on:
   schedule:
     - cron: "0 0 1,5,15,25 * *"
+  workflow_dispatch:
+    branches: ["**"]
 
 jobs:
   build:
@@ -19,6 +21,6 @@ jobs:
       - run: |
           bundle exec rake bump:analyzers
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.SIDERBOT_PERSONAL_ACCESS_TOKEN }}
           GITHUB_AUTHOR_NAME: GitHub Actions
           GITHUB_AUTHOR_EMAIL: actions@github.com

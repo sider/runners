@@ -1,12 +1,1 @@
-
-# This configuration copied from:
-# https://github.com/detekt/detekt/blob/master/detekt-cli/src/test/resources/configs/disabled-reports.yml
-
-console-reports:
-  active: false
-
-# detekt said:
-# > Property 'output-reports' is misspelled or does not exist.
-# > Run failed with 1 invalid config property.
-output-reports:
-  active: false
+a: true
