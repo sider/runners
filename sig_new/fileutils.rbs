@@ -3,4 +3,5 @@ module FileUtils
                    ?noop: bool,
                    ?verbose: bool,
                    ?secure: bool) -> void
+  def self.copy_entry: (String | Pathname, String | Pathname) -> void
 end

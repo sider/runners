@@ -14,32 +14,23 @@ module Runners
       end
 
       def self.only?: (String) -> bool
-      def self.add_test: (String, type: String,
-                          ?guid: String | Symbol,
-                          ?timestamp: String | Symbol,
-                          ?issues: Array[Hash[Symbol, untyped]] | Symbol | nil,
-                          ?message: String | Symbol | Regexp | nil,
-                          ?analyzer: Hash[Symbol, untyped] | Symbol | nil,
-                          ?class: String | Symbol | nil,
-                          ?backtrace: Array[String] | Symbol | nil,
-                          ?inspect: String | Regexp | Symbol | nil,
-                          ?warnings: Array[Hash[Symbol, untyped]],
-                          ?ci_config: Hash[Symbol, untyped] | Symbol,
-                          ?version: String | Symbol) -> void
-      def self.add_offline_test: (String, type: String,
-                                  ?guid: String | Symbol,
-                                  ?timestamp: String | Symbol,
-                                  ?issues: Array[Hash[Symbol, untyped]] | Symbol | nil,
-                                  ?message: String | Symbol | Regexp | nil,
-                                  ?analyzer: Hash[Symbol, untyped] | Symbol | nil,
-                                  ?class: String | Symbol | nil,
-                                  ?backtrace: Array[String] | Symbol | nil,
-                                  ?inspect: String | Regexp | Symbol | nil,
-                                  ?warnings: Array[Hash[Symbol, untyped]],
-                                  ?ci_config: Hash[Symbol, untyped] | Symbol,
-                                  ?version: String | Symbol) -> void
+      def self.add_test: (String, **Hash[Symbol, untyped]) -> void
+      def self.add_offline_test: (String, **Hash[Symbol, untyped]) -> void
       def self.check_duplicate: (String) -> void
-      def self.build_pattern: (**untyped) -> Hash[Symbol, untyped]
+      def self.build_pattern: (type: String,
+                               ?guid: String,
+                               ?timestamp: Symbol,
+                               ?issues: Array[untyped] | nil,
+                               ?message: String | Regexp | nil,
+                               ?analyzer: Hash[Symbol, untyped] | nil,
+                               ?class: String | nil,
+                               ?backtrace: Array[String] | nil,
+                               ?inspect: String | Regexp | nil,
+                               ?warnings: Array[Hash[Symbol, untyped]],
+                               ?ci_config: Hash[Symbol, untyped] | Symbol,
+                               ?config_file: String | Symbol,
+                               ?version: String | Symbol
+                              ) -> Hash[Symbol, untyped]
       def self.tests: -> Array[TestParams]
 
       attr_reader argv: Array[String]
@@ -55,7 +46,8 @@ module Runners
       def unify_result: (untyped, untyped, StringIO) -> bool
       def with_data_container: [X] { () -> X } -> X
       def command_line: (params: TestParams, repo_dir: String, base: String, head: String) -> Array[String]
-      def prepare_git_repository: (workdir: Pathname, smoke_target: Pathname, out: StringIO) -> Array[String]
+      type repo_info = { dir: String, base: String, head: String }
+      def prepare_git_repository: (workdir: Pathname, smoke_target: Pathname, out: StringIO) -> repo_info
       def debug?: () -> bool
       def debug_trace?: () -> bool
       def sh!: (*String, out: StringIO, ?exception: bool) -> [String, String]
