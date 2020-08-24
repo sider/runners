@@ -70,7 +70,7 @@ module Runners
         'origin',
         '+refs/heads/*:refs/remotes/origin/*',
         *Array(git_source.refspec),
-      ]
+      ].freeze
     end
 
     def patches
