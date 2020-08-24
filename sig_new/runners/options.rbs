@@ -14,11 +14,11 @@ class Runners::Options::GitSource
   attr_reader base: String?
   attr_reader git_url: String
   attr_reader git_url_userinfo: String?
-  attr_reader pull_number: Integer?
+  attr_reader refspecs: Array[String]?
 
   def initialize: (head: String,
                    ?base: String?,
                    git_url: String,
                    ?git_url_userinfo: String?,
-                   ?pull_number: Integer?) -> void
+                   ?refspecs: Array[String]?) -> void
 end

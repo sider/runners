@@ -66,8 +66,8 @@ module Runners
       @git_fetch_args ||= %w[--quiet --no-tags --no-recurse-submodules origin].tap do |command|
         command << "+refs/heads/*:refs/remotes/origin/*"
 
-        num = git_source.pull_number
-        command << "+refs/pull/#{num}/head:refs/remotes/pull/#{num}/head" if num
+        refspecs = git_source.refspecs
+        refspecs.each { command << _1 } if refspecs
       end
     end
 

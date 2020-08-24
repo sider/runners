@@ -14,7 +14,6 @@ class SensitiveFilterTest < Minitest::Test
       base: "456def",
       git_url: "https://github.com/foo/bar",
       git_url_userinfo: "user:secret",
-      pull_number: 105,
     }
     with_runners_options_env(source: source) do
       filter = new_filter
