@@ -26,6 +26,8 @@ module Runners
     def config_linter: () -> Hash[Symbol, untyped]
     def check_root_dir_exist: () -> result?
     def in_root_dir: [X] { (Pathname) -> X } -> X
+    def root_dir: () -> Pathname
+    def missing_config_file_result: (String) -> Results::Success
     def ensure_files: (*Pathname) { (Pathname) -> result } -> result
     def ensure_runner_config_schema: (untyped) { (untyped) -> result } -> result
     def chdir: [X] (Pathname) { (Pathname) -> X } -> X
@@ -53,7 +55,6 @@ module Runners
     def analyzer_version: () -> String
     def extract_version!: (String | Array[String], ?(String | Array[String]), ?pattern: Regexp) -> String
     def config_field_path: (*_ToS) -> String
-    def root_dir: () -> Pathname
     def directory_traversal_attack?: (String) -> bool
     def show_runtime_versions: () -> void
     def report_file: () -> String

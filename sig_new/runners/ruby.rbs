@@ -23,6 +23,6 @@ module Runners
     def user_specs: (Array[GemInstaller::Spec], LockfileLoader::Lockfile) -> Array[GemInstaller::Spec]
     def ruby_analyzer_bin: () -> Array[String]
     def installed_gem_versions: (String, *String, ?exception: bool) -> Hash[String, Array[String]]
-    def default_gems: (?String, *String) -> Array[GemInstaller::Spec]
+    def default_gem_specs: (?String, *String) -> Array[GemInstaller::Spec]
   end
 end
