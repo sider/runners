@@ -67,7 +67,7 @@ module Runners
         command << "+refs/heads/*:refs/remotes/origin/*"
 
         refspecs = git_source.refspecs
-        refspecs.each { command << _1 } if refspecs
+        refspecs.each { |refspec| command << refspec } if refspecs
       end
     end
 
