@@ -3,33 +3,53 @@ require_relative "../test_helper"
 class AwsS3Test < Minitest::Test
   include TestHelper
 
+  def setup
+    stub(Runners::IO::AwsS3).stub? { true }
+  end
+
   def test_initialize
-    mock(Aws::S3::Client).new(retry_limit: is_a(Numeric), retry_base_delay: is_a(Numeric),
-                              instance_profile_credentials_retries: is_a(Numeric),
-                              instance_profile_credentials_timeout: is_a(Numeric))
-    Runners::IO::AwsS3.new('s3://bucket_name/object_name')
+    subject = Runners::IO::AwsS3.new('s3://a_bucket/an_object')
+
+    assert_equal 's3://a_bucket/an_object', subject.uri
+    assert_equal 'a_bucket', subject.bucket_name
+    assert_equal 'an_object', subject.object_name
+    assert_instance_of Tempfile, subject.tempfile
+    assert_equal 0, subject.written_items
+
+    config = subject.client.config
+    assert_equal 5, config.retry_limit
+    assert_equal 1.2, config.retry_base_delay
+    assert_equal 5, config.instance_profile_credentials_retries
+    assert_equal 3, config.instance_profile_credentials_timeout
+    assert_equal URI('https://s3.us-stubbed-1.amazonaws.com'), config.endpoint
+    assert_equal false, config.force_path_style
   end
 
   def test_initialize_with_endpoint
-    mock(Aws::S3::Client).new(retry_limit: is_a(Numeric), retry_base_delay: is_a(Numeric),
-                              instance_profile_credentials_retries: is_a(Numeric),
-                              instance_profile_credentials_timeout: is_a(Numeric),
-                              endpoint: 'https://s3.example.com', force_path_style: true)
-    Runners::IO::AwsS3.new('s3://bucket_name/object_name', endpoint: 'https://s3.example.com')
+    subject = Runners::IO::AwsS3.new('s3://a_bucket/an_object', endpoint: 'https://s3.example.com')
+
+    config = subject.client.config
+    assert_equal URI('https://s3.example.com'), config.endpoint
+    assert_equal true, config.force_path_style
   end
 
-  def test_parse_s3_uri
-    assert_raises(RuntimeError) { Runners::IO::AwsS3.parse_s3_uri!('http://example.com') }
-    assert_raises(RuntimeError) { Runners::IO::AwsS3.parse_s3_uri!('s3://bucket') }
-    assert_equal ['bucket', 'key'], Runners::IO::AwsS3.parse_s3_uri!('s3://bucket/key')
-    assert_equal ['bucket', 'path/to/bar'], Runners::IO::AwsS3.parse_s3_uri!('s3://bucket/path/to/bar')
+  def test_initialize_with_complex_uri
+    subject = Runners::IO::AwsS3.new('s3://a_bucket.com/path/to/an_object')
+
+    assert_equal 'a_bucket.com', subject.bucket_name
+    assert_equal 'path/to/an_object', subject.object_name
+  end
+
+  def test_initialize_with_invalid_uri
+    error = assert_raises ArgumentError do
+      Runners::IO::AwsS3.new('https://a_bucket/an_object')
+    end
+    assert_equal 'The specified S3 URI is invalid: `"https://a_bucket/an_object"`', error.message
   end
 
   def test_write_flush
-    mock(Aws::S3::Client).new(retry_limit: is_a(Numeric), retry_base_delay: is_a(Numeric),
-                              instance_profile_credentials_retries: is_a(Numeric),
-                              instance_profile_credentials_timeout: is_a(Numeric))
-    io = Runners::IO::AwsS3.new('s3://bucket_name/object_name')
+    mock(Aws::S3::Client).new(is_a(Hash))
+    io = Runners::IO::AwsS3.new('s3://a_bucket/an_object')
     io.write('abc')
     io.write('!!!')
     io.flush
@@ -37,10 +57,8 @@ class AwsS3Test < Minitest::Test
   end
 
   def test_should_flush?
-    mock(Aws::S3::Client).new(retry_limit: is_a(Numeric), retry_base_delay: is_a(Numeric),
-                              instance_profile_credentials_retries: is_a(Numeric),
-                              instance_profile_credentials_timeout: is_a(Numeric))
-    io = Runners::IO::AwsS3.new('s3://bucket_name/object_name')
+    mock(Aws::S3::Client).new(is_a(Hash))
+    io = Runners::IO::AwsS3.new('s3://a_bucket/an_object')
 
     2.times { io.write("a") }
     assert_equal 2, io.written_items
@@ -52,22 +70,13 @@ class AwsS3Test < Minitest::Test
   end
 
   def test_flush!
-    mock_object = Object.new
-    mock(Aws::S3::Client).new(retry_limit: is_a(Numeric), retry_base_delay: is_a(Numeric),
-                              instance_profile_credentials_retries: is_a(Numeric),
-                              instance_profile_credentials_timeout: is_a(Numeric)) { mock_object }
-    mock(mock_object).put_object(bucket: 'bucket_name', key: 'object_name', body: instance_of(Tempfile))
-    io = Runners::IO::AwsS3.new('s3://bucket_name/object_name')
+    io = Runners::IO::AwsS3.new('s3://a_bucket_name/an_object')
+    mock(io.client).put_object(bucket: 'a_bucket_name', key: 'an_object', body: instance_of(Tempfile))
+
     io.write("a")
     assert_equal 1, io.written_items
 
     io.flush!
     assert_equal 0, io.written_items
-  end
-
-  private
-
-  def stdout
-    @stdout ||= StringIO.new
   end
 end
