@@ -10,16 +10,6 @@ module Runners
         @git_url_userinfo = git_url_userinfo
         @refspec = Array(refspec)
       end
-
-      def to_h
-        {
-          head: head,
-          base: base,
-          git_url: git_url,
-          git_url_userinfo: git_url_userinfo,
-          refspec: refspec,
-        }
-      end
     end
     private_constant :GitSource
 
