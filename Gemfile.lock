@@ -67,7 +67,6 @@ GEM
     regexp_parser (1.7.1)
     retryable (3.0.5)
     rexml (3.2.4)
-    rr (1.2.1)
     rubocop (0.89.1)
       parallel (~> 1.10)
       parser (>= 2.7.1.1)
@@ -117,7 +116,6 @@ DEPENDENCIES
   rake
   retryable
   rexml (>= 3.2, < 4.0)
-  rr
   rubocop
   steep (= 0.11.1)
   strong_json (= 2.1.0)

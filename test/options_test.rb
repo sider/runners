@@ -1,10 +1,10 @@
-require_relative 'test_helper'
+require 'test_helper'
 
 class OptionsTest < Minitest::Test
   include TestHelper
 
-  def setup
-    stub(Runners::IO::AwsS3).stub? { true }
+  def run
+    Runners::IO::AwsS3.stub(:stub?, true) { super }
   end
 
   def test_source

@@ -1,4 +1,4 @@
-require_relative "test_helper"
+require "test_helper"
 
 class ResultTest < Minitest::Test
   include TestHelper
@@ -221,11 +221,11 @@ class ResultTest < Minitest::Test
       },
       schema: nil,
     )
+
     with_workspace do |workspace|
-      mock(workspace).range_git_blame_info("foo/bar/baz.rb", 1, 1) do
-        [GitBlameInfo.new(commit: "c1", original_line: 1, final_line: 1, line_hash: "h")]
+      workspace.stub :range_git_blame_info, [GitBlameInfo.new(commit: "c1", original_line: 1, final_line: 1, line_hash: "h")] do
+        result.add_git_blame_info(workspace)
       end
-      result.add_git_blame_info(workspace)
     end
 
     assert result.valid?

@@ -11,7 +11,9 @@ class Runners::Processor::PhpmdTest < Minitest::Test
 
   def subject(workspace, yaml: nil)
     Phpmd.new(guid: SecureRandom.uuid, working_dir: workspace.working_dir, config: config(yaml), git_ssh_path: nil, trace_writer: trace_writer).tap do |s|
-      stub(s).analyzer_id { "phpmd" }
+      def s.analyzer_id
+        "phpmd"
+      end
     end
   end
 
