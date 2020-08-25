@@ -51,6 +51,9 @@ module Runners
         attr_reader :source
 
         def initialize(source)
+          source or raise ArgumentError, "Required source for Rubygems source"
+
+          super
           @source = source
         end
 
@@ -82,8 +85,9 @@ module Runners
         attr_reader :repo, :ref, :branch, :tag
 
         def initialize(repo, ref: nil, branch: nil, tag: nil)
-          repo or raise ArgumentError, "Required repo for Git source!"
+          repo or raise ArgumentError, "Required repository for Git source"
 
+          super
           @repo = repo
           @ref = ref
           @branch = branch
