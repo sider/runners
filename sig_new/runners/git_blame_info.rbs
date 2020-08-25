@@ -1,10 +1,11 @@
 class Runners::GitBlameInfo
-  attr_accessor commit: String
-  attr_accessor original_line: Integer
-  attr_accessor final_line: Integer
-  attr_accessor line_hash: String
-
   def self.parse: (String) -> Array[instance]
-  def initialize: (commit: String, original_line: Integer, final_line: Integer, line_hash: String) -> untyped
-  def to_h: () -> Hash[Symbol, untyped]
+
+attr_reader commit: String
+  attr_reader original_line: Integer
+  attr_reader final_line: Integer
+  attr_reader line_hash: String
+
+  def initialize: (commit: String, original_line: Integer, final_line: Integer, line_hash: String) -> void
+  def to_h: () -> Hash[Symbol, String | Integer]
 end
