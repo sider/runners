@@ -49,17 +49,17 @@ module Runners
       @linter = {}
 
       let :payload, object(
-        linter: optional(object(@linter)),
+        linter: object?(@linter),
         ignore: enum?(string, array(string)),
         branches: object?(exclude: enum?(string, array(string))),
       )
 
-      def register(name:, schema:)
+      def self.register(name:, schema:)
         if @linter.include? name
           raise ArgumentError, "#{name.inspect} is already registered"
         end
         @linter[name] = optional(schema)
-        payload.fields[:linter] = optional(object(@linter))
+        payload.fields[:linter] = object?(@linter)
       end
     end
   end
