@@ -59,7 +59,7 @@ module Runners
           raise ArgumentError, "#{name.inspect} is already registered"
         end
         @linter[name] = optional(schema)
-        payload.fields[:linter] = optional(object(@linter))
+        payload.fields[:linter] = object?(@linter)
       end
     end
   end
