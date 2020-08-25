@@ -1,25 +1,25 @@
 module Runners
   module Ruby
     class GemInstaller
-      module Source
-        def self.create: (gems_item) -> source_type
+      class Source
+        def self.create: (gems_item) -> instance
 
-        class Base
-          def rubygems?: () -> bool
-          def git?: () -> bool
-          def default?: () -> bool
-        end
+        def rubygems?: () -> bool
+        def git?: () -> bool
+        def default?: () -> bool
 
-        class Rubygems < Base
+        class Rubygems < Source
           attr_reader source: String
+
           def initialize: (?String) -> void
         end
 
-        class Git < Base
+        class Git < Source
           attr_reader repo: String
           attr_reader ref: String?
           attr_reader branch: String?
           attr_reader tag: String?
+
           def initialize: (String, ?ref: String, ?branch: String, ?tag: String) -> void
         end
       end

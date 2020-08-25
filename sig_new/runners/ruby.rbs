@@ -17,7 +17,7 @@ module Runners
     class InstallGemsFailure < UserError
     end
 
-    def install_gems: [X] (Array[GemInstaller::Spec], ?optionals: Array[GemInstaller::Spec], constraints: Hash[String, Array[String]]) { (Hash[String, String]) -> X } -> X
+    def install_gems: (Array[GemInstaller::Spec], ?optionals: Array[GemInstaller::Spec], constraints: Hash[String, Array[String]]) { (Hash[String, String]) -> untyped } -> void
     def default_specs: (Array[GemInstaller::Spec], Hash[String, Array[String]], LockfileLoader::Lockfile) -> Array[GemInstaller::Spec]
     def optional_specs: (Array[GemInstaller::Spec], LockfileLoader::Lockfile) -> Array[GemInstaller::Spec]
     def user_specs: (Array[GemInstaller::Spec], LockfileLoader::Lockfile) -> Array[GemInstaller::Spec]

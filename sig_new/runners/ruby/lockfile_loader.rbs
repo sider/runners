@@ -10,12 +10,12 @@ module Runners
       attr_reader shell: Shell
 
       def initialize: (root_dir: Pathname, shell: Shell) -> void
-      def ensure_lockfile: [X] () { (Lockfile) -> [X] } -> [X]
+      def ensure_lockfile: [X] () { (Lockfile) -> X } -> X
 
       private
       def gemfile_path: () -> Pathname
       def gemfile_lock_path: () -> Pathname
-      def generate_lockfile: (Pathname) -> Pathname?
+      def generate_lockfile: (Pathname) -> String?
     end
   end
 end

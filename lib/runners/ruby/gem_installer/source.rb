@@ -1,6 +1,6 @@
 module Runners
   class Ruby::GemInstaller
-    module Source
+    class Source
       def self.create(gems_item)
         source = gems_item[:source]
         git = gems_item[:git]
@@ -23,22 +23,20 @@ module Runners
         end
       end
 
-      class Base
-        def rubygems?
-          false
-        end
+      def rubygems?
+        false
+      end
 
-        def git?
-          false
-        end
+      def git?
+        false
+      end
 
-        def default?
-          false
-        end
+      def default?
+        false
       end
 
       # @see https://bundler.io/man/gemfile.5.html#SOURCE
-      class Rubygems < Base
+      class Rubygems < Source
         attr_reader :source
 
         def initialize(source = DEFAULT_SOURCE)
@@ -54,7 +52,7 @@ module Runners
         end
 
         def ==(other)
-          self.class === other && source == other.source
+          self.class === other.class && source == other.source
         end
         alias eql? ==
 
@@ -68,7 +66,7 @@ module Runners
       end
 
       # @see https://bundler.io/man/gemfile.5.html#GIT
-      class Git < Base
+      class Git < Source
         attr_reader :repo, :ref, :branch, :tag
 
         def initialize(repo, ref: nil, branch: nil, tag: nil)
@@ -85,7 +83,7 @@ module Runners
         end
 
         def ==(other)
-          self.class === other && repo == other.repo && ref == other.ref && branch == other.branch && tag == other.tag
+          self.class === other.class && repo == other.repo && ref == other.ref && branch == other.branch && tag == other.tag
         end
         alias eql? ==
 

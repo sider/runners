@@ -18,7 +18,7 @@ module Runners
       end
 
       def gemfile_path
-        gem_home + "Gemfile"
+        gem_home / "Gemfile"
       end
 
       def lockfile_path
