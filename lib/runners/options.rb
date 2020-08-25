@@ -8,7 +8,7 @@ module Runners
         @base = base
         @git_url = git_url
         @git_url_userinfo = git_url_userinfo
-        @refspec = refspec
+        @refspec = Array(refspec)
       end
 
       def to_h
@@ -21,6 +21,7 @@ module Runners
         }
       end
     end
+    private_constant :GitSource
 
     attr_reader :stdout, :stderr, :source, :ssh_key, :io
 

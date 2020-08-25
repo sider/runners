@@ -70,7 +70,7 @@ module Runners
         '--no-recurse-submodules',
         'origin',
         '+refs/heads/*:refs/remotes/origin/*',
-        *Array(git_source.refspec),
+        *git_source.refspec,
       ].freeze
     end
 
