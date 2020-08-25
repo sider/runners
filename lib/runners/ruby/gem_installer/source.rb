@@ -53,7 +53,7 @@ module Runners
         def initialize(source)
           source or raise ArgumentError, "Required source for Rubygems source"
 
-          super
+          super()
           @source = source
         end
 
@@ -87,7 +87,7 @@ module Runners
         def initialize(repo, ref: nil, branch: nil, tag: nil)
           repo or raise ArgumentError, "Required repository for Git source"
 
-          super
+          super()
           @repo = repo
           @ref = ref
           @branch = branch
