@@ -15,7 +15,8 @@ module Runners
     def initialize: (start_line: Integer | String | nil,
                      ?start_column: Integer | String | nil,
                      ?end_line: Integer | String | nil,
-                     ?end_column: Integer | String | nil) -> void
+                     ?end_column: Integer | String | nil,
+                    ) -> void
     def as_json: -> Hash[(:start_line | :start_column | :end_line | :end_column), Integer]
   end
 end
