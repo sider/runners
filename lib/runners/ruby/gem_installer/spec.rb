@@ -6,18 +6,19 @@ module Runners
 
         alias versions version
 
-        def initialize(name:, version:, source: Source::Rubygems.new)
+        def initialize(name:, version:, source: Source.default)
           @name = name
           @version = version
           @source = source
         end
 
         def ==(other)
-          other.class == self.class && other.name == name && other.version == version && other.source == source
+          self.class == other.class && name == other.name && version == other.version && source == other.source
         end
+        alias eql? ==
 
-        __skip__ = begin
-          alias eql? ==
+        def hash
+          name.hash ^ version.hash ^ source.hash
         end
 
         def override_by_lockfile(lockfile)
