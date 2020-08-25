@@ -354,7 +354,7 @@ class ProcessorTest < Minitest::Test
         assert_mock mock_status
 
         refute trace_writer.writer.find {|hash| hash[:trace] == :status && hash[:status] == 0 }
-        assert trace_writer.writer.find {|hash| hash[:trace] == :error && hash[:message] =~ /Process aborted or coredumped:/ }
+        assert trace_writer.writer.find {|hash| hash[:trace] == :error && hash[:message].include?("Process aborted or coredumped:") }
       end
     end
   end
