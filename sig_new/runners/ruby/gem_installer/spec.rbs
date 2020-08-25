@@ -2,17 +2,17 @@ module Runners
   module Ruby
     class GemInstaller
       class Spec
+        def self.from_gems: (Array[gems_item | String]) -> Array[Spec]
+        def self.merge: (Array[Spec], Array[Spec]) -> Array[Spec]
+
         attr_reader name: String
         attr_reader version: Array[String]
         attr_reader source: Source
 
         alias versions version
 
-        def self.from_gems: (Array[gems_item | String]) -> Array[Spec]
-        def self.merge: (Array[Spec], Array[Spec]) -> Array[Spec]
-
         def initialize: (name: String, version: Array[String], ?source: Source) -> void
-        def override_by_lockfile: (LockfileLoader::Lockfile) -> self
+        def override_by_lockfile: (LockfileLoader::Lockfile) -> Spec
       end
     end
   end

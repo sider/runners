@@ -22,10 +22,12 @@ module Runners
 
         case
         when source.is_a?(String)
-          rubygems(source)
+          rubygems(_ = source)
         when git.is_a?(Hash)
-          if git[:repo]
-            git(git[:repo], ref: git[:ref], branch: git[:branch], tag: git[:tag])
+          g = _ = git
+          repo = _ = g[:repo]
+          if repo
+            git(repo, ref: g[:ref], branch: g[:branch], tag: g[:tag])
           else
             raise ArgumentError.new("Unexpected gem: #{gems_item.inspect}")
           end

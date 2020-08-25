@@ -2,16 +2,10 @@ module Runners
   module Ruby
     class GemInstaller
       class Source
-        def self.create: (gems_item) -> instance
-
-        def rubygems?: () -> bool
-        def git?: () -> bool
-        def default?: () -> bool
-
         class Rubygems < Source
           attr_reader source: String
 
-          def initialize: (?String) -> void
+          def initialize: (String) -> void
         end
 
         class Git < Source
@@ -22,6 +16,17 @@ module Runners
 
           def initialize: (String, ?ref: String, ?branch: String, ?tag: String) -> void
         end
+
+        DEFAULT: String
+
+        def self.default: () -> instance
+        def self.rubygems: (String) -> instance
+        def self.git: (String, **untyped) -> instance
+        def self.create: (gems_item) -> instance
+
+        def rubygems?: () -> bool
+        def git?: () -> bool
+        def default?: () -> bool
       end
     end
   end
