@@ -50,7 +50,14 @@ class WorkspaceTest < Minitest::Test
   def test_git_ssh_path_is_pathname
     with_workspace(ssh_key: data("ssh_key").read) do |workspace|
       workspace.open do |git_ssh_path|
-        refute_nil git_ssh_path
+        assert_path_exists git_ssh_path
+        assert_equal Pathname("run.sh"), git_ssh_path.basename
+        assert_equal "100700", "%o" % git_ssh_path.stat.mode
+
+        ssh_dir = git_ssh_path.parent
+        assert_equal "100600", "%o" % (ssh_dir / "config").stat.mode
+        assert_equal "100600", "%o" % (ssh_dir / "key").stat.mode
+        assert_equal "100600", "%o" % (ssh_dir / "known_hosts").stat.mode
 
         Open3.capture3(
           { "GIT_SSH" => git_ssh_path.to_s },

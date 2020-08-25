@@ -25,6 +25,7 @@ class Pathname
   def rename: (Pathname) -> 0
   def parent: -> Pathname
   def rmdir: -> 0
+  def chmod: (Integer) -> Integer
 end
 
 extension Object (Polyfill)
