@@ -431,11 +431,22 @@ class ProcessorTest < Minitest::Test
       # receive array command
       mock(processor).capture3!("foo", "bar", "--version") { ["v1.2.3", ""] }
       assert_equal "1.2.3", processor.extract_version!(["foo", "bar"])
+    end
+  end
 
-      # not found
+  def test_extract_version_failed
+    with_workspace do |workspace|
+      processor = new_processor(workspace: workspace)
+
+      error = assert_raises(ArgumentError) { processor.extract_version!([]) }
+      assert_equal 'Unspecified command: `["--version"]`', error.message
+
+      error = assert_raises(ArgumentError) { processor.extract_version!([], nil) }
+      assert_equal "Unspecified command", error.message
+
       mock(processor).capture3!("foo", "-v") { ["no version", ""] }
-      error = assert_raises { processor.extract_version!("foo", "-v") }
-      assert_equal "Not found version from 'foo -v'", error.message
+      error = assert_raises(ArgumentError) { processor.extract_version!("foo", "-v") }
+      assert_equal "Not found version from the command `foo -v`", error.message
     end
   end
 
