@@ -107,16 +107,19 @@ module Runners
     end
 
     def extract_version!(command, version_option = extract_version_option, pattern: /v?(\d+\.\d+(\.\d+)?)\b/)
-      single_command, *extra_commands = Array(command)
-      command_options = extra_commands + Array(version_option)
-      outputs = capture3!(single_command, *command_options)
+      command_line = Array(command) + Array(version_option)
+      cmd = command_line.first or raise ArgumentError, "Unspecified command"
+      cmd_opts = command_line.drop(1).tap do |opts|
+        raise ArgumentError, "Unspecified command: `#{command_line.inspect}`" if opts.empty?
+      end
+      outputs = capture3!(cmd, *cmd_opts)
       outputs.each do |output|
         pattern.match(output) do |match|
           found = match[1]
           return found if found
         end
       end
-      raise "Not found version from '#{single_command} #{command_options.join(' ')}'"
+      raise ArgumentError, "Not found version from the command `#{command_line.join(' ')}`"
     end
 
     def config_linter
@@ -170,7 +173,7 @@ module Runners
 
     def add_warning_if_deprecated_version(minimum:, file: nil, deadline: nil)
       unless Gem::Version.create(minimum) <= Gem::Version.create(analyzer_version)
-        deadline_str = deadline ? deadline.strftime('on %B %-d, %Y') : 'in the near future'
+        deadline_str = deadline ? (_ = deadline).strftime('on %B %-d, %Y') : 'in the near future'
         add_warning <<~MSG, file: file
           DEPRECATION WARNING!!!
           The `#{analyzer_version}` and older versions are deprecated, and these versions will be dropped #{deadline_str}.
@@ -211,7 +214,7 @@ module Runners
     end
 
     def add_warning_for_deprecated_linter(alternative:, ref:, deadline: nil)
-      deadline_str = deadline ? deadline.strftime("on %B %-d, %Y") : "in the near future"
+      deadline_str = deadline ? (_ = deadline).strftime("on %B %-d, %Y") : "in the near future"
       add_warning <<~MSG, file: config.path_name
         DEPRECATION WARNING!!!
         The support for #{analyzer_name} is deprecated and will be removed #{deadline_str}.

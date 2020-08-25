@@ -18,8 +18,12 @@ module Runners
     attr_reader warnings: Array[untyped]
     attr_reader config: Config
 
-    def initialize: (guid: String, working_dir: Pathname, config: Config,
-                     git_ssh_path: Pathname?, trace_writer: TraceWriter) -> void
+    def initialize: (guid: String,
+                     working_dir: Pathname,
+                     config: Config,
+                     git_ssh_path: Pathname?,
+                     trace_writer: TraceWriter,
+                    ) -> void
     def relative_path: (String | Pathname, ?from: Pathname) -> Pathname
     def setup: { () -> result } -> result
     def analyze: (Changes) -> result
@@ -44,15 +48,17 @@ module Runners
     def delete_unchanged_files: (Changes, ?except: Array[String], ?only: Array[String]) -> void
     def add_warning: (String, ?file: String?) -> void
     def add_warning_if_deprecated_version: (minimum: String, ?file: String?, ?deadline: Time?) -> void
-    def add_warning_if_deprecated_options: (Array[Symbol]) -> void
+    def add_warning_if_deprecated_options: () -> void
     def add_warning_for_deprecated_linter: (alternative: String, ref: String, ?deadline: Time?) -> void
     def analyzer: () -> Analyzer
     def analyzers: () -> Analyzers
     def analyzer_id: () -> String
     def analyzer_name: () -> String
     def analyzer_doc: () -> String
+    def analyzer_github: () -> String
     def analyzer_bin: () -> String
     def analyzer_version: () -> String
+    def extract_version_option: () -> String
     def extract_version!: (String | Array[String], ?(String | Array[String]), ?pattern: Regexp) -> String
     def config_field_path: (*_ToS) -> String
     def directory_traversal_attack?: (String) -> bool
@@ -62,5 +68,6 @@ module Runners
     def read_report_file: (?String) -> String
     def read_report_xml: (?String) -> REXML::Document
     def read_report_json: [X] (?String) { () -> X } -> (Hash[Symbol, untyped] | X)
+    def comma_separated_list: (String | Array[String] | nil) -> String?
   end
 end
