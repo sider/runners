@@ -2,7 +2,10 @@ module Runners
   class Processor::ClangTidy < Processor
     include CPlusPlus
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[Schema::cplusplus_runner_config]
+    end
+    Schema: SchemaClass
 
     private
     def construct_result: (untyped stdout) { (untyped) -> untyped } -> untyped

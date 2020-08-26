@@ -2,12 +2,16 @@ module Runners
   class Processor::Checkstyle < Processor
     include Java
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[Schema::java_runner_config]
+    end
+    Schema: SchemaClass
+
     OFFICIAL_RULE_NAMESPACE: String
 
     private
-    def checkstyle_args: () -> untyped
-    def construct_result: (untyped xml_root) { (untyped) -> untyped } -> untyped
+    def checkstyle_args: () -> Array[String]
+    def construct_result: (REXML::Document) { (Issue) -> untyped } -> void
     def normalize_id: (untyped rule_id) -> untyped
     def build_links: (untyped rule_id) -> Array[String]
     def config_file: () -> untyped

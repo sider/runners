@@ -2,8 +2,9 @@ module Runners
   class Processor::CodeSniffer < Processor
     include PHP
 
-    Schema = StrongJSON.new do
-      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+      let :runner_config, Runners::Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
                         version: enum?(string, numeric),
                         dir: string?,
@@ -37,7 +38,7 @@ module Runners
     end
 
     def analyze(changes)
-      run_analyzer additional_options, directory
+      run_analyzer
     end
 
     private
@@ -112,15 +113,18 @@ module Runners
     end
 
     def php_framework
-      @php_framework ||= {
+      # @type var found: Symbol?
+      found = nil
+      {
         CakePHP: 'lib/Cake/Core/CakePlugin.php',
         Symfony: 'app/SymfonyRequirements.php',
-      }.find do |framework, file|
-        break framework if (current_dir / file).exist?
+      }.each do |framework, file|
+        found = framework if (current_dir / file).exist?
       end
+      found
     end
 
-    def run_analyzer(options, target)
+    def run_analyzer
       capture3!(
         analyzer_bin,
         "--report=json",
@@ -128,8 +132,8 @@ module Runners
         "-q", # Enable quiet mode. See https://github.com/squizlabs/PHP_CodeSniffer/wiki/Advanced-Usage#quieting-output
         "--runtime-set", "ignore_errors_on_exit", "1", # See https://github.com/squizlabs/PHP_CodeSniffer/wiki/Configuration-Options#ignoring-errors-when-generating-the-exit-code
         "--runtime-set", "ignore_warnings_on_exit", "1", # See https://github.com/squizlabs/PHP_CodeSniffer/wiki/Configuration-Options#ignoring-warnings-when-generating-the-exit-code
-        *options,
-        target
+        *additional_options,
+        directory,
       )
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|

@@ -2,17 +2,20 @@ module Runners
   class Processor::CodeSniffer < Processor
     include PHP
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[Schema::base_runner_config]
+    end
+    Schema: SchemaClass
 
     private
-    def additional_options: () -> untyped
+    def additional_options: () -> Array[String]
     def standard_option: () -> String
     def extensions_option: () -> String
-    def encoding_option: () -> untyped
-    def ignore_option: () -> untyped
-    def directory: () -> untyped
-    def default_sideci_options: () -> untyped
-    def php_framework: () -> untyped
-    def run_analyzer: (untyped options, untyped target) -> untyped
+    def encoding_option: () -> String?
+    def ignore_option: () -> String?
+    def directory: () -> String
+    def default_sideci_options: () -> Hash[Symbol, untyped]
+    def php_framework: () -> Symbol?
+    def run_analyzer: () -> result
   end
 end

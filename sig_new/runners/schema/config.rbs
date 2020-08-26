@@ -53,6 +53,10 @@ module Runners
       npm_install: npm_install_runner_config?
     }
 
+    type java_runner_config = {
+      jvm_deps: Array[Array[String | Numeric]]?
+    }
+
     type config_payload = {
       linter: StrongJSON::Type::Object[untyped]?,
       ignore: StrongJSON::Type::Enum[one_or_more_string]?,
@@ -68,6 +72,7 @@ module Runners
       def cplusplus: () -> StrongJSON::Type::Object[cplusplus_runner_config]
       def npm_install: () -> StrongJSON::Type::Enum[npm_install_runner_config]
       def npm: () -> StrongJSON::Type::Object[npm_runner_config]
+      def java: () -> StrongJSON::Type::Object[java_runner_config]
     end
     BaseConfig: BaseConfigSchema
 
