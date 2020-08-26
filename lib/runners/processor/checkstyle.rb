@@ -24,6 +24,8 @@ module Runners
 
     register_config_schema(name: :checkstyle, schema: Schema.runner_config)
 
+    DEFAULT_TARGET = ".".freeze
+
     def setup
       begin
         install_jvm_deps
@@ -37,7 +39,8 @@ module Runners
     def analyze(changes)
       delete_unchanged_files(changes, only: ["*.java"])
 
-      capture3(analyzer_bin, *check_directory, *checkstyle_args)
+      target = Array(config_linter[:dir] || DEFAULT_TARGET)
+      capture3(analyzer_bin, *checkstyle_args, *target)
 
       xml_root =
         begin
@@ -67,9 +70,9 @@ module Runners
 
         excluded_directories.each do |exclude|
           case
-          when exclude.key?(:string)
+          when exclude[:string]
             args << "--exclude" << exclude[:string]
-          when exclude.key?(:pattern)
+          when exclude[:pattern]
             args << "--exclude-regexp" << exclude[:pattern]
           end
         end
@@ -81,6 +84,8 @@ module Runners
     end
 
     def construct_result(xml_root)
+      ignored_severities = Array(config_linter[:ignore])
+
       xml_root.each_element("file") do |file|
         file_name = file[:name] or raise "Invalid file: #{file.inspect}"
         path = relative_path file_name
@@ -153,31 +158,14 @@ module Runners
       end
     end
 
-    def check_directory
-      Array(config_linter[:dir] || ".")
-    end
-
     def excluded_directories
-      array(config_linter[:exclude]).map do |x|
-        case x
+      Array(config_linter[:exclude]).map do |dir|
+        case dir
         when String
-          { string: x }
+          { string: dir }
         else
-          x
+          dir
         end
-      end
-    end
-
-    def ignored_severities
-      Array(config_linter[:ignore])
-    end
-
-    def array(value)
-      case value
-      when Hash
-        [value]
-      else
-        Array(value)
       end
     end
   end
