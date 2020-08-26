@@ -489,7 +489,9 @@ class ProcessorTest < Minitest::Test
       file = (workspace.working_dir / "a_file.xml").tap { |f| f.write "<foo></foo>" }.then(&:to_path)
 
       processor = new_processor(workspace: workspace)
-      assert_instance_of REXML::Document, processor.read_report_xml(file)
+      root = processor.read_report_xml(file)
+      assert_instance_of REXML::Element, root
+      assert_equal "<foo/>", root.to_s
     end
   end
 

@@ -87,7 +87,7 @@ module Runners
     def construct_result(xml)
       # https://github.com/pmd/pmd.github.io/blob/8b0c31ff8e18215ed213b7df400af27b9137ee67/report_2_0_0.xsd
 
-      xml.root.each_element do |element|
+      xml.each_element do |element|
         case element.name
         when "file"
           path = relative_path(element[:name])

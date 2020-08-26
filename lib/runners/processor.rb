@@ -258,12 +258,13 @@ module Runners
 
     def read_report_xml(file_path = report_file)
       output = read_report_file(file_path)
-      REXML::Document.new(output).tap do |document|
-        unless document.root
-          message = "Output XML is invalid from #{file_path}"
-          trace_writer.error message
-          raise InvalidXML, message
-        end
+      root = REXML::Document.new(output).root
+      if root
+        root
+      else
+        message = "Output XML is invalid from #{file_path}"
+        trace_writer.error message
+        raise InvalidXML, message
       end
     end
 
