@@ -18,11 +18,8 @@ module Runners
       @sensitives ||= begin
         # @type var list: Array[String]
         list = []
-        source = @options.source
-        if source.is_a?(Options::GitSource)
-          # @type var source: Options::GitSource
-          user_info = source.git_url_userinfo
-          list << user_info if user_info
+        @options.source.git_url_userinfo.tap do |info|
+          list << info if info
         end
         list
       end

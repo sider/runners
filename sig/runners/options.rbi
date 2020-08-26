@@ -14,12 +14,12 @@ class Runners::Options
 end
 
 class Runners::Options::GitSource
-  attr_accessor head: String
-  attr_accessor base: String?
-  attr_accessor git_url: String
-  attr_accessor git_url_userinfo: String?
-  attr_accessor refspec: (Array<String>? | String?)
+  attr_reader head: String
+  attr_reader base: String?
+  attr_reader git_url: String
+  attr_reader git_url_userinfo: String?
+  attr_reader refspec: Array<String>
 
-  def initialize: (head: String, ?base: String, git_url: String,
-                   ?git_url_userinfo: String, ?refspec: Array<String> | String) -> any
+  def initialize: (head: String, base: String?, git_url: String,
+                   git_url_userinfo: String?, refspec: Array<String> | String | nil) -> any
 end

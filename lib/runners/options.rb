@@ -10,16 +10,6 @@ module Runners
         @git_url_userinfo = git_url_userinfo
         @refspec = Array(refspec)
       end
-
-      def to_h
-        {
-          head: head,
-          base: base,
-          git_url: git_url,
-          git_url_userinfo: git_url_userinfo,
-          refspec: refspec,
-        }
-      end
     end
     private_constant :GitSource
 
@@ -45,7 +35,7 @@ module Runners
                 when /^s3:/
                   Runners::IO::AwsS3.new(output, endpoint: options.dig(:s3, :endpoint))
                 else
-                  raise "Invalid output option. You included '#{output}'"
+                  raise ArgumentError, "Invalid output option: `#{output.inspect}`"
                 end
               end
               Runners::IO.new(*ios)

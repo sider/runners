@@ -5,12 +5,7 @@ module Runners
     class DownloadError < SystemError; end
 
     def self.prepare(options:, working_dir:, trace_writer:)
-      case options.source
-      when Options::GitSource
-        Workspace::Git.new(options: options, working_dir: working_dir, trace_writer: trace_writer)
-      else
-        raise ArgumentError, "The specified options #{options.inspect} is not supported"
-      end
+      Workspace::Git.new(options: options, working_dir: working_dir, trace_writer: trace_writer)
     end
 
     attr_reader :options, :working_dir, :trace_writer, :shell

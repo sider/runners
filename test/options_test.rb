@@ -3,107 +3,98 @@ require_relative 'test_helper'
 class OptionsTest < Minitest::Test
   include TestHelper
 
-  def test_options_git_source
-    source_params = {
-      head: 'head_commit',
-      base: 'base_commit',
-      git_url: 'https://github.com/foo/bar',
-      git_url_userinfo: 'user:secret',
-      refspec: "+refs/pull/1234/head:refs/remotes/pull/1234/head",
-    }
+  def setup
+    stub(Runners::IO::AwsS3).stub? { true }
+  end
+
+  def test_source
     with_runners_options_env(source: source_params) do
-      options = Runners::Options.new(stdout, stderr)
-      assert_instance_of Runners::Options::GitSource, options.source
-      assert_equal source_params, options.source.to_h
+      source = Runners::Options.new(stdout, stderr).source
+      assert_equal "e07dc104", source.head
+      assert_equal "a7c6b27c", source.base
+      assert_equal "https://github.com/foo/bar", source.git_url
+      assert_equal "user:secret", source.git_url_userinfo
+      assert_equal ["+refs/pull/1234/head:refs/remotes/pull/1234/head"], source.refspec
     end
   end
 
-  def test_options_git_source_without_base
-    source_params = {
-      head: 'head_commit',
-      git_url: 'https://github.com/foo/bar',
-      git_url_userinfo: 'user:secret',
-      refspec: "+refs/pull/1234/head:refs/remotes/pull/1234/head",
-    }
-    with_runners_options_env(source: source_params) do
-      options = Runners::Options.new(stdout, stderr)
-      assert_instance_of Runners::Options::GitSource, options.source
-      assert_equal source_params.merge(base: nil), options.source.to_h
+  def test_source_without_base
+    with_runners_options_env(source: source_params.tap { _1.delete(:base) }) do
+      source = Runners::Options.new(stdout, stderr).source
+      assert_equal "e07dc104", source.head
+      assert_nil source.base
+      assert_equal "https://github.com/foo/bar", source.git_url
+      assert_equal "user:secret", source.git_url_userinfo
+      assert_equal ["+refs/pull/1234/head:refs/remotes/pull/1234/head"], source.refspec
     end
   end
 
-  def test_options_git_source_without_userinfo
-    source_params = {
-      head: 'head_commit',
-      base: 'base',
-      git_url: 'https://github.com/foo/bar',
-      refspec: "+refs/pull/1234/head:refs/remotes/pull/1234/head",
-    }
-    with_runners_options_env(source: source_params) do
-      options = Runners::Options.new(stdout, stderr)
-      assert_instance_of Runners::Options::GitSource, options.source
-      assert_equal source_params.merge(git_url_userinfo: nil), options.source.to_h
+  def test_source_without_userinfo
+    with_runners_options_env(source: source_params.tap { _1.delete(:git_url_userinfo) }) do
+      source = Runners::Options.new(stdout, stderr).source
+      assert_equal "e07dc104", source.head
+      assert_equal "a7c6b27c", source.base
+      assert_equal "https://github.com/foo/bar", source.git_url
+      assert_nil source.git_url_userinfo
+      assert_equal ["+refs/pull/1234/head:refs/remotes/pull/1234/head"], source.refspec
     end
   end
 
-  def test_options_git_source_without_refspecs
-    source_params = {
-      head: 'head_commit',
-      base: 'base',
-      git_url: 'https://github.com/foo/bar',
-      git_url_userinfo: 'user:secret',
-    }
-    with_runners_options_env(source: source_params) do
-      options = Runners::Options.new(stdout, stderr)
-      assert_instance_of Runners::Options::GitSource, options.source
-      assert_equal source_params.merge(refspec: nil), options.source.to_h
+  def test_options_git_source_without_refspec
+    with_runners_options_env(source: source_params.tap { _1.delete(:refspec) }) do
+      source = Runners::Options.new(stdout, stderr).source
+      assert_equal "e07dc104", source.head
+      assert_equal "a7c6b27c", source.base
+      assert_equal "https://github.com/foo/bar", source.git_url
+      assert_equal "user:secret", source.git_url_userinfo
+      assert_empty source.refspec
     end
   end
 
-  def test_options_with_ssh_key
-    with_runners_options_env(ssh_key: 'ssh', source: new_source) do
-      options = Runners::Options.new(stdout, stderr)
-      assert_equal 'ssh', options.ssh_key
+  def test_ssh_key
+    with_runners_options_env(ssh_key: 'ssh', source: source_params) do
+      assert_equal 'ssh', Runners::Options.new(stdout, stderr).ssh_key
     end
   end
 
-  def test_options_without_ssh_key
-    with_runners_options_env(ssh_key: nil, source: new_source) do
-      options = Runners::Options.new(stdout, stderr)
-      assert_nil options.ssh_key
+  def test_ssh_key_nil
+    with_runners_options_env(ssh_key: nil, source: source_params) do
+      assert_nil Runners::Options.new(stdout, stderr).ssh_key
     end
   end
 
-  def test_options_with_outputs
-    with_runners_options_env(outputs: %w[stdout stderr], source: new_source) do
-      options = Runners::Options.new(stdout, stderr)
-      assert_instance_of(Runners::IO, options.io)
-      assert_equal [stdout, stderr], options.io.ios
+  def test_io
+    with_runners_options_env(outputs: %w[stdout stderr], source: source_params) do
+      io = Runners::Options.new(stdout, stderr).io
+      assert_equal [stdout, stderr], io.ios
     end
   end
 
-  def test_options_with_outputs_s3_url
+  def test_io_with_s3
     with_runners_options_env(outputs: %w[stdout s3://bucket/abc], source: new_source) do
-      s3_mock = Object.new
-      stub(s3_mock).write
-      stub(s3_mock).flush
-      stub(s3_mock).flush!
-      mock(Runners::IO::AwsS3).new("s3://bucket/abc", endpoint: nil) { s3_mock }
-      mock.proxy(Runners::IO).new(stdout, s3_mock)
-
-      options = Runners::Options.new(stdout, stderr)
-      assert_instance_of(Runners::IO, options.io)
-      assert_equal [stdout, s3_mock], options.io.ios
+      io = Runners::Options.new(stdout, stderr).io
+      assert_equal 2, io.ios.size
+      assert_equal stdout, io.ios[0]
+      assert_instance_of Runners::IO::AwsS3, io.ios[1]
+      assert_equal "s3://bucket/abc", io.ios[1].uri
     end
   end
 
-  def test_options_without_outputs
+  def test_io_nil
     with_runners_options_env(outputs: nil, source: new_source) do
-      options = Runners::Options.new(stdout, stderr)
-      assert_instance_of(Runners::IO, options.io)
-      assert_equal [stdout], options.io.ios
+      io = Runners::Options.new(stdout, stderr).io
+      assert_equal [stdout], io.ios
     end
   end
+
+  def test_invalid_outputs
+    with_runners_options_env(outputs: ["foo"], source: new_source) do
+      error = assert_raises(ArgumentError) { Runners::Options.new(stdout, stderr) }
+      assert_equal 'Invalid output option: `"foo"`', error.message
+    end
+  end
+
+  private
 
   def stdout
     @stdout ||= StringIO.new
@@ -111,5 +102,15 @@ class OptionsTest < Minitest::Test
 
   def stderr
     @stderr ||= StringIO.new
+  end
+
+  def source_params
+    {
+      head: 'e07dc104',
+      base: 'a7c6b27c',
+      git_url: 'https://github.com/foo/bar',
+      git_url_userinfo: 'user:secret',
+      refspec: '+refs/pull/1234/head:refs/remotes/pull/1234/head',
+    }
   end
 end
