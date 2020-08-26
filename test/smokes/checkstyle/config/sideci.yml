@@ -6,4 +6,5 @@ linter:
       - vendor
     exclude:
       - vendor/foo
-      - src/Ignore.java
+      - { string: src/Ignore.java }
+      - { pattern: "Fo+" }
