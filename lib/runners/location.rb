@@ -35,7 +35,7 @@ module Runners
     end
 
     def to_s
-      "{ start_line: #{start_line.inspect}, start_column: #{start_column.inspect}, end_line: #{end_line.inspect}, end_column: #{end_column.inspect} }"
+      "{ start_line=#{start_line.inspect}, start_column=#{start_column.inspect}, end_line=#{end_line.inspect}, end_column=#{end_column.inspect} }"
     end
   end
 end

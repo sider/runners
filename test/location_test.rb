@@ -20,11 +20,11 @@ class LocationTest < Minitest::Test
 
   def test_to_s
     assert_equal(
-      "{ start_line: 1, start_column: 2, end_line: 3, end_column: 4 }",
+      "{ start_line=1, start_column=2, end_line=3, end_column=4 }",
       Location.new(start_line: 1, start_column: 2, end_line: 3, end_column: 4).to_s,
     )
     assert_equal(
-      "{ start_line: 1, start_column: nil, end_line: nil, end_column: nil }",
+      "{ start_line=1, start_column=nil, end_line=nil, end_column=nil }",
       Location.new(start_line: 1).to_s,
     )
   end
