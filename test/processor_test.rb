@@ -1,4 +1,4 @@
-require_relative "test_helper"
+require "test_helper"
 
 class ProcessorTest < Minitest::Test
   include TestHelper
@@ -32,20 +32,25 @@ class ProcessorTest < Minitest::Test
 
   def test_capture3_env_setup
     with_workspace do |workspace|
-      mock(Open3).capture3({"RUBYOPT" => nil, "GIT_SSH" => (workspace.working_dir / "id_rsa").to_s},
-                           "ls",
-                           chdir: workspace.working_dir.to_s, stdin_data: nil) do
-        status = Process::Status.allocate
+      mock_status = Minitest::Mock.new
+      mock_status.expect :success?, false
+      mock_status.expect :exited?, true
+      mock_status.expect :exitstatus, 3
 
-        def status.success?; false end
-        def status.exited?; true end
-        def status.exitstatus; 3 end
+      mock_capture3 = Minitest::Mock.new
+      mock_capture3.expect :call, ["", "", mock_status], [
+        { "RUBYOPT" => nil, "GIT_SSH" => (workspace.working_dir / "id_rsa").to_s },
+        "ls",
+        chdir: workspace.working_dir.to_s, stdin_data: nil
+      ]
 
-        ["", "", status]
+      Open3.stub :capture3, mock_capture3 do
+        processor = new_processor(workspace: workspace, git_ssh_path: (workspace.working_dir / "id_rsa"))
+        processor.capture3_trace("ls")
+
+        assert_mock mock_status
+        assert_mock mock_capture3
       end
-
-      processor = new_processor(workspace: workspace, git_ssh_path: (workspace.working_dir / "id_rsa"))
-      processor.capture3_trace("ls")
     end
   end
 
@@ -201,7 +206,9 @@ class ProcessorTest < Minitest::Test
     with_workspace do |workspace|
       processor = new_processor(workspace: workspace)
 
-      stub(processor).analyzer_version { '1.0.0' }
+      def processor.analyzer_version
+        '1.0.0'
+      end
 
       processor.add_warning_if_deprecated_version(minimum: '0.9.9')
       processor.add_warning_if_deprecated_version(minimum: '1.0.0')
@@ -337,31 +344,18 @@ class ProcessorTest < Minitest::Test
       processor = new_processor(workspace: workspace)
 
       # Simulate aborted status
-      stub(Open3).capture3 do
-        status = Process::Status.allocate.tap do |object|
-          def object.success?
-            false
-          end
+      mock_status = Minitest::Mock.new
+      mock_status.expect(:success?, false)
+      mock_status.expect(:exited?, false)
 
-          def object.exited?
-            false
-          end
+      Open3.stub :capture3, ["", "", mock_status] do
+        processor.capture3 "/bin/echo"
 
-          def object.exitstatus
-            nil
-          end
-        end
+        assert_mock mock_status
 
-        ["", "", status]
+        refute trace_writer.writer.find {|hash| hash[:trace] == :status && hash[:status] == 0 }
+        assert trace_writer.writer.find {|hash| hash[:trace] == :error && hash[:message].include?("Process aborted or coredumped:") }
       end
-
-      _, _, status = processor.capture3 "/bin/echo"
-
-      # Returns status, stdout, and stderr
-      assert_instance_of Process::Status, status
-
-      refute trace_writer.writer.find {|hash| hash[:trace] == :status && hash[:status] == 0 }
-      assert trace_writer.writer.find {|hash| hash[:trace] == :error && hash[:message] =~ /Process aborted or coredumped:/ }
     end
   end
 
@@ -403,34 +397,40 @@ class ProcessorTest < Minitest::Test
     with_workspace do |workspace|
       processor = new_processor(workspace: workspace)
 
-      mock(processor).capture3!("eslint", "--version") { ["1.2.3", ""] }
-      assert_equal "1.2.3", processor.analyzer_version
+      processor.stub :capture3!, ["1.2.3", ""] do
+        assert_equal "1.2.3", processor.analyzer_version
+      end
     end
   end
 
-  def test_extract_version!
+  def test_extract_version
     with_workspace do |workspace|
       processor = new_processor(workspace: workspace)
 
       # from stdout
-      mock(processor).capture3!("foo", "--version") { ["Foo v10.20.1", ""] }
-      assert_equal "10.20.1", processor.extract_version!("foo")
+      processor.stub :capture3!, ["Foo v10.20.1", ""] do
+        assert_equal "10.20.1", processor.extract_version!("foo")
+      end
 
       # from stderr
-      mock(processor).capture3!("foo", "bar", "version") { ["", "7.8.20 version\n"] }
-      assert_equal "7.8.20", processor.extract_version!("foo", ["bar", "version"])
+      processor.stub :capture3!, ["", "7.8.20 version\n"] do
+        assert_equal "7.8.20", processor.extract_version!("foo", ["bar", "version"])
+      end
 
       # non semver
-      mock(processor).capture3!("foo", "--version") { ["Foo 1.2", ""] }
-      assert_equal "1.2", processor.extract_version!("foo")
+      processor.stub :capture3!, ["Foo 1.2", ""] do
+        assert_equal "1.2", processor.extract_version!("foo")
+      end
 
       # change pattern
-      mock(processor).capture3!("foo", "bar", "-v") { ["ver 1.2", ""] }
-      assert_equal "1.2", processor.extract_version!("foo", ["bar", "-v"], pattern: /ver (\d+.\d+)\b/)
+      processor.stub :capture3!, ["ver 1.2", ""] do
+        assert_equal "1.2", processor.extract_version!("foo", ["bar", "-v"], pattern: /ver (\d+.\d+)\b/)
+      end
 
       # receive array command
-      mock(processor).capture3!("foo", "bar", "--version") { ["v1.2.3", ""] }
-      assert_equal "1.2.3", processor.extract_version!(["foo", "bar"])
+      processor.stub :capture3!, ["v1.2.3", ""] do
+        assert_equal "1.2.3", processor.extract_version!(["foo", "bar"])
+      end
     end
   end
 
@@ -444,9 +444,10 @@ class ProcessorTest < Minitest::Test
       error = assert_raises(ArgumentError) { processor.extract_version!([], nil) }
       assert_equal "Unspecified command", error.message
 
-      mock(processor).capture3!("foo", "-v") { ["no version", ""] }
-      error = assert_raises(ArgumentError) { processor.extract_version!("foo", "-v") }
-      assert_equal "Not found version from the command `foo -v`", error.message
+      processor.stub :capture3!, ["no version", ""] do
+        error = assert_raises(ArgumentError) { processor.extract_version!("foo", "-v") }
+        assert_equal "Not found version from the command `foo -v`", error.message
+      end
     end
   end
 

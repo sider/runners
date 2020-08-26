@@ -34,7 +34,9 @@ jobs:
           gem install bundler --no-document
           bundle config set --local path vendor/bundle
           bundle install --jobs 4 --retry 3
-      - run: bundle exec rake test TESTOPTS='--verbose'
+      - run: bundle exec rake test
+        env:
+          TESTOPTS: --verbose
       - run: bundle exec rake readme:generate
 
   timeout_test:

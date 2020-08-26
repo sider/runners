@@ -1,4 +1,4 @@
-require_relative "test_helper"
+require "test_helper"
 
 class IssueTest < Minitest::Test
   include TestHelper
@@ -120,17 +120,17 @@ class IssueTest < Minitest::Test
       schema: s.object,
     )
     with_workspace do |workspace|
-      mock(workspace).range_git_blame_info(issue.path.to_s, issue.location.start_line, issue.location.start_line) do
-        [
-          GitBlameInfo.new(
-            commit: "abe1cfc294c8d39de7484954bf8c3d7792fd8ad1",
-            original_line: 137,
-            final_line: 137,
-            line_hash: "c57a7c8a63aa22b9aa40625f019fe097c3a23ab8",
-          ),
-        ]
+      return_value = [
+        GitBlameInfo.new(
+          commit: "abe1cfc294c8d39de7484954bf8c3d7792fd8ad1",
+          original_line: 137,
+          final_line: 137,
+          line_hash: "c57a7c8a63aa22b9aa40625f019fe097c3a23ab8",
+        ),
+      ]
+      workspace.stub :range_git_blame_info, return_value do
+        issue.add_git_blame_info(workspace)
       end
-      issue.add_git_blame_info(workspace)
     end
 
     assert_equal({

@@ -1,4 +1,4 @@
-require_relative 'test_helper'
+require 'test_helper'
 
 class RubyTest < Minitest::Test
   include TestHelper
@@ -821,27 +821,21 @@ EOF
   def test_installed_gem_versions
     with_workspace do |workspace|
       processor = new_processor(workspace: workspace)
-      mock(processor).capture3!("gem", "list", "--quiet", "--exact", "rubocop", "meowcop") do
-        <<~OUTPUT
-          rubocop (0.75.1, 0.75.0)
-          meowcop (2.4.0)
-        OUTPUT
-      end
-      assert_equal({ "rubocop" => ["0.75.1", "0.75.0"], "meowcop" => ["2.4.0"] },
-                   processor.installed_gem_versions("rubocop", "meowcop"))
 
-      mock(processor).capture3!("gem", "list", "--quiet", "--exact", "foo") { "" }
-      assert_raises(RuntimeError) { processor.installed_gem_versions("foo") }.tap do |error|
+      processor.stub :capture3!, "rubocop (0.75.1, 0.75.0)\nmeowcop (2.4.0)\n" do
+        assert_equal({ "rubocop" => ["0.75.1", "0.75.0"], "meowcop" => ["2.4.0"] },
+                     processor.installed_gem_versions("rubocop", "meowcop"))
+      end
+
+      processor.stub :capture3!, "" do
+        error = assert_raises(RuntimeError) { processor.installed_gem_versions("foo") }
         assert_equal 'Not found installed gem "foo"', error.message
       end
 
-      mock(processor).capture3!("gem", "list", "--quiet", "--exact", "foo", "meowcop") do
-        <<~OUTPUT
-          meowcop (2.4.0)
-        OUTPUT
+      processor.stub :capture3!, "meowcop (2.4.0)\n" do
+        assert_equal({ "meowcop" => ["2.4.0"] },
+                     processor.installed_gem_versions("foo", "meowcop", exception: false))
       end
-      assert_equal({ "meowcop" => ["2.4.0"] },
-                   processor.installed_gem_versions("foo", "meowcop", exception: false))
     end
   end
 
@@ -849,25 +843,21 @@ EOF
     with_workspace do |workspace|
       processor = new_processor(workspace: workspace)
 
-      mock(processor).analyzer_bin { "rubocop" }
-      mock(processor).capture3!("gem", "list", "--quiet", "--exact", "rubocop").twice do
-        <<~OUTPUT
-          rubocop (0.75.1, 0.75.0)
-        OUTPUT
+      def processor.analyzer_bin
+        "rubocop"
       end
-      assert_equal [Spec.new(name: "rubocop", version: ["0.75.1", "0.75.0"])], processor.default_gem_specs
-      assert_equal [Spec.new(name: "rubocop", version: ["0.75.1", "0.75.0"])], processor.default_gem_specs("rubocop")
 
-      mock(processor).capture3!("gem", "list", "--quiet", "--exact", "foo", "bar") do
-        <<~OUTPUT
-          foo (1.2.3)
-          bar (4.5.6)
-        OUTPUT
+      processor.stub :capture3!, "rubocop (0.75.1, 0.75.0)\n" do
+        assert_equal [Spec.new(name: "rubocop", version: ["0.75.1", "0.75.0"])], processor.default_gem_specs
+        assert_equal [Spec.new(name: "rubocop", version: ["0.75.1", "0.75.0"])], processor.default_gem_specs("rubocop")
       end
-      assert_equal [
-        Spec.new(name: "foo", version: ["1.2.3"]),
-        Spec.new(name: "bar", version: ["4.5.6"]),
-      ], processor.default_gem_specs("foo", "bar")
+
+      processor.stub :capture3!, "foo (1.2.3)\nbar (4.5.6)\n" do
+        assert_equal [
+          Spec.new(name: "foo", version: ["1.2.3"]),
+          Spec.new(name: "bar", version: ["4.5.6"]),
+        ], processor.default_gem_specs("foo", "bar")
+      end
     end
   end
 end

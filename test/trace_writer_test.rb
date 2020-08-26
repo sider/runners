@@ -43,11 +43,12 @@ class TraceWriterTest < Minitest::Test
       Time.utc(2001, 1, 1, 0, 0, 0),
       Time.utc(2001, 1, 1, 0, 1, 0),
     ]
-    stub(writer).now { return_values.shift }
-    writer.message("Hello", recorded_at: now) { "noop" }
+    writer.stub :now, ->() { return_values.shift } do
+      writer.message("Hello", recorded_at: now) { "noop" }
 
-    assert_equal [{ trace: :message, message: "Hello", recorded_at: "2017-08-01T22:34:51.200Z", truncated: false, duration_in_ms: 0 },
-                  { trace: :message, message: "-> 60.0s", recorded_at: "2017-08-01T22:35:51.200Z", truncated: false, duration_in_ms: 60000 }], writer.writer
+      assert_equal [{ trace: :message, message: "Hello", recorded_at: "2017-08-01T22:34:51.200Z", truncated: false, duration_in_ms: 0 },
+                    { trace: :message, message: "-> 60.0s", recorded_at: "2017-08-01T22:35:51.200Z", truncated: false, duration_in_ms: 60000 }], writer.writer
+    end
   end
 
   def test_message_with_long_content

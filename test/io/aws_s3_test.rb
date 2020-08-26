@@ -1,10 +1,10 @@
-require_relative "../test_helper"
+require "test_helper"
 
 class AwsS3Test < Minitest::Test
   include TestHelper
 
-  def setup
-    stub(Runners::IO::AwsS3).stub? { true }
+  def run
+    Runners::IO::AwsS3.stub(:stub?, true) { super }
   end
 
   def test_initialize
@@ -48,7 +48,6 @@ class AwsS3Test < Minitest::Test
   end
 
   def test_write_flush
-    mock(Aws::S3::Client).new(is_a(Hash))
     io = Runners::IO::AwsS3.new('s3://a_bucket/an_object')
     io.write('abc')
     io.write('!!!')
@@ -57,7 +56,6 @@ class AwsS3Test < Minitest::Test
   end
 
   def test_should_flush?
-    mock(Aws::S3::Client).new(is_a(Hash))
     io = Runners::IO::AwsS3.new('s3://a_bucket/an_object')
 
     2.times { io.write("a") }
@@ -70,13 +68,14 @@ class AwsS3Test < Minitest::Test
   end
 
   def test_flush!
-    io = Runners::IO::AwsS3.new('s3://a_bucket_name/an_object')
-    mock(io.client).put_object(bucket: 'a_bucket_name', key: 'an_object', body: instance_of(Tempfile))
+    io = Runners::IO::AwsS3.new('s3://a_bucket/an_object')
 
-    io.write("a")
-    assert_equal 1, io.written_items
+    io.client.stub :put_object, nil do
+      io.write("a")
+      assert_equal 1, io.written_items
 
-    io.flush!
-    assert_equal 0, io.written_items
+      io.flush!
+      assert_equal 0, io.written_items
+    end
   end
 end

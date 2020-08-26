@@ -1,10 +1,7 @@
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'runners'
+require_relative '../lib/runners'
 
 require 'minitest/autorun'
 require "unification_assertion"
-require "pp"
-require "rr"
 
 module TestHelper
   include UnificationAssertion

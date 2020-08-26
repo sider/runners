@@ -1,6 +1,5 @@
 require "minitest"
 require "unification_assertion"
-require "pp"
 require 'parallel'
 require "amazing_print"
 require "rainbow"
@@ -9,8 +8,6 @@ module Runners
   module Testing
     class Smoke
       include Minitest::Assertions
-      include UnificationAssertion
-      include Tmpdir
 
       class TestParams
         attr_reader :name, :pattern, :offline
@@ -25,6 +22,10 @@ module Runners
           self.class == other.class && name == other.name
         end
         alias eql? ==
+
+        def hash
+          name.hash
+        end
       end
 
       attr_reader :argv
@@ -124,7 +125,8 @@ module Runners
 
       def unify_result(result, pattern, out)
         ok = true
-        unify [[result, pattern, ""]] do |a, b, path|
+
+        UnificationAssertion.unify [[result, pattern, ""]] do |a, b, path|
           case
           when (a.is_a?(Regexp) && !b.is_a?(Regexp)) || (!a.is_a?(Regexp) && b.is_a?(Regexp))
             unless a.match?(b)

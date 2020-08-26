@@ -2,8 +2,6 @@ module Runners
   class Workspace
     include Tmpdir
 
-    class DownloadError < SystemError; end
-
     def self.prepare(options:, working_dir:, trace_writer:)
       Workspace::Git.new(options: options, working_dir: working_dir, trace_writer: trace_writer)
     end
