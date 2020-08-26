@@ -6,5 +6,5 @@ class Runners::GitBlameInfo
 
   def self.parse: (String) -> Array<instance>
   def initialize: (commit: String, original_line: Integer, final_line: Integer, line_hash: String) -> any
-  def to_h: () -> Hash<Symbol, any>
+  def as_json: () -> Hash<Symbol, any>
 end

@@ -55,7 +55,7 @@ cb1af575f65f7cc49668b891fb34a5df692d3a0e 14 8
     )
   end
 
-  def test_to_h
+  def test_as_json
     info = GitBlameInfo.new(commit: "cb1af575f65f7cc49668b891fb34a5df692d3a0e", original_line: 13, final_line: 7, line_hash: "a5f52a5e0847c750ab9f24cc5ee4e8aa0b6dfc1d")
     assert_equal(
       {
@@ -64,7 +64,7 @@ cb1af575f65f7cc49668b891fb34a5df692d3a0e 14 8
         final_line: 7,
         line_hash: "a5f52a5e0847c750ab9f24cc5ee4e8aa0b6dfc1d",
       },
-      info.to_h,
+      info.as_json,
     )
   end
 end
