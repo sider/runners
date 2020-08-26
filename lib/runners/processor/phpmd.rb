@@ -121,7 +121,7 @@ module Runners
       end
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        xml_doc.root.each_element('file') do |file|
+        xml_root.each_element('file') do |file|
           path = relative_path(file[:name])
 
           file.each_element('violation') do |violation|
