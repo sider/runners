@@ -41,8 +41,7 @@ module Runners
       string = filter.mask(message.strip)
 
       if string.size > limit
-        # @type var sliced: String
-        sliced = _ = string.slice(0, limit)
+        sliced = string.slice(0, limit) or raise "Slicing failed, maybe wrong limit `#{limit.inspect}`"
         string = sliced + omission
         all_truncated = true
       end
@@ -100,8 +99,7 @@ module Runners
       string = string.dup
 
       while not string.empty?
-        # @var sliced: String
-        sliced = _ = string.slice!(0, size)
+        sliced = string.slice!(0, size) or raise ArgumentError, "Slicing failed, maybe wrong size `#{size.inspect}`"
         truncated = sliced.size == size
         yield sliced, truncated
       end
