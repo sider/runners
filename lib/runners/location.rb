@@ -6,10 +6,10 @@ module Runners
     attr_reader :end_column
 
     def initialize(start_line:, start_column: nil, end_line: nil, end_column: nil)
-      @start_line = start_line ? Integer(start_line) : nil
-      @start_column = start_column ? Integer(start_column) : nil
-      @end_line = end_line ? Integer(end_line) : nil
-      @end_column = end_column ? Integer(end_column) : nil
+      @start_line = start_line ? Integer(_ = start_line) : nil
+      @start_column = start_column ? Integer(_ = start_column) : nil
+      @end_line = end_line ? Integer(_ = end_line) : nil
+      @end_column = end_column ? Integer(_ = end_column) : nil
     end
 
     def ==(other)
