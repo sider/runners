@@ -2,8 +2,9 @@ module Runners
   class Processor::Brakeman < Processor
     include Ruby
 
-    Schema = StrongJSON.new do
-      let :runner_config, Schema::BaseConfig.ruby
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+      let :runner_config, Runners::Schema::BaseConfig.ruby
 
       let :issue, object(
         severity: string,

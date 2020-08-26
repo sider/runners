@@ -23,7 +23,7 @@ module Runners
                        use_local: bool) -> void
       def gemfile_path: () -> Pathname
       def lockfile_path: () -> Pathname
-      def install!: { (Hash[String, String]) -> untyped } -> void
+      def install!: [X] { (Hash[String, String]) -> X } -> X
       def gemfile_content: () -> String
 
       private

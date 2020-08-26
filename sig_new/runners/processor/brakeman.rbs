@@ -2,7 +2,10 @@ module Runners
   class Processor::Brakeman < Processor
     include Ruby
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[Schema::ruby_runner_config]
+    end
+    Schema: SchemaClass
 
     CONSTRAINTS: Hash[String, Array[String]]
   end

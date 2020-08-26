@@ -38,9 +38,13 @@ module Runners
     def current_dir: () -> Pathname
 
     def capture3: (String, *String, **capture3_options) -> [String, String, Process::Status]
+                | (*String, **capture3_options) -> [String, String, Process::Status]
     def capture3!: (String, *String, **capture3_options) -> [String, String]
+                 | (*String, **capture3_options) -> [String, String]
     def capture3_with_retry!: (String, *String, ?tries: Integer) -> [String, String]
+                            | (*String, ?tries: Integer) -> [String, String]
     def capture3_trace: (String, *String, **capture3_options) -> [String, String, Process::Status]
+                      | (*String, **capture3_options) -> [String, String, Process::Status]
 
     def push_env_hash: [X] (Hash[String, String?]) { () -> X } -> X
     def env_hash: () -> Hash[String, String?]
@@ -67,7 +71,8 @@ module Runners
     def report_file_exist?: () -> bool
     def read_report_file: (?String) -> String
     def read_report_xml: (?String) -> REXML::Document
-    def read_report_json: [X] (?String) { () -> X } -> (Hash[Symbol, untyped] | X)
+    def read_report_json: [X] (?String) { () -> X } -> X
+                        | (?String) -> Hash[Symbol, untyped]
     def comma_separated_list: (String | Array[String] | nil) -> String?
   end
 end
