@@ -1,5 +1,5 @@
 # https://github.com/soutaro/unification_assertion
 
 module UnificationAssertion
-  def unify: (untyped) { (untyped) -> untyped } -> untyped
+  def self.unify: (untyped) { (untyped) -> untyped } -> untyped
 end
