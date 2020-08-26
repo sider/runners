@@ -8,6 +8,7 @@ module Runners
     end
     Schema: SchemaClass
 
+    DEFAULT_TARGET: String
     OFFICIAL_RULE_NAMESPACE: String
 
     private
@@ -16,9 +17,7 @@ module Runners
     def normalize_id: (String) -> String
     def build_links: (String) -> Array[String]
     def config_file: () -> String
-    def check_directory: () -> Array[String]
     def excluded_directories: () -> Array[Hash[Symbol, String]]
     def ignored_severities: () -> Array[String]
-    def array: [X] (untyped) -> Array[X]
   end
 end
