@@ -28,6 +28,11 @@ module Runners
         final_line == other.final_line &&
         line_hash == other.line_hash
     end
+    alias eql? ==
+
+    def hash
+      commit.hash ^ original_line.hash ^ final_line.hash ^ line_hash.hash
+    end
 
     def as_json
       {
