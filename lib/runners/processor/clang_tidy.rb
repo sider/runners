@@ -49,7 +49,8 @@ module Runners
       # issue format
       # <path>:<line>:<column>: <severity>: <message> [<id>]
       pattern = /^(.+):(\d+):(\d+): ([^:]+): (.+) \[([^\[]+)\]$/
-      stdout.scan(pattern) do |path, line, column, severity, message, id|
+      stdout.scan(pattern) do |match|
+        path, line, column, severity, message, id = match
         yield Issue.new(
           path: relative_path(path),
           location: Location.new(start_line: line, start_column: column),

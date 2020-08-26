@@ -4,6 +4,7 @@ module Runners
 
     class SchemaClass < StrongJSON
       def runner_config: () -> StrongJSON::Type::Object[Schema::java_runner_config]
+      def issue: () -> StrongJSON::Type::Object[untyped]
     end
     Schema: SchemaClass
 
@@ -11,13 +12,13 @@ module Runners
 
     private
     def checkstyle_args: () -> Array[String]
-    def construct_result: (REXML::Document) { (Issue) -> untyped } -> void
-    def normalize_id: (untyped rule_id) -> untyped
-    def build_links: (untyped rule_id) -> Array[String]
-    def config_file: () -> untyped
-    def check_directory: () -> untyped
-    def excluded_directories: () -> untyped
-    def ignored_severities: () -> untyped
-    def array: (untyped value) -> untyped
+    def construct_result: (REXML::Element) { (Issue) -> untyped } -> void
+    def normalize_id: (String) -> String
+    def build_links: (String) -> Array[String]
+    def config_file: () -> String
+    def check_directory: () -> Array[String]
+    def excluded_directories: () -> Array[Hash[Symbol, String]]
+    def ignored_severities: () -> Array[String]
+    def array: [X] (untyped) -> Array[X]
   end
 end
