@@ -102,7 +102,7 @@ module Runners
     end
 
     def parse_output
-      read_report_xml.root.each_element("file") do |file|
+      read_report_xml.each_element("file") do |file|
         file.each_element do |error|
           case error.name
           when "error"

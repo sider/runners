@@ -103,7 +103,7 @@ module Runners
       end
 
       begin
-        xml_doc = read_report_xml
+        xml_root = read_report_xml
       rescue REXML::ParseException => exn
         trace_writer.error exn.message
         return Results::Failure.new(guid: guid, analyzer: analyzer,
@@ -112,7 +112,7 @@ module Runners
 
       change_paths = changes.changed_paths
       errors = []
-      xml_doc.root.each_element('error') do |error|
+      xml_root.each_element('error') do |error|
         errors << error[:msg] if change_paths.include?(relative_path(error[:filename]))
       end
       unless errors.empty?
