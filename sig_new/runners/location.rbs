@@ -1,12 +1,5 @@
 module Runners
   class Location
-    class InvalidLocationError < StandardError
-      attr_reader location: Location
-      def initialize: (location: Location) -> void
-    end
-
-    def self.from_json: (untyped) -> Location
-
     attr_reader start_line: Integer?
     attr_reader start_column: Integer?
     attr_reader end_line: Integer?
@@ -17,6 +10,6 @@ module Runners
                      ?end_line: Integer | String | nil,
                      ?end_column: Integer | String | nil,
                     ) -> void
-    def as_json: -> Hash[(:start_line | :start_column | :end_line | :end_column), Integer]
+    def as_json: -> Hash[Symbol, Integer]
   end
 end

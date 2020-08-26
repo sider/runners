@@ -1,11 +1,11 @@
 class Runners::GitBlameInfo
   def self.parse: (String) -> Array[instance]
 
-attr_reader commit: String
+  attr_reader commit: String
   attr_reader original_line: Integer
   attr_reader final_line: Integer
   attr_reader line_hash: String
 
   def initialize: (commit: String, original_line: Integer, final_line: Integer, line_hash: String) -> void
-  def to_h: () -> Hash[Symbol, String | Integer]
+  def as_json: () -> Hash[Symbol, String | Integer]
 end

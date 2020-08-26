@@ -9,5 +9,5 @@ module Bundler
     def specs: -> Array[LazySpecification]
   end
 
-  def self.with_unbundled_env: { () -> untyped } -> void
+  def self.with_unbundled_env: [X] { () -> X } -> X
 end
