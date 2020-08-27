@@ -113,15 +113,9 @@ module Runners
     end
 
     def php_framework
-      # @type var found: Symbol?
-      found = nil
-      {
-        CakePHP: 'lib/Cake/Core/CakePlugin.php',
-        Symfony: 'app/SymfonyRequirements.php',
-      }.each do |framework, file|
-        found = framework if (current_dir / file).exist?
-      end
-      found
+      return :CakePHP if File.exist? 'lib/Cake/Core/CakePlugin.php'
+      return :Symfony if File.exist? 'app/SymfonyRequirements.php'
+      nil
     end
 
     def run_analyzer
