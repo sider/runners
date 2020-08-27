@@ -2,8 +2,9 @@ module Runners
   class Processor::Coffeelint < Processor
     include Nodejs
 
-    Schema = StrongJSON.new do
-      let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+      let :runner_config, Runners::Schema::BaseConfig.npm.update_fields { |fields|
         fields.merge!({
                         file: string?,
                         # DO NOT ADD ANY OPTIONS in `options` option.
@@ -34,35 +35,18 @@ module Runners
     end
 
     def analyze(_changes)
-      check_runner_config do |options|
-        run_analyzer(options)
-      end
-    end
-
-    private
-
-    def check_runner_config
-      yield file
-    end
-
-    def file
-      file = config_linter[:file] || config_linter.dig(:options, :file) || config_linter.dig(:options, :config)
-      ['--file', "#{file}"] if file
-    end
-
-    def run_analyzer(options)
       # NOTE: CoffeeLint exits with 1 when any issues exist.
-      stdout, stderr, _status = capture3(nodejs_analyzer_bin, '.', '--reporter', 'raw', *options)
+      stdout, stderr, _status = capture3(nodejs_analyzer_bin, '.', '--reporter', 'raw', *config_file)
       return Results::Failure.new(guid: guid, message: stderr, analyzer: analyzer) unless stderr.empty?
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
         JSON.parse(stdout, symbolize_names: true).each do |file, issues|
+          path = relative_path(file.to_s)
           issues.each do |issue|
-            # TODO: Use Structured issue
             message = issue[:message].dup
             message << " #{issue[:context]}" if issue[:context]
             result.add_issue Issue.new(
-              path: relative_path(file.to_s),
+              path: path,
               location: Location.new(start_line: issue[:lineNumber]),
               id: issue[:rule] || issue[:name],
               message: message,
@@ -70,6 +54,13 @@ module Runners
           end
         end
       end
+    end
+
+    private
+
+    def config_file
+      file = config_linter[:file] || config_linter.dig(:options, :file) || config_linter.dig(:options, :config)
+      file ? ['--file', file] : []
     end
   end
 end
