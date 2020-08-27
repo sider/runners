@@ -100,6 +100,7 @@ module Runners
         analyzer_bin,
         "--quiet",
         "--xml",
+        "--output-file=#{report_file}",
         *ignore,
         *project,
         *language,
@@ -120,22 +121,23 @@ module Runners
         return Results::Failure.new(guid: guid, analyzer: analyzer, message: message)
       end
 
-      xml = REXML::Document.new(stderr).root
-
-      unless xml
-        return Results::Failure.new(guid: guid, analyzer: analyzer, message: "Invalid XML output!")
-      end
+      xml_root =
+        begin
+          read_report_xml
+        rescue InvalidXML
+          return Results::Failure.new(guid: guid, analyzer: analyzer, message: "Invalid XML output")
+        end
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        parse_result(xml) do |issue|
+        parse_result(xml_root) do |issue|
           result.add_issue issue
         end
       end
     end
 
     # @see https://github.com/danmar/cppcheck/blob/master/man/manual.md#xml-output
-    def parse_result(xml)
-      xml.each_element("errors/error") do |err|
+    def parse_result(xml_root)
+      xml_root.each_element("errors/error") do |err|
         id = err[:id] or raise "Required id: #{err.inspect}"
         msg = err[:msg] or raise "Required msg: #{err.inspect}"
 
