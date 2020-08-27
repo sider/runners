@@ -3,8 +3,9 @@ module Runners
     include Java
     include Kotlin
 
-    Schema = StrongJSON.new do
-      let :runner_config, Schema::BaseConfig.java.update_fields { |fields|
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+      let :runner_config, Runners::Schema::BaseConfig.java.update_fields { |fields|
         fields.merge!({
           baseline: string?,
           config: enum?(string, array(string)),
@@ -35,12 +36,7 @@ module Runners
 
     def analyze(changes)
       delete_unchanged_files changes, only: kotlin_file_extensions
-      run_analyzer
-    end
 
-    private
-
-    def run_analyzer
       _stdout, stderr, status = capture3(
         analyzer_bin,
         *cli_baseline,
@@ -57,17 +53,15 @@ module Runners
       # @see https://detekt.github.io/detekt/cli.html
       case status.exitstatus
       when 0, 2
-        Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-          parse_output do |issue|
-            result.add_issue issue
-          end
-        end
+        Results::Success.new(guid: guid, analyzer: analyzer, issues: parse_output)
       when 3 # invalid configuration
         Results::Failure.new(guid: guid, message: "Your detekt configuration is invalid", analyzer: analyzer)
       else
         raise stderr
       end
     end
+
+    private
 
     def cli_baseline
       config_linter[:baseline].then { |value| value ? ["--baseline", value] : [] }
@@ -102,23 +96,34 @@ module Runners
     end
 
     def parse_output
+      issues = []
+
       read_report_xml.each_element("file") do |file|
+        filename = file[:name] or raise "Required name: #{file.inspect}"
+        path = relative_path(filename)
+
         file.each_element do |error|
+          id = error[:source] or raise "Required ID: #{error.inspect}"
+          message = error[:message] or raise "Required message: #{error.inspect}"
+
           case error.name
           when "error"
-            yield Issue.new(
-              path: relative_path(file[:name]),
+            issues << Issue.new(
+              path: path,
               location: Location.new(start_line: error[:line], start_column: error[:column]),
-              id: error[:source],
-              message: error[:message],
+              id: id,
+              message: message,
               object: { severity: error[:severity] },
               schema: Schema.issue
             )
           else
-            add_warning error.text, file: file[:name]
+            warning = error.text or raise "Required text: #{error.inspect}"
+            add_warning warning, file: path.to_path
           end
         end
       end
+
+      issues
     end
   end
 end

@@ -3,18 +3,21 @@ module Runners
     include Java
     include Kotlin
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[Schema::java_runner_config]
+      def issue: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
     private
-    def run_analyzer: () -> untyped
-    def cli_baseline: () -> untyped
-    def cli_config: () -> untyped
-    def cli_config_resource: () -> untyped
-    def cli_disable_default_rulesets: () -> untyped
-    def cli_excludes: () -> untyped
-    def cli_includes: () -> untyped
-    def cli_input: () -> untyped
+    def cli_baseline: () -> Array[String]
+    def cli_config: () -> Array[String]
+    def cli_config_resource: () -> Array[String]
+    def cli_disable_default_rulesets: () -> Array[String]
+    def cli_excludes: () -> Array[String]
+    def cli_includes: () -> Array[String]
+    def cli_input: () -> Array[String]
     def cli_report: () -> Array[String]
-    def parse_output: () { (untyped) -> untyped } -> untyped
+    def parse_output: () -> Array[Issue]
   end
 end
