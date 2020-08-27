@@ -1,12 +1,15 @@
 module Runners
   class Processor::Cpplint < Processor
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[Schema::base_runner_config]
+      def issue: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
     DEFAULT_TARGET: String
 
     private
-    def analyzer_options: () -> untyped
-    def run_analyzer: () -> untyped
-    def parse_result: (untyped xml_doc) { (untyped) -> untyped } -> untyped
+    def analyzer_options: () -> Array[String]
+    def parse_result: (REXML::Element) -> Array[Issue]
   end
 end
