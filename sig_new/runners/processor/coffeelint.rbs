@@ -2,12 +2,14 @@ module Runners
   class Processor::Coffeelint < Processor
     include Nodejs
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[Schema::base_runner_config]
+    end
+    Schema: SchemaClass
+
     CONSTRAINTS: Hash[String, Nodejs::Constraint]
 
     private
-    def check_runner_config: () { (untyped) -> untyped } -> untyped
-    def file: () -> untyped
-    def run_analyzer: (untyped options) -> untyped
+    def config_file: () -> Array[String]
   end
 end
