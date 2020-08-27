@@ -4,6 +4,7 @@ module Runners
 
     class SchemaClass < StrongJSON
       def runner_config: () -> StrongJSON::Type::Object[Schema::base_runner_config]
+      def issue: () -> StrongJSON::Type::Object[untyped]
     end
     Schema: SchemaClass
 
@@ -11,11 +12,19 @@ module Runners
     def additional_options: () -> Array[String]
     def standard_option: () -> String
     def extensions_option: () -> String
-    def encoding_option: () -> String?
-    def ignore_option: () -> String?
+    def encoding_option: () -> Array[String]
+    def ignore_option: () -> Array[String]
     def directory: () -> String
-    def default_sideci_options: () -> Hash[Symbol, untyped]
-    def php_framework: () -> Symbol?
-    def run_analyzer: () -> result
+
+    type default_options_type = {
+      options: {
+        standard: String,
+        extensions: String
+      },
+      dir: String
+    }
+    def default_options: () -> default_options_type
+
+    def php_framework: () -> (:CakePHP | :Symfony | nil)
   end
 end
