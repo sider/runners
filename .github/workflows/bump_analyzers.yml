@@ -18,9 +18,14 @@ jobs:
           gem install bundler --no-document
           bundle config set path vendor/bundle
           bundle install --jobs=4 --retry=3
+      - uses: tibdex/github-app-token@v1
+        id: generate_token
+        with:
+          app_id: ${{ secrets.SIDER_INTERNAL_BOT_APP_ID }}
+          private_key: ${{ secrets.SIDER_INTERNAL_BOT_PRIVATE_KEY }}
       - run: |
           bundle exec rake bump:analyzers
         env:
-          GITHUB_TOKEN: ${{ secrets.SIDERBOT_PERSONAL_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
           GITHUB_AUTHOR_NAME: GitHub Actions
           GITHUB_AUTHOR_EMAIL: actions@github.com
