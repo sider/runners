@@ -2,25 +2,30 @@ module Runners
   class Processor::Eslint < Processor
     include Nodejs
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[Schema::npm_runner_config]
+      def issue: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
+
     CONSTRAINTS: Hash[String, Nodejs::Constraint]
     CUSTOM_FORMATTER: String
     DEFAULT_ESLINT_CONFIG: String
     DEFAULT_TARGET: String
 
     private
-    def target: () -> untyped
-    def eslint_config: () -> untyped
-    def ext: () -> untyped
-    def ignore_path: () -> untyped
-    def ignore_pattern: () -> untyped
-    def no_ignore: () -> untyped
-    def global: () -> untyped
-    def quiet: () -> untyped
-    def normalize_severity: (untyped severity) -> untyped
-    def parse_result: (untyped result) { (untyped) -> untyped } -> untyped
-    def run_analyzer: (?config: untyped? config) -> untyped
-    def no_linting_files?: (untyped stderr) -> untyped
-    def no_eslint_config?: (untyped stderr) -> untyped
+    def target: () -> Array[String]
+    def eslint_config: () -> String?
+    def ext: () -> Array[String]
+    def ignore_path: () -> Array[String]
+    def ignore_pattern: () -> Array[String]
+    def no_ignore: () -> Array[String]
+    def global: () -> Array[String]
+    def quiet: () -> Array[String]
+    def normalize_severity: (Integer) -> String
+    def parse_result: (Array[Hash[Symbol, untyped]]) -> Array[Issue]
+    def run_analyzer: (?config: String?) -> result
+    def no_linting_files?: (String) -> bool
+    def no_eslint_config?: (String) -> bool
   end
 end

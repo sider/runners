@@ -2,7 +2,8 @@ module Runners
   class Processor::Eslint < Processor
     include Nodejs
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
       let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
         fields.merge!({
                         target: enum?(string, array(string)),
@@ -122,11 +123,11 @@ module Runners
 
     # @see https://eslint.org/docs/developer-guide/working-with-custom-formatters#the-results-object
     def parse_result(result)
-      result.each do |issue|
+      result.flat_map do |issue|
         path = relative_path(issue[:filePath])
         # ESLint informs errors as an array if ESLint detects errors in a file.
-        issue[:messages].each do |details|
-          yield Issue.new(
+        issue[:messages].map do |details|
+          Issue.new(
             path: path,
             location: details[:line] ? Location.new(
               start_line: details[:line],
@@ -179,14 +180,12 @@ module Runners
       output_json = report_file_exist? ? read_report_json { nil } : nil
 
       if [0, 1].include?(status.exitstatus) && output_json
-        Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-          parse_result(output_json) { |issue| result.add_issue(issue) }
-        end
+        Results::Success.new(guid: guid, analyzer: analyzer, issues: parse_result(output_json))
       elsif no_linting_files?(stderr)
         Results::Success.new(guid: guid, analyzer: analyzer)
       elsif no_eslint_config?(stderr)
         trace_writer.message "Retrying with the default configuration file because no configuration files were found..."
-        FileUtils.copy(DEFAULT_ESLINT_CONFIG, ".eslintrc.yml")
+        FileUtils.copy_file(DEFAULT_ESLINT_CONFIG, ".eslintrc.yml")
         run_analyzer
       else
         Results::Failure.new(guid: guid, message: stderr.strip, analyzer: analyzer)
