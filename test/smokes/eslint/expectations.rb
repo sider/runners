@@ -155,7 +155,7 @@ s.add_test(
 s.add_test(
   "broken_config",
   type: "failure",
-  message: /Error: ESLint configuration in .eslintrc.yml is invalid:/,
+  message: "The analysis failed due to an unexpected error. See the analysis log for details.",
   analyzer: { name: "ESLint", version: :_ }
 )
 

@@ -159,7 +159,7 @@ s.add_test(
 s.add_test(
   "disable_default_linter_in_yml",
   type: "failure",
-  message: "Analysis failed. See the log for details.",
+  message: "The analysis failed due to an unexpected error. See the analysis log for details.",
   analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
