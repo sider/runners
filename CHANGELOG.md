@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.34.0...HEAD)
 
+- Reconsider `Results::Failure` message [#1459](https://github.com/sider/runners/pull/1459)
+
 ## 0.34.0
 
 [Full diff](https://github.com/sider/runners/compare/0.33.0...0.34.0)
