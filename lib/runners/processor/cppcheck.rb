@@ -1,3 +1,5 @@
+require "etc"
+
 module Runners
   class Processor::Cppcheck < Processor
     include CPlusPlus
@@ -98,6 +100,7 @@ module Runners
     def step_analyzer(*args)
       stdout, stderr, status = capture3(
         analyzer_bin,
+        "-j", Etc.nprocessors.to_s,
         "--quiet",
         "--xml",
         "--output-file=#{report_file}",
