@@ -56,7 +56,7 @@ s.add_test("no_error", type: "success", issues: [], analyzer: { name: "GolangCI-
 s.add_test(
   "failure",
   type: "failure",
-  message: "Analysis failed. See the log for details.",
+  message: "The analysis failed due to an unexpected error. See the analysis log for details.",
   analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 

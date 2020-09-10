@@ -452,7 +452,7 @@ s.add_test(
 s.add_test(
   "unexpected_error",
   type: "failure",
-  message: "cppcheck: Unknown language 'foo' enforced.",
+  message: "The analysis failed due to an unexpected error. See the analysis log for details.",
   analyzer: { name: "Cppcheck", version: default_version }
 )
 
