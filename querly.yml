@@ -109,3 +109,18 @@ rules:
           Integer(result[:line])
     justification:
       - When the use of `.to_i` can make the code more simple
+
+  - id: sider.runners.failure_message
+    pattern: "Results::Failure.new(..., message: _, ...)"
+    message: |
+      Be careful whether the `message` is user-friendly.
+
+      The message set to `Results::Failure` may be shown in the UI.
+      For example, setting the STDERR output as the message may not be user-friendly. (a too long stack trace, etc.)
+    justification:
+      - When setting a user-friendly message.
+    examples:
+      - before: |
+          Results::Failure.new(guid: guid, message: stderr, analyzer: analyzer)
+        after: |
+          Results::Failure.new(guid: guid, analyzer: analyzer)

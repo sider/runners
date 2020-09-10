@@ -30,10 +30,10 @@ module Runners
         if xml_output
           Results::Success.new(guid: guid, analyzer: analyzer, issues: parse_result(xml_output))
         else
-          Results::Failure.new(guid: guid, analyzer: analyzer, message: stderr)
+          Results::Failure.new(guid: guid, analyzer: analyzer)
         end
       else
-        Results::Failure.new(guid: guid, analyzer: analyzer, message: stderr)
+        Results::Failure.new(guid: guid, analyzer: analyzer)
       end
     end
 

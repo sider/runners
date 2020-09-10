@@ -68,8 +68,8 @@ module Runners
         Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
           parse_result(stdout).each { |v| result.add_issue(v) }
         end
-      rescue JSON::ParserError
-        Results::Failure.new(guid: guid, analyzer: analyzer, message: stderr)
+      rescue JSON::ParserError => exn
+        Results::Failure.new(guid: guid, analyzer: analyzer, message: exn.message)
       end
     end
 

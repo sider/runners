@@ -115,10 +115,7 @@ module Runners
       end
 
       unless status.success?
-        message = stdout.strip
-        message = stderr.strip if message.empty?
-        message = "An unexpected error occurred. See the analysis log." if message.empty?
-        return Results::Failure.new(guid: guid, analyzer: analyzer, message: message)
+        return Results::Failure.new(guid: guid, analyzer: analyzer)
       end
 
       xml_root =

@@ -120,8 +120,7 @@ module Runners
       elsif stderr.start_with? "No files specified."
         Results::Success.new(guid: guid, analyzer: analyzer)
       else
-        message = "An unexpected error occurred. Check the log output."
-        Results::Failure.new(guid: guid, message: message, analyzer: analyzer)
+        Results::Failure.new(guid: guid, analyzer: analyzer)
       end
     end
 

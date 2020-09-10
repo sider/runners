@@ -80,7 +80,7 @@ module Runners
           construct_result(xml) { result.add_issue _1 }
         end
       else
-        Results::Failure.new(guid: guid, analyzer: analyzer, message: "Unexpected error occurred. Please see the analysis log.")
+        Results::Failure.new(guid: guid, analyzer: analyzer)
       end
     end
 
