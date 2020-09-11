@@ -37,45 +37,6 @@ s.add_test(
       }
     },
     {
-      id: "ctunullpointer",
-      path: "src/nullpointer.c",
-      location: { start_line: 2, start_column: 6 },
-      message: "Null pointer dereference: q",
-      links: [],
-      object: {
-        severity: "error", verbose: nil, inconclusive: false, cwe: "476", location_info: "Dereferencing argument q that is null"
-      },
-      git_blame_info: {
-        commit: :_, line_hash: "18737ae19d9ba677cc75212276757fefbeff2d5a", original_line: 2, final_line: 2
-      }
-    },
-    {
-      id: "ctunullpointer",
-      path: "src/nullpointer.c",
-      location: { start_line: 6, start_column: 14 },
-      message: "Null pointer dereference: q",
-      links: [],
-      object: {
-        severity: "error", verbose: nil, inconclusive: false, cwe: "476", location_info: "Assignment 'a=0', assigned value is 0"
-      },
-      git_blame_info: {
-        commit: :_, line_hash: "3fa4dc7d4e6657a293c827b3e374636b3ccea575", original_line: 6, final_line: 6
-      }
-    },
-    {
-      id: "ctunullpointer",
-      path: "src/nullpointer.c",
-      location: { start_line: 7, start_column: 6 },
-      message: "Null pointer dereference: q",
-      links: [],
-      object: {
-        severity: "error", verbose: nil, inconclusive: false, cwe: "476", location_info: "Calling function f, 1st argument is null"
-      },
-      git_blame_info: {
-        commit: :_, line_hash: "26d62c425999f29ac2a500ca5913cd47d409d642", original_line: 7, final_line: 7
-      }
-    },
-    {
       id: "invalidContainer",
       path: "src/erase.cpp",
       location: { start_line: 4, start_column: 22 },
@@ -354,19 +315,6 @@ s.add_test(
       git_blame_info: {
         commit: :_, line_hash: "90556cd318a1aaf1aa004d2b6c37189d79f5d3a0", original_line: 4, final_line: 4
       }
-    },
-    {
-      id: "unusedFunction",
-      path: "bad.c",
-      location: { start_line: 1, start_column: 0 },
-      message: "The function 'foo' is never used.",
-      links: [],
-      object: {
-        severity: "style", verbose: nil, inconclusive: false, cwe: "561", location_info: nil
-      },
-      git_blame_info: {
-        commit: :_, line_hash: "aba21ca7df06967d62bb367398a9d2f826c398f9", original_line: 1, final_line: 1
-      }
     }
   ],
   analyzer: { name: "Cppcheck", version: default_version }
@@ -398,6 +346,19 @@ s.add_test(
   "project",
   type: "success",
   issues: [
+    {
+      id: "arrayIndexOutOfBounds",
+      path: "arrayIndexOutOfBounds.c",
+      location: { start_line: 7, start_column: 6 },
+      message: "Array 'a[2]' accessed at index 2, which is out of bounds.",
+      links: [],
+      object: {
+        severity: "error", verbose: nil, inconclusive: false, cwe: "788", location_info: "Array index out of bounds"
+      },
+      git_blame_info: {
+        commit: :_, line_hash: "0385494c4c5930cf676a075a1eff5644b391b1c8", original_line: 7, final_line: 7
+      }
+    },
     {
       id: "zerodiv",
       path: "main.c",
@@ -824,6 +785,19 @@ s.add_test(
     },
     {
       id: "bughuntingDivByZero",
+      path: "src/cpp_sample_2.c++",
+      location: { start_line: 9, start_column: 15 },
+      message: "There is division, cannot determine that there can't be a division by zero.",
+      links: [],
+      object: {
+        severity: "error", verbose: nil, inconclusive: false, cwe: "369", location_info: nil
+      },
+      git_blame_info: {
+        commit: :_, line_hash: "74cc2eab823e61f73b1c85432ea4ecca95512c49", original_line: 9, final_line: 9
+      }
+    },
+    {
+      id: "bughuntingDivByZero",
       path: "src/cpp_sample_3.c++",
       location: { start_line: 11, start_column: 15 },
       message: "There is division, cannot determine that there can't be a division by zero.",
@@ -846,6 +820,19 @@ s.add_test(
       },
       git_blame_info: {
         commit: :_, line_hash: "fe526b59f18512f140fb71bea18d10db1d4b0c61", original_line: 20, final_line: 20
+      }
+    },
+    {
+      id: "bughuntingDivByZeroFloat",
+      path: "src/cpp_sample_2.c++",
+      location: { start_line: 22, start_column: 14 },
+      message: "There is division, cannot determine that there can't be a division by zero.",
+      links: [],
+      object: {
+        severity: "error", verbose: nil, inconclusive: false, cwe: "369", location_info: nil
+      },
+      git_blame_info: {
+        commit: :_, line_hash: "fe526b59f18512f140fb71bea18d10db1d4b0c61", original_line: 22, final_line: 22
       }
     },
     {
@@ -885,6 +872,32 @@ s.add_test(
       },
       git_blame_info: {
         commit: :_, line_hash: "acf5ddfa8e7109366a023a35caed04623817c40d", original_line: 21, final_line: 21
+      }
+    },
+    {
+      id: "bughuntingUninit",
+      path: "src/cpp_sample_2.c++",
+      location: { start_line: 20, start_column: 12 },
+      message: "Cannot determine that 'dz' is initialized",
+      links: [],
+      object: {
+        severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil
+      },
+      git_blame_info: {
+        commit: :_, line_hash: "d1dc81b8c917189f68cc5bec2965b205d13162d5", original_line: 20, final_line: 20
+      }
+    },
+    {
+      id: "bughuntingUninit",
+      path: "src/cpp_sample_2.c++",
+      location: { start_line: 23, start_column: 16 },
+      message: "Cannot determine that 'dz' is initialized",
+      links: [],
+      object: {
+        severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil
+      },
+      git_blame_info: {
+        commit: :_, line_hash: "acf5ddfa8e7109366a023a35caed04623817c40d", original_line: 23, final_line: 23
       }
     },
     {
@@ -937,6 +950,32 @@ s.add_test(
       },
       git_blame_info: {
         commit: :_, line_hash: "acf5ddfa8e7109366a023a35caed04623817c40d", original_line: 21, final_line: 21
+      }
+    },
+    {
+      id: "uninitvar",
+      path: "src/cpp_sample_2.c++",
+      location: { start_line: 20, start_column: 12 },
+      message: "Uninitialized variable: dz",
+      links: [],
+      object: {
+        severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil
+      },
+      git_blame_info: {
+        commit: :_, line_hash: "d1dc81b8c917189f68cc5bec2965b205d13162d5", original_line: 20, final_line: 20
+      }
+    },
+    {
+      id: "uninitvar",
+      path: "src/cpp_sample_2.c++",
+      location: { start_line: 23, start_column: 16 },
+      message: "Uninitialized variable: dz",
+      links: [],
+      object: {
+        severity: "error", verbose: nil, inconclusive: false, cwe: "457", location_info: nil
+      },
+      git_blame_info: {
+        commit: :_, line_hash: "acf5ddfa8e7109366a023a35caed04623817c40d", original_line: 23, final_line: 23
       }
     },
     {
