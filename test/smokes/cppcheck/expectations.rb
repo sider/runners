@@ -446,6 +446,10 @@ s.add_test(
       }
     }
   ],
+  warnings: [{ message: <<~MSG.strip, file: "sider.yml" }],
+    The `parallel` option is ignored when the `project` option is specified.
+    This limitation is due to the behavior of Cppcheck.
+  MSG
   analyzer: { name: "Cppcheck", version: default_version }
 )
 

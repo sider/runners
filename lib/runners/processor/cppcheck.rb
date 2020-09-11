@@ -71,7 +71,20 @@ module Runners
     end
 
     def jobs
-      (config_linter[:parallel] && !config_linter[:project]) ? ["-j", Etc.nprocessors.to_s] : []
+      @jobs ||=
+        if config_linter[:parallel]
+          if config_linter[:project]
+            add_warning <<~MSG, file: config.path_name
+              The `parallel` option is ignored when the `project` option is specified.
+              This limitation is due to the behavior of #{analyzer_name}.
+            MSG
+            []
+          else
+            ["-j", Etc.nprocessors.to_s]
+          end
+        else
+          []
+        end
     end
 
     def run_analyzer
