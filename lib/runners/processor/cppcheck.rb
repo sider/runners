@@ -17,7 +17,8 @@ module Runners
           std: string?,
           project: string?,
           language: string?,
-          'bug-hunting': boolean?
+          'bug-hunting': boolean?,
+          parallel: boolean?
         )
       }
 
@@ -69,6 +70,10 @@ module Runners
       config_linter[:language].then { |lang| lang ? ["--language=#{lang}"] : [] }
     end
 
+    def jobs
+      (config_linter[:parallel] && !config_linter[:project]) ? ["-j", Etc.nprocessors.to_s] : []
+    end
+
     def run_analyzer
       issues = []
 
@@ -100,7 +105,7 @@ module Runners
     def step_analyzer(*args)
       stdout, stderr, status = capture3(
         analyzer_bin,
-        "-j", Etc.nprocessors.to_s,
+        *jobs,
         "--quiet",
         "--xml",
         "--output-file=#{report_file}",
