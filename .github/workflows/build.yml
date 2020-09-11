@@ -137,6 +137,7 @@ jobs:
           ANALYZER: ${{ matrix.analyzer }}
           TAG: ${{ steps.define_vars.outputs.tag }}
           DEBUG: true
+          RUNNERS_TIMEOUT: 3m
       - name: Publish Docker image
         if: |
           steps.define_vars.outputs.tag == 'master' || startsWith(github.ref, 'refs/tags/')
