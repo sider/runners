@@ -18,7 +18,7 @@ module Runners
           project: string?,
           language: string?,
           'bug-hunting': boolean?,
-          parallel: boolean?
+          parallel: boolean?,
         )
       }
 
@@ -105,7 +105,6 @@ module Runners
     def step_analyzer(*args)
       stdout, stderr, status = capture3(
         analyzer_bin,
-        *jobs,
         "--quiet",
         "--xml",
         "--output-file=#{report_file}",
@@ -113,6 +112,7 @@ module Runners
         *project,
         *language,
         *config_include_path,
+        *jobs,
         *args,
         *target
       )
