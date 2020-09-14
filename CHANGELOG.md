@@ -13,6 +13,7 @@ Updated tools:
 - **Goodcheck** 2.5.1 -> 2.5.2 [#1445](https://github.com/sider/runners/pull/1445)
 - **Brakeman** 4.9.0 -> 4.9.1 [#1450](https://github.com/sider/runners/pull/1450)
 - **Checkstyle** 8.35 -> 8.36.1 [#1466](https://github.com/sider/runners/pull/1466)
+- **stylelint** 13.6.1 -> 13.7.1 [#1472](https://github.com/sider/runners/pull/1472)
 
 Misc:
 
