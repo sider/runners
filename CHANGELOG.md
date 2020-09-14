@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 Updated tools:
 
 - **Pylint** 2.5.3 -> 2.6.0 [#1407](https://github.com/sider/runners/pull/1407)
+- **ktlint** 0.37.2 -> 0.38.1 [#1435](https://github.com/sider/runners/pull/1435)
 
 Misc:
 
