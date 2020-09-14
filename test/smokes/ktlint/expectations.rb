@@ -71,6 +71,17 @@ s.add_test(
       }
     },
     {
+      id: "experimental:spacing-around-angle-brackets",
+      path: "src/App.kt",
+      location: { start_line: 5, start_column: 22 },
+      message: "Unexpected spacing after \"<\"",
+      links: [],
+      object: nil,
+      git_blame_info: {
+        commit: :_, line_hash: "3229de70df8f5e854d699db96f4921d70261b435", original_line: 5, final_line: 5
+      }
+    },
+    {
       id: "no-semi",
       path: "src/App.kt",
       location: { start_line: 6, start_column: 19 },
