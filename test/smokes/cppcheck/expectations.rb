@@ -199,7 +199,7 @@ s.add_test(
       message: "Possible null pointer dereference: q",
       links: [],
       object: {
-        severity: "warning", verbose: nil, inconclusive: false, cwe: "476",       location_info: "Calling function 'f', 1st argument 'a' value is 0"
+        severity: "warning", verbose: nil, inconclusive: false, cwe: "476", location_info: "Calling function 'f', 1st argument 'a' value is 0"
       },
       git_blame_info: {
         commit: :_, line_hash: "26d62c425999f29ac2a500ca5913cd47d409d642", original_line: 7, final_line: 7
