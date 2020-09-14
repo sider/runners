@@ -12,7 +12,7 @@ jobs:
   check_skip:
     runs-on: ubuntu-latest
     if: |
-      !contains(format('{0} {1} {2}', github.event.head_commit.message, github.event.pull_request.title, github.event.pull_request.body), '[skip ci]')
+      !contains(format('{0} {1}', github.event.head_commit.message, github.event.pull_request.title), '[skip ci]')
     steps:
       - run: |
           cat <<'MESSAGE'
@@ -137,6 +137,7 @@ jobs:
           ANALYZER: ${{ matrix.analyzer }}
           TAG: ${{ steps.define_vars.outputs.tag }}
           DEBUG: true
+          RUNNERS_TIMEOUT: 3m
       - name: Publish Docker image
         if: |
           steps.define_vars.outputs.tag == 'master' || startsWith(github.ref, 'refs/tags/')
