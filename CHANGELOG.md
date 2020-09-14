@@ -12,6 +12,7 @@ Updated tools:
 - **ktlint** 0.37.2 -> 0.38.1 [#1435](https://github.com/sider/runners/pull/1435)
 - **Goodcheck** 2.5.1 -> 2.5.2 [#1445](https://github.com/sider/runners/pull/1445)
 - **Brakeman** 4.9.0 -> 4.9.1 [#1450](https://github.com/sider/runners/pull/1450)
+- **Checkstyle** 8.35 -> 8.36.1 [#1466](https://github.com/sider/runners/pull/1466)
 
 Misc:
 
