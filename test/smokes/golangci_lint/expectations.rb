@@ -56,7 +56,7 @@ s.add_test("no_error", type: "success", issues: [], analyzer: { name: "GolangCI-
 s.add_test(
   "failure",
   type: "failure",
-  message: "Analysis failed. See the log for details.",
+  message: "The analysis failed due to an unexpected error. See the analysis log for details.",
   analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
@@ -159,28 +159,28 @@ s.add_test(
 s.add_test(
   "disable_default_linter_in_yml",
   type: "failure",
-  message: "Analysis failed. See the log for details.",
+  message: "The analysis failed due to an unexpected error. See the analysis log for details.",
   analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
   "disable_only",
   type: "failure",
-  message: "Analysis failed. See the log for details.",
+  message: "The analysis failed due to an unexpected error. See the analysis log for details.",
   analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
   "enable_disable_same_linter",
   type: "failure",
-  message: "Analysis failed. See the log for details.",
+  message: "The analysis failed due to an unexpected error. See the analysis log for details.",
   analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
   "duplicate_disable",
   type: "failure",
-  message: "Analysis failed. See the log for details.",
+  message: "The analysis failed due to an unexpected error. See the analysis log for details.",
   analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
@@ -319,14 +319,14 @@ s.add_test(
 s.add_test(
   "presets_validate",
   type: "failure",
-  message: "Analysis failed. See the log for details.",
+  message: "The analysis failed due to an unexpected error. See the analysis log for details.",
   analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
 s.add_test(
   "no_such_linter",
   type: "failure",
-  message: "Analysis failed. See the log for details.",
+  message: "The analysis failed due to an unexpected error. See the analysis log for details.",
   analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
@@ -377,7 +377,7 @@ s.add_test(
 s.add_test(
   "monorepo",
   type: "failure",
-  message: "Analysis failed. See the log for details.",
+  message: "The analysis failed due to an unexpected error. See the analysis log for details.",
   analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 

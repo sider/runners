@@ -4,7 +4,21 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.34.0...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.34.1...HEAD)
+
+Updated tools:
+
+- **Pylint** 2.5.3 -> 2.6.0 [#1407](https://github.com/sider/runners/pull/1407)
+
+Misc:
+
+- **Cppcheck** Run multiple threads with the `-j` option [#1462](https://github.com/sider/runners/pull/1462)
+
+## 0.34.1
+
+[Full diff](https://github.com/sider/runners/compare/0.34.0...0.34.1)
+
+- Reconsider `Results::Failure` message [#1459](https://github.com/sider/runners/pull/1459)
 
 ## 0.34.0
 

@@ -232,7 +232,9 @@ s.add_test(
 
 s.add_test(
   "missing_rubocop_required_gems",
-  type: "failure", message: "HAML-Lint raises an unexpected error", analyzer: { name: "HAML-Lint", version: default_version }
+  type: "failure",
+  message: "The analysis failed due to an unexpected error. See the analysis log for details.",
+  analyzer: { name: "HAML-Lint", version: default_version }
 )
 
 s.add_test(

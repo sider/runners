@@ -71,8 +71,9 @@ end
 class Runners::Results::Failure < Runners::Results::Base
   attr_reader message: String
   attr_reader analyzer: Analyzer?
-  def initialize: (guid: String, message: String, ?analyzer: Analyzer?) -> any
+  def initialize: (guid: String, ?message: String, ?analyzer: Analyzer?) -> any
 end
+Runners::Results::Failure::DEFAULT_MESSAGE: String
 
 class Runners::Results::Error < Runners::Results::Base
   attr_reader exception: Exception
