@@ -28,6 +28,22 @@ s.add_test(
       git_blame_info: {
         commit: :_, line_hash: "8c8f23cfb0c26eaf47a78c98f6e90533b229116a", original_line: 1, final_line: 1
       }
+    },
+    {
+      id: "too-many-format-args",
+      path: "bad.py",
+      location: { start_line: 3, start_column: 15 },
+      message: "Too many arguments for format string",
+      object: {
+        severity: "error",
+        "message-id": "E1305",
+        module: "bad",
+        obj: ""
+      },
+      links: [],
+      git_blame_info: {
+        commit: :_, line_hash: "d114f06295e290e37f11d1dbadbac862d2dc0071", original_line: 3, final_line: 3
+      }
     }
   ],
   analyzer: { name: "Pylint", version: default_version }
