@@ -74,7 +74,7 @@ s.add_test(
 s.add_test(
   "only_eslintrc",
   type: "failure",
-  message: /ESLint couldn't find the plugin "eslint-plugin-filenames"/,
+  message: "The analysis failed due to an unexpected error. See the analysis log for details.",
   analyzer: { name: "ESLint", version: default_version }
 )
 
@@ -155,7 +155,7 @@ s.add_test(
 s.add_test(
   "broken_config",
   type: "failure",
-  message: /Error: ESLint configuration in .eslintrc.yml is invalid:/,
+  message: "The analysis failed due to an unexpected error. See the analysis log for details.",
   analyzer: { name: "ESLint", version: :_ }
 )
 
@@ -417,7 +417,7 @@ s.add_test(
       id: "@typescript-eslint/no-unused-vars",
       message: "'x' is assigned a value but never used.",
       links: %w[
-        https://github.com/typescript-eslint/typescript-eslint/blob/v3.9.1/packages/eslint-plugin/docs/rules/no-unused-vars.md
+        https://github.com/typescript-eslint/typescript-eslint/blob/v4.1.0/packages/eslint-plugin/docs/rules/no-unused-vars.md
       ],
       path: "index.ts",
       location: { start_line: 1, start_column: 7, end_line: 1, end_column: 8 },

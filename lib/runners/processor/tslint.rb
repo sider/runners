@@ -102,7 +102,7 @@ module Runners
       # 1: An invalid command line argument, combination thereof was used, or compilation error with `--type-check`
       # 2: Linting failed with one or more rule violations with severity error
       unless status.exitstatus == 0 || status.exitstatus == 2
-        return Results::Failure.new(guid: guid, message: stderr, analyzer: analyzer)
+        return Results::Failure.new(guid: guid, analyzer: analyzer)
       end
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|

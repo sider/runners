@@ -68,8 +68,7 @@ module Runners
 
       # TyScan exited with 0 when finishing an analysis correctly.
       unless status.exitstatus == 0
-        msg = "TyScan was failed with the exit status #{status.exitstatus} since an unexpected error occurred."
-        return Results::Failure.new(guid: guid, message: msg, analyzer: analyzer)
+        return Results::Failure.new(guid: guid, analyzer: analyzer)
       end
 
       json = JSON.parse(stdout, symbolize_names: true)
