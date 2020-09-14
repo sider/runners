@@ -1,4 +1,4 @@
 linter:
   cppcheck:
     enable: "warning,unusedFunction"
-    parallel: false
+    parallel: true

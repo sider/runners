@@ -373,6 +373,40 @@ s.add_test(
 )
 
 s.add_test(
+  "parallel",
+  type: "success",
+  issues: [
+    {
+      id: "readWriteOnlyFile",
+      path: "bad.c",
+      location: { start_line: 5, start_column: 5 },
+      message: "Read operation on a file that was opened only for writing.",
+      links: [],
+      object: {
+        severity: "error", verbose: nil, inconclusive: false, cwe: "664", location_info: nil
+      },
+      git_blame_info: {
+        commit: :_, line_hash: "479ce88b23ce551981eed443165ea6a466a3e7e2", original_line: 5, final_line: 5
+      }
+    },
+    {
+      id: "seekOnAppendedFile",
+      path: "bad.c",
+      location: { start_line: 4, start_column: 5 },
+      message: "Repositioning operation performed on a file opened in append mode has no effect.",
+      links: [],
+      object: {
+        severity: "warning", verbose: nil, inconclusive: false, cwe: "398", location_info: nil
+      },
+      git_blame_info: {
+        commit: :_, line_hash: "90556cd318a1aaf1aa004d2b6c37189d79f5d3a0", original_line: 4, final_line: 4
+      }
+    }
+  ],
+  analyzer: { name: "Cppcheck", version: default_version }
+)
+
+s.add_test(
   "std",
   type: "success",
   issues: [
@@ -412,6 +446,10 @@ s.add_test(
       }
     }
   ],
+  warnings: [{ message: <<~MSG.strip, file: "sider.yml" }],
+    The `parallel` option is ignored when the `project` option is specified.
+    This limitation is due to the behavior of Cppcheck.
+  MSG
   analyzer: { name: "Cppcheck", version: default_version }
 )
 
