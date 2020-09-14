@@ -56,24 +56,22 @@ module Runners
     end
 
     def remote_url
-      # For smoke test
-      if git_source.git_http_url.start_with? "file://"
-        return URI(git_source.git_http_url)
-      end
-
-      @remote_url ||= URI.join(git_source.git_http_url, "#{git_source.owner}/#{git_source.repo}").tap do |uri|
-        git_http_userinfo = git_source.git_http_userinfo
-        uri.userinfo = git_http_userinfo if git_http_userinfo
+      @remote_url ||= URI.parse(git_source.git_url).tap do |uri|
+        git_url_userinfo = git_source.git_url_userinfo
+        uri.userinfo = git_url_userinfo if git_url_userinfo
+        uri.freeze
       end
     end
 
     def git_fetch_args
-      @git_fetch_args ||= %w[--quiet --no-tags --no-recurse-submodules origin].tap do |command|
-        command << "+refs/heads/*:refs/remotes/origin/*"
-
-        num = git_source.pull_number
-        command << "+refs/pull/#{num}/head:refs/remotes/pull/#{num}/head" if num
-      end
+      @git_fetch_args ||= [
+        '--quiet',
+        '--no-tags',
+        '--no-recurse-submodules',
+        'origin',
+        '+refs/heads/*:refs/remotes/origin/*',
+        *git_source.refspec,
+      ].freeze
     end
 
     def patches

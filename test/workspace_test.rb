@@ -1,4 +1,4 @@
-require_relative "test_helper"
+require "test_helper"
 
 class WorkspaceTest < Minitest::Test
   include TestHelper
@@ -6,7 +6,7 @@ class WorkspaceTest < Minitest::Test
   Workspace = Runners::Workspace
 
   def test_prepare
-    with_runners_options_env(source: { head: "commit", git_http_url: "https://github.com", owner: "foo", repo: "bar" }) do
+    with_runners_options_env(source: { head: "commit", git_url: "https://github.com/foo/bar" }) do
       options = Runners::Options.new(StringIO.new, StringIO.new)
       filter = Runners::SensitiveFilter.new(options: options)
       workspace = Workspace.prepare(options: options, trace_writer: new_trace_writer(filter: filter), working_dir: Pathname("/"))
@@ -50,7 +50,14 @@ class WorkspaceTest < Minitest::Test
   def test_git_ssh_path_is_pathname
     with_workspace(ssh_key: data("ssh_key").read) do |workspace|
       workspace.open do |git_ssh_path|
-        refute_nil git_ssh_path
+        assert_path_exists git_ssh_path
+        assert_equal Pathname("run.sh"), git_ssh_path.basename
+        assert_equal "100700", "%o" % git_ssh_path.stat.mode
+
+        ssh_dir = git_ssh_path.parent
+        assert_equal "100600", "%o" % (ssh_dir / "config").stat.mode
+        assert_equal "100600", "%o" % (ssh_dir / "key").stat.mode
+        assert_equal "100600", "%o" % (ssh_dir / "known_hosts").stat.mode
 
         Open3.capture3(
           { "GIT_SSH" => git_ssh_path.to_s },

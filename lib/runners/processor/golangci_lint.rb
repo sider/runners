@@ -70,8 +70,7 @@ module Runners
       end
 
       if status.exitstatus == 3
-        message = "Analysis failed. See the log for details."
-        return Results::Failure.new(guid: guid, analyzer: analyzer, message: message)
+        return Results::Failure.new(guid: guid, analyzer: analyzer)
       end
 
       if status.exitstatus == 5

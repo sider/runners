@@ -1,10 +1,7 @@
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'runners'
+require_relative '../lib/runners'
 
 require 'minitest/autorun'
 require "unification_assertion"
-require "pp"
-require "rr"
 
 module TestHelper
   include UnificationAssertion
@@ -35,9 +32,7 @@ module TestHelper
   def new_source(**source)
     {
       head: "6ba85479fc406a64b7202f7bc3ea8da3ada93084",
-      git_http_url: "https://github.com",
-      owner: "sider",
-      repo: "runners_test",
+      git_url: "https://github.com/sider/runners_test",
       **source,
     }
   end
@@ -77,11 +72,9 @@ module TestHelper
     source = {
       head: "123abc",
       base: "456def",
-      git_http_url: "https://github.com",
-      owner: "foo",
-      repo: "bar",
-      git_http_userinfo: "user:secret",
-      pull_number: 105,
+      git_url: "https://github.com/foo/bar",
+      git_url_userinfo: "user:secret",
+      refspec: "+refs/pull/1234/head:refs/remotes/pull/1234/head",
     }
     with_runners_options_env(source: source) do
       options = Runners::Options.new(StringIO.new, StringIO.new)

@@ -19,7 +19,9 @@ class Runners::Processor::RemarkLintTest < Minitest::Test
       trace_writer: trace_writer,
       git_ssh_path: nil
     ).tap do |s|
-      stub(s).analyzer_id { "remark_lint" }
+      def s.analyzer_id
+        "remark_lint"
+      end
     end
   end
 

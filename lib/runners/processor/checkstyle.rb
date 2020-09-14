@@ -2,8 +2,9 @@ module Runners
   class Processor::Checkstyle < Processor
     include Java
 
-    Schema = StrongJSON.new do
-      let :runner_config, Schema::BaseConfig.java.update_fields { |fields|
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+      let :runner_config, Runners::Schema::BaseConfig.java.update_fields { |fields|
         fields.merge!({
           config: string?,
           dir: enum?(string, array(string)),
@@ -23,6 +24,8 @@ module Runners
 
     register_config_schema(name: :checkstyle, schema: Schema.runner_config)
 
+    DEFAULT_TARGET = ".".freeze
+
     def setup
       begin
         install_jvm_deps
@@ -36,14 +39,16 @@ module Runners
     def analyze(changes)
       delete_unchanged_files(changes, only: ["*.java"])
 
-      capture3(analyzer_bin, *check_directory, *checkstyle_args)
+      target = Array(config_linter[:dir] || DEFAULT_TARGET)
+      capture3(analyzer_bin, *checkstyle_args, *target)
 
-      begin
-        xml_root = read_report_xml.root
-      rescue InvalidXML
-        message = "Analysis failed. See the log for details."
-        return Results::Failure.new(guid: guid, analyzer: analyzer, message: message)
-      end
+      xml_root =
+        begin
+          read_report_xml
+        rescue InvalidXML
+          return Results::Failure.new(guid: guid, analyzer: analyzer,
+                                      message: "Analysis failed. See the log for details.")
+        end
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
         construct_result(xml_root) do |issue|
@@ -65,9 +70,9 @@ module Runners
 
         excluded_directories.each do |exclude|
           case
-          when exclude.key?(:string)
+          when exclude[:string]
             args << "--exclude" << exclude[:string]
-          when exclude.key?(:pattern)
+          when exclude[:pattern]
             args << "--exclude-regexp" << exclude[:pattern]
           end
         end
@@ -79,8 +84,11 @@ module Runners
     end
 
     def construct_result(xml_root)
+      ignored_severities = Array(config_linter[:ignore])
+
       xml_root.each_element("file") do |file|
-        path = relative_path file[:name]
+        file_name = file[:name] or raise "Invalid file: #{file.inspect}"
+        path = relative_path file_name
 
         file.each_element do |error|
           case error.name
@@ -89,19 +97,21 @@ module Runners
             next if ignored_severities.include?(severity)
 
             line = error[:line]
-            id = error[:source]
+            id = error[:source] or raise "Required id: #{error.inspect}"
+            msg = error[:message] or raise "Required message: #{error.inspect}"
 
             yield Issue.new(
               path: path,
               location: line == "0" || line.nil? ? nil : Location.new(start_line: line, start_column: error[:column]),
               id: normalize_id(id),
-              message: error[:message],
+              message: msg,
               links: build_links(id),
               object: { severity: severity },
               schema: Schema.issue,
             )
           when "exception"
-            add_warning element_.get_text.value.strip, file: path.to_s
+            exception = error.text or raise "Required exception: #{error.inspect}"
+            add_warning exception, file: path.to_s
           end
         end
       end
@@ -111,7 +121,7 @@ module Runners
 
     def normalize_id(rule_id)
       if rule_id.start_with?(OFFICIAL_RULE_NAMESPACE)
-        rule_id.split(".").last
+        rule_id.split(".").last or raise "Invalid rule ID: #{rule_id.inspect}"
       else
         rule_id
       end
@@ -122,6 +132,9 @@ module Runners
       return [] unless rule_id.start_with?(prefix)
 
       category, id = rule_id.delete_prefix(prefix).split(".")
+      unless category
+        raise "Required category: #{rule_id.inspect}"
+      end
       unless id
         id = category
         category = "misc"
@@ -145,31 +158,14 @@ module Runners
       end
     end
 
-    def check_directory
-      array(config_linter[:dir] || ".")
-    end
-
     def excluded_directories
-      array(config_linter[:exclude]).map do |x|
-        case x
+      Array(config_linter[:exclude]).map do |dir|
+        case dir
         when String
-          { string: x }
+          { string: dir }
         else
-          x
+          dir
         end
-      end
-    end
-
-    def ignored_severities
-      array(config_linter[:ignore])
-    end
-
-    def array(value)
-      case value
-      when Hash
-        [value]
-      else
-        Array(value)
       end
     end
   end

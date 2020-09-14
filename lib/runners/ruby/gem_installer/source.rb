@@ -1,47 +1,59 @@
 module Runners
   class Ruby::GemInstaller
-    module Source
+    class Source
+      DEFAULT = "https://rubygems.org".freeze
+      private_constant :DEFAULT
+
+      def self.default
+        Rubygems.new(DEFAULT)
+      end
+
+      def self.rubygems(source)
+        Rubygems.new(source)
+      end
+
+      def self.git(repo, **options)
+        Git.new(repo, **options)
+      end
+
       def self.create(gems_item)
         source = gems_item[:source]
         git = gems_item[:git]
 
         case
         when source.is_a?(String)
-          # @type var source: String
-          source = source
-          Rubygems.new(source)
+          rubygems(source)
         when git.is_a?(Hash)
-          # @type var git: Ruby::git_source
-          git = git
           if git[:repo]
-            Git.new(git[:repo], ref: git[:ref], branch: git[:branch], tag: git[:tag])
+            git(git[:repo], ref: git[:ref], branch: git[:branch], tag: git[:tag])
           else
             raise ArgumentError.new("Unexpected gem: #{gems_item.inspect}")
           end
         else
-          Rubygems.new
+          default
         end
       end
 
-      class Base
-        def rubygems?
-          false
-        end
+      def rubygems?
+        false
+      end
 
-        def git?
-          false
-        end
+      def git?
+        false
+      end
 
-        def default?
-          false
-        end
+      def default?
+        false
       end
 
       # @see https://bundler.io/man/gemfile.5.html#SOURCE
-      class Rubygems < Base
+      class Rubygems < Source
         attr_reader :source
 
-        def initialize(source = DEFAULT_SOURCE)
+        def initialize(source)
+          source or raise ArgumentError, "Required source for Rubygems source"
+
+          super()
           @source = source
         end
 
@@ -50,11 +62,11 @@ module Runners
         end
 
         def default?
-          source == DEFAULT_SOURCE
+          source == DEFAULT
         end
 
         def ==(other)
-          self.class === other && source == other.source
+          self.class == other.class && source == other.source
         end
         alias eql? ==
 
@@ -63,17 +75,19 @@ module Runners
         end
 
         def to_s
-          "source #{source.inspect}"
+          "source \"#{source}\""
         end
       end
+      private_constant :Rubygems
 
       # @see https://bundler.io/man/gemfile.5.html#GIT
-      class Git < Base
+      class Git < Source
         attr_reader :repo, :ref, :branch, :tag
 
         def initialize(repo, ref: nil, branch: nil, tag: nil)
-          repo or raise ArgumentError, "Required repo for Git source!"
+          repo or raise ArgumentError, "Required repository for Git source"
 
+          super()
           @repo = repo
           @ref = ref
           @branch = branch
@@ -85,7 +99,7 @@ module Runners
         end
 
         def ==(other)
-          self.class === other && repo == other.repo && ref == other.ref && branch == other.branch && tag == other.tag
+          self.class == other.class && repo == other.repo && ref == other.ref && branch == other.branch && tag == other.tag
         end
         alias eql? ==
 
@@ -94,13 +108,14 @@ module Runners
         end
 
         def to_s
-          s = "git #{repo.inspect}"
-          s << ", ref: #{ref.inspect}" if ref
-          s << ", branch: #{branch.inspect}" if branch
-          s << ", tag: #{tag.inspect}" if tag
+          s = "git \"#{repo}\""
+          s << ", ref: \"#{ref}\"" if ref
+          s << ", branch: \"#{branch}\"" if branch
+          s << ", tag: \"#{tag}\"" if tag
           s
         end
       end
+      private_constant :Git
     end
   end
 end

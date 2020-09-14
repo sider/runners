@@ -25,31 +25,17 @@ module Runners
       start_line.hash ^ start_column.hash ^ end_line.hash ^ end_column.hash
     end
 
-    def self.from_json(json)
-      self.new(start_line: json[:start_line],
-               start_column: json[:start_column],
-               end_line: json[:end_line],
-               end_column: json[:end_column])
-    end
-
     def as_json
-      # @type _: Hash<json_key, Integer>
-      @as_json ||= _ = Schema::Issue.location.coerce({
+      {
         start_line: start_line,
         start_column: start_column,
         end_line: end_line,
         end_column: end_column,
-      }.compact)
+      }.compact
     end
 
     def to_s
-      attrs = %W[
-        start_line=#{start_line.inspect}
-        start_column=#{start_column.inspect}
-        end_line=#{end_line.inspect}
-        end_column=#{end_column.inspect}
-      ].join(", ")
-      "{ #{attrs} }"
+      "{ start_line=#{start_line.inspect}, start_column=#{start_column.inspect}, end_line=#{end_line.inspect}, end_column=#{end_column.inspect} }"
     end
   end
 end

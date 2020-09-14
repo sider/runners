@@ -1,4 +1,4 @@
-require_relative "test_helper"
+require "test_helper"
 require "runners/cli"
 
 class CLITest < Minitest::Test
@@ -107,24 +107,6 @@ class CLITest < Minitest::Test
       assert objects.any? { |hash| hash.dig(:result, :type) == 'failure' }
       assert objects.any? { |hash| hash[:warnings] == [] }
       assert objects.any? { |hash| hash[:ci_config] == nil }
-    end
-  end
-
-  def test_run_when_download_error_happens
-    with_runners_options_env(source: new_source) do
-      cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr)
-      cli.instance_variable_set(:@processor_class, TestProcessor)
-      any_instance_of(Runners::Workspace) do |instance|
-        mock(instance).open.with_any_args { raise Runners::Workspace::DownloadError }
-      end
-      cli.run
-
-      output = stdout.string
-      reader = JSONSEQ::Reader.new(io: StringIO.new(output), decoder: -> (string) { JSON.parse(string, symbolize_names: true) })
-      objects = reader.each_object.to_a
-
-      assert objects.any? { |hash| hash.dig(:result, :type) == 'error' }
-      assert objects.any? { |hash| hash.dig(:result, :class) == 'Runners::Workspace::DownloadError' }
     end
   end
 

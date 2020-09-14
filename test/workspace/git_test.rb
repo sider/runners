@@ -1,4 +1,4 @@
-require_relative "../test_helper"
+require "test_helper"
 
 class WorkspaceGitTest < Minitest::Test
   include TestHelper
@@ -38,14 +38,20 @@ class WorkspaceGitTest < Minitest::Test
     end
   end
 
+  def test_remote_url_with_file
+    with_workspace(git_url: 'file:///project/smoke/foo/bar') do |workspace|
+      assert_equal URI("file:///project/smoke/foo/bar"), workspace.send(:remote_url)
+    end
+  end
+
   def test_remote_url_with_token
-    with_workspace(git_http_userinfo: "x-access-token:v1.aaabbbcccdddeeefffgggbc06400127f248a82ac") do |workspace|
+    with_workspace(git_url_userinfo: "x-access-token:v1.aaabbbcccdddeeefffgggbc06400127f248a82ac") do |workspace|
       assert_equal URI("https://x-access-token:v1.aaabbbcccdddeeefffgggbc06400127f248a82ac@github.com/sider/runners_test"), workspace.send(:remote_url)
     end
   end
 
   def test_git_fetch_args
-    with_workspace(pull_number: 533) do |workspace|
+    with_workspace(refspec: "+refs/pull/533/head:refs/remotes/pull/533/head") do |workspace|
       assert_equal %w[
         --quiet --no-tags --no-recurse-submodules origin
         +refs/heads/*:refs/remotes/origin/*
@@ -54,7 +60,18 @@ class WorkspaceGitTest < Minitest::Test
     end
   end
 
-  def test_git_fetch_args_without_pull_number
+  def test_git_fetch_args_with_multiple_refspecs
+    with_workspace(refspec: ["+refs/pull/533/head:refs/remotes/pull/533/head", "+refs/foo/533/head:refs/remotes/foo/533/head"]) do |workspace|
+      assert_equal %w[
+        --quiet --no-tags --no-recurse-submodules origin
+        +refs/heads/*:refs/remotes/origin/*
+        +refs/pull/533/head:refs/remotes/pull/533/head
+        +refs/foo/533/head:refs/remotes/foo/533/head
+      ], workspace.send(:git_fetch_args)
+    end
+  end
+
+  def test_git_fetch_args_without_refspaces
     with_workspace do |workspace|
       assert_equal %w[
         --quiet --no-tags --no-recurse-submodules origin
@@ -117,7 +134,7 @@ class WorkspaceGitTest < Minitest::Test
   end
 
   def test_git_fetch_failed
-    with_workspace(pull_number: 999999999) do |workspace|
+    with_workspace(refspec: "+refs/pull/999999999/head:refs/remotes/pull/999999999/head") do |workspace|
       error = assert_raises(Runners::Workspace::Git::FetchFailed) do
         workspace.prepare_head_source
       end

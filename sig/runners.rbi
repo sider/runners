@@ -71,8 +71,9 @@ end
 class Runners::Results::Failure < Runners::Results::Base
   attr_reader message: String
   attr_reader analyzer: Analyzer?
-  def initialize: (guid: String, message: String, ?analyzer: Analyzer?) -> any
+  def initialize: (guid: String, ?message: String, ?analyzer: Analyzer?) -> any
 end
+Runners::Results::Failure::DEFAULT_MESSAGE: String
 
 class Runners::Results::Error < Runners::Results::Base
   attr_reader exception: Exception
@@ -152,7 +153,7 @@ class Runners::Processor
   def report_file: -> String
   def report_file_exist?: -> bool
   def read_report_file: (?String) -> String
-  def read_report_xml: (?String) -> REXML::Document
+  def read_report_xml: (?String) -> untyped
   def read_report_json: <'x> (?String) { () -> 'x } -> (Hash<Symbol, any> | 'x)
   def comma_separated_list: (String | Array<String> | nil) -> String?
 end

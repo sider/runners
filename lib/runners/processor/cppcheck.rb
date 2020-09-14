@@ -1,9 +1,14 @@
+require "etc"
+
 module Runners
   class Processor::Cppcheck < Processor
     include CPlusPlus
 
-    Schema = StrongJSON.new do
-      let :runner_config, Schema::BaseConfig.cplusplus.update_fields { |fields|
+    class NoTargetFiles < SystemError; end
+
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+      let :runner_config, Runners::Schema::BaseConfig.cplusplus.update_fields { |fields|
         fields.merge!(
           target: enum?(string, array(string)),
           ignore: enum?(string, array(string)),
@@ -12,11 +17,12 @@ module Runners
           std: string?,
           project: string?,
           language: string?,
-          'bug-hunting': boolean?
+          'bug-hunting': boolean?,
+          parallel: boolean?,
         )
       }
 
-      let :rule, object(
+      let :issue, object(
         severity: string,
         verbose: string?,
         inconclusive: boolean,
@@ -41,59 +47,72 @@ module Runners
     end
 
     def ignore
-      Array(config_linter[:ignore] || DEFAULT_IGNORE).map { |i| ["-i", i] }.flatten
+      Array(config_linter[:ignore] || DEFAULT_IGNORE).flat_map { |i| ["-i", i] }
     end
 
     def addon
-      Array(config_linter[:addon] || []).map { |config| "--addon=#{config}" }.flatten
+      Array(config_linter[:addon] || []).map { |config| "--addon=#{config}" }
     end
 
     def enable
-      id = config_linter[:enable]
-      Array(id ? "--enable=#{id}" : nil)
+      config_linter[:enable].then { |id| id ? ["--enable=#{id}"] : [] }
     end
 
     def std
-      id = config_linter[:std]
-      Array(id ? "--std=#{id}" : nil)
+      config_linter[:std].then { |id| id ? ["--std=#{id}"] : [] }
     end
 
     def project
-      file = config_linter[:project]
-      Array(file ? "--project=#{file}" : nil)
+      config_linter[:project].then { |file| file ? ["--project=#{file}"] : [] }
     end
 
     def language
-      lang = config_linter[:language]
-      Array(lang ? "--language=#{lang}" : nil)
+      config_linter[:language].then { |lang| lang ? ["--language=#{lang}"] : [] }
     end
 
-    def args_normal
-      [*enable, *std, *addon]
-    end
-
-    def args_bughunting
-      config_linter[:'bug-hunting'] ? ["--bug-hunting"] : nil
+    def jobs
+      @jobs ||=
+        if config_linter[:parallel]
+          if config_linter[:project]
+            add_warning <<~MSG, file: config.path_name
+              The `parallel` option is ignored when the `project` option is specified.
+              This limitation is due to the behavior of #{analyzer_name}.
+            MSG
+            []
+          else
+            ["-j", Etc.nprocessors.to_s]
+          end
+        else
+          []
+        end
     end
 
     def run_analyzer
       issues = []
 
-      [args_normal, args_bughunting].compact.each do |args|
-        ret = step_analyzer(*args)
+      begin
+        ret = step_analyzer(*enable, *std, *addon)
         case ret
         when Results::Success
           issues.push(*ret.issues)
-        when :no_target_files
-          return Results::Success.new(guid: guid, analyzer: analyzer)
+        else
+          return ret
+        end
+      rescue NoTargetFiles
+        return Results::Success.new(guid: guid, analyzer: analyzer)
+      end
+
+      if config_linter[:'bug-hunting']
+        ret = step_analyzer("--bug-hunting")
+        case ret
+        when Results::Success
+          issues.push(*ret.issues)
         else
           return ret
         end
       end
 
-      Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        result.issues.push(*issues)
-      end
+      Results::Success.new(guid: guid, analyzer: analyzer, issues: issues)
     end
 
     def step_analyzer(*args)
@@ -101,56 +120,60 @@ module Runners
         analyzer_bin,
         "--quiet",
         "--xml",
+        "--output-file=#{report_file}",
         *ignore,
         *project,
         *language,
         *config_include_path,
+        *jobs,
         *args,
         *target
       )
 
       if status.exitstatus == 1 && stdout.strip == "cppcheck: error: could not find or open any of the paths given."
         add_warning "No linting files."
-        return :no_target_files
+        raise NoTargetFiles
       end
 
       unless status.success?
-        message = stdout.strip
-        message = stderr.strip if message.empty?
-        message = "An unexpected error occurred. See the analysis log." if message.empty?
-        return Results::Failure.new(guid: guid, analyzer: analyzer, message: message)
+        return Results::Failure.new(guid: guid, analyzer: analyzer)
       end
 
-      xml_output = REXML::Document.new(stderr)
-
-      unless xml_output.root
-        return Results::Failure.new(guid: guid, analyzer: analyzer, message: "Invalid XML output!")
-      end
+      xml_root =
+        begin
+          read_report_xml
+        rescue InvalidXML
+          return Results::Failure.new(guid: guid, analyzer: analyzer, message: "Invalid XML output")
+        end
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        parse_result(xml_output) do |issue|
+        parse_result(xml_root) do |issue|
           result.add_issue issue
         end
       end
     end
 
     # @see https://github.com/danmar/cppcheck/blob/master/man/manual.md#xml-output
-    def parse_result(xml_doc)
-      xml_doc.root.each_element("errors/error") do |err|
+    def parse_result(xml_root)
+      xml_root.each_element("errors/error") do |err|
+        id = err[:id] or raise "Required id: #{err.inspect}"
+        msg = err[:msg] or raise "Required msg: #{err.inspect}"
+
         err.each_element("location") do |loc|
+          file = loc[:file] or raise "Required file: #{loc.inspect}"
           yield Issue.new(
-            id: err[:id],
-            path: relative_path(loc[:file]),
+            id: id,
+            path: relative_path(file),
             location: Location.new(start_line: loc[:line], start_column: loc[:column]),
-            message: err[:msg],
+            message: msg,
             object: {
               severity: err[:severity],
-              verbose: err[:verbose] != err[:msg] ? err[:verbose] : nil,
+              verbose: err[:verbose] != msg ? err[:verbose] : nil,
               inconclusive: err[:inconclusive] == "true",
               cwe: err[:cwe],
-              location_info: loc[:info] != err[:msg] ? loc[:info] : nil,
+              location_info: loc[:info] != msg ? loc[:info] : nil,
             },
-            schema: Schema.rule,
+            schema: Schema.issue,
           )
         end
       end

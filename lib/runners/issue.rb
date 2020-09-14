@@ -25,6 +25,7 @@ module Runners
       @message = message
       @links = links
       @object = object
+      @git_blame_info = nil
     end
 
     def missing_id?
@@ -38,7 +39,8 @@ module Runners
         other.id == id &&
         other.message == message &&
         other.links == links &&
-        other.object == object
+        other.object == object &&
+        other.git_blame_info == git_blame_info
     end
     alias eql? ==
 
@@ -54,7 +56,7 @@ module Runners
         message: message,
         links: links,
         object: object,
-        git_blame_info: git_blame_info&.to_h,
+        git_blame_info: git_blame_info&.as_json,
       })
     end
 

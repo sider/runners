@@ -1,8 +1,18 @@
 module Runners
   class Options
-    GitSource = Struct.new(:head, :base, :git_http_url, :owner, :repo, :git_http_userinfo, :pull_number, keyword_init: true)
+    class GitSource
+      attr_reader :head, :base, :git_url, :git_url_userinfo, :refspec
 
-    # @dynamic stdout, stderr, source, ssh_key, io
+      def initialize(head:, base:, git_url:, git_url_userinfo:, refspec:)
+        @head = head
+        @base = base
+        @git_url = git_url
+        @git_url_userinfo = git_url_userinfo
+        @refspec = Array(refspec)
+      end
+    end
+    private_constant :GitSource
+
     attr_reader :stdout, :stderr, :source, :ssh_key, :io
 
     def initialize(stdout, stderr)
@@ -23,9 +33,9 @@ module Runners
                 when 'stderr'
                   stderr
                 when /^s3:/
-                  Runners::IO::AwsS3.new(output)
+                  Runners::IO::AwsS3.new(output, endpoint: options.dig(:s3, :endpoint))
                 else
-                  raise "Invalid output option. You included '#{output}'"
+                  raise ArgumentError, "Invalid output option: `#{output.inspect}`"
                 end
               end
               Runners::IO.new(*ios)

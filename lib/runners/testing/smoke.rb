@@ -1,6 +1,5 @@
 require "minitest"
 require "unification_assertion"
-require "pp"
 require 'parallel'
 require "amazing_print"
 require "rainbow"
@@ -9,10 +8,25 @@ module Runners
   module Testing
     class Smoke
       include Minitest::Assertions
-      include UnificationAssertion
-      include Tmpdir
 
-      TestParams = Struct.new(:name, :pattern, :offline, keyword_init: true)
+      class TestParams
+        attr_reader :name, :pattern, :offline
+
+        def initialize(name:, pattern:, offline:)
+          @name = name
+          @pattern = pattern
+          @offline = offline
+        end
+
+        def ==(other)
+          self.class == other.class && name == other.name
+        end
+        alias eql? ==
+
+        def hash
+          name.hash
+        end
+      end
 
       attr_reader :argv
 
@@ -86,12 +100,12 @@ module Runners
 
       def run_test(params, out)
         command_output, _ = Dir.mktmpdir do |dir|
-          repo_dir, base, head = prepare_git_repository(
+          repo = prepare_git_repository(
             workdir: Pathname(dir).realpath,
             smoke_target: expectations.parent.join(params.name).realpath,
             out: out,
           )
-          cmd = command_line(params: params, repo_dir: repo_dir, base: base, head: head)
+          cmd = command_line(params: params, repo_dir: repo.fetch(:dir), base: repo.fetch(:base), head: repo.fetch(:head))
           sh!(*cmd, out: out, exception: false)
         end
 
@@ -111,7 +125,8 @@ module Runners
 
       def unify_result(result, pattern, out)
         ok = true
-        unify [[result, pattern, ""]] do |a, b, path|
+
+        UnificationAssertion.unify [[result, pattern, ""]] do |a, b, path|
           case
           when (a.is_a?(Regexp) && !b.is_a?(Regexp)) || (!a.is_a?(Regexp) && b.is_a?(Regexp))
             unless a.match?(b)
@@ -137,9 +152,7 @@ module Runners
         source = {
           head: head,
           base: base,
-          git_http_url: "file://#{project_dir}",
-          owner: "smoke",
-          repo: params.name,
+          git_url: URI.join("file:///", project_dir).to_s,
         }
         runners_options = JSON.dump({ source: source })
         commands = ["docker", "run"]
@@ -174,7 +187,8 @@ module Runners
           sh! "git", "push", out: out
           head_commit, _ = sh! "git", "rev-parse", "HEAD", out: out
 
-          [bare_dir, base_commit.chomp, head_commit.chomp]
+          # @type var _: repo_info
+          _ = { dir: bare_dir, base: base_commit.chomp, head: head_commit.chomp }
         end
       end
 
@@ -224,22 +238,20 @@ module Runners
       end
 
       def self.add_test(name, **pattern)
-        return unless only? name
-
-        check_duplicate name
-        tests << TestParams.new(name: name, pattern: build_pattern(**pattern), offline: false)
+        add_test_helper TestParams.new(name: name, pattern: build_pattern(**pattern), offline: false)
       end
 
       def self.add_offline_test(name, **pattern)
-        return unless only? name
-
-        check_duplicate name
-        tests << TestParams.new(name: name, pattern: build_pattern(**pattern), offline: true)
+        add_test_helper TestParams.new(name: name, pattern: build_pattern(**pattern), offline: true)
       end
 
-      def self.check_duplicate(name)
-        if tests.find { |t| t.name === name }
-          raise ArgumentError, "Smoke test #{name.inspect} is duplicate"
+      def self.add_test_helper(test)
+        return unless only? test.name
+
+        if tests.include? test
+          raise ArgumentError, "Smoke test #{test.name.inspect} is duplicate"
+        else
+          tests << test
         end
       end
 

@@ -13,7 +13,6 @@ gem 'git_diff_parser'
 group :development, :test do
   gem 'rake'
   gem 'minitest'
-  gem 'rr'
   gem 'unification_assertion'
   gem 'parallel'
   gem 'amazing_print'

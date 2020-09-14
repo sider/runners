@@ -1,41 +1,38 @@
-# AwsS3IO expects AWS credentials set with environment variables or an instance profile.
-# So, before using this, make sure AWS credentials available.
-# Also, prepare the S3 bucket and allow this instance to upload an S3 object.
 module Runners
+  # This class expects AWS credentials set with environment variables or an instance profile.
+  # So, before using this, make sure AWS credentials available.
+  # Also, prepare the S3 bucket and allow this instance to upload an S3 object.
   class IO::AwsS3
     # @type const BUFFER_SIZE: Integer
     BUFFER_SIZE = 300
 
-    def self.parse_s3_uri!(s3_uri)
-      uri = URI.parse(s3_uri)
-      bucket = uri.host&.then { |s| s.empty? ? nil : s }
-      object = uri.path&.then { |s| s.empty? ? nil : s }
-      if uri.scheme == "s3" && bucket && object
-        [bucket, object.delete_prefix("/")]
-      else
-        raise "The specified S3 URI is not valid. You specified with '#{s3_uri}'"
-      end
+    # Only for test
+    # @see https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ClientStubs.html
+    def self.stub?
+      false
     end
 
     attr_reader :uri, :bucket_name, :object_name, :tempfile, :written_items, :client
 
-    def initialize(uri)
+    def initialize(uri, endpoint: nil)
       @uri = uri
-      @bucket_name, @object_name = self.class.parse_s3_uri!(uri)
+
+      parsed = parse_s3_uri(uri)
+      @bucket_name = parsed.fetch(:bucket)
+      @object_name = parsed.fetch(:object)
+
       @tempfile = Tempfile.new
       @written_items = 0
 
-      args = {
+      @client = Aws::S3::Client.new({
         retry_limit: 5,
         retry_base_delay: 1.2,
         instance_profile_credentials_retries: 5,
         instance_profile_credentials_timeout: 3,
-      }
-      if ENV["S3_ENDPOINT"]
-        args[:endpoint] = ENV["S3_ENDPOINT"]
-        args[:force_path_style] = true
-      end
-      @client = Aws::S3::Client.new(**args)
+        endpoint: endpoint,
+        force_path_style: endpoint ? true : false,
+        stub_responses: self.class.stub?,
+      }.compact)
     end
 
     def write(*args)
@@ -57,6 +54,17 @@ module Runners
     end
 
     private
+
+    def parse_s3_uri(s3_uri)
+      uri = URI.parse(s3_uri)
+      bucket = uri.host&.then { |s| s.empty? ? nil : s }
+      object = uri.path&.then { |s| s.empty? ? nil : s }
+      if uri.scheme == "s3" && bucket && object
+        { bucket: bucket, object: object.delete_prefix("/") }
+      else
+        raise ArgumentError, "The specified S3 URI is invalid: `#{s3_uri.inspect}`"
+      end
+    end
 
     def flush_to_s3!
       tempfile.rewind

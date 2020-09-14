@@ -3,8 +3,6 @@ module Runners
     class GemInstaller
       class InstallationFailure < InstallGemsFailure; end
 
-      DEFAULT_SOURCE = "https://rubygems.org"
-
       attr_reader :gem_home, :specs, :trace_writer, :shell, :constraints, :config_path_name, :use_local
 
       def initialize(shell:, home:, config_path_name:, specs:, constraints:, trace_writer:, use_local:)
@@ -18,7 +16,7 @@ module Runners
       end
 
       def gemfile_path
-        gem_home + "Gemfile"
+        gem_home / "Gemfile"
       end
 
       def lockfile_path
@@ -57,7 +55,9 @@ module Runners
         trace_writer.message "Generating optimized Gemfile..."
 
         # @type var lines: Array<String>
-        lines = ["source #{DEFAULT_SOURCE.inspect}", ""]
+        lines = []
+        lines << Source.default.to_s
+        lines << ""
 
         group_specs.each do |source, specs|
           if source.default?

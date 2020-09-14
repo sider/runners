@@ -2,15 +2,8 @@ module Runners
   class Workspace
     include Tmpdir
 
-    class DownloadError < SystemError; end
-
     def self.prepare(options:, working_dir:, trace_writer:)
-      case options.source
-      when Options::GitSource
-        Workspace::Git.new(options: options, working_dir: working_dir, trace_writer: trace_writer)
-      else
-        raise ArgumentError, "The specified options #{options.inspect} is not supported"
-      end
+      Workspace::Git.new(options: options, working_dir: working_dir, trace_writer: trace_writer)
     end
 
     attr_reader :options, :working_dir, :trace_writer, :shell
@@ -48,18 +41,32 @@ module Runners
       []
     end
 
+    def prepare_head_source
+      raise NotImplementedError
+    end
+
+    def patches
+      raise NotImplementedError
+    end
+
+    private
+
     def prepare_ssh
       ssh_key = options.ssh_key
       if ssh_key
         mktmpdir do |dir|
           trace_writer.message "Preparing SSH config..."
 
-          config_path = dir / 'config'
-          key_path = dir / 'key'
-          script_path = dir / 'run.sh'
           known_hosts_path = dir / 'known_hosts'
+          known_hosts_path.write ''
+          known_hosts_path.chmod 0600
 
-          config_path.write(<<~SSH_CONFIG, perm: 0600)
+          key_path = dir / 'key'
+          key_path.write ssh_key
+          key_path.chmod 0600
+
+          config_path = dir / 'config'
+          config_path.write <<~SSH_CONFIG
             Host *
               CheckHostIP no
               ConnectTimeout 30
@@ -68,25 +75,20 @@ module Runners
               IdentitiesOnly yes
               IdentityFile #{key_path}
           SSH_CONFIG
-          key_path.write(ssh_key, perm: 0600)
-          known_hosts_path.write('', perm: 0600)
-          script_path.write(<<~GIT_SSH, perm: 0700)
+          config_path.chmod 0600
+
+          script_path = dir / 'run.sh'
+          script_path.write <<~GIT_SSH
             #!/bin/sh
             ssh -F #{config_path} "$@"
           GIT_SSH
+          script_path.chmod 0700
+
           yield script_path
         end
       else
         yield nil
       end
-    end
-
-    def prepare_head_source
-      raise NotImplementedError
-    end
-
-    def patches
-      raise NotImplementedError
     end
   end
 end

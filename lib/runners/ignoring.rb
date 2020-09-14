@@ -9,7 +9,8 @@ module Runners
 
     def delete_ignored_files!
       Tempfile.create("gitignore-") do |gitignore|
-        File.write gitignore, ignore_patterns.join("\n")
+        gitignore << ignore_patterns.join("\n")
+        gitignore.flush
 
         # @see https://git-scm.com/docs/git-ls-files
         ignored_files, _ = workspace.shell.capture3!(
