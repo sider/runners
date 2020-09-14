@@ -44,7 +44,7 @@ s.add_test(
   "failure",
   type: "failure",
   analyzer: { name: "JavaSee", version: default_version },
-  message: /java.lang.ClassCastException: class java.lang.Integer cannot be cast/
+  message: "The analysis failed due to an unexpected error. See the analysis log for details."
 )
 
 s.add_test(

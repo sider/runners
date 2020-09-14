@@ -1,3 +1,5 @@
+require "etc"
+
 module Runners
   class Processor::Cppcheck < Processor
     include CPlusPlus
@@ -15,7 +17,8 @@ module Runners
           std: string?,
           project: string?,
           language: string?,
-          'bug-hunting': boolean?
+          'bug-hunting': boolean?,
+          parallel: boolean?,
         )
       }
 
@@ -67,6 +70,23 @@ module Runners
       config_linter[:language].then { |lang| lang ? ["--language=#{lang}"] : [] }
     end
 
+    def jobs
+      @jobs ||=
+        if config_linter[:parallel]
+          if config_linter[:project]
+            add_warning <<~MSG, file: config.path_name
+              The `parallel` option is ignored when the `project` option is specified.
+              This limitation is due to the behavior of #{analyzer_name}.
+            MSG
+            []
+          else
+            ["-j", Etc.nprocessors.to_s]
+          end
+        else
+          []
+        end
+    end
+
     def run_analyzer
       issues = []
 
@@ -105,6 +125,7 @@ module Runners
         *project,
         *language,
         *config_include_path,
+        *jobs,
         *args,
         *target
       )
@@ -115,10 +136,7 @@ module Runners
       end
 
       unless status.success?
-        message = stdout.strip
-        message = stderr.strip if message.empty?
-        message = "An unexpected error occurred. See the analysis log." if message.empty?
-        return Results::Failure.new(guid: guid, analyzer: analyzer, message: message)
+        return Results::Failure.new(guid: guid, analyzer: analyzer)
       end
 
       xml_root =

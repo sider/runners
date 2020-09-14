@@ -1,5 +1,0 @@
-overrides:
-  - files: "**/*.rb"
-    options:
-      preferSingleQuotes: false
-      printWidth: 120

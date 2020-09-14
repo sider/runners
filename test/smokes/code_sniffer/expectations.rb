@@ -1,4 +1,4 @@
-require_relative "phpcs3/expectations.rb"
+require_relative "phpcs3/expectations"
 
 s = Runners::Testing::Smoke
 

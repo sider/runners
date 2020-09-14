@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "0.37.2"
+default_version = "0.38.1"
 
 s.add_test(
   "success",
@@ -68,6 +68,17 @@ s.add_test(
       object: nil,
       git_blame_info: {
         commit: :_, line_hash: "35ccf42827417452a774c61c25dd5c4acc237dba", original_line: 1, final_line: 1
+      }
+    },
+    {
+      id: "experimental:spacing-around-angle-brackets",
+      path: "src/App.kt",
+      location: { start_line: 5, start_column: 22 },
+      message: "Unexpected spacing after \"<\"",
+      links: [],
+      object: nil,
+      git_blame_info: {
+        commit: :_, line_hash: "3229de70df8f5e854d699db96f4921d70261b435", original_line: 5, final_line: 5
       }
     },
     {

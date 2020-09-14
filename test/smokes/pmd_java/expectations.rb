@@ -223,7 +223,7 @@ s.add_test(
   "failure",
   type: "failure",
   analyzer: { name: "PMD Java", version: default_version },
-  message: "Unexpected error occurred. Please see the analysis log."
+  message: "The analysis failed due to an unexpected error. See the analysis log for details."
 )
 
 s.add_test(
