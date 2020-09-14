@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "2.5.3"
+default_version = "2.6.0"
 
 s.add_test(
   "success",
@@ -13,22 +13,6 @@ s.add_test(
   "failure",
   type: "success",
   issues: [
-    {
-      id: "bad-whitespace",
-      path: "bad.py",
-      location: { start_line: 3, start_column: 14 },
-      message: "No space allowed before bracket\n        print (\"{} * {} = {}\".format(i, j, i*j))\n              ^",
-      object: {
-        severity: "convention",
-        "message-id": "C0326",
-        module: "bad",
-        obj: ""
-      },
-      links: [],
-      git_blame_info: {
-        commit: :_, line_hash: "5df189fd2c155c1bd4dd79caaebc092d69a59b71", original_line: 3, final_line: 3
-      }
-    },
     {
       id: "missing-module-docstring",
       path: "bad.py",
