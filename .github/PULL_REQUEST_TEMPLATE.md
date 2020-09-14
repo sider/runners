@@ -1,8 +1,14 @@
 > Explain a summary, purpose, or background for this change.
 
-> Link related issues or pull requests, e.g. `Fix #123`, `Related to #456`, or `None`.
+<!-- E.g This change aims to fix... -->
 
-> Check the following items (please remove needless items).
+> Link related issues or pull requests.
+
+<!-- E.g. Fix #123, Related to #456, or None etc. -->
+
+> Check the following items.
+
+<!-- Please remove this section if needless. -->
 
 - [ ] Add a new [changelog](https://github.com/sider/runners/blob/master/CHANGELOG.md) entry if this change is notable.
 
