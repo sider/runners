@@ -6,11 +6,13 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.34.1...HEAD)
 
-- **Cppcheck** Run multiple threads with the `-j` option [#1462](https://github.com/sider/runners/pull/1462)
-
 Updated tools:
 
 - **Pylint** 2.5.3 -> 2.6.0 [#1407](https://github.com/sider/runners/pull/1407)
+
+Misc:
+
+- **Cppcheck** Run multiple threads with the `-j` option [#1462](https://github.com/sider/runners/pull/1462)
 
 ## 0.34.1
 
