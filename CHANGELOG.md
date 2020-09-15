@@ -13,10 +13,12 @@ Updated tools:
 - **Goodcheck** 2.5.1 -> 2.5.2 [#1445](https://github.com/sider/runners/pull/1445)
 - **Brakeman** 4.9.0 -> 4.9.1 [#1450](https://github.com/sider/runners/pull/1450)
 - **Checkstyle** 8.35 -> 8.36.1 [#1466](https://github.com/sider/runners/pull/1466)
+- **stylelint** 13.6.1 -> 13.7.1 [#1472](https://github.com/sider/runners/pull/1472)
 
 Misc:
 
 - **Cppcheck** Run multiple threads with the `-j` option [#1462](https://github.com/sider/runners/pull/1462)
+- **RuboCop** Add `standard` to optional gem list [#1479](https://github.com/sider/runners/pull/1479)
 - **RuboCop** Improve warning messages [#1480](https://github.com/sider/runners/pull/1480)
 - Replace ENTRYPOINT with docker-entrypoint.sh [#1463](https://github.com/sider/runners/pull/1463)
 
