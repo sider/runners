@@ -94,7 +94,7 @@ module Runners
         '--disable=import-error',
       )
 
-      return Results::Failure.new(guid: guid, message: stderr, analyzer: analyzer) unless stderr.empty?
+      return Results::Failure.new(guid: guid, analyzer: analyzer) unless stderr.empty?
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
         parse_result(stdout) do |issue|

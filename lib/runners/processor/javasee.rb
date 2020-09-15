@@ -49,11 +49,7 @@ module Runners
           construct_result(result, stdout, stderr)
         end
       else
-        Results::Failure.new(
-          guid: guid,
-          analyzer: analyzer,
-          message: stderr,
-        )
+        Results::Failure.new(guid: guid, analyzer: analyzer)
       end
     end
 

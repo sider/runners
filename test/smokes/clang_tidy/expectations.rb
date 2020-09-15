@@ -34,7 +34,7 @@ s.add_test(
       id: "clang-analyzer-deadcode.DeadStores",
       message: "Value stored to 't' during its initialization is never read",
       links: [],
-      object: {       severity: "warning" },
+      object: { severity: "warning" },
       git_blame_info: {
         commit: :_, line_hash: "325e902bbf21dcb5f6ba2e272378d9fa08242c39", original_line: 5, final_line: 5
       }
@@ -53,7 +53,7 @@ s.add_test(
       id: "clang-analyzer-core.CallAndMessage",
       message: "2nd function call argument is an uninitialized value",
       links: [],
-      object: {       severity: "warning" },
+      object: { severity: "warning" },
       git_blame_info: {
         commit: :_, line_hash: "325712945c407d3c9e9c806676bacebe5948046e", original_line: 6, final_line: 6
       }
@@ -75,7 +75,7 @@ s.add_test(
       id: "clang-analyzer-deadcode.DeadStores",
       message: "Value stored to 't' during its initialization is never read",
       links: [],
-      object: {       severity: "warning" },
+      object: { severity: "warning" },
       git_blame_info: {
         commit: :_, line_hash: "325e902bbf21dcb5f6ba2e272378d9fa08242c39", original_line: 5, final_line: 5
       }
@@ -94,7 +94,7 @@ s.add_test(
       id: "clang-analyzer-core.uninitialized.Assign",
       message: "Assigned value is garbage or undefined",
       links: [],
-      object: {       severity: "warning" },
+      object: { severity: "warning" },
       git_blame_info: {
         commit: :_, line_hash: "325e902bbf21dcb5f6ba2e272378d9fa08242c39", original_line: 6, final_line: 6
       }

@@ -4,7 +4,30 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.34.0...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.34.1...HEAD)
+
+Updated tools:
+
+- **Brakeman** 4.9.0 -> 4.9.1 [#1450](https://github.com/sider/runners/pull/1450)
+- **Checkstyle** 8.35 -> 8.36.1 [#1466](https://github.com/sider/runners/pull/1466)
+- **ESLint** 7.7.0 -> 7.9.0 [#1469](https://github.com/sider/runners/pull/1469)
+- **Goodcheck** 2.5.1 -> 2.5.2 [#1445](https://github.com/sider/runners/pull/1445)
+- **ktlint** 0.37.2 -> 0.39.0 [#1435](https://github.com/sider/runners/pull/1435) [#1482](https://github.com/sider/runners/pull/1482)
+- **Pylint** 2.5.3 -> 2.6.0 [#1407](https://github.com/sider/runners/pull/1407)
+- **stylelint** 13.6.1 -> 13.7.1 [#1472](https://github.com/sider/runners/pull/1472)
+
+Misc:
+
+- **Cppcheck** Run multiple threads with the `-j` option [#1462](https://github.com/sider/runners/pull/1462)
+- **RuboCop** Add `standard` to optional gem list [#1479](https://github.com/sider/runners/pull/1479)
+- **RuboCop** Improve warning messages [#1480](https://github.com/sider/runners/pull/1480)
+- Replace ENTRYPOINT with docker-entrypoint.sh [#1463](https://github.com/sider/runners/pull/1463)
+
+## 0.34.1
+
+[Full diff](https://github.com/sider/runners/compare/0.34.0...0.34.1)
+
+- Reconsider `Results::Failure` message [#1459](https://github.com/sider/runners/pull/1459)
 
 ## 0.34.0
 
