@@ -1,3 +1,4 @@
 linter:
   cppcheck:
+    parallel: true
     project: "helloworld.vcxproj"
