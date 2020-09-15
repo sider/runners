@@ -1,2 +1,0 @@
-test/smokes/**/*.rb
-!test/smokes/**/expectations.rb
