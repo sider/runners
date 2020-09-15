@@ -14,6 +14,7 @@ Updated tools:
 - **Brakeman** 4.9.0 -> 4.9.1 [#1450](https://github.com/sider/runners/pull/1450)
 - **Checkstyle** 8.35 -> 8.36.1 [#1466](https://github.com/sider/runners/pull/1466)
 - **stylelint** 13.6.1 -> 13.7.1 [#1472](https://github.com/sider/runners/pull/1472)
+- **ktlint**  0.38.1-> 0.39.0 [#1482](https://github.com/sider/runners/pull/1482)
 
 Misc:
 
