@@ -60,6 +60,7 @@ module Runners
       GemInstaller::Spec.new(name: "rubocop-thread_safety", version: []),
       GemInstaller::Spec.new(name: "salsify_rubocop", version: []),
       GemInstaller::Spec.new(name: "sanelint", version: []),
+      GemInstaller::Spec.new(name: "standard", version: []),
       GemInstaller::Spec.new(name: "unasukecop", version: []),
       GemInstaller::Spec.new(name: "unifacop", version: []),
       GemInstaller::Spec.new(name: "ws-style", version: []),
