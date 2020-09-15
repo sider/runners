@@ -6,7 +6,6 @@ See also another related project, called [devon_rex](https://github.com/sider/de
 
 ## Supported analyzers
 
-<!-- prettier-ignore-start -->
 <!-- AUTO-GENERATED-CONTENT:START (analyzers) -->
 All 36 analyzers are provided as a Docker image:
 
@@ -49,7 +48,6 @@ All 36 analyzers are provided as a Docker image:
 | TSLint | [docker](https://hub.docker.com/r/sider/runner_tslint), [source](https://github.com/palantir/tslint), [doc](https://help.sider.review/tools/javascript/tslint) | ✅ |
 | TyScan | [docker](https://hub.docker.com/r/sider/runner_tyscan), [source](https://github.com/sider/TyScan), [doc](https://help.sider.review/tools/javascript/tyscan) | ✅ |
 <!-- AUTO-GENERATED-CONTENT:END (analyzers) -->
-<!-- prettier-ignore-end -->
 
 ## Developer guide
 

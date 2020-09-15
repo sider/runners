@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "8.35"
+default_version = "8.36.1"
 
 s.add_test(
   "success",
@@ -12,10 +12,10 @@ s.add_test(
       links: %w[https://checkstyle.org/config_misc.html#Indentation],
       id: "IndentationCheck",
       path: "src/Hello.java",
-      location: { start_line: 5, start_column: 5 },
+      location: { start_line: 9, start_column: 5 },
       object: { severity: "warning" },
       git_blame_info: {
-        commit: :_, line_hash: "97c8f652b768ead8c8ae633a28485000d16ad703", original_line: 5, final_line: 5
+        commit: :_, line_hash: "97c8f652b768ead8c8ae633a28485000d16ad703", original_line: 9, final_line: 9
       }
     },
     {
@@ -23,10 +23,10 @@ s.add_test(
       links: %w[https://checkstyle.org/config_misc.html#Indentation],
       id: "IndentationCheck",
       path: "src/Hello.java",
-      location: { start_line: 6, start_column: 9 },
+      location: { start_line: 10, start_column: 9 },
       object: { severity: "warning" },
       git_blame_info: {
-        commit: :_, line_hash: "addb4c033c4233fd7e9025796b0a22ff829782f9", original_line: 6, final_line: 6
+        commit: :_, line_hash: "addb4c033c4233fd7e9025796b0a22ff829782f9", original_line: 10, final_line: 10
       }
     },
     {
@@ -34,10 +34,10 @@ s.add_test(
       links: %w[https://checkstyle.org/config_misc.html#Indentation],
       id: "IndentationCheck",
       path: "src/Hello.java",
-      location: { start_line: 7, start_column: 5 },
+      location: { start_line: 11, start_column: 5 },
       object: { severity: "warning" },
       git_blame_info: {
-        commit: :_, line_hash: "e266bf187351d458abacf0d6374d1c6659d82428", original_line: 7, final_line: 7
+        commit: :_, line_hash: "e266bf187351d458abacf0d6374d1c6659d82428", original_line: 11, final_line: 11
       }
     },
     {
@@ -49,6 +49,17 @@ s.add_test(
       object: { severity: "warning" },
       git_blame_info: {
         commit: :_, line_hash: "b4aa7ff94732722c55d79ff3788d3d5f22b197b2", original_line: 3, final_line: 3
+      }
+    },
+    {
+      message: "Javadoc tag '@param' should be preceded with an empty line.",
+      links: %w[https://checkstyle.org/config_javadoc.html#RequireEmptyLineBeforeBlockTagGroup],
+      id: "RequireEmptyLineBeforeBlockTagGroupCheck",
+      path: "src/Hello.java",
+      location: { start_line: 7 },
+      object: { severity: "warning" },
+      git_blame_info: {
+        commit: :_, line_hash: "c5eac3efafa02a21624306960aebdf27b3ce1706", original_line: 7, final_line: 7
       }
     }
   ]

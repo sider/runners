@@ -163,7 +163,7 @@ s.add_test(
     }
   ],
   analyzer: { name: "RuboCop", version: "0.79.0" },
-  warnings: [{ message: "Style/Tab has the wrong namespace - should be Layout", file: ".rubocop.yml" }]
+  warnings: [{ message: ".rubocop.yml: Style/Tab has the wrong namespace - should be Layout", file: ".rubocop.yml" }]
 )
 
 s.add_test(
@@ -255,7 +255,10 @@ s.add_test(
       message: /The `linter.rubocop.options` option is deprecated/,
       file: "sideci.yml"
     },
-    { message: "Metrics/LineLength has the wrong namespace - should be Layout", file: "my.rubocop.yml" }
+    {
+      message: "my.rubocop.yml: Metrics/LineLength has the wrong namespace - should be Layout",
+      file: "my.rubocop.yml"
+    }
   ]
 )
 
@@ -281,7 +284,7 @@ s.add_test(
   analyzer: { name: "RuboCop", version: "0.71.0" },
   warnings: [
     {
-      message: "Rails cops were removed from RuboCop 0.72. Use the `rubocop-rails` gem instead.",
+      message: "`-R/--rails` option and Rails cops will be removed from RuboCop 0.72. Use the `rubocop-rails` gem instead.",
       file: nil
     }
   ]
@@ -489,4 +492,21 @@ s.add_test(
     }
   ],
   analyzer: { name: "RuboCop", version: default_version }
+)
+
+s.add_test(
+  "unexpected_error",
+  type: "success",
+  issues: [],
+  analyzer: { name: "RuboCop", version: "0.90.0" },
+  warnings: [
+    {
+      message: "An error occurred while Layout/EmptyLineAfterMultilineCondition cop was inspecting backtrace_silencers.rb:3:0.",
+      file: "backtrace_silencers.rb"
+    },
+    {
+      message: "An error occurred while Layout/EmptyLineAfterMultilineCondition cop was inspecting lib/backtrace_silencers2.rb:1:0.",
+      file: "lib/backtrace_silencers2.rb"
+    }
+  ]
 )

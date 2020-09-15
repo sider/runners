@@ -60,6 +60,7 @@ module Runners
       GemInstaller::Spec.new(name: "rubocop-thread_safety", version: []),
       GemInstaller::Spec.new(name: "salsify_rubocop", version: []),
       GemInstaller::Spec.new(name: "sanelint", version: []),
+      GemInstaller::Spec.new(name: "standard", version: []),
       GemInstaller::Spec.new(name: "unasukecop", version: []),
       GemInstaller::Spec.new(name: "unifacop", version: []),
       GemInstaller::Spec.new(name: "ws-style", version: []),
@@ -140,28 +141,34 @@ module Runners
     end
 
     def check_rubocop_yml_warning(stderr)
-      error_occurred = false
-      stderr.each_line do |line|
-        case line
-        when /(.+): (.+has the wrong namespace - should be.+$)/
-          file = $1
-          msg = $2
-          add_warning(msg, file: relative_path(file).to_s)
-        when /Rails cops will be removed from RuboCop 0.72/
-          add_warning(<<~WARNING)
-            Rails cops were removed from RuboCop 0.72. Use the `rubocop-rails` gem instead.
-          WARNING
-        when /^\d+ errors? occurred:$/
-          # NOTE: "An error occurred... is displayed twice, "when an error happens", and "at the end of RuboCop runtime".
-          #       So, we handle "at the end of RuboCop runtime" only.
-          error_occurred = true
-        when /^(An error occurred while \S+ cop) was inspecting (.+):\d+:\d+\.$/
-          next unless error_occurred
-          file = $2
-          msg = $1
-          add_warning("RuboCop crashes: #{msg}", file: relative_path(file).to_s)
+      patterns = [
+        # @see https://github.com/rubocop-hq/rubocop/blob/v0.89.1/lib/rubocop/cop/registry.rb#L263
+        /(?<file>.+): .+ has the wrong namespace/,
+
+        # @see https://github.com/rubocop-hq/rubocop/blob/v0.71.0/lib/rubocop/runner.rb#L30
+        /Rails cops will be removed from RuboCop 0.72/,
+
+        # @see https://github.com/rubocop-hq/rubocop/blob/v0.89.1/lib/rubocop/cop/team.rb#L244
+        /An error occurred while .+ inspecting (?<file>.+):.+:/,
+      ]
+
+      warnings = Set[]
+
+      stderr.each_line(chomp: true) do |message|
+        patterns.each do |pattern|
+          message.match(pattern) do |match|
+            file = match.named_captures["file"]
+            if file
+              rel_file = relative_path(file).to_path
+              message.sub!(file, rel_file)
+              file = rel_file
+            end
+            warnings << [message, file]
+          end
         end
       end
+
+      warnings.each { |msg, file| add_warning(msg, file: file) }
     end
 
     def run_analyzer(options)
