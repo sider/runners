@@ -69,7 +69,7 @@ module Runners
           parse_result(stdout).each { |v| result.add_issue(v) }
         end
       rescue JSON::ParserError
-        Results::Failure.new(guid: guid, analyzer: analyzer, message: stderr)
+        Results::Failure.new(guid: guid, analyzer: analyzer)
       end
     end
 

@@ -8,4 +8,5 @@ ENV PATH ${RUNNERS_DIR}/bin:${PATH}
 USER $RUNNER_USER
 WORKDIR $RUNNER_USER_HOME
 
-ENTRYPOINT ["/usr/bin/timeout", "--signal=SIGUSR2", "--kill-after=10s", "<%= ENV.fetch('RUNNERS_TIMEOUT', '30m') %>", "runners", "--analyzer=<%= ENV.fetch('ANALYZER') %>"]
+COPY images/docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh", "runners", "--analyzer=<%= ENV.fetch('ANALYZER') %>"]

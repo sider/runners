@@ -87,7 +87,7 @@ s.add_test(
 s.add_test(
   "invalid_pattern",
   type: "failure",
-  message: "TyScan was failed with the exit status 1 since an unexpected error occurred.",
+  message: "The analysis failed due to an unexpected error. See the analysis log for details.",
   analyzer: { name: "TyScan", version: default_version },
   warnings: [{ message: "`tyscan test` failed. It may cause an unintended match.", file: "tyscan.yml" }]
 )

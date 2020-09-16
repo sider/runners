@@ -74,13 +74,7 @@ module Runners
         add_warning(stdout)
         Results::Success.new(guid: guid, analyzer: analyzer)
       else
-        Results::Failure.new(guid: guid, message: <<~MESSAGE, analyzer: analyzer)
-          stdout:
-          #{stdout}
-
-          stderr:
-          #{stderr}
-        MESSAGE
+        Results::Failure.new(guid: guid, analyzer: analyzer)
       end
     end
   end

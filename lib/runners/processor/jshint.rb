@@ -73,9 +73,13 @@ module Runners
       args << "--reporter=checkstyle"
       args << "--config=#{config_path}" if config_path
       args << (config_linter[:dir] || "./")
-      stdout, stderr, status = capture3(analyzer_bin, *args)
+      stdout, _stderr, status = capture3(analyzer_bin, *args)
+
       # If command is succeeded, status.exitstatus is 0 or 2(issues are found).
-      return Results::Failure.new(guid: guid, message: stderr, analyzer: analyzer) if status.exitstatus == 1
+      unless [0, 2].include? status.exitstatus
+        return Results::Failure.new(guid: guid, analyzer: analyzer)
+      end
+
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
         break result if status.exitstatus == 0
         parse_result(stdout) { |issue| result.add_issue(issue) }

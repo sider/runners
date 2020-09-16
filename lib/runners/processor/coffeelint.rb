@@ -37,7 +37,10 @@ module Runners
     def analyze(_changes)
       # NOTE: CoffeeLint exits with 1 when any issues exist.
       stdout, stderr, _status = capture3(nodejs_analyzer_bin, '.', '--reporter', 'raw', *config_file)
-      return Results::Failure.new(guid: guid, message: stderr, analyzer: analyzer) unless stderr.empty?
+
+      unless stderr.empty?
+        return Results::Failure.new(guid: guid, analyzer: analyzer)
+      end
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
         JSON.parse(stdout, symbolize_names: true).each do |file, issues|
