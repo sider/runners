@@ -7,5 +7,5 @@ repositories {
 }
 
 dependencies {
-    implementation "net.sourceforge.pmd:pmd-java:6.26.0"
+    implementation "net.sourceforge.pmd:pmd-java:6.27.0"
 }
