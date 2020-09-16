@@ -26,6 +26,7 @@ Misc:
 - **RuboCop** Add `standard` to optional gem list [#1479](https://github.com/sider/runners/pull/1479)
 - **RuboCop** Improve warning messages [#1480](https://github.com/sider/runners/pull/1480)
 - Replace ENTRYPOINT with docker-entrypoint.sh [#1463](https://github.com/sider/runners/pull/1463)
+- Make generated `Gemfile` content log valid as Ruby [#1485](https://github.com/sider/runners/pull/1485)
 
 ## 0.34.1
 
