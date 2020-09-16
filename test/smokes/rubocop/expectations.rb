@@ -510,3 +510,11 @@ s.add_test(
     }
   ]
 )
+
+# This test is for https://github.com/rubocop-hq/rubocop/issues/8718
+s.add_test(
+  "empty_file",
+  type: "failure",
+  message: /undefined method `last_line' for #<RuboCop::Cop::Offense::PseudoSourceRange:0x(.+)>/,
+  analyzer: { name: "RuboCop", version: default_version }
+)
