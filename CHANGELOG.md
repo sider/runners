@@ -18,6 +18,7 @@ Updated tools:
 - **PMD CPD** 6.26.0 -> 6.27.0 [#1447](https://github.com/sider/runners/pull/1447)
 - **PMD Java** 6.26.0 -> 6.27.0 [#1448](https://github.com/sider/runners/pull/1448)
 - **Pylint** 2.5.3 -> 2.6.0 [#1407](https://github.com/sider/runners/pull/1407)
+- **RuboCop** 0.89.1 -> 0.91.0 [#1483](https://github.com/sider/runners/pull/1483)
 - **stylelint** 13.6.1 -> 13.7.1 [#1472](https://github.com/sider/runners/pull/1472)
 
 Misc:
