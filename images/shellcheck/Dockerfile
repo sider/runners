@@ -4,7 +4,7 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM koalaman/shellcheck:v0.7.1 as shellcheck
 
-FROM sider/devon_rex_base:2.26.0
+FROM sider/devon_rex_base:2.26.1
 
 USER root
 RUN apt-get update && \
