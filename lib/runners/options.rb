@@ -8,7 +8,7 @@ module Runners
         @base = base
         @git_url = git_url
         @git_url_userinfo = git_url_userinfo
-        @refspec = Array(refspec)
+        @refspec = refspec ? [*refspec] : []
       end
     end
     private_constant :GitSource
