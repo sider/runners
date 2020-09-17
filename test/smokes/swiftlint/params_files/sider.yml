@@ -1,0 +1,4 @@
+linter:
+  swiftlint:
+    root_dir: foo
+    path: "@bar/files.lst"
