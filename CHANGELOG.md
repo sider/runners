@@ -32,6 +32,7 @@ Misc:
 - **RuboCop** Improve warning messages [#1480](https://github.com/sider/runners/pull/1480)
 - Replace ENTRYPOINT with docker-entrypoint.sh [#1463](https://github.com/sider/runners/pull/1463)
 - Make generated `Gemfile` content log valid as Ruby [#1485](https://github.com/sider/runners/pull/1485)
+- Run update-ca-certificates(8) before analyzing [#1489](https://github.com/sider/runners/pull/1489)
 
 ## 0.34.1
 
