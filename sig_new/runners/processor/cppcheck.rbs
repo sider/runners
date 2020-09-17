@@ -19,6 +19,7 @@ module Runners
     def std: () -> Array[String]
     def project: () -> Array[String]
     def language: () -> Array[String]
+    def jobs: () -> Array[String]
     def run_analyzer: () -> result
     def step_analyzer: (*String) -> result
     def parse_result: (REXML::Element) { (Issue) -> untyped } -> void
