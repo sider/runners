@@ -19,6 +19,7 @@ Updated tools:
 - **PMD Java** 6.26.0 -> 6.27.0 [#1448](https://github.com/sider/runners/pull/1448)
 - **Pylint** 2.5.3 -> 2.6.0 [#1407](https://github.com/sider/runners/pull/1407)
 - **stylelint** 13.6.1 -> 13.7.1 [#1472](https://github.com/sider/runners/pull/1472)
+- **SwiftLint** 0.40.0 -> 0.40.2 [#1481](https://github.com/sider/runners/pull/1481)
 
 Misc:
 
