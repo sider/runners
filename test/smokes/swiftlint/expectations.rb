@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "0.40.0"
+default_version = "0.40.2"
 
 s.add_test(
   "success",
@@ -193,3 +193,34 @@ s.add_test(
 #
 # @see https://realm.github.io/SwiftLint/unused_import.html
 s.add_test("unused_import", type: "success", issues: [], analyzer: { name: "SwiftLint", version: default_version })
+
+# @see https://github.com/realm/SwiftLint/pull/3313
+s.add_test(
+  "params_files",
+  type: "success",
+  analyzer: { name: "SwiftLint", version: default_version },
+  issues: [
+    {
+      path: "foo/bar/baz/test3.swift",
+      location: { start_line: 1 },
+      id: "identifier_name",
+      message: "Function name should start with a lowercase character: 'Hello3田()'",
+      links: %w[https://realm.github.io/SwiftLint/identifier_name.html],
+      object: { severity: "Error" },
+      git_blame_info: {
+        commit: :_, line_hash: "f7bc1a1b754c8835099fb68df561206b4275d9f9", original_line: 1, final_line: 1
+      }
+    },
+    {
+      path: "foo/test1.swift",
+      location: { start_line: 1 },
+      id: "identifier_name",
+      message: "Function name should start with a lowercase character: 'Hello1田()'",
+      links: %w[https://realm.github.io/SwiftLint/identifier_name.html],
+      object: { severity: "Error" },
+      git_blame_info: {
+        commit: :_, line_hash: "c22b783989b7c2e8fa79ca4be7d32969dd9fdf3b", original_line: 1, final_line: 1
+      }
+    }
+  ]
+)

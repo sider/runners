@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.34.1...HEAD)
 
+Updated environments:
+
+- **devon_rex** 2.25.0 -> 2.26.0 [#1487](https://github.com/sider/runners/pull/1487)
+
 Updated tools:
 
 - **Brakeman** 4.9.0 -> 4.9.1 [#1450](https://github.com/sider/runners/pull/1450)
@@ -20,6 +24,7 @@ Updated tools:
 - **PMD Java** 6.26.0 -> 6.27.0 [#1448](https://github.com/sider/runners/pull/1448)
 - **Pylint** 2.5.3 -> 2.6.0 [#1407](https://github.com/sider/runners/pull/1407)
 - **stylelint** 13.6.1 -> 13.7.1 [#1472](https://github.com/sider/runners/pull/1472)
+- **SwiftLint** 0.40.0 -> 0.40.2 [#1481](https://github.com/sider/runners/pull/1481)
 
 Misc:
 
@@ -27,6 +32,7 @@ Misc:
 - **RuboCop** Add `standard` to optional gem list [#1479](https://github.com/sider/runners/pull/1479)
 - **RuboCop** Improve warning messages [#1480](https://github.com/sider/runners/pull/1480)
 - Replace ENTRYPOINT with docker-entrypoint.sh [#1463](https://github.com/sider/runners/pull/1463)
+- Make generated `Gemfile` content log valid as Ruby [#1485](https://github.com/sider/runners/pull/1485)
 
 ## 0.34.1
 
