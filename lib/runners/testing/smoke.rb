@@ -241,7 +241,7 @@ module Runners
         cert.add_extension(extension.create_extension("basicConstraints", "CA:TRUE", true))
         cert.add_extension(extension.create_extension("subjectKeyIdentifier", "hash", false))
         cert.add_extension(extension.create_extension("authorityKeyIdentifier", "keyid:always", false))
-        cert.sign(key, OpenSSL::Digest::SHA256.new)
+        cert.sign(key, OpenSSL::Digest.new('SHA256'))
         Base64.strict_encode64(cert.to_s)
       end
 
