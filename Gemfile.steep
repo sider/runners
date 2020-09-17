@@ -2,4 +2,4 @@ source 'https://rubygems.org'
 
 gem 'steep'
 gem 'rake'
-gem 'strong_json', git: 'https://github.com/ybiquitous/strong_json.git', branch: 'fix-steep-failures'
+gem 'strong_json'
