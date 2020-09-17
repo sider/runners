@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/soutaro/strong_json.git
+  revision: cdd0f0c64753e1a02075bd7c25407e02269a5672
+  ref: master
+  specs:
+    strong_json (2.1.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -36,7 +43,6 @@ GEM
       parser (~> 2.7.0)
       rainbow (>= 2.2.2, < 4.0)
       rbs (~> 0.12.0)
-    strong_json (2.1.1)
     thor (1.0.1)
     thread_safe (0.3.6)
     tzinfo (1.2.7)
@@ -49,7 +55,7 @@ PLATFORMS
 DEPENDENCIES
   rake
   steep
-  strong_json
+  strong_json!
 
 BUNDLED WITH
    2.1.4
