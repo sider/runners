@@ -90,11 +90,13 @@ module Runners
     # Result to indicate that processing failed by some error.
     # Client programs may return this result.
     class Failure < Base
+      DEFAULT_MESSAGE = "The analysis failed due to an unexpected error. See the analysis log for details.".freeze
+
       # @dynamic message, analyzer
       attr_reader :message
       attr_reader :analyzer
 
-      def initialize(guid:, message:, analyzer: nil)
+      def initialize(guid:, message: DEFAULT_MESSAGE, analyzer: nil)
         super(guid: guid)
         @message = message
         @analyzer = analyzer

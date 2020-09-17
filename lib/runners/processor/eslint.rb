@@ -188,7 +188,7 @@ module Runners
         FileUtils.copy_file(DEFAULT_ESLINT_CONFIG, ".eslintrc.yml")
         run_analyzer
       else
-        Results::Failure.new(guid: guid, message: stderr.strip, analyzer: analyzer)
+        Results::Failure.new(guid: guid, analyzer: analyzer)
       end
     end
 

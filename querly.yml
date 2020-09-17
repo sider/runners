@@ -3,7 +3,7 @@ rules:
     pattern:
       - _.exitstatus()
     message: |
-      Note that `Process#exitstatus` can return `nil`.
+      Be careful that `Process#exitstatus` may return `nil`.
 
       `Process#exitstatus` returns `nil` when the process does not exit normally.
       This means the process may be abort(2)-ed or core-dumped.
@@ -13,6 +13,7 @@ rules:
       * https://ruby-doc.org/core/Process/Status.html#method-i-exitstatus
     justification:
       - When you are not interested in aborted or core-dumped.
+      - When you confirm that `NoMethodError` on `NilClass` will not occur.
 
   - id: sider.runners.trace_writer_status
     pattern:
@@ -109,3 +110,18 @@ rules:
           Integer(result[:line])
     justification:
       - When the use of `.to_i` can make the code more simple
+
+  - id: sider.runners.failure_message
+    pattern: "Results::Failure.new(..., message: _, ...)"
+    message: |
+      Be careful whether the `message` is user-friendly.
+
+      The message set to `Results::Failure` may be shown in the UI.
+      For example, setting the STDERR output as the message may not be user-friendly. (a too long stack trace, etc.)
+    justification:
+      - When setting a user-friendly message.
+    examples:
+      - before: |
+          Results::Failure.new(guid: guid, message: stderr, analyzer: analyzer)
+        after: |
+          Results::Failure.new(guid: guid, analyzer: analyzer)

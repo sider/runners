@@ -2,7 +2,7 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM sider/devon_rex_npm:2.25.0
+FROM sider/devon_rex_npm:2.26.1
 
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
@@ -41,4 +41,5 @@ ENV PATH ${RUNNERS_DIR}/bin:${PATH}
 USER $RUNNER_USER
 WORKDIR $RUNNER_USER_HOME
 
-ENTRYPOINT ["/usr/bin/timeout", "--signal=SIGUSR2", "--kill-after=10s", "30m", "runners", "--analyzer=coffeelint"]
+COPY images/docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh", "runners", "--analyzer=coffeelint"]

@@ -155,10 +155,13 @@ module Runners
           git_url: URI.join("file:///", project_dir).to_s,
         }
         runners_options = JSON.dump({ source: source })
+        runners_timeout = ENV['RUNNERS_TIMEOUT']
         commands = ["docker", "run"]
         commands << "--rm"
         commands << "--mount" << "type=bind,source=#{repo_dir},target=#{project_dir}"
         commands << "--env" << "RUNNERS_OPTIONS=#{runners_options}"
+        commands << "--env" << "RUNNERS_TIMEOUT=#{runners_timeout}" if runners_timeout
+        commands << "--env" << "DEBUG=true" if debug?
         commands << "--network=none" if params.offline
         commands << docker_image
         commands << params.pattern.dig(:result, :guid)
