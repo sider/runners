@@ -1,11 +1,4 @@
-class URI
-  def self.parse: (String) -> URI
-  def self.join: (*String) -> URI
-
-  def path: () -> String
-  def scheme: () -> String
-  def host: () -> String
-  def hostname: () -> String
-  def port: () -> Integer
-  def userinfo=: (String) -> String
+module URI
+  def self.parse: (String) -> URI::Generic
+  def self.join: (*String) -> URI::Generic
 end

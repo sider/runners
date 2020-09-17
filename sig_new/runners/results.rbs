@@ -24,10 +24,12 @@ module Runners
     end
 
     class Failure < Base
+      DEFAULT_MESSAGE: String
+
       attr_reader message: String
       attr_reader analyzer: Analyzer?
 
-      def initialize: (guid: String, message: String, ?analyzer: Analyzer?) -> void
+      def initialize: (guid: String, ?message: String, ?analyzer: Analyzer?) -> void
     end
 
     class Error < Base

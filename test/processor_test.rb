@@ -438,11 +438,11 @@ class ProcessorTest < Minitest::Test
     with_workspace do |workspace|
       processor = new_processor(workspace: workspace)
 
-      error = assert_raises(ArgumentError) { processor.extract_version!([]) }
-      assert_equal 'Unspecified command: `["--version"]`', error.message
+      error = assert_raises(Errno::ENOENT) { processor.extract_version!([]) }
+      assert_equal "No such file or directory - --version", error.message
 
       error = assert_raises(ArgumentError) { processor.extract_version!([], nil) }
-      assert_equal "Unspecified command", error.message
+      assert_match "wrong number of arguments (given 0, expected 1+)", error.message
 
       processor.stub :capture3!, ["no version", ""] do
         error = assert_raises(ArgumentError) { processor.extract_version!("foo", "-v") }

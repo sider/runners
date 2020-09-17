@@ -107,13 +107,9 @@ module Runners
     end
 
     def extract_version!(command, version_option = extract_version_option, pattern: /v?(\d+\.\d+(\.\d+)?)\b/)
-      command_line = Array(command) + Array(version_option)
-      cmd = command_line.first or raise ArgumentError, "Unspecified command"
-      cmd_opts = command_line.drop(1).tap do |opts|
-        raise ArgumentError, "Unspecified command: `#{command_line.inspect}`" if opts.empty?
-      end
-      outputs = capture3!(cmd, *cmd_opts)
-      outputs.each do |output|
+      command_line = [*command, *version_option]
+      stdout, stderr = capture3!(*command_line)
+      [stdout, stderr].each do |output|
         pattern.match(output) do |match|
           found = match[1]
           return found if found
@@ -278,7 +274,14 @@ module Runners
     end
 
     def comma_separated_list(value)
-      values = Array(value).flat_map { |s| s.split(/\s*,\s*/) }
+      values = Array(value).flat_map do |str|
+        case str
+        when String
+          str.split(/\s*,\s*/)
+        else
+          raise "#{str.inspect} must be a string"
+        end
+      end
       values.empty? ? nil : values.join(",")
     end
   end

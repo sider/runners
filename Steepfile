@@ -8,5 +8,7 @@ target :lib do
   library "pathname"
   library "set"
   library "tmpdir"
+  library "forwardable"
+  library "uri"
   library "strong_json"
 end

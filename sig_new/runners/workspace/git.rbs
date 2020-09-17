@@ -5,7 +5,7 @@ module Runners
       def git_source: () -> Options::GitSource
       def try_count: () -> Integer
       def sleep_lambda: () -> ^(Integer) -> Numeric
-      def remote_url: () -> URI
+      def remote_url: () -> URI::Generic
       def git_fetch_args: () -> Array[String]
     end
   end
