@@ -8,17 +8,25 @@ All notable changes to this project will be documented in this file.
 
 Updated tools:
 
-- **Pylint** 2.5.3 -> 2.6.0 [#1407](https://github.com/sider/runners/pull/1407)
-- **ktlint** 0.37.2 -> 0.38.1 [#1435](https://github.com/sider/runners/pull/1435)
-- **Goodcheck** 2.5.1 -> 2.5.2 [#1445](https://github.com/sider/runners/pull/1445)
 - **Brakeman** 4.9.0 -> 4.9.1 [#1450](https://github.com/sider/runners/pull/1450)
 - **Checkstyle** 8.35 -> 8.36.1 [#1466](https://github.com/sider/runners/pull/1466)
+- **detekt** 1.11.2 -> 1.13.1 [#1468](https://github.com/sider/runners/pull/1468)
+- **ESLint** 7.7.0 -> 7.9.0 [#1469](https://github.com/sider/runners/pull/1469)
+- **GolangCI-Lint** 1.30.0 -> 1.31.0 [#1465](https://github.com/sider/runners/pull/1465)
+- **Goodcheck** 2.5.1 -> 2.5.2 [#1445](https://github.com/sider/runners/pull/1445)
+- **ktlint** 0.37.2 -> 0.39.0 [#1435](https://github.com/sider/runners/pull/1435) [#1482](https://github.com/sider/runners/pull/1482)
+- **PMD CPD** 6.26.0 -> 6.27.0 [#1447](https://github.com/sider/runners/pull/1447)
+- **PMD Java** 6.26.0 -> 6.27.0 [#1448](https://github.com/sider/runners/pull/1448)
+- **Pylint** 2.5.3 -> 2.6.0 [#1407](https://github.com/sider/runners/pull/1407)
 - **stylelint** 13.6.1 -> 13.7.1 [#1472](https://github.com/sider/runners/pull/1472)
 
 Misc:
 
 - **Cppcheck** Run multiple threads with the `-j` option [#1462](https://github.com/sider/runners/pull/1462)
+- **RuboCop** Add `standard` to optional gem list [#1479](https://github.com/sider/runners/pull/1479)
+- **RuboCop** Improve warning messages [#1480](https://github.com/sider/runners/pull/1480)
 - Replace ENTRYPOINT with docker-entrypoint.sh [#1463](https://github.com/sider/runners/pull/1463)
+- Make generated `Gemfile` content log valid as Ruby [#1485](https://github.com/sider/runners/pull/1485)
 
 ## 0.34.1
 

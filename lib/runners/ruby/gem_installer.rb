@@ -76,9 +76,8 @@ module Runners
 
         (lines.join("\n") + "\n").tap do |content|
           trace_writer.message <<~MSG
-            ---
+            ### Auto-generated Gemfile ###
             #{content.chomp}
-            ---
           MSG
         end
       end
