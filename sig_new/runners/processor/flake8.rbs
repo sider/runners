@@ -2,22 +2,24 @@ module Runners
   class Processor::Flake8 < Processor
     include Python
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[Schema::base_runner_config]
+    end
+    Schema: SchemaClass
 
     OUTPUT_FORMAT: String
-    OUTPUT_PATTERN: String
+    OUTPUT_PATTERN: Regexp
     DEFAULT_TARGET: String
 
     private
-    def prepare_config: () -> untyped
-    def prepare_plugins: () -> untyped
-    def detected_python_version: () -> untyped
-    def specified_python_version: () -> untyped
-    def specified_python_version_via_pyenv: () -> untyped
-    def ignored_config_path: () -> untyped
-    def python2_version: () -> untyped
-    def python3_version: () -> untyped
-    def parse_result: (untyped output) { (untyped) -> untyped } -> untyped
-    def run_analyzer: () -> untyped
+    def prepare_config: () -> void
+    def prepare_plugins: () -> void
+    def detected_python_version: () -> String
+    def specified_python_version: () -> String?
+    def specified_python_version_via_pyenv: () -> String?
+    def ignored_config_path: () -> Pathname
+    def python2_version: () -> String
+    def python3_version: () -> String
+    def parse_result: (String) { (Issue) -> void } -> void
   end
 end

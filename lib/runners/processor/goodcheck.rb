@@ -2,7 +2,8 @@ module Runners
   class Processor::Goodcheck < Processor
     include Ruby
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
       let :rule, object(
         id: string,
         message: string,
@@ -47,7 +48,7 @@ module Runners
       end
 
       if !status.success? && !stderr.empty?
-        stderr.lines.first.chomp
+        stderr.lines.first&.chomp
       else
         nil
       end
@@ -109,9 +110,9 @@ module Runners
       end
     end
 
-    def setup(&block)
+    def setup
       begin
-        install_gems default_gem_specs, constraints: CONSTRAINTS, &block
+        install_gems(default_gem_specs, constraints: CONSTRAINTS) { yield }
       rescue InstallGemsFailure => exn
         trace_writer.error exn.message
         return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)

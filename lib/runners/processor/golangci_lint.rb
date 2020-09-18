@@ -2,8 +2,9 @@ module Runners
   class Processor::GolangCiLint < Processor
     include Go
 
-    Schema =
+    Schema = _ =
       StrongJSON.new do
+        # @type self: SchemaClass
         let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
           fields.merge!({
             target: enum?(string, array(string)),
@@ -45,12 +46,6 @@ module Runners
       "golangci-lint"
     end
 
-    def analyze(_changes)
-      run_analyzer
-    end
-
-    private
-
     # @see https://github.com/golangci/golangci-lint/blob/v1.25.1/pkg/exitcodes/exitcodes.go
     #     Success              = 0
     #     IssuesFound          = 1
@@ -61,7 +56,7 @@ module Runners
     #     NoConfigFileDetected = 6
     #     ErrorWasLogged       = 7
 
-    def run_analyzer
+    def analyze(_changes)
       stdout, stderr, status = capture3(analyzer_bin, "run", *analyzer_options)
       if (status.exitstatus == 0 || status.exitstatus == 1) && !stdout.empty? && stderr.empty?
         return Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
@@ -79,6 +74,8 @@ module Runners
 
       raise "Analysis errored with the exit status #{status.exitstatus.inspect}."
     end
+
+    private
 
     def analyzer_options
       [].tap do |opts|

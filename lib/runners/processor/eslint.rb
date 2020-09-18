@@ -180,7 +180,8 @@ module Runners
       output_json = report_file_exist? ? read_report_json { nil } : nil
 
       if [0, 1].include?(status.exitstatus) && output_json
-        Results::Success.new(guid: guid, analyzer: analyzer, issues: parse_result(output_json))
+        # TODO: steep-ignore
+        Results::Success.new(guid: guid, analyzer: analyzer, issues: parse_result(_ = output_json))
       elsif no_linting_files?(stderr)
         Results::Success.new(guid: guid, analyzer: analyzer)
       elsif no_eslint_config?(stderr)

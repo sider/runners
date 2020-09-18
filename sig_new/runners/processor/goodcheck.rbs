@@ -2,14 +2,18 @@ module Runners
   class Processor::Goodcheck < Processor
     include Ruby
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def rule: () -> StrongJSON::Type::Object[untyped]
+      def runner_config: () -> StrongJSON::Type::Object[Schema::ruby_runner_config]
+    end
+    Schema: SchemaClass
 
     CONSTRAINTS: Hash[String, Array[String]]
     DEFAULT_TARGET: String
     DEFAULT_CONFIG_FILE: String
 
     private
-    def goodcheck_test: () -> untyped
-    def goodcheck_check: () -> untyped
+    def goodcheck_test: () -> String?
+    def goodcheck_check: () -> Results::Success
   end
 end

@@ -2,7 +2,8 @@ module Runners
   class Processor::Flake8 < Processor
     include Python
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
                         target: enum?(string, array(string)),
@@ -35,8 +36,22 @@ module Runners
       yield
     end
 
-    def analyze(changes)
-      run_analyzer
+    def analyze(_changes)
+      capture3!(
+        analyzer_bin,
+        "--exit-zero",
+        "--output-file", report_file,
+        "--format", OUTPUT_FORMAT,
+        "--append-config", ignored_config_path.to_path,
+        *(config_linter[:config]&.then { |c| ["--config", c] }),
+        *Array(config_linter[:target] || DEFAULT_TARGET),
+      )
+      output = read_report_file
+
+      Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+        next if output.empty?
+        parse_result(output) { |issue| result.add_issue(issue) }
+      end
     end
 
     private
@@ -63,7 +78,7 @@ module Runners
         specified_python_version,
         specified_python_version_via_pyenv,
         python3_version
-      ].compact.first
+      ].compact.first or raise "Cannot detect Python version"
     end
 
     def specified_python_version
@@ -112,24 +127,6 @@ module Runners
           id: id,
           message: message,
         )
-      end
-    end
-
-    def run_analyzer
-      capture3!(
-        analyzer_bin,
-        "--exit-zero",
-        "--output-file", report_file,
-        "--format", OUTPUT_FORMAT,
-        "--append-config", ignored_config_path.to_path,
-        *(config_linter[:config]&.then { |c| ["--config", c] }),
-        *Array(config_linter[:target] || DEFAULT_TARGET),
-      )
-      output = read_report_file
-
-      Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        next if output.empty?
-        parse_result(output) { |issue| result.add_issue(issue) }
       end
     end
   end

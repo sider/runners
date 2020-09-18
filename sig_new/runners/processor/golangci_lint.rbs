@@ -2,15 +2,18 @@ module Runners
   class Processor::GolangCiLint < Processor
     include Go
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[Schema::base_runner_config]
+      def issue: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
     DEFAULT_TARGET: String
 
     private
-    def run_analyzer: () -> untyped
-    def analyzer_options: () -> untyped
-    def path_to_config: () -> (untyped | nil)
-    def analysis_targets: () -> untyped
-    def parse_result: (untyped output) { (untyped) -> untyped } -> untyped
+    def analyzer_options: () -> Array[String]
+    def path_to_config: () -> String?
+    def analysis_targets: () -> Array[String]
+    def parse_result: (String) { (Issue) -> void } -> void
   end
 end
