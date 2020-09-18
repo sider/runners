@@ -1,15 +1,18 @@
 module Runners
   class Processor::Hadolint < Processor
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[Schema::base_runner_config]
+      def issue: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
     DEFAULT_TARGET: String
     DEFAULT_TARGET_EXCLUDED: String
 
     private
-    def analyzer_options: () -> untyped
-    def analysis_target: () -> untyped
-    def run_analyzer: () -> untyped
-    def parse_result: (untyped stdout) -> untyped
-    def link_to_wiki: (untyped id) -> untyped
+    def analyzer_options: () -> Array[String]
+    def analysis_target: () -> Array[String]
+    def parse_result: (String) -> Array[Issue]
+    def link_to_wiki: (String) -> Array[String]
   end
 end

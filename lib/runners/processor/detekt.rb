@@ -5,7 +5,7 @@ module Runners
 
     Schema = _ = StrongJSON.new do
       # @type self: SchemaClass
-      let :runner_config, Runners::Schema::BaseConfig.java.update_fields { |fields|
+      let :runner_config, Schema::BaseConfig.java.update_fields { |fields|
         fields.merge!({
           baseline: string?,
           config: enum?(string, array(string)),

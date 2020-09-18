@@ -1,6 +1,7 @@
 module Runners
   class Processor::Hadolint < Processor
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
                         target: enum?(string, array(string)),
@@ -21,7 +22,22 @@ module Runners
     DEFAULT_TARGET_EXCLUDED = "*.{erb,txt}".freeze # Exclude templates
 
     def analyze(_changes)
-      run_analyzer
+      if analysis_target.empty?
+        trace_writer.message "Dockerfile not found."
+        return Results::Success.new(guid: guid, analyzer: analyzer)
+      end
+
+      stdout, stderr, status = capture3(analyzer_bin, *analyzer_options, *analysis_target)
+
+      if status.exitstatus == 1 && stderr.include?("openBinaryFile: does not exist (No such file or directory)")
+        return Results::Failure.new(guid: guid, analyzer: analyzer, message: "Invalid Dockerfile(s) specified.")
+      end
+
+      begin
+        Results::Success.new(guid: guid, analyzer: analyzer, issues: parse_result(stdout))
+      rescue JSON::ParserError
+        Results::Failure.new(guid: guid, analyzer: analyzer)
+      end
     end
 
     private
@@ -52,27 +68,6 @@ module Runners
         end
     end
 
-    def run_analyzer
-      if analysis_target.empty?
-        trace_writer.message "Dockerfile not found."
-        return Results::Success.new(guid: guid, analyzer: analyzer)
-      end
-
-      stdout, stderr, status = capture3(analyzer_bin, *analyzer_options, *analysis_target)
-
-      if status.exitstatus == 1 && stderr.include?("openBinaryFile: does not exist (No such file or directory)")
-        return Results::Failure.new(guid: guid, analyzer: analyzer, message: "Invalid Dockerfile(s) specified.")
-      end
-
-      begin
-        Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-          parse_result(stdout).each { |v| result.add_issue(v) }
-        end
-      rescue JSON::ParserError
-        Results::Failure.new(guid: guid, analyzer: analyzer)
-      end
-    end
-
     # Output format:
     #
     #     { line: number, code: rule, message: description, column: number, file: filepath, level: level }
@@ -82,7 +77,6 @@ module Runners
     #     {"line":14,"code":"DL3003","message":"Use WORKDIR to switch to a directory","column":1,"file":"images/hadolint/Dockerfile","level":"warning"}
     #
     # @see https://github.com/hadolint/hadolint#rules
-    # @param stdout [String]
     def parse_result(stdout)
       JSON.parse(stdout, symbolize_names: true).map do |file|
         path = relative_path(file[:file])

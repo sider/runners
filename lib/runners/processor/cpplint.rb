@@ -2,7 +2,7 @@ module Runners
   class Processor::Cpplint < Processor
     Schema = _ = StrongJSON.new do
       # @type self: SchemaClass
-      let :runner_config, Runners::Schema::BaseConfig.base.update_fields { |fields|
+      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
           target: enum?(string, array(string)),
           extensions: string?,

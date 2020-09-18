@@ -8,7 +8,7 @@ module Runners
 
     Schema = _ = StrongJSON.new do
       # @type self: SchemaClass
-      let :runner_config, Runners::Schema::BaseConfig.cplusplus.update_fields { |fields|
+      let :runner_config, Schema::BaseConfig.cplusplus.update_fields { |fields|
         fields.merge!(
           target: enum?(string, array(string)),
           ignore: enum?(string, array(string)),
