@@ -3,6 +3,7 @@ require "unification_assertion"
 require 'parallel'
 require "amazing_print"
 require "rainbow"
+require "openssl"
 
 module Runners
   module Testing
