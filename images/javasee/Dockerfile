@@ -4,7 +4,7 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM sider/devon_rex_java:2.26.1
 
-ARG JAVASEE_VERSION=0.1.3
+ARG JAVASEE_VERSION=0.2.0
 
 RUN cd /tmp && \
     curl -fsSLO --compressed https://github.com/sider/JavaSee/releases/download/${JAVASEE_VERSION}/JavaSee-bin-${JAVASEE_VERSION}.zip && \
