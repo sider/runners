@@ -172,3 +172,22 @@ s.add_test(
   ],
   analyzer: { name: "cpplint", version: default_version }
 )
+
+s.add_test(
+  "default_rules",
+  type: "success",
+  issues: [
+    {
+      id: "runtime/printf",
+      path: "src/foo/sample.cpp",
+      location: { start_line: 42 },
+      message: 'Potential format string bug. Do printf("%s", str.c_str()) instead.',
+      links: [],
+      object: { confidence: "4" },
+      git_blame_info: {
+        commit: :_, line_hash: "2f1bd03f5ae88a98b3f874b1889c3ea965c58267", original_line: 42, final_line: 42
+      }
+    }
+  ],
+  analyzer: { name: "cpplint", version: default_version }
+)
