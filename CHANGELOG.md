@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.35.0...HEAD)
 
+- **RuboCop** Add `rubocop-codetakt` as optional gem [#1506](https://github.com/sider/runners/pull/1506)
+
 ## 0.35.0
 
 [Full diff](https://github.com/sider/runners/compare/0.34.1...0.35.0)
