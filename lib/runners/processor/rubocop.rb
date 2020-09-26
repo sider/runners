@@ -53,6 +53,7 @@ module Runners
       GemInstaller::Spec.new(name: "otacop", version: []),
       GemInstaller::Spec.new(name: "pulis", version: []),
       GemInstaller::Spec.new(name: "rubocop-cask", version: []),
+      GemInstaller::Spec.new(name: "rubocop-codetakt", version: []),
       GemInstaller::Spec.new(name: "rubocop-config-umbrellio", version: []),
       GemInstaller::Spec.new(name: "rubocop-github", version: []),
       GemInstaller::Spec.new(name: "rubocop-rails_config", version: []),
