@@ -46,7 +46,10 @@ module Runners
     private
 
     def warn_recommended_config_file_release
-      add_warning "Sider's recommended configuration file is about to release in mid October 2020. After the release, Sider will automatically apply our recommended set of rules if you don't have the cpplint configuration file called CPPLINT.cfg in your repository.", file: 'CPPLINT.cfg'
+      add_warning <<~MSG, file: 'CPPLINT.cfg'
+        Sider's recommended configuration file is about to release in mid October 2020.
+        After the release, Sider will automatically apply our recommended set of rules if you don't have the cpplint configuration file called CPPLINT.cfg in your repository.
+      MSG
     end
 
     def prepare_config_file
