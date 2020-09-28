@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 [Full diff](https://github.com/sider/runners/compare/0.35.0...HEAD)
 
 - **RuboCop** Update optional gem list [#1506](https://github.com/sider/runners/pull/1506)
+- Delete environment variables after used [#1520](https://github.com/sider/runners/pull/1520)
 
 ## 0.35.0
 
