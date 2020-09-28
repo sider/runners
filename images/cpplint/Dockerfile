@@ -32,6 +32,9 @@ RUN cd ${RUNNER_USER_HOME} && \
     done && \
     echo "The default Python runtime version is '$(python --version)'"
 
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/cpplint/sider_recommended_CPPLINT.cfg ${RUNNER_USER_HOME}/
+
+
 # Copy the main source code
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} bin ${RUNNERS_DIR}/bin
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} lib ${RUNNERS_DIR}/lib
