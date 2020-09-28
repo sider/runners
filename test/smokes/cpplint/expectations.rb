@@ -38,16 +38,22 @@ s.add_test(
       }
     }
   ],
+  warnings: [
+    {
+      message: "Sider's recommended configuration file is about to release in mid October 2020. After the release, Sider will automatically apply our recommended set of rules if you don't have the cpplint configuration file called CPPLINT.cfg in your repository.",
+      file: "CPPLINT.cfg"
+    }
+  ],
   analyzer: { name: "cpplint", version: default_version }
 )
 
-s.add_test("official_samples", type: "success", issues: :_, analyzer: { name: "cpplint", version: default_version })
+s.add_test("official_samples", type: "success", issues: :_, warnings: :_, analyzer: { name: "cpplint", version: default_version })
 
-s.add_test("option_exclude", type: "success", issues: [], analyzer: { name: "cpplint", version: default_version })
+s.add_test("option_exclude", type: "success", issues: [], warnings: :_, analyzer: { name: "cpplint", version: default_version })
 
-s.add_test("option_exclude_multi", type: "success", issues: [], analyzer: { name: "cpplint", version: default_version })
+s.add_test("option_exclude_multi", type: "success", issues: [], warnings: :_, analyzer: { name: "cpplint", version: default_version })
 
-s.add_test("option_extensions", type: "success", issues: [], analyzer: { name: "cpplint", version: default_version })
+s.add_test("option_extensions", type: "success", issues: [], warnings: :_, analyzer: { name: "cpplint", version: default_version })
 
 s.add_test(
   "option_filter",
@@ -65,10 +71,11 @@ s.add_test(
       }
     }
   ],
+  warnings: :_,
   analyzer: { name: "cpplint", version: default_version }
 )
 
-s.add_test("option_headers", type: "success", issues: [], analyzer: { name: "cpplint", version: default_version })
+s.add_test("option_headers", type: "success", issues: [], warnings: :_, analyzer: { name: "cpplint", version: default_version })
 
 s.add_test(
   "option_linelength",
@@ -95,6 +102,7 @@ s.add_test(
       }
     }
   ],
+  warnings: :_,
   analyzer: { name: "cpplint", version: default_version }
 )
 
@@ -114,6 +122,7 @@ s.add_test(
       }
     }
   ],
+  warnings: :_,
   analyzer: { name: "cpplint", version: default_version }
 )
 
@@ -144,6 +153,7 @@ s.add_test(
       }
     }
   ],
+  warnings: :_,
   analyzer: { name: "cpplint", version: default_version }
 )
 
@@ -170,6 +180,7 @@ s.add_test(
       git_blame_info: nil
     }
   ],
+  warnings: :_,
   analyzer: { name: "cpplint", version: default_version }
 )
 
@@ -187,6 +198,12 @@ s.add_test(
       git_blame_info: {
         commit: :_, line_hash: "2f1bd03f5ae88a98b3f874b1889c3ea965c58267", original_line: 42, final_line: 42
       }
+    }
+  ],
+  warnings: [
+    {
+      message: "Sider's recommended configuration file is about to release in mid October 2020. After the release, Sider will automatically apply our recommended set of rules if you don't have the cpplint configuration file called CPPLINT.cfg in your repository.",
+      file: "CPPLINT.cfg"
     }
   ],
   analyzer: { name: "cpplint", version: default_version }
