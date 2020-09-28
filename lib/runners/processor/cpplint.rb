@@ -22,6 +22,11 @@ module Runners
 
     DEFAULT_TARGET = ".".freeze
 
+    def setup
+      prepare_config_file
+      yield
+    end
+
     def analyze(changes)
       _stdout, stderr, status = capture3 analyzer_bin, *analyzer_options
 
@@ -38,6 +43,15 @@ module Runners
     end
 
     private
+
+    def prepare_config_file
+      user_config_filepath = current_dir / 'CPPLINT.cfg'
+      recommended_config_filepath = Pathname(Dir.home) / 'sider_recommended_CPPLINT.cfg'
+
+      return if user_config_filepath.exist?
+
+      FileUtils.copy(recommended_config_filepath, user_config_filepath)
+    end
 
     def analyzer_options
       [].tap do |opts|
