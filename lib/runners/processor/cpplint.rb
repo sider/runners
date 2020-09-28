@@ -23,7 +23,10 @@ module Runners
     DEFAULT_TARGET = ".".freeze
 
     def setup
-      prepare_config_file
+      unless config_linter[:filter]
+        prepare_config_file
+      end
+
       yield
     end
 
