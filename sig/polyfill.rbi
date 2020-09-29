@@ -107,6 +107,7 @@ end
 class FileUtils
   def self.rm: (Array<String>) -> void
   def self.install: (String, String, ?any) -> void
+  def self.copy: (any, any) -> void
   def self.copy_entry: (any, any) -> void
   def self.remove_entry: (String|Pathname, ?bool) -> void
   def self.rm_rf: (String | Pathname | Array<String> | Array<Pathname>) -> void
