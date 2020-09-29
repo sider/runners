@@ -3,8 +3,11 @@ module Runners
     # When the notification period expires, set `activate` to `true` to activate our default configuration file.
     # If it is `false`, this method just notifies release of it is approaching as a warning message.
     def deploy_recommended_config_file(activate, release_date, config_filename, skips=[])
-      notify_release(config_filename, release_date)
-      deploy_file(config_filename, skips)
+      if activate
+        deploy_file(config_filename, skips)
+      else
+        notify_release(config_filename, release_date)
+      end
     end
 
     private
