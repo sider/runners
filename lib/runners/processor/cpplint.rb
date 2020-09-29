@@ -27,8 +27,9 @@ module Runners
     def setup
       # TODO: When the notification period expires, comment out the below line (warn_recommended_config_file_release)
       #       and uncomment the second line (prepare_config_file) to activate our default configuration file.
-      warn_recommended_config_file_release
-      # prepare_config_file
+      config_filename = 'CPPLINT.cfg'
+      warn_recommended_config_file_release(config_filename, "mid October 2020")
+      prepare_config_file(config_filename)
       yield
     end
 
