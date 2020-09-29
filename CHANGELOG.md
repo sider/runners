@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.34.1...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.35.0...HEAD)
+
+- **RuboCop** Update optional gem list [#1506](https://github.com/sider/runners/pull/1506)
+
+## 0.35.0
+
+[Full diff](https://github.com/sider/runners/compare/0.34.1...0.35.0)
 
 Updated environments:
 
@@ -19,6 +25,7 @@ Updated tools:
 - **GolangCI-Lint** 1.30.0 -> 1.31.0 [#1465](https://github.com/sider/runners/pull/1465)
 - **Goodcheck** 2.5.1 -> 2.5.2 [#1445](https://github.com/sider/runners/pull/1445)
 - **ktlint** 0.37.2 -> 0.39.0 [#1435](https://github.com/sider/runners/pull/1435) [#1482](https://github.com/sider/runners/pull/1482)
+- **PHPMD** 2.8.2 -> 2.9.0 [#1451](https://github.com/sider/runners/issues/1451)
 - **PMD CPD** 6.26.0 -> 6.27.0 [#1447](https://github.com/sider/runners/pull/1447)
 - **PMD Java** 6.26.0 -> 6.27.0 [#1448](https://github.com/sider/runners/pull/1448)
 - **Pylint** 2.5.3 -> 2.6.0 [#1407](https://github.com/sider/runners/pull/1407)
@@ -32,6 +39,7 @@ Misc:
 - **RuboCop** Improve warning messages [#1480](https://github.com/sider/runners/pull/1480)
 - Replace ENTRYPOINT with docker-entrypoint.sh [#1463](https://github.com/sider/runners/pull/1463)
 - Make generated `Gemfile` content log valid as Ruby [#1485](https://github.com/sider/runners/pull/1485)
+- Run update-ca-certificates(8) before analyzing [#1489](https://github.com/sider/runners/pull/1489)
 
 ## 0.34.1
 

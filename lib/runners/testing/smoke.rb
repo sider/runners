@@ -3,6 +3,7 @@ require "unification_assertion"
 require 'parallel'
 require "amazing_print"
 require "rainbow"
+require "openssl"
 
 module Runners
   module Testing
@@ -162,6 +163,7 @@ module Runners
         commands << "--env" << "RUNNERS_OPTIONS=#{runners_options}"
         commands << "--env" << "RUNNERS_TIMEOUT=#{runners_timeout}" if runners_timeout
         commands << "--env" << "DEBUG=true" if debug?
+        commands << "--env" << "EXTRA_CERTIFICATE=#{extra_certificate}" # Test update-ca-certificates(8)
         commands << "--network=none" if params.offline
         commands << docker_image
         commands << params.pattern.dig(:result, :guid)
@@ -222,6 +224,26 @@ module Runners
 
       def colored_pretty_inspect(obj, multiline: false)
         obj.awesome_inspect(indent: 2, index: false, multiline: multiline)
+      end
+
+      def extra_certificate
+        key = OpenSSL::PKey::RSA.new(4096)
+        extension = OpenSSL::X509::ExtensionFactory.new
+        cert = OpenSSL::X509::Certificate.new
+        cert.subject = OpenSSL::X509::Name.parse 'CN=test.example.com'
+        cert.issuer = OpenSSL::X509::Name.parse 'CN=test.example.com'
+        cert.not_before = Time.now
+        cert.not_after = Time.now + (60 * 60 * 24)
+        cert.version = 2
+        cert.serial = 1
+        cert.public_key = key.public_key
+        extension.subject_certificate = cert
+        extension.issuer_certificate = cert
+        cert.add_extension(extension.create_extension("basicConstraints", "CA:TRUE", true))
+        cert.add_extension(extension.create_extension("subjectKeyIdentifier", "hash", false))
+        cert.add_extension(extension.create_extension("authorityKeyIdentifier", "keyid:always", false))
+        cert.sign(key, OpenSSL::Digest.new('SHA256'))
+        Base64.strict_encode64(cert.to_s)
       end
 
       @tests = []
