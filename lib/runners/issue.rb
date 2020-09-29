@@ -9,22 +9,19 @@ module Runners
     attr_reader :git_blame_info
 
     def initialize(path:, location:, id:, message:, links: [], object: nil, schema: nil)
-      path.instance_of?(Pathname) or
-        raise ArgumentError, "`path` must be a #{Pathname}: #{path.inspect}"
+      # TODO: Fix error: "NoMethodError: type=⟘, method=inspect (path.inspect)"
+      raise ArgumentError, "`path` must be a #{Pathname}: #{(_ = path).inspect}" unless path.is_a?(Pathname)
 
-      (message && !message.empty?) or
-        raise ArgumentError, "`message` must be required: #{message.inspect}"
+      raise ArgumentError, "`message` must be required: #{message.inspect}" unless message && !message.empty?
 
       if object && schema
-        # @type var _: StrongJSON::Type::Object[Hash[Symbol, untyped]]
-        (_ = schema).coerce(object)
+        schema.coerce(object)
       end
 
       @path = path
       @location = location
       @missing_id = id.to_s.empty?
-      # @type var _: String
-      @id = _ = missing_id? ? Digest::SHA1.hexdigest(message) : id
+      @id = missing_id? ? Digest::SHA1.hexdigest(message) : id
       @message = message
       @links = links
       @object = object
