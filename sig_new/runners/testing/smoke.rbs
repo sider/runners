@@ -52,6 +52,7 @@ module Runners
       def debug_trace?: () -> bool
       def sh!: (*String, out: StringIO, ?exception: bool) -> [String, String]
       def colored_pretty_inspect: (untyped, ?multiline: bool) -> String
+      def extra_certificate: () -> String
     end
   end
 end
