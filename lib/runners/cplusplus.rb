@@ -38,8 +38,7 @@ module Runners
     private
 
     def find_paths_containing_headers
-      # @type var _: Array[Pathname]
-      _ = Pathname.glob(CPP_HEADERS_GLOB, File::FNM_EXTGLOB | File::FNM_CASEFOLD)
+      Pathname.glob(CPP_HEADERS_GLOB, File::FNM_EXTGLOB | File::FNM_CASEFOLD)
         .filter_map { |path| path.parent.to_path if path.file? }
         .uniq
     end

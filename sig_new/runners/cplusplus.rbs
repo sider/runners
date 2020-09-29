@@ -8,6 +8,6 @@ module Runners
     def install_apt_packages: () -> void
 
     private
-    def find_paths_containing_headers: () -> Array[Pathname]
+    def find_paths_containing_headers: () -> Array[String]
   end
 end

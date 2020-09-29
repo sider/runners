@@ -192,7 +192,7 @@ module Runners
           sh! "git", "push", out: out
           head_commit, _ = sh! "git", "rev-parse", "HEAD", out: out
 
-          # @type var _: repo_info
+          # TODO: ignore-steep: "MethodBodyTypeMismatch: method=prepare_git_repository, expected=::Runners::Testing::Smoke::repo_info, actual=::Hash[::Symbol, ::String] (def prepare_git_repository(workdir:, smoke_target:, out:))"
           _ = { dir: bare_dir, base: base_commit.chomp, head: head_commit.chomp }
         end
       end

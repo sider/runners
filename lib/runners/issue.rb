@@ -9,7 +9,7 @@ module Runners
     attr_reader :git_blame_info
 
     def initialize(path:, location:, id:, message:, links: [], object: nil, schema: nil)
-      # TODO: Fix error: "NoMethodError: type=⟘, method=inspect (path.inspect)"
+      # TODO: ignore-steep "NoMethodError: type=⟘, method=inspect (path.inspect)"
       raise ArgumentError, "`path` must be a #{Pathname}: #{(_ = path).inspect}" unless path.is_a?(Pathname)
 
       raise ArgumentError, "`message` must be required: #{message.inspect}" unless message && !message.empty?

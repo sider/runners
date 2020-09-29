@@ -22,10 +22,11 @@ module Runners
 
         case
         when source.is_a?(String)
-          rubygems(_ = source)
+          rubygems(source)
         when git.is_a?(Hash)
+          # TODO: steep-ignore "NoMethodError: type=⟘, method=[] (git[:repo])"
           g = _ = git
-          repo = _ = g[:repo]
+          repo = g[:repo]
           if repo
             git(repo, ref: g[:ref], branch: g[:branch], tag: g[:tag])
           else
