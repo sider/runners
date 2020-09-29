@@ -23,8 +23,10 @@ module Runners
     DEFAULT_TARGET = ".".freeze
 
     def setup
+      # TODO: When the notification period expires, comment out the below line (warn_recommended_config_file_release)
+      #       and uncomment the second line (prepare_config_file) to activate our default configuration file.
       warn_recommended_config_file_release
-      prepare_config_file
+      # prepare_config_file
       yield
     end
 
