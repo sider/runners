@@ -29,7 +29,7 @@ module Runners
         [proc { config_linter[:filter] },
         "The `filter` option in #{config.path_name} is specified. The Sider's recommended set of rules is ignored."]
       ]
-      deploy_recommended_config_file('CPPLINT.cfg', "mid October 2020", skips)
+      deploy_recommended_config_file(false, "mid October 2020", "CPPLINT.cfg", skips)
       yield
     end
 
