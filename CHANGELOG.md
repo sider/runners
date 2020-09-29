@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.35.0...HEAD)
 
+Misc:
+
+- **cpplint** Provide Sider's recommended set of rules [#1505](https://github.com/sider/runners/pull/1505)
+
 ## 0.35.0
 
 [Full diff](https://github.com/sider/runners/compare/0.34.1...0.35.0)
