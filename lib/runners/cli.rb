@@ -25,9 +25,9 @@ module Runners
 
       @guid = _ = argv.shift
 
-      raise OptionParser::MissingArgument, "--analyzer is required" unless analyzer
-      raise OptionParser::MissingArgument, "GUID is required" unless guid
-      raise OptionParser::MissingArgument, "The specified analyzer is not supported" unless processor_class
+      raise OptionParser::MissingArgument.new("--analyzer is required") unless analyzer
+      raise OptionParser::MissingArgument.new("GUID is required") unless guid
+      raise OptionParser::MissingArgument.new("The specified analyzer is not supported") unless processor_class
 
       @options = Options.new(options_json, stdout, stderr)
     end

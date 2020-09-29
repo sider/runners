@@ -1,5 +1,13 @@
 class OptionParser
+  attr_writer banner: String
+
   def initialize: { (OptionParser) -> void } -> void
-  def on: (String) { (String) -> void } -> void
+  def on: (String, String) { (String) -> void } -> void
   def parse!: (Array[String]) -> void
+end
+
+class OptionParser::ParseError < RuntimeError
+end
+
+class OptionParser::MissingArgument < OptionParser::ParseError
 end
