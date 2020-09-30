@@ -1,7 +1,4 @@
 module Runners::RecommendedConfig : Processor
-  def deploy_recommended_config_file: (bool, String, String, ?any) -> void
-
-  # private
-  def notify_release: (String, String) -> void
-  def deploy_file: (String, any) -> void
+  def warn_recommended_config_file_release: (String, String) -> void
+  def deploy_recommended_config_file: (String) -> void
 end

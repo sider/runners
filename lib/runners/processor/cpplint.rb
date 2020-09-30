@@ -25,11 +25,18 @@ module Runners
     DEFAULT_TARGET = ".".freeze
 
     def setup
-      skips = [
-        [proc { config_linter[:filter] },
-        "The `filter` option in #{config.path_name} is specified. The Sider's recommended set of rules is ignored."]
-      ]
-      deploy_recommended_config_file(false, "mid October 2020", "CPPLINT.cfg", skips)
+      # TODO: When the notification period expires, comment out the below line (warn_recommended_config_file_release)
+      #       and uncomment the second line (deploy_recommended_config_file) to activate our default configuration file.
+      warn_recommended_config_file_release("CPPLINT.cfg", "mid October 2020")
+
+=begin
+      if config_linter[:filter]
+        trace_writer.message "The `filter` option in #{config.path_name} is specified. The Sider's recommended set of rules is ignored."
+      else
+        deploy_recommended_config_file("CPPLINT.cfg")
+      end
+=end
+
       yield
     end
 
