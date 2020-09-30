@@ -5,8 +5,8 @@ class Runners::Options
   attr_reader ssh_key: String?
   attr_reader io: Runners::IO
 
-  def initialize: (::IO stdout, ::IO stderr) -> void
-  def parse_options: () -> Hash[Symbol, untyped]
+  def initialize: (String, ::IO stdout, ::IO stderr) -> void
+  def parse_options: (String) -> Hash[Symbol, untyped]
 end
 
 class Runners::Options::GitSource

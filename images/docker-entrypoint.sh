@@ -10,6 +10,7 @@ if [[ -n "$EXTRA_CERTIFICATE" ]]; then
   echo "Run update-ca-certificates(8) to add the specified certificate" >&2
   echo "$EXTRA_CERTIFICATE" | base64 --decode > /usr/local/share/ca-certificates/extra-cert.crt
   sudo update-ca-certificates
+  unset EXTRA_CERTIFICATE
 fi
 
 RUNNERS_TIMEOUT=${RUNNERS_TIMEOUT:-30m}

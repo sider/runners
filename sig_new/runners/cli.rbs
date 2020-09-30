@@ -7,7 +7,7 @@ class Runners::CLI
   attr_reader analyzer: String
   attr_reader options: Options
 
-  def initialize: (argv: Array[String], stdout: ::IO, stderr: ::IO) -> void
+  def initialize: (argv: Array[String], stdout: ::IO, stderr: ::IO, options_json: String) -> void
   def with_working_dir: [X] { (Pathname) -> X } -> X
   def processor_class: () -> Class
   def run: () -> untyped

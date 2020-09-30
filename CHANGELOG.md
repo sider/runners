@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 Misc:
 
 - **RuboCop** Update optional gem list [#1506](https://github.com/sider/runners/pull/1506)
+- Delete environment variables after used [#1520](https://github.com/sider/runners/pull/1520)
 - **cpplint** Provide Sider's recommended set of rules [#1505](https://github.com/sider/runners/pull/1505)
 
 ## 0.35.0
