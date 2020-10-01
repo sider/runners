@@ -4,7 +4,7 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM sider/devon_rex_dotnet:2.26.1
 
-ENV FXCOP_VERSION=3.3.0
+ENV FXCOP_VERSION=5.0.1xx-preview8
 
 ARG ROSLYN_ANALYZERS_RUNNER_VERSION=0.1.4
 ARG ROSLYN_ANALYZERS_RUNNER_HOME=${RUNNER_USER_HOME}/roslyn-analyzers-runner
