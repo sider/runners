@@ -9,11 +9,11 @@ module Runners
 
     def deploy_recommended_config_file(config_filename)
       if exists_in_repository?(config_filename)
-        trace_writer.message "The #{analyzer_name} configuration file called #{config_filename} exists in the root directory of your repository. The Sider's recommended set of rules is ignored."
+        trace_writer.message "The #{analyzer_name} configuration file called #{config_filename} exists in your repository. The Sider's recommended set of rules is ignored."
         return
       end
 
-      trace_writer.message "The #{analyzer_name} configuration file called #{config_filename} does not exist in the root directory of your repository. Sider uses our recommended set of rules instead."
+      trace_writer.message "The #{analyzer_name} configuration file called #{config_filename} does not exist in your repository. Sider uses our recommended set of rules instead."
       FileUtils.copy(Pathname(Dir.home) / "sider_recommended_#{config_filename}", current_dir / config_filename)
     end
 

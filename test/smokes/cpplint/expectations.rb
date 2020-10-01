@@ -233,17 +233,6 @@ s.add_test(
   #      git_blame_info: {
   #        commit: :_, line_hash: "de6ba426e696e32c9b26b0f6ac9f78413c365d91", original_line: 6, final_line: 6
   #      }
-  #    },
-  #    {
-  #      id: "whitespace/braces",
-  #      path: "src/foo/baz/test3.cpp",
-  #      location: { start_line: 4 },
-  #      message: '{ should almost always be at the end of the previous line',
-  #      links: [],
-  #      object: { confidence: "4" },
-  #      git_blame_info: {
-  #        commit: :_, line_hash: "60ba4b2daa4ed4d070fec06687e249e0e6f9ee45", original_line: 4, final_line: 4
-  #      }
   #    }
   #   ],
   warnings: :_,
