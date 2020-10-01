@@ -118,6 +118,7 @@ class Dir
                    | () -> String
   def self.chdir: <'a> (String) { (String) -> 'a } -> 'a
   def self.home: () -> String
+  def self.glob: (String, ?Integer, ?base: String | Pathname) -> Array<String>
 end
 
 class URI

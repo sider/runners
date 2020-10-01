@@ -8,16 +8,19 @@ module Runners
     end
 
     def deploy_recommended_config_file(config_filename)
-      user_config_filepath = current_dir / config_filename
-      recommended_config_filepath = Pathname(Dir.home) / "sider_recommended_#{config_filename}"
-
-      if user_config_filepath.exist?
+      if exists_in_repository?(config_filename)
         trace_writer.message "The #{analyzer_name} configuration file called #{config_filename} exists in the root directory of your repository. The Sider's recommended set of rules is ignored."
         return
       end
 
       trace_writer.message "The #{analyzer_name} configuration file called #{config_filename} does not exist in the root directory of your repository. Sider uses our recommended set of rules instead."
-      FileUtils.copy(recommended_config_filepath, user_config_filepath)
+      FileUtils.copy(Pathname(Dir.home) / "sider_recommended_#{config_filename}", current_dir / config_filename)
+    end
+
+    private
+
+    def exists_in_repository?(config_filename)
+      Dir.glob("**/#{config_filename}", File::FNM_DOTMATCH, base: working_dir).any?
     end
   end
 end

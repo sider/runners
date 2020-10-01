@@ -207,3 +207,45 @@ s.add_test(
   MSG
   analyzer: { name: "cpplint", version: default_version }
 )
+
+s.add_test(
+  "default_rules_when_cfg_exists",
+  type: "success",
+  # TODO: When the notification period expires, uncomment the begin-end block to activate this test.
+  issues: :_,
+  #   issues: [
+  #     {
+  #       id: "legal/copyright",
+  #       path: "src/foo/test2.cpp",
+  #       location: nil,
+  #       message: 'No copyright message found.  You should have a line: "Copyright [year] <Copyright Owner>"',
+  #       links: [],
+  #       object: { confidence: "5" },
+  #       git_blame_info: nil,
+  #     },
+  #     {
+  #      id: "runtime/printf",
+  #      path: "src/foo/test2.cpp",
+  #      location: { start_line: 6 },
+  #      message: 'Potential format string bug. Do printf("%s", str) instead.',
+  #      links: [],
+  #      object: { confidence: "4" },
+  #      git_blame_info: {
+  #        commit: :_, line_hash: "de6ba426e696e32c9b26b0f6ac9f78413c365d91", original_line: 6, final_line: 6
+  #      }
+  #    },
+  #    {
+  #      id: "whitespace/braces",
+  #      path: "src/foo/baz/test3.cpp",
+  #      location: { start_line: 4 },
+  #      message: '{ should almost always be at the end of the previous line',
+  #      links: [],
+  #      object: { confidence: "4" },
+  #      git_blame_info: {
+  #        commit: :_, line_hash: "60ba4b2daa4ed4d070fec06687e249e0e6f9ee45", original_line: 4, final_line: 4
+  #      }
+  #    }
+  #   ],
+  warnings: :_,
+  analyzer: { name: "cpplint", version: default_version }
+)
