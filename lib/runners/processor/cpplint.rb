@@ -31,7 +31,7 @@ module Runners
 
 =begin
       if config_linter[:filter]
-        trace_writer.message "The `filter` option in #{config.path_name} is specified. The Sider's recommended set of rules is ignored."
+        trace_writer.message "The `filter` option in #{config.path_name} is specified. The Sider's recommended ruleset is ignored."
       else
         deploy_recommended_config_file("CPPLINT.cfg")
       end
