@@ -41,7 +41,7 @@ s.add_test(
   # TODO: When the notification period expires, this warning message will no longer appear. Delete all warning entries in this file.
   warnings: [{ message: <<~MSG.strip, file: "CPPLINT.cfg" }],
     Sider's recommended configuration file is about to release in mid October 2020.
-    After the release, Sider will automatically apply our recommended ruleset if you don't have the cpplint configuration file called CPPLINT.cfg in your repository.
+    After the release, Sider will automatically apply our recommended ruleset if you don't have the cpplint configuration file called `CPPLINT.cfg` in your repository.
   MSG
   analyzer: { name: "cpplint", version: default_version }
 )
@@ -203,7 +203,7 @@ s.add_test(
   #   ],
   warnings: [{ message: <<~MSG.strip, file: "CPPLINT.cfg" }],
     Sider's recommended configuration file is about to release in mid October 2020.
-    After the release, Sider will automatically apply our recommended ruleset if you don't have the cpplint configuration file called CPPLINT.cfg in your repository.
+    After the release, Sider will automatically apply our recommended ruleset if you don't have the cpplint configuration file called `CPPLINT.cfg` in your repository.
   MSG
   analyzer: { name: "cpplint", version: default_version }
 )
