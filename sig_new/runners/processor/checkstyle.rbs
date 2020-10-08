@@ -18,6 +18,5 @@ module Runners
     def build_links: (String) -> Array[String]
     def config_file: () -> String
     def excluded_directories: () -> Array[Hash[Symbol, String]]
-    def ignored_severities: () -> Array[String]
   end
 end

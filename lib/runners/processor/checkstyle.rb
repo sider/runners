@@ -163,8 +163,10 @@ module Runners
         case dir
         when String
           { string: dir }
-        else
+        when Hash
           dir
+        else
+          raise "Unexpected type: #{dir.inspect}"
         end
       end
     end
