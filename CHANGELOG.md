@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.36.0...HEAD)
 
+- **Misspell** Allow `string` type for `target` option [#1536](https://github.com/sider/runners/pull/1536)
+
 ## 0.36.0
 
 [Full diff](https://github.com/sider/runners/compare/0.35.0...0.36.0)
