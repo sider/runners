@@ -21,6 +21,7 @@ class Runners::Schema::Types::Options < StrongJSON
   def outputs: -> StrongJSON::Type::Array<String>?
   def ssh_key: -> String?
   def s3: -> StrongJSON::Type::Object<s3>?
+  def payload: -> any
 end
 
 Runners::Schema::Options: Runners::Schema::Types::Options

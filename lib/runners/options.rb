@@ -15,11 +15,11 @@ module Runners
 
     attr_reader :stdout, :stderr, :source, :ssh_key, :io
 
-    def initialize(stdout, stderr)
+    def initialize(json, stdout, stderr)
       @stdout = stdout
       @stderr = stderr
 
-      options = parse_options
+      options = parse_options(json)
       outputs = options[:outputs] || []
       @source = GitSource.new(**options[:source])
       @ssh_key = options[:ssh_key]
@@ -44,10 +44,8 @@ module Runners
 
     private
 
-    def parse_options
-      ENV['RUNNERS_OPTIONS'].yield_self do |val|
-        Schema::Options.payload.coerce(JSON.parse(val, symbolize_names: true))
-      end
+    def parse_options(json)
+      Schema::Options.payload.coerce(JSON.parse(json, symbolize_names: true))
     end
   end
 end

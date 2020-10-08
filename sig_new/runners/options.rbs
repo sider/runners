@@ -21,9 +21,9 @@ module Runners
     attr_reader ssh_key: String?
     attr_reader io: IO
 
-    def initialize: (::IO stdout, ::IO stderr) -> void
+    def initialize: (String, ::IO stdout, ::IO stderr) -> void
 
     private
-    def parse_options: () -> Hash[Symbol, untyped]
+    def parse_options: (String) -> Hash[Symbol, untyped]
   end
 end
