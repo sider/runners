@@ -14,7 +14,6 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-      - run: bundle install
       - uses: tibdex/github-app-token@v1
         id: generate_token
         with:
