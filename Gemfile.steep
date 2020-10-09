@@ -2,4 +2,4 @@ source 'https://rubygems.org'
 
 gem 'steep'
 gem 'rake'
-gem 'strong_json', git: 'https://github.com/soutaro/strong_json.git', ref: 'master'
+gem 'strong_json'
