@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 [Full diff](https://github.com/sider/runners/compare/0.36.1...HEAD)
 
 - Bump Ruby from 2.7.1 to 2.7.2 [#1538](https://github.com/sider/runners/pull/1538)
+- **stylelint** Add `stylelint-config-recommended-scss` [#1557](https://github.com/sider/runners/pull/1557)
 
 ## 0.36.1
 
