@@ -1,11 +1,13 @@
-class Runners::SensitiveFilter
-  @options: Options
+module Runners
+  class SensitiveFilter
+    FILTERED: String
 
-  def initialize: (options: Options) -> void
-  def mask: (String) -> String
+    @options: Options
 
-  private
-  def sensitives: () -> Array[String]
+    def initialize: (options: Options) -> void
+    def mask: (String) -> String
+
+    private
+    def sensitives: () -> Array[String]
+  end
 end
-
-Runners::SensitiveFilter::FILTERED: String
