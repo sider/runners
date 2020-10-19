@@ -4,17 +4,18 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM sider/devon_rex_java:master
 
-ARG JAVASEE_VERSION=0.1.3
+ARG JAVASEE_VERSION=0.2.0
 
-RUN cd /tmp && \
+RUN mkdir /tmp/work && \
+    cd /tmp/work && \
     curl -fsSLO --compressed https://github.com/sider/JavaSee/releases/download/${JAVASEE_VERSION}/JavaSee-bin-${JAVASEE_VERSION}.zip && \
     unzip JavaSee-bin-${JAVASEE_VERSION}.zip && \
     mkdir ${RUNNER_USER_HOME}/JavaSee && \
-    cp -rv JavaSee-${JAVASEE_VERSION}/bin ${RUNNER_USER_HOME}/JavaSee/bin && \
-    cp -rv JavaSee-${JAVASEE_VERSION}/lib ${RUNNER_USER_HOME}/JavaSee/lib && \
+    cp -rv JavaSee-bin-${JAVASEE_VERSION}/bin ${RUNNER_USER_HOME}/JavaSee/bin && \
+    cp -rv JavaSee-bin-${JAVASEE_VERSION}/lib ${RUNNER_USER_HOME}/JavaSee/lib && \
     ln -sv ${RUNNER_USER_HOME}/JavaSee/bin/javasee ${RUNNER_USER_HOME}/bin/javasee && \
-    rm JavaSee-bin-${JAVASEE_VERSION}.zip && \
-    rm -r JavaSee-${JAVASEE_VERSION} && \
+    cd .. && \
+    rm -rf /tmp/work && \
     javasee version
 
 

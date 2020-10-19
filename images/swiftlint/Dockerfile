@@ -4,7 +4,7 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM sider/devon_rex_swift:master
 
-ARG SWIFTLINT_VERSION=0.40.2
+ARG SWIFTLINT_VERSION=0.40.3
 
 # Build SwiftLint
 RUN cd /tmp && \

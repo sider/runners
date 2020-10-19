@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "3.8.3"
+default_version = "3.8.4"
 
 s.add_test(
   "sandbox_django",
