@@ -48,5 +48,14 @@ rules:
     justification:
       - When you need to use system-wide commands such as `apt-get`.
 
+  - id: sider.runners.use_exact_version_in_package_json
+    pattern: "^"
+    glob: images/**/package.json
+    message: |
+      Use the exact version format `x.y.z` instead of `^x.y.z`.
+
+      A package's version with `^x.y.z` is changeable at runtime (e.g. `npm install`).
+      Such an inaccurate version may makes our debugging hard.
+
 import:
   - https://raw.githubusercontent.com/sider/goodcheck-rules/master/rules/typo.yml
