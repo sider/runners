@@ -16,15 +16,14 @@ class HarnessTest < Minitest::Test
 
   def with_harness(processor_class: TestProcessor)
     mktmpdir do |working_dir|
-      with_runners_options_env(source: new_source(head: "330716dcd50a7a2c7d8ff79d74035c05453528b4")) do
-        yield Harness.new(
-          guid: "test-guid",
-          processor_class: processor_class,
-          options: Runners::Options.new(StringIO.new, StringIO.new),
-          working_dir: working_dir,
-          trace_writer: trace_writer,
-        )
-      end
+      options_json = JSON.dump(source: new_source(head: "330716dcd50a7a2c7d8ff79d74035c05453528b4"))
+      yield Harness.new(
+        guid: "test-guid",
+        processor_class: processor_class,
+        options: Runners::Options.new(options_json, StringIO.new, StringIO.new),
+        working_dir: working_dir,
+        trace_writer: trace_writer,
+      )
     end
   end
 

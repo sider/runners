@@ -1,5 +1,7 @@
 module Runners
   class Processor::Cpplint < Processor
+    include RecommendedConfig
+
     Schema = _ = StrongJSON.new do
       # @type self: SchemaClass
       let :runner_config, Runners::Schema::BaseConfig.base.update_fields { |fields|
@@ -21,6 +23,23 @@ module Runners
     register_config_schema(name: :cpplint, schema: Schema.runner_config)
 
     DEFAULT_TARGET = ".".freeze
+    CONFIG_FILE_NAME = "CPPLINT.cfg".freeze
+
+    def setup
+      # TODO: When the notification period expires, comment out the below line (warn_recommended_config_file_release)
+      #       and uncomment the second line (deploy_recommended_config_file) to activate our default configuration file.
+      warn_recommended_config_file_release(CONFIG_FILE_NAME, "in mid October 2020")
+
+=begin
+      if config_linter[:filter]
+        trace_writer.message "The `filter` option in #{config.path_name} is specified. The Sider's recommended ruleset is ignored."
+      else
+        deploy_recommended_config_file(CONFIG_FILE_NAME)
+      end
+=end
+
+      yield
+    end
 
     def analyze(changes)
       _stdout, stderr, status = capture3 analyzer_bin, *analyzer_options
