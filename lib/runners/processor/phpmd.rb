@@ -39,13 +39,6 @@ module Runners
       run_analyzer(changes)
     end
 
-    # NOTE: Remove this function after the next version of phpmd `2.9.1` is released.
-    #       `phpmd --version` displays 2.8.1 although running on 2.9.0. As a workaround for this issue, this function returns a fixed version string.
-    # @see https://github.com/phpmd/phpmd/issues/820
-    def analyzer_version
-      "2.9.0"
-    end
-
     private
 
     def target_files

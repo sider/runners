@@ -9,7 +9,7 @@ require_relative "lib/tasks/readme/generate"
 
 ENV["DOCKER_BUILDKIT"] = "1"
 
-Aufgaben::Release.new do |t|
+Aufgaben::Release.new(:release) do |t|
   t.files = ["lib/runners/version.rb"]
 end
 
@@ -33,18 +33,6 @@ Rake::TestTask.new(:test) do |t|
 end
 
 task :default => [:test, :typecheck]
-
-task :typecheck do
-  # FIXME: Must check all files.
-  files = Dir.glob("lib/runners/**/*.rb")
-    .reject { |f| File.fnmatch? "**/processor/*.rb", f }
-    .reject { |f| File.fnmatch? "**/ruby.rb", f }
-    .reject { |f| File.fnmatch? "**/ruby/*.rb", f }
-    .reject { |f| File.fnmatch? "**/ruby/**/*.rb", f }
-  files += Dir.glob("test/smokes/**/expectations.rb")
-  files.sort!
-  sh "steep", "check", *files
-end
 
 namespace :dockerfile do
   def render_erb(file, analyzer: ENV.fetch('ANALYZER'))
@@ -83,10 +71,25 @@ namespace :dockerfile do
 
   desc 'Verify Dockerfile is committed'
   task :verify do
-    system('git diff --exit-code') or
-      abort "\nError: Run `bundle exec rake dockerfile:generate` and include the changes in commit"
+    sh 'git', 'diff', '--exit-code' do |ok|
+      unless ok
+        abort "\nError: Run `bundle exec rake dockerfile:generate` and include the changes in commit"
+      end
+    end
+  end
+
+  desc 'Verify the devon_rex image tag'
+  task :verify_devon_rex do
+    disallowed_tag = 'master'
+    sh 'git', 'grep', '--quiet', "/devon_rex_.+:#{disallowed_tag}", 'images/' do |found|
+      if found
+        abort "\nError: Disallow to release with the `#{disallowed_tag}` tag of the devon_rex images."
+      end
+    end
   end
 end
+
+task :release => "dockerfile:verify_devon_rex"
 
 namespace :docker do
   def image_name(t = tag)

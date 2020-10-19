@@ -1,22 +1,11 @@
 s = Runners::Testing::Smoke
 
-default_version = "8.0.1"
+default_version = "9.0.0"
 
 s.add_test(
   "success",
   type: "success",
   issues: [
-    {
-      path: "readme.md",
-      location: { start_line: 5, start_column: 6 },
-      id: "2f2aa88b3c64e39930228cb265d844b1efc343d2",
-      message: "Numeric character references must be terminated by a semicolon",
-      links: [],
-      object: { severity: "warn" },
-      git_blame_info: {
-        commit: :_, line_hash: "e424cc2640c3188bde8ad4479dca7c71046690fc", original_line: 5, final_line: 5
-      }
-    },
     {
       path: "readme.md",
       location: { start_line: 3, start_column: 1 },
