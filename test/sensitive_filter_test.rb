@@ -3,8 +3,8 @@ require "test_helper"
 class SensitiveFilterTest < Minitest::Test
   include TestHelper
 
-  def new_filter(stdout: StringIO.new, stderr: StringIO.new)
-    options = Runners::Options.new(stdout, stderr)
+  def new_filter(options_json, stdout: StringIO.new, stderr: StringIO.new)
+    options = Runners::Options.new(options_json, stdout, stderr)
     Runners::SensitiveFilter.new(options: options)
   end
 
@@ -15,10 +15,8 @@ class SensitiveFilterTest < Minitest::Test
       git_url: "https://github.com/foo/bar",
       git_url_userinfo: "user:secret",
     }
-    with_runners_options_env(source: source) do
-      filter = new_filter
-      assert_equal "https://[FILTERED]@github.com/foo/bar", filter.mask("https://user:secret@github.com/foo/bar")
-      assert_equal "https://github.com/foo/bar", filter.mask("https://github.com/foo/bar")
-    end
+    filter = new_filter(JSON.dump(source: source))
+    assert_equal "https://[FILTERED]@github.com/foo/bar", filter.mask("https://user:secret@github.com/foo/bar")
+    assert_equal "https://github.com/foo/bar", filter.mask("https://github.com/foo/bar")
   end
 end
