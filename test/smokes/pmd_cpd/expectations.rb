@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "6.27.0"
+default_version = "6.28.0"
 
 s.add_test(
   "success",
@@ -252,58 +252,22 @@ s.add_test(
   type: "success",
   issues: [
     {
-      path: "src/app.rb",
-      location: { start_line: 3, start_column: 1, end_line: 14, end_column: 56 },
-      id: "90ee917cf8612589def4e3030d309564062cdbf8",
-      message: "Code duplications found (2 occurrences).",
-      links: [],
-      object: {
-        lines: 12,
-        tokens: 19,
-        files: [
-          {
-            id: "b232ffb305e88308e309ab3dd3ff66e8578168b5", path: "foo/bar/baz/qux.rb",
-            start_line: 5, start_column: 1, end_line: 16, end_column: 56
-          },
-          {
-            id: "90ee917cf8612589def4e3030d309564062cdbf8", path: "src/app.rb",
-            start_line: 3, start_column: 1, end_line: 14, end_column: 56
-          }
-        ],
-        codefragment: %[def show_status_tank capacity
-  case capacity
-  when 0
-    "You ran out of gas."
-  when 1..20
-    "The tank is almost empty. Quickly, find a gas station!"
-  when 21..70
-    "You should be ok for now."
-  when 71..100
-    "The tank is almost full."
-  else
-    "Error: capacity has an invalid value (\#{capacity})"]
-      },
-      git_blame_info: {
-        commit: :_, line_hash: "cb9bf4628574bad099e82e3b56c908af7ae30231", original_line: 3, final_line: 3
-      }
-    },
-    {
       path: "foo/bar/baz/qux.rb",
-      location: { start_line: 5, start_column: 1, end_line: 16, end_column: 56 },
-      id: "b232ffb305e88308e309ab3dd3ff66e8578168b5",
+      location: { start_line: 5, start_column: 1, end_line: 18, end_column: 3 },
+      id: "62950080534b1528922f0cd0664801ca694d8db4",
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
-        lines: 12,
-        tokens: 19,
+        lines: 14,
+        tokens: 30,
         files: [
           {
-            id: "b232ffb305e88308e309ab3dd3ff66e8578168b5", path: "foo/bar/baz/qux.rb",
-            start_line: 5, start_column: 1, end_line: 16, end_column: 56
+            id: "62950080534b1528922f0cd0664801ca694d8db4", path: "foo/bar/baz/qux.rb",
+            start_line: 5, start_column: 1, end_line: 18, end_column: 3
           },
           {
-            id: "90ee917cf8612589def4e3030d309564062cdbf8", path: "src/app.rb",
-            start_line: 3, start_column: 1, end_line: 14, end_column: 56
+            id: "f187a6d7cc29608a9e1e931d5b29e8d489d7fdbd", path: "src/app.rb",
+            start_line: 3, start_column: 1, end_line: 16, end_column: 3
           }
         ],
         codefragment: %[def show_status_tank capacity
@@ -317,10 +281,50 @@ s.add_test(
   when 71..100
     "The tank is almost full."
   else
-    "Error: capacity has an invalid value (\#{capacity})"]
+    "Error: capacity has an invalid value (\#{capacity})"
+  end
+end]
       },
       git_blame_info: {
         commit: :_, line_hash: "cb9bf4628574bad099e82e3b56c908af7ae30231", original_line: 5, final_line: 5
+      }
+    },
+    {
+      path: "src/app.rb",
+      location: { start_line: 3, start_column: 1, end_line: 16, end_column: 3 },
+      id: "f187a6d7cc29608a9e1e931d5b29e8d489d7fdbd",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 14,
+        tokens: 30,
+        files: [
+          {
+            id: "62950080534b1528922f0cd0664801ca694d8db4", path: "foo/bar/baz/qux.rb",
+            start_line: 5, start_column: 1, end_line: 18, end_column: 3
+          },
+          {
+            id: "f187a6d7cc29608a9e1e931d5b29e8d489d7fdbd", path: "src/app.rb",
+            start_line: 3, start_column: 1, end_line: 16, end_column: 3
+          }
+        ],
+        codefragment: %[def show_status_tank capacity
+  case capacity
+  when 0
+    "You ran out of gas."
+  when 1..20
+    "The tank is almost empty. Quickly, find a gas station!"
+  when 21..70
+    "You should be ok for now."
+  when 71..100
+    "The tank is almost full."
+  else
+    "Error: capacity has an invalid value (\#{capacity})"
+  end
+end]
+      },
+      git_blame_info: {
+        commit: :_, line_hash: "cb9bf4628574bad099e82e3b56c908af7ae30231", original_line: 3, final_line: 3
       }
     }
   ],
@@ -1233,6 +1237,31 @@ s.add_test(
       }
     },
     {
+      path: "foo/hello_ruby.rb",
+      location: { start_line: 1, start_column: 1, end_line: 24, end_column: 6 },
+      id: "80e9eb7928ca5770ffe588c59fa744f1b197fc68",
+      message: "Code duplications found (2 occurrences).",
+      links: [],
+      object: {
+        lines: 24,
+        tokens: 48,
+        files: [
+          {
+            id: "8fb7e0cb466173ca7f6924705a48faa449d53024", path: "bar/hello_ruby.rb",
+            start_line: 1, start_column: 1, end_line: 24, end_column: 6
+          },
+          {
+            id: "80e9eb7928ca5770ffe588c59fa744f1b197fc68", path: "foo/hello_ruby.rb",
+            start_line: 1, start_column: 1, end_line: 24, end_column: 6
+          }
+        ],
+        codefragment: /def main\(\)/
+      },
+      git_blame_info: {
+        commit: :_, line_hash: "763d80e283cd30bc48a6425fb1adbb97ba090bf5", original_line: 1, final_line: 1
+      }
+    },
+    {
       path: "bar/hello_php.php",
       location: { start_line: 1, end_line: 8 },
       id: "816e15083fd49ae7bd01aee5f5a979978f6f7b84",
@@ -1259,21 +1288,21 @@ s.add_test(
     },
     {
       path: "bar/hello_ruby.rb",
-      location: { start_line: 1, start_column: 1, end_line: 24, end_column: 4 },
-      id: "936520f0ce1feec8bd0ebcaab536888c2268f715",
+      location: { start_line: 1, start_column: 1, end_line: 24, end_column: 6 },
+      id: "8fb7e0cb466173ca7f6924705a48faa449d53024",
       message: "Code duplications found (2 occurrences).",
       links: [],
       object: {
         lines: 24,
-        tokens: 27,
+        tokens: 48,
         files: [
           {
-            id: "936520f0ce1feec8bd0ebcaab536888c2268f715", path: "bar/hello_ruby.rb",
-            start_line: 1, start_column: 1, end_line: 24, end_column: 4
+            id: "8fb7e0cb466173ca7f6924705a48faa449d53024", path: "bar/hello_ruby.rb",
+            start_line: 1, start_column: 1, end_line: 24, end_column: 6
           },
           {
-            id: "dee764319f0b6fe2d4ff23925c5ab296c779ca14", path: "foo/hello_ruby.rb",
-            start_line: 1, start_column: 1, end_line: 24, end_column: 4
+            id: "80e9eb7928ca5770ffe588c59fa744f1b197fc68", path: "foo/hello_ruby.rb",
+            start_line: 1, start_column: 1, end_line: 24, end_column: 6
           }
         ],
         codefragment: /def main\(\)/
@@ -1430,31 +1459,6 @@ s.add_test(
       },
       git_blame_info: {
         commit: :_, line_hash: "5656b6543b24b9b164b717943f7e56d1cf5954c0", original_line: 1, final_line: 1
-      }
-    },
-    {
-      path: "foo/hello_ruby.rb",
-      location: { start_line: 1, start_column: 1, end_line: 24, end_column: 4 },
-      id: "dee764319f0b6fe2d4ff23925c5ab296c779ca14",
-      message: "Code duplications found (2 occurrences).",
-      links: [],
-      object: {
-        lines: 24,
-        tokens: 27,
-        files: [
-          {
-            id: "936520f0ce1feec8bd0ebcaab536888c2268f715", path: "bar/hello_ruby.rb",
-            start_line: 1, start_column: 1, end_line: 24, end_column: 4
-          },
-          {
-            id: "dee764319f0b6fe2d4ff23925c5ab296c779ca14", path: "foo/hello_ruby.rb",
-            start_line: 1, start_column: 1, end_line: 24, end_column: 4
-          }
-        ],
-        codefragment: /def main\(\)/
-      },
-      git_blame_info: {
-        commit: :_, line_hash: "763d80e283cd30bc48a6425fb1adbb97ba090bf5", original_line: 1, final_line: 1
       }
     },
     {
