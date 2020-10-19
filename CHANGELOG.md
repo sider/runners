@@ -4,7 +4,36 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.35.0...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.36.1...HEAD)
+
+Updated environments:
+
+- Bump Ruby from 2.7.1 to 2.7.2 [#1538](https://github.com/sider/runners/pull/1538)
+
+Updated tools:
+
+- **JavaSee** 0.1.3 -> 0.2.0 [#1503](https://github.com/sider/runners/pull/1503)
+- **remark-lint** 8.0.1 -> 9.0.0 [#1567](https://github.com/sider/runners/pull/1567)
+- **SwiftLint** 0.40.2 -> 0.40.3 [#1504](https://github.com/sider/runners/pull/1504)
+
+Misc:
+
+- **stylelint** Add `stylelint-config-recommended-scss` [#1557](https://github.com/sider/runners/pull/1557)
+
+## 0.36.1
+
+[Full diff](https://github.com/sider/runners/compare/0.36.0...0.36.1)
+
+- **Misspell** Allow `string` type for `target` option [#1536](https://github.com/sider/runners/pull/1536)
+
+## 0.36.0
+
+[Full diff](https://github.com/sider/runners/compare/0.35.0...0.36.0)
+
+- **ESLint** Add `eslint-plugin-vue` to default package list [#1521](https://github.com/sider/runners/pull/1521)
+- **RuboCop** Update optional gem list [#1506](https://github.com/sider/runners/pull/1506)
+- Delete environment variables after used [#1520](https://github.com/sider/runners/pull/1520)
+- **cpplint** Provide Sider's recommended ruleset [#1505](https://github.com/sider/runners/pull/1505)
 
 ## 0.35.0
 

@@ -6,12 +6,11 @@ class WorkspaceTest < Minitest::Test
   Workspace = Runners::Workspace
 
   def test_prepare
-    with_runners_options_env(source: { head: "commit", git_url: "https://github.com/foo/bar" }) do
-      options = Runners::Options.new(StringIO.new, StringIO.new)
-      filter = Runners::SensitiveFilter.new(options: options)
-      workspace = Workspace.prepare(options: options, trace_writer: new_trace_writer(filter: filter), working_dir: Pathname("/"))
-      assert_instance_of Workspace::Git, workspace
-    end
+    json = JSON.dump(source: { head: "commit", git_url: "https://github.com/foo/bar" })
+    options = Runners::Options.new(json, StringIO.new, StringIO.new)
+    filter = Runners::SensitiveFilter.new(options: options)
+    workspace = Workspace.prepare(options: options, trace_writer: new_trace_writer(filter: filter), working_dir: Pathname("/"))
+    assert_instance_of Workspace::Git, workspace
   end
 
   def test_open

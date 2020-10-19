@@ -23,12 +23,6 @@ module TestHelper
     ENV[name] = backup
   end
 
-  def with_runners_options_env(hash)
-    with_stubbed_env('RUNNERS_OPTIONS', JSON.dump(hash)) do
-      yield
-    end
-  end
-
   def new_source(**source)
     {
       head: "6ba85479fc406a64b7202f7bc3ea8da3ada93084",
@@ -43,13 +37,10 @@ module TestHelper
 
   def with_workspace(ssh_key: nil, **source_params)
     source = new_source(**source_params)
-
-    with_runners_options_env(source: source, ssh_key: ssh_key) do
-      options = Runners::Options.new(StringIO.new, StringIO.new)
-      filter = Runners::SensitiveFilter.new(options: options)
-      mktmpdir do |dir|
-        yield Runners::Workspace.prepare(options: options, working_dir: dir, trace_writer: new_trace_writer(filter: filter))
-      end
+    options = Runners::Options.new(JSON.dump(source: source, ssh_key: ssh_key), StringIO.new, StringIO.new)
+    filter = Runners::SensitiveFilter.new(options: options)
+    mktmpdir do |dir|
+      yield Runners::Workspace.prepare(options: options, working_dir: dir, trace_writer: new_trace_writer(filter: filter))
     end
   end
 
@@ -76,10 +67,8 @@ module TestHelper
       git_url_userinfo: "user:secret",
       refspec: "+refs/pull/1234/head:refs/remotes/pull/1234/head",
     }
-    with_runners_options_env(source: source) do
-      options = Runners::Options.new(StringIO.new, StringIO.new)
-      Runners::SensitiveFilter.new(options: options)
-    end
+    options = Runners::Options.new(JSON.dump(source: source), StringIO.new, StringIO.new)
+    Runners::SensitiveFilter.new(options: options)
   end
 
   def new_trace_writer(filter: sensitive_filter)
