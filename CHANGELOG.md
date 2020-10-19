@@ -12,6 +12,7 @@ Updated environments:
 
 Updated tools:
 
+- **Checkstyle** 8.36.1 -> 8.36.2 [#1516](https://github.com/sider/runners/pull/1516)
 - **JavaSee** 0.1.3 -> 0.2.0 [#1503](https://github.com/sider/runners/pull/1503)
 - **PHPMD** 2.9.0 -> 2.9.1 [#1509](https://github.com/sider/runners/pull/1509)
 - **remark-lint** 8.0.1 -> 9.0.0 [#1567](https://github.com/sider/runners/pull/1567)
