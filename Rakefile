@@ -34,18 +34,6 @@ end
 
 task :default => [:test, :typecheck]
 
-task :typecheck do
-  # FIXME: Must check all files.
-  files = Dir.glob("lib/runners/**/*.rb")
-    .reject { |f| File.fnmatch? "**/processor/*.rb", f }
-    .reject { |f| File.fnmatch? "**/ruby.rb", f }
-    .reject { |f| File.fnmatch? "**/ruby/*.rb", f }
-    .reject { |f| File.fnmatch? "**/ruby/**/*.rb", f }
-  files += Dir.glob("test/smokes/**/expectations.rb")
-  files.sort!
-  sh "steep", "check", *files
-end
-
 namespace :dockerfile do
   def render_erb(file, analyzer: ENV.fetch('ANALYZER'))
     locals = {
