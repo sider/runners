@@ -17,7 +17,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-      # TODO: Enable
-      # - run: |
-      #     bundle exec steep check | ruby -pe 'sub(/^(.+):(\d+):(\d+): (.+)$/, %q{::error file=\1,line=\2,col=\3::\4})'
-      #   shell: bash
+      TODO: Enable
+      - run: |
+          bundle exec steep check | ruby -pe 'sub(/^(.+):(\d+):(\d+): (.+)$/, %q{::error file=\1,line=\2,col=\3::\4})'
+        shell: bash
