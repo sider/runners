@@ -1,24 +1,22 @@
-interface Runners::TraceWriter::_Writer
-  def <<: (Hash[Symbol, untyped]) -> void
-end
+module Runners
+  class TraceWriter
+    attr_reader writer: JSONSEQ::Writer
+    attr_reader filter: SensitiveFilter
 
-class Runners::TraceWriter
-  attr_reader writer: _Writer
-  attr_reader filter: SensitiveFilter
+    def initialize: (writer: JSONSEQ::Writer, filter: SensitiveFilter) -> void
+    def command_line: (Array[String] command_line, ?recorded_at: Time) -> void
+    def status: (Process::Status status, ?recorded_at: Time) -> untyped
+    def stdout: (String string, ?recorded_at: Time, ?max_length: Integer) -> void
+    def stderr: (String string, ?recorded_at: Time, ?max_length: Integer) -> void
+    def message: (String message, ?recorded_at: Time, ?max_length: Integer, ?limit: Integer, ?omission: String) ?{ () -> untyped } -> untyped
+    def header: (String message, ?recorded_at: Time) -> void
+    def warning: (String message, ?file: String?, ?recorded_at: Time) -> void
+    def ci_config: (Hash[Symbol, untyped] content, raw_content: String, file: String, ?recorded_at: Time) -> void
+    def error: (String message, ?recorded_at: Time, ?max_length: Integer) -> void
+    def <<: (Hash[Symbol, untyped] object) -> void
 
-  def initialize: (writer: _Writer, filter: SensitiveFilter) -> void
-  def command_line: (Array[String] command_line, ?recorded_at: Time) -> void
-  def status: (Process::Status status, ?recorded_at: Time) -> untyped
-  def stdout: (String string, ?recorded_at: Time, ?max_length: Integer) -> void
-  def stderr: (String string, ?recorded_at: Time, ?max_length: Integer) -> void
-  def message: (String message, ?recorded_at: Time, ?max_length: Integer, ?limit: Integer, ?omission: String) ?{ () -> untyped } -> untyped
-  def header: (String message, ?recorded_at: Time) -> void
-  def warning: (String message, ?file: String?, ?recorded_at: Time) -> void
-  def ci_config: (Hash[Symbol, untyped] content, raw_content: String, file: String, ?recorded_at: Time) -> void
-  def error: (String message, ?recorded_at: Time, ?max_length: Integer) -> void
-  def <<: (Hash[Symbol, untyped] object) -> void
-
-  private
-  def now: () -> untyped
-  def each_slice: (String string, size: Integer) { (String, bool) -> void } -> void
+    private
+    def now: () -> untyped
+    def each_slice: (String string, size: Integer) { (String, bool) -> void } -> void
+  end
 end
