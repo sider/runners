@@ -1,0 +1,4 @@
+linter:
+  cpplint:
+    root_dir: src
+    target: foo
