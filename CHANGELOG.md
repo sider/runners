@@ -12,6 +12,7 @@ Updated environments:
 
 Updated tools:
 
+- **Brakeman** 4.9.1 -> 4.10.0 [#1525](https://github.com/sider/runners/pull/1525)
 - **Checkstyle** 8.36.1 -> 8.36.2 [#1516](https://github.com/sider/runners/pull/1516)
 - **Flake8** 3.8.3 -> 3.8.4 [#1528](https://github.com/sider/runners/pull/1528)
 - **HAML-Lint** 0.35.0 -> 0.36.0 [#1523](https://github.com/sider/runners/pull/1523)
