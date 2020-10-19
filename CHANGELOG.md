@@ -19,6 +19,7 @@ Updated tools:
 - **Flake8** 3.8.3 -> 3.8.4 [#1528](https://github.com/sider/runners/pull/1528)
 - **HAML-Lint** 0.35.0 -> 0.36.0 [#1523](https://github.com/sider/runners/pull/1523)
 - **JavaSee** 0.1.3 -> 0.2.0 [#1503](https://github.com/sider/runners/pull/1503)
+- **LanguageTool** 5.0 -> 5.1 [#1522](https://github.com/sider/runners/pull/1522)
 - **PHPMD** 2.9.0 -> 2.9.1 [#1509](https://github.com/sider/runners/pull/1509)
 - **PMD CPD** 6.27.0 -> 6.28.0 [#1515](https://github.com/sider/runners/pull/1515)
 - **PMD Java** 6.27.0 -> 6.28.0 [#1517](https://github.com/sider/runners/pull/1517)
