@@ -12,6 +12,8 @@ Updated environments:
 
 Updated tools:
 
+- **JavaSee** 0.1.3 -> 0.2.0 [#1503](https://github.com/sider/runners/pull/1503)
+
 Misc:
 
 - **stylelint** Add `stylelint-config-recommended-scss` [#1557](https://github.com/sider/runners/pull/1557)
