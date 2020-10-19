@@ -1,16 +1,18 @@
-class Runners::CLI
-  include Tmpdir
+module Runners
+  class CLI
+    include Tmpdir
 
-  attr_reader stdout: ::IO
-  attr_reader stderr: ::IO
-  attr_reader guid: String
-  attr_reader analyzer: String
-  attr_reader options: Options
+    attr_reader stdout: ::IO
+    attr_reader stderr: ::IO
+    attr_reader guid: String
+    attr_reader analyzer: String
+    attr_reader options: Options
 
-  def initialize: (argv: Array[String], stdout: ::IO, stderr: ::IO, options_json: String) -> void
-  def with_working_dir: [X] { (Pathname) -> X } -> X
-  def processor_class: () -> Class
-  def run: () -> untyped
-  def io: () -> Runners::IO
-  def format_duration: (Float duration_in_sec) -> String
+    def initialize: (argv: Array[String], stdout: ::IO, stderr: ::IO, options_json: String) -> void
+    def with_working_dir: [X] { (Pathname) -> X } -> X
+    def processor_class: () -> Class
+    def run: () -> untyped
+    def io: () -> Runners::IO
+    def format_duration: (Float duration_in_sec) -> String
+  end
 end
