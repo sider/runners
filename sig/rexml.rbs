@@ -1,0 +1,18 @@
+module REXML
+  class Document
+    def initialize: (String) -> void
+    def root: () -> Element?
+  end
+
+  class Element
+    include Namespace
+
+    def []: (String | Symbol | Integer) -> (String | nil)
+    def each_element: (?String) { (Element) -> untyped } -> void
+    def text: (?String) -> String?
+  end
+
+  module Namespace
+    attr_reader name: String
+  end
+end

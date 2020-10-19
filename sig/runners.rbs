@@ -1,4 +1,3 @@
 module Runners
+  VERSION: String
 end
-
-Runners::VERSION: String
