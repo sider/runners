@@ -1,37 +1,44 @@
-class Runners::Shell
-  @current_dir: Pathname
+module Runners
+  class Shell
+    class ExecError < SystemError
+      attr_reader type: Symbol
+      attr_reader args: Array[String]
+      attr_reader stdout_str: String
+      attr_reader stderr_str: String
+      attr_reader status: Process::Status
+      attr_reader dir: Pathname
 
-  attr_reader trace_writer: TraceWriter
-  attr_reader current_dir: Pathname
-  attr_reader env_hash_stack: Array[Hash[String, String?]]
+      def initialize: (type: Symbol,
+                       args: Array[String],
+                       stdout_str: String,
+                       stderr_str: String,
+                       status: Process::Status,
+                       dir: Pathname) -> void
+      def bugsnag_meta_data: () -> {
+        details: {
+          args: Array[String],
+          stdout: String,
+          stderr: String,
+          status: Integer?
+        }
+      }
+    end
 
-  def initialize: (current_dir: Pathname, env_hash: Hash[String, String?], trace_writer: TraceWriter) -> untyped
-  def chdir: [X] (Pathname) { (Pathname) -> X } -> X
-  def push_env_hash: [X] (Hash[String, String?]) { () -> X } -> X
-  def env_hash: () -> Hash[String, String?]
-  def capture3: (String, *String, **untyped) -> [String, String, Process::Status]
-  def capture3!: (String, *String, **untyped) -> [String, String]
-  def capture3_with_retry!: (String, *String, ?tries: Integer, ?sleep: ^(Integer) -> Integer | Float) -> [String, String]
-  def capture3_trace: (String, *String, **untyped) -> [String, String, Process::Status]
-end
+    @current_dir: Pathname
 
-class Runners::Shell::ExecError < SystemError
-  attr_reader type: Symbol
-  attr_reader args: Array[String]
-  attr_reader stdout_str: String
-  attr_reader stderr_str: String
-  attr_reader status: Process::Status
-  attr_reader dir: Pathname
+    attr_reader trace_writer: TraceWriter
+    attr_reader current_dir: Pathname
+    attr_reader env_hash_stack: Array[Hash[String, String?]]
 
-  def initialize: (type: Symbol, args: Array[String],
-                   stdout_str: String, stderr_str: String,
-                   status: Process::Status, dir: Pathname) -> untyped
-  def bugsnag_meta_data: () -> {
-    details: {
-      args: Array[String],
-      stdout: String,
-      stderr: String,
-      status: Integer?
-    }
-  }
+    def initialize: (current_dir: Pathname,
+                     env_hash: Hash[String, String?],
+                     trace_writer: TraceWriter) -> void
+    def chdir: [X] (Pathname) { (Pathname) -> X } -> X
+    def push_env_hash: [X] (Hash[String, String?]) { () -> X } -> X
+    def env_hash: () -> Hash[String, String?]
+    def capture3: (String, *String, **untyped) -> [String, String, Process::Status]
+    def capture3!: (String, *String, **untyped) -> [String, String]
+    def capture3_with_retry!: (String, *String, ?tries: Integer, ?sleep: ^(Integer) -> Numeric) -> [String, String]
+    def capture3_trace: (String, *String, **untyped) -> [String, String, Process::Status]
+  end
 end

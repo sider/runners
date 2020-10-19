@@ -1,7 +1,6 @@
 module Runners
   class Shell
     class ExecError < SystemError
-      # @dynamic type, args, stdout_str, stderr_str, status, dir
       attr_reader :type
       attr_reader :args
       attr_reader :stdout_str
@@ -36,7 +35,6 @@ module Runners
       end
     end
 
-    # @dynamic trace_writer, current_dir, env_hash_stack
     attr_reader :trace_writer
     attr_reader :current_dir
     attr_reader :env_hash_stack
