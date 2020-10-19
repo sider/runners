@@ -13,6 +13,7 @@ Updated environments:
 Updated tools:
 
 - **JavaSee** 0.1.3 -> 0.2.0 [#1503](https://github.com/sider/runners/pull/1503)
+- **PHPMD** 2.9.0 -> 2.9.1 [#1509](https://github.com/sider/runners/pull/1509)
 - **remark-lint** 8.0.1 -> 9.0.0 [#1567](https://github.com/sider/runners/pull/1567)
 - **SwiftLint** 0.40.2 -> 0.40.3 [#1504](https://github.com/sider/runners/pull/1504)
 
