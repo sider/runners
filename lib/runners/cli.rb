@@ -11,21 +11,25 @@ module Runners
     attr_reader :analyzer
     attr_reader :options
 
-    def initialize(argv:, stdout:, stderr:)
+    def initialize(argv:, stdout:, stderr:, options_json:)
       @stdout = stdout
       @stderr = stderr
 
       OptionParser.new do |opts|
-        opts.on("--analyzer=ANALYZER") do |analyzer|
+        opts.banner = "Usage: runners [options] <GUID>"
+
+        opts.on("--analyzer=ANALYZER", "Analyzer tool name") do |analyzer|
           @analyzer = analyzer
         end
       end.parse!(argv)
+
       @guid = _ = argv.shift
 
-      raise "--analyzer is required" unless analyzer
-      raise "The specified analyzer is not supported" unless processor_class
-      raise "GUID is required" unless guid
-      @options = Options.new(stdout, stderr)
+      raise OptionParser::MissingArgument.new("--analyzer is required") unless analyzer
+      raise OptionParser::MissingArgument.new("GUID is required") unless guid
+      raise OptionParser::MissingArgument.new("The specified analyzer is not supported") unless processor_class
+
+      @options = Options.new(options_json, stdout, stderr)
     end
 
     def with_working_dir(&block)

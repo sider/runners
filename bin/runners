@@ -13,12 +13,13 @@ EXIT_STATUS_FOR_SIGTERM = 126
 
 # @see https://docs.bugsnag.com/platforms/ruby/configuration-options
 Bugsnag.configure do |config|
-  config.app_version = ENV["RUNNERS_VERSION"]
-  config.release_stage = ENV["BUGSNAG_RELEASE_STAGE"]
+  config.api_key = ENV.delete("BUGSNAG_API_KEY")
+  config.app_version = ENV.delete("RUNNERS_VERSION")
+  config.release_stage = ENV.delete("BUGSNAG_RELEASE_STAGE")
 
   # @see https://docs.bugsnag.com/platforms/ruby/customizing-error-reports/#adding-callbacks
   config.add_on_error(proc do |report|
-    report.add_tab(:task_guid, ENV["TASK_GUID"]) if ENV["TASK_GUID"]
+    report.add_tab(:task_guid, ENV.delete("TASK_GUID")) if ENV["TASK_GUID"]
     report.add_tab(:arguments, ARGV)
   end)
 end
@@ -33,7 +34,20 @@ trap('SIGUSR2') do
 end
 
 begin
-  Runners::CLI.new(argv: ARGV.dup, stdout: STDOUT, stderr: STDERR).run
+  # @see https://docs.aws.amazon.com/sdk-for-ruby/v3/developer-guide/setup-config.html
+  if ENV["AWS_ACCESS_KEY_ID"]
+    Aws.config[:credentials] = Aws::Credentials.new(ENV.delete("AWS_ACCESS_KEY_ID"), ENV.delete("AWS_SECRET_ACCESS_KEY"))
+  end
+  if ENV["AWS_REGION"]
+    Aws.config[:region] = ENV.delete("AWS_REGION")
+  end
+
+  Runners::CLI.new(
+    argv: ARGV.dup,
+    stdout: STDOUT,
+    stderr: STDERR,
+    options_json: ENV.delete("RUNNERS_OPTIONS"),
+  ).run
 rescue => exn
   Bugsnag.notify(exn)
   raise
