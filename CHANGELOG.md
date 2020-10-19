@@ -14,6 +14,7 @@ Updated tools:
 
 - **Checkstyle** 8.36.1 -> 8.36.2 [#1516](https://github.com/sider/runners/pull/1516)
 - **Flake8** 3.8.3 -> 3.8.4 [#1528](https://github.com/sider/runners/pull/1528)
+- **HAML-Lint** 0.35.0 -> 0.36.0 [#1523](https://github.com/sider/runners/pull/1523)
 - **JavaSee** 0.1.3 -> 0.2.0 [#1503](https://github.com/sider/runners/pull/1503)
 - **PHPMD** 2.9.0 -> 2.9.1 [#1509](https://github.com/sider/runners/pull/1509)
 - **PMD CPD** 6.27.0 -> 6.28.0 [#1515](https://github.com/sider/runners/pull/1515)
