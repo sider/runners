@@ -114,7 +114,7 @@ DEPENDENCIES
   rexml (>= 3.2, < 4.0)
   rubocop
   steep
-  strong_json (= 2.1.0)
+  strong_json
   unification_assertion
 
 BUNDLED WITH
