@@ -21,7 +21,7 @@ module Runners
     register_config_schema(name: :remark_lint, schema: Schema.runner_config)
 
     CONSTRAINTS = {
-      "remark-cli" => Constraint.new(">= 7.0.0", "< 9.0.0"),
+      "remark-cli" => Constraint.new(">= 7.0.0", "< 10.0.0"),
     }.freeze
 
     DEFAULT_TARGET = ".".freeze

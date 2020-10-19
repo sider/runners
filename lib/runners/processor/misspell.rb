@@ -5,7 +5,7 @@ module Runners
         fields.merge!({
                         exclude: array?(string),
                         targets: array?(string),
-                        target: array?(string),
+                        target: enum?(string, array(string)),
                         locale: enum?(literal('US'), literal('UK')),
                         ignore: enum?(string, array(string)),
                         # DO NOT ADD ANY OPTIONS under `options`.
