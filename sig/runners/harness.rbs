@@ -1,21 +1,30 @@
-class Runners::Harness
-  include Tmpdir
+module Runners
+  class Harness
+    include Tmpdir
 
-  attr_reader guid: String
-  attr_reader processor_class: Class
-  attr_reader options: Options
-  attr_reader working_dir: Pathname
-  attr_reader trace_writer: TraceWriter
-  attr_reader warnings: Array[String]
-  attr_reader config: Config?
+    class InvalidResult < SystemError
+      attr_reader result: untyped
+      def initialize: (result: untyped) -> void
+    end
 
-  def initialize: (guid: String,
-                   processor_class: Class,
-                   options: Options,
-                   working_dir: Pathname,
-                   trace_writer: TraceWriter) -> void
-  def run: () -> untyped
-  def ensure_result: () { () -> untyped } -> untyped
-  def handle_error: (Exception exn) -> void
-  def exclude_special_dirs: [X] { () -> X } -> X
+    attr_reader guid: String
+    attr_reader processor_class: untyped
+    attr_reader options: Options
+    attr_reader working_dir: Pathname
+    attr_reader trace_writer: TraceWriter
+    attr_reader warnings: Array[String]
+    attr_reader config: Config?
+
+    def initialize: (guid: String,
+                     processor_class: untyped,
+                     options: Options,
+                     working_dir: Pathname,
+                     trace_writer: TraceWriter) -> void
+    def run: () -> untyped
+
+    private
+    def ensure_result: () { () -> untyped } -> untyped
+    def handle_error: (Exception exn) -> void
+    def exclude_special_dirs: [X] { () -> X } -> X
+  end
 end
