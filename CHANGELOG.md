@@ -13,6 +13,7 @@ Updated environments:
 Updated tools:
 
 - **JavaSee** 0.1.3 -> 0.2.0 [#1503](https://github.com/sider/runners/pull/1503)
+- **remark-lint** 8.0.1 -> 9.0.0 [#1567](https://github.com/sider/runners/pull/1567)
 
 Misc:
 
