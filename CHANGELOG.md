@@ -21,6 +21,7 @@ Updated tools:
 - **PHPMD** 2.9.0 -> 2.9.1 [#1509](https://github.com/sider/runners/pull/1509)
 - **PMD CPD** 6.27.0 -> 6.28.0 [#1515](https://github.com/sider/runners/pull/1515)
 - **PMD Java** 6.27.0 -> 6.28.0 [#1517](https://github.com/sider/runners/pull/1517)
+- **Reek** 6.0.1 -> 6.0.2 [#1561](https://github.com/sider/runners/pull/1561)
 - **remark-lint** 8.0.1 -> 9.0.0 [#1567](https://github.com/sider/runners/pull/1567)
 - **stylelint** 13.7.1 -> 13.7.2 [#1511](https://github.com/sider/runners/pull/1511)
 - **SwiftLint** 0.40.2 -> 0.40.3 [#1504](https://github.com/sider/runners/pull/1504)
