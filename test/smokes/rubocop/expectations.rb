@@ -445,7 +445,7 @@ s.add_test(
     {
       message: <<~MSG.strip,
         `rubocop #{default_version}` is installed instead of `0.60.0` in your `Gemfile.lock`.
-        Because `0.60.0` does not satisfy our constraints `>= 0.61.0, < 1.0.0`.
+        Because `0.60.0` does not satisfy our constraints `>= 0.61.0, < 2.0.0`.
 
         If you want to use a different version of `rubocop`, please do either:
         - Update your `Gemfile.lock` to satisfy the constraint
@@ -509,4 +509,23 @@ s.add_test(
       file: "lib/backtrace_silencers2.rb"
     }
   ]
+)
+
+s.add_test(
+  "v1.0.0",
+  type: "success",
+  issues: [
+    {
+      path: "Gemfile",
+      location: { start_line: 1, start_column: 18, end_line: 1, end_column: 35 },
+      id: "Lint/RedundantCopEnableDirective",
+      message: "Unnecessary enabling of Bundler/GemComment.",
+      links: %w[https://docs.rubocop.org/rubocop/cops_lint.html#lintredundantcopenabledirective],
+      object: { severity: "warning", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "2b6492d28753891a9c883b6043f89234caf80d53", original_line: 1, final_line: 1
+      }
+    }
+  ],
+  analyzer: { name: "RuboCop", version: "1.0.0" }
 )
