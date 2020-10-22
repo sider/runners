@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 
-gem 'haml_lint', '0.35.0'
+gem 'haml_lint', '0.36.0'
 gem 'meowcop'

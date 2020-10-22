@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "0.89.1"
+default_version = "1.0.0"
 
 s.add_test(
   "sandbox_rails",
@@ -445,7 +445,7 @@ s.add_test(
     {
       message: <<~MSG.strip,
         `rubocop #{default_version}` is installed instead of `0.60.0` in your `Gemfile.lock`.
-        Because `0.60.0` does not satisfy our constraints `>= 0.61.0, < 1.0.0`.
+        Because `0.60.0` does not satisfy our constraints `>= 0.61.0, < 2.0.0`.
 
         If you want to use a different version of `rubocop`, please do either:
         - Update your `Gemfile.lock` to satisfy the constraint

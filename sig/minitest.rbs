@@ -1,0 +1,5 @@
+module Minitest
+  module Assertions
+    def diff: (untyped, untyped) -> String
+  end
+end

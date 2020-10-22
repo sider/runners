@@ -4,7 +4,6 @@ module Runners
   class CLI
     include Tmpdir
 
-    # @dynamic stdout, stderr, guid, analyzer, options
     attr_reader :stdout
     attr_reader :stderr
     attr_reader :guid

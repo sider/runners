@@ -1,0 +1,16 @@
+module GitDiffParser
+  class Patches
+    def find_patch_by_file: (String) -> Patch?
+    def files: () -> Array[String]
+  end
+
+  class Patch
+    def changed_lines: () -> Array[Line]
+  end
+
+  class Line
+    attr_reader number: Integer
+  end
+
+  def self.parse: (String) -> Patches
+end

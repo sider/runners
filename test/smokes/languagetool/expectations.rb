@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "5.0"
+default_version = "5.1"
 
 s.add_test(
   "success",
@@ -54,7 +54,7 @@ s.add_test(
       id: "UPPERCASE_SENTENCE_START",
       path: "sample.txt",
       location: { start_line: 3 },
-      message: "This sentence does not start with an uppercase letter",
+      message: "This sentence does not start with an uppercase letter.",
       links: [],
       object: {
         sentence: "to see an few of the problems that LanguageTool can detecd.",
@@ -137,7 +137,7 @@ s.add_test(
       id: "EN_QUOTES",
       path: "target.html",
       location: { start_line: 3 },
-      message: 'Use a smart closing quote here: "”".',
+      message: "Use a smart closing quote here.",
       links: [],
       object: {
         sentence: '<p class="normal">This is a sample <em>HTML</em> file.</p>',
@@ -153,7 +153,7 @@ s.add_test(
       id: "EN_QUOTES",
       path: "target.html",
       location: { start_line: 3 },
-      message: 'Use a smart closing quote here: "”".',
+      message: "Use a smart closing quote here.",
       links: [],
       object: {
         sentence: '<p class="normal">This is a sample <em>HTML</em> file.</p>',
@@ -175,7 +175,7 @@ s.add_test(
         sentence: "This is a sample [markdow](https://en.wikipedia.org/wiki/Markdown) file.",
         type: "misspelling",
         category: "TYPOS",
-        replacements: %w[markdown]
+        replacements: %w[markdown Markdown]
       },
       git_blame_info: {
         commit: :_, line_hash: "0cd318e72c6c0682c98b6174a41887e9a1764c16", original_line: 3, final_line: 3
@@ -193,7 +193,7 @@ s.add_test(
       id: "UPPERCASE_SENTENCE_START",
       path: "target.txt",
       location: { start_line: 1 },
-      message: "This sentence does not start with an uppercase letter",
+      message: "This sentence does not start with an uppercase letter.",
       links: [],
       object: { sentence: "this is a pen.", type: "typographical", category: "CASING", replacements: %w[This] },
       git_blame_info: {
@@ -233,7 +233,7 @@ s.add_test(
       id: "UPPERCASE_SENTENCE_START",
       path: "sample.txt",
       location: { start_line: 1 },
-      message: "This sentence does not start with an uppercase letter",
+      message: "This sentence does not start with an uppercase letter.",
       links: [],
       object: { sentence: "this is a.", type: "typographical", category: "CASING", replacements: %w[This] },
       git_blame_info: {
@@ -271,7 +271,7 @@ s.add_test(
       id: "UPPERCASE_SENTENCE_START",
       path: "sample.txt",
       location: { start_line: 1 },
-      message: "This sentence does not start with an uppercase letter",
+      message: "This sentence does not start with an uppercase letter.",
       links: [],
       object: { sentence: "this is a.", type: "typographical", category: "CASING", replacements: %w[This] },
       git_blame_info: {

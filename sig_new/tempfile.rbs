@@ -1,3 +1,0 @@
-class Tempfile
-  def self.create: [X] (String | Array[String]) { (File) -> X } -> X
-end

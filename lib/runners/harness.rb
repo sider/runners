@@ -11,7 +11,6 @@ module Runners
       end
     end
 
-    # @dynamic guid, processor_class, options, working_dir, trace_writer, warnings, config
     attr_reader :guid
     attr_reader :processor_class
     attr_reader :options

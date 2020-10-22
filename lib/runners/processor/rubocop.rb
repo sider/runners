@@ -73,7 +73,7 @@ module Runners
     ].freeze
 
     CONSTRAINTS = {
-      "rubocop" => [">= 0.61.0", "< 1.0.0"]
+      "rubocop" => [">= 0.61.0", "< 2.0.0"]
     }.freeze
 
     def default_gem_specs
