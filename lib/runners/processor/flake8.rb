@@ -7,7 +7,6 @@ module Runners
         fields.merge!({
                         target: enum?(string, array(string)),
                         config: string?,
-                        version: numeric?,
                         plugins: enum?(string, array(string)),
                       })
       }
@@ -28,9 +27,6 @@ module Runners
 
     def setup
       prepare_config
-      capture3! 'pyenv', 'global', detected_python_version
-      capture3! "python", "--version" # NOTE: `show_runtime_versions` does not work...
-      capture3! "pip", "--version"
       prepare_plugins
       yield
     end
@@ -58,49 +54,8 @@ module Runners
       end
     end
 
-    def detected_python_version
-      [
-        specified_python_version,
-        specified_python_version_via_pyenv,
-        python3_version
-      ].compact.first
-    end
-
-    def specified_python_version
-      case config_linter[:version]&.to_i
-      when 2
-        python2_version
-      when 3
-        python3_version
-      end
-    end
-
-    def specified_python_version_via_pyenv
-      python_version = Pathname(current_dir + '.python-version')
-      if python_version.exist?
-        version = if python_version.read.start_with? '2'
-                    python2_version
-                  else
-                    python3_version
-                  end
-        # Delete .python-version not to run Python that is not installed.
-        python_version.delete
-        return version
-      end
-    end
-
     def ignored_config_path
       (Pathname(Dir.home) / '.config/ignored-config.ini').realpath
-    end
-
-    def python2_version
-      @python2_version ||= capture3!('pyenv', 'versions', '--bare').first.match(/^2[0-9\.]+$/m).to_s.tap do
-        add_warning "Python 2 is deprecated. Consider migrating to Python 3."
-      end
-    end
-
-    def python3_version
-      @python3_version ||= capture3!('pyenv', 'versions', '--bare').first.match(/^3[0-9\.]+$/m).to_s
     end
 
     def parse_result(output)

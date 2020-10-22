@@ -22,15 +22,7 @@ RUN cd ${RUNNER_USER_HOME} && \
     mkdir pylint && \
     mv pylint_Pipfile pylint/Pipfile && \
     cd pylint && \
-    for version in "${PYTHON2_VERSION}" "${PYTHON3_VERSION}"; do \
-      pyenv global ${version} && \
-      pipenv install --system --skip-lock && \
-      pyenv rehash && \
-      echo "In '$(python --version 2>&1)', the version of the analyzer 'pylint' is ..." && \
-      pylint --version && \
-      : ; \
-    done && \
-    echo "The default Python runtime version is '$(python --version)'"
+    pipenv install --system --skip-lock
 
 
 # Copy the main source code
