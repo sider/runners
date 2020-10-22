@@ -216,10 +216,9 @@ s.add_test(
 
 s.add_test(
   "python2",
-  type: "success",
-  issues: [],
-  analyzer: { name: "Flake8", version: default_version },
-  warnings: [{ message: "Python 2 is deprecated. Consider migrating to Python 3.", file: nil }]
+  type: "failure",
+  message: "The attribute `linter.flake8.version` in your `sider.yml` is unsupported. Please fix and retry.",
+  analyzer: :_
 )
 
 s.add_test("dot_python_version", type: "success", issues: [], analyzer: { name: "Flake8", version: default_version })
@@ -228,8 +227,7 @@ s.add_test(
   "dot_python_version_2",
   type: "success",
   issues: [],
-  analyzer: { name: "Flake8", version: default_version },
-  warnings: [{ message: "Python 2 is deprecated. Consider migrating to Python 3.", file: nil }]
+  analyzer: { name: "Flake8", version: default_version }
 )
 
 s.add_test(

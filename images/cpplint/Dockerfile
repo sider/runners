@@ -22,15 +22,7 @@ RUN cd ${RUNNER_USER_HOME} && \
     mkdir cpplint && \
     mv cpplint_Pipfile cpplint/Pipfile && \
     cd cpplint && \
-    for version in "${PYTHON2_VERSION}" "${PYTHON3_VERSION}"; do \
-      pyenv global ${version} && \
-      pipenv install --system --skip-lock && \
-      pyenv rehash && \
-      echo "In '$(python --version 2>&1)', the version of the analyzer 'cpplint' is ..." && \
-      cpplint --version && \
-      : ; \
-    done && \
-    echo "The default Python runtime version is '$(python --version)'"
+    pipenv install --system --skip-lock
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/cpplint/sider_recommended_CPPLINT.cfg ${RUNNER_USER_HOME}/
 
