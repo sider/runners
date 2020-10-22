@@ -25,6 +25,7 @@ Updated tools:
 - **PMD Java** 6.27.0 -> 6.28.0 [#1517](https://github.com/sider/runners/pull/1517)
 - **Reek** 6.0.1 -> 6.0.2 [#1561](https://github.com/sider/runners/pull/1561)
 - **remark-lint** 8.0.1 -> 9.0.0 [#1567](https://github.com/sider/runners/pull/1567)
+- **RuboCop** 0.89.1 -> 1.0.0 [#1576](https://github.com/sider/runners/pull/1576)
 - **stylelint** 13.7.1 -> 13.7.2 [#1511](https://github.com/sider/runners/pull/1511)
 - **SwiftLint** 0.40.2 -> 0.40.3 [#1504](https://github.com/sider/runners/pull/1504)
 
