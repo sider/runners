@@ -64,6 +64,7 @@ Updated tools:
 
 - **Brakeman** 4.9.0 -> 4.9.1 [#1450](https://github.com/sider/runners/pull/1450)
 - **Checkstyle** 8.35 -> 8.36.1 [#1466](https://github.com/sider/runners/pull/1466)
+- **Cppcheck** 2.1 -> 2.2 [#1534](https://github.com/sider/runners/pull/1534)
 - **detekt** 1.11.2 -> 1.13.1 [#1468](https://github.com/sider/runners/pull/1468)
 - **ESLint** 7.7.0 -> 7.9.0 [#1469](https://github.com/sider/runners/pull/1469)
 - **GolangCI-Lint** 1.30.0 -> 1.31.0 [#1465](https://github.com/sider/runners/pull/1465)
