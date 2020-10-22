@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.36.1...HEAD)
 
+Notable:
+
+- Drop Python 2 support [#1579](https://github.com/sider/runners/pull/1579)
+
 Updated environments:
 
 - Bump Ruby from 2.7.1 to 2.7.2 [#1538](https://github.com/sider/runners/pull/1538)
