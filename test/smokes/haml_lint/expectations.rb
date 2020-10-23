@@ -286,3 +286,33 @@ s.add_test(
   ],
   analyzer: { name: "HAML-Lint", version: default_version }
 )
+
+s.add_test(
+  "option_parallel",
+  type: "success",
+  issues: [
+    {
+      message: "Avoid defining `class` in attributes hash for static class names",
+      links: %W[https://github.com/sds/haml-lint/blob/v#{default_version}/lib/haml_lint/linter#classattributewithstaticvalue],
+      id: "ClassAttributeWithStaticValue",
+      path: "1.haml",
+      location: { start_line: 1 },
+      object: { severity: "warning" },
+      git_blame_info: {
+        commit: :_, line_hash: "2f024a2bdf291a1ab61e026140f7e709028266a8", original_line: 1, final_line: 1
+      }
+    },
+    {
+      message: "Avoid defining `class` in attributes hash for static class names",
+      links: %W[https://github.com/sds/haml-lint/blob/v#{default_version}/lib/haml_lint/linter#classattributewithstaticvalue],
+      id: "ClassAttributeWithStaticValue",
+      path: "2.haml",
+      location: { start_line: 1 },
+      object: { severity: "warning" },
+      git_blame_info: {
+        commit: :_, line_hash: "2f024a2bdf291a1ab61e026140f7e709028266a8", original_line: 1, final_line: 1
+      }
+    }
+  ],
+  analyzer: { name: "HAML-Lint", version: default_version }
+)

@@ -13,6 +13,7 @@ module Runners
                         exclude_linter: enum?(string, array(string)),
                         exclude: enum?(string, array(string)),
                         config: string?,
+                        parallel: boolean?,
                         # DO NOT ADD ANY OPTION in `options` option.
                         options: object?(
                           file: string?,
@@ -109,6 +110,10 @@ module Runners
       config ? ["--config", config] : []
     end
 
+    def config_parallel
+      config_linter[:parallel] ? ["--parallel"] : []
+    end
+
     def parse_result(output)
       JSON.parse(output, symbolize_names: true).fetch(:files).flat_map do |file|
         path = file.fetch(:path)
@@ -147,6 +152,7 @@ module Runners
         *exclude_linter,
         *exclude,
         *haml_lint_config,
+        *config_parallel,
         *target,
       )
 
