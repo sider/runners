@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.36.1...HEAD)
 
+- **cpplint** Enable new recommended configuration [#1585](https://github.com/sider/runners/pull/1585)
+
 Notable:
 
 - Drop Python 2 support [#1579](https://github.com/sider/runners/pull/1579)
