@@ -27,7 +27,7 @@ Updated tools:
 - **PHPMD** 2.9.0 -> 2.9.1 [#1509](https://github.com/sider/runners/pull/1509)
 - **PMD CPD** 6.27.0 -> 6.28.0 [#1515](https://github.com/sider/runners/pull/1515)
 - **PMD Java** 6.27.0 -> 6.28.0 [#1517](https://github.com/sider/runners/pull/1517)
-- **PHP_CodeSniffer** 3.5.6 -> 3.5.7 [#1581](https://github.com/sider/runners/pull/1581)
+- **PHP_CodeSniffer** 3.5.6 -> 3.5.8 [#1581](https://github.com/sider/runners/pull/1581) [#1583](https://github.com/sider/runners/pull/1583)
 - **Reek** 6.0.1 -> 6.0.2 [#1561](https://github.com/sider/runners/pull/1561)
 - **remark-lint** 8.0.1 -> 9.0.0 [#1567](https://github.com/sider/runners/pull/1567)
 - **RuboCop** 0.89.1 -> 1.0.0 [#1576](https://github.com/sider/runners/pull/1576)
