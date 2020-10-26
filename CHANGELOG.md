@@ -18,7 +18,7 @@ Updated tools:
 
 - **Brakeman** 4.9.1 -> 4.10.0 [#1525](https://github.com/sider/runners/pull/1525)
 - **Checkstyle** 8.36.1 -> 8.36.2 [#1516](https://github.com/sider/runners/pull/1516)
-- **detekt** 1.13.1 -> 1.14.1 [#1530](https://github.com/sider/runners/pull/1530)
+- **detekt** 1.13.1 -> 1.14.2 [#1530](https://github.com/sider/runners/pull/1530) [#1595](https://github.com/sider/runners/pull/1595)
 - **ESLint** 7.9.0 -> 7.11.0 [#1546](https://github.com/sider/runners/pull/1546)
 - **Flake8** 3.8.3 -> 3.8.4 [#1528](https://github.com/sider/runners/pull/1528)
 - **HAML-Lint** 0.35.0 -> 0.36.0 [#1523](https://github.com/sider/runners/pull/1523)
