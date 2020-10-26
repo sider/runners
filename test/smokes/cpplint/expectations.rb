@@ -181,12 +181,12 @@ s.add_test(
     {
       id: "runtime/printf",
       path: "src/foo/sample.cpp",
-      location: { start_line: 42 },
+      location: { start_line: 43 },
       message: 'Potential format string bug. Do printf("%s", str.c_str()) instead.',
       links: [],
       object: { confidence: "4" },
       git_blame_info: {
-        commit: :_, line_hash: "2f1bd03f5ae88a98b3f874b1889c3ea965c58267", original_line: 42, final_line: 42
+        commit: :_, line_hash: "2f1bd03f5ae88a98b3f874b1889c3ea965c58267", original_line: 43, final_line: 43
       }
     }
   ],
