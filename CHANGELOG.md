@@ -21,6 +21,7 @@ Updated tools:
 - **detekt** 1.13.1 -> 1.14.2 [#1530](https://github.com/sider/runners/pull/1530) [#1595](https://github.com/sider/runners/pull/1595)
 - **ESLint** 7.9.0 -> 7.12.0 [#1546](https://github.com/sider/runners/pull/1546) [#1594](https://github.com/sider/runners/pull/1594)
 - **Flake8** 3.8.3 -> 3.8.4 [#1528](https://github.com/sider/runners/pull/1528)
+- **GolangCI-Lint** 1.31.0 -> 1.32.0 [#1589](https://github.com/sider/runners/pull/1589)
 - **hadolint** 1.18.0 -> 1.18.2 [#1588](https://github.com/sider/runners/pull/1588)
 - **HAML-Lint** 0.35.0 -> 0.36.0 [#1523](https://github.com/sider/runners/pull/1523)
 - **JavaSee** 0.1.3 -> 0.2.0 [#1503](https://github.com/sider/runners/pull/1503)
