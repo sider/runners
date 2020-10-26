@@ -40,9 +40,25 @@ module Runners
     register_config_schema(name: :golangci_lint, schema: Schema.runner_config)
 
     DEFAULT_TARGET = "./...".freeze
+    DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_golangci.yml").to_path.freeze
+
+    # @see https://golangci-lint.run/usage/configuration/#config-file
+    SUPPORTED_CONFIG_FILES = %w[
+      .golangci.yml
+      .golangci.yaml
+      .golangci.toml
+      .golangci.json
+    ].freeze
 
     def analyzer_bin
       "golangci-lint"
+    end
+
+    # HACK: `golangci-lint --version` (also `version`) is broken...
+    #
+    # @see https://github.com/golangci/golangci-lint/issues/1468
+    def analyzer_version
+      "1.32.0"
     end
 
     def analyze(_changes)
@@ -115,14 +131,10 @@ module Runners
 
     def path_to_config
       return config_linter[:config] if config_linter[:config]
-
-      # @see https://golangci-lint.run/usage/configuration/#config-file
-      default_config_file_is_found = %w[.golangci.yml .golangci.toml .golangci.json].find { |f| (current_dir / f).exist? }
-      return if default_config_file_is_found
-
       return if config_linter[:'disable-all'] == true
+      return if SUPPORTED_CONFIG_FILES.any? { |file| File.exist?(file) }
 
-      Pathname(Dir.home).join("sider_golangci.yml").to_path
+      DEFAULT_CONFIG_FILE
     end
 
     def analysis_targets
