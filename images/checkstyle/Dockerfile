@@ -17,6 +17,7 @@ RUN cd "${DEPS_DIR}" && \
     rm build.gradle
 
 COPY images/checkstyle/checkstyle /usr/local/bin/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/checkstyle/sider_recommended_CHECKSTYLE.xml ${RUNNER_USER_HOME}/
 
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners

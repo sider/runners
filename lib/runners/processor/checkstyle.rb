@@ -1,6 +1,7 @@
 module Runners
   class Processor::Checkstyle < Processor
     include Java
+    include RecommendedConfig
 
     Schema = _ = StrongJSON.new do
       # @type self: SchemaClass
@@ -25,6 +26,7 @@ module Runners
     register_config_schema(name: :checkstyle, schema: Schema.runner_config)
 
     DEFAULT_TARGET = ".".freeze
+    CONFIG_FILE_NAME = "CHECKSTYLE.xml".freeze
 
     def setup
       begin
@@ -32,6 +34,7 @@ module Runners
       rescue UserError => exn
         return Results::Failure.new(guid: guid, message: exn.message)
       end
+      deploy_recommended_config_file(CONFIG_FILE_NAME)
 
       yield
     end
@@ -147,12 +150,14 @@ module Runners
     end
 
     def config_file
-      file = config_linter[:config] || "google"
+      file = config_linter[:config] || "sider"
       case file
       when "sun"
         "/sun_checks.xml"
       when "google"
         "/google_checks.xml"
+      when "sider"
+        return recommended_file_path(CONFIG_FILE_NAME)
       else
         file
       end
