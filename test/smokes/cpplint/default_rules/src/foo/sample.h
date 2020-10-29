@@ -12,7 +12,7 @@ extern int func4(int a, int b);
 
 namespace bar {
 class Foo {
-  Foo(int i);
+  explicit Foo(int i);
 
 };
 

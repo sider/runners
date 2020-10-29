@@ -1,8 +1,9 @@
 /* Copyright [2020] John Doe */
 
-#include "./sample.h"
 #include "./utils.h"
+#include "./sample.h"
 #include <stdio.h>
+#include <regex>
 
 using namespace bar;
 
@@ -30,7 +31,7 @@ int main(void) {
     func3();
   }
 
-  a = func4(5,7); // add numbers
+  a = func4(5, 7); // add numbers
 
   a = 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 0 + 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 0 + 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 0 + 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 0 + 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 0 + 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 0 + 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 0;
 
@@ -41,6 +42,6 @@ int main(void) {
   std::string str;
   printf(str.c_str());
 
-  while (true) ;
+  while (true) {};
 	// infinite loop
 }

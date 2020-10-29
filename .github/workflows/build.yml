@@ -21,29 +21,6 @@ jobs:
           ${{ toJson(github.event) }}
           MESSAGE
 
-  test:
-    runs-on: ubuntu-latest
-    needs: check_skip
-    steps:
-      - uses: actions/checkout@v2
-      - uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
-      - run: bundle exec rake test
-        env:
-          TESTOPTS: --verbose
-      - run: bundle exec rake readme:generate
-
-  timeout_test:
-    runs-on: ubuntu-latest
-    needs: check_skip
-    steps:
-      - uses: actions/checkout@v2
-      - uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
-      - run: bundle exec rake docker:timeout_test
-
   build:
     runs-on: ubuntu-latest
     needs: check_skip

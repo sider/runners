@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 Notable:
 
 - Drop Python 2 support [#1579](https://github.com/sider/runners/pull/1579)
+- **cpplint** Enable new recommended configuration [#1585](https://github.com/sider/runners/pull/1585)
 
 Updated environments:
 
@@ -18,15 +19,17 @@ Updated tools:
 
 - **Brakeman** 4.9.1 -> 4.10.0 [#1525](https://github.com/sider/runners/pull/1525)
 - **Checkstyle** 8.36.1 -> 8.36.2 [#1516](https://github.com/sider/runners/pull/1516)
-- **detekt** 1.13.1 -> 1.14.1 [#1530](https://github.com/sider/runners/pull/1530)
-- **ESLint** 7.9.0 -> 7.11.0 [#1546](https://github.com/sider/runners/pull/1546)
+- **detekt** 1.13.1 -> 1.14.2 [#1530](https://github.com/sider/runners/pull/1530) [#1595](https://github.com/sider/runners/pull/1595)
+- **ESLint** 7.9.0 -> 7.12.1 [#1546](https://github.com/sider/runners/pull/1546) [#1594](https://github.com/sider/runners/pull/1594) [#1602](https://github.com/sider/runners/pull/1602)
 - **Flake8** 3.8.3 -> 3.8.4 [#1528](https://github.com/sider/runners/pull/1528)
+- **GolangCI-Lint** 1.31.0 -> 1.32.0 [#1589](https://github.com/sider/runners/pull/1589)
+- **hadolint** 1.18.0 -> 1.18.2 [#1588](https://github.com/sider/runners/pull/1588)
 - **HAML-Lint** 0.35.0 -> 0.36.0 [#1523](https://github.com/sider/runners/pull/1523)
 - **JavaSee** 0.1.3 -> 0.2.0 [#1503](https://github.com/sider/runners/pull/1503)
 - **LanguageTool** 5.0 -> 5.1 [#1522](https://github.com/sider/runners/pull/1522)
 - **PHPMD** 2.9.0 -> 2.9.1 [#1509](https://github.com/sider/runners/pull/1509)
-- **PMD CPD** 6.27.0 -> 6.28.0 [#1515](https://github.com/sider/runners/pull/1515)
-- **PMD Java** 6.27.0 -> 6.28.0 [#1517](https://github.com/sider/runners/pull/1517)
+- **PMD CPD** 6.27.0 -> 6.29.0 [#1515](https://github.com/sider/runners/pull/1515) [#1590](https://github.com/sider/runners/pull/1590)
+- **PMD Java** 6.27.0 -> 6.29.0 [#1517](https://github.com/sider/runners/pull/1517) [#1593](https://github.com/sider/runners/pull/1593)
 - **PHP_CodeSniffer** 3.5.6 -> 3.5.8 [#1581](https://github.com/sider/runners/pull/1581) [#1583](https://github.com/sider/runners/pull/1583)
 - **Reek** 6.0.1 -> 6.0.2 [#1561](https://github.com/sider/runners/pull/1561)
 - **remark-lint** 8.0.1 -> 9.0.0 [#1567](https://github.com/sider/runners/pull/1567)
@@ -38,6 +41,7 @@ Misc:
 
 - **HAML-Lint** Add `parallel` option [#1582](https://github.com/sider/runners/pull/1582)
 - **stylelint** Add `stylelint-config-recommended-scss` [#1557](https://github.com/sider/runners/pull/1557)
+- Implement analyse timeout message [#1600](https://github.com/sider/runners/pull/1600)
 
 ## 0.36.1
 

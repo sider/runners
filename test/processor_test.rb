@@ -347,6 +347,7 @@ class ProcessorTest < Minitest::Test
       mock_status = Minitest::Mock.new
       mock_status.expect(:success?, false)
       mock_status.expect(:exited?, false)
+      mock_status.expect(:termsig, Signal.list.fetch('ABRT'))
 
       Open3.stub :capture3, ["", "", mock_status] do
         processor.capture3 "/bin/echo"
@@ -355,6 +356,29 @@ class ProcessorTest < Minitest::Test
 
         refute trace_writer.writer.find {|hash| hash[:trace] == :status && hash[:status] == 0 }
         assert trace_writer.writer.find {|hash| hash[:trace] == :error && hash[:message].include?("Process aborted or coredumped:") }
+      end
+    end
+  end
+
+  def test_timeout_capture3
+    with_workspace do |workspace|
+      processor = new_processor(workspace: workspace)
+
+      # Simulate timeout status
+      mock_status = Minitest::Mock.new
+      mock_status.expect(:success?,  false)
+      mock_status.expect(:exited?, false)
+      mock_status.expect(:termsig, Signal.list.fetch('USR2'))
+
+      Open3.stub :capture3, ["", "", mock_status] do
+        ENV.stub :fetch, "20s" do
+          processor.capture3 "/bin/echo"
+        end
+
+        assert_mock mock_status
+
+        refute trace_writer.writer.find {|hash| hash[:trace] == :status && hash[:status] == 0 }
+        assert trace_writer.writer.find {|hash| hash[:trace] == :error && hash[:message].include?("Analysis timeout (20s)")}
       end
     end
   end

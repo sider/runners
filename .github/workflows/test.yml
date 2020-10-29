@@ -1,0 +1,22 @@
+name: Test
+
+on:
+  push:
+    branches: ["master"]
+    tags: ["**"]
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - run: bundle exec rake test
+        env:
+          TESTOPTS: --verbose
+      - run: bundle exec rake readme:generate
+      - run: bundle exec rake docker:timeout_test

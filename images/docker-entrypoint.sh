@@ -36,4 +36,6 @@ while [[ -n "$1" ]]; do
   shift
 done
 
+export RUNNERS_TIMEOUT
+
 exec /usr/bin/timeout --signal=SIGUSR2 --kill-after=10s "$RUNNERS_TIMEOUT" "${args[@]}"
