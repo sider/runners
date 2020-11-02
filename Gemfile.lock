@@ -35,7 +35,7 @@ GEM
       aws-sigv4 (~> 1.1)
     aws-sigv4 (1.2.2)
       aws-eventstream (~> 1, >= 1.0.2)
-    bugsnag (6.17.0)
+    bugsnag (6.18.0)
       concurrent-ruby (~> 1.0)
     concurrent-ruby (1.1.7)
     ffi (1.13.1)
