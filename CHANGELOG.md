@@ -13,7 +13,7 @@ Notable:
 
 Updated environments:
 
-- **devon_rex** 2.26.1 -> 2.27.0 [#1607](https://github.com/sider/runners/pull/1607)
+- **devon_rex** 2.26.1 -> 2.27.0 [#1538](https://github.com/sider/runners/pull/1538) [#1607](https://github.com/sider/runners/pull/1607)
 
 Updated tools:
 
