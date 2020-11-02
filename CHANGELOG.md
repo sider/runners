@@ -13,7 +13,7 @@ Notable:
 
 Updated environments:
 
-- Bump Ruby from 2.7.1 to 2.7.2 [#1538](https://github.com/sider/runners/pull/1538)
+- **devon_rex** 2.26.1 -> 2.27.0 [#1607](https://github.com/sider/runners/pull/1607)
 
 Updated tools:
 
