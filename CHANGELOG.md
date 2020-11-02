@@ -23,7 +23,7 @@ Updated tools:
 - **ESLint** 7.9.0 -> 7.12.1 [#1546](https://github.com/sider/runners/pull/1546) [#1594](https://github.com/sider/runners/pull/1594) [#1602](https://github.com/sider/runners/pull/1602)
 - **Flake8** 3.8.3 -> 3.8.4 [#1528](https://github.com/sider/runners/pull/1528)
 - **FxCop** 3.3.0 -> 3.3.1 [#1586](https://github.com/sider/runners/pull/1586)
-- **GolangCI-Lint** 1.31.0 -> 1.32.0 [#1589](https://github.com/sider/runners/pull/1589)
+- **GolangCI-Lint** 1.31.0 -> 1.32.1 [#1589](https://github.com/sider/runners/pull/1589) [#1608](https://github.com/sider/runners/pull/1608)
 - **hadolint** 1.18.0 -> 1.18.2 [#1588](https://github.com/sider/runners/pull/1588)
 - **HAML-Lint** 0.35.0 -> 0.36.0 [#1523](https://github.com/sider/runners/pull/1523)
 - **JavaSee** 0.1.3 -> 0.2.0 [#1503](https://github.com/sider/runners/pull/1503)
