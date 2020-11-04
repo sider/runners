@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "3.3.0"
+default_version = "3.3.1"
 
 # a normal case
 s.add_test(
@@ -18,7 +18,7 @@ s.add_test(
           "Avoid unused paramereters in your code. If the parameter cannot be removed, then change its name so it starts with an underscore and is optionally followed by an integer, such as '_', '_1', '_2', etc. These are treated as special discard symbol names.",
         severity: "Warning"
       },
-      links: %w[https://docs.microsoft.com/visualstudio/code-quality/ca1801],
+      links: %w[https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1801],
       git_blame_info: {
         commit: :_, line_hash: "e7002f7dd06c31a9f25368e012845661d00f49d9", original_line: 7, final_line: 7
       }
@@ -34,7 +34,7 @@ s.add_test(
           "Avoid unused paramereters in your code. If the parameter cannot be removed, then change its name so it starts with an underscore and is optionally followed by an integer, such as '_', '_1', '_2', etc. These are treated as special discard symbol names.",
         severity: "Warning"
       },
-      links: %w[https://docs.microsoft.com/visualstudio/code-quality/ca1801],
+      links: %w[https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1801],
       git_blame_info: {
         commit: :_, line_hash: "6c0131f10a46e93aebd78110e9f82f88708279c1", original_line: 7, final_line: 7
       }
@@ -50,7 +50,7 @@ s.add_test(
         description: "An instance of an assembly-level type is not created by code in the assembly.",
         severity: "Warning"
       },
-      links: %w[https://docs.microsoft.com/visualstudio/code-quality/ca1812],
+      links: %w[https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1812],
       git_blame_info: {
         commit: :_, line_hash: "0a0c4509d7b357152d5ad499da7c652c97f3cb2c", original_line: 5, final_line: 5
       }
@@ -75,7 +75,7 @@ s.add_test(
           "Avoid unused paramereters in your code. If the parameter cannot be removed, then change its name so it starts with an underscore and is optionally followed by an integer, such as '_', '_1', '_2', etc. These are treated as special discard symbol names.",
         severity: "Warning"
       },
-      links: %w[https://docs.microsoft.com/visualstudio/code-quality/ca1801],
+      links: %w[https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1801],
       git_blame_info: {
         commit: :_, line_hash: "e7002f7dd06c31a9f25368e012845661d00f49d9", original_line: 7, final_line: 7
       }
@@ -91,7 +91,7 @@ s.add_test(
           "Avoid unused paramereters in your code. If the parameter cannot be removed, then change its name so it starts with an underscore and is optionally followed by an integer, such as '_', '_1', '_2', etc. These are treated as special discard symbol names.",
         severity: "Warning"
       },
-      links: %w[https://docs.microsoft.com/visualstudio/code-quality/ca1801],
+      links: %w[https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1801],
       git_blame_info: {
         commit: :_, line_hash: "6c0131f10a46e93aebd78110e9f82f88708279c1", original_line: 7, final_line: 7
       }
@@ -107,7 +107,7 @@ s.add_test(
         description: "An instance of an assembly-level type is not created by code in the assembly.",
         severity: "Warning"
       },
-      links: %w[https://docs.microsoft.com/visualstudio/code-quality/ca1812],
+      links: %w[https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1812],
       git_blame_info: {
         commit: :_, line_hash: "0a0c4509d7b357152d5ad499da7c652c97f3cb2c", original_line: 5, final_line: 5
       }

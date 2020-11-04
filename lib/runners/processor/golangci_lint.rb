@@ -54,13 +54,6 @@ module Runners
       "golangci-lint"
     end
 
-    # HACK: `golangci-lint --version` (also `version`) is broken...
-    #
-    # @see https://github.com/golangci/golangci-lint/issues/1468
-    def analyzer_version
-      "1.32.0"
-    end
-
     def analyze(_changes)
       run_analyzer
     end

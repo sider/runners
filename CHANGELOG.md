@@ -4,7 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.36.1...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.37.1...HEAD)
+
+## 0.37.1
+
+[Full diff](https://github.com/sider/runners/compare/0.37.0...0.37.1)
+
+- **devon_rex** 2.27.0 -> 2.27.1 [#1617](https://github.com/sider/runners/pull/1617)
+
+## 0.37.0
+
+[Full diff](https://github.com/sider/runners/compare/0.36.1...0.37.0)
 
 Notable:
 
@@ -13,16 +23,17 @@ Notable:
 
 Updated environments:
 
-- Bump Ruby from 2.7.1 to 2.7.2 [#1538](https://github.com/sider/runners/pull/1538)
+- **devon_rex** 2.26.1 -> 2.27.0 [#1538](https://github.com/sider/runners/pull/1538) [#1607](https://github.com/sider/runners/pull/1607)
 
 Updated tools:
 
 - **Brakeman** 4.9.1 -> 4.10.0 [#1525](https://github.com/sider/runners/pull/1525)
 - **Checkstyle** 8.36.1 -> 8.36.2 [#1516](https://github.com/sider/runners/pull/1516)
 - **detekt** 1.13.1 -> 1.14.2 [#1530](https://github.com/sider/runners/pull/1530) [#1595](https://github.com/sider/runners/pull/1595)
-- **ESLint** 7.9.0 -> 7.12.0 [#1546](https://github.com/sider/runners/pull/1546) [#1594](https://github.com/sider/runners/pull/1594)
+- **ESLint** 7.9.0 -> 7.12.1 [#1546](https://github.com/sider/runners/pull/1546) [#1594](https://github.com/sider/runners/pull/1594) [#1602](https://github.com/sider/runners/pull/1602)
 - **Flake8** 3.8.3 -> 3.8.4 [#1528](https://github.com/sider/runners/pull/1528)
-- **GolangCI-Lint** 1.31.0 -> 1.32.0 [#1589](https://github.com/sider/runners/pull/1589)
+- **FxCop** 3.3.0 -> 3.3.1 [#1586](https://github.com/sider/runners/pull/1586)
+- **GolangCI-Lint** 1.31.0 -> 1.32.1 [#1589](https://github.com/sider/runners/pull/1589) [#1608](https://github.com/sider/runners/pull/1608)
 - **hadolint** 1.18.0 -> 1.18.2 [#1588](https://github.com/sider/runners/pull/1588)
 - **HAML-Lint** 0.35.0 -> 0.36.0 [#1523](https://github.com/sider/runners/pull/1523)
 - **JavaSee** 0.1.3 -> 0.2.0 [#1503](https://github.com/sider/runners/pull/1503)
@@ -41,6 +52,7 @@ Misc:
 
 - **HAML-Lint** Add `parallel` option [#1582](https://github.com/sider/runners/pull/1582)
 - **stylelint** Add `stylelint-config-recommended-scss` [#1557](https://github.com/sider/runners/pull/1557)
+- Implement analyse timeout message [#1600](https://github.com/sider/runners/pull/1600)
 
 ## 0.36.1
 

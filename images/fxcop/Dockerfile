@@ -2,9 +2,9 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM sider/devon_rex_dotnet:master
+FROM sider/devon_rex_dotnet:2.27.1
 
-ENV FXCOP_VERSION=3.3.0
+ENV FXCOP_VERSION=3.3.1
 
 ARG ROSLYN_ANALYZERS_RUNNER_VERSION=0.1.4
 ARG ROSLYN_ANALYZERS_RUNNER_HOME=${RUNNER_USER_HOME}/roslyn-analyzers-runner
