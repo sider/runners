@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.37.0...HEAD)
 
+- **devon_rex** 2.27.0 -> 2.27.1 [#1617](https://github.com/sider/runners/pull/1617)
+
 ## 0.37.0
 
 [Full diff](https://github.com/sider/runners/compare/0.36.1...0.37.0)
