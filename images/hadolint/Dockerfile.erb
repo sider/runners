@@ -1,6 +1,6 @@
 FROM hadolint/hadolint:v1.18.2-debian as hadolint
 
-FROM sider/devon_rex_base:2.27.0
+FROM sider/devon_rex_base:2.27.1
 
 COPY --chown=<%= chown %> --from=hadolint /bin/hadolint ${RUNNER_USER_HOME}/bin/
 
