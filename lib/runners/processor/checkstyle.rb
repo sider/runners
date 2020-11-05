@@ -34,7 +34,14 @@ module Runners
       rescue UserError => exn
         return Results::Failure.new(guid: guid, message: exn.message)
       end
-      deploy_recommended_config_file(CONFIG_FILE_NAME)
+
+      if config_linter[:config]
+        #if ! ["sun", "google", "sider"].include?(config_linter[:config])
+        #  trace_writer.message "The `config` option in `#{config_linter[:config]}` is specified. The Sider's recommended ruleset is ignored."
+        #end
+      else
+        warn_recommended_config_option_release(config_linter, :config, "late in November 2020")
+      end
 
       yield
     end
@@ -150,14 +157,14 @@ module Runners
     end
 
     def config_file
-      file = config_linter[:config] || "sider"
+      file = config_linter[:config] || "google" # Change "sider" when recommended ruleset is released.
       case file
       when "sun"
         "/sun_checks.xml"
       when "google"
         "/google_checks.xml"
       when "sider"
-        return recommended_file_path(CONFIG_FILE_NAME)
+        original_recommended_file_path(CONFIG_FILE_NAME)
       else
         file
       end

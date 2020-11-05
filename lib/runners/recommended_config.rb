@@ -9,6 +9,15 @@ module Runners
       MSG
     end
 
+    def warn_recommended_config_option_release(config, config_key, deadline)
+      return if config[config_key]
+
+      add_warning <<~MSG
+        Sider's recommended configuration option is about to be released #{deadline}.
+        After the release, Sider will automatically apply our recommended ruleset if you don't have the #{analyzer_name} configuration option called `#{config_key.to_s}` in your repository.
+      MSG
+    end
+
     def deploy_recommended_config_file(config_filename)
       if exists_in_repository?(config_filename)
         trace_writer.message "The #{analyzer_name} configuration file called `#{config_filename}` exists in your repository. The Sider's recommended ruleset is ignored."
@@ -19,9 +28,8 @@ module Runners
       FileUtils.copy(Pathname(Dir.home) / "sider_recommended_#{config_filename}", current_dir / config_filename)
     end
 
-    def recommended_file_path(config_filename)
-      #Pathname(Dir.home) / "sider_recommended_#{config_filename}"
-      current_dir / config_filename
+    def original_recommended_file_path(config_filename)
+      (Pathname(Dir.home) / "sider_recommended_#{config_filename}").to_s
     end
 
     private
