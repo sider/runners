@@ -1,0 +1,33 @@
+module Runners
+  class Processor::PmdJava < Processor
+    include Java
+
+    Schema: untyped
+
+    DEFAULT_RULESET: untyped
+
+    DEFAULT_DIR: untyped
+
+    def analyzer_version: () -> untyped
+
+    def analyzer_bin: () -> "pmd"
+
+    def setup: () { () -> untyped } -> untyped
+
+    def analyze: (untyped changes) -> untyped
+
+    def cli_args: () -> untyped
+
+    def run_analyzer: () -> untyped
+
+    def construct_result: (untyped xml) { (untyped) -> untyped } -> untyped
+
+    def rulesets: () -> untyped
+
+    def dir: () -> untyped
+
+    def encoding: () -> untyped
+
+    def min_priority: () -> untyped
+  end
+end

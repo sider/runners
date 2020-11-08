@@ -1,0 +1,64 @@
+module Runners
+  module Testing
+    class Smoke
+      include Minitest::Assertions
+
+      class TestParams
+        attr_reader name: untyped
+
+        attr_reader pattern: untyped
+
+        attr_reader offline: untyped
+
+        def initialize: (name: untyped name, pattern: untyped pattern, offline: untyped offline) -> untyped
+
+        def ==: (untyped other) -> untyped
+
+        def hash: () -> untyped
+      end
+
+      attr_reader argv: untyped
+
+      def docker_image: () -> untyped
+
+      def entrypoint: () -> untyped
+
+      def expectations: () -> untyped
+
+      def initialize: (untyped argv) -> untyped
+
+      def run: () -> untyped
+
+      def run_test: (untyped params, untyped `out`) -> untyped
+
+      def unify_result: (untyped result, untyped pattern, untyped `out`) -> untyped
+
+      def command_line: (params: untyped params, repo_dir: untyped repo_dir, base: untyped base, head: untyped head) -> untyped
+
+      def prepare_git_repository: (workdir: untyped workdir, smoke_target: untyped smoke_target, out: untyped `out`) -> untyped
+
+      def debug?: () -> untyped
+
+      def debug_trace?: () -> untyped
+
+      def sh!: (*untyped command, out: untyped `out`, ?exception: bool exception) -> ::Array[untyped]
+
+      def colored_pretty_inspect: (untyped obj, ?multiline: bool multiline) -> untyped
+
+      def extra_certificate: () -> untyped
+
+      def self.tests: () -> untyped
+
+      # Comma-separated value is also available.
+      def self.only?: (untyped name) -> untyped
+
+      def self.add_test: (untyped name, **untyped pattern) -> untyped
+
+      def self.add_offline_test: (untyped name, **untyped pattern) -> untyped
+
+      def self.add_test_helper: (untyped test) -> (nil | untyped)
+
+      def self.build_pattern: (type: untyped `type`, ?guid: ::String guid, ?timestamp: ::Symbol timestamp, ?issues: untyped? issues, ?message: untyped? message, ?analyzer: untyped? analyzer, ?class: untyped? `class`, ?backtrace: untyped? backtrace, ?inspect: untyped? inspect, ?warnings: untyped warnings, ?ci_config: ::Symbol ci_config, ?config_file: ::Symbol config_file, ?version: ::Symbol version) -> { result: untyped, warnings: untyped, ci_config: untyped, config_file: untyped, version: untyped }
+    end
+  end
+end

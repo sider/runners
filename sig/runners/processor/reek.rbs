@@ -1,0 +1,23 @@
+module Runners
+  class Processor::Reek < Processor
+    include Ruby
+
+    Schema: untyped
+
+    CONSTRAINTS: untyped
+
+    DEFAULT_TARGET: untyped
+
+    def setup: () { () -> untyped } -> untyped
+
+    def analyze: (untyped changes) -> untyped
+
+    def analysis_targets: () -> untyped
+
+    def cli_args: () -> untyped
+
+    def v4?: () -> untyped
+
+    def raise_warnings: (untyped stderr) -> untyped
+  end
+end

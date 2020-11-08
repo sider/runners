@@ -1,0 +1,18 @@
+module Runners
+  module Java
+    class InvalidDependency < UserError
+    end
+
+    def show_runtime_versions: () -> untyped
+
+    def install_jvm_deps: () -> (nil | untyped)
+
+    def jvm_deps_dir: () -> untyped
+
+    def fetch_deps_via_gradle!: () -> untyped
+
+    def config_jvm_deps: () -> untyped
+
+    def generate_jvm_deps_file: () -> untyped
+  end
+end

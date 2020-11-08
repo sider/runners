@@ -1,0 +1,17 @@
+module Runners
+  class Processor::Javasee < Processor
+    include Java
+
+    Schema: untyped
+
+    DEFAULT_CONFIG_FILE: untyped
+
+    def extract_version_option: () -> "version"
+
+    def setup: () { () -> untyped } -> untyped
+
+    def analyze: (untyped changes) -> untyped
+
+    def construct_result: (untyped result, untyped stdout, untyped stderr) -> untyped
+  end
+end

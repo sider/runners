@@ -1,0 +1,38 @@
+module Runners
+  module Ruby
+    class GemInstaller
+      class InstallationFailure < InstallGemsFailure
+      end
+
+      attr_reader gem_home: untyped
+
+      attr_reader specs: untyped
+
+      attr_reader trace_writer: untyped
+
+      attr_reader shell: untyped
+
+      attr_reader constraints: untyped
+
+      attr_reader config_path_name: untyped
+
+      attr_reader use_local: untyped
+
+      def initialize: (shell: untyped shell, home: untyped home, config_path_name: untyped config_path_name, specs: untyped specs, constraints: untyped constraints, trace_writer: untyped trace_writer, use_local: untyped use_local) -> untyped
+
+      def gemfile_path: () -> untyped
+
+      def lockfile_path: () -> untyped
+
+      def install!: () { (untyped) -> untyped } -> untyped
+
+      def gemfile_content: () -> untyped
+
+      def group_specs: () -> untyped
+
+      def gem: (untyped spec, untyped constraints) -> untyped
+
+      def gem_constraints: (untyped spec, untyped source) -> (::Array[untyped] | untyped)
+    end
+  end
+end

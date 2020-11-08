@@ -1,0 +1,29 @@
+module Runners
+  class Processor::CodeSniffer < Processor
+    include PHP
+
+    Schema: untyped
+
+    def analyzer_bin: () -> "phpcs"
+
+    def setup: () { () -> untyped } -> untyped
+
+    def analyze: (untyped changes) -> untyped
+
+    def additional_options: () -> untyped
+
+    def standard_option: () -> ::String
+
+    def extensions_option: () -> ::String
+
+    def encoding_option: () -> untyped
+
+    def ignore_option: () -> untyped
+
+    def directory: () -> untyped
+
+    def default_options: () -> untyped
+
+    def php_framework: () -> (:CakePHP | :Symfony | nil)
+  end
+end

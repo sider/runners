@@ -1,0 +1,31 @@
+module Runners
+  class Processor::Hadolint < Processor
+    Schema: untyped
+
+    DEFAULT_TARGET: untyped
+
+    DEFAULT_TARGET_EXCLUDED: untyped
+
+    def analyze: (untyped _changes) -> untyped
+
+    def analyzer_options: () -> untyped
+
+    def analysis_target: () -> untyped
+
+    def run_analyzer: () -> untyped
+
+    # Output format:
+    #
+    #     { line: number, code: rule, message: description, column: number, file: filepath, level: level }
+    #
+    # Example:
+    #
+    #     {"line":14,"code":"DL3003","message":"Use WORKDIR to switch to a directory","column":1,"file":"images/hadolint/Dockerfile","level":"warning"}
+    #
+    # @see https://github.com/hadolint/hadolint#rules
+    # @param stdout [String]
+    def parse_result: (untyped stdout) -> untyped
+
+    def link_to_wiki: (untyped id) -> untyped
+  end
+end

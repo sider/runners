@@ -1,8 +1,11 @@
-class Runners::IO
-  attr_reader ios: Array[::IO]
+module Runners
+  class IO
+    attr_reader ios: Array[::IO]
 
-  def initialize: (*::IO ios) -> void
-  def write: (*_ToS) -> void
-  def flush: () -> void
-  def flush!: () -> void
+    def initialize: (*::IO) -> void
+
+    def write: (*_ToS) -> void
+    def flush: () -> void
+    def flush!: () -> void
+  end
 end

@@ -1,0 +1,23 @@
+module Runners
+  class Processor::Pylint < Processor
+    include Python
+
+    Schema: untyped
+
+    DEFAULT_TARGET: untyped
+
+    def analyze: (untyped changes) -> untyped
+
+    def rcfile: () -> untyped
+
+    def ignore: () -> untyped
+
+    def erros_only: () -> untyped
+
+    def analyzed_files: () -> untyped
+
+    def parse_result: (untyped output) { (untyped) -> untyped } -> untyped
+
+    def run_analyzer: () -> untyped
+  end
+end

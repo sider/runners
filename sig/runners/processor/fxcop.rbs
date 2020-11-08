@@ -1,0 +1,11 @@
+module Runners
+  class Processor::FxCop < Processor
+    Schema: untyped
+
+    def analyzer_version: () -> untyped
+
+    def analyze: (untyped changes) -> untyped
+
+    def construct_result: (untyped result, untyped json) -> untyped
+  end
+end

@@ -1,3 +1,2 @@
 module Runners
-  VERSION: String
 end

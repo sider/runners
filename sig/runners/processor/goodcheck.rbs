@@ -1,0 +1,23 @@
+module Runners
+  class Processor::Goodcheck < Processor
+    include Ruby
+
+    Schema: untyped
+
+    CONSTRAINTS: untyped
+
+    DEFAULT_TARGET: untyped
+
+    DEFAULT_CONFIG_FILE: untyped
+
+    def extract_version_option: () -> "version"
+
+    def goodcheck_test: () -> untyped
+
+    def goodcheck_check: () -> untyped
+
+    def setup: () { () -> untyped } -> untyped
+
+    def analyze: (untyped changes) -> untyped
+  end
+end

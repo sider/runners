@@ -1,0 +1,29 @@
+module Runners
+  class Issue
+    attr_reader path: untyped
+
+    attr_reader location: untyped
+
+    attr_reader id: untyped
+
+    attr_reader message: untyped
+
+    attr_reader links: untyped
+
+    attr_reader object: untyped
+
+    attr_reader git_blame_info: untyped
+
+    def initialize: (path: untyped path, location: untyped location, id: untyped id, message: untyped message, ?links: untyped links, ?object: untyped? object, ?schema: untyped? schema) -> untyped
+
+    def missing_id?: () -> untyped
+
+    def ==: (untyped other) -> untyped
+
+    def hash: () -> untyped
+
+    def as_json: () -> untyped
+
+    def add_git_blame_info: (untyped workspace) -> untyped
+  end
+end

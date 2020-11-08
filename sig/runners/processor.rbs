@@ -1,3 +1,102 @@
-class Runners::Processor
+module Runners
+  class Processor
+    extend Forwardable
 
+    include Tmpdir
+
+    class CIConfigBroken < UserError
+    end
+
+    attr_reader guid: untyped
+
+    attr_reader working_dir: untyped
+
+    attr_reader git_ssh_path: untyped
+
+    attr_reader trace_writer: untyped
+
+    attr_reader warnings: untyped
+
+    attr_reader config: untyped
+
+    attr_reader shell: untyped
+
+    def self.register_config_schema: (**untyped args) -> untyped
+
+    # TODO: Keep the following schemas for the backward compatibility.
+    RemovedGoToolSchema: untyped
+
+    def initialize: (guid: untyped guid, working_dir: untyped working_dir, config: untyped config, git_ssh_path: untyped git_ssh_path, trace_writer: untyped trace_writer) -> untyped
+
+    def relative_path: (untyped original, ?from: untyped from) -> untyped
+
+    def setup: () { () -> untyped } -> untyped
+
+    def analyze: (untyped changes) -> untyped
+
+    def analyzers: () -> untyped
+
+    def analyzer_name: () -> untyped
+
+    def analyzer_doc: () -> untyped
+
+    def analyzer_github: () -> untyped
+
+    def analyzer: () -> untyped
+
+    def analyzer_bin: () -> untyped
+
+    def analyzer_version: () -> untyped
+
+    def extract_version_option: () -> "--version"
+
+    def extract_version!: (untyped command, ?untyped version_option, ?pattern: untyped pattern) -> untyped
+
+    def config_linter: () -> untyped
+
+    def check_root_dir_exist: () -> (nil | untyped)
+
+    def in_root_dir: () { () -> untyped } -> untyped
+
+    def root_dir: () -> untyped
+
+    def missing_config_file_result: (untyped file) -> untyped
+
+    # Returns e.g. "linter.rubocop.gems"
+    def config_field_path: (*untyped fields) -> ::String
+
+    def delete_unchanged_files: (untyped changes, ?except: untyped except, ?only: untyped only) -> untyped
+
+    def add_warning: (untyped message, ?file: untyped? file) -> untyped
+
+    def add_warning_if_deprecated_version: (minimum: untyped minimum, ?file: untyped? file, ?deadline: untyped? deadline) -> untyped
+
+    def add_warning_if_deprecated_options: () -> (nil | untyped)
+
+    def add_warning_for_deprecated_option: (untyped name, to: untyped to) -> (nil | untyped)
+
+    def add_warning_for_deprecated_linter: (alternative: untyped alternative, ref: untyped ref, ?deadline: untyped? deadline) -> untyped
+
+    # Prohibit directory traversal attack, e.g.
+    # - '../../etc/passwd'
+    # - 'config/../../../etc/passwd'
+    def directory_traversal_attack?: (untyped path) -> untyped
+
+    def show_runtime_versions: () -> nil
+
+    def report_file: () -> untyped
+
+    def report_file_exist?: () -> untyped
+
+    def read_report_file: (?untyped file_path) -> untyped
+
+    class InvalidXML < SystemError
+    end
+
+    def read_report_xml: (?untyped file_path) -> untyped
+
+    def read_report_json: (?untyped file_path) { () -> untyped } -> untyped
+
+    def comma_separated_list: (untyped value) -> untyped
+  end
 end

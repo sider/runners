@@ -1,0 +1,45 @@
+module Runners
+  class Processor::RuboCop < Processor
+    include Ruby
+
+    Schema: untyped
+
+    # The followings are maintained by RuboCop Headquarters.
+    # @see https://github.com/rubocop-hq
+    OFFICIAL_RUBOCOP_PLUGINS: untyped
+
+    OPTIONAL_GEMS: untyped
+
+    CONSTRAINTS: untyped
+
+    def default_gem_specs: () -> untyped
+
+    def setup: () { () -> untyped } -> untyped
+
+    def analyze: (untyped _) -> untyped
+
+    def rails_option: () -> untyped
+
+    def config_file: () -> untyped
+
+    def safe: () -> untyped
+
+    def setup_default_config: () -> (::FalseClass | ::TrueClass)
+
+    def check_rubocop_yml_warning: (untyped stderr) -> untyped
+
+    def run_analyzer: (untyped options) -> untyped
+
+    # @see https://github.com/rubocop-hq/rubocop/blob/v0.76.0/lib/rubocop/cop/message_annotator.rb#L62-L63
+    def extract_links: (untyped original_message) -> untyped
+
+    def build_cop_links: (untyped cop_name) -> (::Array[::String] | ::Array[untyped])
+
+    def department_to_gem_name: () -> untyped
+
+    def normalize_message: (untyped original_message, untyped links, untyped cop_name) -> untyped
+
+    # @see https://github.com/rubocop-hq/rubocop/blob/v0.72.0/CHANGELOG.md
+    def rails_cops_removed?: () -> untyped
+  end
+end

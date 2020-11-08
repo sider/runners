@@ -1,0 +1,25 @@
+module Runners
+  class Processor::Misspell < Processor
+    Schema: untyped
+
+    DEFAULT_TARGET: untyped
+
+    def extract_version_option: () -> "-v"
+
+    def setup: () { () -> untyped } -> untyped
+
+    def analyze: (untyped _changes) -> untyped
+
+    def run_analyzer: () -> untyped
+
+    def cli_args: () -> untyped
+
+    def locale: () -> untyped
+
+    def ignore: () -> untyped
+
+    def analysis_targets: () -> untyped
+
+    def delete_targets: () -> (nil | untyped)
+  end
+end

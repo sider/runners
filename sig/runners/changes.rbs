@@ -1,0 +1,23 @@
+module Runners
+  class Changes
+    attr_reader changed_paths: untyped
+
+    attr_reader unchanged_paths: untyped
+
+    attr_reader patches: untyped
+
+    def initialize: (changed_paths: untyped changed_paths, unchanged_paths: untyped unchanged_paths, patches: untyped patches) -> untyped
+
+    def delete_unchanged: (dir: untyped dir, ?except: untyped except, ?only: untyped only) -> untyped
+
+    def deletable?: (untyped dir, untyped file, untyped except, untyped only) -> (untyped | ::FalseClass)
+
+    def include?: (untyped issue) -> untyped
+
+    def self.calculate: (working_dir: untyped working_dir) -> untyped
+
+    def self.calculate_by_patches: (working_dir: untyped working_dir, patches: untyped patches) -> untyped
+
+    def self.all_files_in: (untyped basedir) -> untyped
+  end
+end

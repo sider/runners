@@ -1,0 +1,26 @@
+module Runners
+  class Processor::ShellCheck < Processor
+    Schema: untyped
+
+    DEFAULT_TARGET: untyped
+
+    # NOTE: Follow file(1) format.
+    #
+    # @see https://linux.die.net/man/1/file
+    SHELL_SCRIPT_SHEBANG_PATTERN: untyped
+
+    def analyze: (untyped _changes) -> untyped
+
+    def find_files_with_shebang: () -> untyped
+
+    def analyzed_files: () -> untyped
+
+    def option_values: (untyped name, untyped sep) -> untyped
+
+    def analyzer_options: () -> untyped
+
+    def run_analyzer: () -> untyped
+
+    def parse_result: (untyped output) { (untyped) -> untyped } -> untyped
+  end
+end

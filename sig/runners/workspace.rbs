@@ -1,2 +1,27 @@
-class Runners::Workspace
+module Runners
+  class Workspace
+    include Tmpdir
+
+    def self.prepare: (options: untyped options, working_dir: untyped working_dir, trace_writer: untyped trace_writer) -> untyped
+
+    attr_reader options: untyped
+
+    attr_reader working_dir: untyped
+
+    attr_reader trace_writer: untyped
+
+    attr_reader shell: untyped
+
+    def initialize: (options: untyped options, working_dir: untyped working_dir, trace_writer: untyped trace_writer) -> untyped
+
+    def open: () { (untyped, untyped) -> untyped } -> untyped
+
+    def range_git_blame_info: (untyped path_string, untyped start_line, untyped end_line) -> ::Array[untyped]
+
+    def prepare_head_source: () -> untyped
+
+    def patches: () -> untyped
+
+    def prepare_ssh: () { (untyped) -> untyped } -> untyped
+  end
 end

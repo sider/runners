@@ -1,0 +1,27 @@
+module Runners
+  class Processor::Tslint < Processor
+    include Nodejs
+
+    Schema: untyped
+
+    CONSTRAINTS: untyped
+
+    def setup: () { () -> untyped } -> untyped
+
+    def analyze: (untyped _changes) -> untyped
+
+    def target_glob: () -> untyped
+
+    def tslint_config: () -> untyped
+
+    def exclude: () -> untyped
+
+    def project: () -> untyped
+
+    def rules_dir: () -> untyped
+
+    def type_check: () -> untyped
+
+    def run_analyzer: (untyped target, untyped options) -> untyped
+  end
+end

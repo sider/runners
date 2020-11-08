@@ -1,24 +1,28 @@
-class Runners::Options
-  attr_reader stdout: ::IO
-  attr_reader stderr: ::IO
-  attr_reader source: GitSource
-  attr_reader ssh_key: String?
-  attr_reader io: Runners::IO
+module Runners
+  class Options
+    class GitSource
+      attr_reader head: String
+      attr_reader base: String?
+      attr_reader git_url: String
+      attr_reader git_url_userinfo: String?
+      attr_reader refspec: (Array[String] | String)?
 
-  def initialize: (String, ::IO stdout, ::IO stderr) -> void
-  def parse_options: (String) -> Hash[Symbol, untyped]
-end
+      def initialize: (head: String,
+                       ?base: String?,
+                       git_url: String,
+                       ?git_url_userinfo: String?,
+                       ?refspec: (Array[String] | String)?) -> void
+    end
 
-class Runners::Options::GitSource
-  attr_reader head: String
-  attr_reader base: String?
-  attr_reader git_url: String
-  attr_reader git_url_userinfo: String?
-  attr_reader refspec: (Array[String] | String)?
+    attr_reader stdout: ::IO
+    attr_reader stderr: ::IO
+    attr_reader source: GitSource
+    attr_reader ssh_key: String?
+    attr_reader io: Runners::IO
 
-  def initialize: (head: String,
-                   ?base: String?,
-                   git_url: String,
-                   ?git_url_userinfo: String?,
-                   ?refspec: (Array[String] | String)?) -> void
+    def initialize: (String json, ::IO stdout, ::IO stderr) -> void
+
+    private
+    def parse_options: (String json) -> Hash[Symbol, untyped]
+  end
 end

@@ -1,0 +1,7 @@
+module Runners
+  module Schema
+    BaseConfig: untyped
+
+    Config: untyped
+  end
+end

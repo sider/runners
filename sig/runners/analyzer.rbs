@@ -1,8 +1,11 @@
-class Runners::Analyzer
-  attr_reader name: String
-  attr_reader version: String
+module Runners
+  class Analyzer
+    attr_reader name: String
+    attr_reader version: String
 
-  def initialize: (name: String, version: String) -> untyped
-  def valid?: () -> bool
-  def as_json: () -> { name: String, version: String }
+    def initialize: (name: String, version: String) -> void
+
+    def valid?: () -> bool
+    def as_json: () -> { name: String, version: String }
+  end
 end

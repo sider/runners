@@ -1,8 +1,10 @@
-class Runners::Error < StandardError
-end
+module Runners
+  class Error < StandardError
+  end
 
-class Runners::UserError < Runners::Error
-end
+  class UserError < Error
+  end
 
-class Runners::SystemError < Runners::Error
+  class SystemError < Error
+  end
 end

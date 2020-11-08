@@ -1,0 +1,23 @@
+module Runners
+  class GitBlameInfo
+    # @param porcelain_output [String] The output of git-blame(1) with -p option
+    # @see https://www.git-scm.com/docs/git-blame#_the_porcelain_format
+    def self.parse: (untyped porcelain_output) -> untyped
+
+    attr_reader commit: untyped
+
+    attr_reader original_line: untyped
+
+    attr_reader final_line: untyped
+
+    attr_reader line_hash: untyped
+
+    def initialize: (commit: untyped commit, original_line: untyped original_line, final_line: untyped final_line, line_hash: untyped line_hash) -> untyped
+
+    def ==: (untyped other) -> untyped
+
+    def hash: () -> untyped
+
+    def as_json: () -> { commit: untyped, original_line: untyped, final_line: untyped, line_hash: untyped }
+  end
+end

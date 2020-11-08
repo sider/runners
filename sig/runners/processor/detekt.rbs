@@ -1,0 +1,31 @@
+module Runners
+  class Processor::Detekt < Processor
+    include Java
+
+    include Kotlin
+
+    Schema: untyped
+
+    def setup: () { () -> untyped } -> untyped
+
+    def analyze: (untyped changes) -> untyped
+
+    def cli_baseline: () -> untyped
+
+    def cli_config: () -> untyped
+
+    def cli_config_resource: () -> untyped
+
+    def cli_disable_default_rulesets: () -> untyped
+
+    def cli_excludes: () -> untyped
+
+    def cli_includes: () -> untyped
+
+    def cli_input: () -> untyped
+
+    def cli_report: () -> ::Array["--report" | ::String]
+
+    def parse_output: () -> untyped
+  end
+end

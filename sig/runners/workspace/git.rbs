@@ -1,0 +1,30 @@
+module Runners
+  class Workspace::Git < Workspace
+    class FetchFailed < SystemError
+    end
+
+    class CheckoutFailed < SystemError
+    end
+
+    class BlameFailed < SystemError
+    end
+
+    def range_git_blame_info: (untyped path_string, untyped start_line, untyped end_line) -> untyped
+
+    def prepare_head_source: () -> untyped
+
+    def git_source: () -> untyped
+
+    # for testing
+    def try_count: () -> 10
+
+    # for testing
+    def sleep_lambda: () -> untyped
+
+    def remote_url: () -> untyped
+
+    def git_fetch_args: () -> untyped
+
+    def patches: () -> untyped
+  end
+end
