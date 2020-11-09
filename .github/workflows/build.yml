@@ -47,6 +47,7 @@ jobs:
           - jshint
           - ktlint
           - languagetool
+          - lizard
           - misspell
           - phinder
           - phpmd

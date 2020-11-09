@@ -80,6 +80,10 @@ analyzers:
     github: languagetool-org/languagetool
     doc: tools/others/languagetool
     dependabot: false
+  lizard:
+    name: Lizard
+    github: terryyin/lizard
+    doc: tools/others/lizard
   misspell:
     name: Misspell
     github: client9/misspell
