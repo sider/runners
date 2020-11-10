@@ -11,7 +11,7 @@ module Runners
       return cache_value if cache_value
 
       stdout, _ = shell.capture3!("git", "blame", "-p", "-L", "#{start_line},#{end_line}", git_source.head, "--", path_string,
-                                  trace_stdout: false, trace_stderr: true)
+                                  trace_stdout: false, trace_stderr: false, trace_command_line: false)
       GitBlameInfo.parse(stdout).tap do |result|
         @git_blame_cache[cache_key] = result
       end
