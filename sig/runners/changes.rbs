@@ -1,23 +1,25 @@
 module Runners
   class Changes
-    attr_reader changed_paths: untyped
+    def self.calculate: (working_dir: Pathname) -> Changes
 
-    attr_reader unchanged_paths: untyped
+    def self.calculate_by_patches: (working_dir: Pathname, patches: GitDiffParser::Patches) -> Changes
 
-    attr_reader patches: untyped
+    def self.all_files_in: (Pathname) -> Array[Pathname]
 
-    def initialize: (changed_paths: untyped changed_paths, unchanged_paths: untyped unchanged_paths, patches: untyped patches) -> untyped
+    attr_reader changed_paths: Set[Pathname]
+    attr_reader unchanged_paths: Set[Pathname]
+    attr_reader patches: GitDiffParser::Patches?
 
-    def delete_unchanged: (dir: untyped dir, ?except: untyped except, ?only: untyped only) -> untyped
+    def initialize: (changed_paths: Array[Pathname], unchanged_paths: Array[Pathname], patches: GitDiffParser::Patches?) -> void
 
-    def deletable?: (untyped dir, untyped file, untyped except, untyped only) -> (untyped | ::FalseClass)
+    def delete_unchanged: (dir: Pathname, ?except: Array[String], ?only: Array[String]) -> Array[Pathname]
 
-    def include?: (untyped issue) -> untyped
+    def include?: (Issue) -> bool
 
-    def self.calculate: (working_dir: untyped working_dir) -> untyped
+    private
 
-    def self.calculate_by_patches: (working_dir: untyped working_dir, patches: untyped patches) -> untyped
+    def deletable?: (Pathname dir, Pathname file, Array[String] except, Array[String] only) -> bool
 
-    def self.all_files_in: (untyped basedir) -> untyped
+    def find_patch_by_file: (String) -> GitDiffParser::Patch?
   end
 end
