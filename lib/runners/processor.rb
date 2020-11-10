@@ -277,6 +277,14 @@ module Runners
       end
     end
 
+    def read_report_csv(file_path, options = Hash.new)
+      if block_given?
+        CSV.foreach(file_path, options) { |row| yield row }
+      else
+        CSV.read(file_path, options)
+      end
+    end
+
     def comma_separated_list(value)
       values = Array(value).flat_map { |s| s.split(/\s*,\s*/) }
       values.empty? ? nil : values.join(",")

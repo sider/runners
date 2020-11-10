@@ -26,6 +26,7 @@ require "bugsnag"
 require "git_diff_parser"
 require "strscan"
 require "cgi"
+require "csv"
 
 require "runners/version"
 require "runners/errors"

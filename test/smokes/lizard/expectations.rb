@@ -5,10 +5,51 @@ default_version = "1.17.7"
 s.add_test(
   "success",
   type: "success",
-  issues: [],
-  analyzer: { name: "Pylint", version: default_version }
+  issues: [
+    {
+      id: "TBD",
+      path: "example.c",
+      location: { start_line: 7, start_column: 11 },
+      message: "TBD",
+      object: {
+        NLOC: 5,
+        CCN: 1,
+        token: 13,
+        PARAM: 1,
+        length: 5,
+        function: "main",
+        long_name: "main( void)"
+      },
+      links: [],
+      git_blame_info: {
+        commit: :_, line_hash: "cf51d105d80da8bcee55efeb3b70011502abf9d0", original_line: 7, final_line: 7
+      }
+    },
+    {
+      id: "TBD",
+      path: "example.c",
+      location: { start_line: 13, start_column: 16 },
+      message: "TBD",
+      object: {
+        NLOC: 4,
+        CCN: 1,
+        token: 10,
+        PARAM: 0,
+        length: 4,
+        function: "print_hello_world",
+        long_name: "print_hello_world()"
+      },
+      links: [],
+      git_blame_info: {
+        commit: :_, line_hash: "1c5f9d44bb3f43d94efe7c31b50c452875698a80", original_line: 2, final_line: 2
+      }
+    }
+  ],
+  analyzer: { name: "Lizard", version: default_version }
 )
 
+# $ lizard -t 2 -V --csv -o results.txt .
+#   or
 # $ lizard -t 2 -V -o results.csv .
 # $ cat results.csv
 # NLOC,CCN,token,PARAM,length,location,file,function,long_name,start,end
@@ -32,6 +73,4 @@ s.add_test(
 # 4,1,7,0,5,"hello_world@2-6@./src/baz/hello.php","./src/baz/hello.php","hello_world","hello_world ( )",2,6
 # 3,1,10,0,4,"hello_world@2-5@./src/baz/hello.scala","./src/baz/hello.scala","hello_world","hello_world",2,5
 # 3,1,4,0,4,"hello_world@1-4@./src/baz/hello.rb","./src/baz/hello.rb","hello_world","hello_world",1,4
-# 5,1,13,1,5,"main@7-11@./example.c","./example.c","main","main( void)",7,11
-# 4,1,10,0,4,"print_hello_world@13-16@./example.c","./example.c","print_hello_world","print_hello_world()",13,16
 # 2,1,8,0,3,"hello_world@1-3@./src/baz/hello.py","./src/baz/hello.py","hello_world","hello_world( )",1,3
