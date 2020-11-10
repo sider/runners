@@ -1,4 +1,3 @@
-/* Hello world in C */
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -12,6 +11,7 @@ int main(void)
 
 void print_hello_world()
 {
+/* Hello world in C */
   puts("Hello, World!");
 }
 
