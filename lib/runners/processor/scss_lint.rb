@@ -62,7 +62,7 @@ module Runners
     end
 
     def run_analyzer(options)
-      stdout, stderr, status = capture3(analyzer_bin, '--format=JSON', *options)
+      stdout, _stderr, status = capture3(analyzer_bin, '--format=JSON', *options)
       # https://github.com/brigade/scss-lint#exit-status-codes
       case status.exitstatus
       when 0..2
