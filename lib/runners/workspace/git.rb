@@ -6,7 +6,7 @@ module Runners
 
     def range_git_blame_info(path_string, start_line, end_line, trace: false)
       @git_blame_cache ||= {}
-      cache_key = "#{path_string}\t#{start_line}\t#{end_line}"
+      cache_key = :"#{path_string}\t#{start_line}\t#{end_line}"
       cache_value = @git_blame_cache[cache_key]
       return cache_value if cache_value
 
