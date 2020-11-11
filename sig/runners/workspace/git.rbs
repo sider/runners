@@ -9,7 +9,7 @@ module Runners
     class BlameFailed < SystemError
     end
 
-    def range_git_blame_info: (untyped path_string, untyped start_line, untyped end_line) -> untyped
+    def range_git_blame_info: (String, Integer, Integer, ?trace: bool) -> GitBlameInfo
 
     def prepare_head_source: () -> untyped
 
