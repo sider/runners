@@ -44,8 +44,8 @@ module Runners
     def analyze(changes)
       capture3!(
         analyzer_bin,
-        "--report=json",
-        "--report-json=#{report_file}",
+        "--report=xml",
+        "--report-xml=#{report_file}",
         "-q", # Enable quiet mode. See https://github.com/squizlabs/PHP_CodeSniffer/wiki/Advanced-Usage#quieting-output
         "--runtime-set", "ignore_errors_on_exit", "1", # See https://github.com/squizlabs/PHP_CodeSniffer/wiki/Configuration-Options#ignoring-errors-when-generating-the-exit-code
         "--runtime-set", "ignore_warnings_on_exit", "1", # See https://github.com/squizlabs/PHP_CodeSniffer/wiki/Configuration-Options#ignoring-warnings-when-generating-the-exit-code
@@ -55,19 +55,25 @@ module Runners
 
       issues = []
 
-      read_report_json.fetch(:files).each do |file, suggests|
-        path = relative_path(file.to_s)
+      # NOTE: This uses XML instead of JSON because the JSON reporter is implemented by string concatenation
+      #       and is unstable. By contrast, the XML reporter is implemented by the PHP standard library.
+      #
+      # @see https://github.com/squizlabs/PHP_CodeSniffer/wiki/Reporting#printing-an-xml-report
+      # @see https://github.com/squizlabs/PHP_CodeSniffer/blob/3.5.8/src/Reports/Xml.php
+      # @see https://github.com/squizlabs/PHP_CodeSniffer/blob/3.5.8/src/Reports/Json.php
+      read_report_xml.each_element("file") do |file|
+        path = relative_path(file[:name])
 
-        suggests.fetch(:messages).each do |suggest|
+        file.each_element do |suggest|
           issues << Issue.new(
             path: path,
             location: Location.new(start_line: suggest[:line], start_column: suggest[:column]),
             id: suggest[:source],
-            message: suggest[:message],
+            message: suggest.text,
             object: {
-              type: suggest[:type],
-              severity: suggest[:severity],
-              fixable: suggest[:fixable],
+              type: suggest.name.upcase,
+              severity: Integer(suggest[:severity]),
+              fixable: suggest[:fixable] == "1",
             },
             schema: Schema.issue,
           )
