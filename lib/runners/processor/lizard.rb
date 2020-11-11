@@ -40,6 +40,8 @@ module Runners
     private
 
     def construct_result(result, row)
+      # With --verbose and --csv flags, lizard writes results as following format:
+      # NLOC,CCN,token,PARAM,length,location,file,function,long_name,start,end
       result.add_issue Issue.new(
         path: relative_path(row["file"]),
         location: Location.new(start_line: row["start"], end_line: row["end"]),

@@ -9,7 +9,7 @@ s.add_test(
     {
       id: "TBD",
       path: "example.c",
-      location: { start_line: 7, start_column: 11 },
+      location: { start_line: 7, end_line: 11 },
       message: "TBD",
       object: {
         NLOC: 5,
@@ -28,7 +28,7 @@ s.add_test(
     {
       id: "TBD",
       path: "example.c",
-      location: { start_line: 13, start_column: 16 },
+      location: { start_line: 13, end_line: 16 },
       message: "TBD",
       object: {
         NLOC: 4,
@@ -41,36 +41,408 @@ s.add_test(
       },
       links: [],
       git_blame_info: {
+        commit: :_, line_hash: "64218a0fd55b3bf3c6e2231b24cb97b4beb7c07d", original_line: 13, final_line: 13
+      }
+    },
+    {
+      id: "TBD",
+      path: "src/baz/hello.php",
+      location: { start_line: 2, end_line: 6 },
+      message: "TBD",
+      object: {
+        NLOC: 4,
+        CCN: 1,
+        token: 7,
+        PARAM: 0,
+        length: 5,
+        function: "hello_world",
+        long_name: "hello_world ( )"
+      },
+      links: [],
+      git_blame_info: {
         commit: :_, line_hash: "1c5f9d44bb3f43d94efe7c31b50c452875698a80", original_line: 2, final_line: 2
+      }
+    },
+    {
+      id: "TBD",
+      path: "src/baz/hello.py",
+      location: { start_line: 1, end_line: 3 },
+      message: "TBD",
+      object: {
+        NLOC: 2,
+        CCN: 1,
+        token: 8,
+        PARAM: 0,
+        length: 3,
+        function: "hello_world",
+        long_name: "hello_world( )"
+      },
+      links: [],
+      git_blame_info: {
+        commit: :_, line_hash: "a3a7f8f418d186dcf9849a0109ed2cfb1c24c0c6", original_line: 1, final_line: 1
+      }
+    },
+    {
+      id: "TBD",
+      path: "src/baz/hello.rb",
+      location: { start_line: 1, end_line: 4 },
+      message: "TBD",
+      object: {
+        NLOC: 3,
+        CCN: 1,
+        token: 4,
+        PARAM: 0,
+        length: 4,
+        function: "hello_world",
+        long_name: "hello_world"
+      },
+      links: [],
+      git_blame_info: {
+        commit: :_, line_hash: "cef9c6f253991b843ddae7253c8b054d2f4bf046", original_line: 1, final_line: 1
+      }
+    },
+    {
+      id: "TBD",
+      path: "src/baz/hello.scala",
+      location: { start_line: 2, end_line: 5 },
+      message: "TBD",
+      object: {
+        NLOC: 3,
+        CCN: 1,
+        token: 10,
+        PARAM: 0,
+        length: 4,
+        function: "hello_world",
+        long_name: "hello_world"
+      },
+      links: [],
+      git_blame_info: {
+        commit: :_, line_hash: "6bbc59d8a3b8d34f9a4b6452b7ec62242797bfec", original_line: 2, final_line: 2
+      }
+    },
+    {
+      id: "TBD",
+      path: "src/baz/qux/hello.go",
+      location: { start_line: 5, end_line: 7 },
+      message: "TBD",
+      object: {
+        NLOC: 3,
+        CCN: 1,
+        token: 9,
+        PARAM: 0,
+        length: 3,
+        function: "main",
+        long_name: "main"
+      },
+      links: [],
+      git_blame_info: {
+        commit: :_, line_hash: "5656b6543b24b9b164b717943f7e56d1cf5954c0", original_line: 5, final_line: 5
+      }
+    },
+    {
+      id: "TBD",
+      path: "src/baz/qux/hello.go",
+      location: { start_line: 9, end_line: 12 },
+      message: "TBD",
+      object: {
+        NLOC: 3,
+        CCN: 1,
+        token: 12,
+        PARAM: 0,
+        length: 4,
+        function: "hello_world",
+        long_name: "hello_world"
+      },
+      links: [],
+      git_blame_info: {
+        commit: :_, line_hash: "de8a54f94e2c7fa83cb8713e423cfcf77f705fb4", original_line: 9, final_line: 9
+      }
+    },
+    {
+      id: "TBD",
+      path: "src/baz/qux/hello.lua",
+      location: { start_line: 2, end_line: 5 },
+      message: "TBD",
+      object: {
+        NLOC: 3,
+        CCN: 1,
+        token: 6,
+        PARAM: 0,
+        length: 4,
+        function: "hello_world",
+        long_name: "hello_world )"
+      },
+      links: [],
+      git_blame_info: {
+        commit: :_, line_hash: "1c5f9d44bb3f43d94efe7c31b50c452875698a80", original_line: 2, final_line: 2
+      }
+    },
+    {
+      id: "TBD",
+      path: "src/baz/qux/hello.rs",
+      location: { start_line: 2, end_line: 4 },
+      message: "TBD",
+      object: {
+        NLOC: 3,
+        CCN: 1,
+        token: 10,
+        PARAM: 0,
+        length: 3,
+        function: "main",
+        long_name: "main"
+      },
+      links: [],
+      git_blame_info: {
+        commit: :_, line_hash: "77cf7c960249076c5960ab96178083f5427e6cb9", original_line: 2, final_line: 2
+      }
+    },
+    {
+      id: "TBD",
+      path: "src/baz/qux/hello.rs",
+      location: { start_line: 6, end_line: 9 },
+      message: "TBD",
+      object: {
+        NLOC: 3,
+        CCN: 1,
+        token: 12,
+        PARAM: 0,
+        length: 4,
+        function: "print_hello",
+        long_name: "print_hello"
+      },
+      links: [],
+      git_blame_info: {
+        commit: :_, line_hash: "7e4c807c0610e658f65874ffbef8ee7e44914731", original_line: 6, final_line: 6
+      }
+    },
+    {
+      id: "TBD",
+      path: "src/foo/bar/hello.m",
+      location: { start_line: 3, end_line: 8 },
+      message: "TBD",
+      object: {
+        NLOC: 5,
+        CCN: 1,
+        token: 15,
+        PARAM: 0,
+        length: 6,
+        function: "hello_world",
+        long_name: "hello_world()"
+      },
+      links: [],
+      git_blame_info: {
+        commit: :_, line_hash: "5e4df70cbe0a97dffc6984e47f2425dc1b5ef306", original_line: 3, final_line: 3
+      }
+    },
+    {
+      id: "TBD",
+      path: "src/foo/bar/hello.m",
+      location: { start_line: 10, end_line: 13 },
+      message: "TBD",
+      object: {
+        NLOC: 4,
+        CCN: 1,
+        token: 21,
+        PARAM: 1,
+        length: 4,
+        function: "main",
+        long_name: "main( int argc , const char * argv [ ])"
+      },
+      links: [],
+      git_blame_info: {
+        commit: :_, line_hash: "7ed115c44fba1afccd67bc57ac1ab3dead320c12", original_line: 10, final_line: 10
+      }
+    },
+    {
+      id: "TBD",
+      path: "src/foo/bar/hello.swift",
+      location: { start_line: 1, end_line: 4 },
+      message: "TBD",
+      object: {
+        NLOC: 3,
+        CCN: 1,
+        token: 10,
+        PARAM: 0,
+        length: 4,
+        function: "hello_world",
+        long_name: "hello_world"
+      },
+      links: [],
+      git_blame_info: {
+        commit: :_, line_hash: "de8a54f94e2c7fa83cb8713e423cfcf77f705fb4", original_line: 1, final_line: 1
+      }
+    },
+    {
+      id: "TBD",
+      path: "src/foo/hello.c",
+      location: { start_line: 6, end_line: 10 },
+      message: "TBD",
+      object: {
+        NLOC: 5,
+        CCN: 1,
+        token: 13,
+        PARAM: 1,
+        length: 5,
+        function: "main",
+        long_name: "main( void)"
+      },
+      links: [],
+      git_blame_info: {
+        commit: :_, line_hash: "cf51d105d80da8bcee55efeb3b70011502abf9d0", original_line: 6, final_line: 6
+      }
+    },
+    {
+      id: "TBD",
+      path: "src/foo/hello.c",
+      location: { start_line: 12, end_line: 16 },
+      message: "TBD",
+      object: {
+        NLOC: 4,
+        CCN: 1,
+        token: 10,
+        PARAM: 0,
+        length: 5,
+        function: "print_hello_world",
+        long_name: "print_hello_world()"
+      },
+      links: [],
+      git_blame_info: {
+        commit: :_, line_hash: "64218a0fd55b3bf3c6e2231b24cb97b4beb7c07d", original_line: 12, final_line: 12
+      }
+    },
+    {
+      id: "TBD",
+      path: "src/foo/hello.cpp",
+      location: { start_line: 6, end_line: 10 },
+      message: "TBD",
+      object: {
+        NLOC: 5,
+        CCN: 1,
+        token: 13,
+        PARAM: 1,
+        length: 5,
+        function: "main",
+        long_name: "main( void)"
+      },
+      links: [],
+      git_blame_info: {
+        commit: :_, line_hash: "cf51d105d80da8bcee55efeb3b70011502abf9d0", original_line: 6, final_line: 6
+      }
+    },
+    {
+      id: "TBD",
+      path: "src/foo/hello.cpp",
+      location: { start_line: 12, end_line: 16 },
+      message: "TBD",
+      object: {
+        NLOC: 4,
+        CCN: 1,
+        token: 13,
+        PARAM: 0,
+        length: 5,
+        function: "print_hello_world",
+        long_name: "print_hello_world()"
+      },
+      links: [],
+      git_blame_info: {
+        commit: :_, line_hash: "64218a0fd55b3bf3c6e2231b24cb97b4beb7c07d", original_line: 12, final_line: 12
+      }
+    },
+    {
+      id: "TBD",
+      path: "src/foo/hello.cs",
+      location: { start_line: 4, end_line: 7 },
+      message: "TBD",
+      object: {
+        NLOC: 4,
+        CCN: 1,
+        token: 9,
+        PARAM: 0,
+        length: 4,
+        function: "HelloWorld::Main",
+        long_name: "HelloWorld::Main()"
+      },
+      links: [],
+      git_blame_info: {
+        commit: :_, line_hash: "6f8675952e222798e307e7e02f8df48be9afa3d2", original_line: 4, final_line: 4
+      }
+    },
+    {
+      id: "TBD",
+      path: "src/foo/hello.cs",
+      location: { start_line: 9, end_line: 13 },
+      message: "TBD",
+      object: {
+        NLOC: 4,
+        CCN: 1,
+        token: 14,
+        PARAM: 0,
+        length: 5,
+        function: "HelloWorld::PrintHelloWorld",
+        long_name: "HelloWorld::PrintHelloWorld()"
+      },
+      links: [],
+      git_blame_info: {
+        commit: :_, line_hash: "971fa2c643e4f0d82408f8d118cd0d33fdf98267", original_line: 9, final_line: 9
+      }
+    },
+    {
+      id: "TBD",
+      path: "src/foo/hello.java",
+      location: { start_line: 2, end_line: 4 },
+      message: "TBD",
+      object: {
+        NLOC: 3,
+        CCN: 1,
+        token: 13,
+        PARAM: 0,
+        length: 3,
+        function: "HelloWorld::main",
+        long_name: "HelloWorld::main( String args [ ])"
+      },
+      links: [],
+      git_blame_info: {
+        commit: :_, line_hash: "147eb5fd9cd9f1e6d7d48e4fbd89e0dd53b13c0c", original_line: 2, final_line: 2
+      }
+    },
+    {
+      id: "TBD",
+      path: "src/foo/hello.java",
+      location: { start_line: 6, end_line: 9 },
+      message: "TBD",
+      object: {
+        NLOC: 3,
+        CCN: 1,
+        token: 14,
+        PARAM: 0,
+        length: 4,
+        function: "HelloWorld::printHelloWorld",
+        long_name: "HelloWorld::printHelloWorld()"
+      },
+      links: [],
+      git_blame_info: {
+        commit: :_, line_hash: "85f8de94a8f46916f827884dbb7f798dbe79fc95", original_line: 6, final_line: 6
+      }
+    },
+    {
+      id: "TBD",
+      path: "src/foo/hello.js",
+      location: { start_line: 1, end_line: 4 },
+      message: "TBD",
+      object: {
+        NLOC: 3,
+        CCN: 1,
+        token: 11,
+        PARAM: 0,
+        length: 4,
+        function: "hello_world",
+        long_name: "hello_world ( )"
+      },
+      links: [],
+      git_blame_info: {
+        commit: :_, line_hash: "d8a4f7e4e1e40d4d89907f7c88e7910b5f4c89fb", original_line: 1, final_line: 1
       }
     }
   ],
   analyzer: { name: "Lizard", version: default_version }
 )
-
-# $ lizard -t 2 -V --csv -o results.txt .
-#   or
-# $ lizard -t 2 -V -o results.csv .
-# $ cat results.csv
-# NLOC,CCN,token,PARAM,length,location,file,function,long_name,start,end
-# 3,1,10,0,4,"hello_world@1-4@./src/foo/bar/hello.swift","./src/foo/bar/hello.swift","hello_world","hello_world",1,4
-# 5,1,15,0,6,"hello_world@3-8@./src/foo/bar/hello.m","./src/foo/bar/hello.m","hello_world","hello_world()",3,8
-# 4,1,21,1,4,"main@10-13@./src/foo/bar/hello.m","./src/foo/bar/hello.m","main","main( int argc , const char * argv [ ])",10,13
-# 3,1,11,0,4,"hello_world@1-4@./src/foo/hello.js","./src/foo/hello.js","hello_world","hello_world ( )",1,4
-# 5,1,13,1,5,"main@6-10@./src/foo/hello.cpp","./src/foo/hello.cpp","main","main( void)",6,10
-# 4,1,13,0,5,"print_hello_world@12-16@./src/foo/hello.cpp","./src/foo/hello.cpp","print_hello_world","print_hello_world()",12,16
-# 5,1,13,1,5,"main@6-10@./src/foo/hello.c","./src/foo/hello.c","main","main( void)",6,10
-# 4,1,10,0,5,"print_hello_world@12-16@./src/foo/hello.c","./src/foo/hello.c","print_hello_world","print_hello_world()",12,16
-# 3,1,13,0,3,"HelloWorld::main@2-4@./src/foo/hello.java","./src/foo/hello.java","HelloWorld::main","HelloWorld::main( String args [ ])",2,4
-# 3,1,14,0,4,"HelloWorld::printHelloWorld@6-9@./src/foo/hello.java","./src/foo/hello.java","HelloWorld::printHelloWorld","HelloWorld::printHelloWorld()",6,9
-# 4,1,9,0,4,"HelloWorld::Main@4-7@./src/foo/hello.cs","./src/foo/hello.cs","HelloWorld::Main","HelloWorld::Main()",4,7
-# 4,1,14,0,5,"HelloWorld::PrintHelloWorld@9-13@./src/foo/hello.cs","./src/foo/hello.cs","HelloWorld::PrintHelloWorld","HelloWorld::PrintHelloWorld()",9,13
-# 3,1,9,0,3,"main@5-7@./src/baz/qux/hello.go","./src/baz/qux/hello.go","main","main",5,7
-# 3,1,12,0,4,"hello_world@9-12@./src/baz/qux/hello.go","./src/baz/qux/hello.go","hello_world","hello_world",9,12
-# 3,1,10,0,3,"main@2-4@./src/baz/qux/hello.rs","./src/baz/qux/hello.rs","main","main",2,4
-# 3,1,12,0,4,"print_hello@6-9@./src/baz/qux/hello.rs","./src/baz/qux/hello.rs","print_hello","print_hello",6,9
-# 3,1,6,0,4,"hello_world@2-5@./src/baz/qux/hello.lua","./src/baz/qux/hello.lua","hello_world","hello_world )",2,5
-# 4,1,7,0,5,"hello_world@2-6@./src/baz/hello.php","./src/baz/hello.php","hello_world","hello_world ( )",2,6
-# 3,1,10,0,4,"hello_world@2-5@./src/baz/hello.scala","./src/baz/hello.scala","hello_world","hello_world",2,5
-# 3,1,4,0,4,"hello_world@1-4@./src/baz/hello.rb","./src/baz/hello.rb","hello_world","hello_world",1,4
-# 2,1,8,0,3,"hello_world@1-3@./src/baz/hello.py","./src/baz/hello.py","hello_world","hello_world( )",1,3
