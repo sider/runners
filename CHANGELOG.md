@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.37.1...HEAD)
 
+- Optimize `Runners::Changes#include?` [#1633](https://github.com/sider/runners/pull/1633)
 - Reduce log for git-blame(1) [#1632](https://github.com/sider/runners/pull/1632)
 
 ## 0.37.1
