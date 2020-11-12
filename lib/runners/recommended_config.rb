@@ -14,7 +14,7 @@ module Runners
 
       add_warning <<~MSG
         Sider's recommended configuration option is about to be released #{deadline}.
-        After the release, Sider will automatically apply our recommended ruleset if you don't have the #{analyzer_name} configuration option called `#{config_key.to_s}` in your repository.
+        After the release, Sider will automatically apply our recommended ruleset if you don't have the #{analyzer_name} configuration option called `#{config_key}` in your repository.
       MSG
     end
 
