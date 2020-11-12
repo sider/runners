@@ -1,0 +1,13 @@
+module Runners
+  module Nodejs
+    class Dependency
+      attr_reader name: untyped
+
+      attr_reader version: untyped
+
+      def initialize: (name: untyped name, version: untyped version) -> untyped
+
+      def to_s: () -> ::String
+    end
+  end
+end

@@ -1,0 +1,15 @@
+module Runners
+  class Analyzers
+    def name: (untyped id) -> untyped
+
+    def github: (untyped id) -> untyped
+
+    def doc: (untyped id) -> untyped
+
+    def deprecated?: (untyped id) -> untyped
+
+    def content: () -> untyped
+
+    def analyzer: (untyped id) -> untyped
+  end
+end

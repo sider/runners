@@ -107,7 +107,7 @@ class WorkspaceGitTest < Minitest::Test
   def test_git_blame_info
     with_workspace(head: "330716dcd50a7a2c7d8ff79d74035c05453528b4", base: "cd33ab59ef3d75e54e6d49c000bc8f141d94d356") do |workspace|
       workspace.prepare_head_source
-      actual = workspace.range_git_blame_info("README.md", 1, 2)
+      actual = workspace.range_git_blame_info("README.md", 1, 2, trace: true)
       expected = [
         GitBlameInfo.new(commit: "cd33ab59ef3d75e54e6d49c000bc8f141d94d356", original_line: 1, final_line: 1, line_hash: "82c89d4ea306d31642e44c10609b686671e485dc"),
         GitBlameInfo.new(commit: "330716dcd50a7a2c7d8ff79d74035c05453528b4", original_line: 2, final_line: 2, line_hash: "da39a3ee5e6b4b0d3255bfef95601890afd80709"),
@@ -115,7 +115,7 @@ class WorkspaceGitTest < Minitest::Test
       assert_equal expected, actual
 
       # Using cache
-      actual = workspace.range_git_blame_info("README.md", 1, 2)
+      actual = workspace.range_git_blame_info("README.md", 1, 2, trace: true)
       assert_equal expected, actual
       assert_equal 1, workspace.trace_writer.writer.count { _1[:command_line]&.slice(0, 2) == %w[git blame] }
     end

@@ -1,0 +1,39 @@
+module Runners
+  class Processor::Cppcheck < Processor
+    include CPlusPlus
+
+    class NoTargetFiles < SystemError
+    end
+
+    Schema: untyped
+
+    DEFAULT_TARGET: untyped
+
+    DEFAULT_IGNORE: untyped
+
+    def analyze: (untyped _changes) -> untyped
+
+    def target: () -> untyped
+
+    def ignore: () -> untyped
+
+    def addon: () -> untyped
+
+    def enable: () -> untyped
+
+    def std: () -> untyped
+
+    def project: () -> untyped
+
+    def language: () -> untyped
+
+    def jobs: () -> untyped
+
+    def run_analyzer: () -> untyped
+
+    def step_analyzer: (*untyped args) -> untyped
+
+    # @see https://github.com/danmar/cppcheck/blob/master/man/manual.md#xml-output
+    def parse_result: (untyped xml_root) { (untyped) -> untyped } -> untyped
+  end
+end

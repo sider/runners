@@ -1,0 +1,21 @@
+module Runners
+  module Ruby
+    class LockfileLoader
+      class Lockfile
+        attr_reader specs: untyped
+
+        def initialize: (untyped lockfile_content) -> untyped
+
+        def spec_exists?: (untyped spec) -> untyped
+
+        def locked_version: (untyped spec) -> untyped
+
+        def locked_version!: (untyped spec) -> untyped
+
+        def satisfied_by?: (untyped spec, untyped constraints) -> untyped
+
+        def find_spec: (untyped spec) -> untyped
+      end
+    end
+  end
+end

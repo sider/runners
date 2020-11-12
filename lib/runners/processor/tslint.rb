@@ -90,7 +90,7 @@ module Runners
     end
 
     def run_analyzer(target, options)
-      stdout, stderr, status = capture3(
+      stdout, _stderr, status = capture3(
         nodejs_analyzer_bin,
         '--format',
         'json',

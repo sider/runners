@@ -116,7 +116,7 @@ module Runners
     end
 
     def step_analyzer(*args)
-      stdout, stderr, status = capture3(
+      stdout, _stderr, status = capture3(
         analyzer_bin,
         "--quiet",
         "--xml",

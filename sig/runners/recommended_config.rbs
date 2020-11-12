@@ -1,0 +1,9 @@
+module Runners
+  module RecommendedConfig
+    def warn_recommended_config_file_release: (untyped config_filename, untyped deadline) -> (nil | untyped)
+
+    def deploy_recommended_config_file: (untyped config_filename) -> (nil | untyped)
+
+    def exists_in_repository?: (untyped config_filename) -> untyped
+  end
+end

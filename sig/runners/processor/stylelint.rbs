@@ -1,0 +1,58 @@
+module Runners
+  class Processor::Stylelint < Processor
+    include Nodejs
+
+    Schema: untyped
+
+    CONSTRAINTS: untyped
+
+    DEFAULT_TARGET_FILES: untyped
+
+    DEFAULT_GLOB: untyped
+
+    def setup: () { () -> untyped } -> untyped
+
+    def analyze: (untyped changes) -> untyped
+
+    def glob: () -> untyped
+
+    def stylelint_config: () -> untyped
+
+    def syntax: () -> untyped
+
+    def ignore_path: () -> untyped
+
+    def ignore_disables: () -> untyped
+
+    def report_needless_disables: () -> untyped
+
+    def quiet: () -> untyped
+
+    # @param stdout [String]
+    def parse_result: (untyped stdout) -> untyped
+
+    # @see https://github.com/stylelint/stylelint/blob/11.1.1/lib/formatters/stringFormatter.js#L120
+    def normalize_message: (untyped id, untyped message) -> untyped
+
+    # @see https://github.com/stylelint/stylelint/blob/11.1.1/lib/formatters/stringFormatter.js#L120
+    def rule_doc_urls: () -> untyped
+
+    def prepare_config_file: () -> (nil | untyped)
+
+    def prepare_ignore_file: () -> (nil | untyped)
+
+    # returns available config file path. If the file doesn't exist, it returns nil.
+    def config_file_path: () -> untyped
+
+    # Save warnings written by stylelint.
+    # stylelint writes "deprecations" flags in each file, so we cannot conduct naive implementations.
+    # Without this method, if we write a warning when the "deprecations" appear,
+    # the same number of duplicated warnings as files will appear.
+    # We use `Set` to avoid it.
+    #
+    # @param deprecations [Array<Hash>]
+    def check_warning: (untyped deprecations) -> untyped
+
+    def run_analyzer: (untyped glob, untyped additional_options) -> untyped
+  end
+end

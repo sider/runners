@@ -1,0 +1,39 @@
+module Runners
+  # This class expects AWS credentials set with environment variables or an instance profile.
+  # So, before using this, make sure AWS credentials available.
+  # Also, prepare the S3 bucket and allow this instance to upload an S3 object.
+  class IO::AwsS3
+    # @type const BUFFER_SIZE: Integer
+    BUFFER_SIZE: ::Integer
+
+    # Only for test
+    # @see https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ClientStubs.html
+    def self.stub?: () -> ::FalseClass
+
+    attr_reader uri: untyped
+
+    attr_reader bucket_name: untyped
+
+    attr_reader object_name: untyped
+
+    attr_reader tempfile: untyped
+
+    attr_reader written_items: untyped
+
+    attr_reader client: untyped
+
+    def initialize: (untyped uri, ?endpoint: untyped? endpoint) -> untyped
+
+    def write: (*untyped args) -> untyped
+
+    def flush: () -> untyped
+
+    def should_flush?: () -> untyped
+
+    def flush!: () -> untyped
+
+    def parse_s3_uri: (untyped s3_uri) -> untyped
+
+    def flush_to_s3!: () -> untyped
+  end
+end

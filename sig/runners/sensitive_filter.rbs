@@ -5,6 +5,7 @@ module Runners
     @options: Options
 
     def initialize: (options: Options) -> void
+
     def mask: (String) -> String
 
     private

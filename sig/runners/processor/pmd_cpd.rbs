@@ -1,0 +1,57 @@
+module Runners
+  class Processor::PmdCpd < Processor
+    include Java
+
+    Schema: untyped
+
+    DEFAULT_MINIMUM_TOKENS: ::Integer
+
+    DEFAULT_FILES: untyped
+
+    DEFAULT_LANGUAGE: untyped
+
+    def analyzer_version: () -> untyped
+
+    def analyze: (untyped changes) -> untyped
+
+    def run_analyzer: () -> untyped
+
+    def raise_warnings: (untyped stderr) -> untyped
+
+    def construct_result: (untyped stdout) { (untyped) -> untyped } -> untyped
+
+    def to_fileinfo: (untyped elem_file) -> { id: untyped, path: untyped, location: untyped }
+
+    def create_issue_object: (untyped elem_dupli, untyped files) -> { lines: untyped, tokens: untyped, files: untyped, codefragment: untyped }
+
+    def option_files: () -> untyped
+
+    def option_encoding: () -> untyped
+
+    def option_minimum_tokens: () -> untyped
+
+    def languages: () -> untyped
+
+    def option_language: (untyped v) -> ::Array["--language" | untyped]
+
+    def option_skip_duplicate_files: () -> untyped
+
+    def option_non_recursive: () -> untyped
+
+    def option_skip_lexical_errors: () -> untyped
+
+    def option_ignore_annotations: () -> untyped
+
+    def option_ignore_identifiers: () -> untyped
+
+    def option_ignore_literals: () -> untyped
+
+    def option_ignore_usings: () -> untyped
+
+    def option_no_skip_blocks: () -> untyped
+
+    def option_skip_blocks_pattern: () -> untyped
+
+    def cli_options: (untyped language) -> untyped
+  end
+end

@@ -1,0 +1,72 @@
+module Runners
+  module Results
+    class Base
+      # @dynamic guid, timestamp
+      attr_reader guid: untyped
+
+      attr_reader timestamp: untyped
+
+      def initialize: (guid: untyped guid) -> untyped
+
+      def as_json: () -> { guid: untyped, timestamp: untyped }
+
+      def valid?: () -> untyped
+    end
+
+    # Result to indicate that processing finished successfully
+    # Client programs may return this result.
+    class Success < Base
+      # @dynamic issues, analyzer
+      attr_reader issues: untyped
+
+      attr_reader analyzer: untyped
+
+      def initialize: (guid: untyped guid, analyzer: untyped analyzer, ?issues: untyped issues) -> untyped
+
+      def as_json: () -> untyped
+
+      def valid?: () -> untyped
+
+      def add_issue: (*untyped issue) -> untyped
+
+      def filter_issues: (untyped changes) -> untyped
+
+      def add_git_blame_info: (untyped workspace) -> untyped
+
+      def each_missing_id_warning: () { (untyped) -> untyped } -> untyped
+    end
+
+    # Result to indicate that processing failed by some error.
+    # Client programs may return this result.
+    class Failure < Base
+      DEFAULT_MESSAGE: untyped
+
+      # @dynamic message, analyzer
+      attr_reader message: untyped
+
+      attr_reader analyzer: untyped
+
+      def initialize: (guid: untyped guid, ?message: untyped message, ?analyzer: untyped? analyzer) -> untyped
+
+      def as_json: () -> untyped
+
+      def valid?: () -> untyped
+    end
+
+    # Result to indicate that processor raises an exception.
+    # Client programs should not return this result.
+    class Error < Base
+      # @dynamic exception, analyzer
+      attr_reader exception: untyped
+
+      # @dynamic exception, analyzer
+      attr_reader analyzer: untyped
+
+      def initialize: (guid: untyped guid, exception: untyped exception, analyzer: untyped analyzer) -> untyped
+
+      def as_json: () -> untyped
+
+      def valid?: () -> untyped
+    end
+  end
+end

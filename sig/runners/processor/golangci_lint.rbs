@@ -1,0 +1,42 @@
+module Runners
+  class Processor::GolangCiLint < Processor
+    include Go
+
+    Schema: untyped
+
+    DEFAULT_TARGET: untyped
+
+    DEFAULT_CONFIG_FILE: untyped
+
+    # @see https://golangci-lint.run/usage/configuration/#config-file
+    SUPPORTED_CONFIG_FILES: untyped
+
+    def analyzer_bin: () -> "golangci-lint"
+
+    def analyze: (untyped _changes) -> untyped
+
+    def run_analyzer: () -> untyped
+
+    def analyzer_options: () -> untyped
+
+    def path_to_config: () -> (untyped | nil)
+
+    def analysis_targets: () -> untyped
+
+    # Output format:
+    #
+    #      ["{"Issues":[{"FromLinter":"govet","Text":"printf: Printf call has arguments but no formatting directives",
+    #      "SourceLines":["\tfmt.Printf(\\\"text\\\", awesome_text)\"],\"Replacement\":null,
+    #      \"Pos\":{\"Filename\":\"test/smokes/golangci_lint/success/main.go\",\"Offset\":85,\"Line\":7,\"Column\":12}}],
+    #      \"Report\":{\"Linters\":[{\"Name\":\"govet\",\"Enabled\":true,\"EnabledByDefault\":true},
+    #      {\"Name\":\"bodyclose\"}...
+    #
+    # Example:
+    #
+    #     {:FromLinter=>"govet", :Text=>"printf: Printf call has arguments but no formatting directives",
+    #     :SourceLines=>["\tfmt.Printf(\"text\", awesome_text)"], :Replacement=>nil,
+    #     :Pos=>{:Filename=>"test/smokes/golangci_lint/success/main.go", :Offset=>85, :Line=>7, :Column=>12}}
+    #
+    def parse_result: (untyped output) { (untyped) -> untyped } -> untyped
+  end
+end

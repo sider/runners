@@ -1,0 +1,25 @@
+module Runners
+  class Changes
+    def self.calculate: (working_dir: Pathname) -> Changes
+
+    def self.calculate_by_patches: (working_dir: Pathname, patches: GitDiffParser::Patches) -> Changes
+
+    def self.all_files_in: (Pathname) -> Array[Pathname]
+
+    attr_reader changed_paths: Set[Pathname]
+    attr_reader unchanged_paths: Set[Pathname]
+    attr_reader patches: GitDiffParser::Patches?
+
+    def initialize: (changed_paths: Array[Pathname], unchanged_paths: Array[Pathname], patches: GitDiffParser::Patches?) -> void
+
+    def delete_unchanged: (dir: Pathname, ?except: Array[String], ?only: Array[String]) -> Array[Pathname]
+
+    def include?: (Issue) -> bool
+
+    private
+
+    def deletable?: (Pathname dir, Pathname file, Array[String] except, Array[String] only) -> bool
+
+    def find_patch_by_file: (String) -> GitDiffParser::Patch?
+  end
+end

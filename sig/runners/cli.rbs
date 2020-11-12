@@ -9,7 +9,8 @@ module Runners
     attr_reader options: Options
 
     def initialize: (argv: Array[String], stdout: ::IO, stderr: ::IO, options_json: String) -> void
-    def with_working_dir: [X] { (Pathname) -> X } -> X
+
+    def with_working_dir: [X] () { (Pathname) -> X } -> X
     def processor_class: () -> Class
     def run: () -> untyped
     def io: () -> Runners::IO

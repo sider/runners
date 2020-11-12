@@ -1,0 +1,49 @@
+module Runners
+  class Processor::RemarkLint < Processor
+    include Nodejs
+
+    Schema: untyped
+
+    CONSTRAINTS: untyped
+
+    DEFAULT_TARGET: untyped
+
+    DEFAULT_PRESET: untyped
+
+    def analyzer_bin: () -> "remark"
+
+    def extract_version!: (untyped command, ?::String version_option, ?pattern: untyped pattern) -> untyped
+
+    def setup: () { () -> untyped } -> untyped
+
+    def analyze: (untyped _changes) -> untyped
+
+    def remark_lint_version!: (?global: bool global) -> untyped
+
+    def analysis_target: () -> untyped
+
+    def option_ext: () -> untyped
+
+    def option_rc_path: () -> untyped
+
+    def option_ignore_path: () -> untyped
+
+    def option_use: () -> untyped
+
+    # @see https://github.com/unifiedjs/unified-engine/blob/master/doc/configure.md
+    def no_rc_files?: () -> untyped
+
+    # @see https://github.com/unifiedjs/unified-engine/blob/master/doc/configure.md
+    def no_config_in_package_json?: () -> untyped
+
+    def use_default_preset?: () -> untyped
+
+    def default_preset: () -> untyped
+
+    def cli_options: () -> untyped
+
+    def run_analyzer: () -> untyped
+
+    def parse_result: (untyped output) -> ::Array[untyped]
+  end
+end

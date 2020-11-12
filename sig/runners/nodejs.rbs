@@ -1,0 +1,71 @@
+module Runners
+  module Nodejs
+    class InvalidNodeVersion < SystemError
+    end
+
+    class InvalidNpmVersion < SystemError
+    end
+
+    class InvalidYarnVersion < SystemError
+    end
+
+    class ConstraintsNotSatisfied < UserError
+    end
+
+    class NpmInstallFailed < UserError
+    end
+
+    class YarnInstallFailed < UserError
+    end
+
+    INSTALL_OPTION_NONE: bool
+
+    INSTALL_OPTION_ALL: bool
+
+    INSTALL_OPTION_PRODUCTION: ::String
+
+    INSTALL_OPTION_DEVELOPMENT: ::String
+
+    # Return the locally installed analyzer command.
+    def nodejs_analyzer_local_command: () -> ::String
+
+    # Return the analyzer command which will actually be ran.
+    def nodejs_analyzer_bin: () -> untyped
+
+    def analyzer_version: () -> untyped
+
+    # Return the actual file path of `package.json`.
+    def package_json_path: () -> untyped
+
+    # Return the `Hash` content of `package.json`.
+    def package_json: () -> untyped
+
+    # Return the actual file path of `package-lock.json`.
+    def package_lock_json_path: () -> untyped
+
+    # Return the actual file path of `yarn.lock`.
+    def yarn_lock_path: () -> untyped
+
+    # Install Node.js dependencies by using given parameters.
+    def install_nodejs_deps: (constraints: untyped constraints, install_option: untyped install_option) -> (nil | untyped)
+
+    def show_runtime_versions: () -> untyped
+
+    def nodejs_analyzer_locally_installed?: () -> untyped
+
+    def nodejs_analyzer_global_version: () -> untyped
+
+    def nodejs_analyzer_local_version: () -> untyped
+
+    # @see https://docs.npmjs.com/cli/install
+    # @see https://docs.npmjs.com/cli/ci
+    def npm_install: (untyped option) -> (nil | untyped)
+
+    # @see https://yarnpkg.com/en/docs/cli/install
+    def yarn_install: (untyped option) -> (nil | untyped)
+
+    def list_installed_nodejs_deps: (?only: untyped only, ?chdir: untyped? chdir) -> (::Hash[untyped, untyped] | untyped)
+
+    def check_installed_nodejs_deps: (untyped constraints) -> (nil | untyped)
+  end
+end

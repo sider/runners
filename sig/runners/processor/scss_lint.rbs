@@ -1,0 +1,25 @@
+module Runners
+  class Processor::ScssLint < Processor
+    include Ruby
+
+    Schema: untyped
+
+    # https://github.com/brigade/scss-lint#exit-status-codes
+    EXIT_CODE_FILES_NOT_EXIST: ::Integer
+
+    def analyzer_bin: () -> "scss-lint"
+
+    def analyzer_version: () -> untyped
+
+    def setup: () { () -> untyped } -> untyped
+
+    def analyze: (untyped _changes) -> untyped
+
+    def scss_lint_config: () -> untyped
+
+    # @param stdout [String]
+    def parse_result: (untyped stdout) -> untyped
+
+    def run_analyzer: (untyped options) -> untyped
+  end
+end

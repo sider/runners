@@ -1,0 +1,24 @@
+module Runners
+  module Ruby
+    class InstallGemsFailure < UserError
+    end
+
+    def install_gems: (untyped default_specs, constraints: untyped constraints, ?optionals: untyped optionals) { () -> untyped } -> untyped
+
+    def default_specs: (untyped specs, untyped constraints, untyped lockfile) -> untyped
+
+    def optional_specs: (untyped specs, untyped lockfile) -> untyped
+
+    def user_specs: (untyped specs, untyped lockfile) -> untyped
+
+    def show_runtime_versions: () -> untyped
+
+    def ruby_analyzer_bin: () -> ::Array["bundle" | "exec" | untyped]
+
+    def analyzer_version: () -> untyped
+
+    def installed_gem_versions: (untyped gem_name, *untyped gem_names, ?exception: bool exception) -> untyped
+
+    def default_gem_specs: (?untyped gem_name, *untyped gem_names) -> untyped
+  end
+end

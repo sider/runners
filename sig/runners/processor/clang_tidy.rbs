@@ -1,0 +1,15 @@
+module Runners
+  class Processor::ClangTidy < Processor
+    include CPlusPlus
+
+    Schema: untyped
+
+    def setup: () { () -> untyped } -> untyped
+
+    def analyzer_bin: () -> "clang-tidy"
+
+    def analyze: (untyped changes) -> untyped
+
+    def construct_result: (untyped stdout) { (untyped) -> untyped } -> untyped
+  end
+end

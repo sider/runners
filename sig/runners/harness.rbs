@@ -4,6 +4,7 @@ module Runners
 
     class InvalidResult < SystemError
       attr_reader result: untyped
+
       def initialize: (result: untyped) -> void
     end
 
@@ -20,11 +21,12 @@ module Runners
                      options: Options,
                      working_dir: Pathname,
                      trace_writer: TraceWriter) -> void
+
     def run: () -> untyped
 
     private
     def ensure_result: () { () -> untyped } -> untyped
-    def handle_error: (Exception exn) -> void
-    def exclude_special_dirs: [X] { () -> X } -> X
+    def handle_error: (Exception) -> void
+    def exclude_special_dirs: [X] () { () -> X } -> X
   end
 end

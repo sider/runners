@@ -1,3 +1,7 @@
-class Runners::Schema::Result
-  def self.envelope: () -> untyped
+module Runners
+  module Schema
+    Issue: untyped
+
+    Result: untyped
+  end
 end

@@ -1,0 +1,5 @@
+module Runners
+  module Schema
+    Trace: untyped
+  end
+end

@@ -1,0 +1,51 @@
+module Runners
+  class Processor::HamlLint < Processor
+    include Ruby
+
+    Schema: untyped
+
+    OPTIONAL_GEMS: untyped
+
+    DEFAULT_GEMS: untyped
+
+    CONSTRAINTS: untyped
+
+    DEFAULT_TARGET: untyped
+
+    DEFAULT_RUBOCOP_CONFIG: untyped
+
+    def analyzer_bin: () -> "haml-lint"
+
+    def default_gem_specs: () -> untyped
+
+    def setup: () { () -> untyped } -> untyped
+
+    def analyze: (untyped _changes) -> untyped
+
+    def setup_default_rubocop_config: () -> (nil | untyped)
+
+    def target: () -> untyped
+
+    def include_linter: () -> untyped
+
+    def exclude_linter: () -> untyped
+
+    def exclude: () -> untyped
+
+    def haml_lint_config: () -> untyped
+
+    def config_parallel: () -> untyped
+
+    def parse_result: (untyped output) -> untyped
+
+    def build_links: (untyped issue_id) -> (::Array[untyped] | ::Array[::String])
+
+    def run_analyzer: () -> untyped
+
+    # NOTE: HAML-Lint exits successfully even if RuboCop fails.
+    #       The version 0.35.0 fixed the issue, but we continue to support older versions.
+    #
+    # @see https://github.com/sds/haml-lint/issues/317
+    def add_rubocop_warnings_if_exists: (untyped stderr) -> untyped
+  end
+end
