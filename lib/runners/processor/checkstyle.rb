@@ -40,7 +40,7 @@ module Runners
         #  trace_writer.message "The `config` option in `#{config_linter[:config]}` is specified. The Sider's recommended ruleset is ignored."
         #end
       else
-        warn_recommended_config_option_release(config_linter, :config, "late in November 2020")
+        warn_recommended_config_option_release(config_linter, :config, "early in December 2020")
       end
 
       yield
