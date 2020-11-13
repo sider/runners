@@ -4,14 +4,14 @@ module Runners
     class CheckoutFailed < SystemError; end
     class BlameFailed < SystemError; end
 
-    def range_git_blame_info(path_string, start_line, end_line)
+    def range_git_blame_info(path_string, start_line, end_line, trace: false)
       @git_blame_cache ||= {}
-      cache_key = "#{path_string}\t#{start_line}\t#{end_line}"
+      cache_key = :"#{path_string}\t#{start_line}\t#{end_line}"
       cache_value = @git_blame_cache[cache_key]
       return cache_value if cache_value
 
       stdout, _ = shell.capture3!("git", "blame", "-p", "-L", "#{start_line},#{end_line}", git_source.head, "--", path_string,
-                                  trace_stdout: false, trace_stderr: true)
+                                  trace_stdout: trace, trace_stderr: trace, trace_command_line: trace)
       GitBlameInfo.parse(stdout).tap do |result|
         @git_blame_cache[cache_key] = result
       end

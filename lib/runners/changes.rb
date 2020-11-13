@@ -29,12 +29,11 @@ module Runners
     end
 
     def include?(issue)
-      gdp = patches # NOTE: This assignment is required for typecheck by Steep
-      if gdp
+      if patches
         location = issue.location
         # NOTE: #find_patch_by_file omits just renamed files.
         # @see https://github.com/packsaddle/ruby-git_diff_parser/issues/272
-        patch = gdp.find_patch_by_file(issue.path.to_s)
+        patch = find_patch_by_file(issue.path.to_path)
         if patch && location
           patch.changed_lines.one? { |line| location.start_line == line.number }
         elsif patch
@@ -44,6 +43,20 @@ module Runners
         end
       else
         changed_paths.member?(issue.path)
+      end
+    end
+
+    private def find_patch_by_file(path)
+      git_diff_patches = patches or raise "#patches is required"
+
+      # NOTE: Cache for so many issues
+      @patches_by_file ||= {}
+      if @patches_by_file.key? path
+        @patches_by_file[path]
+      else
+        found = git_diff_patches.find_patch_by_file(path)
+        @patches_by_file[path] = found
+        found
       end
     end
 
