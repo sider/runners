@@ -1,0 +1,3 @@
+linter:
+  lizard:
+    root_dir: src
