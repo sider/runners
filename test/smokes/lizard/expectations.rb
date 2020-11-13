@@ -308,3 +308,30 @@ s.add_test(
   ],
   analyzer: { name: "Lizard", version: default_version }
 )
+
+s.add_test(
+  "comma_in_filename",
+  type: "success",
+  issues: [
+    {
+      id: "code-metrics",
+      path: "src/example,file.cs",
+      location: { start_line: 5, end_line: 14 },
+      message: "Complexity is 2 for 8 line(s) of code at Program::TestFunction.",
+      object: {
+        NLOC: 8,
+        CCN: 2,
+        token: 35,
+        PARAM: 3,
+        length: 10,
+        function: "Program::TestFunction",
+        long_name: "Program::TestFunction( string a = 'foo' , string b = '' , double c = 3 . 14)"
+      },
+      links: [],
+      git_blame_info: {
+        commit: :_, line_hash: "9a34e7886c83da3f2a39064cde0f2e749057a441", original_line: 5, final_line: 5
+      }
+    }
+  ],
+  analyzer: { name: "Lizard", version: default_version }
+)
