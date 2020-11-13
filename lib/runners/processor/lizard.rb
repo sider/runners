@@ -42,18 +42,24 @@ module Runners
     def construct_result(result, row)
       # With --verbose and --csv flags, lizard writes results as following format:
       # NLOC,CCN,token,PARAM,length,location,file,function,long_name,start,end
+
+      nloc = Integer(row["NLOC"])
+      ccn = Integer(row["CCN"])
+      function = row["function"]
+      msg = "Complexity is #{ccn} for #{nloc} line(s) of code at #{function}."
+
       result.add_issue Issue.new(
         path: relative_path(row["file"]),
         location: Location.new(start_line: row["start"], end_line: row["end"]),
-        id: "TBD",
-        message: "TBD",
+        id: "code-metrics",
+        message: msg,
         object: {
-          NLOC: Integer(row["NLOC"]),
-          CCN: Integer(row["CCN"]),
+          NLOC: nloc,
+          CCN: ccn,
           token: Integer(row["token"]),
           PARAM: Integer(row["PARAM"]),
           length: Integer(row["length"]),
-          function: row["function"],
+          function: function,
           long_name: row["long_name"],
           },
         schema: Schema.issue,

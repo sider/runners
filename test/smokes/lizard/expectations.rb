@@ -7,10 +7,10 @@ s.add_test(
   type: "success",
   issues: [
     {
-      id: "TBD",
+      id: "code-metrics",
       path: "example.c",
       location: { start_line: 7, end_line: 11 },
-      message: "TBD",
+      message: "Complexity is 1 for 5 line(s) of code at main.",
       object: {
         NLOC: 5,
         CCN: 1,
@@ -26,10 +26,10 @@ s.add_test(
       }
     },
     {
-      id: "TBD",
+      id: "code-metrics",
       path: "example.c",
       location: { start_line: 13, end_line: 16 },
-      message: "TBD",
+      message: "Complexity is 1 for 4 line(s) of code at print_hello_world.",
       object: {
         NLOC: 4,
         CCN: 1,
@@ -45,10 +45,10 @@ s.add_test(
       }
     },
     {
-      id: "TBD",
+      id: "code-metrics",
       path: "src/baz/hello.php",
       location: { start_line: 2, end_line: 6 },
-      message: "TBD",
+      message: "Complexity is 1 for 4 line(s) of code at hello_world.",
       object: {
         NLOC: 4,
         CCN: 1,
@@ -64,10 +64,10 @@ s.add_test(
       }
     },
     {
-      id: "TBD",
+      id: "code-metrics",
       path: "src/baz/hello.py",
       location: { start_line: 1, end_line: 3 },
-      message: "TBD",
+      message: "Complexity is 1 for 2 line(s) of code at hello_world.",
       object: {
         NLOC: 2,
         CCN: 1,
@@ -83,10 +83,10 @@ s.add_test(
       }
     },
     {
-      id: "TBD",
+      id: "code-metrics",
       path: "src/baz/hello.rb",
       location: { start_line: 1, end_line: 4 },
-      message: "TBD",
+      message: "Complexity is 1 for 3 line(s) of code at hello_world.",
       object: {
         NLOC: 3,
         CCN: 1,
@@ -102,10 +102,10 @@ s.add_test(
       }
     },
     {
-      id: "TBD",
+      id: "code-metrics",
       path: "src/baz/hello.scala",
       location: { start_line: 2, end_line: 5 },
-      message: "TBD",
+      message: "Complexity is 1 for 3 line(s) of code at hello_world.",
       object: {
         NLOC: 3,
         CCN: 1,
@@ -121,10 +121,10 @@ s.add_test(
       }
     },
     {
-      id: "TBD",
+      id: "code-metrics",
       path: "src/baz/qux/hello.go",
       location: { start_line: 5, end_line: 7 },
-      message: "TBD",
+      message: "Complexity is 1 for 3 line(s) of code at main.",
       object: {
         NLOC: 3,
         CCN: 1,
@@ -140,10 +140,10 @@ s.add_test(
       }
     },
     {
-      id: "TBD",
+      id: "code-metrics",
       path: "src/baz/qux/hello.go",
       location: { start_line: 9, end_line: 12 },
-      message: "TBD",
+      message: "Complexity is 1 for 3 line(s) of code at hello_world.",
       object: {
         NLOC: 3,
         CCN: 1,
@@ -159,10 +159,10 @@ s.add_test(
       }
     },
     {
-      id: "TBD",
+      id: "code-metrics",
       path: "src/baz/qux/hello.lua",
       location: { start_line: 2, end_line: 5 },
-      message: "TBD",
+      message: "Complexity is 1 for 3 line(s) of code at hello_world.",
       object: {
         NLOC: 3,
         CCN: 1,
@@ -178,10 +178,10 @@ s.add_test(
       }
     },
     {
-      id: "TBD",
+      id: "code-metrics",
       path: "src/baz/qux/hello.rs",
       location: { start_line: 2, end_line: 4 },
-      message: "TBD",
+      message: "Complexity is 1 for 3 line(s) of code at main.",
       object: {
         NLOC: 3,
         CCN: 1,
@@ -197,10 +197,10 @@ s.add_test(
       }
     },
     {
-      id: "TBD",
+      id: "code-metrics",
       path: "src/baz/qux/hello.rs",
       location: { start_line: 6, end_line: 9 },
-      message: "TBD",
+      message: "Complexity is 1 for 3 line(s) of code at print_hello.",
       object: {
         NLOC: 3,
         CCN: 1,
@@ -216,10 +216,10 @@ s.add_test(
       }
     },
     {
-      id: "TBD",
+      id: "code-metrics",
       path: "src/foo/bar/hello.m",
       location: { start_line: 3, end_line: 8 },
-      message: "TBD",
+      message: "Complexity is 1 for 5 line(s) of code at hello_world.",
       object: {
         NLOC: 5,
         CCN: 1,
@@ -235,10 +235,10 @@ s.add_test(
       }
     },
     {
-      id: "TBD",
+      id: "code-metrics",
       path: "src/foo/bar/hello.m",
       location: { start_line: 10, end_line: 13 },
-      message: "TBD",
+      message: "Complexity is 1 for 4 line(s) of code at main.",
       object: {
         NLOC: 4,
         CCN: 1,
@@ -254,10 +254,10 @@ s.add_test(
       }
     },
     {
-      id: "TBD",
+      id: "code-metrics",
       path: "src/foo/bar/hello.swift",
       location: { start_line: 1, end_line: 4 },
-      message: "TBD",
+      message: "Complexity is 1 for 3 line(s) of code at hello_world.",
       object: {
         NLOC: 3,
         CCN: 1,
@@ -273,10 +273,10 @@ s.add_test(
       }
     },
     {
-      id: "TBD",
+      id: "code-metrics",
       path: "src/foo/hello.c",
       location: { start_line: 6, end_line: 10 },
-      message: "TBD",
+      message: "Complexity is 1 for 5 line(s) of code at main.",
       object: {
         NLOC: 5,
         CCN: 1,
@@ -292,10 +292,10 @@ s.add_test(
       }
     },
     {
-      id: "TBD",
+      id: "code-metrics",
       path: "src/foo/hello.c",
       location: { start_line: 12, end_line: 16 },
-      message: "TBD",
+      message: "Complexity is 1 for 4 line(s) of code at print_hello_world.",
       object: {
         NLOC: 4,
         CCN: 1,
@@ -311,10 +311,10 @@ s.add_test(
       }
     },
     {
-      id: "TBD",
+      id: "code-metrics",
       path: "src/foo/hello.cpp",
       location: { start_line: 6, end_line: 10 },
-      message: "TBD",
+      message: "Complexity is 1 for 5 line(s) of code at main.",
       object: {
         NLOC: 5,
         CCN: 1,
@@ -330,10 +330,10 @@ s.add_test(
       }
     },
     {
-      id: "TBD",
+      id: "code-metrics",
       path: "src/foo/hello.cpp",
       location: { start_line: 12, end_line: 16 },
-      message: "TBD",
+      message: "Complexity is 1 for 4 line(s) of code at print_hello_world.",
       object: {
         NLOC: 4,
         CCN: 1,
@@ -349,10 +349,10 @@ s.add_test(
       }
     },
     {
-      id: "TBD",
+      id: "code-metrics",
       path: "src/foo/hello.cs",
       location: { start_line: 4, end_line: 7 },
-      message: "TBD",
+      message: "Complexity is 1 for 4 line(s) of code at HelloWorld::Main.",
       object: {
         NLOC: 4,
         CCN: 1,
@@ -368,10 +368,10 @@ s.add_test(
       }
     },
     {
-      id: "TBD",
+      id: "code-metrics",
       path: "src/foo/hello.cs",
       location: { start_line: 9, end_line: 13 },
-      message: "TBD",
+      message: "Complexity is 1 for 4 line(s) of code at HelloWorld::PrintHelloWorld.",
       object: {
         NLOC: 4,
         CCN: 1,
@@ -387,10 +387,10 @@ s.add_test(
       }
     },
     {
-      id: "TBD",
+      id: "code-metrics",
       path: "src/foo/hello.java",
       location: { start_line: 2, end_line: 4 },
-      message: "TBD",
+      message: "Complexity is 1 for 3 line(s) of code at HelloWorld::main.",
       object: {
         NLOC: 3,
         CCN: 1,
@@ -406,10 +406,10 @@ s.add_test(
       }
     },
     {
-      id: "TBD",
+      id: "code-metrics",
       path: "src/foo/hello.java",
       location: { start_line: 6, end_line: 9 },
-      message: "TBD",
+      message: "Complexity is 1 for 3 line(s) of code at HelloWorld::printHelloWorld.",
       object: {
         NLOC: 3,
         CCN: 1,
@@ -425,10 +425,10 @@ s.add_test(
       }
     },
     {
-      id: "TBD",
+      id: "code-metrics",
       path: "src/foo/hello.js",
       location: { start_line: 1, end_line: 4 },
-      message: "TBD",
+      message: "Complexity is 1 for 3 line(s) of code at hello_world.",
       object: {
         NLOC: 3,
         CCN: 1,
