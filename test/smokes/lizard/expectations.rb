@@ -222,18 +222,40 @@ s.add_test(
   issues: [
     {
       id: "code-metrics",
+      path: "src/baz/fizzbuzz.py",
+      location: { start_line: 5, end_line: 6 },
+      message: "Complexity is 1 for 2 line(s) of code at do_nothing.",
+      object: :_,
+      links: [],
+      git_blame_info: {
+        commit: :_, line_hash: "f3d84ad46ed37fc21c568416fbbbcb053ea1985e", original_line: 5, final_line: 5
+      }
+    },
+    {
+      id: "code-metrics",
+      path: "src/baz/fizzbuzz.py",
+      location: { start_line: 8, end_line: 25 },
+      message: "Complexity is 6 for 14 line(s) of code at do_fizz_Buzz.",
+      object: {
+        NLOC: 14,
+        CCN: 6,
+        token: 68,
+        PARAM: 3,
+        length: 18,
+        function: "do_fizz_Buzz",
+        long_name: "do_fizz_Buzz( n , dummy1 , dummy2 )"
+      },
+      links: [],
+      git_blame_info: {
+        commit: :_, line_hash: "c7a15bc57aee43d8101b868671c45619c7facbf9", original_line: 8, final_line: 8
+      }
+    },
+    {
+      id: "code-metrics",
       path: "src/baz/qux/今日は世界.go",
       location: { start_line: 5, end_line: 7 },
       message: "Complexity is 1 for 3 line(s) of code at main.",
-      object: {
-        NLOC: 3,
-        CCN: 1,
-        token: 9,
-        PARAM: 0,
-        length: 3,
-        function: "main",
-        long_name: "main"
-      },
+      object: :_,
       links: [],
       git_blame_info: {
         commit: :_, line_hash: "5656b6543b24b9b164b717943f7e56d1cf5954c0", original_line: 5, final_line: 5
