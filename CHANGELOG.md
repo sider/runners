@@ -6,6 +6,12 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.37.1...HEAD)
 
+New supported:
+
+- **Lizard** [#1631](https://github.com/sider/runners/pull/1631)
+
+Misc:
+
 - Optimize `Runners::Changes#include?` [#1633](https://github.com/sider/runners/pull/1633)
 - Reduce log for git-blame(1) [#1632](https://github.com/sider/runners/pull/1632)
 
