@@ -39,7 +39,7 @@ module Runners
 
       hash = {
         "RUBYOPT" => nil,
-        "GIT_SSH" => git_ssh_path&.to_path,
+        "GIT_SSH_COMMAND" => git_ssh_path&.then { |path| "ssh -F '#{path}'" },
       }
       @shell = Shell.new(current_dir: working_dir,
                          env_hash: hash,

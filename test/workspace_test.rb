@@ -50,16 +50,18 @@ class WorkspaceTest < Minitest::Test
     with_workspace(ssh_key: data("ruby_private_gem_deploy_key").read) do |workspace|
       workspace.open do |git_ssh_path|
         assert_path_exists git_ssh_path
-        assert_equal Pathname("run.sh"), git_ssh_path.basename
-        assert_equal "100700", "%o" % git_ssh_path.stat.mode
+        assert_equal "config", git_ssh_path.basename.to_path
 
         ssh_dir = git_ssh_path.parent
+        all_files = ssh_dir.glob("**/*").map { _1.relative_path_from(ssh_dir).to_path }.sort
+
+        assert_equal ["config", "key", "known_hosts"], all_files
         assert_equal "100600", "%o" % (ssh_dir / "config").stat.mode
         assert_equal "100600", "%o" % (ssh_dir / "key").stat.mode
         assert_equal "100600", "%o" % (ssh_dir / "known_hosts").stat.mode
 
         system(
-          { "GIT_SSH" => git_ssh_path.to_path },
+          { "GIT_SSH_COMMAND" => "ssh -F '#{git_ssh_path}'" },
           "git", "clone", "--depth=1", "--quiet", "git@github.com:sider/ruby_private_gem.git",
           { chdir: workspace.working_dir.to_path, exception: true }
         )
