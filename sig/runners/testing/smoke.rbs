@@ -35,6 +35,8 @@ module Runners
 
       def command_line: (params: untyped params, repo_dir: untyped repo_dir, base: untyped base, head: untyped head) -> untyped
 
+      def ssh_key: () -> Array[String]
+
       def prepare_git_repository: (workdir: untyped workdir, smoke_target: untyped smoke_target, out: untyped `out`) -> untyped
 
       def debug?: () -> untyped

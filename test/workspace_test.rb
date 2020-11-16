@@ -54,9 +54,31 @@ class WorkspaceTest < Minitest::Test
         assert_equal "100700", "%o" % git_ssh_path.stat.mode
 
         ssh_dir = git_ssh_path.parent
+        all_files = ssh_dir.glob("**/*").map { _1.relative_path_from(ssh_dir).to_path }.sort
+
+        assert_equal ["config", "key-1", "known_hosts", "run.sh"], all_files
         assert_equal "100600", "%o" % (ssh_dir / "config").stat.mode
-        assert_equal "100600", "%o" % (ssh_dir / "key").stat.mode
+        assert_equal "100600", "%o" % (ssh_dir / "key-1").stat.mode
         assert_equal "100600", "%o" % (ssh_dir / "known_hosts").stat.mode
+
+        system(
+          { "GIT_SSH" => git_ssh_path.to_path },
+          "git", "clone", "--depth=1", "--quiet", "git@github.com:sider/ruby_private_gem.git",
+          { chdir: workspace.working_dir.to_path, exception: true }
+        )
+        assert_path_exists workspace.working_dir / "ruby_private_gem" / "README.md"
+      end
+    end
+  end
+
+  def test_git_ssh_path_are_multiple
+    ssh_keys = ["incorrect_key", data("ruby_private_gem_deploy_key").read]
+    with_workspace(ssh_key: ssh_keys) do |workspace|
+      workspace.open do |git_ssh_path|
+        ssh_dir = git_ssh_path.parent
+        all_files = ssh_dir.glob("**/*").map { _1.relative_path_from(ssh_dir).to_path }.sort
+
+        assert_equal ["config", "key-1", "key-2", "known_hosts", "run.sh"], all_files
 
         system(
           { "GIT_SSH" => git_ssh_path.to_path },

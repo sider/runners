@@ -510,3 +510,22 @@ s.add_test(
     }
   ]
 )
+
+s.add_test(
+  "private_gem",
+  type: "success",
+  issues: [
+    {
+      path: "foo.rb",
+      location: { start_line: 1, start_column: 1, end_line: 2, end_column: 3 },
+      id: "RubyPrivateGem/Hello",
+      message: "Disallow `hello` method.",
+      links: [],
+      object: { severity: "convention", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "1d9fffa6b27cc497b9a8d0fe869443c9aae40920", original_line: 1, final_line: 1
+      }
+    }
+  ],
+  analyzer: { name: "RuboCop", version: "1.3.0" }
+)

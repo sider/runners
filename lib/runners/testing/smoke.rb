@@ -155,7 +155,7 @@ module Runners
           base: base,
           git_url: URI.join("file:///", project_dir).to_s,
         }
-        runners_options = JSON.dump({ source: source })
+        runners_options = JSON.dump({ source: source, ssh_key: ssh_key })
         runners_timeout = ENV['RUNNERS_TIMEOUT']
         commands = ["docker", "run"]
         commands << "--rm"
@@ -168,6 +168,14 @@ module Runners
         commands << docker_image
         commands << params.pattern.dig(:result, :guid)
         commands
+      end
+
+      def ssh_key
+        dir = Pathname(__dir__) / "../../../test/data"
+        [
+          dir.join("ruby_private_gem_deploy_key").read,
+          dir.join("private-npm-example_deploy_key").read,
+        ]
       end
 
       def prepare_git_repository(workdir:, smoke_target:, out:)

@@ -47,14 +47,19 @@ class OptionsTest < Minitest::Test
     assert_empty source.refspec
   end
 
-  def test_ssh_key
-    json = options_json(ssh_key: 'ssh', source: source_params)
-    assert_equal 'ssh', Runners::Options.new(json, stdout, stderr).ssh_key
+  def test_ssh_keys
+    json = options_json(ssh_key: 'foo', source: source_params)
+    assert_equal ['foo'], Runners::Options.new(json, stdout, stderr).ssh_keys
   end
 
-  def test_ssh_key_nil
+  def test_ssh_keys_array
+    json = options_json(ssh_key: ['foo', 'bar'], source: source_params)
+    assert_equal ['foo', 'bar'], Runners::Options.new(json, stdout, stderr).ssh_keys
+  end
+
+  def test_ssh_keys_nil
     json = options_json(ssh_key: nil, source: source_params)
-    assert_nil Runners::Options.new(json, stdout, stderr).ssh_key
+    assert_equal [], Runners::Options.new(json, stdout, stderr).ssh_keys
   end
 
   def test_io

@@ -52,42 +52,44 @@ module Runners
     private
 
     def prepare_ssh
-      ssh_key = options.ssh_key
-      if ssh_key
-        mktmpdir do |dir|
-          trace_writer.message "Preparing SSH config..."
+      ssh_keys = options.ssh_keys
 
-          known_hosts_path = dir / 'known_hosts'
-          known_hosts_path.write ''
-          known_hosts_path.chmod 0600
+      return yield nil if ssh_keys.empty?
 
-          key_path = dir / 'key'
-          key_path.write ssh_key
+      mktmpdir do |dir|
+        trace_writer.message "Preparing SSH config..."
+
+        known_hosts_path = dir / 'known_hosts'
+        known_hosts_path.write ''
+        known_hosts_path.chmod 0600
+
+        key_paths = ssh_keys.map.with_index(1) do |key, number|
+          key_path = dir / "key-#{number}"
+          key_path.write key
           key_path.chmod 0600
-
-          config_path = dir / 'config'
-          config_path.write <<~SSH_CONFIG
-            Host *
-              CheckHostIP no
-              ConnectTimeout 30
-              UserKnownHostsFile #{known_hosts_path}
-              StrictHostKeyChecking no
-              IdentitiesOnly yes
-              IdentityFile #{key_path}
-          SSH_CONFIG
-          config_path.chmod 0600
-
-          script_path = dir / 'run.sh'
-          script_path.write <<~GIT_SSH
-            #!/bin/sh
-            ssh -F #{config_path} "$@"
-          GIT_SSH
-          script_path.chmod 0700
-
-          yield script_path
+          key_path
         end
-      else
-        yield nil
+
+        config_path = dir / 'config'
+        config_path.write <<~SSH_CONFIG
+          Host *
+            CheckHostIP no
+            ConnectTimeout 30
+            UserKnownHostsFile #{known_hosts_path}
+            StrictHostKeyChecking no
+            IdentitiesOnly yes
+            #{key_paths.map { |path| "IdentityFile #{path}" }.join("\n")}
+        SSH_CONFIG
+        config_path.chmod 0600
+
+        script_path = dir / 'run.sh'
+        script_path.write <<~GIT_SSH
+          #!/bin/sh
+          ssh -F '#{config_path}' "$@"
+        GIT_SSH
+        script_path.chmod 0700
+
+        yield script_path
       end
     end
   end

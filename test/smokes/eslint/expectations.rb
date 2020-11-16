@@ -487,3 +487,22 @@ s.add_test(
   analyzer: { name: "ESLint", version: default_version },
   config_file: "sider.yml"
 )
+
+s.add_test(
+  "private_npm",
+  type: "success",
+  issues: [
+    {
+      id: "sider-private-npm-example/hello",
+      message: "Disallow `hello` function",
+      links: %w[https://github.com/sider/private-npm-example/blob/master/README.md],
+      path: "foo.js",
+      location: { start_line: 1, start_column: 1, end_line: 1, end_column: 20 },
+      object: { severity: "error", category: "Stylistic Issues", recommended: true },
+      git_blame_info: {
+        commit: :_, line_hash: "3447ddf1e1e8ac0df782cd6427a16194a2deb59f", original_line: 1, final_line: 1
+      }
+    }
+  ],
+  analyzer: { name: "ESLint", version: default_version }
+)

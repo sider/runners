@@ -1,0 +1,5 @@
+plugins:
+  - sider-private-npm-example
+
+rules:
+  sider-private-npm-example/hello: error

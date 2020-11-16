@@ -1,0 +1,9 @@
+linter:
+  rubocop:
+    gems:
+      - name: rubocop
+        version: ">= 1.3.0"
+      - name: ruby_private_gem
+        git:
+          repo: git@github.com:sider/ruby_private_gem.git
+          ref: 859573e47671df1bbf079c4d70c6b5755d808241

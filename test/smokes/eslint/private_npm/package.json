@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "eslint-plugin-sider-private-npm-example": "github:sider/private-npm-example#b344fd126cb3690ffe55a0e3bad8a9c947194d70"
+  }
+}

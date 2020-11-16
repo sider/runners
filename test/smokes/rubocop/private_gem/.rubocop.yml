@@ -1,0 +1,9 @@
+require:
+  - ruby_private_gem
+
+AllCops:
+  NewCops: disable
+  DisabledByDefault: true
+
+RubyPrivateGem/Hello:
+  Enabled: true

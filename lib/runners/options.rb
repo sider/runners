@@ -13,7 +13,7 @@ module Runners
     end
     private_constant :GitSource
 
-    attr_reader :stdout, :stderr, :source, :ssh_key, :io
+    attr_reader :stdout, :stderr, :source, :ssh_keys, :io
 
     def initialize(json, stdout, stderr)
       @stdout = stdout
@@ -22,7 +22,7 @@ module Runners
       options = parse_options(json)
       outputs = options[:outputs] || []
       @source = GitSource.new(**options[:source])
-      @ssh_key = options[:ssh_key]
+      @ssh_keys = Array(options[:ssh_key]).freeze
       @io = if outputs.empty?
               Runners::IO.new(stdout)
             else

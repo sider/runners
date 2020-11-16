@@ -17,7 +17,7 @@ module Runners
     attr_reader stdout: ::IO
     attr_reader stderr: ::IO
     attr_reader source: GitSource
-    attr_reader ssh_key: String?
+    attr_reader ssh_keys: Array[String]
     attr_reader io: Runners::IO
 
     def initialize: (String json, ::IO stdout, ::IO stderr) -> void

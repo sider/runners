@@ -14,7 +14,7 @@ module Runners
       let :payload, object(
         source: source,
         outputs: array?(string),
-        ssh_key: string?,
+        ssh_key: enum?(string, array(string)),
         s3: object?(endpoint: string),
       )
     end
