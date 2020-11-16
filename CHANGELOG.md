@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.37.2...HEAD)
 
-- Use `GIT_SSH_COMMAND` instead of `GIT_SSH [#1648](https://github.com/sider/runners/pull/1648)
+- Use `GIT_SSH_COMMAND` instead of `GIT_SSH` [#1648](https://github.com/sider/runners/pull/1648)
 
 ## 0.37.2
 
