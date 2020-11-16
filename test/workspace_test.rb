@@ -47,7 +47,7 @@ class WorkspaceTest < Minitest::Test
   end
 
   def test_git_ssh_path_is_pathname
-    with_workspace(ssh_key: data("ssh_key").read) do |workspace|
+    with_workspace(ssh_key: data("ruby_private_gem_deploy_key").read) do |workspace|
       workspace.open do |git_ssh_path|
         assert_path_exists git_ssh_path
         assert_equal Pathname("run.sh"), git_ssh_path.basename
@@ -58,12 +58,12 @@ class WorkspaceTest < Minitest::Test
         assert_equal "100600", "%o" % (ssh_dir / "key").stat.mode
         assert_equal "100600", "%o" % (ssh_dir / "known_hosts").stat.mode
 
-        Open3.capture3(
-          { "GIT_SSH" => git_ssh_path.to_s },
-          "git", "clone", "--depth=1", "git@github.com:sider/runners_test.git",
-          { chdir: workspace.working_dir.to_s }
+        system(
+          { "GIT_SSH" => git_ssh_path.to_path },
+          "git", "clone", "--depth=1", "--quiet", "git@github.com:sider/ruby_private_gem.git",
+          { chdir: workspace.working_dir.to_path, exception: true }
         )
-        assert_path_exists workspace.working_dir / "runners_test" / "README.md"
+        assert_path_exists workspace.working_dir / "ruby_private_gem" / "README.md"
       end
     end
   end
