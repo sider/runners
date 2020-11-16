@@ -21,8 +21,6 @@ module Runners
     register_config_schema(name: :lizard, schema: Schema.runner_config)
 
     def analyze(changes)
-      delete_unchanged_files(changes)
-
       capture3!(analyzer_bin,
         '--working_threads', Etc.nprocessors.to_s,
         '--verbose',
