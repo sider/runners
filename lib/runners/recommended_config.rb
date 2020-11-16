@@ -9,12 +9,12 @@ module Runners
       MSG
     end
 
-    def warn_recommended_config_option_release(config, config_key, deadline)
-      return if config[config_key]
+    def warn_recommended_config_option_release(config_key, deadline)
+      return if config_linter[config_key]
 
-      add_warning <<~MSG
-        Sider's recommended configuration option is about to be released #{deadline}.
-        After the release, Sider will automatically apply our recommended ruleset if you don't have the #{analyzer_name} configuration option called `#{config_key}` in your repository.
+      add_warning <<~MSG, file: config.path_name
+        Sider's recommended configuration file is about to be released #{deadline}.
+        After the release, Sider will automatically apply our recommended ruleset if you don't specify the #{config_key} option in your `#{config.path_name}`.
       MSG
     end
 

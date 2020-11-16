@@ -35,12 +35,10 @@ module Runners
         return Results::Failure.new(guid: guid, message: exn.message)
       end
 
-      if config_linter[:config]
-        #if ! ["sun", "google", "sider"].include?(config_linter[:config])
-        #  trace_writer.message "The `config` option in `#{config_linter[:config]}` is specified. The Sider's recommended ruleset is ignored."
-        #end
+      if config_linter[:config] && config_linter[:config] != "sider"
+        #trace_writer.message "The `config` option in `#{config.path_name}` is specified. The Sider's recommended ruleset is ignored."
       else
-        warn_recommended_config_option_release(config_linter, :config, "early in December 2020")
+        warn_recommended_config_option_release(:config, "early in December 2020")
       end
 
       yield
@@ -164,7 +162,7 @@ module Runners
       when "google"
         "/google_checks.xml"
       when "sider"
-        original_recommended_file_path(CONFIG_FILE_NAME)
+        #original_recommended_file_path(CONFIG_FILE_NAME)
       else
         file
       end

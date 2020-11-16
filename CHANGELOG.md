@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - Optimize `Runners::Changes#include?` [#1633](https://github.com/sider/runners/pull/1633)
 - Reduce log for git-blame(1) [#1632](https://github.com/sider/runners/pull/1632)
+- Checkstyle Provide Sider's recommended ruleset [#1505](https://github.com/sider/runners/pull/1619)
 
 ## 0.37.1
 
