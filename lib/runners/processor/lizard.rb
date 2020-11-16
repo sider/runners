@@ -27,7 +27,7 @@ module Runners
         '--working_threads', Etc.nprocessors.to_s,
         '--verbose',
         '--csv',
-        '-o', report_file,
+        '--output_file', report_file,
         '.')
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
