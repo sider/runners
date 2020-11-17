@@ -1,0 +1,5 @@
+linter:
+  code_sniffer:
+    ignore:
+      - test/
+      - src/baz.php
