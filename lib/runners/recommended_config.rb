@@ -14,7 +14,7 @@ module Runners
 
       add_warning <<~MSG, file: config.path_name
         Sider's recommended configuration file is about to be released #{deadline}.
-        After the release, Sider will automatically apply our recommended ruleset if you don't specify the #{config_key} option in your `#{config.path_name}`.
+        After the release, Sider will automatically apply our recommended ruleset if you don't specify the `#{config_key}` option in your `#{config.path_name}`.
       MSG
     end
 

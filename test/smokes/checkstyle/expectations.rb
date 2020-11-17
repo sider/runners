@@ -7,7 +7,7 @@ s.add_test(
   type: "success",
   analyzer: { name: "Checkstyle", version: default_version },
   warnings: [
-    { message: "Sider's recommended configuration file is about to be released early in December 2020.\nAfter the release, Sider will automatically apply our recommended ruleset if you don't specify the config option in your `sider.yml`.", file: "sider.yml" }
+    { message: "Sider's recommended configuration file is about to be released early in December 2020.\nAfter the release, Sider will automatically apply our recommended ruleset if you don't specify the `config` option in your `sider.yml`.", file: "sider.yml" }
   ],
   issues: [
     {
@@ -73,7 +73,7 @@ s.add_test(
   type: "success",
   analyzer: { name: "Checkstyle", version: default_version },
   warnings: [
-    { message: "Sider's recommended configuration file is about to be released early in December 2020.\nAfter the release, Sider will automatically apply our recommended ruleset if you don't specify the config option in your `sider.yml`.", file: "sider.yml" }
+    { message: "Sider's recommended configuration file is about to be released early in December 2020.\nAfter the release, Sider will automatically apply our recommended ruleset if you don't specify the `config` option in your `sider.yml`.", file: "sider.yml" }
   ],
   issues: [
     {

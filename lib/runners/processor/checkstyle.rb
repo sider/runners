@@ -161,8 +161,8 @@ module Runners
         "/sun_checks.xml"
       when "google"
         "/google_checks.xml"
-      when "sider"
-        #original_recommended_file_path(CONFIG_FILE_NAME)
+      #when "sider"
+      #  original_recommended_file_path(CONFIG_FILE_NAME)
       else
         file
       end
