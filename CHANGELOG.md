@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - Use `GIT_SSH_COMMAND` instead of `GIT_SSH` [#1648](https://github.com/sider/runners/pull/1648)
 - **PHP_CodeSniffer** Allow array for `extensions` and `ignore` options [#1650](https://github.com/sider/runners/pull/1650)
+- **RuboCop** Use `--parallel` option [#1654](https://github.com/sider/runners/pull/1654)
 
 ## 0.37.2
 
