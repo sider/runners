@@ -35,12 +35,13 @@ module Runners
         return Results::Failure.new(guid: guid, message: exn.message)
       end
 
-      if config_linter[:config] && config_linter[:config] != "sider"
-        #trace_writer.message "The `config` option in `#{config.path_name}` is specified. The Sider's recommended ruleset is ignored."
+      if config_linter[:config]
+        trace_writer.message "The `config` option in `#{config.path_name}` is specified. The Sider's recommended ruleset is ignored."
       else
-        warn_recommended_config_option_release(:config, "early in December 2020")
+         trace_writer.message "The `config` option in `#{config.path_name}` is not specified. Sider uses our recommended ruleset instead."
       end
 
+      warn_recommended_config_option_release(:config, "early in December 2020")
       yield
     end
 
