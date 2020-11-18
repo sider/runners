@@ -159,7 +159,7 @@ module Runners
         /An error occurred while .+ inspecting (?<file>.+):.+:/,
       ]
 
-      warnings = Set[]
+      warnings = []
 
       stderr.each_line(chomp: true) do |message|
         patterns.each do |pattern|
@@ -175,6 +175,8 @@ module Runners
         end
       end
 
+      warnings.uniq!
+      warnings.sort_by! { |_, file| file ? file : "" } # 1. no file, 2. filename
       warnings.each { |msg, file| add_warning(msg, file: file) }
     end
 
