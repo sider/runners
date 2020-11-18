@@ -1,5 +1,0 @@
-linter:
-  eslint:
-    root_dir: 'frontend'
-    options:
-      ext: 'js,jsx'
