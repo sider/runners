@@ -9,6 +9,7 @@ on:
 
 jobs:
   # https://gist.github.com/ybiquitous/c80f15c18319c63cae8447a3be341267
+  # https://github.com/actions/runner/issues/774
   check_skip:
     runs-on: ubuntu-latest
     if: |
