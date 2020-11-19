@@ -13,6 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     if: |
       !contains(format('{0} {1}', github.event.head_commit.message, github.event.pull_request.title), '[skip ci]')
+    steps:
+      - run: echo '${{ github.event_name }}'
+      - run: echo '${{ github.event.head_commit.message }}'
+      - run: echo '${{ github.event.pull_request.title }}'
 
   build:
     runs-on: ubuntu-latest
