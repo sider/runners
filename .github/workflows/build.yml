@@ -18,7 +18,7 @@ jobs:
       - run: |
           echo 'github.event_name: ${{ github.event_name }}'
           echo 'github.event:'
-          cat <<EOD
+          cat <<'EOD'
           ${{ toJson(github.event) }}
           EOD
 
