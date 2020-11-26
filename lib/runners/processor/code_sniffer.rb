@@ -9,9 +9,9 @@ module Runners
                         version: enum?(string, numeric),
                         dir: string?,
                         standard: string?,
-                        extensions: string?,
+                        extensions: enum?(string, array(string)),
                         encoding: string?,
-                        ignore: string?,
+                        ignore: enum?(string, array(string)),
                         # DO NOT ADD ANY OPTION under `options`.
                         options: optional(object(
                                             dir: string?,
@@ -96,6 +96,7 @@ module Runners
 
     def extensions_option
       extensions = config_linter[:extensions] || config_linter.dig(:options, :extensions) || default_options.dig(:options, :extensions)
+      extensions = comma_separated_list(extensions)
       "--extensions=#{extensions}"
     end
 
@@ -106,6 +107,7 @@ module Runners
 
     def ignore_option
       ignore = config_linter[:ignore] || config_linter.dig(:options, :ignore)
+      ignore = comma_separated_list(ignore)
       ignore ? ["--ignore=#{ignore}"] : []
     end
 

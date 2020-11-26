@@ -19,7 +19,7 @@ module Runners
 
     attr_reader config: untyped
 
-    attr_reader shell: untyped
+    attr_reader shell: Shell
 
     def self.register_config_schema: (**untyped args) -> untyped
 
@@ -27,6 +27,8 @@ module Runners
     RemovedGoToolSchema: untyped
 
     def initialize: (guid: untyped guid, working_dir: untyped working_dir, config: untyped config, git_ssh_path: untyped git_ssh_path, trace_writer: untyped trace_writer) -> untyped
+
+    def current_dir: () -> Pathname
 
     def relative_path: (untyped original, ?from: untyped from) -> untyped
 

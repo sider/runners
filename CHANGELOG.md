@@ -4,7 +4,21 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.37.1...HEAD)
+- Add the new option `new_issue_schema` [#1674](https://github.com/sider/runners/pull/1674)
+
+[Full diff](https://github.com/sider/runners/compare/0.38.0...HEAD)
+
+## 0.38.0
+
+[Full diff](https://github.com/sider/runners/compare/0.37.2...0.38.0)
+
+- Use `GIT_SSH_COMMAND` instead of `GIT_SSH` [#1648](https://github.com/sider/runners/pull/1648)
+- **PHP_CodeSniffer** Allow array for `extensions` and `ignore` options [#1650](https://github.com/sider/runners/pull/1650)
+- **RuboCop** Use `--parallel` option [#1654](https://github.com/sider/runners/pull/1654)
+
+## 0.37.2
+
+[Full diff](https://github.com/sider/runners/compare/0.37.1...0.37.2)
 
 - Optimize `Runners::Changes#include?` [#1633](https://github.com/sider/runners/pull/1633)
 - Reduce log for git-blame(1) [#1632](https://github.com/sider/runners/pull/1632)

@@ -76,6 +76,8 @@ module Runners
       "rubocop" => [">= 0.61.0", "< 2.0.0"]
     }.freeze
 
+    DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "default_rubocop.yml").to_path.freeze
+
     def default_gem_specs
       super.tap do |gems|
         if setup_default_config
@@ -100,8 +102,7 @@ module Runners
     end
 
     def analyze(_)
-      options = ["--display-style-guide", "--cache=false", "--no-display-cop-names", rails_option, config_file, safe].compact
-      run_analyzer(options)
+      run_analyzer
     end
 
     private
@@ -141,7 +142,7 @@ module Runners
       return false if path.exist?
 
       path.parent.mkpath
-      FileUtils.cp (Pathname(Dir.home) / "default_rubocop.yml"), path
+      FileUtils.copy_file DEFAULT_CONFIG_FILE, path
       trace_writer.message "Setup the default RuboCop configuration file."
       true
     end
@@ -158,7 +159,7 @@ module Runners
         /An error occurred while .+ inspecting (?<file>.+):.+:/,
       ]
 
-      warnings = Set[]
+      warnings = []
 
       stderr.each_line(chomp: true) do |message|
         patterns.each do |pattern|
@@ -174,15 +175,33 @@ module Runners
         end
       end
 
+      warnings.uniq!
+      warnings.sort_by! { |_, file| file ? file : "" } # 1. no file, 2. filename
       warnings.each { |msg, file| add_warning(msg, file: file) }
     end
 
-    def run_analyzer(options)
-      # NOTE: `--out` option must be after `--format` option.
-      #
-      # @see https://docs.rubocop.org/en/stable/formatters
-      options << "--format=json"
-      options << "--out=#{report_file}"
+    def run_analyzer
+      options = [
+        "--display-style-guide",
+        "--no-display-cop-names",
+
+        # NOTE: `--parallel` requires a cache.
+        #
+        # @see https://github.com/rubocop-hq/rubocop/blob/v1.3.1/lib/rubocop/options.rb#L353-L355
+        "--parallel",
+        "--cache=true",
+        *cache_root,
+
+        # NOTE: `--out` option must be after `--format` option.
+        #
+        # @see https://docs.rubocop.org/rubocop/1.3/formatters.html
+        "--format=json",
+        "--out=#{report_file}",
+
+        *rails_option,
+        *config_file,
+        *safe,
+      ]
 
       _, stderr, status = capture3(*ruby_analyzer_bin, *options)
       check_rubocop_yml_warning(stderr)
@@ -286,6 +305,15 @@ module Runners
     # @see https://github.com/rubocop-hq/rubocop/blob/v0.72.0/CHANGELOG.md
     def rails_cops_removed?
       Gem::Version.create(analyzer_version) >= Gem::Version.create("0.72.0")
+    end
+
+    def cache_root
+      # @see https://github.com/rubocop-hq/rubocop/blob/v0.91.0/CHANGELOG.md
+      if Gem::Version.create(analyzer_version) >= Gem::Version.create("0.91.0")
+        "--cache-root=#{File.join(Dir.tmpdir, 'rubocop-cache')}"
+      else
+        nil
+      end
     end
   end
 end

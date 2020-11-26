@@ -84,6 +84,12 @@ class OptionsTest < Minitest::Test
     assert_equal 'Invalid output option: `"foo"`', error.message
   end
 
+  def test_new_issue_schema
+    assert_nil Runners::Options.new(options_json(source: source_params), stdout, stderr).new_issue_schema
+    assert_equal true, Runners::Options.new(options_json(source: source_params, new_issue_schema: true), stdout, stderr).new_issue_schema
+    assert_equal false, Runners::Options.new(options_json(source: source_params, new_issue_schema: false), stdout, stderr).new_issue_schema
+  end
+
   private
 
   def stdout

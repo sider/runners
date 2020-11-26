@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: olegtarasov/get-tag@v2
-        id: getTag
+      - run: echo ::set-output name=tag::${GITHUB_REF/refs\/tags\//}
+        id: get_tag
       - run: ./.github/workflows/notify_build_to_bugsnag.sh
         env:
           BUGSNAG_API_KEY: ${{ secrets.BUGSNAG_API_KEY }}
-          APP_VERSION: ${{ steps.getTag.outputs.tag }}
+          APP_VERSION: ${{ steps.get_tag.outputs.tag }}
           SOURCE_REVISION: ${{ github.sha }}
