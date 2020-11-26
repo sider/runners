@@ -75,7 +75,7 @@ GEM
     rubocop-ast (1.1.1)
       parser (>= 2.7.1.5)
     ruby-progressbar (1.10.1)
-    steep (0.35.0)
+    steep (0.36.0)
       activesupport (>= 5.1)
       ast_utils (~> 0.3.0)
       language_server-protocol (~> 3.15.0.1)
