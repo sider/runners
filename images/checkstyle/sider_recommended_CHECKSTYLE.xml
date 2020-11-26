@@ -6,7 +6,26 @@
   <property name="fileExtensions" value="java, properties, xml"/>
   <property name="severity" value="info"/>
 
+  <module name="Translation"/>
+  <module name="UniqueProperties"/>
+  <module name="FileLength"/>
+
   <module name="TreeWalker">
+    <!-- Annotations -->
+    <module name="PackageAnnotation"/>
+
+    <!-- Block Checks -->
+    <module name="AvoidNestedBlocks"/>
+    <module name="EmptyBlock"/>
+    <module name="EmptyCatchBlock"/>
+
+    <!-- Class Design -->
+    <module name="InterfaceIsType"/>
+    <module name="MutableException"/>
+    <module name="OneTopLevelClass"/>
+    <module name="ThrowsCount"/>
+
+    <!-- Coding -->
     <module name="CovariantEquals"/>
     <module name="DefaultComesLast"/>
     <module name="EmptyStatement"/>
@@ -32,6 +51,29 @@
     <module name="StringLiteralEquality"/>
     <module name="SuperClone"/>
     <module name="SuperFinalize"/>
+
+    <!-- Imports -->
+    <module name="AvoidStarImport"/>
+    <module name="RedundantImport"/>
+    <module name="UnusedImports"/>
+
+    <!-- Javdoc Comments -->
+    <module name="SingleLineJavadoc"/>
+
+    <!-- Metrics -->
+    <module name="BooleanExpressionComplexity"/>
+
+    <!-- Miscellaneous -->
+    <module name="AvoidEscapedUnicodeCharacters"/>
+    <module name="OuterTypeFilename"/>
+    <module name="TodoComment"/>
+    <module name="UpperEll"/>
+
+    <!-- Modifiers -->
+    <module name="InterfaceMemberImpliedModifier"/>
+    <module name="ModifierOrder"/>
+
+    <!-- Naming Conventions -->
     <module name="AbbreviationAsWordInName"/>
     <module name="CatchParameterName"/>
     <module name="ClassTypeParameterName"/>
@@ -46,36 +88,20 @@
     <module name="ParameterName"/>
     <module name="StaticVariableName"/>
     <module name="TypeName"/>
-    <module name="FileLength"/>
+
+    <!-- Regexp -->
+
+    <!-- Size Violations -->
     <module name="MethodCount"/>
     <module name="MethodLength"/>
     <module name="ParameterNumber"/>
-    <module name="InterfaceMemberImpliedModifier"/>
-    <module name="ModifierOrder"/>
+
+    <!-- Whitespace -->
     <module name="GenericWhitespace"/>
     <module name="NoLineWrap"/>
     <module name="NoWhitespaceAfter"/>
     <module name="NoWhitespaceBefore"/>
     <module name="WhitespaceAfter"/>
     <module name="WhitespaceAround"/>
-    <module name="SingleLineJavadoc"/>
-    <module name="BooleanExpressionComplexity"/>
-    <module name="InterfaceIsType"/>
-    <module name="MutableException"/>
-    <module name="OneTopLevelClass"/>
-    <module name="ThrowsCount"/>
-    <module name="PackageAnnotation"/>
-    <module name="AvoidStarImport"/>
-    <module name="RedundantImport"/>
-    <module name="UnusedImports"/>
-    <module name="AvoidNestedBlocks"/>
-    <module name="EmptyBlock"/>
-    <module name="EmptyCatchBlock"/>
-    <module name="AvoidEscapedUnicodeCharacters"/>
-    <module name="OuterTypeFilename"/>
-    <module name="TodoComment"/>
-    <module name="Translation"/>
-    <module name="UniqueProperties"/>
-    <module name="UpperEll"/>
   </module>
 </module>
