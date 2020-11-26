@@ -8,7 +8,7 @@ module Runners
 
       def initialize: (guid: untyped guid) -> untyped
 
-      def as_json: () -> { guid: untyped, timestamp: untyped }
+      def as_json: (?with_issues: bool with_issues) -> untyped
 
       def valid?: () -> untyped
     end
@@ -23,7 +23,7 @@ module Runners
 
       def initialize: (guid: untyped guid, analyzer: untyped analyzer, ?issues: untyped issues) -> untyped
 
-      def as_json: () -> untyped
+      def as_json: (?with_issues: bool with_issues) -> untyped
 
       def valid?: () -> untyped
 
@@ -48,7 +48,7 @@ module Runners
 
       def initialize: (guid: untyped guid, ?message: untyped message, ?analyzer: untyped? analyzer) -> untyped
 
-      def as_json: () -> untyped
+      def as_json: (?with_issues: bool with_issues) -> untyped
 
       def valid?: () -> untyped
     end
@@ -64,7 +64,7 @@ module Runners
 
       def initialize: (guid: untyped guid, exception: untyped exception, analyzer: untyped analyzer) -> untyped
 
-      def as_json: () -> untyped
+      def as_json: (?with_issues: bool with_issues) -> untyped
 
       def valid?: () -> untyped
     end

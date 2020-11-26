@@ -19,7 +19,8 @@ module Runners
       let :warning, object(message: string, file: string?)
       let :analyzer, object(name: string, version: string)
 
-      let :success, object(guid: string, timestamp: string, type: literal("success"), issues: array(Issue.issue), analyzer: analyzer)
+      let :success, enum(object(guid: string, timestamp: string, type: literal("success"), issues: array(Issue.issue), analyzer: analyzer),
+                         object(guid: string, timestamp: string, type: literal("success"), analyzer: analyzer))
       let :failure, object(guid: string, timestamp: string, type: literal("failure"), message: string, analyzer: optional(analyzer))
       let :error, object(guid: string, timestamp: string, type: literal("error"), class: string, backtrace: array(string), inspect: string, analyzer: optional(analyzer))
 

@@ -70,7 +70,7 @@ module Runners
         warnings = harness.warnings
         config = harness.config
         json = {
-          result: result.as_json,
+          result: result.as_json(with_issues: !options.new_issue_schema),
           warnings: warnings,
           ci_config: config&.content,
           config_file: config&.path_name,
@@ -79,6 +79,17 @@ module Runners
 
         trace_writer.message "Writing result..." do
           writer << Schema::Result.envelope.coerce(json)
+        end
+
+        if result.is_a?(Results::Success) && options.new_issue_schema
+          trace_writer.message "Writing issues..." do
+            length = result.issues.length
+            trace_writer.issues(:begin, length)
+            result.issues.each do |issue|
+              writer << Schema::Issue.issue.coerce(issue.as_json)
+            end
+            trace_writer.issues(:end, length)
+          end
         end
 
         result.tap do

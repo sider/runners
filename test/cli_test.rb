@@ -104,6 +104,27 @@ class CLITest < Minitest::Test
     assert objects.any? { |hash| hash[:ci_config] == nil }
   end
 
+  def test_run_with_new_issue_schema
+    json = options_json({ new_issue_schema: true, source: new_source })
+    cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: json)
+    cli.instance_variable_set(:@processor_class, TestProcessor)
+    cli.run
+
+    # It write JSON objects to stdout
+
+    output = stdout.string
+    reader = JSONSEQ::Reader.new(io: StringIO.new(output), decoder: -> (string) { JSON.parse(string, symbolize_names: true) })
+    objects = reader.each_object.to_a
+
+    assert objects.any? { |hash| hash[:trace] == 'command_line' && hash[:command_line] == ["test", "command"] }
+    assert objects.any? { |hash| hash[:trace] == 'status' && hash[:status] == 31 }
+    assert objects.any? { |hash| hash[:trace] == 'warning' && hash[:message] == 'hogehogewarn' }
+    assert objects.any? { |hash| hash[:warnings] == [{ message: 'hogehogewarn', file: nil }] }
+    assert objects.any? { |hash| hash[:issues] == { position: 'begin', length: 0 } }
+    assert objects.any? { |hash| hash[:issues] == { position: 'end', length: 0 } }
+    assert objects.any? { |hash| hash[:ci_config] == { linter: nil, ignore: [], branches: nil } }
+  end
+
   def test_format_duration
     cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: options_json)
     assert_equal "0.0s", cli.format_duration(0.0)

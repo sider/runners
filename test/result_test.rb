@@ -209,6 +209,20 @@ class ResultTest < Minitest::Test
     assert_equal [issue1, issue2], result.issues
   end
 
+  def test_success_as_json_without_issues
+    result = Results::Success.new(guid: SecureRandom.uuid, analyzer: Analyzer.new(name: "RuboCop", version: "1.0.0"))
+    issue = Issue.new(path: Pathname("foo.rb"), location: nil, id: "aaa", message: "bbb")
+    result.add_issue(issue)
+    assert_equal [issue], result.issues
+    assert_unifiable(result.as_json(with_issues: false),
+                     {
+                       guid: result.guid,
+                       timestamp: result.timestamp.utc.iso8601,
+                       type: 'success',
+                       analyzer: { name: "RuboCop", version: "1.0.0" }
+                     })
+  end
+
   def test_add_git_blame_info
     result = Results::Success.new(guid: SecureRandom.uuid, analyzer: Analyzer.new(name: "RuboCop", version: "1.3.2pre"))
     result.add_issue Issue.new(

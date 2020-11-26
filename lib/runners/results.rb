@@ -10,7 +10,7 @@ module Runners
         @timestamp = Time.now
       end
 
-      def as_json
+      def as_json(with_issues: true)
         {
           guid: guid,
           timestamp: timestamp.utc.iso8601
@@ -35,19 +35,21 @@ module Runners
         @analyzer = analyzer
       end
 
-      def as_json
+      def as_json(with_issues: true)
         super.tap do |json|
           json[:type] = 'success'
-          json[:issues] = issues.map(&:as_json).sort_by! do |issue|
-            [
-              issue[:id] || "",
-              issue[:path] || "",
-              issue.dig(:location, :start_line) || 0,
-              issue.dig(:location, :start_column) || 0,
-              issue.dig(:location, :end_line) || 0,
-              issue.dig(:location, :end_column) || 0,
-              issue[:message] || "",
-            ]
+          if with_issues
+            json[:issues] = issues.map(&:as_json).sort_by! do |issue|
+              [
+                issue[:id] || "",
+                issue[:path] || "",
+                issue.dig(:location, :start_line) || 0,
+                issue.dig(:location, :start_column) || 0,
+                issue.dig(:location, :end_line) || 0,
+                issue.dig(:location, :end_column) || 0,
+                issue[:message] || "",
+              ]
+            end
           end
           json[:analyzer] = analyzer.as_json
         end
@@ -102,7 +104,7 @@ module Runners
         @analyzer = analyzer
       end
 
-      def as_json
+      def as_json(with_issues: true)
         super.tap do |json|
           json[:type] = 'failure'
           json[:message] = message
@@ -127,7 +129,7 @@ module Runners
         @analyzer = analyzer
       end
 
-      def as_json
+      def as_json(with_issues: true)
         super.tap do |json|
           json[:type] = 'error'
           json[:class] = exception.class.name

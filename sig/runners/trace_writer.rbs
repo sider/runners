@@ -14,6 +14,7 @@ module Runners
     def warning: (String, ?file: String?, ?recorded_at: Time) -> void
     def ci_config: (Hash[Symbol, untyped], raw_content: String, file: String, ?recorded_at: Time) -> void
     def error: (String, ?recorded_at: Time, ?max_length: Integer) -> void
+    def issues: (:begin | :end, Integer, ?recorded_at: Time) -> void
     def <<: (Hash[Symbol, untyped]) -> void
 
     private
