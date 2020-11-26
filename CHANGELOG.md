@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Add the new option `new_issue_schema` [#1674](https://github.com/sider/runners/pull/1674)
+
 [Full diff](https://github.com/sider/runners/compare/0.38.0...HEAD)
 
 ## 0.38.0
