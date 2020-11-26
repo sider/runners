@@ -16,6 +16,7 @@ module Runners
         outputs: array?(string),
         ssh_key: string?,
         s3: object?(endpoint: string),
+        new_issue_schema: boolean?,
       )
     end
   end
