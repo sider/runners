@@ -19,7 +19,6 @@ module Runners
     attr_reader source: GitSource
     attr_reader ssh_key: String?
     attr_reader io: Runners::IO
-    attr_reader new_issue_schema: bool?
 
     def initialize: (String json, ::IO stdout, ::IO stderr) -> void
 

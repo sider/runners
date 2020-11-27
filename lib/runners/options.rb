@@ -13,7 +13,7 @@ module Runners
     end
     private_constant :GitSource
 
-    attr_reader :stdout, :stderr, :source, :ssh_key, :io, :new_issue_schema
+    attr_reader :stdout, :stderr, :source, :ssh_key, :io
 
     def initialize(json, stdout, stderr)
       @stdout = stdout
@@ -40,7 +40,6 @@ module Runners
               end
               Runners::IO.new(*ios)
             end
-      @new_issue_schema = options[:new_issue_schema]
     end
 
     private
