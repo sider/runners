@@ -6,6 +6,7 @@ class CLITest < Minitest::Test
 
   CLI = Runners::CLI
   TraceWriter = Runners::TraceWriter
+  Issue = Runners::Issue
 
   def stdout
     @stdout ||= StringIO.new
@@ -69,6 +70,27 @@ class CLITest < Minitest::Test
     end
   end
 
+  class TestProcessorWithIssues < TestProcessor
+    def analyze(changes)
+      super.tap do |result|
+        result.add_issue(
+          Issue.new(
+            path: Pathname("README.md"),
+            location: nil,
+            id: "id1",
+            message: "id1",
+            ),
+          Issue.new(
+            path: Pathname("README.md"),
+            location: nil,
+            id: "id2",
+            message: "id2",
+            ),
+          )
+      end
+    end
+  end
+
   def test_run
     cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: options_json)
     cli.instance_variable_set(:@processor_class, TestProcessor)
@@ -107,7 +129,7 @@ class CLITest < Minitest::Test
   def test_run_with_new_issue_schema
     json = options_json({ new_issue_schema: true, source: new_source })
     cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: json)
-    cli.instance_variable_set(:@processor_class, TestProcessor)
+    cli.instance_variable_set(:@processor_class, TestProcessorWithIssues)
     cli.run
 
     # It write JSON objects to stdout
@@ -120,8 +142,10 @@ class CLITest < Minitest::Test
     assert objects.any? { |hash| hash[:trace] == 'status' && hash[:status] == 31 }
     assert objects.any? { |hash| hash[:trace] == 'warning' && hash[:message] == 'hogehogewarn' }
     assert objects.any? { |hash| hash[:warnings] == [{ message: 'hogehogewarn', file: nil }] }
-    assert objects.any? { |hash| hash[:issues] == { position: 'begin', length: 0 } }
-    assert objects.any? { |hash| hash[:issues] == { position: 'end', length: 0 } }
+    assert objects.any? { |hash| hash[:issues] == { position: 'begin', length: 2 } }
+    assert objects.any? { |hash| hash == { path: 'README.md', location: nil, id: 'id1', message: 'id1', links: [], object: nil, git_blame_info: nil } }
+    assert objects.any? { |hash| hash == { path: 'README.md', location: nil, id: 'id2', message: 'id2', links: [], object: nil, git_blame_info: nil } }
+    assert objects.any? { |hash| hash[:issues] == { position: 'end', length: 2 } }
     assert objects.any? { |hash| hash[:ci_config] == { linter: nil, ignore: [], branches: nil } }
   end
 
