@@ -35,7 +35,6 @@
     <module name="IllegalInstantiation"/>
     <module name="IllegalThrows"/>
     <module name="IllegalToken"/>
-    <module name="IllegalTokenText"/>
     <module name="IllegalType"/>
     <module name="InnerAssignment"/>
     <module name="MissingSwitchDefault"/>
