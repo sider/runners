@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ## Unreleased
 
 - Add the new option `new_issue_schema` [#1674](https://github.com/sider/runners/pull/1674)
+- Write issues per each line when `new_issue_schema` is `true` [#1677](https://github.com/sider/runners/pull/1677)
 
 [Full diff](https://github.com/sider/runners/compare/0.38.0...HEAD)
 
