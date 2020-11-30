@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.38.0...HEAD)
 
+- Add `issue_count` to the result schema [#1688](https://github.com/sider/runners/pull/1688)
+
 ## 0.38.0
 
 [Full diff](https://github.com/sider/runners/compare/0.37.2...0.38.0)
