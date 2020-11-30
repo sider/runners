@@ -298,7 +298,7 @@ module Runners
             type: type,
             guid: guid,
             timestamp: timestamp,
-            issue_count: issues&.size,
+            issue_count: issues == :_ ? :_ : issues&.size,
             issues: issues,
             message: message,
             analyzer: analyzer,
