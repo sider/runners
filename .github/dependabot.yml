@@ -114,14 +114,6 @@ updates:
     open-pull-requests-limit: 10
     versioning-strategy: increase
   - package-ecosystem: npm
-    directory: "/images/tslint"
-    schedule:
-      interval: weekly
-      time: "09:00"
-      timezone: Asia/Tokyo
-    open-pull-requests-limit: 10
-    versioning-strategy: increase
-  - package-ecosystem: npm
     directory: "/images/tyscan"
     schedule:
       interval: weekly
