@@ -1,6 +1,6 @@
 require "test_helper"
 
-class ResultTest < Minitest::Test
+class ResultsTest < Minitest::Test
   include TestHelper
 
   Results = Runners::Results
