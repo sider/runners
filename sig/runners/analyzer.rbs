@@ -6,6 +6,6 @@ module Runners
     def initialize: (name: String, version: String) -> void
 
     def valid?: () -> bool
-    def as_json: () -> { name: String, version: String }
+    def as_json: () -> Hash[Symbol, String]
   end
 end

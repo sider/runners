@@ -16,6 +16,8 @@ module Runners
     attr_reader warnings: Array[String]
     attr_reader config: Config?
 
+    @analyzer: Analyzer?
+
     def initialize: (guid: String,
                      processor_class: untyped,
                      options: Options,
