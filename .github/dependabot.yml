@@ -10,11 +10,6 @@ updates:
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
     versioning-strategy: increase
-    ignore:
-      # TODO: Steep is broken by the update. See https://github.com/sider/runners/pull/1135
-      - dependency-name: strong_json
-        versions:
-          - ">= 0"
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
