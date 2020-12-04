@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.38.0...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.38.1...HEAD)
+
+## 0.38.1
+
+[Full diff](https://github.com/sider/runners/compare/0.38.0...0.38.1)
+
+- Add `issue_count` to the result schema [#1688](https://github.com/sider/runners/pull/1688)
 
 ## 0.38.0
 

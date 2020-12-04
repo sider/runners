@@ -1,6 +1,6 @@
 require "test_helper"
 
-class ResultTest < Minitest::Test
+class ResultsTest < Minitest::Test
   include TestHelper
 
   Results = Runners::Results
@@ -37,6 +37,7 @@ class ResultTest < Minitest::Test
                        guid: result.guid,
                        timestamp: result.timestamp.utc.iso8601,
                        type: 'success',
+                       issue_count: 2,
                        issues: [
                          {
                            path: "foo/bar/baz.rb",
@@ -95,6 +96,7 @@ class ResultTest < Minitest::Test
                        guid: result.guid,
                        timestamp: result.timestamp.utc.iso8601,
                        type: 'success',
+                       issue_count: 1,
                        issues: [
                          {
                            path: "foo/bar/xxx.rb",
@@ -166,6 +168,7 @@ class ResultTest < Minitest::Test
                        guid: result.guid,
                        timestamp: result.timestamp.utc.iso8601,
                        type: 'success',
+                       issue_count: 2,
                        issues: [
                          {
                            path: "a.py",
@@ -236,6 +239,7 @@ class ResultTest < Minitest::Test
                        guid: result.guid,
                        timestamp: result.timestamp.utc.iso8601,
                        type: 'success',
+                       issue_count: 1,
                        issues: [
                          {
                            path: "foo/bar/baz.rb",
@@ -274,6 +278,7 @@ class ResultTest < Minitest::Test
                        guid: result.guid,
                        timestamp: result.timestamp.utc.iso8601,
                        type: 'success',
+                       issue_count: 1,
                        issues: [
                          {
                            path: "foo/bar/baz.rb",
