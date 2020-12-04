@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.38.1...HEAD)
 
+- **stylelint** 13.7.2 -> 13.8.0 [#1670](https://github.com/sider/runners/pull/1670)
+
 ## 0.38.1
 
 [Full diff](https://github.com/sider/runners/compare/0.38.0...0.38.1)
