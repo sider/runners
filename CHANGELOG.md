@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.38.1...HEAD)
 
+- **ESLint** 7.12.1 -> 7.14.0 [#1669](https://github.com/sider/runners/pull/1669)
+
 ## 0.38.1
 
 [Full diff](https://github.com/sider/runners/compare/0.38.0...0.38.1)
