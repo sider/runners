@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "1.16.0"
+default_version = "4.1.2"
 
 s.add_test(
   "success",
@@ -79,7 +79,11 @@ s.add_test(
       }
     },
     {
-      message: "[stdin]:1:7: error: unexpected <\n" + "foo = <%= something %>\n" + "      ^",
+      message: <<~MSG.strip,
+        [stdin]:1:7: error: unexpected <
+        foo = <%= something %>
+              ^
+      MSG
       links: [],
       id: "coffeescript_error",
       path: "er.coffee",
@@ -153,7 +157,8 @@ s.add_test(
       }
     }
   ],
-  analyzer: { name: "CoffeeLint", version: "2.0.6" }
+  analyzer: { name: "CoffeeLint", version: "2.0.6" },
+  warnings: [{ message: /The `2.0.6` and older versions are deprecated/, file: nil }]
 )
 
 s.add_test(
@@ -172,7 +177,8 @@ s.add_test(
       }
     }
   ],
-  analyzer: { name: "CoffeeLint", version: "2.0.3" }
+  analyzer: { name: "CoffeeLint", version: "2.0.3" },
+  warnings: [{ message: /The `2.0.3` and older versions are deprecated/, file: nil }]
 )
 
 s.add_test(
@@ -191,7 +197,8 @@ s.add_test(
       }
     }
   ],
-  analyzer: { name: "CoffeeLint", version: "1.16.2" }
+  analyzer: { name: "CoffeeLint", version: "1.16.2" },
+  warnings: [{ message: /The `1.16.2` and older versions are deprecated/, file: nil }]
 )
 
 s.add_test(
@@ -210,5 +217,6 @@ s.add_test(
       }
     }
   ],
-  analyzer: { name: "CoffeeLint", version: "2.0.5" }
+  analyzer: { name: "CoffeeLint", version: "2.0.5" },
+  warnings: [{ message: /The `2.0.5` and older versions are deprecated/, file: nil }]
 )
