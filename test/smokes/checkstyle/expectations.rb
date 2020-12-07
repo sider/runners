@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "8.36.2"
+default_version = "8.38"
 
 s.add_test(
   "success",
@@ -38,6 +38,17 @@ s.add_test(
       object: { severity: "warning" },
       git_blame_info: {
         commit: :_, line_hash: "e266bf187351d458abacf0d6374d1c6659d82428", original_line: 11, final_line: 11
+      }
+    },
+    {
+      message: "Missing a Javadoc comment.",
+      links: %w[https://checkstyle.org/config_javadoc.html#MissingJavadocType],
+      id: "MissingJavadocTypeCheck",
+      path: "src/Hello.java",
+      location: { start_line: 3, start_column: 1 },
+      object: { severity: "warning" },
+      git_blame_info: {
+        commit: :_, line_hash: "b4aa7ff94732722c55d79ff3788d3d5f22b197b2", original_line: 3, final_line: 3
       }
     },
     {
