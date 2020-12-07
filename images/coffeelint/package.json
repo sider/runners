@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "coffeelint": "1.16.0"
+    "@coffeelint/cli": "4.1.2"
   }
 }

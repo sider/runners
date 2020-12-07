@@ -177,7 +177,7 @@ module Runners
         add_warning <<~MSG, file: file
           DEPRECATION WARNING!!!
           The `#{analyzer_version}` and older versions are deprecated, and these versions will be dropped #{deadline_str}.
-          Please consider upgrading to #{minimum} or a newer version.
+          Please consider upgrading to `#{minimum}` or a newer version.
         MSG
       end
     end
