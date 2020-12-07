@@ -18,7 +18,9 @@ jobs:
       - run: |
           echo 'github.event_name: ${{ github.event_name }}'
           echo 'github.event:'
-          echo '${{ toJson(github.event) }}'
+          cat <<'EOD'
+          ${{ toJson(github.event) }}
+          EOD
   test:
     needs: check_skip
     runs-on: ubuntu-latest

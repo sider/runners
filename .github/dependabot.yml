@@ -10,11 +10,6 @@ updates:
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
     versioning-strategy: increase
-    ignore:
-      # TODO: Steep is broken by the update. See https://github.com/sider/runners/pull/1135
-      - dependency-name: strong_json
-        versions:
-          - ">= 0"
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
@@ -112,14 +107,6 @@ updates:
     versioning-strategy: increase
   - package-ecosystem: npm
     directory: "/images/stylelint"
-    schedule:
-      interval: weekly
-      time: "09:00"
-      timezone: Asia/Tokyo
-    open-pull-requests-limit: 10
-    versioning-strategy: increase
-  - package-ecosystem: npm
-    directory: "/images/tslint"
     schedule:
       interval: weekly
       time: "09:00"
