@@ -20,6 +20,7 @@ module Runners
 
     CONSTRAINTS = {
       "coffeelint" => Constraint.new(">= 1.16.0", "< 3.0.0"),
+      "@coffeelint/cli" => Constraint.new(">= 4.0.0", "< 5.0.0"),
     }.freeze
 
     def setup
@@ -30,6 +31,8 @@ module Runners
       rescue UserError => exn
         return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
       end
+
+      add_warning_if_deprecated_version minimum: "4.0.0"
 
       yield
     end
