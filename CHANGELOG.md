@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.38.1...HEAD)
 
+- **CoffeeLint** 1.16.0 -> 4.1.2 [#1690](https://github.com/sider/runners/pull/1690)
+
 ## 0.38.1
 
 [Full diff](https://github.com/sider/runners/compare/0.38.0...0.38.1)
