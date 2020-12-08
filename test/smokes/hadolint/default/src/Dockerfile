@@ -4,3 +4,6 @@ USER root
 RUN cd ..
 RUN git clone https://github.com/hadolint/hadolint
 RUN echo "Hello\tworld"
+
+RUN yum update
+
