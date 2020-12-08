@@ -6,6 +6,20 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.38.1...HEAD)
 
+Updated environments:
+
+- **devon_rex** 2.27.1 -> master [#1708](https://github.com/sider/runners/pull/1708)
+
+Updated tools:
+
+- **Checkstyle** 8.36.2 -> 8.38 [#1685](https://github.com/sider/runners/pull/1685)
+- **CoffeeLint** 1.16.0 -> 4.1.2 [#1690](https://github.com/sider/runners/pull/1690)
+- **ESLint** 7.12.1 -> 7.14.0 [#1669](https://github.com/sider/runners/pull/1669)
+- **GolangCI-Lint** 1.32.1 -> 1.33.0 [#1680](https://github.com/sider/runners/pull/1680)
+- **Goodcheck** 2.5.2 -> 2.7.0 [#1696](https://github.com/sider/runners/pull/1696)
+- **RuboCop** 1.0.0 -> 1.5.2 [#1695](https://github.com/sider/runners/pull/1695)
+- **stylelint** 13.7.2 -> 13.8.0 [#1670](https://github.com/sider/runners/pull/1670)
+
 ## 0.38.1
 
 [Full diff](https://github.com/sider/runners/compare/0.38.0...0.38.1)

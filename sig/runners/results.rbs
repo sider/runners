@@ -1,4 +1,6 @@
 module Runners
+  type result = Results::Success | Results::Failure | Results::Error
+
   module Results
     class Base
       attr_reader guid: String
