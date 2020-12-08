@@ -1,5 +1,4 @@
 module Runners
-  module Go
-    def show_runtime_versions: () -> untyped
+  module Go : Processor
   end
 end
