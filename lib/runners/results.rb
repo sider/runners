@@ -1,7 +1,6 @@
 module Runners
   module Results
     class Base
-      # @dynamic guid, timestamp
       attr_reader :guid
       attr_reader :timestamp
 
@@ -18,14 +17,13 @@ module Runners
       end
 
       def valid?
-        guid && timestamp
+        !!(guid && timestamp)
       end
     end
 
     # Result to indicate that processing finished successfully
     # Client programs may return this result.
     class Success < Base
-      # @dynamic issues, analyzer
       attr_reader :issues
       attr_reader :analyzer
 
@@ -38,6 +36,7 @@ module Runners
       def as_json
         super.tap do |json|
           json[:type] = 'success'
+          json[:issue_count] = issues.size
           json[:issues] = issues.map(&:as_json).sort_by! do |issue|
             [
               issue[:id] || "",
@@ -54,7 +53,7 @@ module Runners
       end
 
       def valid?
-        super && analyzer&.valid?
+        super && !!(analyzer&.valid?)
       end
 
       def add_issue(*issue)
@@ -92,7 +91,6 @@ module Runners
     class Failure < Base
       DEFAULT_MESSAGE = "The analysis failed due to an unexpected error. See the analysis log for details.".freeze
 
-      # @dynamic message, analyzer
       attr_reader :message
       attr_reader :analyzer
 
@@ -111,14 +109,13 @@ module Runners
       end
 
       def valid?
-        super && message && ((a = analyzer) ? a.valid? : true)
+        super && !!message && ((a = analyzer) ? a.valid? : true)
       end
     end
 
     # Result to indicate that processor raises an exception.
     # Client programs should not return this result.
     class Error < Base
-      # @dynamic exception, analyzer
       attr_reader :exception, :analyzer
 
       def initialize(guid:, exception:, analyzer:)

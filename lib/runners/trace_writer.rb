@@ -41,15 +41,15 @@ module Runners
       string = filter.mask(message.strip)
 
       if string.size > limit
-        string = string[0, limit] + omission
+        string = string[0, limit].to_s + omission
         all_truncated = true
       end
 
       block_given = block_given?
       each_slice(string, size: max_length) do |text, truncated|
-        self << { trace: :message, message: text, recorded_at: recorded_at, truncated: all_truncated || truncated }.tap do |entry|
-          entry[:duration_in_ms] = 0 if block_given
-        end
+        self << { trace: :message, message: text, recorded_at: recorded_at,
+                  truncated: all_truncated || truncated,
+                  duration_in_ms: block_given ? 0 : nil }.compact
       end
 
       if block_given
@@ -98,7 +98,7 @@ module Runners
       string = string.dup
 
       while string.length > 0
-        slice = string.slice!(0, size)
+        slice = string.slice!(0, size) or raise "Invalid sliced string: string=#{string.inspect}, size=#{size.inspect}"
         truncated = slice.length == size
         yield slice, truncated
       end

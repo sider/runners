@@ -9,7 +9,7 @@ module Runners
     def status: (Process::Status status, ?recorded_at: Time) -> void
     def stdout: (String, ?recorded_at: Time, ?max_length: Integer) -> void
     def stderr: (String, ?recorded_at: Time, ?max_length: Integer) -> void
-    def message: (String, ?recorded_at: Time, ?max_length: Integer, ?limit: Integer, ?omission: String) { () -> void } -> void
+    def message: (String, ?recorded_at: Time, ?max_length: Integer, ?limit: Integer, ?omission: String) ?{ () -> untyped } -> untyped
     def header: (String, ?recorded_at: Time) -> void
     def warning: (String, ?file: String?, ?recorded_at: Time) -> void
     def ci_config: (Hash[Symbol, untyped], raw_content: String, file: String, ?recorded_at: Time) -> void
