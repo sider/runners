@@ -1,17 +1,16 @@
 module Runners
-  module CPlusPlus
-    # @see https://github.com/github/linguist/blob/775b07d40c04ef6e0051a541886a8f1e30a892f4/lib/linguist/languages.yml#L532-L535
-    # @see https://github.com/github/linguist/blob/775b07d40c04ef6e0051a541886a8f1e30a892f4/lib/linguist/languages.yml#L568-L584
-    CPP_SOURCES_GLOB: untyped
+  module CPlusPlus : Processor
+    CPP_SOURCES_GLOB: String
+    CPP_HEADERS_GLOB: String
 
-    CPP_HEADERS_GLOB: untyped
+    def config_include_path: () -> Array[String]
 
-    def config_include_path: () -> untyped
+    def cpp_file?: (Pathname) -> bool
 
-    def cpp_file?: (untyped path) -> untyped
+    def install_apt_packages: () -> void
 
-    def install_apt_packages: () -> untyped
+    private
 
-    def find_paths_containing_headers: () -> untyped
+    def find_paths_containing_headers: () -> Array[String]
   end
 end
