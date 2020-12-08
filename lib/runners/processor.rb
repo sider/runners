@@ -12,13 +12,13 @@ module Runners
       :capture3, :capture3!, :capture3_trace, :capture3_with_retry!,
       :env_hash, :push_env_hash
 
-    def self.register_config_schema(**args)
-      Schema::Config.register(**args)
+    def self.register_config_schema(name:, schema:)
+      Schema::Config.register(name: name, schema: schema)
     end
 
     # TODO: Keep the following schemas for the backward compatibility.
-    RemovedGoToolSchema = StrongJSON.new do
-      # @type self: StrongJSON
+    RemovedGoToolSchema = _ = StrongJSON.new do
+      # @type self: RemovedGoToolSchemaClass
       let :config, any?
     end
     register_config_schema(name: :golint, schema: RemovedGoToolSchema.config)
@@ -112,7 +112,8 @@ module Runners
       cmd_opts = command_line.drop(1).tap do |opts|
         raise ArgumentError, "Unspecified command: `#{command_line.inspect}`" if opts.empty?
       end
-      outputs = capture3!(cmd, *cmd_opts)
+      # TODO: Ignored Steep error
+      outputs = capture3!(_ = cmd, *(_ = cmd_opts))
       outputs.each do |output|
         pattern.match(output) do |match|
           found = match[1]
@@ -129,7 +130,7 @@ module Runners
     def check_root_dir_exist
       return if root_dir.directory?
 
-      message = "`#{relative_path(root_dir)}` directory is not found! Please check `#{config_field_path("root_dir")}` in your `#{config.path_name}`"
+      message = "`#{relative_path(root_dir)}` directory is not found! Please check `#{config_field_path(:root_dir)}` in your `#{config.path_name}`"
       trace_writer.error message
       Results::Failure.new(guid: guid, message: message)
     end
@@ -173,7 +174,7 @@ module Runners
 
     def add_warning_if_deprecated_version(minimum:, file: nil, deadline: nil)
       unless Gem::Version.create(minimum) <= Gem::Version.create(analyzer_version)
-        deadline_str = deadline ? (_ = deadline).strftime('on %B %-d, %Y') : 'in the near future'
+        deadline_str = deadline ? deadline.strftime('on %B %-d, %Y') : 'in the near future'
         add_warning <<~MSG, file: file
           DEPRECATION WARNING!!!
           The `#{analyzer_version}` and older versions are deprecated, and these versions will be dropped #{deadline_str}.
@@ -214,7 +215,7 @@ module Runners
     end
 
     def add_warning_for_deprecated_linter(alternative:, ref:, deadline: nil)
-      deadline_str = deadline ? (_ = deadline).strftime("on %B %-d, %Y") : "in the near future"
+      deadline_str = deadline ? deadline.strftime("on %B %-d, %Y") : "in the near future"
       add_warning <<~MSG, file: config.path_name
         DEPRECATION WARNING!!!
         The support for #{analyzer_name} is deprecated and will be removed #{deadline_str}.
@@ -278,7 +279,8 @@ module Runners
     end
 
     def comma_separated_list(value)
-      values = Array(value).flat_map { |s| s.split(/\s*,\s*/) }
+      # TODO: Ignored Steep error
+      values = Array(value).flat_map { |s| (_ = s).split(/\s*,\s*/) }
       values.empty? ? nil : values.join(",")
     end
   end
