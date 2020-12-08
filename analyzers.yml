@@ -150,3 +150,5 @@ analyzers:
     name: TyScan
     github: sider/TyScan
     doc: tools/javascript/tyscan
+  linecounter:
+    name: LineCounter
