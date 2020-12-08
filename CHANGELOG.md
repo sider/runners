@@ -17,6 +17,7 @@ Updated tools:
 - **ESLint** 7.12.1 -> 7.14.0 [#1669](https://github.com/sider/runners/pull/1669)
 - **GolangCI-Lint** 1.32.1 -> 1.33.0 [#1680](https://github.com/sider/runners/pull/1680)
 - **Goodcheck** 2.5.2 -> 2.7.0 [#1696](https://github.com/sider/runners/pull/1696)
+- **PHP_CodeSniffer** Bump cakephp-codesniffer from 3.3.0 to 4.2.4 [#1699](https://github.com/sider/runners/pull/1699)
 - **RuboCop** 1.0.0 -> 1.5.2 [#1695](https://github.com/sider/runners/pull/1695)
 - **stylelint** 13.7.2 -> 13.8.0 [#1670](https://github.com/sider/runners/pull/1670)
 
