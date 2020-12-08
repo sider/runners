@@ -19,6 +19,7 @@ Updated tools:
 - **Goodcheck** 2.5.2 -> 2.7.0 [#1696](https://github.com/sider/runners/pull/1696)
 - **RuboCop** 1.0.0 -> 1.5.2 [#1695](https://github.com/sider/runners/pull/1695)
 - **stylelint** 13.7.2 -> 13.8.0 [#1670](https://github.com/sider/runners/pull/1670)
+- **SwiftLint** 0.40.3 -> 0.41.0 [#1638](https://github.com/sider/runners/pull/1638)
 
 ## 0.38.1
 
