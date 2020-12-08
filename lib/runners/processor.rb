@@ -5,7 +5,7 @@ module Runners
 
     class CIConfigBroken < UserError; end
 
-    attr_reader :guid, :working_dir, :git_ssh_path, :trace_writer, :warnings, :config
+    attr_reader :guid, :working_dir, :git_ssh_path, :trace_writer, :warnings, :config, :shell
 
     def_delegators :@shell,
       :chdir, :current_dir,

@@ -13,6 +13,7 @@ module Runners
     attr_reader trace_writer: TraceWriter
     attr_reader warnings: Array[{ message: String, file: String? }]
     attr_reader config: Config
+    attr_reader shell: Shell
 
     def self.register_config_schema: (name: Symbol, schema: StrongJSON::_Schema[untyped]) -> void
 
