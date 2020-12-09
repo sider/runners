@@ -1,39 +1,30 @@
 module Runners
-  # This class expects AWS credentials set with environment variables or an instance profile.
-  # So, before using this, make sure AWS credentials available.
-  # Also, prepare the S3 bucket and allow this instance to upload an S3 object.
   class IO::AwsS3
-    # @type const BUFFER_SIZE: Integer
     BUFFER_SIZE: ::Integer
 
-    # Only for test
-    # @see https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ClientStubs.html
-    def self.stub?: () -> ::FalseClass
+    def self.stub?: () -> bool
 
-    attr_reader uri: untyped
+    attr_reader uri: String
+    attr_reader bucket_name: String
+    attr_reader object_name: String
+    attr_reader tempfile: Tempfile
+    attr_reader written_items: Integer
+    attr_reader client: Aws::S3::Client
 
-    attr_reader bucket_name: untyped
+    def initialize: (String uri, ?endpoint: String?) -> void
 
-    attr_reader object_name: untyped
+    def write: (*_ToS) -> void
 
-    attr_reader tempfile: untyped
+    def flush: () -> void
 
-    attr_reader written_items: untyped
+    def should_flush?: () -> bool
 
-    attr_reader client: untyped
+    def flush!: () -> void
 
-    def initialize: (untyped uri, ?endpoint: untyped? endpoint) -> untyped
+    private
 
-    def write: (*untyped args) -> untyped
+    def parse_s3_uri: (String) -> { bucket: String, object: String }
 
-    def flush: () -> untyped
-
-    def should_flush?: () -> untyped
-
-    def flush!: () -> untyped
-
-    def parse_s3_uri: (untyped s3_uri) -> untyped
-
-    def flush_to_s3!: () -> untyped
+    def flush_to_s3!: () -> void
   end
 end
