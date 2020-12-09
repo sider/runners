@@ -14,7 +14,7 @@ module Runners
     end
 
     Metric = _ = StrongJSON.new do
-      # @type self: Types::Metri
+      # @type self: Types::Metric
 
       let :metric, object(path: string, type: string, object: any)
     end
