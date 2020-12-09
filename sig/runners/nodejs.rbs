@@ -1,5 +1,5 @@
 module Runners
-  module Nodejs
+  module Nodejs : Processor
     class InvalidNodeVersion < SystemError
     end
 
@@ -19,53 +19,40 @@ module Runners
     end
 
     INSTALL_OPTION_NONE: bool
-
     INSTALL_OPTION_ALL: bool
+    INSTALL_OPTION_PRODUCTION: String
+    INSTALL_OPTION_DEVELOPMENT: String
 
-    INSTALL_OPTION_PRODUCTION: ::String
+    type install_option = bool | String
 
-    INSTALL_OPTION_DEVELOPMENT: ::String
+    def nodejs_analyzer_local_command: () -> String
 
-    # Return the locally installed analyzer command.
-    def nodejs_analyzer_local_command: () -> ::String
+    def nodejs_analyzer_bin: () -> String
 
-    # Return the analyzer command which will actually be ran.
-    def nodejs_analyzer_bin: () -> untyped
+    def package_json_path: () -> Pathname
 
-    def analyzer_version: () -> untyped
+    def package_json: () -> Hash[Symbol, untyped]
 
-    # Return the actual file path of `package.json`.
-    def package_json_path: () -> untyped
+    def package_lock_json_path: () -> Pathname
 
-    # Return the `Hash` content of `package.json`.
-    def package_json: () -> untyped
+    def yarn_lock_path: () -> Pathname
 
-    # Return the actual file path of `package-lock.json`.
-    def package_lock_json_path: () -> untyped
+    def install_nodejs_deps: (constraints: Hash[String, Constraint], install_option: install_option) -> void
 
-    # Return the actual file path of `yarn.lock`.
-    def yarn_lock_path: () -> untyped
+    private
 
-    # Install Node.js dependencies by using given parameters.
-    def install_nodejs_deps: (constraints: untyped constraints, install_option: untyped install_option) -> (nil | untyped)
+    def nodejs_analyzer_locally_installed?: () -> bool
 
-    def show_runtime_versions: () -> untyped
+    def nodejs_analyzer_global_version: () -> String
 
-    def nodejs_analyzer_locally_installed?: () -> untyped
+    def nodejs_analyzer_local_version: () -> String
 
-    def nodejs_analyzer_global_version: () -> untyped
+    def npm_install: (install_option) -> void
 
-    def nodejs_analyzer_local_version: () -> untyped
+    def yarn_install: (install_option) -> void
 
-    # @see https://docs.npmjs.com/cli/install
-    # @see https://docs.npmjs.com/cli/ci
-    def npm_install: (untyped option) -> (nil | untyped)
+    def list_installed_nodejs_deps: (?only: Array[String], ?chdir: Pathname | String | nil) -> Hash[String, String]
 
-    # @see https://yarnpkg.com/en/docs/cli/install
-    def yarn_install: (untyped option) -> (nil | untyped)
-
-    def list_installed_nodejs_deps: (?only: untyped only, ?chdir: untyped? chdir) -> (::Hash[untyped, untyped] | untyped)
-
-    def check_installed_nodejs_deps: (untyped constraints) -> (nil | untyped)
+    def check_installed_nodejs_deps: (Hash[String, Constraint]) -> void
   end
 end
