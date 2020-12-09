@@ -57,5 +57,13 @@ rules:
       A package's version with `^x.y.z` is changeable at runtime (e.g. `npm install`).
       Such an inaccurate version may makes our debugging hard.
 
+  - id: sider.runners.use_same_version_for_typescript_eslint
+    pattern: "@typescript-eslint/"
+    glob: images/eslint/package.json
+    message: |
+      Use the same version for the `@typescript-eslint/*` packages.
+    justification:
+      - When the same version has been used already.
+
 import:
   - https://raw.githubusercontent.com/sider/goodcheck-rules/master/rules/typo.yml
