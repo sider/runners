@@ -1,38 +1,54 @@
 module Runners
   module Ruby
     class GemInstaller
+      type git_source = {
+        repo: String,
+        ref: String?,
+        branch: String?,
+        tag: String?
+      }
+
+      type gems_item = {
+        name: String,
+        version: String?,
+        source: String?,
+        git: git_source?
+      }
+
       class InstallationFailure < InstallGemsFailure
       end
 
-      attr_reader gem_home: untyped
+      attr_reader gem_home: Pathname
+      attr_reader specs: Array[Spec]
+      attr_reader trace_writer: TraceWriter
+      attr_reader shell: Shell
+      attr_reader constraints: Hash[String, Array[String]]
+      attr_reader config_path_name: String
+      attr_reader use_local: bool
 
-      attr_reader specs: untyped
+      def initialize: (shell: Shell,
+                       home: Pathname,
+                       config_path_name: String,
+                       specs: Array[Spec],
+                       constraints: Hash[String, Array[String]],
+                       trace_writer: TraceWriter,
+                       use_local: bool) -> void
 
-      attr_reader trace_writer: untyped
+      def gemfile_path: () -> Pathname
 
-      attr_reader shell: untyped
+      def lockfile_path: () -> Pathname
 
-      attr_reader constraints: untyped
+      def install!: [X] () { (Hash[String, String]) -> X } -> X
 
-      attr_reader config_path_name: untyped
+      def gemfile_content: () -> String
 
-      attr_reader use_local: untyped
+      private
 
-      def initialize: (shell: untyped shell, home: untyped home, config_path_name: untyped config_path_name, specs: untyped specs, constraints: untyped constraints, trace_writer: untyped trace_writer, use_local: untyped use_local) -> untyped
+      def group_specs: () -> Array[[Source, Array[Spec]]]
 
-      def gemfile_path: () -> untyped
+      def gem: (Spec, Array[String]) -> String
 
-      def lockfile_path: () -> untyped
-
-      def install!: () { (untyped) -> untyped } -> untyped
-
-      def gemfile_content: () -> untyped
-
-      def group_specs: () -> untyped
-
-      def gem: (untyped spec, untyped constraints) -> untyped
-
-      def gem_constraints: (untyped spec, untyped source) -> (::Array[untyped] | untyped)
+      def gem_constraints: (Spec, Source) -> Array[String]
     end
   end
 end

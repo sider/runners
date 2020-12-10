@@ -8,27 +8,15 @@ module Runners
         Rubygems.new(DEFAULT)
       end
 
-      def self.rubygems(source)
-        Rubygems.new(source)
-      end
-
-      def self.git(repo, **options)
-        Git.new(repo, **options)
-      end
-
       def self.create(gems_item)
         source = gems_item[:source]
-        git = gems_item[:git]
+        git_source = gems_item[:git]
 
         case
         when source.is_a?(String)
-          rubygems(source)
-        when git.is_a?(Hash)
-          if git[:repo]
-            git(git[:repo], ref: git[:ref], branch: git[:branch], tag: git[:tag])
-          else
-            raise ArgumentError.new("Unexpected gem: #{gems_item.inspect}")
-          end
+          Rubygems.new(source)
+        when git_source.is_a?(Hash)
+          Git.new(git_source)
         else
           default
         end
@@ -84,14 +72,14 @@ module Runners
       class Git < Source
         attr_reader :repo, :ref, :branch, :tag
 
-        def initialize(repo, ref: nil, branch: nil, tag: nil)
-          repo or raise ArgumentError, "Required repository for Git source"
+        def initialize(params)
+          repo = params[:repo] or raise ArgumentError, "Required repository for Git source"
 
           super()
           @repo = repo
-          @ref = ref
-          @branch = branch
-          @tag = tag
+          @ref = params[:ref]
+          @branch = params[:branch]
+          @tag = params[:tag]
         end
 
         def git?
