@@ -5,13 +5,9 @@ module Runners
       attr_reader base: String?
       attr_reader git_url: String
       attr_reader git_url_userinfo: String?
-      attr_reader refspec: (Array[String] | String)?
+      attr_reader refspec: Array[String]
 
-      def initialize: (head: String,
-                       ?base: String?,
-                       git_url: String,
-                       ?git_url_userinfo: String?,
-                       ?refspec: (Array[String] | String)?) -> void
+      def initialize: (Hash[Symbol, untyped]) -> void
     end
 
     attr_reader stdout: ::IO

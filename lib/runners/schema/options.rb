@@ -3,7 +3,7 @@ module Runners
     Options = _ = StrongJSON.new do
       # @type self: Types::Options
 
-      let :source, object?(
+      let :source, object(
         head: string,
         base: string?,
         git_url: string,

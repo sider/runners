@@ -3,12 +3,12 @@ module Runners
     class GitSource
       attr_reader :head, :base, :git_url, :git_url_userinfo, :refspec
 
-      def initialize(head:, base:, git_url:, git_url_userinfo:, refspec:)
-        @head = head
-        @base = base
-        @git_url = git_url
-        @git_url_userinfo = git_url_userinfo
-        @refspec = Array(refspec)
+      def initialize(params)
+        @head = params.fetch(:head)
+        @base = params.fetch(:base)
+        @git_url = params.fetch(:git_url)
+        @git_url_userinfo = params.fetch(:git_url_userinfo)
+        @refspec = Array(params.fetch(:refspec))
       end
     end
     private_constant :GitSource
@@ -21,7 +21,7 @@ module Runners
 
       options = parse_options(json)
       outputs = options[:outputs] || []
-      @source = GitSource.new(**options[:source])
+      @source = GitSource.new(options.fetch(:source))
       @ssh_key = options[:ssh_key]
       @io = if outputs.empty?
               Runners::IO.new(stdout)
