@@ -1,24 +1,22 @@
 module Runners
-  module Ruby
+  module Ruby : Processor
     class InstallGemsFailure < UserError
     end
 
-    def install_gems: (untyped default_specs, constraints: untyped constraints, ?optionals: untyped optionals) { () -> untyped } -> untyped
+    def install_gems: [X] (Array[GemInstaller::Spec], constraints: Hash[String, Array[String]], ?optionals: Array[GemInstaller::Spec]) { (Hash[String, String]) -> X } -> X
 
-    def default_specs: (untyped specs, untyped constraints, untyped lockfile) -> untyped
+    def ruby_analyzer_bin: () -> Array[String]
 
-    def optional_specs: (untyped specs, untyped lockfile) -> untyped
+    def installed_gem_versions: (String, *String, ?exception: bool) -> Hash[String, Array[String]]
 
-    def user_specs: (untyped specs, untyped lockfile) -> untyped
+    def default_gem_specs: (?String, *String) -> Array[GemInstaller::Spec]
 
-    def show_runtime_versions: () -> untyped
+    private
 
-    def ruby_analyzer_bin: () -> ::Array["bundle" | "exec" | untyped]
+    def default_specs: (Array[GemInstaller::Spec], Hash[String, Array[String]], LockfileLoader::Lockfile) -> Array[GemInstaller::Spec]
 
-    def analyzer_version: () -> untyped
+    def optional_specs: (Array[GemInstaller::Spec], LockfileLoader::Lockfile) -> Array[GemInstaller::Spec]
 
-    def installed_gem_versions: (untyped gem_name, *untyped gem_names, ?exception: bool exception) -> untyped
-
-    def default_gem_specs: (?untyped gem_name, *untyped gem_names) -> untyped
+    def user_specs: (Array[GemInstaller::Spec] specs, LockfileLoader::Lockfile) -> Array[GemInstaller::Spec]
   end
 end

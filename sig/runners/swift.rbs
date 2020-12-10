@@ -1,5 +1,4 @@
 module Runners
-  module Swift
-    def show_runtime_versions: () -> untyped
+  module Swift : Processor
   end
 end

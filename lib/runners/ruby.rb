@@ -2,7 +2,7 @@ module Runners
   module Ruby
     class InstallGemsFailure < UserError; end
 
-    def install_gems(default_specs, optionals: [], constraints:, &block)
+    def install_gems(default_specs, constraints:, optionals: [], &block)
       original_default_specs = default_specs.dup
       user_specs = GemInstaller::Spec.from_gems(config_linter[:gems] || [])
 
@@ -26,7 +26,7 @@ module Runners
       end
     end
 
-    def default_specs(specs, constraints, lockfile)
+    private def default_specs(specs, constraints, lockfile)
       specs.map do |spec|
         if lockfile.spec_exists?(spec)
           if lockfile.satisfied_by?(spec, constraints)
@@ -40,7 +40,7 @@ module Runners
 
               If you want to use a different version of `#{spec.name}`, please do either:
               - Update your `Gemfile.lock` to satisfy the constraint
-              - Set the `#{config_field_path("gems")}` option in your `#{config.path_name}`
+              - Set the `#{config_field_path(:gems)}` option in your `#{config.path_name}`
             MESSAGE
             spec
           end
@@ -50,12 +50,12 @@ module Runners
       end
     end
 
-    def optional_specs(specs, lockfile)
+    private def optional_specs(specs, lockfile)
       specs.select { |spec| lockfile.spec_exists?(spec) }
            .map { |spec| spec.override_by_lockfile(lockfile) }
     end
 
-    def user_specs(specs, lockfile)
+    private def user_specs(specs, lockfile)
       specs.map do |spec|
         if spec.version.empty?
           spec.override_by_lockfile(lockfile)
