@@ -1,7 +1,7 @@
 module Runners
   module Schema
     Issue = _ = StrongJSON.new do
-      # @type self: Types::Issue
+      # @type self: IssueClass
 
       let :location, enum?(object(start_line: integer, start_column: integer, end_line: integer, end_column: integer),
                            object(start_line: integer, start_column: integer),
@@ -14,9 +14,8 @@ module Runners
     end
 
     Result = _ = StrongJSON.new do
-      # @type self: Types::Result
+      # @type self: ResultClass
 
-      let :warning, object(message: string, file: string?)
       let :analyzer, object(name: string, version: string)
 
       let :success, object(guid: string, timestamp: string, type: literal("success"), issue_count: integer, issues: array(Issue.issue), analyzer: analyzer)
@@ -25,7 +24,7 @@ module Runners
 
       let :envelope, object(
         result: enum(success, failure, error),
-        warnings: array(warning),
+        warnings: array(object(message: string, file: string?)),
         ci_config: any?,
         config_file: string?,
         version: string,

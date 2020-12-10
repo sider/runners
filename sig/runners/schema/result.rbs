@@ -1,7 +1,19 @@
 module Runners
   module Schema
-    Issue: untyped
+    class IssueClass < StrongJSON
+      def location: () -> StrongJSON::Type::Object[untyped]
+      def git_blame_info: () -> StrongJSON::Type::Object[untyped]
+      def issue: () -> StrongJSON::Type::Object[untyped]
+    end
+    Issue: IssueClass
 
-    Result: untyped
+    class ResultClass < StrongJSON
+      def analyzer: () -> StrongJSON::Type::Object[untyped]
+      def success: () -> StrongJSON::Type::Object[untyped]
+      def failure: () -> StrongJSON::Type::Object[untyped]
+      def error: () -> StrongJSON::Type::Object[untyped]
+      def envelope: () -> StrongJSON::Type::Object[untyped]
+    end
+    Result: ResultClass
   end
 end
