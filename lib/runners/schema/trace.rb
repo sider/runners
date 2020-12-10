@@ -1,7 +1,8 @@
 module Runners
   module Schema
     Trace = _ = StrongJSON.new do
-      # @type self: Types::Trace
+      # @type self: TraceClass
+
       let :command_line, object(trace: literal(:command_line), command_line: array(string), recorded_at: string)
       let :status, object(trace: literal(:status), status: number, recorded_at: string)
       let :stdout, object(trace: literal(:stdout), string: string, recorded_at: string, truncated: boolean)

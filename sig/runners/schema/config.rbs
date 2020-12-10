@@ -1,7 +1,16 @@
 module Runners
   module Schema
-    BaseConfig: untyped
+    class BaseConfigClass < StrongJSON
+      def base: () -> StrongJSON::Type::Object[untyped]
+      def git: () -> StrongJSON::Type::Enum[untyped]
+      def npm_install: () -> StrongJSON::Type::Enum[untyped]
+    end
+    BaseConfig: BaseConfigClass
 
-    Config: untyped
+    class ConfigClass < StrongJSON
+      def payload: () -> StrongJSON::Type::Object[untyped]
+      def register: (name: Symbol, schema: StrongJSON::_Schema[untyped]) -> void
+    end
+    Config: ConfigClass
   end
 end
