@@ -7,6 +7,7 @@ require_relative "lib/tasks/bump/devon_rex"
 require_relative "lib/tasks/docker/timeout_test"
 require_relative "lib/tasks/rbs/update_gems"
 require_relative "lib/tasks/readme/generate"
+require_relative "lib/tasks/steep/stats"
 
 ENV["DOCKER_BUILDKIT"] = "1"
 
