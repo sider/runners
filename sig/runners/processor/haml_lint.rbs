@@ -2,41 +2,37 @@ module Runners
   class Processor::HamlLint < Processor
     include Ruby
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[untyped]
+      def issue: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
-    OPTIONAL_GEMS: untyped
+    OPTIONAL_GEMS: Array[Ruby::GemInstaller::Spec]
+    DEFAULT_GEMS: Array[String]
+    GEM_NAME: String
+    REQUIRED_GEM_NAMES: Array[String]
+    CONSTRAINTS: Ruby::constraints
+    DEFAULT_TARGET: String
+    DEFAULT_RUBOCOP_CONFIG: String
 
-    DEFAULT_GEMS: untyped
+    private
 
-    CONSTRAINTS: untyped
+    def setup_default_rubocop_config: () -> String?
 
-    DEFAULT_TARGET: untyped
+    def target: () -> Array[String]
 
-    DEFAULT_RUBOCOP_CONFIG: untyped
+    def include_linter: () -> Array[String]
 
-    def analyzer_bin: () -> "haml-lint"
+    def exclude_linter: () -> Array[String]
 
-    def default_gem_specs: () -> untyped
+    def exclude: () -> Array[String]
 
-    def setup: () { () -> untyped } -> untyped
+    def haml_lint_config: () -> Array[String]
 
-    def analyze: (untyped _changes) -> untyped
+    def config_parallel: () -> Array[String]
 
-    def setup_default_rubocop_config: () -> (nil | untyped)
-
-    def target: () -> untyped
-
-    def include_linter: () -> untyped
-
-    def exclude_linter: () -> untyped
-
-    def exclude: () -> untyped
-
-    def haml_lint_config: () -> untyped
-
-    def config_parallel: () -> untyped
-
-    def parse_result: (untyped output) -> untyped
+    def parse_result: (String) -> Array[Issue]
 
     def build_links: (untyped issue_id) -> (::Array[untyped] | ::Array[::String])
 

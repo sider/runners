@@ -4,7 +4,9 @@ module Runners
   class Processor::HamlLint < Processor
     include Ruby
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :runner_config, Schema::BaseConfig.ruby.update_fields { |fields|
         fields.merge!({
                         target: enum?(string, array(string)),
@@ -76,7 +78,7 @@ module Runners
       config_file = ".rubocop.yml"
       return if File.exist? config_file
 
-      FileUtils.cp(DEFAULT_RUBOCOP_CONFIG, config_file)
+      FileUtils.copy_file(DEFAULT_RUBOCOP_CONFIG, config_file)
       config_file
     end
 
@@ -140,8 +142,7 @@ module Runners
     end
 
     def run_analyzer
-      stdout, stderr, status = capture3(
-        *ruby_analyzer_bin,
+      cmd = ruby_analyzer_command(
         "--reporter", "json",
         *include_linter,
         *exclude_linter,
@@ -150,6 +151,7 @@ module Runners
         *config_parallel,
         *target,
       )
+      stdout, stderr, status = capture3(cmd.bin, *cmd.args)
 
       # @see https://github.com/sds/haml-lint/blob/v0.35.0/lib/haml_lint/cli.rb#L110
       # @see https://github.com/ged/sysexits/blob/v1.2.0/lib/sysexits.rb#L96
@@ -159,9 +161,7 @@ module Runners
 
       add_rubocop_warnings_if_exists(stderr)
 
-      Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        parse_result(stdout).each { |v| result.add_issue(v) }
-      end
+      Results::Success.new(guid: guid, analyzer: analyzer, issues: parse_result(stdout))
     end
 
     # NOTE: HAML-Lint exits successfully even if RuboCop fails.
