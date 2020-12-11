@@ -14,6 +14,7 @@ Updated tools:
 
 - **Checkstyle** 8.36.2 -> 8.38 [#1685](https://github.com/sider/runners/pull/1685)
 - **CoffeeLint** 1.16.0 -> 4.1.2 [#1690](https://github.com/sider/runners/pull/1690)
+- **Cppcheck** 2.2 -> 2.3 [#1727](https://github.com/sider/runners/pull/1727)
 - **ESLint** 7.12.1 -> 7.14.0 [#1669](https://github.com/sider/runners/pull/1669)
 - **GolangCI-Lint** 1.32.1 -> 1.33.0 [#1680](https://github.com/sider/runners/pull/1680)
 - **Goodcheck** 2.5.2 -> 2.7.0 [#1696](https://github.com/sider/runners/pull/1696)
