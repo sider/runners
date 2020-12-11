@@ -2,7 +2,9 @@ module Runners
   class Processor::Brakeman < Processor
     include Ruby
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :runner_config, Schema::BaseConfig.ruby
 
       let :issue, object(
@@ -26,8 +28,7 @@ module Runners
     end
 
     def analyze(changes)
-      _, stderr, status = capture3(
-        *ruby_analyzer_bin,
+      cmd = ruby_analyzer_command(
         '--format=json',
         '--output', report_file,
         '--no-exit-on-warn',
@@ -35,6 +36,7 @@ module Runners
         '--no-progress',
         '--quiet',
       )
+      _, stderr, status = capture3(cmd.bin, *cmd.args)
 
       unless status.success?
         if stderr.include?("Please supply the path to a Rails application")

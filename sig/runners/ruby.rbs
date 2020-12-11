@@ -1,11 +1,15 @@
 module Runners
   module Ruby : Processor
+    type constraints = Hash[String, Array[String]]
+
     class InstallGemsFailure < UserError
     end
 
-    def install_gems: [X] (Array[GemInstaller::Spec], constraints: Hash[String, Array[String]], ?optionals: Array[GemInstaller::Spec]) { (Hash[String, String]) -> X } -> X
+    def install_gems: [X] (Array[GemInstaller::Spec], constraints: constraints, ?optionals: Array[GemInstaller::Spec]) { (Hash[String, String]) -> X } -> X
 
     def ruby_analyzer_bin: () -> Array[String]
+
+    def ruby_analyzer_command: (*String) -> Command
 
     def installed_gem_versions: (String, *String, ?exception: bool) -> Hash[String, Array[String]]
 
@@ -13,7 +17,7 @@ module Runners
 
     private
 
-    def default_specs: (Array[GemInstaller::Spec], Hash[String, Array[String]], LockfileLoader::Lockfile) -> Array[GemInstaller::Spec]
+    def default_specs: (Array[GemInstaller::Spec], constraints, LockfileLoader::Lockfile) -> Array[GemInstaller::Spec]
 
     def optional_specs: (Array[GemInstaller::Spec], LockfileLoader::Lockfile) -> Array[GemInstaller::Spec]
 

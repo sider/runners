@@ -22,7 +22,7 @@ module Runners
       attr_reader specs: Array[Spec]
       attr_reader trace_writer: TraceWriter
       attr_reader shell: Shell
-      attr_reader constraints: Hash[String, Array[String]]
+      attr_reader constraints: constraints
       attr_reader config_path_name: String
       attr_reader use_local: bool
 
@@ -30,7 +30,7 @@ module Runners
                        home: Pathname,
                        config_path_name: String,
                        specs: Array[Spec],
-                       constraints: Hash[String, Array[String]],
+                       constraints: constraints,
                        trace_writer: TraceWriter,
                        use_local: bool) -> void
 

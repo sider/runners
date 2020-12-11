@@ -71,12 +71,17 @@ module Runners
       capture3! "bundle", "-v"
     end
 
+    # @deprecated Use {#ruby_analyzer_command} instead.
     def ruby_analyzer_bin
       ["bundle", "exec", analyzer_bin]
     end
 
+    def ruby_analyzer_command(*args)
+      Command.new("bundle", ["exec", analyzer_bin, *args])
+    end
+
     def analyzer_version
-      @analyzer_version ||= extract_version! ruby_analyzer_bin
+      @analyzer_version ||= extract_version! ruby_analyzer_command.to_a
     end
 
     def installed_gem_versions(gem_name, *gem_names, exception: true)

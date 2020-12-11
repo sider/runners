@@ -14,7 +14,7 @@ module Runners
 
         def locked_version!: (spec) -> String
 
-        def satisfied_by?: (spec, Hash[String, Array[String]]) -> bool
+        def satisfied_by?: (spec, constraints) -> bool
 
         private
 
