@@ -2,22 +2,22 @@ module Runners
   class Processor::Goodcheck < Processor
     include Ruby
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def rule: () -> StrongJSON::Type::Object[untyped]
+      def runner_config: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
-    CONSTRAINTS: untyped
+    CONSTRAINTS: Ruby::constraints
+    DEFAULT_TARGET: String
+    DEFAULT_CONFIG_FILE: String
 
-    DEFAULT_TARGET: untyped
+    def goodcheck_test: () -> String?
 
-    DEFAULT_CONFIG_FILE: untyped
+    def goodcheck_check: () -> result
 
-    def extract_version_option: () -> "version"
+    private
 
-    def goodcheck_test: () -> untyped
-
-    def goodcheck_check: () -> untyped
-
-    def setup: () { () -> untyped } -> untyped
-
-    def analyze: (untyped changes) -> untyped
+    def option_config_file: () -> Array[String]
   end
 end
