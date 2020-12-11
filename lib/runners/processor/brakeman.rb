@@ -14,14 +14,13 @@ module Runners
 
     register_config_schema(name: :brakeman, schema: Schema.runner_config)
 
+    GEM_NAME = "brakeman".freeze
     CONSTRAINTS = {
-      "brakeman" => [">= 4.0.0", "< 5.0.0"]
+      GEM_NAME => [">= 4.0.0", "< 5.0.0"]
     }.freeze
 
     def setup
-      install_gems default_gem_specs, constraints: CONSTRAINTS do
-        yield
-      end
+      install_gems(default_gem_specs(GEM_NAME), constraints: CONSTRAINTS) { yield }
     rescue InstallGemsFailure => exn
       trace_writer.error exn.message
       return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)

@@ -72,30 +72,26 @@ module Runners
       GemInstaller::Spec.new(name: "ws-style", version: []),
     ].freeze
 
+    GEM_NAME = "rubocop".freeze
     CONSTRAINTS = {
-      "rubocop" => [">= 0.61.0", "< 2.0.0"]
+      GEM_NAME => [">= 0.61.0", "< 2.0.0"]
     }.freeze
 
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "default_rubocop.yml").to_path.freeze
 
-    def default_gem_specs
-      super.tap do |gems|
-        if setup_default_config
-          # NOTE: The latest MeowCop requires usually the latest RuboCop.
-          #       (e.g. MeowCop 2.4.0 requires RuboCop 0.75.0+)
-          #       So, MeowCop versions must be unspecified because the installation will fail when a user's RuboCop is 0.60.0.
-          #       Bundler will select an appropriate version automatically unless versions.
-          gems << GemInstaller::Spec.new(name: "meowcop", version: [])
-        end
-      end
-    end
-
     def setup
       add_warning_if_deprecated_options
 
-      install_gems default_gem_specs, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS do
-        yield
+      default_gems = default_gem_specs(GEM_NAME)
+      if setup_default_config
+        # NOTE: The latest MeowCop requires usually the latest RuboCop.
+        #       (e.g. MeowCop 2.4.0 requires RuboCop 0.75.0+)
+        #       So, MeowCop versions must be unspecified because the installation will fail when a user's RuboCop is 0.60.0.
+        #       Bundler will select an appropriate version automatically unless versions.
+        default_gems << GemInstaller::Spec.new(name: "meowcop", version: [])
       end
+
+      install_gems(default_gems, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS) { yield }
     rescue InstallGemsFailure => exn
       trace_writer.error exn.message
       return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)

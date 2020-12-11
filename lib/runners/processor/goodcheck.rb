@@ -21,8 +21,9 @@ module Runners
 
     register_config_schema(name: :goodcheck, schema: Schema.runner_config)
 
+    GEM_NAME = "goodcheck".freeze
     CONSTRAINTS = {
-      "goodcheck" => [">= 1.0.0", "< 3.0"]
+      GEM_NAME => [">= 1.0.0", "< 3.0"]
     }.freeze
 
     DEFAULT_TARGET = ".".freeze
@@ -105,12 +106,10 @@ module Runners
     end
 
     def setup
-      begin
-        install_gems(default_gem_specs, constraints: CONSTRAINTS) { yield }
-      rescue InstallGemsFailure => exn
-        trace_writer.error exn.message
-        return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
-      end
+      install_gems(default_gem_specs(GEM_NAME), constraints: CONSTRAINTS) { yield }
+    rescue InstallGemsFailure => exn
+      trace_writer.error exn.message
+      return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
     end
 
     def analyze(changes)

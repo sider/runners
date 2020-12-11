@@ -8,6 +8,7 @@ module Runners
     end
     Schema: SchemaClass
 
+    GEM_NAME: String
     CONSTRAINTS: Ruby::constraints
   end
 end

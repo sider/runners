@@ -84,9 +84,7 @@ module Runners
       @analyzer_version ||= extract_version! ruby_analyzer_command.to_a
     end
 
-    def installed_gem_versions(gem_name, *gem_names, exception: true)
-      gem_names = [gem_name] + gem_names
-
+    def installed_gem_versions(gem_names, exception: true)
       # @see https://guides.rubygems.org/command-reference/#gem-list
       stdout, = capture3! "gem", "list", "--quiet", "--exact", *gem_names
       gem_names.each_with_object({}) do |name, hash|
@@ -100,8 +98,8 @@ module Runners
       end
     end
 
-    def default_gem_specs(gem_name = analyzer_bin, *gem_names)
-      installed_gem_versions(gem_name, *gem_names).map do |name, versions|
+    def default_gem_specs(gem_name, *gem_names)
+      installed_gem_versions([gem_name, *gem_names]).map do |name, versions|
         GemInstaller::Spec.new(name: name, version: versions)
       end
     end

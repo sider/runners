@@ -37,10 +37,10 @@ module Runners
       # additional gems for HAML-Lint
     ].freeze
 
-    DEFAULT_GEMS = ["haml_lint", "rubocop"].freeze
-
+    GEM_NAME = "haml_lint".freeze
+    REQUIRED_GEM_NAMES = ["rubocop"].freeze
     CONSTRAINTS = {
-      "haml_lint" => [">= 0.26.0", "< 1.0.0"]
+      GEM_NAME => [">= 0.26.0", "< 1.0.0"]
     }.freeze
 
     DEFAULT_TARGET = ".".freeze
@@ -50,22 +50,17 @@ module Runners
       "haml-lint"
     end
 
-    def default_gem_specs
-      super(*DEFAULT_GEMS).tap do |gems|
-        if setup_default_rubocop_config
-          # NOTE: See rubocop.rb about no versions.
-          gems << GemInstaller::Spec.new(name: "meowcop", version: [])
-        end
-      end
-    end
-
     def setup
       add_warning_if_deprecated_options
       add_warning_for_deprecated_option :file, to: :target
 
-      install_gems default_gem_specs, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS do
-        yield
+      default_gems = default_gem_specs(GEM_NAME, *REQUIRED_GEM_NAMES)
+      if setup_default_rubocop_config
+        # NOTE: See rubocop.rb about no versions.
+        default_gems << GemInstaller::Spec.new(name: "meowcop", version: [])
       end
+
+      install_gems(default_gems, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS) { yield }
     rescue InstallGemsFailure => exn
       trace_writer.error exn.message
       return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)

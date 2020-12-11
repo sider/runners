@@ -13,16 +13,15 @@ module Runners
 
     register_config_schema(name: :reek, schema: Schema.runner_config)
 
+    GEM_NAME = "reek".freeze
     CONSTRAINTS = {
-      "reek" => [">= 4.4.0", "< 7.0.0"]
+      GEM_NAME => [">= 4.4.0", "< 7.0.0"]
     }.freeze
 
     DEFAULT_TARGET = ".".freeze
 
     def setup
-      install_gems default_gem_specs, constraints: CONSTRAINTS do
-        yield
-      end
+      install_gems(default_gem_specs(GEM_NAME), constraints: CONSTRAINTS) { yield }
     rescue InstallGemsFailure => exn
       trace_writer.error exn.message
       return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)

@@ -24,8 +24,9 @@ module Runners
       GemInstaller::Spec.new(name: "haml", version: []),
     ].freeze
 
+    GEM_NAME = "querly".freeze
     CONSTRAINTS = {
-      "querly" => [">= 0.5.0", "< 2.0.0"]
+      GEM_NAME => [">= 0.5.0", "< 2.0.0"]
     }.freeze
 
     CONFIG_FILE = "querly.yml".freeze
@@ -35,13 +36,11 @@ module Runners
       "version"
     end
 
-    def setup(&block)
-      begin
-        install_gems default_gem_specs, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS, &block
-      rescue InstallGemsFailure => exn
-        trace_writer.error exn.message
-        return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
-      end
+    def setup
+      install_gems(default_gem_specs(GEM_NAME), optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS) { yield }
+    rescue InstallGemsFailure => exn
+      trace_writer.error exn.message
+      return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
     end
 
     def analyze(changes)

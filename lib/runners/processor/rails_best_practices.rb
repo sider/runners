@@ -38,17 +38,16 @@ module Runners
       GemInstaller::Spec.new(name: "rake", version: []),
     ].freeze
 
+    GEM_NAME = "rails_best_practices".freeze
     CONSTRAINTS = {
-      "rails_best_practices" => [">= 1.19.1", "< 2.0"]
+      GEM_NAME => [">= 1.19.1", "< 2.0"]
     }.freeze
 
     def setup
       add_warning_if_deprecated_options
 
       prepare_config
-      install_gems default_gem_specs, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS do
-        yield
-      end
+      install_gems(default_gem_specs(GEM_NAME), optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS) { yield }
     rescue InstallGemsFailure => exn
       trace_writer.error exn.message
       return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
