@@ -19,7 +19,7 @@ Updated tools:
 - **GolangCI-Lint** 1.32.1 -> 1.33.0 [#1680](https://github.com/sider/runners/pull/1680)
 - **Goodcheck** 2.5.2 -> 2.7.0 [#1696](https://github.com/sider/runners/pull/1696)
 - **hadolint** 1.18.2 -> 1.19.0 [#1665](https://github.com/sider/runners/pull/1665)
-- **RuboCop** 1.0.0 -> 1.5.2 [#1695](https://github.com/sider/runners/pull/1695)
+- **RuboCop** 1.0.0 -> 1.6.1 [#1695](https://github.com/sider/runners/pull/1695) [#1741](https://github.com/sider/runners/pull/1741)
 - **stylelint** 13.7.2 -> 13.8.0 [#1670](https://github.com/sider/runners/pull/1670)
 - **SwiftLint** 0.40.3 -> 0.41.0 [#1638](https://github.com/sider/runners/pull/1638)
 
