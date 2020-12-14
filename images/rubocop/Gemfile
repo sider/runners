@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 
-gem 'rubocop', '1.5.2'
+gem 'rubocop', '1.6.1'
 gem 'meowcop'
