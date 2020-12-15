@@ -7,8 +7,6 @@ module Runners
 
     def install_gems: [X] (Array[GemInstaller::Spec], constraints: constraints, ?optionals: Array[GemInstaller::Spec]) { (Hash[String, String]) -> X } -> X
 
-    def ruby_analyzer_bin: () -> Array[String]
-
     def ruby_analyzer_command: (*String) -> Command
 
     def installed_gem_versions: (Array[String], ?exception: bool) -> Hash[String, Array[String]]
