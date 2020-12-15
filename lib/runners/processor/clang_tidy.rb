@@ -2,7 +2,9 @@ module Runners
   class Processor::ClangTidy < Processor
     include CPlusPlus
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :runner_config, Schema::BaseConfig.cplusplus
 
       let :issue, object(
@@ -49,6 +51,8 @@ module Runners
       # <path>:<line>:<column>: <severity>: <message> [<id>]
       pattern = /^(.+):(\d+):(\d+): ([^:]+): (.+) \[([^\[]+)\]$/
       stdout.scan(pattern) do |path, line, column, severity, message, id|
+        raise "Unexpected match data: #{path.inspect}" unless path.is_a? String
+
         yield Issue.new(
           path: relative_path(path),
           location: Location.new(start_line: line, start_column: column),
