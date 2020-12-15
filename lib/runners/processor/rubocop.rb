@@ -2,7 +2,9 @@ module Runners
   class Processor::RuboCop < Processor
     include Ruby
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :runner_config, Schema::BaseConfig.ruby.update_fields { |fields|
         fields.merge!({
                         config: string?,
@@ -97,8 +99,72 @@ module Runners
       return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
     end
 
-    def analyze(_)
-      run_analyzer
+    def analyze(_changes)
+      cmd = ruby_analyzer_command(
+        "--display-style-guide",
+        "--no-display-cop-names",
+
+        # NOTE: `--parallel` requires a cache.
+        #
+        # @see https://github.com/rubocop-hq/rubocop/blob/v1.3.1/lib/rubocop/options.rb#L353-L355
+        "--parallel",
+        "--cache=true",
+        *cache_root,
+
+        # NOTE: `--out` option must be after `--format` option.
+        #
+        # @see https://docs.rubocop.org/rubocop/1.3/formatters.html
+        "--format=json",
+        "--out=#{report_file}",
+
+        *rails_option,
+        *config_file,
+        *safe,
+      )
+
+      _, stderr, status = capture3(cmd.bin, *cmd.args)
+      check_rubocop_yml_warning(stderr)
+
+      # 0: no offences
+      # 1: offences exist
+      # 2: RuboCop crashes by unhandled errors.
+      unless [0, 1].include?(status.exitstatus)
+        error_message = stderr.strip
+        if error_message.empty?
+          error_message = "RuboCop raised an unexpected error. See the analysis log for details."
+        end
+        return Results::Failure.new(guid: guid, message: error_message, analyzer: analyzer)
+      end
+
+      output_json = read_report_json { nil }
+
+      Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+        break result unless output_json # No offenses
+
+        output_json.fetch(:files).reject { |v| v[:offenses].empty? }.each do |hash|
+          hash[:offenses].each do |offense|
+            loc = Location.new(
+              start_line: offense[:location][:line],
+              start_column: offense[:location][:column],
+              end_line: offense[:location][:last_line] || offense[:location][:line],
+              end_column: offense[:location][:last_column] || offense[:location][:column]
+            )
+            links = extract_links(offense[:message])
+            result.add_issue Issue.new(
+              path: relative_path(hash[:path]),
+              location: loc,
+              id: offense[:cop_name],
+              message: normalize_message(offense[:message], links, offense[:cop_name]),
+              links: links + build_cop_links(offense[:cop_name]),
+              object: {
+                severity: offense[:severity],
+                corrected: offense[:corrected],
+              },
+              schema: Schema.issue,
+            )
+          end
+        end
+      end
     end
 
     private
@@ -108,29 +174,31 @@ module Runners
       rails = config_linter.dig(:options, :rails) if rails.nil?
       case
       when rails && !rails_cops_removed?
-        '--rails'
+        ['--rails']
       when rails && rails_cops_removed?
-        add_warning(<<~WARNING, file: config.path_name)
-          The `#{config_field_path("rails")}` option in your `#{config.path_name}` is ignored.
+        add_warning <<~WARNING, file: config.path_name
+          The `#{config_field_path(:rails)}` option in your `#{config.path_name}` is ignored.
           Because the `--rails` option was removed from RuboCop 0.72. Use the `rubocop-rails` gem instead.
         WARNING
-        nil
+        []
       when rails == false
-        nil
+        []
       when rails_cops_removed?
-        nil
+        []
       when %w[bin/rails script/rails].any? { |path| current_dir.join(path).exist? }
-        '--rails'
+        ['--rails']
+      else
+        []
       end
     end
 
     def config_file
       config_path = config_linter[:config] || config_linter.dig(:options, :config)
-      "--config=#{config_path}" if config_path
+      config_path ? ["--config=#{config_path}"] : []
     end
 
     def safe
-      "--safe" if config_linter[:safe]
+      config_linter[:safe] ? ["--safe"] : []
     end
 
     def setup_default_config
@@ -177,71 +245,6 @@ module Runners
     end
 
     def run_analyzer
-      options = [
-        "--display-style-guide",
-        "--no-display-cop-names",
-
-        # NOTE: `--parallel` requires a cache.
-        #
-        # @see https://github.com/rubocop-hq/rubocop/blob/v1.3.1/lib/rubocop/options.rb#L353-L355
-        "--parallel",
-        "--cache=true",
-        *cache_root,
-
-        # NOTE: `--out` option must be after `--format` option.
-        #
-        # @see https://docs.rubocop.org/rubocop/1.3/formatters.html
-        "--format=json",
-        "--out=#{report_file}",
-
-        *rails_option,
-        *config_file,
-        *safe,
-      ]
-
-      _, stderr, status = capture3(*ruby_analyzer_bin, *options)
-      check_rubocop_yml_warning(stderr)
-
-      # 0: no offences
-      # 1: offences exist
-      # 2: RuboCop crashes by unhandled errors.
-      unless [0, 1].include?(status.exitstatus)
-        error_message = stderr.strip
-        if error_message.empty?
-          error_message = "RuboCop raised an unexpected error. See the analysis log for details."
-        end
-        return Results::Failure.new(guid: guid, message: error_message, analyzer: analyzer)
-      end
-
-      output_json = read_report_json { nil }
-
-      Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        break result unless output_json # No offenses
-
-        output_json[:files].reject { |v| v[:offenses].empty? }.each do |hash|
-          hash[:offenses].each do |offense|
-            loc = Location.new(
-              start_line: offense[:location][:line],
-              start_column: offense[:location][:column],
-              end_line: offense[:location][:last_line] || offense[:location][:line],
-              end_column: offense[:location][:last_column] || offense[:location][:column]
-            )
-            links = extract_links(offense[:message])
-            result.add_issue Issue.new(
-              path: relative_path(hash[:path]),
-              location: loc,
-              id: offense[:cop_name],
-              message: normalize_message(offense[:message], links, offense[:cop_name]),
-              links: links + build_cop_links(offense[:cop_name]),
-              object: {
-                severity: offense[:severity],
-                corrected: offense[:corrected],
-              },
-              schema: Schema.issue,
-            )
-          end
-        end
-      end
     end
 
     # @see https://github.com/rubocop-hq/rubocop/blob/v0.76.0/lib/rubocop/cop/message_annotator.rb#L62-L63
@@ -306,9 +309,9 @@ module Runners
     def cache_root
       # @see https://github.com/rubocop-hq/rubocop/blob/v0.91.0/CHANGELOG.md
       if Gem::Version.create(analyzer_version) >= Gem::Version.create("0.91.0")
-        "--cache-root=#{File.join(Dir.tmpdir, 'rubocop-cache')}"
+        ["--cache-root=#{File.join(Dir.tmpdir, 'rubocop-cache')}"]
       else
-        nil
+        []
       end
     end
   end

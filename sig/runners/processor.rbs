@@ -98,7 +98,7 @@ module Runners
 
     def read_report_xml: (?String) -> REXML::Element
 
-    def read_report_json: [X] (?String) { () -> X } -> X
+    def read_report_json: [X] (?String) { () -> X } -> (X | untyped)
                         | (?String) -> untyped
 
     def comma_separated_list: (String | Array[String] | nil) -> String?

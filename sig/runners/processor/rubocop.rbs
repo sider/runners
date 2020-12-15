@@ -2,29 +2,29 @@ module Runners
   class Processor::RuboCop < Processor
     include Ruby
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[untyped]
+      def issue: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
     OFFICIAL_RUBOCOP_PLUGINS: Array[Ruby::GemInstaller::Spec]
-
     OPTIONAL_GEMS: Array[Ruby::GemInstaller::Spec]
-
+    GEM_NAME: String
     CONSTRAINTS: Hash[String, Array[String]]
-
     DEFAULT_CONFIG_FILE: String
 
     private
 
-    def rails_option: () -> String?
+    def rails_option: () -> Array[String]
 
-    def config_file: () -> String?
+    def config_file: () -> Array[String]
 
-    def safe: () -> String?
+    def safe: () -> Array[String]
 
     def setup_default_config: () -> bool
 
     def check_rubocop_yml_warning: (String) -> void
-
-    def run_analyzer: () -> untyped
 
     def extract_links: (String) -> Array[String]
 
@@ -36,6 +36,6 @@ module Runners
 
     def rails_cops_removed?: () -> bool
 
-    def cache_root: () -> String?
+    def cache_root: () -> Array[String]
   end
 end
