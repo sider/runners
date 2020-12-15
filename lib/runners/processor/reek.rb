@@ -2,7 +2,9 @@ module Runners
   class Processor::Reek < Processor
     include Ruby
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :runner_config, Schema::BaseConfig.ruby.update_fields { |f|
         f.merge!(
           target: enum?(string, array(string)),
@@ -28,7 +30,8 @@ module Runners
     end
 
     def analyze(changes)
-      stdout, stderr = capture3!(*ruby_analyzer_bin, *cli_args, *analysis_targets)
+      cmd = ruby_analyzer_command(*cli_args, *analysis_targets)
+      stdout, stderr = capture3!(cmd.bin, *cmd.args)
 
       raise_warnings(stderr)
 
@@ -52,6 +55,8 @@ module Runners
         end
       end
     end
+
+    private
 
     def analysis_targets
       targets = Array(config_linter[:target])
@@ -83,15 +88,15 @@ module Runners
     def v4?
       return @v4 if defined? @v4
 
-      @v4 ||= Gem::Version.new(analyzer.version).then do |v|
-        v >= Gem::Version.new("4.0.0") && v < Gem::Version.new("5.0.0")
+      @v4 ||= Gem::Version.create(analyzer.version).then do |v|
+        v >= Gem::Version.create("4.0.0") && v < Gem::Version.create("5.0.0")
       end
     end
 
     def raise_warnings(stderr)
       stderr.each_line do |line|
         line.match(/Source '(.+)' cannot be processed by Reek due to a syntax error/) do |m|
-          file, = m.captures
+          file = m.captures.first or raise "Unexpected match data: #{m.inspect}"
           file = relative_path(file).to_path
           add_warning "Detected syntax error in `#{file}`", file: file
         end
