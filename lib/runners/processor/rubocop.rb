@@ -244,9 +244,6 @@ module Runners
       warnings.each { |msg, file| add_warning(msg, file: file) }
     end
 
-    def run_analyzer
-    end
-
     # @see https://github.com/rubocop-hq/rubocop/blob/v0.76.0/lib/rubocop/cop/message_annotator.rb#L62-L63
     def extract_links(original_message)
       URI.extract(original_message, %w(http https))
