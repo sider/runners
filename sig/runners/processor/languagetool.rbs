@@ -2,59 +2,54 @@ module Runners
   class Processor::LanguageTool < Processor
     include Java
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[untyped]
+      def issue: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
-    DEFAULT_TARGET: untyped
+    DEFAULT_TARGET: String
+    DEFAULT_EXT: Array[String]
+    DEFAULT_EXCLUDE: Array[String]
+    DEFAULT_LANGUAGE: String
+    DEFAULT_ENCODING: String
+    DEFAULT_DISABLE: Array[String]
+    DEFAULT_ENABLE: Array[String]
+    DEFAULT_DISABLECATEGORIES: Array[String]
+    DEFAULT_ENABLECATEGORIES: Array[String]
 
-    DEFAULT_EXT: untyped
+    private
 
-    DEFAULT_EXCLUDE: untyped
+    def delete_files_except_targets: () -> void
 
-    DEFAULT_LANGUAGE: untyped
+    def config_target: () -> String
 
-    # NOTE: Need a variant for spell checking
-    DEFAULT_ENCODING: untyped
+    def config_ext: () -> Array[String]
 
-    DEFAULT_DISABLE: untyped
+    def config_exclude: () -> Array[String]
 
-    DEFAULT_ENABLE: untyped
+    def config_language: () -> String
 
-    DEFAULT_DISABLECATEGORIES: untyped
+    def config_encoding: () -> String
 
-    DEFAULT_ENABLECATEGORIES: untyped
+    def cli_comma_separated_list: (Symbol, Array[String], String) -> Array[String]
 
-    def analyze: (untyped changes) -> untyped
+    def cli_disable: () -> Array[String]
 
-    def delete_files_except_targets: () -> untyped
+    def cli_enable: () -> Array[String]
 
-    def config_target: () -> untyped
+    def cli_enabledonly: () -> Array[String]
 
-    def config_ext: () -> untyped
+    def cli_disablecategories: () -> Array[String]
 
-    def config_exclude: () -> untyped
+    def cli_enablecategories: () -> Array[String]
 
-    def config_language: () -> untyped
+    def cli_args: () -> Array[String]
 
-    def config_encoding: () -> untyped
+    def run_analyzer: () -> result
 
-    def cli_comma_separated_list: (untyped config_option, untyped default_value, untyped cli_option) -> untyped
+    def parse_output: (String) { (String, Hash[Symbol, untyped]) -> void } -> void
 
-    def cli_disable: () -> untyped
-
-    def cli_enable: () -> untyped
-
-    def cli_enabledonly: () -> untyped
-
-    def cli_disablecategories: () -> untyped
-
-    def cli_enablecategories: () -> untyped
-
-    def cli_args: () -> untyped
-
-    def run_analyzer: () -> untyped
-
-    def parse_output: (untyped output) { (untyped, untyped) -> untyped } -> (nil | untyped)
-
-    def offset_ranges_per_line: (untyped lines) -> untyped
+    def offset_ranges_per_line: (Array[String]) -> Array[Range[Integer]]
   end
 end
