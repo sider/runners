@@ -5,6 +5,9 @@ module Runners
       let :metrics, object(
           line_of_code: integer
       )
+      let :issue, object(
+          line_of_code: integer
+      )
     end
 
     register_config_schema(name: :linecounter, schema: Schema.runner_config)
@@ -24,11 +27,17 @@ module Runners
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
         stdout.split(/\R/).each do |line|
           parsed = line.strip.split(' ', 2)
-          result.add_metric Metric.new(
+          result.add_issue Issue.new(
               path: Pathname(parsed[1]),
-              type: "physical_loc",
-              object: { loc: parsed[0].to_i }
-          )
+              location: nil,
+              id: "ploc",
+              message: "(no message)",
+              links: [],
+              object: {
+                  line_of_code: parsed[0].to_i
+              },
+              schema: Schema.issue,
+              )
         end
       end
     end
