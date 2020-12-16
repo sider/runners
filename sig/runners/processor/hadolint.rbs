@@ -1,31 +1,22 @@
 module Runners
   class Processor::Hadolint < Processor
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[untyped]
+      def issue: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
-    DEFAULT_TARGET: untyped
+    DEFAULT_TARGET: String
+    DEFAULT_TARGET_EXCLUDED: String
 
-    DEFAULT_TARGET_EXCLUDED: untyped
+    private
 
-    def analyze: (untyped _changes) -> untyped
+    def analyzer_options: () -> Array[String]
 
-    def analyzer_options: () -> untyped
+    def analysis_target: () -> Array[String]
 
-    def analysis_target: () -> untyped
+    def parse_result: (String) -> Array[Issue]
 
-    def run_analyzer: () -> untyped
-
-    # Output format:
-    #
-    #     { line: number, code: rule, message: description, column: number, file: filepath, level: level }
-    #
-    # Example:
-    #
-    #     {"line":14,"code":"DL3003","message":"Use WORKDIR to switch to a directory","column":1,"file":"images/hadolint/Dockerfile","level":"warning"}
-    #
-    # @see https://github.com/hadolint/hadolint#rules
-    # @param stdout [String]
-    def parse_result: (untyped stdout) -> untyped
-
-    def link_to_wiki: (untyped id) -> untyped
+    def link_to_wiki: (String) -> Array[String]
   end
 end
