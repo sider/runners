@@ -62,10 +62,12 @@ module Runners
 
       json.fetch(:issues).each do |hash|
         path = relative_path(hash[:script])
-        loc = Location.new(start_line: hash[:location][:start][0],
-                                        start_column: hash[:location][:start][1],
-                                        end_line: hash[:location][:end][0],
-                                        end_column: hash[:location][:end][1])
+        loc = Location.new(
+          start_line: hash[:location][:start][0],
+          start_column: hash[:location][:start][1],
+          end_line: hash[:location][:end][0],
+          end_column: hash[:location][:end][1],
+        )
 
         yield Issue.new(
           path: path,
