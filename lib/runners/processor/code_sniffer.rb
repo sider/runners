@@ -4,6 +4,7 @@ module Runners
 
     Schema = _ = StrongJSON.new do
       # @type self: SchemaClass
+
       let :runner_config, Runners::Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
                         version: enum?(string, numeric),
@@ -31,6 +32,11 @@ module Runners
     end
 
     register_config_schema(name: :code_sniffer, schema: Schema.runner_config)
+
+    DefaultOptions = _ = Struct.new(:standard, :extensions, :dir, keyword_init: true)
+    OPTIONS_CAKE_PHP = DefaultOptions.new(standard: "CakePHP", extensions: "php", dir: "app/").freeze
+    OPTIONS_SYMFONY = DefaultOptions.new(standard: "Symfony", extensions: "php", dir: "src/").freeze
+    OPTIONS_PSR2 = DefaultOptions.new(standard: "PSR2", extensions: "php", dir: "./").freeze
 
     def analyzer_bin
       "phpcs"
@@ -83,19 +89,19 @@ module Runners
 
     def additional_options
       if config_linter.empty?
-        (_ = default_options.fetch(:options)).map { |k, v| "--#{k}=#{v}" }
+        ["--standard=#{default_options.standard}", "--extensions=#{default_options.extensions}"]
       else
         [standard_option, extensions_option, *encoding_option, *ignore_option]
       end
     end
 
     def standard_option
-      standard = config_linter[:standard] || config_linter.dig(:options, :standard) || default_options.dig(:options, :standard)
+      standard = config_linter[:standard] || config_linter.dig(:options, :standard) || default_options.standard
       "--standard=#{standard}"
     end
 
     def extensions_option
-      extensions = config_linter[:extensions] || config_linter.dig(:options, :extensions) || default_options.dig(:options, :extensions)
+      extensions = config_linter[:extensions] || config_linter.dig(:options, :extensions) || default_options.extensions
       extensions = comma_separated_list(extensions)
       "--extensions=#{extensions}"
     end
@@ -112,36 +118,18 @@ module Runners
     end
 
     def directory
-      config_linter[:dir] || config_linter.dig(:options, :dir) || default_options.fetch(:dir)
+      config_linter[:dir] || config_linter.dig(:options, :dir) || default_options.dir
     end
 
     def default_options
       @default_options ||=
         case php_framework
         when :CakePHP
-          {
-            options: {
-              standard: 'CakePHP',
-              extensions: 'php',
-            },
-            dir: 'app/',
-          }
+          OPTIONS_CAKE_PHP
         when :Symfony
-          {
-            options: {
-              standard: 'Symfony',
-              extensions: 'php',
-            },
-            dir: 'src/',
-          }
+          OPTIONS_SYMFONY
         else
-          {
-            options: {
-              standard: 'PSR2',
-              extensions: 'php',
-            },
-            dir: './',
-          }
+          OPTIONS_PSR2
         end
     end
 

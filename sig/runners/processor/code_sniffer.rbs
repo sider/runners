@@ -2,27 +2,39 @@ module Runners
   class Processor::CodeSniffer < Processor
     include PHP
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[untyped]
+      def issue: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
-    def analyzer_bin: () -> "phpcs"
+    class DefaultOptions
+      attr_reader standard: String
+      attr_reader extensions: String
+      attr_reader dir: String
 
-    def setup: () { () -> untyped } -> untyped
+      def initialize: (standard: String, extensions: String, dir: String) -> void
+    end
 
-    def analyze: (untyped changes) -> untyped
+    OPTIONS_CAKE_PHP: DefaultOptions
+    OPTIONS_SYMFONY: DefaultOptions
+    OPTIONS_PSR2: DefaultOptions
 
-    def additional_options: () -> untyped
+    private
 
-    def standard_option: () -> ::String
+    def additional_options: () -> Array[String]
 
-    def extensions_option: () -> ::String
+    def standard_option: () -> String
 
-    def encoding_option: () -> untyped
+    def extensions_option: () -> String
 
-    def ignore_option: () -> untyped
+    def encoding_option: () -> Array[String]
 
-    def directory: () -> untyped
+    def ignore_option: () -> Array[String]
 
-    def default_options: () -> untyped
+    def directory: () -> String
+
+    def default_options: () -> DefaultOptions
 
     def php_framework: () -> (:CakePHP | :Symfony | nil)
   end
