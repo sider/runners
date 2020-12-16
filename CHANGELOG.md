@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.39.0...HEAD)
 
+- Set `error` to Bugsnag severity [#1758](https://github.com/sider/runners/pull/1758)
+
 ## 0.39.0
 
 [Full diff](https://github.com/sider/runners/compare/0.38.1...0.39.0)
