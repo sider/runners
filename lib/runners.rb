@@ -113,6 +113,8 @@ require "runners/processor/swiftlint"
 require "runners/processor/tslint"
 require "runners/processor/tyscan"
 require "runners/processor/linecounter"
+require "runners/processor/lastmodified"
+require "runners/processor/code_clone_detector"
 
 module Runners
 end

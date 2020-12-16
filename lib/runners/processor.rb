@@ -291,5 +291,9 @@ module Runners
       values = Array(value).flat_map { |s| (_ = s).split(/\s*,\s*/) }
       values.empty? ? nil : values.join(",")
     end
+
+    def preserve_dot_git_dir?
+      false
+    end
   end
 end

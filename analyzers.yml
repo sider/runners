@@ -156,3 +156,7 @@ analyzers:
     doc: tools/javascript/tyscan
   linecounter:
     name: LineCounter
+  lastmodified:
+    name: LastModified
+  code_clone_detector:
+    name: CodeCloneDetector

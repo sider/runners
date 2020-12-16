@@ -54,7 +54,12 @@ module Runners
               result = processor.setup do
                 trace_writer.header "Run #{processor.analyzer_name}"
                 @analyzer = processor.analyzer # initialize analyzer
-                exclude_special_dirs { processor.analyze(changes) }
+
+                if processor.preserve_dot_git_dir? then
+                  processor.analyze(changes)
+                else
+                  exclude_special_dirs { processor.analyze(changes) }
+                end
               end
 
               case result
