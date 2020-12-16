@@ -13,18 +13,12 @@ module Runners
       let :issue, object(path: string, location: location, id: string, message: string, links: array(string), object: any, git_blame_info: optional(git_blame_info))
     end
 
-    Metric = _ = StrongJSON.new do
-      # @type self: Types::Metric
-
-      let :metric, object(path: string, type: string, object: any)
-    end
-
     Result = _ = StrongJSON.new do
       # @type self: ResultClass
 
       let :analyzer, object(name: string, version: string)
 
-      let :success, object(guid: string, timestamp: string, type: literal("success"), issue_count: integer, issues: array(Issue.issue), metrics: array(Metric.metric), analyzer: analyzer)
+      let :success, object(guid: string, timestamp: string, type: literal("success"), issue_count: integer, issues: array(Issue.issue), analyzer: analyzer)
       let :failure, object(guid: string, timestamp: string, type: literal("failure"), message: string, analyzer: optional(analyzer))
       let :error, object(guid: string, timestamp: string, type: literal("error"), class: string, backtrace: array(string), inspect: string, analyzer: optional(analyzer))
 

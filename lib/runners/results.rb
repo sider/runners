@@ -26,13 +26,11 @@ module Runners
     class Success < Base
       attr_reader :issues
       attr_reader :analyzer
-      attr_reader :metrics
 
-      def initialize(guid:, analyzer:, issues: [], metrics: [])
+      def initialize(guid:, analyzer:, issues: [])
         super(guid: guid)
         @issues = issues
         @analyzer = analyzer
-        @metrics  = metrics
       end
 
       def as_json
@@ -50,12 +48,6 @@ module Runners
               issue[:message] || "",
             ]
           end
-          json[:metrics] = metrics.map(&:as_json).sort_by! do |metric|
-            [
-                metric[:path] || "",
-                metric[:type] || "",
-            ]
-          end
           json[:analyzer] = analyzer.as_json
         end
       end
@@ -66,10 +58,6 @@ module Runners
 
       def add_issue(*issue)
         issues.push(*issue)
-      end
-
-      def add_metric(*metric)
-        metrics.push(*metric)
       end
 
       def filter_issues(changes)
