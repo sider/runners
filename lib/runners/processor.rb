@@ -123,6 +123,11 @@ module Runners
       raise ArgumentError, "Not found version from the command `#{command_line.join(' ')}`"
     end
 
+    # If a processor needs git metadata('.git' dir), override this method as returning true.
+    def use_git_metadata_dir?
+      false
+    end
+
     def config_linter
       config.linter(analyzer_id)
     end
