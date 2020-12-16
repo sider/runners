@@ -97,7 +97,9 @@ module Runners
       rescue UserError => exn
         Results::Failure.new(guid: guid, message: exn.message, analyzer: @analyzer)
       rescue => exn
-        Bugsnag.notify(exn)
+        Bugsnag.notify(exn) do |report|
+          report.severity = "error"
+        end
         handle_error(exn)
         Results::Error.new(guid: guid, exception: exn, analyzer: @analyzer)
       end

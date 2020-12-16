@@ -1,0 +1,7 @@
+module Bugsnag
+  def self.notify: (Exception) ?{ (Report) -> void } -> void
+
+  class Report
+    attr_accessor severity: "error" | "warning" | "info"
+  end
+end
