@@ -1,30 +1,27 @@
 module Runners
   class Workspace::Git < Workspace
-    class FetchFailed < SystemError
+    class Error < SystemError
     end
 
-    class CheckoutFailed < SystemError
+    class FetchFailed < Error
     end
 
-    class BlameFailed < SystemError
+    class CheckoutFailed < Error
     end
 
-    def range_git_blame_info: (String, Integer, Integer, ?trace: bool) -> GitBlameInfo
+    class BlameFailed < Error
+    end
 
-    def prepare_head_source: () -> untyped
+    private
 
-    def git_source: () -> untyped
+    def git_source: () -> Options::GitSource
 
-    # for testing
-    def try_count: () -> 10
+    def try_count: () -> Integer
 
-    # for testing
-    def sleep_lambda: () -> untyped
+    def sleep_lambda: () -> ^(Integer) -> Numeric
 
-    def remote_url: () -> untyped
+    def remote_url: () -> String
 
-    def git_fetch_args: () -> untyped
-
-    def patches: () -> untyped
+    def git_fetch_args: () -> Array[String]
   end
 end

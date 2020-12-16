@@ -1,8 +1,9 @@
 module Runners
   class Workspace::Git < Workspace
-    class FetchFailed < SystemError; end
-    class CheckoutFailed < SystemError; end
-    class BlameFailed < SystemError; end
+    class Error < SystemError; end
+    class FetchFailed < Error; end
+    class CheckoutFailed < Error; end
+    class BlameFailed < Error; end
 
     def range_git_blame_info(path_string, start_line, end_line, trace: false)
       @git_blame_cache ||= {}
@@ -24,7 +25,7 @@ module Runners
       shell.capture3!("git", "config", "gc.auto", "0")
       shell.capture3!("git", "config", "advice.detachedHead", "false")
       shell.capture3!("git", "config", "core.quotePath", "false")
-      shell.capture3!("git", "remote", "add", "origin", remote_url.to_s)
+      shell.capture3!("git", "remote", "add", "origin", remote_url)
 
       begin
         shell.capture3_with_retry!("git", "fetch", *git_fetch_args, tries: try_count, sleep: sleep_lambda)
@@ -56,10 +57,10 @@ module Runners
     end
 
     def remote_url
-      @remote_url ||= URI.parse(git_source.git_url).tap do |uri|
+      @remote_url ||= URI.parse(git_source.git_url).then do |uri|
         git_url_userinfo = git_source.git_url_userinfo
         uri.userinfo = git_url_userinfo if git_url_userinfo
-        uri.freeze
+        uri.to_s.freeze
       end
     end
 
