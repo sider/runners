@@ -521,14 +521,20 @@ class ProcessorTest < Minitest::Test
 
   def test_read_report_xml_failed
     with_workspace do |workspace|
-      file = (workspace.working_dir / "a_file.xml").tap { |f| f.write "" }.then(&:to_path)
+      file = (workspace.working_dir / "a_file.xml").tap { |f| f.write "" }
 
       processor = new_processor(workspace: workspace)
-      error = assert_raises(Processor::InvalidXML) { processor.read_report_xml(file) }
-      assert_equal "Output XML is invalid from #{file}", error.message
+      error = assert_raises(Processor::InvalidXML) { processor.read_report_xml(file.to_path) }
+      assert_equal 'Invalid XML: ""', error.message
 
-      File.write file, "<foo"
-      assert_raises(REXML::ParseException) { processor.read_report_xml(file) }
+      file.write "<foo"
+      error = assert_raises(Processor::InvalidXML) { processor.read_report_xml(file.to_path) }
+      assert_equal <<~MSG, error.message
+        Start tag isn't ended
+        Line: 1
+        Position: 4
+        Last 80 unconsumed characters:
+      MSG
     end
   end
 
