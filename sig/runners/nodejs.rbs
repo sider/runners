@@ -1,5 +1,7 @@
 module Runners
   module Nodejs : Processor
+    type constraints = Hash[String, Constraint]
+
     class InvalidNodeVersion < SystemError
     end
 
@@ -37,7 +39,7 @@ module Runners
 
     def yarn_lock_path: () -> Pathname
 
-    def install_nodejs_deps: (constraints: Hash[String, Constraint], install_option: install_option) -> void
+    def install_nodejs_deps: (constraints: constraints, install_option: install_option) -> void
 
     private
 
@@ -53,6 +55,6 @@ module Runners
 
     def list_installed_nodejs_deps: (?only: Array[String], ?chdir: Pathname | String | nil) -> Hash[String, String]
 
-    def check_installed_nodejs_deps: (Hash[String, Constraint]) -> void
+    def check_installed_nodejs_deps: (constraints) -> void
   end
 end
