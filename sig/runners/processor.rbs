@@ -96,6 +96,8 @@ module Runners
     class InvalidXML < SystemError
     end
 
+    def read_xml: (String) -> REXML::Element
+
     def read_report_xml: (?String) -> REXML::Element
 
     def read_report_json: [X] (?String) { () -> X } -> (X | untyped)

@@ -257,16 +257,20 @@ module Runners
 
     class InvalidXML < SystemError; end
 
-    def read_report_xml(file_path = report_file)
-      output = read_report_file(file_path)
-      root = REXML::Document.new(output).root
+    def read_xml(text)
+      root = REXML::Document.new(text).root
       if root
         root
       else
-        message = "Output XML is invalid from #{file_path}"
+        message = "Invalid XML: #{text.inspect}"
         trace_writer.error message
         raise InvalidXML, message
       end
+    end
+
+    def read_report_xml(file_path = report_file)
+      output = read_report_file(file_path)
+      read_xml(output)
     end
 
     def read_report_json(file_path = report_file)
