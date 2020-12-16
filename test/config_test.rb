@@ -76,6 +76,7 @@ class ConfigTest < Minitest::Test
           jshint: nil,
           ktlint: nil,
           languagetool: nil,
+          lizard: nil,
           misspell: nil,
           phinder: nil,
           phpmd: nil,
