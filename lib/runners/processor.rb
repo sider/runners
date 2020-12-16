@@ -266,6 +266,15 @@ module Runners
         trace_writer.error message
         raise InvalidXML, message
       end
+    rescue REXML::ParseException => exn
+      message =
+        if exn.cause.instance_of? RuntimeError
+          exn.cause.message
+        else
+          exn.message
+        end
+      trace_writer.error message
+      raise InvalidXML, message
     end
 
     def read_report_xml(file_path = report_file)

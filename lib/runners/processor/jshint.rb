@@ -39,14 +39,8 @@ module Runners
       when 2
         begin
           Results::Success.new(guid: guid, analyzer: analyzer, issues: parse_result(stdout))
-        rescue REXML::ParseException => exn
-          message = if exn.cause.instance_of? RuntimeError
-                      exn.cause.message
-                    else
-                      exn.message
-                    end
-          message = "The output XML is invalid: #{message}"
-          Results::Failure.new(guid: guid, message: message, analyzer: analyzer)
+        rescue InvalidXML => exn
+          Results::Failure.new(guid: guid, analyzer: analyzer, message: exn.message)
         end
       else
         Results::Failure.new(guid: guid, analyzer: analyzer)

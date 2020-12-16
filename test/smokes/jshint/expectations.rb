@@ -124,6 +124,6 @@ s.add_test(
 s.add_test(
   "invalid_output_xml",
   type: "failure",
-  message: 'The output XML is invalid: Illegal character "\\u0000" in raw string "Unexpected &apos;\\u0000&apos;."',
+  message: 'Illegal character "\\u0000" in raw string "Unexpected &apos;\\u0000&apos;."',
   analyzer: { name: "JSHint", version: default_version }
 )
