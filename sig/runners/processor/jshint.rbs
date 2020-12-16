@@ -7,6 +7,9 @@ module Runners
     end
     Schema: SchemaClass
 
+    DEFAULT_CONFIG_FILE: String
+    DEFAULT_IGNORE_FILE: String
+
     private
 
     def prepare_config: () -> void

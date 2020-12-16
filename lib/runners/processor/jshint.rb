@@ -19,6 +19,9 @@ module Runners
 
     register_config_schema(name: :jshint, schema: Schema.runner_config)
 
+    DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / 'sider_jshintrc').to_path.freeze
+    DEFAULT_IGNORE_FILE = (Pathname(Dir.home) / 'sider_jshintignore').to_path.freeze
+
     def setup
       add_warning_if_deprecated_options
       yield
@@ -52,15 +55,13 @@ module Runners
     def prepare_config
       return if jshintrc_exist?
 
-      config = (Pathname(Dir.home) / 'sider_jshintrc').realpath
-      ignore = (Pathname(Dir.home) / 'sider_jshintignore').realpath
-      FileUtils.copy_file(config, current_dir / '.jshintrc')
-      FileUtils.copy_file(ignore, current_dir / '.jshintignore')
+      FileUtils.copy_file(DEFAULT_CONFIG_FILE, current_dir / '.jshintrc')
+      FileUtils.copy_file(DEFAULT_IGNORE_FILE, current_dir / '.jshintignore')
     end
 
     def jshintrc_exist?
       return true if config_path
-      return true if (current_dir + '.jshintrc').exist? || (current_dir + '.jshintignore').exist?
+      return true if (current_dir / '.jshintrc').exist? || (current_dir / '.jshintignore').exist?
 
       begin
         return true if package_json_path.exist? && package_json[:jshintConfig]
