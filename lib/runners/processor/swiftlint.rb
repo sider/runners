@@ -68,8 +68,7 @@ module Runners
       end
 
       stderr.match(/Currently running SwiftLint .+ but configuration specified version .+\./) do |m|
-        message = m.captures.first or raise "Unexpected match data: #{m.inspect}"
-        return Results::Failure.new(guid: guid, message: message, analyzer: analyzer)
+        return Results::Failure.new(guid: guid, message: m.to_s, analyzer: analyzer)
       end
 
       Results::Success.new(guid: guid, analyzer: analyzer, issues: parse_result(stdout))
