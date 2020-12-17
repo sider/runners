@@ -20,6 +20,6 @@ module Runners
 
     def deletable?: (Pathname dir, Pathname file, Array[String] except, Array[String] only) -> bool
 
-    def find_patch_by_file: (String) -> GitDiffParser::Patch?
+    def changed_lines_by_file: (GitDiffParser::Patches, String) -> Array[Integer]
   end
 end
