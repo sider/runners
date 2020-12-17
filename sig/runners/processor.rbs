@@ -59,6 +59,8 @@ module Runners
 
     def extract_version!: ((String | Array[String]) command, ?(String | Array[String]) version_option, ?pattern: Regexp pattern) -> String
 
+    def use_git_metadata_dir?: () -> bool
+
     def config_linter: () -> Hash[Symbol, untyped]
 
     def check_root_dir_exist: () -> Results::Failure?

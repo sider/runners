@@ -2,23 +2,22 @@ module Runners
   class Processor::PmdCpd < Processor
     include Java
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def available_languages: () -> StrongJSON::Type::Enum[untyped]
+      def runner_config: () -> StrongJSON::Type::Object[untyped]
+      def issue: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
-    DEFAULT_MINIMUM_TOKENS: ::Integer
+    DEFAULT_MINIMUM_TOKENS: Integer
+    DEFAULT_FILES: String
+    DEFAULT_LANGUAGE: Array[String]
 
-    DEFAULT_FILES: untyped
+    private
 
-    DEFAULT_LANGUAGE: untyped
+    def raise_warnings: (String) -> void
 
-    def analyzer_version: () -> untyped
-
-    def analyze: (untyped changes) -> untyped
-
-    def run_analyzer: () -> untyped
-
-    def raise_warnings: (untyped stderr) -> untyped
-
-    def construct_result: (untyped stdout) { (untyped) -> untyped } -> untyped
+    def construct_result: (String) { (Issue) -> void } -> void
 
     def to_fileinfo: (untyped elem_file) -> { id: untyped, path: untyped, location: untyped }
 

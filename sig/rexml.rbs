@@ -9,6 +9,7 @@ module REXML
 
     def []: (String | Symbol | Integer) -> (String | nil)
     def each_element: (?String) { (Element) -> untyped } -> void
+    def get_elements: (String) -> Array[Element]
     def text: (?String) -> String?
   end
 

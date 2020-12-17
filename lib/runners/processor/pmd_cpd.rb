@@ -2,7 +2,9 @@ module Runners
   class Processor::PmdCpd < Processor
     include Java
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :available_languages, enum(
         literal("apex"),
         literal("cpp"),
@@ -73,11 +75,7 @@ module Runners
       @analyzer_version ||= capture3!("show_pmd_version").yield_self { |stdout,| stdout.strip }
     end
 
-    def analyze(changes)
-      run_analyzer
-    end
-
-    def run_analyzer
+    def analyze(_changes)
       issues = []
 
       languages.each do |language|
@@ -88,6 +86,8 @@ module Runners
 
       Results::Success.new(guid: guid, analyzer: analyzer, issues: issues)
     end
+
+    private
 
     def raise_warnings(stderr)
       stderr.each_line do |line|
@@ -102,7 +102,7 @@ module Runners
       #       The PMD CPD writes an XML report as UTF-8 with the inconsistent encoding attribute value when the --encoding option is specified.
       stdout.sub!(/<\?xml version="1\.0" encoding=".+"\?>/, '<?xml version="1.0" encoding="UTF-8"?>')
 
-      REXML::Document.new(stdout).each_element('pmd-cpd/duplication') do |elem_dupli|
+      read_xml(stdout).each_element('duplication') do |elem_dupli|
         files = elem_dupli.get_elements('file').map{ |f| to_fileinfo(f) }
         issueobj = create_issue_object(elem_dupli, files)
 
