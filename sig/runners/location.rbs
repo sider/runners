@@ -1,21 +1,15 @@
 module Runners
   class Location
-    attr_reader start_line: untyped
+    attr_reader start_line: Integer?
+    attr_reader start_column: Integer?
+    attr_reader end_line: Integer?
+    attr_reader end_column: Integer?
 
-    attr_reader start_column: untyped
+    def initialize: (start_line: (Numeric | String)?,
+                     ?start_column: (Numeric | String)?,
+                     ?end_line: (Numeric | String)?,
+                     ?end_column: (Numeric | String)?) -> void
 
-    attr_reader end_line: untyped
-
-    attr_reader end_column: untyped
-
-    def initialize: (start_line: untyped start_line, ?start_column: untyped? start_column, ?end_line: untyped? end_line, ?end_column: untyped? end_column) -> untyped
-
-    def ==: (untyped other) -> untyped
-
-    def hash: () -> untyped
-
-    def as_json: () -> untyped
-
-    def to_s: () -> ::String
+    def as_json: () -> Hash[Symbol, Integer?]
   end
 end
