@@ -2,7 +2,9 @@ module Runners
   class Processor::Phpmd < Processor
     include PHP
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
                         target: enum?(string, array(string)),
@@ -108,10 +110,13 @@ module Runners
         return Results::Failure.new(guid: guid, analyzer: analyzer, message: exn.message)
       end
 
+      raise "XML must not be empty" unless xml_root
+
       change_paths = changes.changed_paths
       errors = []
       xml_root.each_element('error') do |error|
-        errors << error[:msg] if change_paths.include?(relative_path(error[:filename]))
+        filename = error[:filename] or raise "Filename must not be empty: #{error.inspect}"
+        errors << error[:msg] if change_paths.include?(relative_path(filename))
       end
       unless errors.empty?
         errors.each { |message| trace_writer.error message }
@@ -120,14 +125,15 @@ module Runners
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
         xml_root.each_element('file') do |file|
-          path = relative_path(file[:name])
+          filename = file[:name] or raise "Filename must not be empty: #{file.inspect}"
+          path = relative_path(filename)
 
           file.each_element('violation') do |violation|
             result.add_issue Issue.new(
               path: path,
               location: Location.new(start_line: violation[:beginline], end_line: violation[:endline]),
               id: violation[:rule],
-              message: violation.text.strip,
+              message: violation.text&.strip,
               links: Array(violation[:externalInfoUrl]),
             )
           end

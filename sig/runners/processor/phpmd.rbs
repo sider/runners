@@ -2,30 +2,30 @@ module Runners
   class Processor::Phpmd < Processor
     include PHP
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
-    DEFAULT_TARGET: untyped
+    DEFAULT_TARGET: String
+    DEFAULT_CONFIG_FILE: String
 
-    DEFAULT_CONFIG_FILE: untyped
+    private
 
-    def setup: () { () -> untyped } -> untyped
+    def target_files: () -> Array[String]
 
-    def analyze: (untyped changes) -> untyped
+    def rule: () -> String
 
-    def target_files: () -> untyped
+    def target_dirs: () -> String
 
-    def rule: () -> untyped
+    def minimumpriority: () -> Array[String]
 
-    def target_dirs: () -> untyped
+    def suffixes: () -> Array[String]
 
-    def minimumpriority: () -> untyped
+    def exclude: () -> Array[String]
 
-    def suffixes: () -> untyped
+    def strict: () -> Array[String]
 
-    def exclude: () -> untyped
-
-    def strict: () -> untyped
-
-    def run_analyzer: (untyped changes) -> untyped
+    def run_analyzer: (Changes) -> result
   end
 end
