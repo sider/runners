@@ -1,6 +1,8 @@
 module Runners
   class Processor::ShellCheck < Processor
     Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         target_element = enum(string, object(shebang: boolean))
         fields.merge!(
@@ -51,7 +53,24 @@ module Runners
     ).freeze
 
     def analyze(_changes)
-      run_analyzer
+      files = analyzed_files
+
+      trace_writer.message "Analyzing #{files.size} file(s)..."
+
+      stdout, stderr, status = capture3(analyzer_bin, *analyzer_options, *files)
+
+      # @see https://github.com/koalaman/shellcheck/blob/de9ab4e6ef5262eeba6871a03ef3938a93b44395/shellcheck.1.md#return-values
+      if [0, 1].include? status.exitstatus
+        Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+          parse_result(stdout) do |issue|
+            result.add_issue(issue)
+          end
+        end
+      elsif stderr.start_with? "No files specified."
+        Results::Success.new(guid: guid, analyzer: analyzer)
+      else
+        Results::Failure.new(guid: guid, analyzer: analyzer)
+      end
     end
 
     private
@@ -74,13 +93,17 @@ module Runners
     end
 
     def analyzed_files
-      # Via glob
+      # @type var targets: Array[target]
       targets = Array(config_linter[:target] || DEFAULT_TARGET)
-      globs = targets.select { |glob| glob.is_a? String }
-      files_via_glob = Dir.glob(globs, File::FNM_EXTGLOB, base: current_dir)
+
+      # Via glob
+      globs = _ = targets.select { |glob| glob.is_a? String } # TODO: Ignored Steep error
+      files_via_glob = Dir.glob(globs, File::FNM_EXTGLOB, base: current_dir.to_path)
 
       # Via shebang
-      shebang = (targets - globs).find { |target| target.fetch(:shebang, false) }
+      shebang = (targets - globs).find do |target|
+        target.is_a?(Hash) && target.fetch(:shebang, false)
+      end
       files_via_shebang = shebang ? find_files_with_shebang : []
 
       # Aggregate (sorting for stable tests)
@@ -100,27 +123,6 @@ module Runners
         config_linter[:shell].tap { |val| opts << "--shell=#{val}" if val }
         config_linter[:severity].tap { |val| opts << "--severity=#{val}" if val }
         opts << "--norc" if config_linter[:norc]
-      end
-    end
-
-    def run_analyzer
-      files = analyzed_files
-
-      trace_writer.message "Analyzing #{files.size} file(s)..."
-
-      stdout, stderr, status = capture3(analyzer_bin, *analyzer_options, *files)
-
-      # @see https://github.com/koalaman/shellcheck/blob/de9ab4e6ef5262eeba6871a03ef3938a93b44395/shellcheck.1.md#return-values
-      if [0, 1].include? status.exitstatus
-        Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-          parse_result(stdout) do |issue|
-            result.add_issue(issue)
-          end
-        end
-      elsif stderr.start_with? "No files specified."
-        Results::Success.new(guid: guid, analyzer: analyzer)
-      else
-        Results::Failure.new(guid: guid, analyzer: analyzer)
       end
     end
 
