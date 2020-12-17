@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 [Full diff](https://github.com/sider/runners/compare/0.39.1...HEAD)
 
 - **remark-lint** Bump remark-preset-lint-sider from 0.5.0 to 0.6.0 [#1762](https://github.com/sider/runners/pull/1762)
+- Add `use_git_metadata_dir?` method for analysis processors. [#1775](https://github.com/sider/runners/pull/1775)
 
 ## 0.39.1
 
