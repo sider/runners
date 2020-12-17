@@ -1,6 +1,8 @@
 module Runners
   class Processor::Misspell < Processor
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
                         exclude: array?(string),
@@ -38,39 +40,35 @@ module Runners
 
     def analyze(_changes)
       delete_targets
-      run_analyzer
-    end
 
-    private
-
-    def run_analyzer
       # NOTE: Prevent command injection with `'--'`.
       capture3!(analyzer_bin, *cli_args, '--', *analysis_targets)
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        read_report_file.each_line do |line|
-          match = line.match(/^(?<file>.+):(?<line>\d+):(?<col>\d+): (?<message>"(?<incorrect>.+)" is a misspelling of "(?<correct>.+)")$/)
-          lineno = Integer(match[:line])
-          col = Integer(match[:col])
-          correct = match[:correct]
-          incorrect = match[:incorrect]
+        pattern = /^(?<file>.+):(?<line>\d+):(?<col>\d+): (?<message>"(?<incorrect>.+)" is a misspelling of "(?<correct>.+)")$/
+        read_report_file.scan(pattern) do |file, line, col, message, incorrect, correct|
+          raise "Unexpected match data: #{file.inspect}" unless file.is_a? String
+          raise "Unexpected match data: #{col.inspect}" unless col.is_a? String
+          raise "Unexpected match data: #{incorrect.inspect}" unless incorrect.is_a? String
 
           result.add_issue Issue.new(
-            path: relative_path(match[:file]),
+            path: relative_path(file),
             location: Location.new(
-              start_line: lineno,
+              start_line: line,
               start_column: col,
-              end_line: lineno,
-              end_column: col + incorrect.size,
+              end_line: line,
+              end_column: Integer(col) + (_ = incorrect).size, # TODO: Ignored Steep error
             ),
             id: correct,
-            message: match[:message],
+            message: message,
             object: { correct: correct, incorrect: incorrect },
             schema: Schema.issue,
           )
         end
       end
     end
+
+    private
 
     def cli_args
       ["-o", report_file, *locale, *ignore]
@@ -94,9 +92,13 @@ module Runners
     def delete_targets
       exclude_targets = Array(config_linter[:exclude])
       return if exclude_targets.empty?
+
       trace_writer.message "Excluding #{exclude_targets.join(', ')} ..." do
-        paths = exclude_targets.flat_map { |target| Dir.glob(working_dir + target.to_s) }.uniq
-        FileUtils.rm_r(paths, secure: true)
+        paths = exclude_targets.flat_map do |target|
+          # @type var target: String
+          working_dir.glob(target)
+        end.uniq
+        FileUtils.rm_rf(paths, secure: true)
       end
     end
   end
