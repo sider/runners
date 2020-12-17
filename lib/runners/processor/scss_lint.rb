@@ -74,8 +74,5 @@ module Runners
         end
       end
     end
-
-    def run_analyzer(options)
-    end
   end
 end
