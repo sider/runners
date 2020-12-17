@@ -182,4 +182,27 @@ class HarnessTest < Minitest::Test
       assert_path_exists harness.working_dir / ".git" / "config"
     end
   end
+
+  def test_not_exclude_special_dirs
+    processor_class = Class.new(TestProcessor) do
+      def use_git_metadata_dir?
+        true
+      end
+
+      def analyze(_)
+        if (working_dir / ".git").exist?
+          super
+        else
+          raise
+        end
+      end
+    end
+
+    with_harness(processor_class: processor_class) do |harness|
+      result = harness.run
+
+      assert_instance_of Results::Success, result
+      assert_path_exists harness.working_dir / ".git" / "config"
+    end
+  end
 end
