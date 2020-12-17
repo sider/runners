@@ -101,7 +101,7 @@ module Runners
 
       Results::Success.new(guid: guid, analyzer: analyzer, issues: parse_result(stdout)).tap do |result|
         @warning_set&.sort&.each do |warning|
-          add_warning(warning, file: config_file_path&.to_s)
+          add_warning(warning, file: config_file_path&.to_path)
         end
       end
     end
