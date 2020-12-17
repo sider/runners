@@ -1,6 +1,6 @@
 target :lib do
   signature "sig"
-  repo_path "vendor/rbs/gem_rbs"
+  repo_path "vendor/rbs/gem_rbs/gems"
 
   check "lib"
   ignore "lib/tasks"
@@ -11,4 +11,5 @@ target :lib do
   library "forwardable"
   library "uri"
   library "strong_json"
+  library "retryable"
 end
