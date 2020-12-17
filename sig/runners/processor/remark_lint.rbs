@@ -2,48 +2,38 @@ module Runners
   class Processor::RemarkLint < Processor
     include Nodejs
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[untyped]
+      def issue: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
-    CONSTRAINTS: untyped
+    CONSTRAINTS: Nodejs::constraints
+    DEFAULT_TARGET: String
+    DEFAULT_PRESET: String
 
-    DEFAULT_TARGET: untyped
+    private
 
-    DEFAULT_PRESET: untyped
+    def analysis_target: () -> Array[String]
 
-    def analyzer_bin: () -> "remark"
+    def option_ext: () -> Array[String]
 
-    def extract_version!: (untyped command, ?::String version_option, ?pattern: untyped pattern) -> untyped
+    def option_rc_path: () -> Array[String]
 
-    def setup: () { () -> untyped } -> untyped
+    def option_ignore_path: () -> Array[String]
 
-    def analyze: (untyped _changes) -> untyped
+    def option_use: () -> Array[String]
 
-    def remark_lint_version!: (?global: bool global) -> untyped
+    def no_rc_files?: () -> bool
 
-    def analysis_target: () -> untyped
+    def no_config_in_package_json?: () -> bool
 
-    def option_ext: () -> untyped
+    def use_default_preset?: () -> bool
 
-    def option_rc_path: () -> untyped
+    def default_preset: () -> Array[String]
 
-    def option_ignore_path: () -> untyped
+    def cli_options: () -> Array[String]
 
-    def option_use: () -> untyped
-
-    # @see https://github.com/unifiedjs/unified-engine/blob/master/doc/configure.md
-    def no_rc_files?: () -> untyped
-
-    # @see https://github.com/unifiedjs/unified-engine/blob/master/doc/configure.md
-    def no_config_in_package_json?: () -> untyped
-
-    def use_default_preset?: () -> untyped
-
-    def default_preset: () -> untyped
-
-    def cli_options: () -> untyped
-
-    def run_analyzer: () -> untyped
-
-    def parse_result: (untyped output) -> ::Array[untyped]
+    def parse_result: (String) -> [Array[Issue], Array[String]]
   end
 end
