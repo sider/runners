@@ -31,6 +31,10 @@ module Runners
 
       attr_reader :argv
 
+      def initialize(argv)
+        @argv = argv
+      end
+
       def docker_image
         argv[0]
       end
@@ -43,14 +47,10 @@ module Runners
         Pathname(argv[1])
       end
 
-      def initialize(argv)
-        @argv = argv
-      end
-
       def run
         start = Time.now
 
-        load expectations.to_s
+        load expectations.to_path
 
         jobs = ENV["JOBS"] ? Integer(ENV["JOBS"]) : nil
         "Running #{Rainbow(self.class.tests.size.to_s).bright} smoke tests".tap do |msg|
@@ -101,12 +101,12 @@ module Runners
 
       def run_test(params, out)
         command_output, _ = Dir.mktmpdir do |dir|
-          repo = prepare_git_repository(
+          repo_dir, base, head = prepare_git_repository(
             workdir: Pathname(dir).realpath,
             smoke_target: expectations.parent.join(params.name).realpath,
             out: out,
           )
-          cmd = command_line(params: params, repo_dir: repo.fetch(:dir), base: repo.fetch(:base), head: repo.fetch(:head))
+          cmd = command_line(params: params, repo_dir: repo_dir, base: base, head: head)
           sh!(*cmd, out: out, exception: false)
         end
 
@@ -192,8 +192,8 @@ module Runners
           sh! "git", "push", out: out
           head_commit, _ = sh! "git", "rev-parse", "HEAD", out: out
 
-          # @type var _: repo_info
-          _ = { dir: bare_dir, base: base_commit.chomp, head: head_commit.chomp }
+          # TODO: Ignored Steep error
+          _ = [bare_dir, base_commit.chomp, head_commit.chomp]
         end
       end
 
