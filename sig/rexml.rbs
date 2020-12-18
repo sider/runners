@@ -4,13 +4,23 @@ module REXML
     def root: () -> Element?
   end
 
+  class Elements
+    def []: (String | Integer) -> Element?
+  end
+
   class Element
     include Namespace
 
     def []: (String | Symbol | Integer) -> (String | nil)
     def each_element: (?String) { (Element) -> untyped } -> void
     def get_elements: (String) -> Array[Element]
+    def elements: () -> Elements
     def text: (?String) -> String?
+    def cdatas: () -> [CData]
+  end
+
+  class CData
+    def value: () -> String
   end
 
   module Namespace

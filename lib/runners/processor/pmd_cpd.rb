@@ -104,7 +104,6 @@ module Runners
 
       read_xml(stdout).each_element('duplication') do |elem_dupli|
         files = elem_dupli.get_elements('file').map{ |f| to_fileinfo(f) }
-        issueobj = create_issue_object(elem_dupli, files)
 
         files.each do |file|
           yield Issue.new(
@@ -112,7 +111,7 @@ module Runners
             path: file[:path],
             location: file[:location],
             message: "Code duplications found (#{files.length} occurrences).",
-            object: issueobj,
+            object: create_issue_object(elem_dupli, files),
             schema: Schema.issue,
           )
         end
@@ -120,40 +119,45 @@ module Runners
     end
 
     def to_fileinfo(elem_file)
-      path = relative_path(elem_file[:path])
+      filename = elem_file[:path] or raise "required path: #{elem_file.inspect}"
+      path = relative_path(filename)
+
       location = Location.new(
         start_line: elem_file[:line],
         start_column: elem_file[:column],
         end_line: elem_file[:endline],
         end_column: elem_file[:endcolumn],
       )
-      id = Digest::SHA1.hexdigest(path.to_s + location.to_s) # In case multiple duplicates are found in a file, generate a hash from the file path and the location.
+      id = Digest::SHA1.hexdigest("#{path}#{location}") # In case multiple duplicates are found in a file, generate a hash from the file path and the location.
 
-      return {
-        id: id,
-        path: path,
-        location: location
-      }
+      { id: id, path: path, location: location }
     end
 
     def create_issue_object(elem_dupli, files)
-      lines = Integer(elem_dupli[:lines])
-      tokens = Integer(elem_dupli[:tokens])
-      codefragment = elem_dupli.elements['codefragment'].cdatas[0].value
+      lines_text = elem_dupli[:lines] or raise "required lines: #{elem_dupli.inspect}"
+      lines = Integer(lines_text)
+
+      tokens_text = elem_dupli[:tokens] or raise "required tokens: #{elem_dupli.inspect}"
+      tokens = Integer(tokens_text)
+
+      codefragment = elem_dupli.elements['codefragment']&.cdatas&.first&.value
+      codefragment or raise "required codefragment: #{elem_dupli.inspect}"
 
       # @see https://github.com/pmd/pmd/pull/2633
       codefragment = CGI.unescape_html(codefragment)
 
-      fileobjs = files.map { |f| {
-        id: f[:id],
-        path: f[:path].to_s,
-        start_line: f[:location].start_line,
-        start_column: f[:location].start_column,
-        end_line: f[:location].end_line,
-        end_column: f[:location].end_column,
-      }}
+      fileobjs = files.map do |f|
+        {
+          id: f[:id],
+          path: f[:path].to_path,
+          start_line: f[:location].start_line,
+          start_column: f[:location].start_column,
+          end_line: f[:location].end_line,
+          end_column: f[:location].end_column,
+        }
+      end
 
-      return {
+      {
         lines: lines,
         tokens: tokens,
         files: fileobjs,

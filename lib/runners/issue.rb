@@ -9,8 +9,8 @@ module Runners
     attr_reader :git_blame_info
 
     def initialize(path:, location:, id:, message:, links: [], object: nil, schema: nil)
-      path.instance_of?(Pathname) or
-        raise ArgumentError, "`path` must be a #{Pathname}: #{path.inspect}"
+      path.is_a?(Pathname) or
+        raise ArgumentError, "`path` must be a #{Pathname}: #{(_ = path).inspect}" # TODO: Ignored Steep error
 
       (message && !message.empty?) or
         raise ArgumentError, "`message` must be required: #{message.inspect}"
@@ -20,8 +20,7 @@ module Runners
       @path = path
       @location = location
       @missing_id = id.to_s.empty?
-      # @type var _: String
-      @id = _ = missing_id? ? Digest::SHA1.hexdigest(message) : id
+      @id = missing_id? ? Digest::SHA1.hexdigest(message) : id
       @message = message
       @links = links
       @object = object

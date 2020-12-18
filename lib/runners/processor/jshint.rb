@@ -80,15 +80,16 @@ module Runners
       issues = []
 
       read_xml(output).each_element("file") do |file|
-        file_name = file[:name]
-        file_path = file_name ? relative_path(file_name) : nil
+        filename = file[:name] or raise "required file: #{file.inspect}"
 
         file.each_element do |error|
+          message = error[:message] or raise "required message: #{error.inspect}"
+
           issues << Issue.new(
-            path: file_path,
+            path: relative_path(filename),
             location: Location.new(start_line: error[:line], start_column: error[:column]),
             id: error[:source],
-            message: error[:message]&.strip,
+            message: message.strip,
           )
         end
       end

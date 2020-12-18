@@ -19,38 +19,40 @@ module Runners
 
     def construct_result: (String) { (Issue) -> void } -> void
 
-    def to_fileinfo: (untyped elem_file) -> { id: untyped, path: untyped, location: untyped }
+    type fileinfo = { id: String, path: Pathname, location: Location }
 
-    def create_issue_object: (untyped elem_dupli, untyped files) -> { lines: untyped, tokens: untyped, files: untyped, codefragment: untyped }
+    def to_fileinfo: (REXML::Element) -> fileinfo
 
-    def option_files: () -> untyped
+    def create_issue_object: (REXML::Element, Array[fileinfo]) -> Hash[Symbol, untyped]
 
-    def option_encoding: () -> untyped
+    def option_files: () -> Array[String]
 
-    def option_minimum_tokens: () -> untyped
+    def option_encoding: () -> Array[String]
 
-    def languages: () -> untyped
+    def option_minimum_tokens: () -> Array[String]
 
-    def option_language: (untyped v) -> ::Array["--language" | untyped]
+    def languages: () -> Array[String]
 
-    def option_skip_duplicate_files: () -> untyped
+    def option_language: (String) -> Array[String]
 
-    def option_non_recursive: () -> untyped
+    def option_skip_duplicate_files: () -> Array[String]
 
-    def option_skip_lexical_errors: () -> untyped
+    def option_non_recursive: () -> Array[String]
 
-    def option_ignore_annotations: () -> untyped
+    def option_skip_lexical_errors: () -> Array[String]
 
-    def option_ignore_identifiers: () -> untyped
+    def option_ignore_annotations: () -> Array[String]
 
-    def option_ignore_literals: () -> untyped
+    def option_ignore_identifiers: () -> Array[String]
 
-    def option_ignore_usings: () -> untyped
+    def option_ignore_literals: () -> Array[String]
 
-    def option_no_skip_blocks: () -> untyped
+    def option_ignore_usings: () -> Array[String]
 
-    def option_skip_blocks_pattern: () -> untyped
+    def option_no_skip_blocks: () -> Array[String]
 
-    def cli_options: (untyped language) -> untyped
+    def option_skip_blocks_pattern: () -> Array[String]
+
+    def cli_options: (String) -> Array[String]
   end
 end

@@ -48,8 +48,9 @@ module Runners
         pattern = /^(?<file>.+):(?<line>\d+):(?<col>\d+): (?<message>"(?<incorrect>.+)" is a misspelling of "(?<correct>.+)")$/
         read_report_file.scan(pattern) do |file, line, col, message, incorrect, correct|
           raise "Unexpected match data: #{file.inspect}" unless file.is_a? String
-          raise "Unexpected match data: #{col.inspect}" unless col.is_a? String
-          raise "Unexpected match data: #{incorrect.inspect}" unless incorrect.is_a? String
+          raise "Unexpected match data: #{file.inspect}" unless col.is_a? String
+          raise "Unexpected match data: #{file.inspect}" unless message.is_a? String
+          raise "Unexpected match data: #{file.inspect}" unless incorrect.is_a? String
 
           result.add_issue Issue.new(
             path: relative_path(file),

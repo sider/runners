@@ -52,6 +52,7 @@ module Runners
       pattern = /^(.+):(\d+):(\d+): ([^:]+): (.+) \[([^\[]+)\]$/
       stdout.scan(pattern) do |path, line, column, severity, message, id|
         raise "Unexpected match data: #{path.inspect}" unless path.is_a? String
+        raise "Unexpected match data: #{path.inspect}" unless message.is_a? String
 
         yield Issue.new(
           path: relative_path(path),

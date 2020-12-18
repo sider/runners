@@ -92,6 +92,8 @@ module Runners
           path = relative_path(filename)
 
           element.each_element("violation") do |violation|
+            message = violation.text or raise "required message: #{violation.inspect}"
+
             yield Issue.new(
               path: path,
               location: Location.new(
@@ -101,8 +103,8 @@ module Runners
                 end_column: violation[:endcolumn],
               ),
               id: violation[:rule],
-              message: violation.text&.strip,
-              links: Array(violation[:externalInfoUrl]),
+              message: message.strip,
+              links: violation[:externalInfoUrl].then { |url| url ? [url] : [] },
               object: {
                 ruleset: violation[:ruleset],
                 priority: violation[:priority],
