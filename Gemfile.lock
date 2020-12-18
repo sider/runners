@@ -75,7 +75,7 @@ GEM
     rubocop-ast (1.3.0)
       parser (>= 2.7.1.5)
     ruby-progressbar (1.10.1)
-    steep (0.38.0)
+    steep (0.37.0)
       activesupport (>= 5.1)
       ast_utils (~> 0.3.0)
       language_server-protocol (~> 3.15.0.1)
@@ -85,7 +85,7 @@ GEM
       rbs (>= 0.20.0)
     strong_json (2.1.2)
     thor (1.0.1)
-    tzinfo (2.0.3)
+    tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     unicode-display_width (1.7.0)
     unification_assertion (0.0.1)
@@ -112,7 +112,7 @@ DEPENDENCIES
   retryable
   rexml (>= 3.2, < 4.0)
   rubocop
-  steep
+  steep (= 0.37.0)
   strong_json
   unification_assertion
 
