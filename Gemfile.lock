@@ -109,6 +109,7 @@ DEPENDENCIES
   parallel
   rainbow
   rake
+  rbs
   retryable
   rexml (>= 3.2, < 4.0)
   rubocop
