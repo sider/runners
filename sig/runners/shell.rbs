@@ -33,7 +33,7 @@ module Runners
     def env_hash: () -> Hash[String, String?]
     def capture3: (String, *String, **untyped) -> [String, String, Process::Status]
     def capture3!: (String, *String, **untyped) -> [String, String]
-    def capture3_with_retry!: (String, *String, ?tries: Integer, ?sleep: ^(real) -> Numeric) -> [String, String]
+    def capture3_with_retry!: (String, *String, ?tries: Integer, ?sleep: ^(Numeric) -> Numeric) -> [String, String]
     def capture3_trace: (String, *String, **untyped) -> [String, String, Process::Status]
   end
 end

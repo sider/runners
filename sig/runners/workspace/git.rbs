@@ -18,7 +18,7 @@ module Runners
 
     def try_count: () -> Integer
 
-    def sleep_lambda: () -> ^(Integer) -> Numeric
+    def sleep_lambda: () -> ^(Numeric) -> Numeric
 
     def remote_url: () -> String
 

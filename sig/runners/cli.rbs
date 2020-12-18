@@ -12,7 +12,7 @@ module Runners
 
     def with_working_dir: [X] () { (Pathname) -> X } -> X
     def processor_class: () -> Class
-    def run: () -> untyped
+    def run: () -> void
     def io: () -> Runners::IO
     def format_duration: (Float duration_in_sec) -> String
   end

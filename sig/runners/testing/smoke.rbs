@@ -27,7 +27,7 @@ module Runners
 
       def run_test: (TestParams, StringIO) -> (:passed | :failed)
 
-      def unify_result: (Hash[Symbol, untyped], pattern, StringIO) -> untyped
+      def unify_result: (Hash[Symbol, untyped], pattern, StringIO) -> bool
 
       def command_line: (params: TestParams, repo_dir: String, base: String, head: String) -> Array[String]
 

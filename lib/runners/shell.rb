@@ -81,7 +81,7 @@ module Runners
       [stdout, stderr]
     end
 
-    def capture3_with_retry!(command, *args, tries: 3, sleep: -> (n) { n + 1 })
+    def capture3_with_retry!(command, *args, tries: 3, sleep: -> (n) { Integer(n) + 1 })
       Retryable.retryable(
         tries: tries,
         on: ExecError,

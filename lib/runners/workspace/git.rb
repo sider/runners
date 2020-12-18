@@ -53,7 +53,7 @@ module Runners
 
     # for testing
     def sleep_lambda
-      -> (n) { n ** 2.5 }
+      -> (n) { Integer(n) ** 2.5 }
     end
 
     def remote_url

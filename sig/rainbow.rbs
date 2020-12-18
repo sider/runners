@@ -1,6 +1,0 @@
-# TODO: Remove it when the missing methods will be supported.
-#       See <https://github.com/ruby/gem_rbs/tree/main/gems/rainbow>.
-class Rainbow::Presenter
-  def aqua: () -> self
-  def darkgray: () -> self
-end

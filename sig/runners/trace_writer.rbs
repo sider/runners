@@ -6,18 +6,29 @@ module Runners
     def initialize: (writer: JSONSEQ::Writer, filter: SensitiveFilter) -> void
 
     def command_line: (Array[String], ?recorded_at: Time) -> void
+
     def status: (Process::Status status, ?recorded_at: Time) -> void
+
     def stdout: (String, ?recorded_at: Time, ?max_length: Integer) -> void
+
     def stderr: (String, ?recorded_at: Time, ?max_length: Integer) -> void
+
     def message: (String, ?recorded_at: Time, ?max_length: Integer, ?limit: Integer, ?omission: String) ?{ () -> untyped } -> untyped
+
     def header: (String, ?recorded_at: Time) -> void
+
     def warning: (String, ?file: String?, ?recorded_at: Time) -> void
+
     def ci_config: (Hash[Symbol, untyped], raw_content: String, file: String, ?recorded_at: Time) -> void
+
     def error: (String, ?recorded_at: Time, ?max_length: Integer) -> void
+
     def <<: (Hash[Symbol, untyped]) -> void
 
     private
+
     def now: () -> Time
+
     def each_slice: (String, size: Integer) { (String, bool) -> void } -> void
   end
 end
