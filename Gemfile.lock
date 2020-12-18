@@ -94,6 +94,7 @@ GEM
 
 PLATFORMS
   ruby
+  x86_64-darwin-19
 
 DEPENDENCIES
   amazing_print
@@ -118,4 +119,4 @@ DEPENDENCIES
   unification_assertion
 
 BUNDLED WITH
-   2.1.4
+   2.2.1
