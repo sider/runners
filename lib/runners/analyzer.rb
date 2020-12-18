@@ -1,6 +1,5 @@
 module Runners
   class Analyzer
-    # @dynamic name, version
     attr_reader :name
     attr_reader :version
 
