@@ -2,3 +2,4 @@ linter:
   pmd_java:
     rulesets: category/java/codestyle.xml
     dir: src
+    min_priority: 5
