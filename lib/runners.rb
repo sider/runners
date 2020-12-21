@@ -17,7 +17,6 @@ require "tempfile"
 require "set"
 require "forwardable"
 require "rexml/document"
-require "shellwords"
 require "digest/sha2"
 require 'retryable'
 require "aws-sdk-s3"
