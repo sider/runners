@@ -33,10 +33,11 @@ class CLITest < Minitest::Test
       assert_equal "missing argument: --analyzer is required", error.message
     end
 
-    assert_raises RuntimeError do
+    assert_raises OptionParser::InvalidArgument do
       CLI.new(argv: ["--analyzer=FOO", "test-guid"], stdout: stdout, stderr: stderr, options_json: options_json)
     end.tap do |error|
-      assert_equal "Not found processor class with 'FOO'", error.message
+      pp error
+      assert_equal "invalid argument: --analyzer=FOO", error.message
     end
 
     assert_raises OptionParser::MissingArgument do
@@ -71,8 +72,9 @@ class CLITest < Minitest::Test
 
   def test_run
     cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: options_json)
-    cli.instance_variable_set(:@processor_class, TestProcessor)
-    cli.run
+    cli.stub(:processor_class, TestProcessor) do
+      cli.run
+    end
 
     # It write JSON objects to stdout
 
@@ -90,7 +92,6 @@ class CLITest < Minitest::Test
   def test_run_when_sider_yml_is_broken
     json = options_json({ source: new_source(head: "07aeaa0b17fb34063cbc3ed24d6d65f986c37884") })
     cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: json)
-    cli.instance_variable_set(:@processor_class, TestProcessor)
     cli.run
 
     # It write JSON objects to stdout
@@ -106,14 +107,16 @@ class CLITest < Minitest::Test
 
   def test_format_duration
     cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: options_json)
-    assert_equal "0.0s", cli.format_duration(0.0)
-    assert_equal "0.0s", cli.format_duration(0.000123)
-    assert_equal "0.123s", cli.format_duration(0.1234567)
-    assert_equal "1s", cli.format_duration(1.1234567)
-    assert_equal "10s", cli.format_duration(10.1234567)
-    assert_equal "16m 40s", cli.format_duration(1000.1234567)
-    assert_equal "2h 46m 40s", cli.format_duration(10000.1234567)
-    assert_equal "27h 46m 40s", cli.format_duration(100000.1234567)
-    assert_equal "27h 46m 40s", cli.format_duration(100000)
+    target = ->(value) { cli.send(:format_duration, value) }
+
+    assert_equal "0.0s", target.(0.0)
+    assert_equal "0.0s", target.(0.000123)
+    assert_equal "0.123s", target.(0.1234567)
+    assert_equal "1s", target.(1.1234567)
+    assert_equal "10s", target.(10.1234567)
+    assert_equal "16m 40s", target.(1000.1234567)
+    assert_equal "2h 46m 40s", target.(10000.1234567)
+    assert_equal "27h 46m 40s", target.(100000.1234567)
+    assert_equal "27h 46m 40s", target.(100000)
   end
 end

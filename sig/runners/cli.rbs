@@ -10,10 +10,18 @@ module Runners
 
     def initialize: (argv: Array[String], stdout: ::IO, stderr: ::IO, options_json: String) -> void
 
-    def with_working_dir: [X] () { (Pathname) -> X } -> X
-    def processor_class: () -> Class
     def run: () -> void
+
+    private
+
+    def with_working_dir: [X] () { (Pathname) -> X } -> X
+
+    def all_processor_classes: () -> Hash[String, Class]
+
+    def processor_class: () -> Class
+
     def io: () -> Runners::IO
+
     def format_duration: (Float duration_in_sec) -> String
   end
 end
