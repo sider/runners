@@ -12,5 +12,4 @@ target :lib do
   library "uri"
   library "strong_json"
   library "retryable"
-  library "rainbow"
 end

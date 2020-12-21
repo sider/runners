@@ -1,10 +1,17 @@
 require "minitest"
 require "unification_assertion"
-require 'parallel'
+require "parallel"
 require "amazing_print"
 require "rainbow"
 require "openssl"
 require "base64"
+require "open3"
+require "uri"
+require "json"
+require "jsonseq"
+require "strong_json"
+
+require_relative "../../lib/runners/schema/result"
 
 module Runners
   module Testing
