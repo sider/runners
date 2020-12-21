@@ -70,16 +70,16 @@ module Runners
     private
 
     def cli_args
-      [].tap do |args|
-        args << "-language" << "java"
-        args << "-threads" << "2"
-        args << "-format" << "xml"
-        args << "-reportfile" << report_file
-        args << "-dir" << dir
-        args << "-rulesets" << rulesets.join(",")
-        min_priority&.tap { |num| args << "-minimumpriority" << num }
-        encoding&.tap { |enc| args << "-encoding" << enc }
-      end
+      [
+        "-language", "java",
+        "-threads", "2",
+        "-format", "xml",
+        "-reportfile", report_file,
+        "-dir", dir,
+        "-rulesets", rulesets.join(","),
+        *min_priority,
+        *encoding,
+      ]
     end
 
     def construct_result(xml)
@@ -133,11 +133,13 @@ module Runners
     end
 
     def encoding
-      config_linter[:encoding]
+      enc = config_linter[:encoding]
+      enc ? ["-encoding", enc] : []
     end
 
     def min_priority
-      config_linter[:min_priority]
+      num = config_linter[:min_priority]
+      num ? ["-minimumpriority", num.to_s] : []
     end
   end
 end

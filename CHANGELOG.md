@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.39.2...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.39.3...HEAD)
+
+## 0.39.3
+
+[Full diff](https://github.com/sider/runners/compare/0.39.2...0.39.3)
+
+- **PMD Java** NoMethodError: undefined method `gsub' for 2:Integer [#1818](https://github.com/sider/runners/pull/1818)
 
 - Remove unused `locale` gem [#1817](https://github.com/sider/runners/pull/1817)
 
