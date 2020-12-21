@@ -3,7 +3,6 @@ target :lib do
   repo_path "vendor/rbs/gem_rbs/gems"
 
   check "lib"
-  ignore "lib/tasks"
 
   library "pathname"
   library "set"
