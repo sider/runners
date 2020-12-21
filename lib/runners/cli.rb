@@ -82,6 +82,7 @@ module Runners
 
     def all_processor_classes
       @processor_classes ||= ObjectSpace.each_object(Class).each_with_object({}) do |cls, classes|
+        next unless cls.name
         next unless cls < Processor
 
         # NOTE: Generate an analyzer ID from the file name convention.
