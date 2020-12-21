@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 [Full diff](https://github.com/sider/runners/compare/0.39.3...HEAD)
 
 - Remove unused `locale` gem [#1817](https://github.com/sider/runners/pull/1817)
+- **PMD CPD** Remove needless `CGI.unescape_html`[#1821](https://github.com/sider/runners/pull/1821)
 
 ## 0.39.3
 
