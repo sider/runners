@@ -19,7 +19,6 @@ require "forwardable"
 require "rexml/document"
 require "shellwords"
 require "digest/sha2"
-require "locale"
 require 'retryable'
 require "aws-sdk-s3"
 require "bugsnag"
