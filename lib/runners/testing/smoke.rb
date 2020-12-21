@@ -4,6 +4,7 @@ require 'parallel'
 require "amazing_print"
 require "rainbow"
 require "openssl"
+require "base64"
 
 module Runners
   module Testing
