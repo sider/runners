@@ -7,7 +7,7 @@ s.add_test(
   type: "success",
   issues: [
     {
-      id: "code-metrics",
+      id: "function-complexity",
       path: "example.c",
       location: { start_line: 7, end_line: 11 },
       message: "Complexity is 1 for 5 line(s) of code at main.",
@@ -26,7 +26,7 @@ s.add_test(
       }
     },
     {
-      id: "code-metrics",
+      id: "function-complexity",
       path: "example.c",
       location: { start_line: 13, end_line: 16 },
       message: "Complexity is 1 for 4 line(s) of code at print_hello_world.",
@@ -37,7 +37,7 @@ s.add_test(
       }
     },
     {
-      id: "code-metrics",
+      id: "function-complexity",
       path: "src/baz/hello.php",
       location: { start_line: 2, end_line: 6 },
       message: "Complexity is 1 for 4 line(s) of code at hello_world.",
@@ -48,7 +48,7 @@ s.add_test(
       }
     },
     {
-      id: "code-metrics",
+      id: "function-complexity",
       path: "src/baz/hello.rb",
       location: { start_line: 1, end_line: 4 },
       message: "Complexity is 1 for 3 line(s) of code at hello_world.",
@@ -59,7 +59,7 @@ s.add_test(
       }
     },
     {
-      id: "code-metrics",
+      id: "function-complexity",
       path: "src/baz/hello.scala",
       location: { start_line: 2, end_line: 5 },
       message: "Complexity is 1 for 3 line(s) of code at hello_world.",
@@ -70,7 +70,7 @@ s.add_test(
       }
     },
     {
-      id: "code-metrics",
+      id: "function-complexity",
       path: "src/baz/qux/hello.lua",
       location: { start_line: 2, end_line: 5 },
       message: "Complexity is 1 for 3 line(s) of code at hello_world.",
@@ -81,7 +81,7 @@ s.add_test(
       }
     },
     {
-      id: "code-metrics",
+      id: "function-complexity",
       path: "src/baz/qux/hello.rs",
       location: { start_line: 2, end_line: 4 },
       message: "Complexity is 1 for 3 line(s) of code at main.",
@@ -92,7 +92,7 @@ s.add_test(
       }
     },
     {
-      id: "code-metrics",
+      id: "function-complexity",
       path: "src/baz/qux/hello.rs",
       location: { start_line: 6, end_line: 9 },
       message: "Complexity is 1 for 3 line(s) of code at print_hello.",
@@ -103,7 +103,7 @@ s.add_test(
       }
     },
     {
-      id: "code-metrics",
+      id: "function-complexity",
       path: "src/foo/bar/hello.m",
       location: { start_line: 3, end_line: 8 },
       message: "Complexity is 1 for 5 line(s) of code at hello_world.",
@@ -114,7 +114,7 @@ s.add_test(
       }
     },
     {
-      id: "code-metrics",
+      id: "function-complexity",
       path: "src/foo/bar/hello.m",
       location: { start_line: 10, end_line: 13 },
       message: "Complexity is 1 for 4 line(s) of code at main.",
@@ -125,7 +125,7 @@ s.add_test(
       }
     },
     {
-      id: "code-metrics",
+      id: "function-complexity",
       path: "src/foo/bar/hello.swift",
       location: { start_line: 1, end_line: 4 },
       message: "Complexity is 1 for 3 line(s) of code at hello_world.",
@@ -136,7 +136,7 @@ s.add_test(
       }
     },
     {
-      id: "code-metrics",
+      id: "function-complexity",
       path: "src/foo/hello.c",
       location: { start_line: 6, end_line: 10 },
       message: "Complexity is 1 for 5 line(s) of code at main.",
@@ -147,7 +147,7 @@ s.add_test(
       }
     },
     {
-      id: "code-metrics",
+      id: "function-complexity",
       path: "src/foo/hello.c",
       location: { start_line: 12, end_line: 16 },
       message: "Complexity is 1 for 4 line(s) of code at print_hello_world.",
@@ -158,7 +158,7 @@ s.add_test(
       }
     },
     {
-      id: "code-metrics",
+      id: "function-complexity",
       path: "src/foo/hello.cpp",
       location: { start_line: 6, end_line: 10 },
       message: "Complexity is 1 for 5 line(s) of code at main.",
@@ -169,7 +169,7 @@ s.add_test(
       }
     },
     {
-      id: "code-metrics",
+      id: "function-complexity",
       path: "src/foo/hello.cpp",
       location: { start_line: 12, end_line: 16 },
       message: "Complexity is 1 for 4 line(s) of code at print_hello_world.",
@@ -180,7 +180,7 @@ s.add_test(
       }
     },
     {
-      id: "code-metrics",
+      id: "function-complexity",
       path: "src/foo/hello.java",
       location: { start_line: 2, end_line: 4 },
       message: "Complexity is 1 for 3 line(s) of code at HelloWorld::main.",
@@ -191,7 +191,7 @@ s.add_test(
       }
     },
     {
-      id: "code-metrics",
+      id: "function-complexity",
       path: "src/foo/hello.java",
       location: { start_line: 6, end_line: 9 },
       message: "Complexity is 1 for 3 line(s) of code at HelloWorld::printHelloWorld.",
@@ -202,7 +202,7 @@ s.add_test(
       }
     },
     {
-      id: "code-metrics",
+      id: "function-complexity",
       path: "src/foo/hello.js",
       location: { start_line: 1, end_line: 4 },
       message: "Complexity is 1 for 3 line(s) of code at hello_world.",
@@ -221,7 +221,7 @@ s.add_test(
   type: "success",
   issues: [
     {
-      id: "code-metrics",
+      id: "function-complexity",
       path: "src/baz/fizzbuzz.py",
       location: { start_line: 5, end_line: 6 },
       message: "Complexity is 1 for 2 line(s) of code at do_nothing.",
@@ -232,7 +232,7 @@ s.add_test(
       }
     },
     {
-      id: "code-metrics",
+      id: "function-complexity",
       path: "src/baz/fizzbuzz.py",
       location: { start_line: 8, end_line: 25 },
       message: "Complexity is 6 for 14 line(s) of code at do_fizz_Buzz.",
@@ -251,7 +251,7 @@ s.add_test(
       }
     },
     {
-      id: "code-metrics",
+      id: "function-complexity",
       path: "src/baz/qux/今日は世界.go",
       location: { start_line: 5, end_line: 7 },
       message: "Complexity is 1 for 3 line(s) of code at main.",
@@ -262,7 +262,7 @@ s.add_test(
       }
     },
     {
-      id: "code-metrics",
+      id: "function-complexity",
       path: "src/baz/qux/今日は世界.go",
       location: { start_line: 9, end_line: 12 },
       message: "Complexity is 1 for 3 line(s) of code at hello_world.",
@@ -273,7 +273,7 @@ s.add_test(
       }
     },
     {
-      id: "code-metrics",
+      id: "function-complexity",
       path: "src/baz/こんにちは.py",
       location: { start_line: 1, end_line: 3 },
       message: "Complexity is 1 for 2 line(s) of code at hello_world.",
@@ -284,7 +284,7 @@ s.add_test(
       }
     },
     {
-      id: "code-metrics",
+      id: "function-complexity",
       path: "src/foo/こんにちは世界.cs",
       location: { start_line: 4, end_line: 7 },
       message: "Complexity is 1 for 4 line(s) of code at HelloWorld::Main.",
@@ -295,7 +295,7 @@ s.add_test(
       }
     },
     {
-      id: "code-metrics",
+      id: "function-complexity",
       path: "src/foo/こんにちは世界.cs",
       location: { start_line: 9, end_line: 13 },
       message: "Complexity is 1 for 4 line(s) of code at HelloWorld::PrintHelloWorld.",
@@ -314,7 +314,7 @@ s.add_test(
   type: "success",
   issues: [
     {
-      id: "code-metrics",
+      id: "function-complexity",
       path: "src/example,file.cs",
       location: { start_line: 5, end_line: 14 },
       message: "Complexity is 2 for 8 line(s) of code at Program::TestFunction.",

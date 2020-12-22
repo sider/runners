@@ -28,17 +28,25 @@ module Runners
         '--output_file', report_file,
         '.')
 
-      issues = []
+      function_issues = []
       read_report_csv(report_file, headers: true) do |row|
-        issues << construct_result(row)
+        function_issues << construct_function_issue(row)
       end
 
-      Results::Success.new(guid: guid, analyzer: analyzer, issues: issues)
+      file_issues = []
+      function_issues
+        .map { |issue| issue.path }
+        .uniq
+        .each do |filepath|
+          file_issues << construct_file_issue(filepath, function_issues)
+        end
+
+      Results::Success.new(guid: guid, analyzer: analyzer, issues: function_issues)
     end
 
     private
 
-    def construct_result(row)
+    def construct_function_issue(row)
       # With --verbose and --csv flags, lizard writes results as following format:
       # NLOC,CCN,token,PARAM,length,location,file,function,long_name,start,end
 
@@ -50,7 +58,7 @@ module Runners
       Issue.new(
         path: relative_path(row["file"]),
         location: Location.new(start_line: row["start"], end_line: row["end"]),
-        id: "code-metrics",
+        id: "function-complexity",
         message: msg,
         object: {
           NLOC: nloc,
@@ -60,6 +68,29 @@ module Runners
           length: Integer(row["length"]),
           function: function,
           long_name: row["long_name"],
+          },
+        schema: Schema.issue,
+        )
+    end
+
+    def construct_file_issue(filepath, issues)
+      issues_in_file = issues.select { |issue| issue.path == filepath }
+      sum_of_CCN = issues_in_file.inject(0) { |sum, issue| sum + issue.object[:CCN] }
+      msg = "The sum of complexity of total #{issues_in_file.length} function(s) is #{sum_of_CCN}."
+
+      Issue.new(
+        path: filepath,
+        location: Location.new(start_line: 1),
+        id: "metrics_file-complexity",
+        message: msg,
+        object: {
+          NLOC: 0,
+          CCN: sum_of_CCN,
+          token: 0,
+          PARAM: 0,
+          length: 0,
+          function: "",
+          long_name: "",
           },
         schema: Schema.issue,
         )
