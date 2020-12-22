@@ -28,16 +28,17 @@ module Runners
         '--output_file', report_file,
         '.')
 
-      Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        read_report_csv(report_file, headers: true) do |row|
-          construct_result(result, row)
-        end
+      issues = []
+      read_report_csv(report_file, headers: true) do |row|
+        issues << construct_result(row)
       end
+
+      Results::Success.new(guid: guid, analyzer: analyzer, issues: issues)
     end
 
     private
 
-    def construct_result(result, row)
+    def construct_result(row)
       # With --verbose and --csv flags, lizard writes results as following format:
       # NLOC,CCN,token,PARAM,length,location,file,function,long_name,start,end
 
@@ -46,7 +47,7 @@ module Runners
       function = row["function"]
       msg = "Complexity is #{ccn} for #{nloc} line(s) of code at #{function}."
 
-      result.add_issue Issue.new(
+      Issue.new(
         path: relative_path(row["file"]),
         location: Location.new(start_line: row["start"], end_line: row["end"]),
         id: "code-metrics",
