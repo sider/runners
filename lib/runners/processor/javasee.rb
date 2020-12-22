@@ -38,7 +38,7 @@ module Runners
     def analyze(changes)
       delete_unchanged_files changes, only: ["*.java"]
 
-      stdout, stderr, status = shell.capture3(
+      stdout, _stderr, status = shell.capture3(
         analyzer_bin,
         "check",
         "-format", "json",
