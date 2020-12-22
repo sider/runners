@@ -35,10 +35,10 @@ COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/jshint/sider_jshintignore ima
 
 
 # Copy the main source code
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} bin ${RUNNERS_DIR}/bin
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} exe ${RUNNERS_DIR}/exe
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} lib ${RUNNERS_DIR}/lib
 
-ENV PATH ${RUNNERS_DIR}/bin:${PATH}
+ENV PATH ${RUNNERS_DIR}/exe:${PATH}
 
 # Run as non-root user
 USER $RUNNER_USER
