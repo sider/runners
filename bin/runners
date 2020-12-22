@@ -5,8 +5,6 @@ $LOAD_PATH.prepend File.join(__dir__, "..", "lib")
 require "runners"
 require "runners/cli"
 
-class RunnersTimeoutError < StandardError; end
-
 EXIT_STATUS_FOR_SIGTERM = 126
 
 # @see https://docs.bugsnag.com/platforms/ruby/configuration-options
@@ -23,12 +21,12 @@ Bugsnag.configure do |config|
 end
 
 trap('SIGTERM') do
-  Bugsnag.notify(RunnersTimeoutError.new)
+  Bugsnag.notify(Runners::TimeoutError.new)
   exit(EXIT_STATUS_FOR_SIGTERM)
 end
 
 trap('SIGUSR2') do
-  Bugsnag.notify(RunnersTimeoutError.new)
+  Bugsnag.notify(Runners::TimeoutError.new)
 end
 
 begin

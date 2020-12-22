@@ -7,4 +7,7 @@ module Runners
 
   class SystemError < Error
   end
+
+  class TimeoutError < SystemError
+  end
 end
