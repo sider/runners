@@ -13,7 +13,7 @@ require "tempfile"
 require "set"
 require "forwardable"
 require "rexml/document"
-require "digest/sha2"
+require "digest"
 require 'retryable'
 require "aws-sdk-s3"
 require "bugsnag"
