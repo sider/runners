@@ -21,7 +21,6 @@ require "aws-sdk-s3"
 require "bugsnag"
 require "git_diff_parser"
 require "strscan"
-require "cgi"
 require "csv"
 
 require "runners/version"

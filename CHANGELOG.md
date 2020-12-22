@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - Remove unused `locale` gem [#1817](https://github.com/sider/runners/pull/1817)
 - **PMD CPD** Remove needless `CGI.unescape_html`[#1821](https://github.com/sider/runners/pull/1821)
+- **Lizard** [#1631](https://github.com/sider/runners/pull/1631)
 
 ## 0.39.3
 
@@ -70,12 +71,6 @@ Updated tools:
 ## 0.37.2
 
 [Full diff](https://github.com/sider/runners/compare/0.37.1...0.37.2)
-
-New supported:
-
-- **Lizard** [#1631](https://github.com/sider/runners/pull/1631)
-
-Misc:
 
 - Optimize `Runners::Changes#include?` [#1633](https://github.com/sider/runners/pull/1633)
 - Reduce log for git-blame(1) [#1632](https://github.com/sider/runners/pull/1632)
