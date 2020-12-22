@@ -211,7 +211,8 @@ module Runners
 
       parsed = JSON.parse(stdout).dig("dependencies") or return {}
 
-      parsed.each_with_object({}) do |(name, obj), deps|
+      parsed.each_with_object({}) do |pair, deps|
+        name, obj = pair
         deps[name] = obj["version"] || ""
       end
     end

@@ -2,23 +2,17 @@ module Runners
   module Ruby
     class GemInstaller
       class Spec
-        attr_reader name: untyped
+        attr_reader name: String
+        attr_reader version: Array[String]
+        attr_reader source: Source
 
-        attr_reader version: untyped
+        def initialize: (name: String, version: Array[String], ?source: Source) -> void
 
-        attr_reader source: untyped
+        def override_by_lockfile: (LockfileLoader::Lockfile) -> Spec
 
-        def initialize: (name: untyped name, version: untyped version, ?source: untyped source) -> untyped
+        def self.from_gems: (Array[gems_item | String]) -> Array[Spec]
 
-        def ==: (untyped other) -> untyped
-
-        def hash: () -> untyped
-
-        def override_by_lockfile: (untyped lockfile) -> untyped
-
-        def self.from_gems: (untyped gems_items) -> untyped
-
-        def self.merge: (untyped default_gems, untyped user_gems) -> untyped
+        def self.merge: (Array[Spec], Array[Spec]) -> Array[Spec]
       end
     end
   end

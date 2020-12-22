@@ -2,22 +2,23 @@ module Runners
   class Processor::Reek < Processor
     include Ruby
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
-    CONSTRAINTS: untyped
+    GEM_NAME: String
+    CONSTRAINTS: Ruby::constraints
+    DEFAULT_TARGET: String
 
-    DEFAULT_TARGET: untyped
+    private
 
-    def setup: () { () -> untyped } -> untyped
+    def analysis_targets: () -> Array[String]
 
-    def analyze: (untyped changes) -> untyped
+    def cli_args: () -> Array[String]
 
-    def analysis_targets: () -> untyped
+    def v4?: () -> bool
 
-    def cli_args: () -> untyped
-
-    def v4?: () -> untyped
-
-    def raise_warnings: (untyped stderr) -> untyped
+    def raise_warnings: (String) -> void
   end
 end

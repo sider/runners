@@ -81,7 +81,7 @@ module Runners
       [stdout, stderr]
     end
 
-    def capture3_with_retry!(command, *args, tries: 3, sleep: -> (n) { n + 1 })
+    def capture3_with_retry!(command, *args, tries: 3, sleep: -> (n) { Integer(n) + 1 })
       Retryable.retryable(
         tries: tries,
         on: ExecError,
@@ -89,7 +89,7 @@ module Runners
         exception_cb: -> (_ex) { trace_writer.message "Command failed. Retrying..." }
       ) do
         capture3!(command, *args)
-      end
+      end or raise "Unexpected result (tries=#{tries}): #{command} #{args.join(' ')}"
     end
 
     # TODO: After migrating to Steep (>= 0.14), use keyword arguments like `trace_stdout: true, ...`

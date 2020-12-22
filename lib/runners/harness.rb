@@ -54,7 +54,11 @@ module Runners
               result = processor.setup do
                 trace_writer.header "Run #{processor.analyzer_name}"
                 @analyzer = processor.analyzer # initialize analyzer
-                exclude_special_dirs { processor.analyze(changes) }
+                if processor.use_git_metadata_dir?
+                  processor.analyze(changes)
+                else
+                  exclude_special_dirs { processor.analyze(changes) }
+                end
               end
 
               case result
@@ -97,7 +101,9 @@ module Runners
       rescue UserError => exn
         Results::Failure.new(guid: guid, message: exn.message, analyzer: @analyzer)
       rescue => exn
-        Bugsnag.notify(exn)
+        Bugsnag.notify(exn) do |report|
+          report.severity = "error"
+        end
         handle_error(exn)
         Results::Error.new(guid: guid, exception: exn, analyzer: @analyzer)
       end
@@ -113,7 +119,6 @@ module Runners
     end
 
     def exclude_special_dirs
-      # @type var saved: Hash<Pathname, Pathname>
       saved = [".git"].filter_map do |dir|
         src = working_dir / dir
         if src.directory?

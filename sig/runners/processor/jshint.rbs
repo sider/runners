@@ -2,20 +2,22 @@ module Runners
   class Processor::Jshint < Processor
     include Nodejs
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
-    def setup: () { () -> untyped } -> untyped
+    DEFAULT_CONFIG_FILE: String
+    DEFAULT_IGNORE_FILE: String
 
-    def analyze: (untyped changes) -> untyped
+    private
 
-    def prepare_config: () -> (nil | untyped)
+    def prepare_config: () -> void
 
-    def jshintrc_exist?: () -> (::TrueClass | ::FalseClass)
+    def jshintrc_exist?: () -> bool
 
-    def config_path: () -> untyped
+    def config_path: () -> String?
 
-    def parse_result: (untyped output) { (untyped) -> untyped } -> untyped
-
-    def run_analyzer: () -> untyped
+    def parse_result: (String) -> Array[Issue]
   end
 end

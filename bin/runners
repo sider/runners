@@ -1,13 +1,9 @@
 #!/usr/bin/env ruby
 
-require "pathname"
-
-$LOAD_PATH << Pathname(__dir__).parent + "lib"
+$LOAD_PATH.prepend File.join(__dir__, "..", "lib")
 
 require "runners"
 require "runners/cli"
-
-class RunnersTimeoutError < StandardError; end
 
 EXIT_STATUS_FOR_SIGTERM = 126
 
@@ -25,12 +21,12 @@ Bugsnag.configure do |config|
 end
 
 trap('SIGTERM') do
-  Bugsnag.notify(RunnersTimeoutError.new)
+  Bugsnag.notify(Runners::TimeoutError.new)
   exit(EXIT_STATUS_FOR_SIGTERM)
 end
 
 trap('SIGUSR2') do
-  Bugsnag.notify(RunnersTimeoutError.new)
+  Bugsnag.notify(Runners::TimeoutError.new)
 end
 
 begin

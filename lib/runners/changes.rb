@@ -29,34 +29,33 @@ module Runners
     end
 
     def include?(issue)
-      if patches
-        location = issue.location
+      git_diff_patches = patches
+      if git_diff_patches
         # NOTE: #find_patch_by_file omits just renamed files.
         # @see https://github.com/packsaddle/ruby-git_diff_parser/issues/272
-        patch = find_patch_by_file(issue.path.to_path)
-        if patch && location
-          patch.changed_lines.one? { |line| location.start_line == line.number }
-        elsif patch
-          true
+        changed_lines = changed_lines_by_file(git_diff_patches, issue.path.to_path)
+        location = issue.location
+        if location
+          changed_lines.any? { |line| location.include_line?(line) }
         else
-          false
+          !changed_lines.empty?
         end
       else
         changed_paths.member?(issue.path)
       end
     end
 
-    private def find_patch_by_file(path)
-      git_diff_patches = patches or raise "#patches is required"
-
+    private def changed_lines_by_file(patches, path)
       # NOTE: Cache for so many issues
-      @patches_by_file ||= {}
-      if @patches_by_file.key? path
-        @patches_by_file[path]
+      @changed_lines_cache ||= {}
+      hit = @changed_lines_cache[path]
+      if hit
+        hit
       else
-        found = git_diff_patches.find_patch_by_file(path)
-        @patches_by_file[path] = found
-        found
+        lines = patches.find_patch_by_file(path)&.changed_lines&.map(&:number) || []
+        lines.freeze
+        @changed_lines_cache[path] = lines
+        lines
       end
     end
 

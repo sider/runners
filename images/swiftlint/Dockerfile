@@ -2,9 +2,9 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM sider/devon_rex_swift:2.27.1
+FROM sider/devon_rex_swift:2.28.0
 
-ARG SWIFTLINT_VERSION=0.40.3
+ARG SWIFTLINT_VERSION=0.41.0
 
 # Build SwiftLint
 RUN cd /tmp && \

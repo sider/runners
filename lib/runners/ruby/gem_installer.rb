@@ -54,7 +54,7 @@ module Runners
       def gemfile_content
         trace_writer.message "Generating optimized Gemfile..."
 
-        # @type var lines: Array<String>
+        # @type var lines: Array[String]
         lines = []
         lines << Source.default.to_s
         lines << ""

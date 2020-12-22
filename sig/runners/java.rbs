@@ -1,18 +1,18 @@
 module Runners
-  module Java
+  module Java : Processor
     class InvalidDependency < UserError
     end
 
-    def show_runtime_versions: () -> untyped
+    def install_jvm_deps: () -> void
 
-    def install_jvm_deps: () -> (nil | untyped)
+    private
 
-    def jvm_deps_dir: () -> untyped
+    def jvm_deps_dir: () -> Pathname
 
-    def fetch_deps_via_gradle!: () -> untyped
+    def fetch_deps_via_gradle!: () -> void
 
-    def config_jvm_deps: () -> untyped
+    def config_jvm_deps: () -> Array[Array[String]]
 
-    def generate_jvm_deps_file: () -> untyped
+    def generate_jvm_deps_file: () -> void
   end
 end

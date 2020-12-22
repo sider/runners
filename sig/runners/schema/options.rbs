@@ -1,5 +1,9 @@
 module Runners
   module Schema
-    Options: untyped
+    class OptionsClass < StrongJSON
+      def source: () -> StrongJSON::Type::Object[untyped]
+      def payload: () -> StrongJSON::Type::Object[untyped]
+    end
+    Options: OptionsClass
   end
 end

@@ -41,7 +41,6 @@ module Runners
         private
 
         def find_spec(spec)
-          # @type var spec: any
           spec_name = spec.is_a?(String) ? spec : spec.name
           specs.find { |s| s.name == spec_name }
         end

@@ -2,7 +2,9 @@ module Runners
   class Processor::RuboCop < Processor
     include Ruby
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :runner_config, Schema::BaseConfig.ruby.update_fields { |fields|
         fields.merge!({
                         config: string?,
@@ -72,119 +74,55 @@ module Runners
       GemInstaller::Spec.new(name: "ws-style", version: []),
     ].freeze
 
+    GEM_NAME = "rubocop".freeze
     CONSTRAINTS = {
-      "rubocop" => [">= 0.61.0", "< 2.0.0"]
+      GEM_NAME => [">= 0.61.0", "< 2.0.0"]
     }.freeze
 
-    def default_gem_specs
-      super.tap do |gems|
-        if setup_default_config
-          # NOTE: The latest MeowCop requires usually the latest RuboCop.
-          #       (e.g. MeowCop 2.4.0 requires RuboCop 0.75.0+)
-          #       So, MeowCop versions must be unspecified because the installation will fail when a user's RuboCop is 0.60.0.
-          #       Bundler will select an appropriate version automatically unless versions.
-          gems << GemInstaller::Spec.new(name: "meowcop", version: [])
-        end
-      end
-    end
+    DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "default_rubocop.yml").to_path.freeze
 
     def setup
       add_warning_if_deprecated_options
 
-      install_gems default_gem_specs, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS do
-        yield
+      default_gems = default_gem_specs(GEM_NAME)
+      if setup_default_config
+        # NOTE: The latest MeowCop requires usually the latest RuboCop.
+        #       (e.g. MeowCop 2.4.0 requires RuboCop 0.75.0+)
+        #       So, MeowCop versions must be unspecified because the installation will fail when a user's RuboCop is 0.60.0.
+        #       Bundler will select an appropriate version automatically unless versions.
+        default_gems << GemInstaller::Spec.new(name: "meowcop", version: [])
       end
+
+      install_gems(default_gems, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS) { yield }
     rescue InstallGemsFailure => exn
       trace_writer.error exn.message
       return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
     end
 
-    def analyze(_)
-      options = ["--display-style-guide", "--cache=false", "--no-display-cop-names", rails_option, config_file, safe].compact
-      run_analyzer(options)
-    end
+    def analyze(_changes)
+      cmd = ruby_analyzer_command(
+        "--display-style-guide",
+        "--no-display-cop-names",
 
-    private
+        # NOTE: `--parallel` requires a cache.
+        #
+        # @see https://github.com/rubocop-hq/rubocop/blob/v1.3.1/lib/rubocop/options.rb#L353-L355
+        "--parallel",
+        "--cache=true",
+        *cache_root,
 
-    def rails_option
-      rails = config_linter[:rails]
-      rails = config_linter.dig(:options, :rails) if rails.nil?
-      case
-      when rails && !rails_cops_removed?
-        '--rails'
-      when rails && rails_cops_removed?
-        add_warning(<<~WARNING, file: config.path_name)
-          The `#{config_field_path("rails")}` option in your `#{config.path_name}` is ignored.
-          Because the `--rails` option was removed from RuboCop 0.72. Use the `rubocop-rails` gem instead.
-        WARNING
-        nil
-      when rails == false
-        nil
-      when rails_cops_removed?
-        nil
-      when %w[bin/rails script/rails].any? { |path| current_dir.join(path).exist? }
-        '--rails'
-      end
-    end
+        # NOTE: `--out` option must be after `--format` option.
+        #
+        # @see https://docs.rubocop.org/rubocop/1.3/formatters.html
+        "--format=json",
+        "--out=#{report_file}",
 
-    def config_file
-      config_path = config_linter[:config] || config_linter.dig(:options, :config)
-      "--config=#{config_path}" if config_path
-    end
+        *rails_option,
+        *config_file,
+        *safe,
+      )
 
-    def safe
-      "--safe" if config_linter[:safe]
-    end
-
-    def setup_default_config
-      path = current_dir / ".rubocop.yml"
-      return false if path.exist?
-
-      path.parent.mkpath
-      FileUtils.cp (Pathname(Dir.home) / "default_rubocop.yml"), path
-      trace_writer.message "Setup the default RuboCop configuration file."
-      true
-    end
-
-    def check_rubocop_yml_warning(stderr)
-      patterns = [
-        # @see https://github.com/rubocop-hq/rubocop/blob/v0.89.1/lib/rubocop/cop/registry.rb#L263
-        /(?<file>.+): .+ has the wrong namespace/,
-
-        # @see https://github.com/rubocop-hq/rubocop/blob/v0.71.0/lib/rubocop/runner.rb#L30
-        /Rails cops will be removed from RuboCop 0.72/,
-
-        # @see https://github.com/rubocop-hq/rubocop/blob/v0.89.1/lib/rubocop/cop/team.rb#L244
-        /An error occurred while .+ inspecting (?<file>.+):.+:/,
-      ]
-
-      warnings = Set[]
-
-      stderr.each_line(chomp: true) do |message|
-        patterns.each do |pattern|
-          message.match(pattern) do |match|
-            file = match.named_captures["file"]
-            if file
-              rel_file = relative_path(file).to_path
-              message.sub!(file, rel_file)
-              file = rel_file
-            end
-            warnings << [message, file]
-          end
-        end
-      end
-
-      warnings.each { |msg, file| add_warning(msg, file: file) }
-    end
-
-    def run_analyzer(options)
-      # NOTE: `--out` option must be after `--format` option.
-      #
-      # @see https://docs.rubocop.org/en/stable/formatters
-      options << "--format=json"
-      options << "--out=#{report_file}"
-
-      _, stderr, status = capture3(*ruby_analyzer_bin, *options)
+      _, stderr, status = capture3(cmd.bin, *cmd.args)
       check_rubocop_yml_warning(stderr)
 
       # 0: no offences
@@ -203,7 +141,7 @@ module Runners
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
         break result unless output_json # No offenses
 
-        output_json[:files].reject { |v| v[:offenses].empty? }.each do |hash|
+        output_json.fetch(:files).reject { |v| v[:offenses].empty? }.each do |hash|
           hash[:offenses].each do |offense|
             loc = Location.new(
               start_line: offense[:location][:line],
@@ -227,6 +165,83 @@ module Runners
           end
         end
       end
+    end
+
+    private
+
+    def rails_option
+      rails = config_linter[:rails]
+      rails = config_linter.dig(:options, :rails) if rails.nil?
+      case
+      when rails && !rails_cops_removed?
+        ['--rails']
+      when rails && rails_cops_removed?
+        add_warning <<~WARNING, file: config.path_name
+          The `#{config_field_path(:rails)}` option in your `#{config.path_name}` is ignored.
+          Because the `--rails` option was removed from RuboCop 0.72. Use the `rubocop-rails` gem instead.
+        WARNING
+        []
+      when rails == false
+        []
+      when rails_cops_removed?
+        []
+      when %w[bin/rails script/rails].any? { |path| current_dir.join(path).exist? }
+        ['--rails']
+      else
+        []
+      end
+    end
+
+    def config_file
+      config_path = config_linter[:config] || config_linter.dig(:options, :config)
+      config_path ? ["--config=#{config_path}"] : []
+    end
+
+    def safe
+      config_linter[:safe] ? ["--safe"] : []
+    end
+
+    def setup_default_config
+      path = current_dir / ".rubocop.yml"
+      return false if path.exist?
+
+      path.parent.mkpath
+      FileUtils.copy_file DEFAULT_CONFIG_FILE, path
+      trace_writer.message "Setup the default RuboCop configuration file."
+      true
+    end
+
+    def check_rubocop_yml_warning(stderr)
+      patterns = [
+        # @see https://github.com/rubocop-hq/rubocop/blob/v0.89.1/lib/rubocop/cop/registry.rb#L263
+        /(?<file>.+): .+ has the wrong namespace/,
+
+        # @see https://github.com/rubocop-hq/rubocop/blob/v0.71.0/lib/rubocop/runner.rb#L30
+        /Rails cops will be removed from RuboCop 0.72/,
+
+        # @see https://github.com/rubocop-hq/rubocop/blob/v0.89.1/lib/rubocop/cop/team.rb#L244
+        /An error occurred while .+ inspecting (?<file>.+):.+:/,
+      ]
+
+      warnings = []
+
+      stderr.each_line(chomp: true) do |message|
+        patterns.each do |pattern|
+          message.match(pattern) do |match|
+            file = match.named_captures["file"]
+            if file
+              rel_file = relative_path(file).to_path
+              message.sub!(file, rel_file)
+              file = rel_file
+            end
+            warnings << [message, file]
+          end
+        end
+      end
+
+      warnings.uniq!
+      warnings.sort_by! { |_, file| file ? file : "" } # 1. no file, 2. filename
+      warnings.each { |msg, file| add_warning(msg, file: file) }
     end
 
     # @see https://github.com/rubocop-hq/rubocop/blob/v0.76.0/lib/rubocop/cop/message_annotator.rb#L62-L63
@@ -286,6 +301,15 @@ module Runners
     # @see https://github.com/rubocop-hq/rubocop/blob/v0.72.0/CHANGELOG.md
     def rails_cops_removed?
       Gem::Version.create(analyzer_version) >= Gem::Version.create("0.72.0")
+    end
+
+    def cache_root
+      # @see https://github.com/rubocop-hq/rubocop/blob/v0.91.0/CHANGELOG.md
+      if Gem::Version.create(analyzer_version) >= Gem::Version.create("0.91.0")
+        ["--cache-root=#{File.join(Dir.tmpdir, 'rubocop-cache')}"]
+      else
+        []
+      end
     end
   end
 end

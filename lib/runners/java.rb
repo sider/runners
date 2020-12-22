@@ -37,6 +37,7 @@ module Runners
 
     def config_jvm_deps
       @config_jvm_deps ||= Array(config_linter[:jvm_deps]).each do |dep|
+        # @type var dep: Array[String]
         group, name, version = dep
         unless group && name && version
           message = <<~MSG

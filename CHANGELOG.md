@@ -4,7 +4,72 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.37.1...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.39.3...HEAD)
+
+- Remove unused `locale` gem [#1817](https://github.com/sider/runners/pull/1817)
+- **PMD CPD** Remove needless `CGI.unescape_html`[#1821](https://github.com/sider/runners/pull/1821)
+
+## 0.39.3
+
+[Full diff](https://github.com/sider/runners/compare/0.39.2...0.39.3)
+
+- **PMD Java** NoMethodError: undefined method `gsub' for 2:Integer [#1818](https://github.com/sider/runners/pull/1818)
+
+## 0.39.2
+
+[Full diff](https://github.com/sider/runners/compare/0.39.1...0.39.2)
+
+- **remark-lint** Bump remark-preset-lint-sider from 0.5.0 to 0.6.0 [#1762](https://github.com/sider/runners/pull/1762)
+- Add `use_git_metadata_dir?` method for analysis processors. [#1775](https://github.com/sider/runners/pull/1775)
+- Consider line range in `Runners::Changes#include?` [#1781](https://github.com/sider/runners/pull/1781)
+
+## 0.39.1
+
+[Full diff](https://github.com/sider/runners/compare/0.39.0...0.39.1)
+
+- Set `error` to Bugsnag severity [#1758](https://github.com/sider/runners/pull/1758)
+- Add `Runners::Workspace::Git::Error` class [#1759](https://github.com/sider/runners/pull/1759)
+
+## 0.39.0
+
+[Full diff](https://github.com/sider/runners/compare/0.38.1...0.39.0)
+
+Updated environments:
+
+- **devon_rex** 2.27.1 -> 2.28.0 [#1708](https://github.com/sider/runners/pull/1708) [#1749](https://github.com/sider/runners/pull/1749)
+
+Updated tools:
+
+- **Checkstyle** 8.36.2 -> 8.38 [#1685](https://github.com/sider/runners/pull/1685)
+- **CoffeeLint** 1.16.0 -> 4.1.2 [#1690](https://github.com/sider/runners/pull/1690)
+- **Cppcheck** 2.2 -> 2.3 [#1727](https://github.com/sider/runners/pull/1727)
+- **ESLint** 7.12.1 -> 7.15.0 [#1669](https://github.com/sider/runners/pull/1669) [#1742](https://github.com/sider/runners/pull/1742)
+- **GolangCI-Lint** 1.32.1 -> 1.33.0 [#1680](https://github.com/sider/runners/pull/1680)
+- **Goodcheck** 2.5.2 -> 2.7.0 [#1696](https://github.com/sider/runners/pull/1696)
+- **hadolint** 1.18.2 -> 1.19.0 [#1665](https://github.com/sider/runners/pull/1665)
+- **PMD CPD** 6.29.0 -> 6.30.0 [#1747](https://github.com/sider/runners/pull/1747)
+- **PMD Java** 6.29.0 -> 6.30.0 [#1746](https://github.com/sider/runners/pull/1746)
+- **RuboCop** 1.0.0 -> 1.6.1 [#1695](https://github.com/sider/runners/pull/1695) [#1741](https://github.com/sider/runners/pull/1741)
+- **stylelint** 13.7.2 -> 13.8.0 [#1670](https://github.com/sider/runners/pull/1670)
+- **SwiftLint** 0.40.3 -> 0.41.0 [#1638](https://github.com/sider/runners/pull/1638)
+
+## 0.38.1
+
+[Full diff](https://github.com/sider/runners/compare/0.38.0...0.38.1)
+
+- Add `issue_count` to the result schema [#1688](https://github.com/sider/runners/pull/1688)
+
+## 0.38.0
+
+[Full diff](https://github.com/sider/runners/compare/0.37.2...0.38.0)
+
+- Use `GIT_SSH_COMMAND` instead of `GIT_SSH` [#1648](https://github.com/sider/runners/pull/1648)
+- **PHP_CodeSniffer** Allow array for `extensions` and `ignore` options [#1650](https://github.com/sider/runners/pull/1650)
+- **RuboCop** Use `--parallel` option [#1654](https://github.com/sider/runners/pull/1654)
+
+## 0.37.2
+
+[Full diff](https://github.com/sider/runners/compare/0.37.1...0.37.2)
 
 New supported:
 

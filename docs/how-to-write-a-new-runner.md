@@ -143,3 +143,15 @@ $ bundle exec rake docker:build docker:smoke ANALYZER=foolint
 ```
 
 See [this description](../README.md#testing), about the available `rake` commands.
+
+## Open a pull request
+
+If you are ready for a new runner, open a new pull request checking the followings:
+
+- [ ] Add a new tool to [`analyzers.yml`](../analyzers.yml).
+- [ ] Run `bundle exec rake readme:generate` and commit the updated [`README.md`](../README.md).
+- [ ] Add a new tool to the [Dependabot configuration](../.github/dependabot.yml) if needed.
+- [ ] Provide the tool's options that users can customize.
+- [ ] Write smoke test cases. E.g. all options, successful end, warnings, errors, etc.
+- [ ] Add a [CI setting](../.github/workflows/build.yml).
+- [ ] Write a [document](https://github.com/sider/sider-docs) and link the pull request, e.g. `sider/sider-docs#789`

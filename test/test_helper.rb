@@ -2,6 +2,7 @@ require_relative '../lib/runners'
 
 require 'minitest/autorun'
 require "unification_assertion"
+require "securerandom"
 
 module TestHelper
   include UnificationAssertion

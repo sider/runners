@@ -1,5 +1,4 @@
 module Runners
-  module PHP
-    def show_runtime_versions: () -> untyped
+  module PHP : Processor
   end
 end

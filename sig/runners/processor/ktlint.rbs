@@ -1,15 +1,15 @@
 module Runners
   class Processor::Ktlint < Processor
     include Java
-
     include Kotlin
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
-    def setup: () { () -> untyped } -> untyped
+    private
 
-    def analyze: (untyped changes) -> untyped
-
-    def parse_json_output: (untyped output) { (untyped) -> untyped } -> untyped
+    def parse_json_output: (String) -> Array[Issue]
   end
 end

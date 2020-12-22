@@ -17,40 +17,17 @@ module Runners
       OptionParser.new do |opts|
         opts.banner = "Usage: runners [options] <GUID>"
 
-        opts.on("--analyzer=ANALYZER", "Analyzer tool name") do |analyzer|
+        opts.on("--analyzer=ANALYZER", "Analyzer tool name", all_processor_classes.keys) do |analyzer|
           @analyzer = analyzer
         end
       end.parse!(argv)
 
-      @guid = _ = argv.shift
-
       raise OptionParser::MissingArgument.new("--analyzer is required") unless analyzer
-      raise OptionParser::MissingArgument.new("GUID is required") unless guid
-      raise OptionParser::MissingArgument.new("The specified analyzer is not supported") unless processor_class
+
+      guid = argv.shift or raise OptionParser::MissingArgument.new("GUID is required")
+      @guid = guid
 
       @options = Options.new(options_json, stdout, stderr)
-    end
-
-    def with_working_dir(&block)
-      mktmpdir(&block)
-    end
-
-    def processor_class
-      @processor_class ||= (ObjectSpace.each_object(Class).filter { |cls| cls < Processor }.detect do |cls|
-        # NOTE: Generate an analyzer ID from filename convention.
-        #       This logic assumes that each subclass has its `#analyze` method.
-        method = cls.instance_method(:analyze)
-        if method
-          method_loc = method.source_location
-          if method_loc
-            analyzer_id_from_filename = File.basename(method_loc[0], ".rb")
-            unless cls.method_defined?(:analyzer_id)
-              cls.define_method(:analyzer_id) { analyzer_id_from_filename }
-            end
-            analyzer == analyzer_id_from_filename
-          end
-        end
-      end or raise "Not found processor class with '#{analyzer}'")
     end
 
     def run
@@ -86,7 +63,6 @@ module Runners
           trace_writer.header "Analysis finished", recorded_at: finished_at
 
           if result.is_a? Results::Success
-            # @type var result: Results::Success
             trace_writer.message "#{result.issues.size} issue(s) found."
           end
 
@@ -96,6 +72,32 @@ module Runners
       end
     ensure
       io.flush! if defined?(:@io)
+    end
+
+    private
+
+    def with_working_dir(&block)
+      mktmpdir(&block)
+    end
+
+    def all_processor_classes
+      @processor_classes ||= ObjectSpace.each_object(Class).each_with_object({}) do |cls, classes|
+        next unless cls.name
+        next unless cls < Processor
+
+        # NOTE: Generate an analyzer ID from the file name convention.
+        filename, _ = Module.const_source_location(cls.name)
+        analyzer_id = File.basename(filename, ".rb")
+        unless cls.method_defined?(:analyzer_id)
+          cls.define_method(:analyzer_id) { analyzer_id }
+        end
+
+        classes[analyzer_id] = cls
+      end
+    end
+
+    def processor_class
+      all_processor_classes.fetch(analyzer)
     end
 
     def io
@@ -115,7 +117,6 @@ module Runners
 
       s = value.round(value.to_i == 0 ? 3 : 0)
 
-      # @type var res: Array[String]
       res = []
       res << "#{h}h" if h.positive?
       res << "#{m}m" if m.positive?

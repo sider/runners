@@ -1,5 +1,4 @@
 module Runners
-  module Python
-    def show_runtime_versions: () -> untyped
+  module Python : Processor
   end
 end

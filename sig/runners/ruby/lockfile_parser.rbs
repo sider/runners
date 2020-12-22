@@ -1,12 +1,7 @@
 module Runners
   module Ruby
     module LockfileParser
-      # HACK: This wrapper method aims to prevent the `Bundler::GemfileNotFound` error.
-      #       Because Bundler assumes that the `Gemfile` file exists.
-      #
-      # @see https://github.com/bundler/bundler/blob/ebe0b853d8f2ac93f9c69768ee6af2c18fbc9d87/lib/bundler/shared_helpers.rb#L13-L17
-      # @see https://github.com/bundler/bundler/blob/ebe0b853d8f2ac93f9c69768ee6af2c18fbc9d87/lib/bundler/shared_helpers.rb#L242-L246
-      def parse: (untyped content) -> untyped
+      def self.parse: (String) -> Bundler::LockfileParser
     end
   end
 end

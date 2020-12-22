@@ -2,7 +2,9 @@ module Runners
   class Processor::Javasee < Processor
     include Java
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :runner_config, Schema::BaseConfig.base.update_fields { |hash|
         hash.merge!({
           dir: enum?(string, array(string)),
@@ -46,24 +48,28 @@ module Runners
 
       if [0, 2].include?(status.exitstatus)
         Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-          construct_result(result, stdout, stderr)
+          construct_result(stdout) { |issue| result.add_issue(issue) }
         end
       else
         Results::Failure.new(guid: guid, analyzer: analyzer)
       end
     end
 
-    def construct_result(result, stdout, stderr)
+    private
+
+    def construct_result(stdout)
       json = JSON.parse(stdout, symbolize_names: true)
 
-      json[:issues].each do |hash|
+      json.fetch(:issues).each do |hash|
         path = relative_path(hash[:script])
-        loc = Location.new(start_line: hash[:location][:start][0],
-                                        start_column: hash[:location][:start][1],
-                                        end_line: hash[:location][:end][0],
-                                        end_column: hash[:location][:end][1])
+        loc = Location.new(
+          start_line: hash[:location][:start][0],
+          start_column: hash[:location][:start][1],
+          end_line: hash[:location][:end][0],
+          end_column: hash[:location][:end][1],
+        )
 
-        result.add_issue Issue.new(
+        yield Issue.new(
           path: path,
           location: loc,
           id: hash[:rule][:id],

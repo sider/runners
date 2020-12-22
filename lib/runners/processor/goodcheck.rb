@@ -2,7 +2,9 @@ module Runners
   class Processor::Goodcheck < Processor
     include Ruby
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :rule, object(
         id: string,
         message: string,
@@ -19,8 +21,9 @@ module Runners
 
     register_config_schema(name: :goodcheck, schema: Schema.runner_config)
 
+    GEM_NAME = "goodcheck".freeze
     CONSTRAINTS = {
-      "goodcheck" => [">= 1.0.0", "< 3.0"]
+      GEM_NAME => [">= 1.0.0", "< 3.0"]
     }.freeze
 
     DEFAULT_TARGET = ".".freeze
@@ -34,11 +37,8 @@ module Runners
       # NOTE: Suppress Ruby 2.7 warning to prevent `stderr` from getting dirty.
       #       See https://www.ruby-lang.org/en/news/2019/12/25/ruby-2-7-0-released
       stdout, stderr, status = push_env_hash({ "RUBYOPT" => "-W:no-deprecated" }) do
-        capture3(
-          *ruby_analyzer_bin,
-          "test",
-          *(config_linter[:config]&.then { |config| ["--config", config] }),
-        )
+        cmd = ruby_analyzer_command("test", *option_config_file)
+        capture3(cmd.bin, *cmd.args)
       end
 
       if !status.success? && !stdout.empty?
@@ -47,20 +47,16 @@ module Runners
       end
 
       if !status.success? && !stderr.empty?
-        stderr.lines.first.chomp
+        stderr.lines(chomp: true).first
       else
         nil
       end
     end
 
     def goodcheck_check
-      stdout, stderr, _ = capture3(
-        *ruby_analyzer_bin,
-        "check",
-        "--format=json",
-        *(config_linter[:config]&.then { |config| ["--config", config] }),
-        *Array(config_linter[:target] || DEFAULT_TARGET),
-      )
+      targets = Array(config_linter[:target] || DEFAULT_TARGET)
+      cmd = ruby_analyzer_command("check", "--format=json", *option_config_file, *targets)
+      stdout, stderr, _ = capture3(cmd.bin, *cmd.args)
 
       json = JSON.parse(stdout, symbolize_names: true)
 
@@ -109,13 +105,11 @@ module Runners
       end
     end
 
-    def setup(&block)
-      begin
-        install_gems default_gem_specs, constraints: CONSTRAINTS, &block
-      rescue InstallGemsFailure => exn
-        trace_writer.error exn.message
-        return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
-      end
+    def setup
+      install_gems(default_gem_specs(GEM_NAME), constraints: CONSTRAINTS) { yield }
+    rescue InstallGemsFailure => exn
+      trace_writer.error exn.message
+      return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
     end
 
     def analyze(changes)
@@ -132,6 +126,13 @@ module Runners
       else
         goodcheck_check
       end
+    end
+
+    private
+
+    def option_config_file
+      config = config_linter[:config]
+      config ? ["--config", config] : []
     end
   end
 end

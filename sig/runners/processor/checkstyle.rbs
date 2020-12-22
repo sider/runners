@@ -2,26 +2,27 @@ module Runners
   class Processor::Checkstyle < Processor
     include Java
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[untyped]
+      def issue: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
-    DEFAULT_TARGET: untyped
+    DEFAULT_TARGET: String
+    OFFICIAL_RULE_NAMESPACE: String
 
-    def setup: () { () -> untyped } -> untyped
+    private
 
-    def analyze: (untyped changes) -> untyped
+    def checkstyle_args: () -> Array[String]
 
-    def checkstyle_args: () -> untyped
+    def construct_result: (REXML::Element) { (Issue) -> void } -> void
 
-    def construct_result: (untyped xml_root) { (untyped) -> untyped } -> untyped
+    def normalize_id: (String) -> String
 
-    OFFICIAL_RULE_NAMESPACE: ::String
+    def build_links: (String) -> Array[String]
 
-    def normalize_id: (untyped rule_id) -> untyped
+    def config_file: () -> String?
 
-    def build_links: (untyped rule_id) -> (::Array[untyped] | ::Array[::String])
-
-    def config_file: () -> untyped
-
-    def excluded_directories: () -> untyped
+    def excluded_directories: () -> Array[Hash[Symbol, String?]]
   end
 end

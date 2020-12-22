@@ -2,7 +2,9 @@ module Runners
   class Processor::ScssLint < Processor
     include Ruby
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!(
           config: string?,
@@ -37,16 +39,28 @@ module Runners
     end
 
     def analyze(_changes)
-      options = [scss_lint_config].compact
-      run_analyzer(options)
+      stdout, _stderr, status = capture3(analyzer_bin, '--format=JSON', *scss_lint_config)
+
+      # https://github.com/brigade/scss-lint#exit-status-codes
+      case status.exitstatus
+      when 0..2
+        Results::Success.new(guid: guid, analyzer: analyzer, issues: parse_result(stdout))
+      when EXIT_CODE_FILES_NOT_EXIST
+        # NOTE: If there are no analysis target files, returns `Success` with a warning.
+        add_warning(stdout)
+        Results::Success.new(guid: guid, analyzer: analyzer)
+      else
+        Results::Failure.new(guid: guid, analyzer: analyzer)
+      end
     end
+
+    private
 
     def scss_lint_config
       config = config_linter[:config] || config_linter.dig(:options, :config)
-      "--config=#{config}" if config
+      config ? ["--config=#{config}"] : []
     end
 
-    # @param stdout [String]
     def parse_result(stdout)
       JSON.parse(stdout, symbolize_names: true).flat_map do |file, issues|
         path = relative_path(file.to_s)
@@ -58,23 +72,6 @@ module Runners
             message: issue[:reason],
           )
         end
-      end
-    end
-
-    def run_analyzer(options)
-      stdout, _stderr, status = capture3(analyzer_bin, '--format=JSON', *options)
-      # https://github.com/brigade/scss-lint#exit-status-codes
-      case status.exitstatus
-      when 0..2
-        Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-          parse_result(stdout).each { |v| result.add_issue(v) }
-        end
-      when EXIT_CODE_FILES_NOT_EXIST
-        # NOTE: If there are no analysis target files, returns `Success` with a warning.
-        add_warning(stdout)
-        Results::Success.new(guid: guid, analyzer: analyzer)
-      else
-        Results::Failure.new(guid: guid, analyzer: analyzer)
       end
     end
   end

@@ -1,5 +1,17 @@
 module Runners
   module Schema
-    Trace: untyped
+    class TraceClass < StrongJSON
+      def command_line: () -> StrongJSON::Type::Object[untyped]
+      def status: () -> StrongJSON::Type::Object[untyped]
+      def stdout: () -> StrongJSON::Type::Object[untyped]
+      def stderr: () -> StrongJSON::Type::Object[untyped]
+      def message: () -> StrongJSON::Type::Enum[untyped]
+      def header: () -> StrongJSON::Type::Object[untyped]
+      def warning: () -> StrongJSON::Type::Object[untyped]
+      def ci_config: () -> StrongJSON::Type::Object[untyped]
+      def error: () -> StrongJSON::Type::Object[untyped]
+      def anything: () -> StrongJSON::Type::Enum[untyped]
+    end
+    Trace: TraceClass
   end
 end

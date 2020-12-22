@@ -37,7 +37,7 @@ module Runners
       end
     end
 
-    def range_git_blame_info(path_string, start_line, end_line)
+    def range_git_blame_info(path_string, start_line, end_line, trace: false)
       []
     end
 
@@ -77,14 +77,7 @@ module Runners
           SSH_CONFIG
           config_path.chmod 0600
 
-          script_path = dir / 'run.sh'
-          script_path.write <<~GIT_SSH
-            #!/bin/sh
-            ssh -F #{config_path} "$@"
-          GIT_SSH
-          script_path.chmod 0700
-
-          yield script_path
+          yield config_path
         end
       else
         yield nil

@@ -39,7 +39,7 @@ class ProcessorTest < Minitest::Test
 
       mock_capture3 = Minitest::Mock.new
       mock_capture3.expect :call, ["", "", mock_status], [
-        { "RUBYOPT" => nil, "GIT_SSH" => (workspace.working_dir / "id_rsa").to_s },
+        { "RUBYOPT" => nil, "GIT_SSH_COMMAND" => "ssh -F '#{workspace.working_dir / 'id_rsa'}'" },
         "ls",
         chdir: workspace.working_dir.to_s, stdin_data: nil
       ]
@@ -219,12 +219,12 @@ class ProcessorTest < Minitest::Test
       expected_message = ->(v) { <<~MSG.strip }
         DEPRECATION WARNING!!!
         The `1.0.0` and older versions are deprecated, and these versions will be dropped in the near future.
-        Please consider upgrading to #{v} or a newer version.
+        Please consider upgrading to `#{v}` or a newer version.
       MSG
       expected_message2 = ->(v) { <<~MSG.strip }
         DEPRECATION WARNING!!!
         The `1.0.0` and older versions are deprecated, and these versions will be dropped on January 9, 2020.
-        Please consider upgrading to #{v} or a newer version.
+        Please consider upgrading to `#{v}` or a newer version.
       MSG
 
       assert_equal(
@@ -387,14 +387,14 @@ class ProcessorTest < Minitest::Test
     with_workspace do |workspace|
       processor = new_processor(workspace: workspace)
 
-      assert_equal({ "RUBYOPT" => nil, "GIT_SSH" => nil }, processor.env_hash)
+      assert_equal({ "RUBYOPT" => nil, "GIT_SSH_COMMAND" => nil }, processor.env_hash)
 
       processor.push_env_hash({ "RBENV_VERSION" => "2.5.0" }) do
-        assert_equal({ "RUBYOPT" => nil, "GIT_SSH" => nil, "RBENV_VERSION" => "2.5.0" },
+        assert_equal({ "RUBYOPT" => nil, "GIT_SSH_COMMAND" => nil, "RBENV_VERSION" => "2.5.0" },
                      processor.env_hash)
       end
 
-      assert_equal({ "RUBYOPT" => nil, "GIT_SSH" => nil }, processor.env_hash)
+      assert_equal({ "RUBYOPT" => nil, "GIT_SSH_COMMAND" => nil }, processor.env_hash)
     end
   end
 
@@ -521,14 +521,20 @@ class ProcessorTest < Minitest::Test
 
   def test_read_report_xml_failed
     with_workspace do |workspace|
-      file = (workspace.working_dir / "a_file.xml").tap { |f| f.write "" }.then(&:to_path)
+      file = (workspace.working_dir / "a_file.xml").tap { |f| f.write "" }
 
       processor = new_processor(workspace: workspace)
-      error = assert_raises(Processor::InvalidXML) { processor.read_report_xml(file) }
-      assert_equal "Output XML is invalid from #{file}", error.message
+      error = assert_raises(Processor::InvalidXML) { processor.read_report_xml(file.to_path) }
+      assert_equal 'Invalid XML: ""', error.message
 
-      File.write file, "<foo"
-      assert_raises(REXML::ParseException) { processor.read_report_xml(file) }
+      file.write "<foo"
+      error = assert_raises(Processor::InvalidXML) { processor.read_report_xml(file.to_path) }
+      assert_equal <<~MSG, error.message
+        Start tag isn't ended
+        Line: 1
+        Position: 4
+        Last 80 unconsumed characters:
+      MSG
     end
   end
 

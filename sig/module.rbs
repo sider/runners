@@ -1,0 +1,3 @@
+class Module
+  def const_source_location: (String | Symbol, ?boolish) -> [String, Integer]
+end

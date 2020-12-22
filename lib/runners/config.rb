@@ -32,7 +32,7 @@ module Runners
     end
 
     def path_exist?
-      path
+      !!path
     end
 
     def ignore_patterns
@@ -51,7 +51,8 @@ module Runners
 
     def path
       return @path if defined?(@path)
-      @path = [working_dir / CONFIG_FILE_NAME, working_dir / OLD_CONFIG_FILE_NAME].find do |pathname|
+
+      @path ||= [working_dir / CONFIG_FILE_NAME, working_dir / OLD_CONFIG_FILE_NAME].find do |pathname|
         pathname.file?
       end
     end

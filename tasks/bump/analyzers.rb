@@ -54,7 +54,7 @@ BumpAnalyzers = Struct.new(
   end
 
   def self.each
-    analyzers = YAML.safe_load(Pathname(__dir__).join("../../../analyzers.yml").read, symbolize_names: true).fetch(:analyzers)
+    analyzers = YAML.safe_load(Pathname(__dir__).join("..", "..", "analyzers.yml").read, symbolize_names: true).fetch(:analyzers)
     analyzers.keep_if { |_, meta| meta[:dependabot] == false && !meta[:deprecated]  }
     analyzers.each do |analyzer, meta|
       yield new(

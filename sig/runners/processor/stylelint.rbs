@@ -2,57 +2,47 @@ module Runners
   class Processor::Stylelint < Processor
     include Nodejs
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[untyped]
+      def issue: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
-    CONSTRAINTS: untyped
+    CONSTRAINTS: Nodejs::constraints
+    DEFAULT_TARGET_FILES: String
+    DEFAULT_GLOB: String
+    DEFAULT_CONFIG_FILE: String
+    DEFAULT_CONFIG_FILE_OLD: String
+    DEFAULT_IGNORE_FILE: String
 
-    DEFAULT_TARGET_FILES: untyped
+    private
 
-    DEFAULT_GLOB: untyped
+    def glob: () -> String
 
-    def setup: () { () -> untyped } -> untyped
+    def stylelint_config: () -> Array[String]
 
-    def analyze: (untyped changes) -> untyped
+    def syntax: () -> Array[String]
 
-    def glob: () -> untyped
+    def ignore_path: () -> Array[String]
 
-    def stylelint_config: () -> untyped
+    def ignore_disables: () -> Array[String]
 
-    def syntax: () -> untyped
+    def report_needless_disables: () -> Array[String]
 
-    def ignore_path: () -> untyped
+    def quiet: () -> Array[String]
 
-    def ignore_disables: () -> untyped
+    def parse_result: (String) -> Array[Issue]
 
-    def report_needless_disables: () -> untyped
+    def normalize_message: (String, String) -> String
 
-    def quiet: () -> untyped
+    def rule_doc_urls: () -> Hash[String, String]
 
-    # @param stdout [String]
-    def parse_result: (untyped stdout) -> untyped
+    def prepare_config_file: () -> void
 
-    # @see https://github.com/stylelint/stylelint/blob/11.1.1/lib/formatters/stringFormatter.js#L120
-    def normalize_message: (untyped id, untyped message) -> untyped
+    def prepare_ignore_file: () -> void
 
-    # @see https://github.com/stylelint/stylelint/blob/11.1.1/lib/formatters/stringFormatter.js#L120
-    def rule_doc_urls: () -> untyped
+    def config_file_path: () -> Pathname?
 
-    def prepare_config_file: () -> (nil | untyped)
-
-    def prepare_ignore_file: () -> (nil | untyped)
-
-    # returns available config file path. If the file doesn't exist, it returns nil.
-    def config_file_path: () -> untyped
-
-    # Save warnings written by stylelint.
-    # stylelint writes "deprecations" flags in each file, so we cannot conduct naive implementations.
-    # Without this method, if we write a warning when the "deprecations" appear,
-    # the same number of duplicated warnings as files will appear.
-    # We use `Set` to avoid it.
-    #
-    # @param deprecations [Array<Hash>]
-    def check_warning: (untyped deprecations) -> untyped
-
-    def run_analyzer: (untyped glob, untyped additional_options) -> untyped
+    def check_warning: (Array[Hash[Symbol, String]]) -> void
   end
 end
