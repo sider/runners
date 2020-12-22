@@ -3,11 +3,10 @@ require "yaml"
 namespace :readme do
   desc "Generate README file"
   task :generate do
-    root = Pathname(__dir__).join("..", "..")
-
-    analyzers = YAML.safe_load(root.join("analyzers.yml").read, symbolize_names: true).fetch(:analyzers)
-
-    analyzers = analyzers.sort_by { |_, analyzer| analyzer.fetch(:name).downcase }
+    filename = "analyzers.yml"
+    analyzers = YAML.safe_load(File.read(filename), filename: filename, symbolize_names: true)
+      .fetch(:analyzers)
+      .sort_by { |_, analyzer| analyzer.fetch(:name).downcase }
 
     list = analyzers.map do |id, analyzer|
       links = []
@@ -34,21 +33,23 @@ namespace :readme do
     start_tag = "<!-- AUTO-GENERATED-CONTENT:START (analyzers) -->"
     end_tag = "<!-- AUTO-GENERATED-CONTENT:END (analyzers) -->"
 
-    readme = root.join("README.md")
+    readme = Pathname("README.md")
     new_content = readme.read.sub(
       /#{Regexp.escape start_tag}.+#{Regexp.escape end_tag}/m,
       "#{start_tag}\n#{generated_content}#{end_tag}"
     )
     readme.write(new_content)
 
-    if system("git", "diff", "--exit-code", readme.to_path)
-      puts "No changes on #{readme.relative_path_from(root)}."
-    else
-      abort <<~MSG
-        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        ERROR: Changes found on #{readme.relative_path_from(root)}. You should commit the changes.
-        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      MSG
+    sh("git", "diff", "--exit-code", readme.to_path) do |ok|
+      if ok
+        puts "No changes on #{readme}."
+      else
+        abort <<~MSG
+          !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+          ERROR: Changes found on #{readme}. You should commit the changes.
+          !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        MSG
+      end
     end
   end
 end
