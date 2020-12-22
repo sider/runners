@@ -2,12 +2,8 @@ require "rake/testtask"
 require 'erb'
 require "aufgaben/release"
 require "aufgaben/bump/ruby"
-require_relative "tasks/bump/analyzers"
-require_relative "tasks/bump/devon_rex"
-require_relative "tasks/docker/timeout_test"
-require_relative "tasks/rbs/update_gems"
-require_relative "tasks/readme/generate"
-require_relative "tasks/steep/stats"
+
+import(*FileList["tasks/**/*.rake"])
 
 ENV["DOCKER_BUILDKIT"] = "1"
 
