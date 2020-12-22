@@ -5,6 +5,8 @@ require "aufgaben/bump/ruby"
 
 import(*FileList["tasks/**/*.rake"])
 
+task default: [:"steep:check", :test]
+
 ENV["DOCKER_BUILDKIT"] = "1"
 
 Aufgaben::Release.new(:release) do |t|
@@ -29,8 +31,6 @@ Rake::TestTask.new(:test) do |t|
   t.libs << "lib"
   t.test_files = FileList['test/**/*_test.rb'].exclude(%r{^test/smokes})
 end
-
-task :default => [:test, :typecheck]
 
 namespace :dockerfile do
   def render_erb(file, analyzer: ENV.fetch('ANALYZER'))
