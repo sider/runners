@@ -5,14 +5,13 @@ require "aufgaben/bump/ruby"
 
 import(*FileList["tasks/**/*.rake"])
 
-task default: [:"steep:check", :test]
+task default: ["steep:check", :test]
 
 ENV["DOCKER_BUILDKIT"] = "1"
 
-Aufgaben::Release.new(:release) do |t|
+Aufgaben::Release.new(:release, depends: ["dockerfile:verify_devon_rex"]) do |t|
   t.files = ["lib/runners/version.rb"]
 end
-task release: [:"dockerfile:verify_devon_rex"]
 
 Aufgaben::Bump::Ruby.new do |t|
   t.files = %w[
