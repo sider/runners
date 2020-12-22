@@ -41,7 +41,7 @@ module Runners
           file_issues << construct_file_issue(filepath, function_issues)
         end
 
-      Results::Success.new(guid: guid, analyzer: analyzer, issues: function_issues)
+      Results::Success.new(guid: guid, analyzer: analyzer, issues: file_issues)
     end
 
     private
