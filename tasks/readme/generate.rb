@@ -3,7 +3,7 @@ require "yaml"
 namespace :readme do
   desc "Generate README file"
   task :generate do
-    root = Pathname(__dir__).join("../../..")
+    root = Pathname(__dir__).join("..", "..")
 
     analyzers = YAML.safe_load(root.join("analyzers.yml").read, symbolize_names: true).fetch(:analyzers)
 
