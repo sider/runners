@@ -9,6 +9,7 @@ gem 'bugsnag'
 gem 'rexml', ">= 3.2", '< 4.0'
 gem 'git_diff_parser'
 gem 'open3'
+gem 'psych'
 
 group :development, :test do
   gem 'rake'
