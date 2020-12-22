@@ -16,6 +16,8 @@ module Runners
 
     def setup_bugsnag!: (Array[String]) -> void
 
+    def setup_aws!: () -> void
+
     def with_working_dir: [X] () { (Pathname) -> X } -> X
 
     def all_processor_classes: () -> Hash[String, Class]

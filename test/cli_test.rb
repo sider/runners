@@ -134,4 +134,20 @@ class CLITest < Minitest::Test
     refute_includes ENV, "RUNNERS_VERSION"
     refute_includes ENV, "BUGSNAG_RELEASE_STAGE"
   end
+
+  def test_setup_aws
+    ENV["AWS_ACCESS_KEY_ID"] = "id"
+    ENV["AWS_SECRET_ACCESS_KEY"] = "secret"
+    ENV["AWS_REGION"] = nil
+
+    CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: options_json)
+
+    assert_equal "id", Aws.config[:credentials].access_key_id
+    assert_equal "secret", Aws.config[:credentials].secret_access_key
+    assert_nil Aws.config[:region]
+
+    refute_includes ENV, "AWS_ACCESS_KEY_ID"
+    refute_includes ENV, "AWS_SECRET_ACCESS_KEY"
+    refute_includes ENV, "AWS_REGION"
+  end
 end

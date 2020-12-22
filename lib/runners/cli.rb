@@ -15,6 +15,7 @@ module Runners
       @stderr = stderr
 
       setup_bugsnag!(argv.dup)
+      setup_aws!
 
       OptionParser.new do |opts|
         opts.banner = "Usage: runners [options] <GUID>"
@@ -98,6 +99,17 @@ module Runners
           report.add_tab :arguments, argv
         end)
       end
+    end
+
+    def setup_aws!
+      # NOTE: Prevent information from being stolen from environment variables.
+      id = ENV.delete("AWS_ACCESS_KEY_ID")
+      secret = ENV.delete("AWS_SECRET_ACCESS_KEY")
+      region = ENV.delete("AWS_REGION")
+
+      # @see https://docs.aws.amazon.com/sdk-for-ruby/v3/developer-guide/setup-config.html
+      Aws.config[:credentials] = Aws::Credentials.new(id, secret) if id && secret
+      Aws.config[:region] = region if region
     end
 
     def with_working_dir(&block)

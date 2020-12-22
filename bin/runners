@@ -17,14 +17,6 @@ trap('SIGUSR2') do
 end
 
 begin
-  # @see https://docs.aws.amazon.com/sdk-for-ruby/v3/developer-guide/setup-config.html
-  if ENV["AWS_ACCESS_KEY_ID"]
-    Aws.config[:credentials] = Aws::Credentials.new(ENV.delete("AWS_ACCESS_KEY_ID"), ENV.delete("AWS_SECRET_ACCESS_KEY"))
-  end
-  if ENV["AWS_REGION"]
-    Aws.config[:region] = ENV.delete("AWS_REGION")
-  end
-
   Runners::CLI.new(
     argv: ARGV.dup,
     stdout: STDOUT,
