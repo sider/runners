@@ -33,12 +33,7 @@ namespace :bump do
   end
 end
 
-BumpAnalyzers = Struct.new(
-  :analyzer, :analyzer_name, :github_repo,
-  :current_version, :updated, :pull_request_url,
-  keyword_init: true
-) do
-
+class BumpAnalyzers
   class GitHubAPIFailed < StandardError
     attr_reader :response_code
     attr_reader :response_body
@@ -64,6 +59,15 @@ BumpAnalyzers = Struct.new(
         github_repo: meta.fetch(:github),
       )
     end
+  end
+
+  attr_reader :analyzer, :analyzer_name, :github_repo
+  attr_accessor :current_version, :updated, :pull_request_url
+
+  def initialize(analyzer:, analyzer_name:, github_repo:)
+    @analyzer = analyzer
+    @analyzer_name = analyzer_name
+    @github_repo = github_repo
   end
 
   def github_token
@@ -210,7 +214,7 @@ BumpAnalyzers = Struct.new(
 
   # @see https://docs.github.com/en/rest/reference/issues#add-labels-to-an-issue
   def add_labels!
-    pull_number = Integer(self.pull_request_url.split("/").last)
+    pull_number = Integer(pull_request_url.split("/").last)
     call_github_api(:post, "/repos/#{original_github_repo}/issues/#{pull_number}/labels", {
       labels: ["dependencies"],
     })
