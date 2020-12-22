@@ -41,6 +41,7 @@ module Runners
 
     OPTIONAL_GEMS = [
       *OFFICIAL_RUBOCOP_PLUGINS,
+      GemInstaller::Spec.new(name: "chefstyle", version: []),
       GemInstaller::Spec.new(name: "cookstyle", version: []),
       GemInstaller::Spec.new(name: "deka_eiwakun", version: []),
       GemInstaller::Spec.new(name: "ezcater_rubocop", version: []),
@@ -54,18 +55,25 @@ module Runners
       GemInstaller::Spec.new(name: "onkcop", version: []),
       GemInstaller::Spec.new(name: "otacop", version: []),
       GemInstaller::Spec.new(name: "pulis", version: []),
+      GemInstaller::Spec.new(name: "rubocop-betterment", version: []),
       GemInstaller::Spec.new(name: "rubocop-cask", version: []),
       GemInstaller::Spec.new(name: "rubocop-codetakt", version: []),
       GemInstaller::Spec.new(name: "rubocop-config-umbrellio", version: []),
+      GemInstaller::Spec.new(name: "rubocop-discourse", version: []),
       GemInstaller::Spec.new(name: "rubocop-github", version: []),
+      GemInstaller::Spec.new(name: "rubocop-govuk", version: []),
+      GemInstaller::Spec.new(name: "rubocop-graphql", version: []),
       GemInstaller::Spec.new(name: "rubocop-i18n", version: []),
+      GemInstaller::Spec.new(name: "rubocop-jekyll", version: []),
       GemInstaller::Spec.new(name: "rubocop-packaging", version: []),
       GemInstaller::Spec.new(name: "rubocop-rails_config", version: []),
       GemInstaller::Spec.new(name: "rubocop-require_tools", version: []),
       GemInstaller::Spec.new(name: "rubocop-salemove", version: []),
-      GemInstaller::Spec.new(name: "rubocop-sequel", version: []),
+      GemInstaller::Spec.new(name: "rubocop-sketchup", version: []),
+      GemInstaller::Spec.new(name: "rubocop-shopify", version: []),
       GemInstaller::Spec.new(name: "rubocop-sorbet", version: []),
       GemInstaller::Spec.new(name: "rubocop-thread_safety", version: []),
+      GemInstaller::Spec.new(name: "rubocop-vendor", version: []),
       GemInstaller::Spec.new(name: "salsify_rubocop", version: []),
       GemInstaller::Spec.new(name: "sanelint", version: []),
       GemInstaller::Spec.new(name: "standard", version: []),
@@ -251,14 +259,21 @@ module Runners
     end
 
     def build_cop_links(cop_name)
-      department, cop = cop_name.split("/")
+      department, *extra = cop_name.split("/")
 
-      if department && cop
-        gem_name = department_to_gem_name[department]
-        if gem_name
-          department.downcase!
-          cop.downcase!
-          return ["https://docs.rubocop.org/#{gem_name}/cops_#{department}.html##{department}#{cop}"]
+      if department && !extra.empty?
+        case
+        when department_to_gem_name.key?(department)
+          gem_name = department_to_gem_name.fetch(department)
+          fragment = cop_name.downcase.delete("/")
+          if extra.size == 1
+            return ["https://docs.rubocop.org/#{gem_name}/cops_#{department.downcase}.html##{fragment}"]
+          else
+            return ["https://docs.rubocop.org/#{gem_name}/cops_#{department.downcase}/#{extra.first&.downcase}.html##{fragment}"]
+          end
+        when department_to_gem_name_ext.key?(department)
+          gem_name = department_to_gem_name_ext.fetch(department)
+          return ["https://www.rubydoc.info/gems/#{gem_name}/RuboCop/Cop/#{cop_name}"]
         end
       end
 
@@ -291,6 +306,31 @@ module Runners
 
         # rubocop-performance
         "Performance" => "rubocop-performance",
+
+        # rubocop-packaging
+        "Packaging" => "rubocop-packaging",
+      }.freeze
+    end
+
+    def department_to_gem_name_ext
+      @department_to_gem_name_ext ||= {
+        "Chef" => "chefstyle",
+        "Discourse" => "rubocop-discourse",
+        "GitHub" => "rubocop-github",
+        "GraphQL" => "rubocop-graphql",
+        "I18n" => "rubocop-i18n",
+        "Jekyll" => "rubocop-jekyll",
+        "Rake" => "rubocop-rake",
+        "Rubycw" => "rubocop-rubycw",
+        "Sequel" => "rubocop-sequel",
+        "SketchupBugs" => "rubocop-sketchup",
+        "SketchupDeprecations" => "rubocop-sketchup",
+        "SketchupPerformance" => "rubocop-sketchup",
+        "SketchupRequirements" => "rubocop-sketchup",
+        "SketchupSuggestions" => "rubocop-sketchup",
+        "Sorbet" => "rubocop-sorbet",
+        "ThreadSafety" => "rubocop-thread_safety",
+        "Vendor" => "rubocop-vendor",
       }.freeze
     end
 

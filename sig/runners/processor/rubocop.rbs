@@ -32,6 +32,8 @@ module Runners
 
     def department_to_gem_name: () -> Hash[String, String]
 
+    def department_to_gem_name_ext: () -> Hash[String, String]
+
     def normalize_message: (String, Array[String], String) -> String
 
     def rails_cops_removed?: () -> bool
