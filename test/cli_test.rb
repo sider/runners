@@ -36,7 +36,6 @@ class CLITest < Minitest::Test
     assert_raises OptionParser::InvalidArgument do
       CLI.new(argv: ["--analyzer=FOO", "test-guid"], stdout: stdout, stderr: stderr, options_json: options_json)
     end.tap do |error|
-      pp error
       assert_equal "invalid argument: --analyzer=FOO", error.message
     end
 
@@ -118,5 +117,21 @@ class CLITest < Minitest::Test
     assert_equal "2h 46m 40s", target.(10000.1234567)
     assert_equal "27h 46m 40s", target.(100000.1234567)
     assert_equal "27h 46m 40s", target.(100000)
+  end
+
+  def test_setup_bugsnag
+    ENV["BUGSNAG_API_KEY"] = "key"
+    ENV["RUNNERS_VERSION"] = "version"
+    ENV["BUGSNAG_RELEASE_STAGE"] = nil
+
+    CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: options_json)
+
+    assert_equal "key", Bugsnag.configuration.api_key
+    assert_equal "version", Bugsnag.configuration.app_version
+    assert_nil Bugsnag.configuration.release_stage
+
+    refute_includes ENV, "BUGSNAG_API_KEY"
+    refute_includes ENV, "RUNNERS_VERSION"
+    refute_includes ENV, "BUGSNAG_RELEASE_STAGE"
   end
 end

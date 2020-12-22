@@ -7,19 +7,6 @@ require "runners/cli"
 
 EXIT_STATUS_FOR_SIGTERM = 126
 
-# @see https://docs.bugsnag.com/platforms/ruby/configuration-options
-Bugsnag.configure do |config|
-  config.api_key = ENV.delete("BUGSNAG_API_KEY")
-  config.app_version = ENV.delete("RUNNERS_VERSION")
-  config.release_stage = ENV.delete("BUGSNAG_RELEASE_STAGE")
-
-  # @see https://docs.bugsnag.com/platforms/ruby/customizing-error-reports/#adding-callbacks
-  config.add_on_error(proc do |report|
-    report.add_tab(:task_guid, ENV.delete("TASK_GUID")) if ENV["TASK_GUID"]
-    report.add_tab(:arguments, ARGV)
-  end)
-end
-
 trap('SIGTERM') do
   Bugsnag.notify(Runners::TimeoutError.new)
   exit(EXIT_STATUS_FOR_SIGTERM)

@@ -14,6 +14,8 @@ module Runners
       @stdout = stdout
       @stderr = stderr
 
+      setup_bugsnag!(argv.dup)
+
       OptionParser.new do |opts|
         opts.banner = "Usage: runners [options] <GUID>"
 
@@ -75,6 +77,27 @@ module Runners
     end
 
     private
+
+    def setup_bugsnag!(argv)
+      # NOTE: Prevent information from being stolen from environment variables.
+      api_key = ENV.delete("BUGSNAG_API_KEY")
+      app_version = ENV.delete("RUNNERS_VERSION")
+      release_stage = ENV.delete("BUGSNAG_RELEASE_STAGE")
+
+      # @see https://docs.bugsnag.com/platforms/ruby/configuration-options
+      Bugsnag.configure do |config|
+        config.api_key = api_key if api_key
+        config.app_version = app_version if app_version
+        config.release_stage = release_stage if release_stage
+
+        # @see https://docs.bugsnag.com/platforms/ruby/customizing-error-reports/#adding-callbacks
+        config.add_on_error(proc do |report|
+          # @type var report: Bugsnag:Report
+          report.add_tab :task_guid, guid
+          report.add_tab :arguments, argv
+        end)
+      end
+    end
 
     def with_working_dir(&block)
       mktmpdir(&block)
