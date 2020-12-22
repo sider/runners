@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 
-require "pathname"
-
-$LOAD_PATH << Pathname(__dir__).parent + "lib"
+$LOAD_PATH.prepend File.join(__dir__, "..", "lib")
 
 require "runners"
 require "runners/cli"
