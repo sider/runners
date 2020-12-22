@@ -32,10 +32,10 @@ ENV PATH ${RUNNER_USER_HOME}/tyscan/node_modules/.bin:${PATH}
 ENV NODE_PATH ${RUNNER_USER_HOME}/tyscan/node_modules:${NODE_PATH}
 
 # Copy the main source code
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} bin ${RUNNERS_DIR}/bin
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} exe ${RUNNERS_DIR}/exe
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} lib ${RUNNERS_DIR}/lib
 
-ENV PATH ${RUNNERS_DIR}/bin:${PATH}
+ENV PATH ${RUNNERS_DIR}/exe:${PATH}
 
 # Run as non-root user
 USER $RUNNER_USER
