@@ -23,32 +23,35 @@ module Runners
         '--output_file', report_file,
         '.')
 
-      file_issues = []
-      read_report_xml.each_element('//cppncss/measure[@type="File"]/item') do |elem|
-        file_issues << construct_file_issue(elem)
-      end
+      file_issues = construct_file_issue(read_report_xml)
 
       Results::Success.new(guid: guid, analyzer: analyzer, issues: file_issues)
     end
 
     private
 
-    def construct_file_issue(elem)
-      filepath = relative_path(elem.attributes['name'])
-      sum_of_CCN = Integer(elem.elements[3].text)
-      functions = Integer(elem.elements[4].text)
-      msg = "The sum of complexity of total #{functions} function(s) is #{sum_of_CCN}."
+    def construct_file_issue(xml_root)
+      issues = []
 
-      Issue.new(
-        path: filepath,
-        location: Location.new(start_line: 1),
-        id: "metrics_file-complexity",
-        message: msg,
-        object: {
-          CCN: sum_of_CCN,
-          },
-        schema: Schema.issue,
-        )
+      xml_root.each_element('//cppncss/measure[@type="File"]/item') do |elem|
+        filepath = relative_path(elem.attributes['name'])
+        sum_of_CCN = Integer(elem.elements[3].text)
+        functions = Integer(elem.elements[4].text)
+        msg = "The sum of complexity of total #{functions} function(s) is #{sum_of_CCN}."
+
+        issues << Issue.new(
+          path: filepath,
+          location: Location.new(start_line: 1),
+          id: "metrics_file-complexity",
+          message: msg,
+          object: {
+            CCN: sum_of_CCN,
+            },
+          schema: Schema.issue,
+          )
+      end
+
+      issues
     end
   end
 end
