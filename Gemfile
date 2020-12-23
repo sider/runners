@@ -12,6 +12,7 @@ gem 'open3'
 gem 'psych'
 gem 'json'
 gem 'fileutils'
+gem 'uri'
 
 group :development, :test do
   gem 'rake'

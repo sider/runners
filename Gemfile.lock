@@ -93,6 +93,7 @@ GEM
     unicode-display_width (1.7.0)
     unification_assertion (0.0.1)
       minitest (~> 5)
+    uri (0.10.1)
     zeitwerk (2.4.2)
 
 PLATFORMS
@@ -124,6 +125,7 @@ DEPENDENCIES
   steep (= 0.37.0)
   strong_json
   unification_assertion
+  uri
 
 BUNDLED WITH
    2.2.1
