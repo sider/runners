@@ -11,6 +11,9 @@ gem 'git_diff_parser'
 gem 'open3'
 gem 'psych'
 gem 'json'
+gem 'fileutils'
+gem 'forwardable'
+gem 'strscan'
 
 group :development, :test do
   gem 'rake'
