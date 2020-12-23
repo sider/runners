@@ -145,7 +145,7 @@ s.add_test(
       }
     }
   ],
-  analyzer: { name: "Lizard", version: default_version }
+  analyzer: { name: "Metrics Complexity", version: default_version }
 )
 
 s.add_test(
@@ -201,7 +201,7 @@ s.add_test(
       }
     }
   ],
-  analyzer: { name: "Lizard", version: default_version }
+  analyzer: { name: "Metrics Complexity", version: default_version }
 )
 
 s.add_test(
@@ -222,5 +222,5 @@ s.add_test(
       }
     }
   ],
-  analyzer: { name: "Lizard", version: default_version }
+  analyzer: { name: "Metrics Complexity", version: default_version }
 )
