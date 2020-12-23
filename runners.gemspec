@@ -23,6 +23,7 @@ Gem::Specification.new do |spec|
 
   # standard libraries
   spec.add_dependency "bundler", "2.2.1" # NOTE: It must be same as devon_rex.
+  spec.add_dependency "fileutils", ">= 1.5"
   spec.add_dependency "forwardable", ">= 1.3"
   spec.add_dependency "json", ">= 2.5"
   spec.add_dependency "open3", ">= 0.1"
