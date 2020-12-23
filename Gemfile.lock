@@ -39,6 +39,7 @@ GEM
       concurrent-ruby (~> 1.0)
     concurrent-ruby (1.1.7)
     ffi (1.13.1)
+    fileutils (1.5.0)
     git_diff_parser (3.2.0)
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
@@ -105,6 +106,7 @@ DEPENDENCIES
   aws-sdk-s3
   bugsnag
   bundler (>= 1.12, < 3.0)
+  fileutils
   git_diff_parser
   json
   jsonseq
