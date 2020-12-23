@@ -8,13 +8,7 @@ module Runners
       let :runner_config, Schema::BaseConfig.base
 
       let :issue, object(
-        NLOC: integer,
         CCN: integer,
-        token: integer,
-        PARAM: integer,
-        length: integer,
-        function: string,
-        long_name: string,
         )
     end
 
@@ -61,13 +55,7 @@ module Runners
         id: "function-complexity",
         message: msg,
         object: {
-          NLOC: nloc,
           CCN: ccn,
-          token: Integer(row["token"]),
-          PARAM: Integer(row["PARAM"]),
-          length: Integer(row["length"]),
-          function: function,
-          long_name: row["long_name"],
           },
         schema: Schema.issue,
         )
@@ -84,13 +72,7 @@ module Runners
         id: "metrics_file-complexity",
         message: msg,
         object: {
-          NLOC: 0,
           CCN: sum_of_CCN,
-          token: 0,
-          PARAM: 0,
-          length: 0,
-          function: "",
-          long_name: "",
           },
         schema: Schema.issue,
         )

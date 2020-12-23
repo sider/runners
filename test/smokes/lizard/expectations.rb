@@ -12,13 +12,7 @@ s.add_test(
       location: { start_line: 1 },
       message: "The sum of complexity of total 2 function(s) is 2.",
       object: {
-        NLOC: 0,
-        CCN: 2,
-        token: 0,
-        PARAM: 0,
-        length: 0,
-        function: "",
-        long_name: ""
+        CCN: 2
       },
       links: [],
       git_blame_info: {
@@ -86,13 +80,7 @@ s.add_test(
       location: { start_line: 1 },
       message: "The sum of complexity of total 2 function(s) is 2.",
       object: {
-        NLOC: 0,
-        CCN: 2,
-        token: 0,
-        PARAM: 0,
-        length: 0,
-        function: "",
-        long_name: ""
+        CCN: 2
       },
       links: [],
       git_blame_info: {
@@ -149,13 +137,7 @@ s.add_test(
       location: { start_line: 1 },
       message: "The sum of complexity of total 1 function(s) is 1.",
       object: {
-        NLOC: 0,
-        CCN: 1,
-        token: 0,
-        PARAM: 0,
-        length: 0,
-        function: "",
-        long_name: ""
+        CCN: 1
       },
       links: [],
       git_blame_info: {
@@ -176,13 +158,7 @@ s.add_test(
       location: { start_line: 1 },
       message: "The sum of complexity of total 2 function(s) is 7.",
       object: {
-        NLOC: 0,
-        CCN: 7,
-        token: 0,
-        PARAM: 0,
-        length: 0,
-        function: "",
-        long_name: ""
+        CCN: 7
       },
       links: [],
       git_blame_info: {
@@ -217,13 +193,7 @@ s.add_test(
       location: { start_line: 1 },
       message: "The sum of complexity of total 3 function(s) is 8.",
       object: {
-        NLOC: 0,
-        CCN: 8,
-        token: 0,
-        PARAM: 0,
-        length: 0,
-        function: "",
-        long_name: ""
+        CCN: 8
       },
       links: [],
       git_blame_info: {
@@ -244,13 +214,7 @@ s.add_test(
       location: { start_line: 1 },
       message: "The sum of complexity of total 1 function(s) is 2.",
       object: {
-        NLOC: 0,
-        CCN: 2,
-        token: 0,
-        PARAM: 0,
-        length: 0,
-        function: "",
-        long_name: ""
+        CCN: 2
       },
       links: [],
       git_blame_info: {
