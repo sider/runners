@@ -12,6 +12,7 @@ gem 'open3'
 gem 'psych'
 gem 'json'
 gem 'fileutils'
+gem 'forwardable'
 
 group :development, :test do
   gem 'rake'
