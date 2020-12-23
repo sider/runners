@@ -4,7 +4,9 @@ module Runners
   class Processor::Lizard < Processor
     include Python
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :runner_config, Schema::BaseConfig.base
 
       let :issue, object(
