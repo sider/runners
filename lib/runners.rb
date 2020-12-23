@@ -1,6 +1,7 @@
 # standard libraries
 require "bundler"
 require "digest"
+require "fileutils"
 require "forwardable"
 require "json"
 require "open3"
@@ -17,7 +18,6 @@ require "yaml"
 # 3rd-party libraries
 require "aws-sdk-s3"
 require "bugsnag"
-require "fileutils"
 require "git_diff_parser"
 require "jsonseq"
 require "retryable"
