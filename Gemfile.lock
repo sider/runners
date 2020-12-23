@@ -88,6 +88,7 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       rbs (>= 0.20.0)
     strong_json (2.1.2)
+    strscan (3.0.0)
     thor (1.0.1)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
@@ -125,6 +126,7 @@ DEPENDENCIES
   rubocop
   steep (= 0.37.0)
   strong_json
+  strscan
   unification_assertion
 
 BUNDLED WITH
