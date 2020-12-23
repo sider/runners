@@ -157,7 +157,7 @@ updates:
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
   - package-ecosystem: pip
-    directory: "/images/lizard"
+    directory: "/images/metrics_complexity"
     schedule:
       interval: weekly
       time: "09:00"

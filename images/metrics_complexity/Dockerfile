@@ -17,11 +17,11 @@ RUN cd ${RUNNERS_DIR} && \
     bundle list
 
 # Install the default version
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/lizard/Pipfile ${RUNNER_USER_HOME}/lizard_Pipfile
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/metrics_complexity/Pipfile ${RUNNER_USER_HOME}/metrics_complexity_Pipfile
 RUN cd ${RUNNER_USER_HOME} && \
-    mkdir lizard && \
-    mv lizard_Pipfile lizard/Pipfile && \
-    cd lizard && \
+    mkdir metrics_complexity && \
+    mv metrics_complexity_Pipfile metrics_complexity/Pipfile && \
+    cd metrics_complexity && \
     pipenv install --system --skip-lock
 
 
@@ -36,4 +36,4 @@ USER $RUNNER_USER
 WORKDIR $RUNNER_USER_HOME
 
 COPY images/docker-entrypoint.sh /
-ENTRYPOINT ["/docker-entrypoint.sh", "runners", "--analyzer=lizard"]
+ENTRYPOINT ["/docker-entrypoint.sh", "runners", "--analyzer=metrics_complexity"]

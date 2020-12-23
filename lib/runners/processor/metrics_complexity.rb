@@ -1,7 +1,7 @@
 require "etc"
 
 module Runners
-  class Processor::Lizard < Processor
+  class Processor::MetricsComplexity < Processor
     include Python
 
     Schema = _ = StrongJSON.new do
@@ -14,7 +14,11 @@ module Runners
         )
     end
 
-    register_config_schema(name: :lizard, schema: Schema.runner_config)
+    register_config_schema(name: :metrics_complexity, schema: Schema.runner_config)
+
+    def analyzer_bin
+      "lizard"
+    end
 
     def analyze(changes)
       capture3!(analyzer_bin,

@@ -1,5 +1,5 @@
 module Runners
-  class Processor::Lizard < Processor
+  class Processor::MetricsComplexity < Processor
     include Python
 
     class SchemaClass < StrongJSON
