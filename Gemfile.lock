@@ -43,6 +43,7 @@ GEM
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
     jmespath (1.4.0)
+    json (2.5.1)
     jsonseq (0.2.0)
     language_server-protocol (3.15.0.1)
     lefthook (0.7.2)
@@ -105,6 +106,7 @@ DEPENDENCIES
   bugsnag
   bundler (>= 1.12, < 3.0)
   git_diff_parser
+  json
   jsonseq
   lefthook
   minitest
