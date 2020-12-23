@@ -14,6 +14,9 @@ module Runners
       @stdout = stdout
       @stderr = stderr
 
+      setup_bugsnag!(argv.dup)
+      setup_aws!
+
       OptionParser.new do |opts|
         opts.banner = "Usage: runners [options] <GUID>"
 
@@ -75,6 +78,39 @@ module Runners
     end
 
     private
+
+    def setup_bugsnag!(argv)
+      # NOTE: Prevent information from being stolen from environment variables.
+      api_key = ENV.delete("BUGSNAG_API_KEY")
+      app_version = ENV.delete("RUNNERS_VERSION")
+      release_stage = ENV.delete("BUGSNAG_RELEASE_STAGE")
+
+      # @see https://docs.bugsnag.com/platforms/ruby/configuration-options
+      Bugsnag.configure do |config|
+        config.api_key = api_key if api_key
+        config.app_version = app_version if app_version
+        config.release_stage = release_stage if release_stage
+
+        # @see https://docs.bugsnag.com/platforms/ruby/customizing-error-reports/#adding-callbacks
+        config.add_on_error(proc do |report|
+          # TODO: Ignored Steep error
+          # @type var report: untyped
+          report.add_tab :task_guid, guid
+          report.add_tab :arguments, argv
+        end)
+      end
+    end
+
+    def setup_aws!
+      # NOTE: Prevent information from being stolen from environment variables.
+      id = ENV.delete("AWS_ACCESS_KEY_ID")
+      secret = ENV.delete("AWS_SECRET_ACCESS_KEY")
+      region = ENV.delete("AWS_REGION")
+
+      # @see https://docs.aws.amazon.com/sdk-for-ruby/v3/developer-guide/setup-config.html
+      Aws.config[:credentials] = Aws::Credentials.new(id, secret) if id && secret
+      Aws.config[:region] = region if region
+    end
 
     def with_working_dir(&block)
       mktmpdir(&block)

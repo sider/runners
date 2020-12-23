@@ -9,6 +9,8 @@ All notable changes to this project will be documented in this file.
 - Remove unused `locale` gem [#1817](https://github.com/sider/runners/pull/1817)
 - **PMD CPD** Remove needless `CGI.unescape_html`[#1821](https://github.com/sider/runners/pull/1821)
 - **Lizard** [#1631](https://github.com/sider/runners/pull/1631)
+- Move `bin/runners` to `exe/runners` [#1833](https://github.com/sider/runners/pull/1833)
+- **RuboCop** Add supported gems [#1834](https://github.com/sider/runners/pull/1834)
 
 ## 0.39.3
 

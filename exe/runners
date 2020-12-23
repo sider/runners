@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.prepend File.join(__dir__, "..", "lib")
+
+require "runners"
+require "runners/cli"
+
+EXIT_STATUS_FOR_SIGTERM = 126
+
+trap('SIGTERM') do
+  Bugsnag.notify(Runners::TimeoutError.new)
+  exit(EXIT_STATUS_FOR_SIGTERM)
+end
+
+trap('SIGUSR2') do
+  Bugsnag.notify(Runners::TimeoutError.new)
+end
+
+begin
+  Runners::CLI.new(
+    argv: ARGV.dup,
+    stdout: STDOUT,
+    stderr: STDERR,
+    options_json: ENV.delete("RUNNERS_OPTIONS"),
+  ).run
+rescue => exn
+  Bugsnag.notify(exn)
+  raise
+end
