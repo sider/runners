@@ -10,6 +10,6 @@ module Runners
 
     private
 
-    def construct_file_issue: (REXML::Element) -> Array[Issue]
+    def construct_file_issues: (REXML::Element) -> Array[Issue]
   end
 end
