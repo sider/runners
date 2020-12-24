@@ -14,10 +14,7 @@ Aufgaben::Release.new(:release, depends: ["dockerfile:verify_devon_rex"]) do |t|
 end
 
 Aufgaben::Bump::Ruby.new do |t|
-  t.files = %w[
-    .ruby-version
-    .github/workflows/bump_analyzers.yml
-  ]
+  t.files = [".ruby-version", "runners.gemspec"]
 end
 
 Rake::TestTask.new(:test) do |t|
