@@ -4,7 +4,7 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM golangci/golangci-lint:v1.33.0 as golangci-lint
 
-FROM sider/devon_rex_go:master
+FROM sider/devon_rex_go:2.29.0
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=golangci-lint /usr/bin/golangci-lint ${RUNNER_USER_HOME}/bin/
 
@@ -12,7 +12,9 @@ COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=golangci-lint /usr/bin/golang
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} Gemfile* analyzers.yml ${RUNNERS_DIR}/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} Gemfile Gemfile.lock runners.gemspec analyzers.yml ${RUNNERS_DIR}/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} lib/runners/version.rb ${RUNNERS_DIR}/lib/runners/
+
 RUN cd ${RUNNERS_DIR} && \
     bundle config set --global jobs 4 && \
     bundle config set --global retry 3 && \
