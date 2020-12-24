@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.description   = "Sider Runners is a framework for analysis tools that run on Sider."
   spec.homepage      = "https://github.com/sider/runners"
   spec.license       = "MIT"
-  spec.required_ruby_version = Gem::Requirement.new(">= 2.7.2")
+  spec.required_ruby_version = Gem::Requirement.new("2.7.2") # NOTE: It must be same as devon_rex and .ruby-version
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = spec.homepage
