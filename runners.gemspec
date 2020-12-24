@@ -10,11 +10,7 @@ Gem::Specification.new do |spec|
   spec.description   = "Sider Runners is a framework for analysis tools that run on Sider."
   spec.homepage      = "https://github.com/sider/runners"
   spec.license       = "MIT"
-
-  # TODO: Dependabot does not support Ruby 2.7 yet.
-  #       See <https://github.com/dependabot/dependabot-core/issues/2910>.
-  spec.required_ruby_version = Gem::Requirement.new(">= 2.6.0", "<= 2.7.2")
-  # spec.required_ruby_version = Gem::Requirement.new("2.7.2") # NOTE: It must be same as devon_rex and .ruby-version
+  spec.required_ruby_version = Gem::Requirement.new("2.7.2") # NOTE: It must be same as devon_rex and .ruby-version
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = spec.homepage
