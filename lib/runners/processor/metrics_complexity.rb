@@ -51,7 +51,7 @@ module Runners
 
         issues << Issue.new(
           path: filepath,
-          location: Location.new(start_line: 1),
+          location: nil,
           id: "metrics_file-complexity",
           message: msg,
           object: {
