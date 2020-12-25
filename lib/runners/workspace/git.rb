@@ -21,11 +21,21 @@ module Runners
     end
 
     def prepare_head_source
+      # TODO: This code is to investigate the issue #1865. Must remove this before release.
+      shell.capture3! "yarn", "-v"
+
       shell.capture3!("git", "init")
       shell.capture3!("git", "config", "gc.auto", "0")
       shell.capture3!("git", "config", "advice.detachedHead", "false")
       shell.capture3!("git", "config", "core.quotePath", "false")
+
+      # TODO: This code is to investigate the issue #1865. Must remove this before release.
+      shell.capture3! "yarn", "-v"
+
       shell.capture3!("git", "remote", "add", "origin", remote_url)
+
+      # TODO: This code is to investigate the issue #1865. Must remove this before release.
+      shell.capture3! "yarn", "-v"
 
       begin
         shell.capture3_with_retry!("git", "fetch", *git_fetch_args, tries: try_count, sleep: sleep_lambda)
