@@ -23,5 +23,8 @@ module Runners
     def remote_url: () -> String
 
     def git_fetch_args: () -> Array[String]
+
+    # TODO: This code is to investigate the issue #1865. Must remove this before release.
+    def check_yarn: () -> void
   end
 end
