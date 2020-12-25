@@ -1,0 +1,11 @@
+linter:
+  pmd_cpd:
+    root_dir: src
+    minimum-tokens: 15
+    language: [lua, python, dart]
+    ignore-literals: true
+    ignore-identifiers: true
+    ignore-annotations: true
+    ignore-usings: true
+    no-skip-blocks: false
+    skip-blocks-pattern: '#ifdef TEST|#endif'

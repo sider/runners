@@ -80,6 +80,10 @@ analyzers:
     github: languagetool-org/languagetool
     doc: tools/others/languagetool
     dependabot: false
+  metrics_codeclone:
+    name: Metrics Code Clone
+    github: pmd/pmd
+    doc: tools/others/metrics_codeclone
   misspell:
     name: Misspell
     github: client9/misspell
