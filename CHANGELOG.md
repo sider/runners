@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Bump devon_rex images from 2.28.0 to 2.30.0 [#1859](https://github.com/sider/runners/pull/1859) [#1864](https://github.com/sider/runners/pull/1864) [#1875](https://github.com/sider/runners/pull/1875)
 - Gemification [#1858](https://github.com/sider/runners/pull/1858)
 - Use always Yarn v1 even if `.yarnrc` exists [#1876](https://github.com/sider/runners/pull/1876)
+- Prevent Git hooks [#1879](https://github.com/sider/runners/pull/1879)
 
 ## 0.39.3
 
