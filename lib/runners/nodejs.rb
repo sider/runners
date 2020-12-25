@@ -99,7 +99,6 @@ module Runners
 
       # TODO: This code is to investigate the issue #1865. Must remove this before release.
       capture3 "which", "yarn"
-      capture3 "where", "yarn"
       capture3 "/usr/local/bin/yarn", "-v"
     end
 
