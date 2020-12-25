@@ -42,9 +42,6 @@ module Runners
 
       # TODO: This code is to investigate the issue #1865. Must remove this before release.
       check_yarn
-      shell.capture3! "git", "config", "--list"
-      shell.capture3! "cat", ".git/hooks/post-checkout" rescue
-      shell.capture3! "rm", "-f", ".git/hooks/post-checkout"
 
       begin
         shell.capture3_with_retry!("git", "checkout", git_source.head, tries: try_count)
@@ -53,6 +50,7 @@ module Runners
       end
 
       # TODO: This code is to investigate the issue #1865. Must remove this before release.
+      shell.capture3! "cat", ".yarnrc" rescue
       check_yarn
     end
 
