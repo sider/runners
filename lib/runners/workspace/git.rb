@@ -51,6 +51,9 @@ module Runners
 
       # TODO: This code is to investigate the issue #1865. Must remove this before release.
       shell.capture3! "cat", ".yarnrc" rescue
+      shell.capture3! "cat", ".yarnrc.yml" rescue
+      shell.capture3! "cat", ".yarnrc.yaml" rescue
+      shell.capture3! "yarn", "config", "list" rescue
       check_yarn
     end
 
