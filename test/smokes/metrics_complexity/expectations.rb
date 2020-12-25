@@ -22,7 +22,9 @@ s.add_test(
       path: "src/baz/hello.php",
       location: nil,
       message: "The sum of complexity of total 1 function(s) is 1.",
-      object: :_,
+      object: {
+        CCN: 1
+      },
       links: [],
       git_blame_info: nil
     },
@@ -31,7 +33,9 @@ s.add_test(
       path: "src/baz/hello.rb",
       location: nil,
       message: "The sum of complexity of total 1 function(s) is 1.",
-      object: :_,
+      object: {
+        CCN: 1
+      },
       links: [],
       git_blame_info: nil
     },
@@ -40,7 +44,9 @@ s.add_test(
       path: "src/baz/hello.scala",
       location: nil,
       message: "The sum of complexity of total 1 function(s) is 1.",
-      object: :_,
+      object: {
+        CCN: 1
+      },
       links: [],
       git_blame_info: nil
     },
@@ -49,7 +55,9 @@ s.add_test(
       path: "src/baz/qux/hello.lua",
       location: nil,
       message: "The sum of complexity of total 1 function(s) is 1.",
-      object: :_,
+      object: {
+        CCN: 1
+      },
       links: [],
       git_blame_info: nil
     },
@@ -58,7 +66,9 @@ s.add_test(
       path: "src/baz/qux/hello.rs",
       location: nil,
       message: "The sum of complexity of total 2 function(s) is 2.",
-      object: :_,
+      object: {
+        CCN: 2
+      },
       links: [],
       git_blame_info: nil
     },
@@ -78,7 +88,9 @@ s.add_test(
       path: "src/foo/bar/hello.swift",
       location: nil,
       message: "The sum of complexity of total 1 function(s) is 1.",
-      object: :_,
+      object: {
+        CCN: 1
+      },
       links: [],
       git_blame_info: nil
     },
@@ -87,7 +99,9 @@ s.add_test(
       path: "src/foo/hello.c",
       location: nil,
       message: "The sum of complexity of total 2 function(s) is 2.",
-      object: :_,
+      object: {
+        CCN: 2
+      },
       links: [],
       git_blame_info: nil
     },
@@ -96,7 +110,9 @@ s.add_test(
       path: "src/foo/hello.cpp",
       location: nil,
       message: "The sum of complexity of total 2 function(s) is 2.",
-      object: :_,
+      object: {
+        CCN: 2
+      },
       links: [],
       git_blame_info: nil
     },
@@ -105,7 +121,9 @@ s.add_test(
       path: "src/foo/hello.java",
       location: nil,
       message: "The sum of complexity of total 2 function(s) is 2.",
-      object: :_,
+      object: {
+        CCN: 2
+      },
       links: [],
       git_blame_info: nil
     },
@@ -144,7 +162,9 @@ s.add_test(
       path: "src/baz/qux/今日は世界.go",
       location: nil,
       message: "The sum of complexity of total 2 function(s) is 2.",
-      object: :_,
+      object: {
+        CCN: 2
+      },
       links: [],
       git_blame_info: nil
     },
@@ -153,7 +173,9 @@ s.add_test(
       path: "src/baz/こんにちは.py",
       location: nil,
       message: "The sum of complexity of total 1 function(s) is 1.",
-      object: :_,
+      object: {
+        CCN: 1
+      },
       links: [],
       git_blame_info: nil
     },
