@@ -98,7 +98,7 @@ module Runners
       capture3! "yarn", "-v"
 
       # TODO: This code is to investigate the issue #1865. Must remove this before release.
-      capture3 "which yarn"
+      capture3 "which", "yarn"
     end
 
     private
