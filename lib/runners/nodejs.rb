@@ -171,17 +171,7 @@ module Runners
       #
       # @see https://classic.yarnpkg.com/en/docs/yarnrc/#toc-yarn-path
       # @see https://yarnpkg.com/configuration/yarnrc#yarnPath
-      mktmpdir do |backup_dir|
-        backup_files = [".yarnrc", ".yarnrc.yml", ".yarnrc.yaml"].map { |file| current_dir / file }
-        move = ->(src, dst) { src.rename(dst) if src.exist? }
-        backup_files.each { |file| move.call(file, backup_dir / file.basename) }
-
-        begin
-          capture3! "yarn", arg, *args
-        ensure
-          backup_files.each { |file| move.call(backup_dir / file.basename, file) }
-        end
-      end
+      capture3! "yarn", "--no-default-rc", arg, *args
     end
 
     # @see https://classic.yarnpkg.com/en/docs/cli/install
