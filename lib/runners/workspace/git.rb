@@ -20,13 +20,6 @@ module Runners
       raise BlameFailed, "git-blame failed: #{exn.stderr_str}"
     end
 
-    # TODO: This code is to investigate the issue #1865. Must remove this before release.
-    def check_yarn
-      shell.capture3 "yarn", "-v"
-    rescue
-      # noop
-    end
-
     def prepare_head_source
       shell.capture3!("git", "init")
       shell.capture3!("git", "config", "gc.auto", "0")
@@ -40,21 +33,11 @@ module Runners
         raise FetchFailed, "git-fetch failed: #{exn.stderr_str}"
       end
 
-      # TODO: This code is to investigate the issue #1865. Must remove this before release.
-      check_yarn
-
       begin
         shell.capture3_with_retry!("git", "checkout", git_source.head, tries: try_count)
       rescue Shell::ExecError => exn
         raise CheckoutFailed, "git-checkout failed: #{exn.stderr_str}"
       end
-
-      # TODO: This code is to investigate the issue #1865. Must remove this before release.
-      shell.capture3! "cat", ".yarnrc" rescue
-      shell.capture3! "cat", ".yarnrc.yml" rescue
-      shell.capture3! "cat", ".yarnrc.yaml" rescue
-      shell.capture3! "yarn", "config", "list" rescue
-      check_yarn
     end
 
     private
