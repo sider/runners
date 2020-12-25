@@ -20,9 +20,16 @@ module Runners
       raise BlameFailed, "git-blame failed: #{exn.stderr_str}"
     end
 
+    # TODO: This code is to investigate the issue #1865. Must remove this before release.
+    def check_yarn
+      shell.capture3 "yarn", "-v"
+    rescue
+      # noop
+    end
+
     def prepare_head_source
       # TODO: This code is to investigate the issue #1865. Must remove this before release.
-      shell.capture3! "yarn", "-v"
+      check_yarn
 
       shell.capture3!("git", "init")
       shell.capture3!("git", "config", "gc.auto", "0")
@@ -30,12 +37,12 @@ module Runners
       shell.capture3!("git", "config", "core.quotePath", "false")
 
       # TODO: This code is to investigate the issue #1865. Must remove this before release.
-      shell.capture3! "yarn", "-v"
+      check_yarn
 
       shell.capture3!("git", "remote", "add", "origin", remote_url)
 
       # TODO: This code is to investigate the issue #1865. Must remove this before release.
-      shell.capture3! "yarn", "-v"
+      check_yarn
 
       begin
         shell.capture3_with_retry!("git", "fetch", *git_fetch_args, tries: try_count, sleep: sleep_lambda)
