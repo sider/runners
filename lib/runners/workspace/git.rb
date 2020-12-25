@@ -50,11 +50,17 @@ module Runners
         raise FetchFailed, "git-fetch failed: #{exn.stderr_str}"
       end
 
+      # TODO: This code is to investigate the issue #1865. Must remove this before release.
+      check_yarn
+
       begin
         shell.capture3_with_retry!("git", "checkout", git_source.head, tries: try_count)
       rescue Shell::ExecError => exn
         raise CheckoutFailed, "git-checkout failed: #{exn.stderr_str}"
       end
+
+      # TODO: This code is to investigate the issue #1865. Must remove this before release.
+      check_yarn
     end
 
     private
