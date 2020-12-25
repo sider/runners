@@ -425,19 +425,26 @@ class NodejsTest < Minitest::Test
       processor.package_json_path.write(JSON.generate(dependencies: { "eslint" => "6.0.1" }))
       FileUtils.cp data("yarn.lock"), processor.yarn_lock_path
 
+      yarnrc = (workspace.working_dir / ".yarnrc").tap { _1.write 'yarn-path "foo"' }
+      yarnrc_yml = (workspace.working_dir / ".yarnrc.yml").tap { _1.write 'yarnPath: "foo"' }
+      yarnrc_yaml = (workspace.working_dir / ".yarnrc.yaml").tap { _1.write 'yarnPath: "foo"' }
+
       processor.send(:yarn_install, INSTALL_OPTION_NONE)
-      refute eslint.exist?
+      refute_path_exists eslint
+      assert_path_exists yarnrc
+      assert_path_exists yarnrc_yml
+      assert_path_exists yarnrc_yaml
 
       processor.send(:yarn_install, INSTALL_OPTION_ALL)
-      assert eslint.exist?
+      assert_path_exists eslint
 
       eslint.rmtree
       processor.send(:yarn_install, INSTALL_OPTION_PRODUCTION)
-      assert eslint.exist?
+      assert_path_exists eslint
 
       node_modules.rmtree
       processor.send(:yarn_install, INSTALL_OPTION_DEVELOPMENT)
-      assert eslint.exist?
+      assert_path_exists eslint
 
       expected_commands = [
         %w[yarn install --ignore-engines --ignore-scripts --no-progress --non-interactive --frozen-lockfile],

@@ -487,3 +487,17 @@ s.add_test(
   analyzer: { name: "ESLint", version: default_version },
   config_file: "sider.yml"
 )
+
+s.add_test(
+  "yarnrc",
+  type: "success",
+  issues: [],
+  analyzer: { name: "ESLint", version: "7.14.0" }
+)
+
+s.add_test(
+  "yarnrc_yml",
+  type: "success",
+  issues: [],
+  analyzer: { name: "ESLint", version: "7.13.0" }
+)
