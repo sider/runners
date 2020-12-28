@@ -122,7 +122,7 @@ module Runners
       saved = [".git"].filter_map do |dir|
         src = working_dir / dir
         if src.directory?
-          dest = mktmpdir_as_pathname / dir
+          dest = mktmpdir / dir
           src.rename(dest)
           trace_writer.message "Move #{src} to #{dest}"
           [src, dest]

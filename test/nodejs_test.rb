@@ -426,23 +426,23 @@ class NodejsTest < Minitest::Test
       FileUtils.cp data("yarn.lock"), processor.yarn_lock_path
 
       processor.send(:yarn_install, INSTALL_OPTION_NONE)
-      refute eslint.exist?
+      refute_path_exists eslint
 
       processor.send(:yarn_install, INSTALL_OPTION_ALL)
-      assert eslint.exist?
+      assert_path_exists eslint
 
       eslint.rmtree
       processor.send(:yarn_install, INSTALL_OPTION_PRODUCTION)
-      assert eslint.exist?
+      assert_path_exists eslint
 
       node_modules.rmtree
       processor.send(:yarn_install, INSTALL_OPTION_DEVELOPMENT)
-      assert eslint.exist?
+      assert_path_exists eslint
 
       expected_commands = [
-        %w[yarn install --ignore-engines --ignore-scripts --no-progress --non-interactive --frozen-lockfile],
-        %w[yarn install --ignore-engines --ignore-scripts --no-progress --non-interactive --frozen-lockfile --production],
-        %w[yarn install --ignore-engines --ignore-scripts --no-progress --non-interactive --frozen-lockfile],
+        %w[yarn --no-default-rc install --ignore-engines --ignore-scripts --no-progress --non-interactive --frozen-lockfile],
+        %w[yarn --no-default-rc install --ignore-engines --ignore-scripts --no-progress --non-interactive --frozen-lockfile --production],
+        %w[yarn --no-default-rc install --ignore-engines --ignore-scripts --no-progress --non-interactive --frozen-lockfile],
       ]
       assert_equal expected_commands, actual_commands
 
