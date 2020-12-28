@@ -1,5 +1,5 @@
 linter:
-  pmd_cpd:
+  metrics_codeclone:
     minimum-tokens: 70
     language: cs
     encoding: Shift_JIS

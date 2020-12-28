@@ -1,5 +1,5 @@
 linter:
-  pmd_cpd:
+  metrics_codeclone:
     language: ruby
     minimum-tokens: 15
     files: [foo/bar, src/]

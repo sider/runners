@@ -1,5 +1,5 @@
 linter:
-  pmd_cpd:
+  metrics_codeclone:
     language: cpp
     minimum-tokens: 50
     files: src

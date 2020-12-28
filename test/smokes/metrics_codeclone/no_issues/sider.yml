@@ -1,3 +1,3 @@
 linter:
-  pmd_cpd:
+  metrics_codeclone:
     minimum-tokens: 200

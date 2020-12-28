@@ -1,5 +1,5 @@
 linter:
-  pmd_cpd:
+  metrics_codeclone:
     root_dir: src
     files: [foo, bar/, baz]
     minimum-tokens: 30

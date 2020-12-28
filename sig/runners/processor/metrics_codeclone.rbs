@@ -1,4 +1,5 @@
 module Runners
-  class Processor::MetricsCodeClone < PmdCpd
+  class Processor::MetricsCodeClone < Processor
+    include PmdCpdBase
   end
 end
