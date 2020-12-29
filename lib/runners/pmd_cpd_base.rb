@@ -2,8 +2,8 @@ module Runners
   module PmdCpdBase
     include Java
 
-    @@Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    @@BaseSchema = _ = StrongJSON.new do
+      # @type self: BaseSchemaClass
 
       let :available_languages, enum(
         literal("apex"),
@@ -77,7 +77,9 @@ module Runners
       @analyzer_version ||= capture3!("show_pmd_version").yield_self { |stdout,| stdout.strip }
     end
 
-    def analyze(_changes)
+    private
+
+    def run_analyze(_changes)
       issues = []
 
       languages.each do |language|
@@ -86,10 +88,8 @@ module Runners
         construct_result(stdout) { |issue| issues << issue }
       end
 
-      Results::Success.new(guid: guid, analyzer: analyzer, issues: issues)
+      issues
     end
-
-    private
 
     def raise_warnings(stderr)
       stderr.each_line do |line|
@@ -114,7 +114,7 @@ module Runners
             location: file[:location],
             message: "Code duplications found (#{files.length} occurrences).",
             object: create_issue_object(elem_dupli, files),
-            schema: @@Schema.issue,
+            schema: @@BaseSchema.issue,
           )
         end
       end
