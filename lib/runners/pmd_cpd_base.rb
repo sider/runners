@@ -2,8 +2,8 @@ module Runners
   module PmdCpdBase
     include Java
 
-    @@BaseSchema = _ = StrongJSON.new do
-      # @type self: BaseSchemaClass
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
 
       let :available_languages, enum(
         literal("apex"),
@@ -69,6 +69,10 @@ module Runners
     DEFAULT_FILES = ".".freeze
     DEFAULT_LANGUAGE = ["cpp", "cs", "ecmascript", "go", "java", "kotlin", "php", "python", "ruby", "swift"].freeze
 
+    def self.register_config_schema(name:)
+      Processor.register_config_schema(name: name, schema: Schema.runner_config)
+    end
+
     def analyzer_bin
       "pmd_cpd"
     end
@@ -114,7 +118,7 @@ module Runners
             location: file[:location],
             message: "Code duplications found (#{files.length} occurrences).",
             object: create_issue_object(elem_dupli, files),
-            schema: @@BaseSchema.issue,
+            schema: Schema.issue,
           )
         end
       end

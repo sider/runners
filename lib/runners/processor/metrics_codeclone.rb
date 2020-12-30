@@ -10,7 +10,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :metrics_codeclone, schema: @@BaseSchema.runner_config)
+    PmdCpdBase.register_config_schema(name: :metrics_codeclone)
 
     def analyze(_changes)
       issues = run_analyze(_changes)
