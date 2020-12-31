@@ -1,5 +1,5 @@
 module Runners
-  module PmdCpdBase : Processor
+  class PmdCpdBase
     include Java
 
     class SchemaClass < StrongJSON
@@ -13,7 +13,11 @@ module Runners
     DEFAULT_FILES: String
     DEFAULT_LANGUAGE: Array[String]
 
+    def self.register_config_schema: (name: Symbol) -> void
+
     private
+
+    def run_analyze: (Changes) -> Array[Issue]
 
     def raise_warnings: (String) -> void
 
