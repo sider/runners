@@ -12,8 +12,8 @@ module Runners
 
     PmdCpdBase.register_config_schema(name: :metrics_codeclone)
 
-    def analyze(_changes)
-      issues = run_analyze(_changes)
+    def analyze(changes)
+      issues = run_analyze(changes)
 
       file_issues = []
       issues
