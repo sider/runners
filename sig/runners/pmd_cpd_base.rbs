@@ -1,5 +1,6 @@
 module Runners
-  class PmdCpdBase
+  module PmdCpdBase
+    include Processor
     include Java
 
     class SchemaClass < StrongJSON
