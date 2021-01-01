@@ -15,13 +15,11 @@ module Runners
     def analyze(changes)
       issues = run_analyze(changes)
 
-      file_issues = []
-      issues
-        .map { |issue| issue.path }
-        .uniq
-        .each do |filepath|
-          file_issues << construct_file_issue(issues, filepath)
-        end
+      file_issues =
+        issues
+          .map { |issue| issue.path }
+          .uniq
+          .map { |filepath| construct_file_issue(issues, filepath) }
 
       Results::Success.new(guid: guid, analyzer: analyzer, issues: file_issues)
     end
