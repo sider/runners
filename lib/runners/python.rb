@@ -5,5 +5,13 @@ module Runners
       capture3! "pip", "--version"
       capture3! "pipenv", "--version"
     end
+
+    def pip_install(*packages)
+      unless packages.empty?
+        options = %w[--disable-pip-version-check]
+        capture3! "pip", "install", *options, *packages
+        capture3! "pip", "list", *options, *packages
+      end
+    end
   end
 end
