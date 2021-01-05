@@ -9,7 +9,7 @@ module Runners
     def pip_install(*packages)
       unless packages.empty?
         options = %w[--disable-pip-version-check]
-        capture3! "pip", "install", *options, *packages
+        capture3! "pip", "install", "--quiet", *options, *packages
         capture3! "pip", "list", *options, *packages
       end
     end
