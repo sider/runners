@@ -10,7 +10,7 @@ All notable changes to this project will be documented in this file.
 - **PMD CPD** Remove needless `CGI.unescape_html`[#1821](https://github.com/sider/runners/pull/1821)
 - Move `bin/runners` to `exe/runners` [#1833](https://github.com/sider/runners/pull/1833)
 - **RuboCop** Add supported gems [#1834](https://github.com/sider/runners/pull/1834)
-- Bump devon_rex images from 2.28.0 to 2.30.0 [#1859](https://github.com/sider/runners/pull/1859) [#1864](https://github.com/sider/runners/pull/1864) [#1875](https://github.com/sider/runners/pull/1875)
+- Bump devon_rex images from 2.28.0 to 2.30.1 [#1859](https://github.com/sider/runners/pull/1859) [#1864](https://github.com/sider/runners/pull/1864) [#1875](https://github.com/sider/runners/pull/1875) [#1894](https://github.com/sider/runners/pull/1894)
 - Gemification [#1858](https://github.com/sider/runners/pull/1858)
 - Use always Yarn v1 even if `.yarnrc` exists [#1876](https://github.com/sider/runners/pull/1876)
 - Prevent Git hooks [#1879](https://github.com/sider/runners/pull/1879)
