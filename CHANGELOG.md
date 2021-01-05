@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 - Gemification [#1858](https://github.com/sider/runners/pull/1858)
 - Use always Yarn v1 even if `.yarnrc` exists [#1876](https://github.com/sider/runners/pull/1876)
 - Prevent Git hooks [#1879](https://github.com/sider/runners/pull/1879)
+- Improve `pip install` [#1893](https://github.com/sider/runners/pull/1893)
 
 ## 0.39.3
 
