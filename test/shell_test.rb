@@ -114,14 +114,14 @@ class ShellTest < Minitest::Test
         { trace: :status, status: 1 },
       ]
 
-      assert_equal({
-        details: {
-          args: ["echo Error | tee /dev/stderr && exit 1"],
-          stdout: "Error\n",
-          stderr: "Error\n",
-          status: 1,
-        }
-      }, error.bugsnag_meta_data)
+      bugsnag = error.bugsnag_meta_data.fetch(:details)
+      assert_equal ["echo Error | tee /dev/stderr && exit 1"], bugsnag.fetch(:args)
+      assert_equal "Error\n", bugsnag.fetch(:stdout)
+      assert_equal "Error\n", bugsnag.fetch(:stderr)
+      assert_match %r{#<Process::Status: pid \d+ exit 1>}, bugsnag.fetch(:status)
+      assert_equal 1, bugsnag.fetch(:exitstatus)
+      assert_nil bugsnag.fetch(:stopsig)
+      assert_nil bugsnag.fetch(:termsig)
     end
   end
 
