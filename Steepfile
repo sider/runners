@@ -9,6 +9,7 @@ target :lib do
   library "tmpdir"
   library "forwardable"
   library "uri"
+  library "time"
   library "strong_json"
   library "retryable"
 end
