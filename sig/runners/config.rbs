@@ -12,18 +12,19 @@ module Runners
     class InvalidConfiguration < Error
     end
 
-    CONFIG_FILE_NAME: String
-    OLD_CONFIG_FILE_NAME: String
+    FILE_NAME: String
+    FILE_NAME_OLD: String
 
     def self.load_from_dir: (Pathname) -> instance
 
     attr_reader path: Pathname?
     attr_reader raw_content: String?
-    attr_reader content: Hash[Symbol, untyped]
 
-    def initialize: (Pathname?) -> void
+    def initialize: (path: Pathname?, raw_content: String?) -> void
 
     def raw_content!: () -> String
+
+    def content: () -> Hash[Symbol, untyped]
 
     def path_name: () -> String
 
@@ -37,7 +38,7 @@ module Runners
 
     private
 
-    def parse_yaml: () -> untyped
+    def parse_yaml: (String) -> untyped
 
     def check_schema: (untyped) -> Hash[Symbol, untyped]
   end
