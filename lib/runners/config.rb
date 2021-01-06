@@ -15,10 +15,19 @@ module Runners
     CONFIG_FILE_NAME = "sider.yml".freeze
     OLD_CONFIG_FILE_NAME = "sideci.yml".freeze
 
-    attr_reader :working_dir, :raw_content, :content
+    def self.load_from_dir(dir)
+      file = [
+        dir / CONFIG_FILE_NAME,
+        dir / OLD_CONFIG_FILE_NAME,
+      ].find(&:file?)
 
-    def initialize(working_dir)
-      @working_dir = working_dir
+      new(file)
+    end
+
+    attr_reader :path, :raw_content, :content
+
+    def initialize(path)
+      @path = path
       @raw_content = path&.read
       @content = check_schema(parse_yaml).freeze
     end
@@ -28,7 +37,7 @@ module Runners
     end
 
     def path_name
-      path&.basename&.to_s || CONFIG_FILE_NAME
+      path&.basename&.to_path || CONFIG_FILE_NAME
     end
 
     def path_exist?
@@ -48,14 +57,6 @@ module Runners
     end
 
     private
-
-    def path
-      return @path if defined?(@path)
-
-      @path ||= [working_dir / CONFIG_FILE_NAME, working_dir / OLD_CONFIG_FILE_NAME].find do |pathname|
-        pathname.file?
-      end
-    end
 
     def parse_yaml
       raw_content&.yield_self { |s| YAML.safe_load(s, symbolize_names: true) }
