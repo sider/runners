@@ -1,3 +1,0 @@
-class Time
-  def iso8601: () -> String
-end
