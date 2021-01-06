@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.40.0...HEAD)
 
+- Commit `Gemfile.lock` on `rake release` [#1898](https://github.com/sider/runners/pull/1898)
+
 ## 0.40.0
 
 [Full diff](https://github.com/sider/runners/compare/0.39.3...0.40.0)
