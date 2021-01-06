@@ -15,7 +15,7 @@ module Runners
                        status: Process::Status,
                        dir: Pathname) -> void
 
-      def bugsnag_meta_data: () -> { details: { args: Array[String], stdout: String, stderr: String, status: Integer? } }
+      def bugsnag_meta_data: () -> { details: { args: Array[String], stdout: String, stderr: String, status: String, exitstatus: Integer?, stopsig: Integer?, termsig: Integer? } }
     end
 
     SIGUSR2: Integer
