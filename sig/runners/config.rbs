@@ -15,11 +15,13 @@ module Runners
     CONFIG_FILE_NAME: String
     OLD_CONFIG_FILE_NAME: String
 
-    attr_reader working_dir: Pathname
+    def self.load_from_dir: (Pathname) -> instance
+
+    attr_reader path: Pathname?
     attr_reader raw_content: String?
     attr_reader content: Hash[Symbol, untyped]
 
-    def initialize: (Pathname) -> void
+    def initialize: (Pathname?) -> void
 
     def raw_content!: () -> String
 
@@ -34,8 +36,6 @@ module Runners
     def linter?: (Symbol | String) -> bool
 
     private
-
-    def path: () -> Pathname?
 
     def parse_yaml: () -> untyped
 
