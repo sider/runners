@@ -1,11 +1,12 @@
 module Runners
   class Processor::MetricsCodeClone < Processor
-    include PmdCpdBase
 
     class SchemaClass < StrongJSON
       def issue: () -> StrongJSON::Type::Object[untyped]
     end
     Schema: SchemaClass
+
+    def initialize: (**untyped) -> void
 
     private
 

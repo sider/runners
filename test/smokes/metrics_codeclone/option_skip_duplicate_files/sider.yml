@@ -1,5 +1,5 @@
 linter:
-  metrics_codeclone:
+  pmd_cpd:
     files: [foo, bar/, baz]
     minimum-tokens: 30
     language: cs

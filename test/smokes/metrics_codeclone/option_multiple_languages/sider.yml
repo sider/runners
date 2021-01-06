@@ -1,5 +1,5 @@
 linter:
-  metrics_codeclone:
+  pmd_cpd:
     root_dir: src
     minimum-tokens: 15
     language: [lua, python, dart]

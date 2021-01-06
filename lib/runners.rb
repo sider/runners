@@ -68,7 +68,6 @@ require "runners/schema/options"
 require "runners/schema/trace"
 require "runners/schema/config"
 require "runners/schema/result"
-require "runners/pmd_cpd_base"
 
 # processors
 require "runners/processor"

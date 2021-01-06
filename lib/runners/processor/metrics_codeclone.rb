@@ -1,6 +1,5 @@
 module Runners
   class Processor::MetricsCodeClone < Processor
-    include PmdCpdBase
 
     Schema = _ = StrongJSON.new do
       # @type self: SchemaClass
@@ -10,11 +9,29 @@ module Runners
       )
     end
 
-    PmdCpdBase.register_config_schema(name: :metrics_codeclone)
+    def initialize(**params)
+      super(**params)
+      @pmd_cpd = PmdCpd.new(**params)
+    end
+
+    def config_linter
+      @pmd_cpd.config_linter
+    end
+
+    def analyzer_bin
+      @pmd_cpd.analyzer_bin
+    end
+
+    def analyzer_version
+      @pmd_cpd.analyzer_version
+    end
 
     def analyze(changes)
-      issues = run_analyze(changes)
+      result = @pmd_cpd.analyze(changes)
+      @pmd_cpd.warnings.each {|warn| @warnings << warn }
+      return result unless result.is_a? Results::Success
 
+      issues = result.issues
       file_issues =
         issues
           .map { |issue| issue.path }

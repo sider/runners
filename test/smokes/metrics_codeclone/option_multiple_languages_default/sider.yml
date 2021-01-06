@@ -1,5 +1,5 @@
 linter:
-  metrics_codeclone:
+  pmd_cpd:
     minimum-tokens: 15
     ignore-literals: true
     ignore-identifiers: true
