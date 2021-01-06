@@ -29,7 +29,10 @@ module Runners
             args: args,
             stdout: stdout_str,
             stderr: stderr_str,
-            status: status.exitstatus,
+            status: status.inspect,
+            exitstatus: status.exitstatus,
+            stopsig: status.stopsig,
+            termsig: status.termsig,
           }
         }
       end

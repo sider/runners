@@ -23,12 +23,23 @@ class WorkspaceGitTest < Minitest::Test
 
   def test_prepare_head_source
     with_workspace do |workspace|
+      dest = workspace.working_dir
+
+      (dest / ".git" / "hooks").mkpath
+      (dest / ".git" / "hooks" / "post-checkout").tap do |hook|
+        hook.write <<~EOF
+          #!/usr/bin/env ruby
+          raise "Error!"
+        EOF
+        hook.chmod 0777
+      end
+
       workspace.prepare_head_source
 
-      dest = workspace.working_dir
       refute_empty dest.children
       assert_path_exists dest / "README.md"
       assert_path_exists dest / ".git"
+      assert_path_exists dest / ".git" / "hooks" / "post-checkout"
     end
   end
 

@@ -1,4 +1,5 @@
 module Runners
   module Python : Processor
+    def pip_install: (*String) -> void
   end
 end

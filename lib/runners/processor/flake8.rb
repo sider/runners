@@ -37,6 +37,7 @@ module Runners
     def analyze(changes)
       capture3!(
         analyzer_bin,
+        "-vv", # This is a debug code. Remove before release.
         "--exit-zero",
         "--output-file", report_file,
         "--format", OUTPUT_FORMAT,
@@ -65,21 +66,21 @@ module Runners
     end
 
     def prepare_plugins
-      plugins = Array(config_linter[:plugins])
-      unless plugins.empty?
-        capture3!('pip', 'install', *plugins)
-      end
+      pip_install(*Array(config_linter[:plugins]))
     end
 
     def parse_result(output)
-      output.scan(OUTPUT_PATTERN) do |match|
-        id, path, line, column, message = match
-        yield Issue.new(
-          path: relative_path(path),
-          location: Location.new(start_line: line, start_column: column),
-          id: id,
-          message: message,
-        )
+      # modifed for debug. revert before release
+      output.split(/\R/).each do |l|
+        l.match(OUTPUT_PATTERN) do |match|
+          _, id, path, line, column, message = match.to_a
+          yield Issue.new(
+              path: relative_path(_ = path),
+              location: Location.new(start_line: line, start_column: column),
+              id: id,
+              message: (_ = message),
+              )
+        end
       end
     end
   end
