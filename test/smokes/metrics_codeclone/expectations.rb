@@ -625,3 +625,10 @@ s.add_test(
   issues: [],
   analyzer: { name: "Metrics Code Clone", version: default_version }
 )
+
+s.add_test(
+  "root_not_found",
+  type: "failure",
+  message: "`src` directory is not found! Please check `linter.pmd_cpd.root_dir` in your `sider.yml`",
+  analyzer: :_
+)

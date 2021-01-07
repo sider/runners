@@ -26,9 +26,13 @@ module Runners
       @pmd_cpd.analyzer_version
     end
 
+    def check_root_dir_exist
+      @pmd_cpd.check_root_dir_exist
+    end
+
     def analyze(changes)
       result = @pmd_cpd.analyze(changes)
-      @pmd_cpd.warnings.each {|warn| @warnings << warn }
+      @pmd_cpd.warnings.each { |warn| @warnings << warn }
       return result unless result.is_a? Results::Success
 
       issues = result.issues
