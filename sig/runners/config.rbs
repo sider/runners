@@ -36,6 +36,8 @@ module Runners
 
     def linter?: (Symbol | String) -> bool
 
+    def check_unsupported_linters: (Array[String]) -> String
+
     private
 
     def parse_yaml: (String) -> untyped

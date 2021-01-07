@@ -61,6 +61,20 @@ module Runners
       !!content.dig(:linter, id.to_sym)
     end
 
+    def check_unsupported_linters(linter_ids)
+      list = linter_ids.filter { |id| linter?(id) }
+
+      if list.empty?
+        ""
+      else
+        list = list.map { |id| "- `linter.#{id}`" }.join("\n")
+        <<~MSG
+          The following linters in your `#{path_name}` are no longer supported. Please remove them.
+          #{list}
+        MSG
+      end
+    end
+
     private
 
     def parse_yaml(text)
