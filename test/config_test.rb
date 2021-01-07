@@ -233,4 +233,23 @@ class ConfigTest < Minitest::Test
     assert_equal({ root_dir: "lib/" }, config.linter("go_vet"))
     assert_equal({ root_dir: "module/", import_path: "foo" }, config.linter("gometalinter"))
   end
+
+  def test_check_unsupported_linters
+    yaml = <<~YAML
+      linter:
+        golint: {}
+        go_vet: {}
+    YAML
+    config = Runners::Config.new(path: Pathname(FILE_NAME), raw_content: yaml)
+    assert_equal <<~MSG, config.check_unsupported_linters(%w[golint go_vet gometalinter])
+      The following linters in your `sider.yml` are no longer supported. Please remove them.
+      - `linter.golint`
+      - `linter.go_vet`
+    MSG
+  end
+
+  def test_check_unsupported_linters_empty
+    config = Runners::Config.new(path: Pathname(FILE_NAME), raw_content: "")
+    assert_equal "", config.check_unsupported_linters(%w[foo bar])
+  end
 end

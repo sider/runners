@@ -34,6 +34,8 @@ module Runners
 
     def relative_path: (String | Pathname, ?from: Pathname) -> Pathname
 
+    def check_unsupported_linters: () -> void
+
     def setup: () { () -> result } -> result
 
     def analyze: (Changes) -> result
