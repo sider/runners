@@ -26,7 +26,7 @@ module Runners
 
     def initialize: (current_dir: Pathname,
                      trace_writer: TraceWriter,
-                     env_hash: Hash[String, String?]) -> void
+                     ?env_hash: Hash[String, String?]) -> void
 
     def chdir: [X] (Pathname) { (Pathname) -> X } -> X
     def push_env_hash: [X] (Hash[String, String?]) { () -> X } -> X

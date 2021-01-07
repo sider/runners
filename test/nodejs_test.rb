@@ -14,6 +14,8 @@ class NodejsTest < Minitest::Test
   INSTALL_OPTION_PRODUCTION = Runners::Nodejs::INSTALL_OPTION_PRODUCTION
   INSTALL_OPTION_DEVELOPMENT = Runners::Nodejs::INSTALL_OPTION_DEVELOPMENT
 
+  private
+
   def processor_class
     @processor_class ||= Class.new(Runners::Processor) do
       include Runners::Nodejs
@@ -57,7 +59,7 @@ class NodejsTest < Minitest::Test
       guid: SecureRandom.uuid,
       working_dir: workspace.working_dir,
       config: config,
-      git_ssh_path: nil,
+      shell: Runners::Shell.new(current_dir: workspace.working_dir, trace_writer: trace_writer),
       trace_writer: trace_writer,
     )
   end
@@ -71,6 +73,8 @@ class NodejsTest < Minitest::Test
       silence_warnings { Runners::Nodejs.const_set(name, saved_value) }
     end
   end
+
+  public
 
   def test_nodejs_analyzer_local_command
     with_workspace do |workspace|
