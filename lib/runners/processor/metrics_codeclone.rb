@@ -30,6 +30,18 @@ module Runners
       @pmd_cpd.check_root_dir_exist
     end
 
+    def show_runtime_versions
+      @pmd_cpd.show_runtime_versions
+    end
+
+    def setup(&block)
+      @pmd_cpd.setup(&block)
+    end
+
+    def use_git_metadata_dir?
+      @pmd_cpd.use_git_metadata_dir?
+    end
+
     def analyze(changes)
       result = @pmd_cpd.analyze(changes)
       @pmd_cpd.warnings.each { |warn| @warnings << warn }
