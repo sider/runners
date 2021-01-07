@@ -7,14 +7,6 @@ module Runners
     class CIConfigBroken < UserError
     end
 
-    attr_reader guid: String
-    attr_reader working_dir: Pathname
-    attr_reader git_ssh_path: Pathname?
-    attr_reader trace_writer: TraceWriter
-    attr_reader warnings: Array[{ message: String, file: String? }]
-    attr_reader config: Config
-    attr_reader shell: Shell
-
     def self.register_config_schema: (name: Symbol, schema: StrongJSON::_Schema[untyped]) -> void
 
     class RemovedGoToolSchemaClass < StrongJSON
@@ -22,7 +14,14 @@ module Runners
     end
     RemovedGoToolSchema: RemovedGoToolSchemaClass
 
-    def initialize: (guid: String, working_dir: Pathname, config: Config, git_ssh_path: Pathname?, trace_writer: TraceWriter) -> void
+    attr_reader guid: String
+    attr_reader working_dir: Pathname
+    attr_reader config: Config
+    attr_reader shell: Shell
+    attr_reader trace_writer: TraceWriter
+    attr_reader warnings: Array[{ message: String, file: String? }]
+
+    def initialize: (guid: String, working_dir: Pathname, config: Config, shell: Shell, trace_writer: TraceWriter) -> void
 
     def current_dir: () -> Pathname
     def chdir: [X] (Pathname) { (Pathname) -> X } -> X

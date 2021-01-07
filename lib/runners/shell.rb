@@ -45,7 +45,7 @@ module Runners
     # signal number for analyse timeout
     SIGUSR2 = Signal.list.fetch('USR2')
 
-    def initialize(current_dir:, trace_writer:, env_hash:)
+    def initialize(current_dir:, trace_writer:, env_hash: {})
       @trace_writer = trace_writer
       @current_dir = current_dir
       @env_hash_stack = [env_hash]

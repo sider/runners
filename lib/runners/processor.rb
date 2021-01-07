@@ -5,13 +5,6 @@ module Runners
 
     class CIConfigBroken < UserError; end
 
-    attr_reader :guid, :working_dir, :git_ssh_path, :trace_writer, :warnings, :config, :shell
-
-    def_delegators :@shell,
-      :chdir, :current_dir,
-      :capture3, :capture3!, :capture3_trace, :capture3_with_retry!,
-      :env_hash, :push_env_hash
-
     def self.register_config_schema(name:, schema:)
       Schema::Config.register(name: name, schema: schema)
     end
@@ -25,25 +18,24 @@ module Runners
     register_config_schema(name: :go_vet, schema: RemovedGoToolSchema.config)
     register_config_schema(name: :gometalinter, schema: RemovedGoToolSchema.config)
 
-    def initialize(guid:, working_dir:, config:, git_ssh_path:, trace_writer:)
+    attr_reader :guid, :working_dir, :config, :shell, :trace_writer, :warnings
+
+    def_delegators :@shell,
+      :chdir, :current_dir,
+      :capture3, :capture3!, :capture3_trace, :capture3_with_retry!,
+      :env_hash, :push_env_hash
+
+    def initialize(guid:, working_dir:, config:, shell:, trace_writer:)
       @guid = guid
       @working_dir = working_dir
-      @git_ssh_path = git_ssh_path
+      @config = config
+      @shell = shell
       @trace_writer = trace_writer
       @warnings = []
-      @config = config
 
       if config.path_exist?
         trace_writer.ci_config(config.content, raw_content: config.raw_content!, file: config.path_name)
       end
-
-      hash = {
-        "RUBYOPT" => nil,
-        "GIT_SSH_COMMAND" => git_ssh_path&.then { |path| "ssh -F '#{path}'" },
-      }
-      @shell = Shell.new(current_dir: working_dir,
-                         env_hash: hash,
-                         trace_writer: trace_writer)
     end
 
     def relative_path(original, from: working_dir)

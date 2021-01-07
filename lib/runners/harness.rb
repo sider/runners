@@ -43,7 +43,8 @@ module Runners
           end
 
           begin
-            processor = processor_class.new(guid: guid, working_dir: working_dir, config: conf, git_ssh_path: git_ssh_path, trace_writer: trace_writer)
+            processor = processor_class.new(guid: guid, working_dir: working_dir, config: conf,
+                                            shell: build_shell(git_ssh_path), trace_writer: trace_writer)
 
             root_dir_not_found = processor.check_root_dir_exist
             return root_dir_not_found if root_dir_not_found
@@ -140,6 +141,14 @@ module Runners
         dest.parent.rmdir
         trace_writer.message "Restore #{dest} to #{src}"
       end
+    end
+
+    def build_shell(git_ssh_path)
+      env = {
+        "RUBYOPT" => nil,
+        "GIT_SSH_COMMAND" => git_ssh_path&.then { |path| "ssh -F '#{path}'" },
+      }
+      Shell.new(current_dir: working_dir, trace_writer: trace_writer, env_hash: env)
     end
   end
 end
