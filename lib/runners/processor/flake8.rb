@@ -35,18 +35,16 @@ module Runners
     end
 
     def analyze(changes)
-      # modify output for debugging. Revert before release.
-      stdout, _ = capture3!(
+      capture3!(
         analyzer_bin,
-        "-vv", # This is a debug code. Remove before release.
         "--exit-zero",
+        "--output-file", report_file,
         "--format", OUTPUT_FORMAT,
         "--append-config", IGNORED_CONFIG_PATH,
-        "-j", "1",
         *(config_linter[:config]&.then { |c| ["--config", c] }),
         *Array(config_linter[:target] || DEFAULT_TARGET),
       )
-      output = stdout
+      output = read_report_file
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
         next if output.empty?
@@ -71,17 +69,14 @@ module Runners
     end
 
     def parse_result(output)
-      # modifed for debug. revert before release
-      output.split(/\R/).each do |l|
-        l.match(OUTPUT_PATTERN) do |match|
-          _, id, path, line, column, message = match.to_a
-          yield Issue.new(
-              path: relative_path(_ = path),
-              location: Location.new(start_line: line, start_column: column),
-              id: id,
-              message: (_ = message),
-              )
-        end
+      output.scan(OUTPUT_PATTERN) do |match|
+        id, path, line, column, message = match
+        yield Issue.new(
+          path: relative_path(path),
+          location: Location.new(start_line: line, start_column: column),
+          id: id,
+          message: message,
+        )
       end
     end
   end
