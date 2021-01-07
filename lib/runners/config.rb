@@ -29,7 +29,7 @@ module Runners
     attr_reader :path, :raw_content
 
     def initialize(path:, raw_content:)
-      @path = path
+      @path = path ? Pathname(path) : path
       @raw_content = raw_content
     end
 
