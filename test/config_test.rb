@@ -252,4 +252,29 @@ class ConfigTest < Minitest::Test
     config = Runners::Config.new(path: Pathname(FILE_NAME), raw_content: "")
     assert_equal "", config.check_unsupported_linters(%w[foo bar])
   end
+
+  def test_exclude_branch?
+    yaml = <<~YAML
+      branches:
+        exclude:
+          - foo
+          - /^bar/
+          - /baz/i
+          - /abc
+          - /^features\/.+/
+    YAML
+    config = Runners::Config.new(path: Pathname(FILE_NAME), raw_content: yaml)
+
+    assert config.exclude_branch?("foo")
+    refute config.exclude_branch?("foooo")
+    assert config.exclude_branch?("bar")
+    assert config.exclude_branch?("bar--")
+    refute config.exclude_branch?("--bar--")
+    assert config.exclude_branch?("baz")
+    assert config.exclude_branch?("BAZ")
+    assert config.exclude_branch?("/abc")
+    refute config.exclude_branch?("abc")
+    assert config.exclude_branch?("features/123")
+    refute config.exclude_branch?("features/")
+  end
 end

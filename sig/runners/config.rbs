@@ -38,6 +38,8 @@ module Runners
 
     def check_unsupported_linters: (Array[String]) -> String
 
+    def exclude_branch?: (String) -> bool
+
     private
 
     def parse_yaml: (String) -> untyped

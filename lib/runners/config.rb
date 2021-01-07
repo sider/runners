@@ -75,6 +75,23 @@ module Runners
       end
     end
 
+    def exclude_branch?(branch)
+      Array(content.dig(:branches, :exclude)).any? do |pattern|
+        # @type var pattern: String
+        match = pattern.match(%r{\A/(.+)/(i)?\z})
+        if match
+          pat, ignorecase = match.captures
+          if pat
+            Regexp.compile(pat, !!ignorecase).match?(branch)
+          else
+            raise "Unexpected regexp: #{match.inspect}"
+          end
+        else
+          pattern == branch
+        end
+      end
+    end
+
     private
 
     def parse_yaml(text)
