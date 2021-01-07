@@ -54,10 +54,11 @@ module TestHelper
   end
 
   def config(yaml = "")
+    yaml ||= ""
     mktmpdir do |dir|
-      file = dir / Runners::Config::CONFIG_FILE_NAME
+      file = dir / Runners::Config::FILE_NAME
       file.write(yaml)
-      Runners::Config.new(file)
+      Runners::Config.new(path: file, raw_content: yaml)
     end
   end
 

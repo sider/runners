@@ -12,32 +12,37 @@ module Runners
     class BrokenYAML < Error; end
     class InvalidConfiguration < Error; end
 
-    CONFIG_FILE_NAME = "sider.yml".freeze
-    OLD_CONFIG_FILE_NAME = "sideci.yml".freeze
+    FILE_NAME = "sider.yml".freeze
+    FILE_NAME_OLD = "sideci.yml".freeze
 
     def self.load_from_dir(dir)
       file = [
-        dir / CONFIG_FILE_NAME,
-        dir / OLD_CONFIG_FILE_NAME,
+        dir / FILE_NAME,
+        dir / FILE_NAME_OLD,
       ].find(&:file?)
 
-      new(file)
+      new(path: file, raw_content: file&.read).tap do |config|
+        config.content # parse content
+      end
     end
 
-    attr_reader :path, :raw_content, :content
+    attr_reader :path, :raw_content
 
-    def initialize(path)
+    def initialize(path:, raw_content:)
       @path = path
-      @raw_content = path&.read
-      @content = check_schema(parse_yaml).freeze
+      @raw_content = raw_content
     end
 
     def raw_content!
       raw_content or raise "No raw content!"
     end
 
+    def content
+      @content ||= check_schema(parse_yaml(raw_content || "")).freeze
+    end
+
     def path_name
-      path&.basename&.to_path || CONFIG_FILE_NAME
+      path&.basename&.to_path || FILE_NAME
     end
 
     def path_exist?
@@ -49,7 +54,7 @@ module Runners
     end
 
     def linter(id)
-      content.dig(:linter, id.to_sym).freeze || {}
+      (content.dig(:linter, id.to_sym) || {}).freeze
     end
 
     def linter?(id)
@@ -58,11 +63,11 @@ module Runners
 
     private
 
-    def parse_yaml
-      raw_content&.yield_self { |s| YAML.safe_load(s, symbolize_names: true) }
+    def parse_yaml(text)
+      YAML.safe_load(text, symbolize_names: true, filename: path_name)
     rescue Psych::SyntaxError => exn
-      message = "Your `#{path_name}` is broken at line #{exn.line} and column #{exn.column}. Please fix and retry."
-      raise BrokenYAML.new(message, raw_content!)
+      message = "Your `#{exn.file}` is broken at line #{exn.line} and column #{exn.column}. Please fix and retry."
+      raise BrokenYAML.new(message, text)
     end
 
     def check_schema(object)
