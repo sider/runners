@@ -82,6 +82,10 @@ module Runners
       end
     end
 
+    def finish(message, duration_in_sec:, recorded_at: now)
+      self << { trace: :finish, message: filter.mask(message.strip), duration_in_sec: duration_in_sec, recorded_at: recorded_at }
+    end
+
     def <<(object)
       recorded_at = object[:recorded_at]
       object = object.merge(recorded_at: recorded_at.utc.iso8601(3)) if recorded_at
