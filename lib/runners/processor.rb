@@ -47,14 +47,15 @@ module Runners
       path.relative_path_from(from)
     end
 
-    def setup
+    def check_unsupported_linters
       # TODO: Keep the following schemas for the backward compatibility.
-      if ["golint", "go_vet", "gometalinter"].any? { |id| config.linter?(id) }
-        add_warning <<~MSG, file: config.path_name
-          The `golint`, `go_vet`, and `gometalinter` options in your `#{config.path_name}` has been unsupported. Please remove them.
-        MSG
+      message = config.check_unsupported_linters ["golint", "go_vet", "gometalinter"]
+      unless message.empty?
+        add_warning message, file: config.path_name
       end
+    end
 
+    def setup
       trace_writer.message "No setup..."
       yield
     end
