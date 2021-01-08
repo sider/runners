@@ -53,7 +53,7 @@ module Runners
       Issue.new(
         path: filepath,
         location: nil,
-        id: "metrics_code-clones",
+        id: "metrics_codeclone",
         message: msg,
         object: {
           clones: clones,

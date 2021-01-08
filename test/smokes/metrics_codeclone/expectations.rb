@@ -9,7 +9,7 @@ s.add_test(
     {
       path: "app.java",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 2 with total 56 lines.",
       links: [],
       object: {
@@ -49,7 +49,7 @@ s.add_test(
     {
       path: "lib/foo/bar.java",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 28 lines.",
       links: [],
       object: {
@@ -60,7 +60,7 @@ s.add_test(
     {
       path: "src/app.java",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 28 lines.",
       links: [],
       object: {
@@ -79,7 +79,7 @@ s.add_test(
     {
       path: "foo/bar/baz/qux.rb",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 14 lines.",
       links: [],
       object: {
@@ -90,7 +90,7 @@ s.add_test(
     {
       path: "src/app.rb",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 14 lines.",
       links: [],
       object: {
@@ -109,7 +109,7 @@ s.add_test(
     {
       path: "src/fizzbuzz_1.c",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 3 with total 10 lines.",
       links: [],
       object: {
@@ -120,7 +120,7 @@ s.add_test(
     {
       path: "src/fizzbuzz_2.c",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 3 with total 10 lines.",
       links: [],
       object: {
@@ -139,7 +139,7 @@ s.add_test(
     {
       path: "src/fizzbuzz.c",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 2 with total 22 lines.",
       links: [],
       object: {
@@ -158,7 +158,7 @@ s.add_test(
     {
       path: "bar/baz/こんにちは.sjis.cs",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 24 lines.",
       links: [],
       object: {
@@ -169,7 +169,7 @@ s.add_test(
     {
       path: "foo/こんにちは.sjis.cs",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 24 lines.",
       links: [],
       object: {
@@ -203,7 +203,7 @@ s.add_test(
     {
       path: "bar/こんにちは.1.eucjp.cs",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 15 lines.",
       links: [],
       object: {
@@ -214,7 +214,7 @@ s.add_test(
     {
       path: "foo/こんにちは.2.eucjp.cs",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 15 lines.",
       links: [],
       object: {
@@ -243,7 +243,7 @@ s.add_test(
     {
       path: "MyApp.java",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 40 lines.",
       links: [],
       object: {
@@ -254,7 +254,7 @@ s.add_test(
     {
       path: "jp/MyAppJp.java",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 40 lines.",
       links: [],
       object: {
@@ -273,7 +273,7 @@ s.add_test(
     {
       path: "src/bar/こんにちは.1.sjis.cs",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 15 lines.",
       links: [],
       object: {
@@ -284,7 +284,7 @@ s.add_test(
     {
       path: "src/foo/こんにちは.2.sjis.cs",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 15 lines.",
       links: [],
       object: {
@@ -317,7 +317,7 @@ s.add_test(
     {
       path: "bar/hello_cpp.cpp",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 15 lines.",
       links: [],
       object: {
@@ -328,7 +328,7 @@ s.add_test(
     {
       path: "bar/hello_cs.cs",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 12 lines.",
       links: [],
       object: {
@@ -339,7 +339,7 @@ s.add_test(
     {
       path: "bar/hello_ecmascript.js",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 5 lines.",
       links: [],
       object: {
@@ -350,7 +350,7 @@ s.add_test(
     {
       path: "bar/hello_go.go",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 10 lines.",
       links: [],
       object: {
@@ -361,7 +361,7 @@ s.add_test(
     {
       path: "bar/hello_java.java",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 13 lines.",
       links: [],
       object: {
@@ -372,7 +372,7 @@ s.add_test(
     {
       path: "bar/hello_kotlin.kt",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 7 lines.",
       links: [],
       object: {
@@ -383,7 +383,7 @@ s.add_test(
     {
       path: "bar/hello_php.php",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 8 lines.",
       links: [],
       object: {
@@ -394,7 +394,7 @@ s.add_test(
     {
       path: "bar/hello_python.py",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 7 lines.",
       links: [],
       object: {
@@ -405,7 +405,7 @@ s.add_test(
     {
       path: "bar/hello_ruby.rb",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 24 lines.",
       links: [],
       object: {
@@ -416,7 +416,7 @@ s.add_test(
     {
       path: "bar/hello_swift.swift",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 9 lines.",
       links: [],
       object: {
@@ -427,7 +427,7 @@ s.add_test(
     {
       path: "foo/hello_cpp.cpp",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 15 lines.",
       links: [],
       object: {
@@ -438,7 +438,7 @@ s.add_test(
     {
       path: "foo/hello_cs.cs",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 12 lines.",
       links: [],
       object: {
@@ -449,7 +449,7 @@ s.add_test(
     {
       path: "foo/hello_ecmascript.js",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 5 lines.",
       links: [],
       object: {
@@ -460,7 +460,7 @@ s.add_test(
     {
       path: "foo/hello_go.go",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 10 lines.",
       links: [],
       object: {
@@ -471,7 +471,7 @@ s.add_test(
     {
       path: "foo/hello_java.java",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 13 lines.",
       links: [],
       object: {
@@ -482,7 +482,7 @@ s.add_test(
     {
       path: "foo/hello_kotlin.kt",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 7 lines.",
       links: [],
       object: {
@@ -493,7 +493,7 @@ s.add_test(
     {
       path: "foo/hello_php.php",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 8 lines.",
       links: [],
       object: {
@@ -504,7 +504,7 @@ s.add_test(
     {
       path: "foo/hello_python.py",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 7 lines.",
       links: [],
       object: {
@@ -515,7 +515,7 @@ s.add_test(
     {
       path: "foo/hello_ruby.rb",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 24 lines.",
       links: [],
       object: {
@@ -526,7 +526,7 @@ s.add_test(
     {
       path: "foo/hello_swift.swift",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 9 lines.",
       links: [],
       object: {
@@ -545,7 +545,7 @@ s.add_test(
     {
       path: "src/bar/hello_dart.dart",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 7 lines.",
       links: [],
       object: {
@@ -556,7 +556,7 @@ s.add_test(
     {
       path: "src/bar/hello_lua.lua",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 9 lines.",
       links: [],
       object: {
@@ -567,7 +567,7 @@ s.add_test(
     {
       path: "src/bar/hello_python.py",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 7 lines.",
       links: [],
       object: {
@@ -578,7 +578,7 @@ s.add_test(
     {
       path: "src/foo/hello_dart.dart",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 7 lines.",
       links: [],
       object: {
@@ -589,7 +589,7 @@ s.add_test(
     {
       path: "src/foo/hello_lua.lua",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 9 lines.",
       links: [],
       object: {
@@ -600,7 +600,7 @@ s.add_test(
     {
       path: "src/foo/hello_python.py",
       location: nil,
-      id: "metrics_code-clones",
+      id: "metrics_codeclone",
       message: "The number of code clones is 1 with total 7 lines.",
       links: [],
       object: {
