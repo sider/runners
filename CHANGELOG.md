@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.40.2...HEAD)
 
+- Relax Bundler requirement [#1917](https://github.com/sider/runners/pull/1917)
+
 ## 0.40.2
 
 [Full diff](https://github.com/sider/runners/compare/0.40.1...0.40.2)
