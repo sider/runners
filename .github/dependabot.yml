@@ -49,13 +49,6 @@ updates:
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
   - package-ecosystem: gradle
-    directory: "/images/metrics_codeclone"
-    schedule:
-      interval: weekly
-      time: "09:00"
-      timezone: Asia/Tokyo
-    open-pull-requests-limit: 10
-  - package-ecosystem: gradle
     directory: "/images/pmd_cpd"
     schedule:
       interval: weekly
