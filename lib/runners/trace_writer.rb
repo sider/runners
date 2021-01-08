@@ -82,6 +82,13 @@ module Runners
       end
     end
 
+    def finish(started_at:, finished_at:, recorded_at: now)
+      duration_in_sec = Integer(finished_at - started_at)
+      started_at = started_at.utc.iso8601(3)
+      finished_at = finished_at.utc.iso8601(3)
+      self << { trace: :finish, duration_in_sec: duration_in_sec, started_at: started_at, finished_at: finished_at, recorded_at: recorded_at }
+    end
+
     def <<(object)
       recorded_at = object[:recorded_at]
       object = object.merge(recorded_at: recorded_at.utc.iso8601(3)) if recorded_at

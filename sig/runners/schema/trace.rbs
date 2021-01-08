@@ -10,6 +10,7 @@ module Runners
       def warning: () -> StrongJSON::Type::Object[untyped]
       def ci_config: () -> StrongJSON::Type::Object[untyped]
       def error: () -> StrongJSON::Type::Object[untyped]
+      def finish: () -> StrongJSON::Type::Object[untyped]
       def anything: () -> StrongJSON::Type::Enum[untyped]
     end
     Trace: TraceClass
