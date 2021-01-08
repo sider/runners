@@ -46,7 +46,7 @@ module Runners
       clones = issues_in_file.length
       sum_of_lines = issues_in_file.sum do |issue|
         issue_obj = issue.object or raise "Required object: #{issue.inspect}"
-        issue_obj[:lines]
+        issue_obj.fetch(:lines)
       end
       msg = "The number of code clones is #{clones} with total #{sum_of_lines} lines."
 
@@ -57,9 +57,9 @@ module Runners
         message: msg,
         object: {
           clones: clones,
-          },
+        },
         schema: Schema.issue,
-        )
+      )
     end
   end
 end
