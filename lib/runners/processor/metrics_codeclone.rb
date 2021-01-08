@@ -44,9 +44,9 @@ module Runners
     def construct_file_issue(issues, filepath)
       issues_in_file = issues.select { |issue| issue.path == filepath }
       clones = issues_in_file.length
-      sum_of_lines = issues_in_file.inject(0) do |sum, issue|
+      sum_of_lines = issues_in_file.sum do |issue|
         issue_obj = issue.object or raise "Required object: #{issue.inspect}"
-        sum + issue_obj[:lines]
+        issue_obj[:lines]
       end
       msg = "The number of code clones is #{clones} with total #{sum_of_lines} lines."
 
