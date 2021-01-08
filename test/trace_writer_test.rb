@@ -90,8 +90,8 @@ class TraceWriterTest < Minitest::Test
   end
 
   def test_finish
-    writer.finish('Finish!', duration_in_sec: 30, recorded_at: now)
-    assert_equal [{ trace: :finish, message: 'Finish!', duration_in_sec: 30, recorded_at: "2017-08-01T22:34:51.200Z" }], writer.writer
+    writer.finish(duration_in_sec: 30, recorded_at: now)
+    assert_equal [{ trace: :finish, duration_in_sec: 30, recorded_at: "2017-08-01T22:34:51.200Z" }], writer.writer
   end
 
   def test_masked_string

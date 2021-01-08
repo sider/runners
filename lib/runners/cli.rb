@@ -70,7 +70,8 @@ module Runners
           end
 
           trace_writer.message "Finished at #{finished_at.utc}"
-          trace_writer.finish "Elapsed time: #{format_duration(finished_at - started_at)}", duration_in_sec: Integer(finished_at - started_at)
+          trace_writer.message "Elapsed time: #{format_duration(finished_at - started_at)}"
+          trace_writer.finish duration_in_sec: Integer(finished_at - started_at)
         end
       end
     ensure

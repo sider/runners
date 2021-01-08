@@ -82,8 +82,8 @@ module Runners
       end
     end
 
-    def finish(message, duration_in_sec:, recorded_at: now)
-      self << { trace: :finish, message: filter.mask(message.strip), duration_in_sec: duration_in_sec, recorded_at: recorded_at }
+    def finish(duration_in_sec:, recorded_at: now)
+      self << { trace: :finish, duration_in_sec: duration_in_sec, recorded_at: recorded_at }
     end
 
     def <<(object)
