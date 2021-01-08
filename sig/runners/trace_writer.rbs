@@ -23,7 +23,7 @@ module Runners
 
     def error: (String, ?recorded_at: Time, ?max_length: Integer) -> void
 
-    def finish: (duration_in_sec: Integer, ?recorded_at: Time) -> void
+    def finish: (duration_in_sec: Integer, started_at: Time, finished_at: Time, ?recorded_at: Time) -> void
 
     def <<: (Hash[Symbol, untyped]) -> void
 
