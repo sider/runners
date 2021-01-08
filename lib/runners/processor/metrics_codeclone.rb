@@ -1,5 +1,6 @@
 module Runners
   class Processor::MetricsCodeClone < Processor
+    extend Forwardable
 
     Schema = _ = StrongJSON.new do
       # @type self: SchemaClass
@@ -9,37 +10,18 @@ module Runners
       )
     end
 
+    def_delegators :@pmd_cpd,
+      :config_linter,
+      :analyzer_bin,
+      :analyzer_version,
+      :check_root_dir_exist,
+      :show_runtime_versions,
+      :setup,
+      :use_git_metadata_dir?
+
     def initialize(**params)
       super(**params)
       @pmd_cpd = PmdCpd.new(**params)
-    end
-
-    def config_linter
-      @pmd_cpd.config_linter
-    end
-
-    def analyzer_bin
-      @pmd_cpd.analyzer_bin
-    end
-
-    def analyzer_version
-      @pmd_cpd.analyzer_version
-    end
-
-    def check_root_dir_exist
-      @pmd_cpd.check_root_dir_exist
-    end
-
-    def show_runtime_versions
-      @pmd_cpd.show_runtime_versions
-    end
-
-    def setup(&block)
-      @pmd_cpd.setup(&block)
-    end
-
-    def use_git_metadata_dir?
-      @pmd_cpd.use_git_metadata_dir?
     end
 
     def analyze(changes)
