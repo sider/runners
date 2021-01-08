@@ -20,7 +20,7 @@ module Runners
     attr_reader path: Pathname?
     attr_reader raw_content: String?
 
-    def initialize: (path: Pathname?, raw_content: String?) -> void
+    def initialize: (path: (Pathname | String)?, raw_content: String?) -> void
 
     def raw_content!: () -> String
 
@@ -37,6 +37,8 @@ module Runners
     def linter?: (Symbol | String) -> bool
 
     def check_unsupported_linters: (Array[String]) -> String
+
+    def exclude_branch?: (String) -> bool
 
     private
 

@@ -89,6 +89,13 @@ class TraceWriterTest < Minitest::Test
     assert_equal [{ trace: :error, message: 'hoge error', recorded_at: "2017-08-01T22:34:51.200Z", truncated: false }], writer.writer
   end
 
+  def test_finish
+    started_at = now - 30
+    finished_at = now - 1
+    writer.finish(started_at: started_at, finished_at: finished_at, recorded_at: now)
+    assert_equal [{ trace: :finish, duration_in_sec: 29, started_at: "2017-08-01T22:34:21.200Z", finished_at: "2017-08-01T22:34:50.200Z", recorded_at: "2017-08-01T22:34:51.200Z" }], writer.writer
+  end
+
   def test_masked_string
     writer.command_line(%w[cat https://user:secret@github.com], recorded_at: now)
     writer.stdout("user:secret in stdout", recorded_at: now)

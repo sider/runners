@@ -35,7 +35,7 @@ class ResultsTest < Minitest::Test
     assert_unifiable(result.as_json,
                      {
                        guid: result.guid,
-                       timestamp: result.timestamp.utc.iso8601,
+                       timestamp: result.timestamp.utc.iso8601(3),
                        type: 'success',
                        issue_count: 2,
                        issues: [
@@ -94,7 +94,7 @@ class ResultsTest < Minitest::Test
     assert_unifiable(result.as_json,
                      {
                        guid: result.guid,
-                       timestamp: result.timestamp.utc.iso8601,
+                       timestamp: result.timestamp.utc.iso8601(3),
                        type: 'success',
                        issue_count: 1,
                        issues: [
@@ -166,7 +166,7 @@ class ResultsTest < Minitest::Test
     assert_unifiable(result.as_json,
                      {
                        guid: result.guid,
-                       timestamp: result.timestamp.utc.iso8601,
+                       timestamp: result.timestamp.utc.iso8601(3),
                        type: 'success',
                        issue_count: 2,
                        issues: [
@@ -237,7 +237,7 @@ class ResultsTest < Minitest::Test
     assert_unifiable(result.as_json,
                      {
                        guid: result.guid,
-                       timestamp: result.timestamp.utc.iso8601,
+                       timestamp: result.timestamp.utc.iso8601(3),
                        type: 'success',
                        issue_count: 1,
                        issues: [
@@ -276,7 +276,7 @@ class ResultsTest < Minitest::Test
     assert_unifiable(result.as_json,
                      {
                        guid: result.guid,
-                       timestamp: result.timestamp.utc.iso8601,
+                       timestamp: result.timestamp.utc.iso8601(3),
                        type: 'success',
                        issue_count: 1,
                        issues: [
@@ -302,7 +302,7 @@ class ResultsTest < Minitest::Test
     assert_unifiable(result.as_json,
                      {
                        guid: result.guid,
-                       timestamp: result.timestamp.utc.iso8601,
+                       timestamp: result.timestamp.utc.iso8601(3),
                        type: "failure",
                        message: "Something wrong...",
                        analyzer: nil
@@ -317,7 +317,7 @@ class ResultsTest < Minitest::Test
     assert_unifiable(result.as_json,
                      {
                        guid: result.guid,
-                       timestamp: result.timestamp.utc.iso8601,
+                       timestamp: result.timestamp.utc.iso8601(3),
                        type: "failure",
                        message: "Something wrong...",
                        analyzer: { name: "Foo", version: "bar" }
@@ -333,7 +333,7 @@ class ResultsTest < Minitest::Test
     assert_unifiable(result.as_json,
                      {
                        guid: result.guid,
-                       timestamp: result.timestamp.utc.iso8601,
+                       timestamp: result.timestamp.utc.iso8601(3),
                        type: "error",
                        class: "RuntimeError",
                        backtrace: nil,

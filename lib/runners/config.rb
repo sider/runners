@@ -29,7 +29,7 @@ module Runners
     attr_reader :path, :raw_content
 
     def initialize(path:, raw_content:)
-      @path = path
+      @path = path ? Pathname(path) : path
       @raw_content = raw_content
     end
 
@@ -72,6 +72,23 @@ module Runners
           The following linters in your `#{path_name}` are no longer supported. Please remove them.
           #{list}
         MSG
+      end
+    end
+
+    def exclude_branch?(branch)
+      Array(content.dig(:branches, :exclude)).any? do |pattern|
+        # @type var pattern: String
+        match = pattern.match(%r{\A/(.+)/(i)?\z})
+        if match
+          pat, ignorecase = match.captures
+          if pat
+            Regexp.compile(pat, !!ignorecase).match?(branch)
+          else
+            raise "Unexpected regexp: #{match.inspect}"
+          end
+        else
+          pattern == branch
+        end
       end
     end
 

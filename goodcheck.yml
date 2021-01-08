@@ -65,5 +65,23 @@ rules:
     justification:
       - When the same version has been used already.
 
+  - id: sider.runners.time_iso8601
+    pattern: iso8601
+    glob: lib/**/*.rb
+    message: |
+      Consider adding `fraction_digits` to when using `Time#iso8601`.
+
+      In most cases, milliseconds are necessary. For example:
+
+      ```ruby
+      Time.now.iso8601    #=> "2021-01-08T11:35:05+09:00"
+      Time.now.iso8601(3) #=> "2021-01-08T11:35:05.371+09:00"
+      ```
+
+      See also <https://ruby-doc.org/stdlib-2.7.2/libdoc/time/rdoc/Time.html#method-i-iso8601>.
+    justification:
+      - When `fraction_digits` is given already.
+      - When milliseconds are never necessary.
+
 import:
   - https://raw.githubusercontent.com/sider/goodcheck-rules/master/rules/typo.yml
