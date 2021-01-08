@@ -11,6 +11,7 @@ module Runners
     end
 
     def_delegators :@pmd_cpd,
+      :warnings,
       :config_linter,
       :analyzer_bin,
       :analyzer_version,
@@ -26,7 +27,6 @@ module Runners
 
     def analyze(changes)
       result = @pmd_cpd.analyze(changes)
-      @pmd_cpd.warnings.each { |warn| @warnings << warn }
       return result unless result.is_a? Results::Success
 
       issues = result.issues
