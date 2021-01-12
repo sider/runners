@@ -253,9 +253,13 @@ module Runners
     end
 
     # @see https://github.com/rubocop-hq/rubocop/blob/v0.76.0/lib/rubocop/cop/message_annotator.rb#L62-L63
-    def extract_links(original_message)
-      URI.extract(original_message, %w(http https))
-        .map { |uri| uri.delete_suffix(",").delete_suffix(")") }
+    def extract_links(text)
+      @uri_regexp ||= URI::DEFAULT_PARSER.make_regexp(["http", "https"])
+      text.to_enum(:scan, @uri_regexp).map do
+        match = Regexp.last_match or raise
+        uri = match[0] or raise
+        uri.delete_suffix(",").delete_suffix(")")
+      end.uniq
     end
 
     def build_cop_links(cop_name)
@@ -273,7 +277,7 @@ module Runners
           end
         when department_to_gem_name_ext.key?(department)
           gem_name = department_to_gem_name_ext.fetch(department)
-          return ["https://www.rubydoc.info/gems/#{gem_name}/RuboCop/Cop/#{cop_name}"]
+          return extract_links(gem_info(gem_name))
         end
       end
 
@@ -332,6 +336,16 @@ module Runners
         "ThreadSafety" => "rubocop-thread_safety",
         "Vendor" => "rubocop-vendor",
       }.freeze
+    end
+
+    def gem_info(gem_name)
+      @gem_info ||= {}
+      info = @gem_info[gem_name]
+      unless info
+        info, _ = capture3! "gem", "info", "--both", "--exact", "--quiet", gem_name
+        @gem_info[gem_name] = info
+      end
+      info
     end
 
     def normalize_message(original_message, links, cop_name)
