@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.40.2...HEAD)
 
+- **RuboCop** Fix issue links for rubydoc.info [#1925](https://github.com/sider/runners/pull/1925)
 - Relax Bundler requirement [#1917](https://github.com/sider/runners/pull/1917)
 
 ## 0.40.2
