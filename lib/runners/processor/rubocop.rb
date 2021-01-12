@@ -259,7 +259,7 @@ module Runners
         match = Regexp.last_match or raise
         uri = match[0] or raise
         uri.delete_suffix(",").delete_suffix(")")
-      end
+      end.uniq
     end
 
     def build_cop_links(cop_name)
