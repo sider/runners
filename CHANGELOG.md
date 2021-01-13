@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.40.3...HEAD)
 
+- Rename `duration_in_sec` to `duration_in_ms` for `finish` trace [#1930](https://github.com/sider/runners/pull/1930)
+
 ## 0.40.3
 
 [Full diff](https://github.com/sider/runners/compare/0.40.2...0.40.3)
