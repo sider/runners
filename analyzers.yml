@@ -83,7 +83,7 @@ analyzers:
   metrics_codeclone:
     name: Metrics Code Clone
     github: pmd/pmd
-    doc: tools/others/metrics_codeclone
+    doc: tools/metrics/codeclone
   misspell:
     name: Misspell
     github: client9/misspell
