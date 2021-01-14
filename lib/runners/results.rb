@@ -12,7 +12,7 @@ module Runners
       def as_json
         {
           guid: guid,
-          timestamp: timestamp.utc.iso8601
+          timestamp: timestamp.utc.iso8601(3)
         }
       end
 

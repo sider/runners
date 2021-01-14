@@ -65,10 +65,7 @@ module Runners
     end
 
     def prepare_plugins
-      plugins = Array(config_linter[:plugins])
-      unless plugins.empty?
-        capture3!('pip', 'install', *plugins)
-      end
+      pip_install(*Array(config_linter[:plugins]))
     end
 
     def parse_result(output)

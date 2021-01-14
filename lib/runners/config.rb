@@ -12,23 +12,37 @@ module Runners
     class BrokenYAML < Error; end
     class InvalidConfiguration < Error; end
 
-    CONFIG_FILE_NAME = "sider.yml".freeze
-    OLD_CONFIG_FILE_NAME = "sideci.yml".freeze
+    FILE_NAME = "sider.yml".freeze
+    FILE_NAME_OLD = "sideci.yml".freeze
 
-    attr_reader :working_dir, :raw_content, :content
+    def self.load_from_dir(dir)
+      file = [
+        dir / FILE_NAME,
+        dir / FILE_NAME_OLD,
+      ].find(&:file?)
 
-    def initialize(working_dir)
-      @working_dir = working_dir
-      @raw_content = path&.read
-      @content = check_schema(parse_yaml).freeze
+      new(path: file, raw_content: file&.read).tap do |config|
+        config.content # parse content
+      end
+    end
+
+    attr_reader :path, :raw_content
+
+    def initialize(path:, raw_content:)
+      @path = path ? Pathname(path) : path
+      @raw_content = raw_content
     end
 
     def raw_content!
       raw_content or raise "No raw content!"
     end
 
+    def content
+      @content ||= check_schema(parse_yaml(raw_content || "")).freeze
+    end
+
     def path_name
-      path&.basename&.to_s || CONFIG_FILE_NAME
+      path&.basename&.to_path || FILE_NAME
     end
 
     def path_exist?
@@ -40,28 +54,51 @@ module Runners
     end
 
     def linter(id)
-      content.dig(:linter, id.to_sym).freeze || {}
+      (content.dig(:linter, id.to_sym) || {}).freeze
     end
 
     def linter?(id)
       !!content.dig(:linter, id.to_sym)
     end
 
-    private
+    def check_unsupported_linters(linter_ids)
+      list = linter_ids.filter { |id| linter?(id) }
 
-    def path
-      return @path if defined?(@path)
-
-      @path ||= [working_dir / CONFIG_FILE_NAME, working_dir / OLD_CONFIG_FILE_NAME].find do |pathname|
-        pathname.file?
+      if list.empty?
+        ""
+      else
+        list = list.map { |id| "- `linter.#{id}`" }.join("\n")
+        <<~MSG
+          The following linters in your `#{path_name}` are no longer supported. Please remove them.
+          #{list}
+        MSG
       end
     end
 
-    def parse_yaml
-      raw_content&.yield_self { |s| YAML.safe_load(s, symbolize_names: true) }
+    def exclude_branch?(branch)
+      Array(content.dig(:branches, :exclude)).any? do |pattern|
+        # @type var pattern: String
+        match = pattern.match(%r{\A/(.+)/(i)?\z})
+        if match
+          pat, ignorecase = match.captures
+          if pat
+            Regexp.compile(pat, !!ignorecase).match?(branch)
+          else
+            raise "Unexpected regexp: #{match.inspect}"
+          end
+        else
+          pattern == branch
+        end
+      end
+    end
+
+    private
+
+    def parse_yaml(text)
+      YAML.safe_load(text, symbolize_names: true, filename: path_name)
     rescue Psych::SyntaxError => exn
-      message = "Your `#{path_name}` is broken at line #{exn.line} and column #{exn.column}. Please fix and retry."
-      raise BrokenYAML.new(message, raw_content!)
+      message = "Your `#{exn.file}` is broken at line #{exn.line} and column #{exn.column}. Please fix and retry."
+      raise BrokenYAML.new(message, text)
     end
 
     def check_schema(object)

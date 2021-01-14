@@ -200,8 +200,7 @@ module Runners
           sh! "git", "push", out: out
           head_commit, _ = sh! "git", "rev-parse", "HEAD", out: out
 
-          # TODO: Ignored Steep error
-          _ = [bare_dir, base_commit.chomp, head_commit.chomp]
+          [bare_dir, base_commit.chomp, head_commit.chomp]
         end
       end
 

@@ -10,6 +10,8 @@ class HarnessTest < Minitest::Test
   Location = Runners::Location
   Analyzer = Runners::Analyzer
 
+  private
+
   def trace_writer
     @trace_writer ||= new_trace_writer
   end
@@ -44,6 +46,8 @@ class HarnessTest < Minitest::Test
       Results::Success.new(guid: guid, analyzer: analyzer)
     end
   end
+
+  public
 
   def test_run
     with_harness do |harness|
@@ -203,6 +207,32 @@ class HarnessTest < Minitest::Test
 
       assert_instance_of Results::Success, result
       assert_path_exists harness.working_dir / ".git" / "config"
+    end
+  end
+
+  def test_build_shell
+    with_harness do |harness|
+      working_dir = harness.working_dir
+      git_ssh_path = working_dir / "id_rsa"
+
+      mock_status = Minitest::Mock.new
+      mock_status.expect :success?, false
+      mock_status.expect :exited?, true
+      mock_status.expect :exitstatus, 3
+
+      mock_capture3 = Minitest::Mock.new
+      mock_capture3.expect :call, ["", "", mock_status], [
+        { "RUBYOPT" => nil, "GIT_SSH_COMMAND" => "ssh -F '#{git_ssh_path}'" },
+        "ls",
+        chdir: working_dir.to_path, stdin_data: nil
+      ]
+
+      Open3.stub :capture3, mock_capture3 do
+        harness.send(:build_shell, git_ssh_path).capture3_trace("ls")
+
+        assert_mock mock_status
+        assert_mock mock_capture3
+      end
     end
   end
 end

@@ -95,7 +95,7 @@ module Runners
     def show_runtime_versions
       capture3! "node", "-v"
       capture3! "npm", "-v"
-      capture3! "yarn", "-v"
+      run_yarn "-v"
     end
 
     private
@@ -166,7 +166,30 @@ module Runners
       end
     end
 
-    # @see https://yarnpkg.com/en/docs/cli/install
+    def run_yarn(arg, *args)
+      # NOTE: Avoid the effects of `.yarnrc` or `.yarnrc.yml`.
+      #
+      # @see https://classic.yarnpkg.com/en/docs/yarnrc/#toc-yarn-path
+      # @see https://yarnpkg.com/configuration/yarnrc#yarnPath
+      yarnrc_files = [".yarnrc", ".yarnrc.yml", ".yarnrc.yaml"].filter_map do |file|
+        src = current_dir / file
+        src if src.exist?
+      end
+
+      mktmpdir do |backup_dir|
+        backup_files = yarnrc_files.map do |src|
+          (backup_dir / src.basename).tap { |dst| src.rename(dst) }
+        end
+
+        begin
+          capture3! "yarn", arg, *args
+        ensure
+          backup_files.each { |file| file.rename(current_dir / file.basename) }
+        end
+      end
+    end
+
+    # @see https://classic.yarnpkg.com/en/docs/cli/install
     def yarn_install(option)
       cli_options = %w[
         --ignore-engines
@@ -193,7 +216,7 @@ module Runners
       end
 
       begin
-        capture3_with_retry! "yarn", "install", *cli_options
+        run_yarn "install", *cli_options
       rescue Shell::ExecError
         message = "`yarn install` failed. Please confirm `yarn.lock` is consistent with `package.json`."
         trace_writer.error message

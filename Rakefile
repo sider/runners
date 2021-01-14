@@ -10,7 +10,7 @@ task default: ["steep:check", :test]
 ENV["DOCKER_BUILDKIT"] = "1"
 
 Aufgaben::Release.new(:release, depends: ["dockerfile:verify_devon_rex"]) do |t|
-  t.files = ["lib/runners/version.rb"]
+  t.files = ["lib/runners/version.rb", "Gemfile.lock"]
 end
 
 Aufgaben::Bump::Ruby.new do |t|
