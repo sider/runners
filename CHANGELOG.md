@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.40.4...HEAD)
 
+- **ESLint** Add `@vue/eslint-config-typescript` to pre-installed packages [#1934](https://github.com/sider/runners/pull/1934)
+
 ## 0.40.4
 
 [Full diff](https://github.com/sider/runners/compare/0.40.3...0.40.4)
