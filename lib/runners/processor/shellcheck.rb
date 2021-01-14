@@ -88,7 +88,7 @@ module Runners
       )
 
       stdout.lines(chomp: true).tap do |files|
-        trace_writer.message "#{files.size} file(s) found."
+        trace_writer.message "#{files.size} file(s) found via shebang."
       end
     end
 
