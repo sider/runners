@@ -83,7 +83,7 @@ analyzers:
   metrics_complexity:
     name: Metrics Complexity
     github: terryyin/lizard
-    doc: tools/others/metrics_complexity
+    doc: tools/metrics/complexity
   misspell:
     name: Misspell
     github: client9/misspell
