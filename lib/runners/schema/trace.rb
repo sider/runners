@@ -15,7 +15,7 @@ module Runners
       let :warning, object(trace: literal(:warning), message: string, file: string?, recorded_at: string)
       let :ci_config, object(trace: literal(:ci_config), content: any, raw_content: string, file: string, recorded_at: string)
       let :error, object(trace: literal(:error), message: string, recorded_at: string, truncated: boolean)
-      let :finish, object(trace: literal(:finish), duration_in_sec: integer, started_at: string, finished_at: string, recorded_at: string)
+      let :finish, object(trace: literal(:finish), duration_in_ms: integer, started_at: string, finished_at: string, recorded_at: string)
       let :anything, enum(command_line, status, stdout, stderr, message, header, warning, ci_config, error, finish)
     end
   end

@@ -31,6 +31,10 @@ module Runners
 
     def now: () -> Time
 
+    def time_to_s: (Time) -> String
+
     def each_slice: (String, size: Integer) { (String, bool) -> void } -> void
+
+    def calc_duration_in_ms: (Time, Time) -> Integer
   end
 end

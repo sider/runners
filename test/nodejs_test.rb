@@ -426,27 +426,42 @@ class NodejsTest < Minitest::Test
       node_modules = workspace.working_dir / "node_modules"
       eslint = node_modules / "eslint"
 
+      yarnrc = (workspace.working_dir / ".yarnrc").tap { _1.write 'yarn-path "foo"' }
+      yarnrc_yml = (workspace.working_dir / ".yarnrc.yml").tap { _1.write 'yarnPath: "foo"' }
+      yarnrc_yaml = (workspace.working_dir / ".yarnrc.yaml").tap { _1.write 'yarnPath: "foo"' }
+
       processor.package_json_path.write(JSON.generate(dependencies: { "eslint" => "6.0.1" }))
       FileUtils.cp data("yarn.lock"), processor.yarn_lock_path
 
       processor.send(:yarn_install, INSTALL_OPTION_NONE)
       refute_path_exists eslint
+      assert_path_exists yarnrc
+      assert_path_exists yarnrc_yml
+      assert_path_exists yarnrc_yaml
 
       processor.send(:yarn_install, INSTALL_OPTION_ALL)
       assert_path_exists eslint
+      assert_path_exists yarnrc
+      assert_path_exists yarnrc_yml
+      assert_path_exists yarnrc_yaml
 
       eslint.rmtree
+      yarnrc_yml.rmtree
+      yarnrc_yaml.rmtree
       processor.send(:yarn_install, INSTALL_OPTION_PRODUCTION)
       assert_path_exists eslint
+      assert_path_exists yarnrc
+      refute_path_exists yarnrc_yml
+      refute_path_exists yarnrc_yaml
 
       node_modules.rmtree
       processor.send(:yarn_install, INSTALL_OPTION_DEVELOPMENT)
       assert_path_exists eslint
 
       expected_commands = [
-        %w[yarn --no-default-rc install --ignore-engines --ignore-scripts --no-progress --non-interactive --frozen-lockfile],
-        %w[yarn --no-default-rc install --ignore-engines --ignore-scripts --no-progress --non-interactive --frozen-lockfile --production],
-        %w[yarn --no-default-rc install --ignore-engines --ignore-scripts --no-progress --non-interactive --frozen-lockfile],
+        %w[yarn install --ignore-engines --ignore-scripts --no-progress --non-interactive --frozen-lockfile],
+        %w[yarn install --ignore-engines --ignore-scripts --no-progress --non-interactive --frozen-lockfile --production],
+        %w[yarn install --ignore-engines --ignore-scripts --no-progress --non-interactive --frozen-lockfile],
       ]
       assert_equal expected_commands, actual_commands
 

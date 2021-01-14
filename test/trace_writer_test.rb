@@ -41,13 +41,14 @@ class TraceWriterTest < Minitest::Test
   def test_message_with_block
     return_values = [
       Time.utc(2001, 1, 1, 0, 0, 0),
+      Time.utc(2001, 1, 1, 0, 0, 0),
       Time.utc(2001, 1, 1, 0, 1, 0),
     ]
     writer.stub :now, ->() { return_values.shift } do
-      writer.message("Hello", recorded_at: now) { "noop" }
+      writer.message("Hello") { "noop" }
 
-      assert_equal [{ trace: :message, message: "Hello", recorded_at: "2017-08-01T22:34:51.200Z", truncated: false, duration_in_ms: 0 },
-                    { trace: :message, message: "-> 60.0s", recorded_at: "2017-08-01T22:35:51.200Z", truncated: false, duration_in_ms: 60000 }], writer.writer
+      assert_equal [{ trace: :message, message: "Hello", recorded_at: "2001-01-01T00:00:00.000Z", truncated: false, duration_in_ms: 0 },
+                    { trace: :message, message: "-> 60.0s", recorded_at: "2001-01-01T00:01:00.000Z", truncated: false, duration_in_ms: 60000 }], writer.writer
     end
   end
 
@@ -93,7 +94,7 @@ class TraceWriterTest < Minitest::Test
     started_at = now - 30
     finished_at = now - 1
     writer.finish(started_at: started_at, finished_at: finished_at, recorded_at: now)
-    assert_equal [{ trace: :finish, duration_in_sec: 29, started_at: "2017-08-01T22:34:21.200Z", finished_at: "2017-08-01T22:34:50.200Z", recorded_at: "2017-08-01T22:34:51.200Z" }], writer.writer
+    assert_equal [{ trace: :finish, duration_in_ms: 29000, started_at: "2017-08-01T22:34:21.200Z", finished_at: "2017-08-01T22:34:50.200Z", recorded_at: "2017-08-01T22:34:51.200Z" }], writer.writer
   end
 
   def test_masked_string

@@ -4,13 +4,31 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.40.1...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.40.4...HEAD)
+
+## 0.40.4
+
+[Full diff](https://github.com/sider/runners/compare/0.40.3...0.40.4)
+
+- Rename `duration_in_sec` to `duration_in_ms` for `finish` trace [#1930](https://github.com/sider/runners/pull/1930)
+
+## 0.40.3
+
+[Full diff](https://github.com/sider/runners/compare/0.40.2...0.40.3)
+
+- **RuboCop** Fix issue links for rubydoc.info [#1925](https://github.com/sider/runners/pull/1925)
+- Relax Bundler requirement [#1917](https://github.com/sider/runners/pull/1917)
+
+## 0.40.2
+
+[Full diff](https://github.com/sider/runners/compare/0.40.1...0.40.2)
 
 - **ESLint** Add `eslint-config-react-app` as pre-installed [#1902](https://github.com/sider/runners/pull/1902)
 - **Metrics Code Clone** [#1878](https://github.com/sider/runners/pull/1878)
 - Fix checking unsupported tools [#1911](https://github.com/sider/runners/pull/1911)
 - Add `Runners::Config#exclude_branch?` method [#1913](https://github.com/sider/runners/pull/1913)
 - Add a new trace schema `finish` [#1914](https://github.com/sider/runners/pull/1914)
+- Do not use `--no-default-rc` flag for `yarn` [#1916](https://github.com/sider/runners/pull/1916)
 
 ## 0.40.1
 
