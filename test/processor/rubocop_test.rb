@@ -72,20 +72,58 @@ class Runners::Processor::RuboCopTest < Minitest::Test
       assert_links.call %w[https://docs.rubocop.org/rubocop-packaging/cops_packaging.html#packagingbundlersetupintests], "Packaging/BundlerSetupInTests"
 
       # extensions...
-      assert_links.call %w[https://github.com/chef/chefstyle], "Chef/Ruby/GemspecRequireRubygems"
-      assert_links.call %w[https://github.com/chef/chefstyle], "Chef/Ruby/RequireNetHttps"
-      assert_links.call %w[https://github.com/discourse/rubocop-discourse], "Discourse/NoChdir"
-      assert_links.call %w[https://github.com/github/rubocop-github], "GitHub/RailsApplicationRecord"
-      assert_links.call %w[https://github.com/DmitryTsepelev/rubocop-graphql], "GraphQL/ArgumentName"
-      assert_links.call %w[https://github.com/puppetlabs/rubocop-i18n], "I18n/RailsI18n/DecorateString"
-      assert_links.call %w[https://github.com/jekyll/rubocop-jekyll], "Jekyll/NoPAllowed"
-      assert_links.call %w[https://github.com/rubocop-hq/rubocop-rake], "Rake/Desc"
-      assert_links.call %w[https://github.com/rubocop-hq/rubocop-rubycw], "Rubycw/Rubycw"
-      assert_links.call %w[https://github.com/rubocop-hq/rubocop-sequel], "Sequel/ColumnDefault"
-      assert_links.call %w[https://github.com/sketchup/rubocop-sketchup], "SketchupBugs/RenderMode"
-      assert_links.call %w[https://github.com/shopify/rubocop-sorbet], "Sorbet/FalseSigil"
-      assert_links.call %w[https://github.com/covermymeds/rubocop-thread_safety], "ThreadSafety/NewThread"
-      assert_links.call %w[https://github.com/wealthsimple/rubocop-vendor], "Vendor/RollbarLog"
+      assert_links.call %w[
+        https://www.rubydoc.info/gems/chefstyle/RuboCop/Cop/Chef/Ruby/GemspecRequireRubygems
+        https://github.com/chef/chefstyle
+      ], "Chef/Ruby/GemspecRequireRubygems"
+      assert_links.call %w[
+        https://www.rubydoc.info/gems/rubocop-discourse/RuboCop/Cop/Discourse/NoChdir
+        https://github.com/discourse/rubocop-discourse
+      ], "Discourse/NoChdir"
+      assert_links.call %w[
+        https://www.rubydoc.info/gems/rubocop-github/RuboCop/Cop/GitHub/RailsApplicationRecord
+        https://github.com/github/rubocop-github
+      ], "GitHub/RailsApplicationRecord"
+      assert_links.call %w[
+        https://www.rubydoc.info/gems/rubocop-graphql/RuboCop/Cop/GraphQL/ArgumentName
+        https://github.com/DmitryTsepelev/rubocop-graphql
+      ], "GraphQL/ArgumentName"
+      assert_links.call %w[
+        https://www.rubydoc.info/gems/rubocop-i18n/RuboCop/Cop/I18n/RailsI18n/DecorateString
+        https://github.com/puppetlabs/rubocop-i18n
+      ], "I18n/RailsI18n/DecorateString"
+      assert_links.call %w[
+        https://www.rubydoc.info/gems/rubocop-jekyll/RuboCop/Cop/Jekyll/NoPAllowed
+        https://github.com/jekyll/rubocop-jekyll
+      ], "Jekyll/NoPAllowed"
+      assert_links.call %w[
+        https://www.rubydoc.info/gems/rubocop-rake/RuboCop/Cop/Rake/Desc
+        https://github.com/rubocop-hq/rubocop-rake
+      ], "Rake/Desc"
+      assert_links.call %w[
+        https://www.rubydoc.info/gems/rubocop-rubycw/RuboCop/Cop/Rubycw/Rubycw
+        https://github.com/rubocop-hq/rubocop-rubycw
+      ], "Rubycw/Rubycw"
+      assert_links.call %w[
+        https://www.rubydoc.info/gems/rubocop-sequel/RuboCop/Cop/Sequel/ColumnDefault
+        https://github.com/rubocop-hq/rubocop-sequel
+      ], "Sequel/ColumnDefault"
+      assert_links.call %w[
+        https://www.rubydoc.info/gems/rubocop-sketchup/RuboCop/Cop/SketchupBugs/RenderMode
+        https://github.com/sketchup/rubocop-sketchup
+      ], "SketchupBugs/RenderMode"
+      assert_links.call %w[
+        https://www.rubydoc.info/gems/rubocop-sorbet/RuboCop/Cop/Sorbet/FalseSigil
+        https://github.com/shopify/rubocop-sorbet
+      ], "Sorbet/FalseSigil"
+      assert_links.call %w[
+        https://www.rubydoc.info/gems/rubocop-thread_safety/RuboCop/Cop/ThreadSafety/NewThread
+        https://github.com/covermymeds/rubocop-thread_safety
+      ], "ThreadSafety/NewThread"
+      assert_links.call %w[
+        https://www.rubydoc.info/gems/rubocop-vendor/RuboCop/Cop/Vendor/RollbarLog
+        https://github.com/wealthsimple/rubocop-vendor
+      ], "Vendor/RollbarLog"
 
       # unknown
       assert_links.call [], "Foo"
