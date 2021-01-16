@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 
-require_relative "../test/smokes/smoke"
+require_relative "../test/smoke"
 
 Runners::Testing::Smoke.new(ARGV).run

@@ -11,7 +11,7 @@ require "json"
 require "jsonseq"
 require "strong_json"
 
-require_relative "../../lib/runners/schema/result"
+require_relative "../lib/runners/schema/result"
 
 module Runners
   module Testing
