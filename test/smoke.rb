@@ -38,31 +38,21 @@ module Runners
         end
       end
 
-      attr_reader :argv
+      attr_reader :docker_image, :expectations_path, :analyzer
 
-      def initialize(argv)
-        @argv = argv
-      end
-
-      def docker_image
-        argv[0]
-      end
-
-      def entrypoint
-        Pathname(argv[0])
-      end
-
-      def expectations
-        Pathname(argv[1])
+      def initialize(docker_image:, expectations_path:, analyzer:)
+        @docker_image = docker_image
+        @expectations_path = Pathname(expectations_path)
+        @analyzer = analyzer
       end
 
       def run
         start = Time.now
 
-        load expectations.to_path
+        load expectations_path.to_path
 
         jobs = ENV["JOBS"] ? Integer(ENV["JOBS"]) : nil
-        "Running #{Rainbow(self.class.tests.size.to_s).bright} smoke tests".tap do |msg|
+        "[#{Rainbow(analyzer).blue.bright.underline}] Running #{Rainbow(self.class.tests.size.to_s).bright} smoke tests".tap do |msg|
           msg << " with #{Rainbow(jobs.to_s).bright} jobs" if jobs
           puts "#{msg}..."
         end
@@ -112,7 +102,7 @@ module Runners
         command_output, _ = Dir.mktmpdir do |dir|
           repo_args = {
             workdir: Pathname(dir).realpath,
-            smoke_target: expectations.parent.join(params.name).realpath,
+            smoke_target: expectations_path.parent.join(params.name).realpath,
             out: out,
           }
           if params.use_git_metadata
