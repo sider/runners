@@ -66,7 +66,7 @@ module Runners
           print out.string
           duration_per_test = (Time.now - start_per_test).round(1)
           puts "#{marks[result]} #{Rainbow(params.name).bright.underline}" + \
-               Rainbow(" (#{duration_per_test}s)").darkgray.to_s
+               Rainbow(" (#{duration_per_test} seconds)").darkgray.to_s
           [result, params.name]
         }
 
