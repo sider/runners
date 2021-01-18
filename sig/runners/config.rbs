@@ -26,6 +26,8 @@ module Runners
 
     def content: () -> Hash[Symbol, untyped]
 
+    alias validate content
+
     def path_name: () -> String
 
     def path_exist?: () -> bool

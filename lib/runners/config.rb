@@ -40,6 +40,7 @@ module Runners
     def content
       @content ||= check_schema(parse_yaml(raw_content || "")).freeze
     end
+    alias validate content
 
     def path_name
       path&.basename&.to_path || FILE_NAME
