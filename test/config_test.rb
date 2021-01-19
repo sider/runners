@@ -279,12 +279,12 @@ class ConfigTest < Minitest::Test
   end
 
   def test_valid
-    assert_equal true, Runners::Config.new(path: Pathname(FILE_NAME), raw_content: "").valid?
-    assert_equal false, Runners::Config.new(path: Pathname(FILE_NAME), raw_content: "`").valid?
+    assert Runners::Config.new(path: Pathname(FILE_NAME), raw_content: "").valid?
+    refute Runners::Config.new(path: Pathname(FILE_NAME), raw_content: "`").valid?
   end
 
   def test_invalid
-    assert_equal true, Runners::Config.new(path: Pathname(FILE_NAME), raw_content: "`").invalid?
-    assert_equal false, Runners::Config.new(path: Pathname(FILE_NAME), raw_content: "").invalid?
+    assert Runners::Config.new(path: Pathname(FILE_NAME), raw_content: "`").invalid?
+    refute Runners::Config.new(path: Pathname(FILE_NAME), raw_content: "").invalid?
   end
 end
