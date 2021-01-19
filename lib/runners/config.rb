@@ -42,6 +42,17 @@ module Runners
     end
     alias validate content
 
+    def valid?
+      validate
+      true
+    rescue Error
+      false
+    end
+
+    def invalid?
+      !valid?
+    end
+
     def path_name
       path&.basename&.to_path || FILE_NAME
     end

@@ -28,6 +28,10 @@ module Runners
 
     alias validate content
 
+    def valid?: () -> bool
+
+    def invalid?: () -> bool
+
     def path_name: () -> String
 
     def path_exist?: () -> bool

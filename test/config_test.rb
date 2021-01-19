@@ -277,4 +277,14 @@ class ConfigTest < Minitest::Test
     assert config.exclude_branch?("features/123")
     refute config.exclude_branch?("features/")
   end
+
+  def test_valid
+    assert_equal true, Runners::Config.new(path: Pathname(FILE_NAME), raw_content: "").valid?
+    assert_equal false, Runners::Config.new(path: Pathname(FILE_NAME), raw_content: "`").valid?
+  end
+
+  def test_invalid
+    assert_equal true, Runners::Config.new(path: Pathname(FILE_NAME), raw_content: "`").invalid?
+    assert_equal false, Runners::Config.new(path: Pathname(FILE_NAME), raw_content: "").invalid?
+  end
 end
