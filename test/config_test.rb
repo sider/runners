@@ -155,7 +155,7 @@ class ConfigTest < Minitest::Test
     exn = assert_raises Runners::Config::BrokenYAML do
       Runners::Config.new(path: Pathname(FILE_NAME), raw_content: "@").content
     end
-    assert_equal "Your `sider.yml` is broken at line 1 and column 1. Please fix and retry.", exn.message
+    assert_equal "`sider.yml` is broken at line 1 and column 1", exn.message
   end
 
   def test_path_name

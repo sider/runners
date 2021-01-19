@@ -38,7 +38,7 @@ module Runners
     end
 
     def content
-      @content ||= check_schema(parse_yaml(raw_content || "")).freeze
+      @content ||= check_schema(parse).freeze
     end
     alias validate content
 
@@ -104,14 +104,17 @@ module Runners
       end
     end
 
-    private
-
-    def parse_yaml(text)
-      YAML.safe_load(text, symbolize_names: true, filename: path_name)
-    rescue Psych::SyntaxError => exn
-      message = "Your `#{exn.file}` is broken at line #{exn.line} and column #{exn.column}. Please fix and retry."
-      raise BrokenYAML.new(message, text)
+    def parse
+      yaml = raw_content || ""
+      begin
+        YAML.safe_load(yaml, symbolize_names: true, filename: path_name)
+      rescue Psych::SyntaxError => exn
+        message = "`#{exn.file}` is broken at line #{exn.line} and column #{exn.column}"
+        raise BrokenYAML.new(message, yaml)
+      end
     end
+
+    private
 
     def check_schema(object)
       object ? Schema::Config.payload.coerce(object) : {}

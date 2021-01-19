@@ -46,9 +46,9 @@ module Runners
 
     def exclude_branch?: (String) -> bool
 
-    private
+    def parse: () -> untyped
 
-    def parse_yaml: (String) -> untyped
+    private
 
     def check_schema: (untyped) -> Hash[Symbol, untyped]
   end
