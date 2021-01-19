@@ -287,4 +287,14 @@ class ConfigTest < Minitest::Test
     assert Runners::Config.new(path: Pathname(FILE_NAME), raw_content: "`").invalid?
     refute Runners::Config.new(path: Pathname(FILE_NAME), raw_content: "").invalid?
   end
+
+  def test_parse
+    assert_nil Runners::Config.new(path: Pathname(FILE_NAME), raw_content: nil).parse
+    assert_nil Runners::Config.new(path: Pathname(FILE_NAME), raw_content: "").parse
+    assert_equal [1, "foo", true], Runners::Config.new(path: Pathname(FILE_NAME), raw_content: "[1, foo, true]").parse
+
+    assert_raises Runners::Config::BrokenYAML do
+      Runners::Config.new(path: Pathname(FILE_NAME), raw_content: "`").parse
+    end
+  end
 end
