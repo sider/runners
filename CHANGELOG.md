@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
 
 - Bump devon_rex images from 2.30.1 to master [#1954](https://github.com/sider/runners/pull/1954)
 
+Updated tools:
+
+- **Brakeman** 4.10.0 -> 4.10.1 [#1881](https://github.com/sider/runners/pull/1881)
+
 ## 0.40.7
 
 [Full diff](https://github.com/sider/runners/compare/0.40.6...0.40.7)
