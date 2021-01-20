@@ -2,7 +2,9 @@ module Runners
   class Processor::ClangTidy < Processor
     include CPlusPlus
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :runner_config, Schema::BaseConfig.cplusplus
 
       let :issue, object(
@@ -24,6 +26,8 @@ module Runners
     def analyze(changes)
       issues = []
       analyzed_files = []
+      success_statuses = [0, 1]
+      is_success = ->(status) { success_statuses.include?(status.exitstatus) }
 
       changes
         .changed_paths
@@ -31,8 +35,7 @@ module Runners
         .map { |path| relative_path(working_dir / path, from: current_dir) }
         .reject { |path| path.to_s.start_with?("../") } # reject files outside the current_dir
         .each do |path|
-          stdout, = capture3!(analyzer_bin, path.to_s, "--", *config_include_path,
-            is_success: ->(status) { [0, 1].include?(status.exitstatus) })
+          stdout, = capture3!(analyzer_bin, path.to_s, "--", *config_include_path, is_success: is_success)
           construct_result(stdout) { |issue| issues << issue }
           analyzed_files << path
         end
@@ -49,6 +52,9 @@ module Runners
       # <path>:<line>:<column>: <severity>: <message> [<id>]
       pattern = /^(.+):(\d+):(\d+): ([^:]+): (.+) \[([^\[]+)\]$/
       stdout.scan(pattern) do |path, line, column, severity, message, id|
+        raise "Unexpected match data: #{path.inspect}" unless path.is_a? String
+        raise "Unexpected match data: #{path.inspect}" unless message.is_a? String
+
         yield Issue.new(
           path: relative_path(path),
           location: Location.new(start_line: line, start_column: column),

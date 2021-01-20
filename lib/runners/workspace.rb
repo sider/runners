@@ -37,7 +37,7 @@ module Runners
       end
     end
 
-    def range_git_blame_info(path_string, start_line, end_line)
+    def range_git_blame_info(path_string, start_line, end_line, trace: false)
       []
     end
 

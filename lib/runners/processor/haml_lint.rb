@@ -69,7 +69,26 @@ module Runners
     end
 
     def analyze(_changes)
-      run_analyzer
+      cmd = ruby_analyzer_command(
+        "--reporter", "json",
+        *include_linter,
+        *exclude_linter,
+        *exclude,
+        *haml_lint_config,
+        *config_parallel,
+        *target,
+      )
+      stdout, stderr, status = capture3(cmd.bin, *cmd.args)
+
+      # @see https://github.com/sds/haml-lint/blob/v0.35.0/lib/haml_lint/cli.rb#L110
+      # @see https://github.com/ged/sysexits/blob/v1.2.0/lib/sysexits.rb#L96
+      unless [65, 0].include?(status.exitstatus)
+        return Results::Failure.new(guid: guid, analyzer: analyzer)
+      end
+
+      add_rubocop_warnings_if_exists(stderr)
+
+      Results::Success.new(guid: guid, analyzer: analyzer, issues: parse_result(stdout))
     end
 
     private
@@ -141,36 +160,17 @@ module Runners
       ["https://github.com/sds/haml-lint/blob/v#{analyzer_version}/lib/haml_lint/linter##{issue_id.downcase}"]
     end
 
-    def run_analyzer
-      cmd = ruby_analyzer_command(
-        "--reporter", "json",
-        *include_linter,
-        *exclude_linter,
-        *exclude,
-        *haml_lint_config,
-        *config_parallel,
-        *target,
-      )
-      stdout, stderr, status = capture3(cmd.bin, *cmd.args)
-
-      # @see https://github.com/sds/haml-lint/blob/v0.35.0/lib/haml_lint/cli.rb#L110
-      # @see https://github.com/ged/sysexits/blob/v1.2.0/lib/sysexits.rb#L96
-      unless [65, 0].include?(status.exitstatus)
-        return Results::Failure.new(guid: guid, analyzer: analyzer)
-      end
-
-      add_rubocop_warnings_if_exists(stderr)
-
-      Results::Success.new(guid: guid, analyzer: analyzer, issues: parse_result(stdout))
-    end
-
     # NOTE: HAML-Lint exits successfully even if RuboCop fails.
     #       The version 0.35.0 fixed the issue, but we continue to support older versions.
     #
     # @see https://github.com/sds/haml-lint/issues/317
     def add_rubocop_warnings_if_exists(stderr)
       stderr.scan(/\bcannot load such file -- [\w-]+\b/) do |message|
-        add_warning message
+        if message.is_a? String
+          add_warning message
+        else
+          raise "Unexpected message: #{message.inspect}"
+        end
       end
     end
   end

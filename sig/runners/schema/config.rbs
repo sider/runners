@@ -3,7 +3,11 @@ module Runners
     class BaseConfigClass < StrongJSON
       def base: () -> StrongJSON::Type::Object[untyped]
       def git: () -> StrongJSON::Type::Enum[untyped]
+      def ruby: () -> StrongJSON::Type::Object[untyped]
+      def cplusplus: () -> StrongJSON::Type::Object[untyped]
       def npm_install: () -> StrongJSON::Type::Enum[untyped]
+      def npm: () -> StrongJSON::Type::Object[untyped]
+      def java: () -> StrongJSON::Type::Object[untyped]
     end
     BaseConfig: BaseConfigClass
 

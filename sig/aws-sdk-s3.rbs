@@ -1,4 +1,12 @@
 module Aws
+  def self.config: () -> Hash[Symbol, Credentials | String]
+
+  class Credentials
+    private
+
+    def initialize: (String, String) -> void
+  end
+
   module S3
     # @see https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3/Client.html
     class Client

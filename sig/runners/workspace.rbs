@@ -2,26 +2,25 @@ module Runners
   class Workspace
     include Tmpdir
 
-    def self.prepare: (options: untyped options, working_dir: untyped working_dir, trace_writer: untyped trace_writer) -> untyped
+    def self.prepare: (options: Options, working_dir: Pathname, trace_writer: TraceWriter) -> Workspace
 
-    attr_reader options: untyped
+    attr_reader options: Options
+    attr_reader working_dir: Pathname
+    attr_reader trace_writer: TraceWriter
+    attr_reader shell: Shell
 
-    attr_reader working_dir: untyped
+    def initialize: (options: Options, working_dir: Pathname, trace_writer: TraceWriter) -> void
 
-    attr_reader trace_writer: untyped
+    def open: [X] () { (Pathname?, Changes) -> X } -> X
 
-    attr_reader shell: untyped
+    def range_git_blame_info: (String, Integer, Integer, ?trace: bool) -> Array[GitBlameInfo]
 
-    def initialize: (options: untyped options, working_dir: untyped working_dir, trace_writer: untyped trace_writer) -> untyped
+    def prepare_head_source: () -> void
 
-    def open: () { (untyped, untyped) -> untyped } -> untyped
+    def patches: () -> GitDiffParser::Patches
 
-    def range_git_blame_info: (untyped path_string, untyped start_line, untyped end_line) -> ::Array[untyped]
+    private
 
-    def prepare_head_source: () -> untyped
-
-    def patches: () -> untyped
-
-    def prepare_ssh: () { (untyped) -> untyped } -> untyped
+    def prepare_ssh: [X] () { (Pathname?) -> X } -> X
   end
 end

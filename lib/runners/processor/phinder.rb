@@ -2,7 +2,9 @@ module Runners
   class Processor::Phinder < Processor
     include PHP
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
                         rule: string?,
@@ -10,7 +12,7 @@ module Runners
                       })
       }
 
-      let :issue_object, object(
+      let :issue, object(
         id: string,
         message: string,
         justifications: array(string),
@@ -21,7 +23,7 @@ module Runners
 
     DEFAULT_RULE_FILE = "phinder.yml".freeze
 
-    def test_phinder_config
+    private def test_phinder_config
       args = []
       args.push("--config", config_linter[:rule]) if config_linter[:rule]
 
@@ -52,7 +54,7 @@ module Runners
       end
     end
 
-    def run_phinder
+    private def run_phinder
       args = []
       args.push("--config", config_linter[:rule]) if config_linter[:rule]
       args << config_linter[:php] if config_linter[:php]
@@ -86,7 +88,7 @@ module Runners
                 message: issue[:rule][:message],
                 justifications: Array(issue[:justifications]),
               },
-              schema: Schema.issue_object,
+              schema: Schema.issue,
             )
           end
         end

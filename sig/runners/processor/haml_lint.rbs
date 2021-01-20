@@ -34,14 +34,8 @@ module Runners
 
     def parse_result: (String) -> Array[Issue]
 
-    def build_links: (untyped issue_id) -> (::Array[untyped] | ::Array[::String])
+    def build_links: (String) -> Array[::String]
 
-    def run_analyzer: () -> untyped
-
-    # NOTE: HAML-Lint exits successfully even if RuboCop fails.
-    #       The version 0.35.0 fixed the issue, but we continue to support older versions.
-    #
-    # @see https://github.com/sds/haml-lint/issues/317
-    def add_rubocop_warnings_if_exists: (untyped stderr) -> untyped
+    def add_rubocop_warnings_if_exists: (String) -> void
   end
 end

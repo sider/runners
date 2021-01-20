@@ -7,14 +7,6 @@ module Runners
     class CIConfigBroken < UserError
     end
 
-    attr_reader guid: String
-    attr_reader working_dir: Pathname
-    attr_reader git_ssh_path: Pathname?
-    attr_reader trace_writer: TraceWriter
-    attr_reader warnings: Array[{ message: String, file: String? }]
-    attr_reader config: Config
-    attr_reader shell: Shell
-
     def self.register_config_schema: (name: Symbol, schema: StrongJSON::_Schema[untyped]) -> void
 
     class RemovedGoToolSchemaClass < StrongJSON
@@ -22,7 +14,14 @@ module Runners
     end
     RemovedGoToolSchema: RemovedGoToolSchemaClass
 
-    def initialize: (guid: String, working_dir: Pathname, config: Config, git_ssh_path: Pathname?, trace_writer: TraceWriter) -> void
+    attr_reader guid: String
+    attr_reader working_dir: Pathname
+    attr_reader config: Config
+    attr_reader shell: Shell
+    attr_reader trace_writer: TraceWriter
+    attr_reader warnings: Array[{ message: String, file: String? }]
+
+    def initialize: (guid: String, working_dir: Pathname, config: Config, shell: Shell, trace_writer: TraceWriter) -> void
 
     def current_dir: () -> Pathname
     def chdir: [X] (Pathname) { (Pathname) -> X } -> X
@@ -30,10 +29,12 @@ module Runners
     def env_hash: () -> Hash[String, String?]
     def capture3: (String, *String, **untyped) -> [String, String, Process::Status]
     def capture3!: (String, *String, **untyped) -> [String, String]
-    def capture3_with_retry!: (String, *String, ?tries: Integer, ?sleep: ^(Integer) -> Numeric) -> [String, String]
+    def capture3_with_retry!: (String, *String, ?tries: Integer, ?sleep: ^(Numeric) -> Numeric) -> [String, String]
     def capture3_trace: (String, *String, **untyped) -> [String, String, Process::Status]
 
     def relative_path: (String | Pathname, ?from: Pathname) -> Pathname
+
+    def check_unsupported_linters: () -> void
 
     def setup: () { () -> result } -> result
 
@@ -58,6 +59,8 @@ module Runners
     def extract_version_option: () -> String
 
     def extract_version!: ((String | Array[String]) command, ?(String | Array[String]) version_option, ?pattern: Regexp pattern) -> String
+
+    def use_git_metadata_dir?: () -> bool
 
     def config_linter: () -> Hash[Symbol, untyped]
 
@@ -96,9 +99,11 @@ module Runners
     class InvalidXML < SystemError
     end
 
+    def read_xml: (String) -> REXML::Element
+
     def read_report_xml: (?String) -> REXML::Element
 
-    def read_report_json: [X] (?String) { () -> X } -> X
+    def read_report_json: [X] (?String) { () -> X } -> (X | untyped)
                         | (?String) -> untyped
 
     def comma_separated_list: (String | Array[String] | nil) -> String?

@@ -37,5 +37,18 @@ module Runners
     def to_s
       "{ start_line=#{start_line.inspect}, start_column=#{start_column.inspect}, end_line=#{end_line.inspect}, end_column=#{end_column.inspect} }"
     end
+
+    def include_line?(line)
+      s = start_line
+      e = end_line
+      case
+      when s && e
+        s <= line && line <= e
+      when s && !e
+        s == line
+      else
+        false
+      end
+    end
   end
 end

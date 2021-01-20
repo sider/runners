@@ -2,7 +2,9 @@ module Runners
   class Processor::PmdJava < Processor
     include Java
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :runner_config, Schema::BaseConfig.java.update_fields { |fields|
         fields.merge!({
           dir: string?,
@@ -44,25 +46,6 @@ module Runners
     def analyze(changes)
       delete_unchanged_files changes, only: ["*.java"]
 
-      run_analyzer
-    end
-
-    private
-
-    def cli_args
-      [].tap do |args|
-        args << "-language" << "java"
-        args << "-threads" << "2"
-        args << "-format" << "xml"
-        args << "-reportfile" << report_file
-        args << "-dir" << dir
-        args << "-rulesets" << rulesets.join(",")
-        min_priority&.tap { args << "-minimumpriority" << _1.to_s }
-        encoding&.tap { args << "-encoding" << _1 }
-      end
-    end
-
-    def run_analyzer
       _, stderr, status = capture3(analyzer_bin, *cli_args)
 
       if status.success? || status.exitstatus == 4
@@ -77,11 +60,26 @@ module Runners
 
         Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
           xml = read_report_xml
-          construct_result(xml) { result.add_issue _1 }
+          construct_result(xml) { |issue| result.add_issue(issue) }
         end
       else
         Results::Failure.new(guid: guid, analyzer: analyzer)
       end
+    end
+
+    private
+
+    def cli_args
+      [
+        "-language", "java",
+        "-threads", "2",
+        "-format", "xml",
+        "-reportfile", report_file,
+        "-dir", dir,
+        "-rulesets", rulesets.join(","),
+        *min_priority,
+        *encoding,
+      ]
     end
 
     def construct_result(xml)
@@ -90,9 +88,12 @@ module Runners
       xml.each_element do |element|
         case element.name
         when "file"
-          path = relative_path(element[:name])
+          filename = element[:name] or raise "Unexpected element: #{element.inspect}"
+          path = relative_path(filename)
 
           element.each_element("violation") do |violation|
+            message = violation.text or raise "required message: #{violation.inspect}"
+
             yield Issue.new(
               path: path,
               location: Location.new(
@@ -102,8 +103,8 @@ module Runners
                 end_column: violation[:endcolumn],
               ),
               id: violation[:rule],
-              message: violation.text.strip,
-              links: Array(violation[:externalInfoUrl]),
+              message: message.strip,
+              links: violation[:externalInfoUrl].then { |url| url ? [url] : [] },
               object: {
                 ruleset: violation[:ruleset],
                 priority: violation[:priority],
@@ -112,9 +113,13 @@ module Runners
             )
           end
         when "error"
-          add_warning element[:msg], file: relative_path(element[:filename]).to_s
+          msg = element[:msg] or raise "Unexpected element: #{element.inspect}"
+          filename = element[:filename] or raise "Unexpected element: #{element.inspect}"
+          add_warning msg, file: relative_path(filename).to_path
         when "configerror"
-          add_warning "#{element[:rule]}: #{element[:msg]}"
+          rule = element[:rule] or raise "Unexpected element: #{element.inspect}"
+          msg = element[:msg] or raise "Unexpected element: #{element.inspect}"
+          add_warning "#{rule}: #{msg}"
         end
       end
     end
@@ -128,11 +133,13 @@ module Runners
     end
 
     def encoding
-      config_linter[:encoding]
+      enc = config_linter[:encoding]
+      enc ? ["-encoding", enc] : []
     end
 
     def min_priority
-      config_linter[:min_priority]
+      num = config_linter[:min_priority]
+      num ? ["-minimumpriority", num.to_s] : []
     end
   end
 end

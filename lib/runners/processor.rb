@@ -5,13 +5,6 @@ module Runners
 
     class CIConfigBroken < UserError; end
 
-    attr_reader :guid, :working_dir, :git_ssh_path, :trace_writer, :warnings, :config, :shell
-
-    def_delegators :@shell,
-      :chdir, :current_dir,
-      :capture3, :capture3!, :capture3_trace, :capture3_with_retry!,
-      :env_hash, :push_env_hash
-
     def self.register_config_schema(name:, schema:)
       Schema::Config.register(name: name, schema: schema)
     end
@@ -25,25 +18,24 @@ module Runners
     register_config_schema(name: :go_vet, schema: RemovedGoToolSchema.config)
     register_config_schema(name: :gometalinter, schema: RemovedGoToolSchema.config)
 
-    def initialize(guid:, working_dir:, config:, git_ssh_path:, trace_writer:)
+    attr_reader :guid, :working_dir, :config, :shell, :trace_writer, :warnings
+
+    def_delegators :@shell,
+      :chdir, :current_dir,
+      :capture3, :capture3!, :capture3_trace, :capture3_with_retry!,
+      :env_hash, :push_env_hash
+
+    def initialize(guid:, working_dir:, config:, shell:, trace_writer:)
       @guid = guid
       @working_dir = working_dir
-      @git_ssh_path = git_ssh_path
+      @config = config
+      @shell = shell
       @trace_writer = trace_writer
       @warnings = []
-      @config = config
 
       if config.path_exist?
         trace_writer.ci_config(config.content, raw_content: config.raw_content!, file: config.path_name)
       end
-
-      hash = {
-        "RUBYOPT" => nil,
-        "GIT_SSH_COMMAND" => git_ssh_path&.then { |path| "ssh -F '#{path}'" },
-      }
-      @shell = Shell.new(current_dir: working_dir,
-                         env_hash: hash,
-                         trace_writer: trace_writer)
     end
 
     def relative_path(original, from: working_dir)
@@ -55,14 +47,15 @@ module Runners
       path.relative_path_from(from)
     end
 
-    def setup
+    def check_unsupported_linters
       # TODO: Keep the following schemas for the backward compatibility.
-      if ["golint", "go_vet", "gometalinter"].any? { |id| config.linter?(id) }
-        add_warning <<~MSG, file: config.path_name
-          The `golint`, `go_vet`, and `gometalinter` options in your `#{config.path_name}` has been unsupported. Please remove them.
-        MSG
+      message = config.check_unsupported_linters ["golint", "go_vet", "gometalinter"]
+      unless message.empty?
+        add_warning message, file: config.path_name
       end
+    end
 
+    def setup
       trace_writer.message "No setup..."
       yield
     end
@@ -121,6 +114,11 @@ module Runners
         end
       end
       raise ArgumentError, "Not found version from the command `#{command_line.join(' ')}`"
+    end
+
+    # If a processor needs git metadata('.git' dir), override this method as returning true.
+    def use_git_metadata_dir?
+      false
     end
 
     def config_linter
@@ -257,16 +255,29 @@ module Runners
 
     class InvalidXML < SystemError; end
 
-    def read_report_xml(file_path = report_file)
-      output = read_report_file(file_path)
-      root = REXML::Document.new(output).root
+    def read_xml(text)
+      root = REXML::Document.new(text).root
       if root
         root
       else
-        message = "Output XML is invalid from #{file_path}"
+        message = "Invalid XML: #{text.inspect}"
         trace_writer.error message
         raise InvalidXML, message
       end
+    rescue REXML::ParseException => exn
+      message =
+        if exn.cause.instance_of? RuntimeError
+          exn.cause.message
+        else
+          exn.message
+        end
+      trace_writer.error message
+      raise InvalidXML, message
+    end
+
+    def read_report_xml(file_path = report_file)
+      output = read_report_file(file_path)
+      read_xml(output)
     end
 
     def read_report_json(file_path = report_file)

@@ -2,7 +2,9 @@ module Runners
   class Processor::Swiftlint < Processor
     include Swift
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
                         ignore_warnings: boolean?,
@@ -43,7 +45,33 @@ module Runners
       # @see https://realm.github.io/SwiftLint/unused_import.html
       delete_unchanged_files changes, only: ["*.swift"]
 
-      run_analyzer
+      stdout, stderr, status = capture3(
+        analyzer_bin,
+        'lint',
+        '--reporter', 'json',
+        '--no-cache',
+        *cli_path,
+        *cli_config,
+        *cli_lenient,
+        *cli_enable_all_rules,
+      )
+
+      # HACK: SwiftLint sometimes exits with no output, so we need to check also the existence of `*.swift` files.
+      if status.exitstatus == 1 && (stderr.include?("No lintable files found at paths:") || working_dir.glob("**/*.swift").empty?)
+        return Results::Success.new(guid: guid, analyzer: analyzer)
+      end
+
+      stderr.match(/Could not read configuration file at path '(.+)'/) do |m|
+        path = m.captures.first or raise "Unexpected match data: #{m.inspect}"
+        message = "Could not read configuration file at path '#{relative_path(path)}'."
+        return Results::Failure.new(guid: guid, message: message, analyzer: analyzer)
+      end
+
+      stderr.match(/Currently running SwiftLint .+ but configuration specified version .+\./) do |m|
+        return Results::Failure.new(guid: guid, message: m.to_s, analyzer: analyzer)
+      end
+
+      Results::Success.new(guid: guid, analyzer: analyzer, issues: parse_result(stdout))
     end
 
     private
@@ -74,50 +102,21 @@ module Runners
 
     def parse_result(output)
       JSON.parse(output, symbolize_names: true).filter_map do |error|
-        next if ignore_warnings? && error[:severity] == 'Warning'
-
-        Issue.new(
-          path: relative_path(error[:file]),
-          location: Location.new(start_line: error[:line]),
-          id: error[:rule_id],
-          message: error[:reason],
-          links: ["https://realm.github.io/SwiftLint/#{error[:rule_id]}.html"],
-          object: {
-            severity: error[:severity],
-          },
-          schema: Schema.issue,
-        )
-      end
-    end
-
-    def run_analyzer
-      stdout, stderr, status = capture3(
-        analyzer_bin,
-        'lint',
-        '--reporter', 'json',
-        '--no-cache',
-        *cli_path,
-        *cli_config,
-        *cli_lenient,
-        *cli_enable_all_rules,
-      )
-
-      # HACK: SwiftLint sometimes exits with no output, so we need to check also the existence of `*.swift` files.
-      if status.exitstatus == 1 && (stderr.include?("No lintable files found at paths:") || working_dir.glob("**/*.swift").empty?)
-        return Results::Success.new(guid: guid, analyzer: analyzer)
-      end
-
-      stderr.match(/Could not read configuration file at path '(.+)'/) do |m|
-        message = "Could not read configuration file at path '#{relative_path(m[1])}'."
-        return Results::Failure.new(guid: guid, message: message, analyzer: analyzer)
-      end
-
-      stderr.match(/Currently running SwiftLint .+ but configuration specified version .+\./) do |m|
-        return Results::Failure.new(guid: guid, message: m[0], analyzer: analyzer)
-      end
-
-      Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        parse_result(stdout).each { |v| result.add_issue(v) }
+        if ignore_warnings? && error[:severity] == 'Warning'
+          nil
+        else
+          Issue.new(
+            path: relative_path(error[:file]),
+            location: Location.new(start_line: error[:line]),
+            id: error[:rule_id],
+            message: error[:reason],
+            links: ["https://realm.github.io/SwiftLint/#{error[:rule_id]}.html"],
+            object: {
+              severity: error[:severity],
+            },
+            schema: Schema.issue,
+          )
+        end
       end
     end
   end

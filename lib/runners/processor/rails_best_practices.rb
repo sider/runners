@@ -104,7 +104,7 @@ module Runners
     def prepare_config
       # NOTE: We expect sider_rails_best_practices.yml to be located in $HOME.
       default_config = Pathname(Dir.home) / 'sider_rails_best_practices.yml'
-      path = Pathname("#{current_dir.to_s}/config/rails_best_practices.yml")
+      path = current_dir / 'config' / 'rails_best_practices.yml'
       return if path.exist?
       path.parent.mkpath
       FileUtils.copy_file(default_config, path)

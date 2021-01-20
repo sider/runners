@@ -5,35 +5,35 @@ module Runners
     class NoTargetFiles < SystemError
     end
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[untyped]
+      def issue: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
-    DEFAULT_TARGET: untyped
+    DEFAULT_TARGET: String
+    DEFAULT_IGNORE: Array[String]
 
-    DEFAULT_IGNORE: untyped
+    private
 
-    def analyze: (untyped _changes) -> untyped
+    def target: () -> Array[String]
 
-    def target: () -> untyped
+    def ignore: () -> Array[String]
 
-    def ignore: () -> untyped
+    def addon: () -> Array[String]
 
-    def addon: () -> untyped
+    def enable: () -> Array[String]
 
-    def enable: () -> untyped
+    def std: () -> Array[String]
 
-    def std: () -> untyped
+    def project: () -> Array[String]
 
-    def project: () -> untyped
+    def language: () -> Array[String]
 
-    def language: () -> untyped
+    def jobs: () -> Array[String]
 
-    def jobs: () -> untyped
+    def step_analyzer: (*String) -> result
 
-    def run_analyzer: () -> untyped
-
-    def step_analyzer: (*untyped args) -> untyped
-
-    # @see https://github.com/danmar/cppcheck/blob/master/man/manual.md#xml-output
-    def parse_result: (untyped xml_root) { (untyped) -> untyped } -> untyped
+    def parse_result: (REXML::Element) { (Issue) -> void } -> void
   end
 end
