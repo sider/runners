@@ -13,6 +13,7 @@ Updated environments:
 Updated tools:
 
 - **Brakeman** 4.10.0 -> 4.10.1 [#1881](https://github.com/sider/runners/pull/1881)
+- **SwiftLint** 0.41.0 -> 0.42.0 [#1750](https://github.com/sider/runners/pull/1750)
 
 ## 0.40.7
 
