@@ -8,16 +8,12 @@ class RubyTest < Minitest::Test
   Source = GemInstaller::Source
   LockfileLoader = Runners::Ruby::LockfileLoader
 
-  def trace_writer
+  private def trace_writer
     @trace_writer ||= new_trace_writer
   end
 
-  def shell
-    @shell ||= Runners::Shell.new(
-      current_dir: __dir__,
-      env_hash: {},
-      trace_writer: trace_writer
-    )
+  private def shell
+    @shell ||= Runners::Shell.new(current_dir: __dir__, trace_writer: trace_writer)
   end
 
   def processor_class
@@ -30,12 +26,14 @@ class RubyTest < Minitest::Test
     end
   end
 
-  def new_processor(workspace:, git_ssh_path: nil, config_yaml: nil)
+  private def new_processor(workspace:, git_ssh_path: nil, config_yaml: "")
     processor_class.new(
       guid: SecureRandom.uuid,
       working_dir: workspace.working_dir,
       config: config(config_yaml),
-      git_ssh_path: git_ssh_path,
+      shell: Runners::Shell.new(current_dir: workspace.working_dir, trace_writer: trace_writer, env_hash: {
+        "GIT_SSH_COMMAND" => git_ssh_path&.then { |path| "ssh -F '#{path}'" },
+      }),
       trace_writer: trace_writer,
     )
   end

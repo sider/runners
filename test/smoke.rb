@@ -1,9 +1,17 @@
 require "minitest"
 require "unification_assertion"
-require 'parallel'
+require "parallel"
 require "amazing_print"
 require "rainbow"
 require "openssl"
+require "base64"
+require "open3"
+require "uri"
+require "json"
+require "jsonseq"
+require "strong_json"
+
+require_relative "../lib/runners/schema/result"
 
 module Runners
   module Testing
@@ -11,12 +19,13 @@ module Runners
       include Minitest::Assertions
 
       class TestParams
-        attr_reader :name, :pattern, :offline
+        attr_reader :name, :pattern, :offline, :use_git_metadata
 
-        def initialize(name:, pattern:, offline:)
+        def initialize(name:, pattern:, offline:, use_git_metadata:)
           @name = name
           @pattern = pattern
           @offline = offline
+          @use_git_metadata = use_git_metadata
         end
 
         def ==(other)
@@ -29,31 +38,21 @@ module Runners
         end
       end
 
-      attr_reader :argv
+      attr_reader :docker_image, :expectations_path, :analyzer
 
-      def initialize(argv)
-        @argv = argv
-      end
-
-      def docker_image
-        argv[0]
-      end
-
-      def entrypoint
-        Pathname(argv[0])
-      end
-
-      def expectations
-        Pathname(argv[1])
+      def initialize(docker_image:, expectations_path:, analyzer:)
+        @docker_image = docker_image
+        @expectations_path = Pathname(expectations_path)
+        @analyzer = analyzer
       end
 
       def run
         start = Time.now
 
-        load expectations.to_path
+        load expectations_path.to_path
 
         jobs = ENV["JOBS"] ? Integer(ENV["JOBS"]) : nil
-        "Running #{Rainbow(self.class.tests.size.to_s).bright} smoke tests".tap do |msg|
+        "[#{Rainbow(analyzer).blue.bright.underline}] Running #{Rainbow(self.class.tests.size.to_s).bright} smoke tests".tap do |msg|
           msg << " with #{Rainbow(jobs.to_s).bright} jobs" if jobs
           puts "#{msg}..."
         end
@@ -67,7 +66,7 @@ module Runners
           print out.string
           duration_per_test = (Time.now - start_per_test).round(1)
           puts "#{marks[result]} #{Rainbow(params.name).bright.underline}" + \
-               Rainbow(" (#{duration_per_test}s)").darkgray.to_s
+               Rainbow(" (#{duration_per_test} seconds)").darkgray.to_s
           [result, params.name]
         }
 
@@ -101,11 +100,16 @@ module Runners
 
       def run_test(params, out)
         command_output, _ = Dir.mktmpdir do |dir|
-          repo_dir, base, head = prepare_git_repository(
+          repo_args = {
             workdir: Pathname(dir).realpath,
-            smoke_target: expectations.parent.join(params.name).realpath,
+            smoke_target: expectations_path.parent.join(params.name).realpath,
             out: out,
-          )
+          }
+          if params.use_git_metadata
+            repo_dir, base, head = prepare_existing_git_repository(**repo_args)
+          else
+            repo_dir, base, head = prepare_new_git_repository(**repo_args)
+          end
           cmd = command_line(params: params, repo_dir: repo_dir, base: base, head: head)
           sh!(*cmd, out: out, exception: false)
         end
@@ -170,7 +174,7 @@ module Runners
         commands
       end
 
-      def prepare_git_repository(workdir:, smoke_target:, out:)
+      def prepare_new_git_repository(workdir:, smoke_target:, out:)
         # Create a bare repository
         bare_dir = workdir.join("bare").to_path
         sh! "git", "init", "--bare", bare_dir, out: out
@@ -192,8 +196,18 @@ module Runners
           sh! "git", "push", out: out
           head_commit, _ = sh! "git", "rev-parse", "HEAD", out: out
 
-          # TODO: Ignored Steep error
-          _ = [bare_dir, base_commit.chomp, head_commit.chomp]
+          [bare_dir, base_commit.chomp, head_commit.chomp]
+        end
+      end
+
+      def prepare_existing_git_repository(workdir:, smoke_target:, out:)
+        smoke_dir = workdir.join("smoke").to_path
+        FileUtils.copy_entry smoke_target, smoke_dir
+
+        Dir.chdir(smoke_dir) do
+          FileUtils.move "gitmetadata", ".git"
+          head_commit, _ = sh! "git", "rev-parse", "HEAD", out: out
+          [smoke_dir, nil, head_commit.chomp]
         end
       end
 
@@ -263,11 +277,21 @@ module Runners
       end
 
       def self.add_test(name, **pattern)
-        add_test_helper TestParams.new(name: name, pattern: build_pattern(**pattern), offline: false)
+        add_test_helper TestParams.new(name: name, pattern: build_pattern(**pattern), offline: false, use_git_metadata: false)
       end
 
       def self.add_offline_test(name, **pattern)
-        add_test_helper TestParams.new(name: name, pattern: build_pattern(**pattern), offline: true)
+        add_test_helper TestParams.new(name: name, pattern: build_pattern(**pattern), offline: true, use_git_metadata: false)
+      end
+
+      # for runners using git metadata for their analysis.
+      # You have to place git metadata directory (.git/) as "gitmetadata" in the test case directory.
+      def self.add_test_with_git_metadata(name, **pattern)
+        add_test_helper TestParams.new(name: name, pattern: build_pattern(**pattern), offline: false, use_git_metadata: true)
+      end
+
+      def self.add_offline_test_with_git_metadata(name, **pattern)
+        add_test_helper TestParams.new(name: name, pattern: build_pattern(**pattern), offline: true, use_git_metadata: true)
       end
 
       def self.add_test_helper(test)

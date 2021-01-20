@@ -52,6 +52,17 @@ s.add_test(
     },
     {
       id: "SC2039",
+      path: "foo.sh/bar.sh",
+      location: { start_line: 3, start_column: 1, end_line: 3, end_column: 17 },
+      message: "In POSIX sh, [[ ]] is undefined.",
+      links: %w[https://github.com/koalaman/shellcheck/wiki/SC2039],
+      object: { code: 2_039, severity: "warning", fix: nil },
+      git_blame_info: {
+        commit: :_, line_hash: "b36d60537db197eefd58519460f7f928406e4355", original_line: 3, final_line: 3
+      }
+    },
+    {
+      id: "SC2039",
       path: "test.sh",
       location: { start_line: 3, start_column: 1, end_line: 3, end_column: 17 },
       message: "In POSIX sh, [[ ]] is undefined.",

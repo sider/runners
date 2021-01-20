@@ -143,9 +143,6 @@ module Runners
       codefragment = elem_dupli.elements['codefragment']&.cdatas&.first&.value
       codefragment or raise "required codefragment: #{elem_dupli.inspect}"
 
-      # @see https://github.com/pmd/pmd/pull/2633
-      codefragment = CGI.unescape_html(codefragment)
-
       fileobjs = files.map do |f|
         {
           id: f[:id],

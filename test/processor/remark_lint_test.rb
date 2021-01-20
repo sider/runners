@@ -3,6 +3,8 @@ require "test_helper"
 class Runners::Processor::RemarkLintTest < Minitest::Test
   include TestHelper
 
+  private
+
   def trace_writer
     @trace_writer ||= new_trace_writer
   end
@@ -16,14 +18,16 @@ class Runners::Processor::RemarkLintTest < Minitest::Test
       guid: SecureRandom.uuid,
       working_dir: workspace.working_dir,
       config: config,
+      shell: Runners::Shell.new(current_dir: workspace.working_dir, trace_writer: trace_writer),
       trace_writer: trace_writer,
-      git_ssh_path: nil
     ).tap do |s|
       def s.analyzer_id
         "remark_lint"
       end
     end
   end
+
+  public
 
   def test_no_rc_files?
     with_workspace do |workspace|

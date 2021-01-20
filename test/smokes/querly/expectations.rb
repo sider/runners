@@ -11,11 +11,11 @@ s.add_test(
       path: "foo.rb",
       location: { start_line: 4, start_column: 0, end_line: 4, end_column: 19 },
       id: "com.method_chain",
-      message: "Method chain with `_`.\n" + "\n" + "message...\n",
+      message: "Method chain with `_`.\n\nmessage...\n",
       links: [],
       object: {
         id: "com.method_chain",
-        messages: ["Method chain with `_`.\n" + "\n" + "message...\n"],
+        messages: ["Method chain with `_`.\n\nmessage...\n"],
         justifications: [],
         examples: []
       },
