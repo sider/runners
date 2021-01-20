@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.license       = "MIT"
 
   # NOTE: It must be same as devon_rex and .ruby-version
-  spec.required_ruby_version = Gem::Requirement.new(">= 2.7.2", "< 3.0.0")
+  spec.required_ruby_version = [">= 2.7.2", "< 3.0.0"]
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = spec.homepage
@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   # standard libraries
-  spec.add_dependency "bundler", "2.2.3" # NOTE: It must be same as devon_rex.
+  spec.add_dependency "bundler", ">= 2.2.3", "< 2.3.0" # NOTE: It must be same as devon_rex.
   spec.add_dependency "fileutils", ">= 1.5"
   spec.add_dependency "forwardable", ">= 1.3"
   spec.add_dependency "json", ">= 2.5"

@@ -33,5 +33,7 @@ module Runners
     def handle_error: (Exception) -> void
 
     def exclude_special_dirs: [X] () { () -> X } -> X
+
+    def build_shell: (Pathname?) -> Shell
   end
 end
