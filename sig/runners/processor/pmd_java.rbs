@@ -21,8 +21,8 @@ module Runners
 
     def dir: () -> String
 
-    def encoding: () -> String?
+    def encoding: () -> Array[String]
 
-    def min_priority: () -> Numeric?
+    def min_priority: () -> Array[String]
   end
 end

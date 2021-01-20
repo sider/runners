@@ -51,6 +51,8 @@ module Runners
 
     def npm_install: (install_option) -> void
 
+    def run_yarn: (String, *String) -> [String, String]
+
     def yarn_install: (install_option) -> void
 
     def list_installed_nodejs_deps: (?only: Array[String], ?chdir: Pathname | String | nil) -> Hash[String, String]

@@ -33,7 +33,7 @@ module Runners
       ensure_result do
         workspace = Workspace.prepare(options: options, working_dir: working_dir, trace_writer: trace_writer)
         workspace.open do |git_ssh_path, changes|
-          @config = conf = Config.new(workspace.working_dir)
+          @config = conf = Config.load_from_dir(workspace.working_dir)
 
           unless conf.ignore_patterns.empty?
             trace_writer.message "Deleting ignored files..." do
@@ -43,14 +43,18 @@ module Runners
           end
 
           begin
-            processor = processor_class.new(guid: guid, working_dir: working_dir, config: conf, git_ssh_path: git_ssh_path, trace_writer: trace_writer)
+            processor = processor_class.new(guid: guid, working_dir: working_dir, config: conf,
+                                            shell: build_shell(git_ssh_path), trace_writer: trace_writer)
 
             root_dir_not_found = processor.check_root_dir_exist
             return root_dir_not_found if root_dir_not_found
 
             processor.in_root_dir do
               trace_writer.header "Set up #{processor.analyzer_name}"
+
+              processor.check_unsupported_linters
               processor.show_runtime_versions
+
               result = processor.setup do
                 trace_writer.header "Run #{processor.analyzer_name}"
                 @analyzer = processor.analyzer # initialize analyzer
@@ -122,7 +126,7 @@ module Runners
       saved = [".git"].filter_map do |dir|
         src = working_dir / dir
         if src.directory?
-          dest = mktmpdir_as_pathname / dir
+          dest = mktmpdir / dir
           src.rename(dest)
           trace_writer.message "Move #{src} to #{dest}"
           [src, dest]
@@ -140,6 +144,14 @@ module Runners
         dest.parent.rmdir
         trace_writer.message "Restore #{dest} to #{src}"
       end
+    end
+
+    def build_shell(git_ssh_path)
+      env = {
+        "RUBYOPT" => nil,
+        "GIT_SSH_COMMAND" => git_ssh_path&.then { |path| "ssh -F '#{path}'" },
+      }
+      Shell.new(current_dir: working_dir, trace_writer: trace_writer, env_hash: env)
     end
   end
 end

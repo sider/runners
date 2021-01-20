@@ -88,7 +88,7 @@ module Runners
       )
 
       stdout.lines(chomp: true).tap do |files|
-        trace_writer.message "#{files.size} file(s) found."
+        trace_writer.message "#{files.size} file(s) found via shebang."
       end
     end
 
@@ -98,7 +98,7 @@ module Runners
 
       # Via glob
       globs = _ = targets.select { |glob| glob.is_a? String } # TODO: Ignored Steep error
-      files_via_glob = Dir.glob(globs, File::FNM_EXTGLOB, base: current_dir.to_path)
+      files_via_glob = Dir.glob(globs, File::FNM_EXTGLOB, base: current_dir.to_path).filter { |path| File.file?(path) }
 
       # Via shebang
       shebang = (targets - globs).find do |target|

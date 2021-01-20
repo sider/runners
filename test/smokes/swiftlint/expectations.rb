@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "0.41.0"
+default_version = "0.42.0"
 
 s.add_test(
   "success",
@@ -163,7 +163,7 @@ s.add_test("no_swift_file", type: "success", issues: [], analyzer: { name: "Swif
 s.add_test(
   "no_config_file",
   type: "failure",
-  message: "Could not read configuration file at path 'not_found.yml'.",
+  message: "SwiftLint Configuration Error: Could not read file at path: not_found.yml",
   analyzer: { name: "SwiftLint", version: default_version },
   warnings: [
     {
