@@ -14,6 +14,10 @@ Updated tools:
 
 - **Brakeman** 4.10.0 -> 4.10.1 [#1881](https://github.com/sider/runners/pull/1881)
 
+Misc:
+
+- Improve behavior about `Changes` class [#1955](https://github.com/sider/runners/pull/1955)
+
 ## 0.40.7
 
 [Full diff](https://github.com/sider/runners/compare/0.40.6...0.40.7)
