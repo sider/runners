@@ -158,6 +158,8 @@ module Runners
     end
 
     def delete_unchanged_files(changes, except: [], only: [])
+      return if changes.unchanged_paths.empty?
+
       trace_writer.message "Deleting unchanged files from working copy..." do
         files = changes.delete_unchanged(dir: working_dir, except: except, only: only)
         trace_writer.message files.join("\n")
