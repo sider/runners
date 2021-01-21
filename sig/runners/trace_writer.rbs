@@ -23,12 +23,18 @@ module Runners
 
     def error: (String, ?recorded_at: Time, ?max_length: Integer) -> void
 
+    def finish: (started_at: Time, finished_at: Time, ?recorded_at: Time) -> void
+
     def <<: (Hash[Symbol, untyped]) -> void
 
     private
 
     def now: () -> Time
 
+    def time_to_s: (Time) -> String
+
     def each_slice: (String, size: Integer) { (String, bool) -> void } -> void
+
+    def calc_duration_in_ms: (Time, Time) -> Integer
   end
 end

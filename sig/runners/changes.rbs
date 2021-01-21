@@ -1,6 +1,6 @@
 module Runners
   class Changes
-    def self.calculate: (working_dir: Pathname) -> Changes
+    def self.all: (working_dir: Pathname) -> Changes
 
     def self.calculate_by_patches: (working_dir: Pathname, patches: GitDiffParser::Patches) -> Changes
 

@@ -5,13 +5,6 @@ module Runners
 
     class CIConfigBroken < UserError; end
 
-    attr_reader :guid, :working_dir, :git_ssh_path, :trace_writer, :warnings, :config, :shell
-
-    def_delegators :@shell,
-      :chdir, :current_dir,
-      :capture3, :capture3!, :capture3_trace, :capture3_with_retry!,
-      :env_hash, :push_env_hash
-
     def self.register_config_schema(name:, schema:)
       Schema::Config.register(name: name, schema: schema)
     end
@@ -25,25 +18,24 @@ module Runners
     register_config_schema(name: :go_vet, schema: RemovedGoToolSchema.config)
     register_config_schema(name: :gometalinter, schema: RemovedGoToolSchema.config)
 
-    def initialize(guid:, working_dir:, config:, git_ssh_path:, trace_writer:)
+    attr_reader :guid, :working_dir, :config, :shell, :trace_writer, :warnings
+
+    def_delegators :@shell,
+      :chdir, :current_dir,
+      :capture3, :capture3!, :capture3_trace, :capture3_with_retry!,
+      :env_hash, :push_env_hash
+
+    def initialize(guid:, working_dir:, config:, shell:, trace_writer:)
       @guid = guid
       @working_dir = working_dir
-      @git_ssh_path = git_ssh_path
+      @config = config
+      @shell = shell
       @trace_writer = trace_writer
       @warnings = []
-      @config = config
 
       if config.path_exist?
         trace_writer.ci_config(config.content, raw_content: config.raw_content!, file: config.path_name)
       end
-
-      hash = {
-        "RUBYOPT" => nil,
-        "GIT_SSH_COMMAND" => git_ssh_path&.then { |path| "ssh -F '#{path}'" },
-      }
-      @shell = Shell.new(current_dir: working_dir,
-                         env_hash: hash,
-                         trace_writer: trace_writer)
     end
 
     def relative_path(original, from: working_dir)
@@ -55,14 +47,15 @@ module Runners
       path.relative_path_from(from)
     end
 
-    def setup
+    def check_unsupported_linters
       # TODO: Keep the following schemas for the backward compatibility.
-      if ["golint", "go_vet", "gometalinter"].any? { |id| config.linter?(id) }
-        add_warning <<~MSG, file: config.path_name
-          The `golint`, `go_vet`, and `gometalinter` options in your `#{config.path_name}` has been unsupported. Please remove them.
-        MSG
+      message = config.check_unsupported_linters ["golint", "go_vet", "gometalinter"]
+      unless message.empty?
+        add_warning message, file: config.path_name
       end
+    end
 
+    def setup
       trace_writer.message "No setup..."
       yield
     end
@@ -165,6 +158,8 @@ module Runners
     end
 
     def delete_unchanged_files(changes, except: [], only: [])
+      return if changes.unchanged_paths.empty?
+
       trace_writer.message "Deleting unchanged files from working copy..." do
         files = changes.delete_unchanged(dir: working_dir, except: except, only: only)
         trace_writer.message files.join("\n")
