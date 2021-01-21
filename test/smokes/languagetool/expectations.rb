@@ -11,7 +11,7 @@ s.add_test(
       path: "sample.txt",
       location: { start_line: 3 },
       message:
-        "Use \"a\" instead of 'an' if the following word doesn't start with a vowel sound, e.g. 'a sentence', 'a university'",
+        "Use \"a\" instead of 'an' if the following word doesn't start with a vowel sound, e.g. 'a sentence', 'a university'.",
       links: [],
       object: {
         sentence: "to see an few of the problems that LanguageTool can detecd.",
