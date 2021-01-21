@@ -13,6 +13,7 @@ Updated environments:
 Updated tools:
 
 - **Brakeman** 4.10.0 -> 4.10.1 [#1881](https://github.com/sider/runners/pull/1881)
+- **detekt** 1.14.2 -> 1.15.0 [#1815](https://github.com/sider/runners/pull/1815)
 - **Querly** 1.1.0 -> 1.2.0 [#1807](https://github.com/sider/runners/pull/1807)
 - **SwiftLint** 0.41.0 -> 0.42.0 [#1750](https://github.com/sider/runners/pull/1750)
 
