@@ -11,7 +11,16 @@ module Runners
       end
     end
 
-    class BrokenYAML < Error; end
+    class BrokenYAML < Error
+      attr_reader :line
+      attr_reader :column
+
+      def initialize(message, path_name:, raw_content:, line:, column:)
+        super(message, path_name: path_name, raw_content: raw_content)
+        @line = line
+        @column = column
+      end
+    end
 
     class InvalidConfiguration < Error
       attr_reader :attribute
@@ -121,7 +130,7 @@ module Runners
       rescue Psych::SyntaxError => exn
         raise BrokenYAML.new(
           "`#{exn.file}` is broken at line #{exn.line} and column #{exn.column}",
-          path_name: path_name, raw_content: yaml,
+          path_name: path_name, raw_content: yaml, line: exn.line, column: exn.column,
         )
       end
     end

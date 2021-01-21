@@ -8,6 +8,10 @@ module Runners
     end
 
     class BrokenYAML < Error
+      attr_reader line: Integer
+      attr_reader column: Integer
+
+      def initialize: (String, path_name: String, raw_content: String, line: Integer, column: Integer) -> void
     end
 
     class InvalidConfiguration < Error
