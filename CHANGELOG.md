@@ -15,6 +15,7 @@ Updated tools:
 - **Brakeman** 4.10.0 -> 4.10.1 [#1881](https://github.com/sider/runners/pull/1881)
 - **Checkstyle** 8.38 -> 8.39 [#1891](https://github.com/sider/runners/pull/1891)
 - **detekt** 1.14.2 -> 1.15.0 [#1815](https://github.com/sider/runners/pull/1815)
+- **HAML-Lint** 0.36.0 -> 0.37.0 [#1920](https://github.com/sider/runners/pull/1920)
 - **LanguageTool** 5.1 -> 5.2 [#1885](https://github.com/sider/runners/pull/1885)
 - **Querly** 1.1.0 -> 1.2.0 [#1807](https://github.com/sider/runners/pull/1807)
 - **SwiftLint** 0.41.0 -> 0.42.0 [#1750](https://github.com/sider/runners/pull/1750)
