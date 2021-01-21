@@ -26,8 +26,6 @@ module Runners
 
     def initialize: (path: (Pathname | String)?, raw_content: String?) -> void
 
-    def path!: () -> Pathname
-
     def raw_content!: () -> String
 
     def content: () -> Hash[Symbol, untyped]
