@@ -24,7 +24,7 @@ Updated tools:
 Misc:
 
 - Improve behavior about `Changes` class [#1955](https://github.com/sider/runners/pull/1955)
-- Improve `Runners::Config::Error` classes [#1959](https://github.com/sider/runners/pull/1959)
+- Improve `Runners::Config::Error` classes [#1959](https://github.com/sider/runners/pull/1959) [#1961](https://github.com/sider/runners/pull/1961)
 
 ## 0.40.7
 
