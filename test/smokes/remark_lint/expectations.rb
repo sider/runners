@@ -204,8 +204,7 @@ s.add_test(
 s.add_test(
   "broken_sider_yml",
   type: "failure",
-  message:
-    "`linter.remark_lint.rc-path` value in `sider.yml` is invalid",
+  message: "`linter.remark_lint.rc-path` value in `sider.yml` is invalid",
   analyzer: :_
 )
 

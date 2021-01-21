@@ -156,8 +156,7 @@ s.add_test(
 s.add_test(
   "broken_sideci_yml",
   type: "failure",
-  message:
-    "`linter.haml_lint.config` value in `sideci.yml` is invalid",
+  message: "`linter.haml_lint.config` value in `sideci.yml` is invalid",
   analyzer: :_
 )
 

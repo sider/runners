@@ -140,7 +140,6 @@ s.add_test(
 s.add_test(
   "broken_sideci_yml",
   type: "failure",
-  message:
-    "`linter.scss_lint.config` in `sideci.yml` is invalid",
+  message: "`linter.scss_lint.config` value in `sideci.yml` is invalid",
   analyzer: :_
 )

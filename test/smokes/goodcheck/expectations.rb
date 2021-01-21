@@ -68,8 +68,7 @@ s.add_offline_test(
 s.add_offline_test(
   "with_invalid_ci_config",
   type: "failure",
-  message:
-    "`linter.goodcheck.config` value in `sideci.yml` is invalid",
+  message: "`linter.goodcheck.config` value in `sideci.yml` is invalid",
   analyzer: :_
 )
 
