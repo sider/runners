@@ -15,8 +15,11 @@ RUN cd ${RUNNERS_DIR} && \
     bundle config set --global jobs 4 && \
     bundle config set --global retry 3 && \
     bundle config && \
-    BUNDLE_WITHOUT=development:test bundle install && \
-    bundle list
+    BUNDLE_WITHOUT=development bundle install && \
+    bundle list && \
+    echo 'Checking if the Bundler version is expected...' && \
+    lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler::LockfileParser.new(File.read "Gemfile.lock").bundler_version') && \
+    bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
 # Install the default version
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/coffeelint/package.json ${RUNNER_USER_HOME}/coffeelint_package.json
