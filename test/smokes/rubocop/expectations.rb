@@ -219,7 +219,7 @@ s.add_test(
   type: "failure",
   analyzer: :_,
   message:
-    "The value of the attribute `linter.rubocop.gems[0]` in your `sideci.yml` is invalid. Please fix and retry."
+    "`linter.rubocop.gems[0]` value in `sideci.yml` is invalid"
 )
 
 s.add_test(

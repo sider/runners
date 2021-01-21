@@ -163,7 +163,7 @@ s.add_test(
   "broken_sideci_yml",
   type: "failure",
   message:
-    "The value of the attribute `linter.eslint.npm_install` in your `sideci.yml` is invalid. Please fix and retry.",
+    "`linter.eslint.npm_install` in `sideci.yml` is invalid",
   analyzer: :_
 )
 

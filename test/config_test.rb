@@ -111,8 +111,10 @@ class ConfigTest < Minitest::Test
     exn = assert_raises Runners::Config::InvalidConfiguration do
       Runners::Config.new(path: Pathname(FILE_NAME), raw_content: yaml).content
     end
-    assert_equal "The attribute `linter.unknown_linter` in your `sider.yml` is unsupported. Please fix and retry.", exn.message
+    assert_equal "`linter.unknown_linter` in `sider.yml` is unsupported", exn.message
+    assert_equal "sider.yml", exn.path_name
     assert_equal yaml, exn.raw_content
+    assert_equal "$.linter.unknown_linter", exn.attribute
   end
 
   def test_content_with_invalid_type_of_linter
@@ -123,8 +125,10 @@ class ConfigTest < Minitest::Test
     exn = assert_raises Runners::Config::InvalidConfiguration do
       Runners::Config.new(path: Pathname(FILE_NAME), raw_content: yaml).content
     end
-    assert_equal "The value of the attribute `linter` in your `sider.yml` is invalid. Please fix and retry.", exn.message
+    assert_equal "`linter` value in `sider.yml` is invalid", exn.message
+    assert_equal "sider.yml", exn.path_name
     assert_equal yaml, exn.raw_content
+    assert_equal "$.linter", exn.attribute
   end
 
   def test_content_with_ignore_section
@@ -156,6 +160,8 @@ class ConfigTest < Minitest::Test
       Runners::Config.new(path: Pathname(FILE_NAME), raw_content: "@").content
     end
     assert_equal "`sider.yml` is broken at line 1 and column 1", exn.message
+    assert_equal "sider.yml", exn.path_name
+    assert_equal "@", exn.raw_content
   end
 
   def test_path_name

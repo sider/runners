@@ -256,7 +256,7 @@ s.add_test(
   type: "failure",
   analyzer: :_,
   message:
-    "The value of the attribute `linter.pmd_java.min_priority` in your `sideci.yml` is invalid. Please fix and retry."
+    "`linter.pmd_java.min_priority` value in `sideci.yml` is invalid"
 )
 
 s.add_test(

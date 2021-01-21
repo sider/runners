@@ -5,7 +5,7 @@ default_version = "1.15.0"
 s.add_test(
   "with_broken_sider_yml",
   type: "failure",
-  message: "The attribute `linter.detekt.cli` in your `sider.yml` is unsupported. Please fix and retry.",
+  message: "`linter.detekt.cli` in `sider.yml` is unsupported",
   analyzer: :_
 )
 

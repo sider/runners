@@ -177,7 +177,7 @@ s.add_test(
   "broken_sideci_yml",
   type: "failure",
   message:
-    "The value of the attribute `linter.swiftlint.lenient` in your `sideci.yml` is invalid. Please fix and retry.",
+    "`linter.swiftlint.lenient` value in `sideci.yml` is invalid",
   analyzer: :_
 )
 

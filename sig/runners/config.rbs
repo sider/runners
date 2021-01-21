@@ -1,15 +1,19 @@
 module Runners
   class Config
     class Error < UserError
-      attr_reader raw_content: untyped
+      attr_reader path_name: String
+      attr_reader raw_content: String
 
-      def initialize: (String, String) -> void
+      def initialize: (String, path_name: String, raw_content: String) -> void
     end
 
     class BrokenYAML < Error
     end
 
     class InvalidConfiguration < Error
+      attr_reader attribute: String
+
+      def initialize: (String, path_name: String, raw_content: String, attribute: String) -> void
     end
 
     FILE_NAME: String
@@ -21,6 +25,8 @@ module Runners
     attr_reader raw_content: String?
 
     def initialize: (path: (Pathname | String)?, raw_content: String?) -> void
+
+    def path!: () -> Pathname
 
     def raw_content!: () -> String
 
