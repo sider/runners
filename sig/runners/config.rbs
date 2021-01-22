@@ -1,15 +1,23 @@
 module Runners
   class Config
     class Error < UserError
-      attr_reader raw_content: untyped
+      attr_reader path_name: String
+      attr_reader raw_content: String
 
-      def initialize: (String, String) -> void
+      def initialize: (String, path_name: String, raw_content: String) -> void
     end
 
     class BrokenYAML < Error
+      attr_reader line: Integer
+      attr_reader column: Integer
+
+      def initialize: (String, path_name: String, raw_content: String, line: Integer, column: Integer) -> void
     end
 
     class InvalidConfiguration < Error
+      attr_reader attribute: String
+
+      def initialize: (String, path_name: String, raw_content: String, attribute: String) -> void
     end
 
     FILE_NAME: String
@@ -26,6 +34,12 @@ module Runners
 
     def content: () -> Hash[Symbol, untyped]
 
+    alias validate content
+
+    def valid?: () -> bool
+
+    def invalid?: () -> bool
+
     def path_name: () -> String
 
     def path_exist?: () -> bool
@@ -40,9 +54,9 @@ module Runners
 
     def exclude_branch?: (String) -> bool
 
-    private
+    def parse: () -> untyped
 
-    def parse_yaml: (String) -> untyped
+    private
 
     def check_schema: (untyped) -> Hash[Symbol, untyped]
   end

@@ -17,7 +17,3 @@ Style/MutableConstant:
 Lint/AmbiguousBlockAssociation:
   Exclude:
     - "test/**/*_test.rb"
-
-# TODO: https://github.com/rubocop-hq/rubocop/issues/8718
-Lint/EmptyFile:
-  Enabled: false

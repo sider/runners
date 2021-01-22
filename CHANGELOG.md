@@ -4,7 +4,47 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.40.4...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.40.7...HEAD)
+
+Updated environments:
+
+- **devon_rex** 2.30.1 -> master [#1954](https://github.com/sider/runners/pull/1954)
+- **Bundler** 2.2.3 -> 2.2.6 [#1960](https://github.com/sider/runners/pull/1960)
+
+Updated tools:
+
+- **Brakeman** 4.10.0 -> 4.10.1 [#1881](https://github.com/sider/runners/pull/1881)
+- **Checkstyle** 8.38 -> 8.39 [#1891](https://github.com/sider/runners/pull/1891)
+- **detekt** 1.14.2 -> 1.15.0 [#1815](https://github.com/sider/runners/pull/1815)
+- **HAML-Lint** 0.36.0 -> 0.37.0 [#1920](https://github.com/sider/runners/pull/1920)
+- **LanguageTool** 5.1 -> 5.2 [#1885](https://github.com/sider/runners/pull/1885)
+- **Querly** 1.1.0 -> 1.2.0 [#1807](https://github.com/sider/runners/pull/1807)
+- **SwiftLint** 0.41.0 -> 0.42.0 [#1750](https://github.com/sider/runners/pull/1750)
+
+Misc:
+
+- Improve behavior about `Changes` class [#1955](https://github.com/sider/runners/pull/1955)
+- Improve `Runners::Config::Error` classes [#1959](https://github.com/sider/runners/pull/1959) [#1961](https://github.com/sider/runners/pull/1961)
+
+## 0.40.7
+
+[Full diff](https://github.com/sider/runners/compare/0.40.6...0.40.7)
+
+- Make internal changes for the `Runners::Config` class [#1950](https://github.com/sider/runners/pull/1950) [#1951](https://github.com/sider/runners/pull/1951) [#1952](https://github.com/sider/runners/pull/1952)
+
+## 0.40.6
+
+[Full diff](https://github.com/sider/runners/compare/0.40.5...0.40.6)
+
+- **ESLint** Add `eslint-plugin-cypress` to pre-installed packages [#1936](https://github.com/sider/runners/pull/1936)
+- **RuboCop** Revert rubydoc.info links [#1942](https://github.com/sider/runners/pull/1942)
+
+## 0.40.5
+
+[Full diff](https://github.com/sider/runners/compare/0.40.4...0.40.5)
+
+- **ESLint** Add `@vue/eslint-config-typescript` to pre-installed packages [#1934](https://github.com/sider/runners/pull/1934)
+- **ShellCheck** Exclude directories named `*.sh` [#1935](https://github.com/sider/runners/pull/1935)
 
 ## 0.40.4
 

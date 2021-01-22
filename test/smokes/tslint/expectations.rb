@@ -208,7 +208,7 @@ s.add_test(
 s.add_test(
   "broken_sideci_yml",
   type: "failure",
-  message: "The value of the attribute `linter.tslint.config` in your `sideci.yml` is invalid. Please fix and retry.",
+  message: "`linter.tslint.config` value in `sideci.yml` is invalid",
   analyzer: :_
 )
 

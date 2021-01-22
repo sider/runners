@@ -54,7 +54,7 @@ s.add_test(
   "broken_sideci_yml",
   type: "failure",
   analyzer: :_,
-  message: "The attribute `linter.code_sniffer.extension` in your `sideci.yml` is unsupported. Please fix and retry."
+  message: "`linter.code_sniffer.extension` in `sideci.yml` is unsupported"
 )
 
 s.add_test(

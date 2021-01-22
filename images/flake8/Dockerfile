@@ -2,7 +2,7 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM sider/devon_rex_python:2.30.1
+FROM sider/devon_rex_python:master
 
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
@@ -15,8 +15,11 @@ RUN cd ${RUNNERS_DIR} && \
     bundle config set --global jobs 4 && \
     bundle config set --global retry 3 && \
     bundle config && \
-    BUNDLE_WITHOUT=development:test bundle install && \
-    bundle list
+    BUNDLE_WITHOUT=development bundle install && \
+    bundle list && \
+    echo 'Checking if the Bundler version is expected...' && \
+    lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler::LockfileParser.new(File.read "Gemfile.lock").bundler_version') && \
+    bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
 # Install the default version
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/flake8/Pipfile ${RUNNER_USER_HOME}/flake8_Pipfile

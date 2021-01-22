@@ -277,7 +277,10 @@ module Runners
           end
         when department_to_gem_name_ext.key?(department)
           gem_name = department_to_gem_name_ext.fetch(department)
-          return extract_links(gem_info(gem_name))
+          return [
+            "https://www.rubydoc.info/gems/#{gem_name}/RuboCop/Cop/#{cop_name}",
+            *extract_links(gem_info(gem_name)),
+          ]
         end
       end
 

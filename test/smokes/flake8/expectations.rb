@@ -220,15 +220,14 @@ s.add_test(
 s.add_test(
   "broken_sideci_yml",
   type: "failure",
-  message:
-    "The value of the attribute `linter.flake8.plugins` in your `sideci.yml` is invalid. Please fix and retry.",
+  message: "`linter.flake8.plugins` value in `sideci.yml` is invalid",
   analyzer: :_
 )
 
 s.add_test(
   "python2",
   type: "failure",
-  message: "The attribute `linter.flake8.version` in your `sider.yml` is unsupported. Please fix and retry.",
+  message: "`linter.flake8.version` in `sider.yml` is unsupported",
   analyzer: :_
 )
 
