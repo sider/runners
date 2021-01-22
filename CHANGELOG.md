@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.40.7...HEAD)
 
+New supported:
+
+- **Metrics Complexity** [#1631](https://github.com/sider/runners/pull/1631)
+
 Updated environments:
 
 - **devon_rex** 2.30.1 -> master [#1954](https://github.com/sider/runners/pull/1954)
@@ -81,7 +85,6 @@ Misc:
 
 - Remove unused `locale` gem [#1817](https://github.com/sider/runners/pull/1817)
 - **PMD CPD** Remove needless `CGI.unescape_html`[#1821](https://github.com/sider/runners/pull/1821)
-- **Metrics Complexity** [#1631](https://github.com/sider/runners/pull/1631)
 - Move `bin/runners` to `exe/runners` [#1833](https://github.com/sider/runners/pull/1833)
 - **RuboCop** Add supported gems [#1834](https://github.com/sider/runners/pull/1834)
 - Bump devon_rex images from 2.28.0 to 2.30.1 [#1859](https://github.com/sider/runners/pull/1859) [#1864](https://github.com/sider/runners/pull/1864) [#1875](https://github.com/sider/runners/pull/1875) [#1894](https://github.com/sider/runners/pull/1894)
