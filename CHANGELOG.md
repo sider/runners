@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.40.7...HEAD)
 
+New supported:
+
+- **Metrics Code Clone** [#1878](https://github.com/sider/runners/pull/1878)
+
 Updated environments:
 
 - **devon_rex** 2.30.1 -> master [#1954](https://github.com/sider/runners/pull/1954)
@@ -64,7 +68,6 @@ Misc:
 [Full diff](https://github.com/sider/runners/compare/0.40.1...0.40.2)
 
 - **ESLint** Add `eslint-config-react-app` as pre-installed [#1902](https://github.com/sider/runners/pull/1902)
-- **Metrics Code Clone** [#1878](https://github.com/sider/runners/pull/1878)
 - Fix checking unsupported tools [#1911](https://github.com/sider/runners/pull/1911)
 - Add `Runners::Config#exclude_branch?` method [#1913](https://github.com/sider/runners/pull/1913)
 - Add a new trace schema `finish` [#1914](https://github.com/sider/runners/pull/1914)
