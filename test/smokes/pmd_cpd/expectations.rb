@@ -131,7 +131,7 @@ s.add_test(
 s.add_test(
   "broken_sider_yml",
   type: "failure",
-  message: "The attribute `linter.pmd_cpd.files-path` in your `sider.yml` is unsupported. Please fix and retry.",
+  message: "`linter.pmd_cpd.files-path` in `sider.yml` is unsupported",
   analyzer: :_
 )
 
@@ -1701,7 +1701,7 @@ s.add_test(
 s.add_test(
   "option_multiple_languages_invalid",
   type: "failure",
-  message: "The value of the attribute `linter.pmd_cpd.language` in your `sider.yml` is invalid. Please fix and retry.",
+  message: "`linter.pmd_cpd.language` value in `sider.yml` is invalid",
   analyzer: :_
 )
 

@@ -1,3 +1,5 @@
+![Build](https://github.com/sider/runners/workflows/Build/badge.svg)
+
 # Sider Runners
 
 This is a Sider analyzer framework.

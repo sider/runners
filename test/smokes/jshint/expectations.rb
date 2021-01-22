@@ -85,7 +85,7 @@ s.add_test(
   "broken_sideci_yml",
   type: "failure",
   analyzer: :_,
-  message: "The value of the attribute `linter.jshint.config` in your `sideci.yml` is invalid. Please fix and retry."
+  message: "`linter.jshint.config` value in `sideci.yml` is invalid"
 )
 
 s.add_test(
