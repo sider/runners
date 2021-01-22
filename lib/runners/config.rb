@@ -1,16 +1,35 @@
 module Runners
   class Config
     class Error < UserError
+      attr_reader :path_name
       attr_reader :raw_content
 
-      def initialize(message, raw_content)
+      def initialize(message, path_name:, raw_content:)
         super(message)
+        @path_name = path_name
         @raw_content = raw_content
       end
     end
 
-    class BrokenYAML < Error; end
-    class InvalidConfiguration < Error; end
+    class BrokenYAML < Error
+      attr_reader :line
+      attr_reader :column
+
+      def initialize(message, path_name:, raw_content:, line:, column:)
+        super(message, path_name: path_name, raw_content: raw_content)
+        @line = line
+        @column = column
+      end
+    end
+
+    class InvalidConfiguration < Error
+      attr_reader :attribute
+
+      def initialize(message, path_name:, raw_content:, attribute:)
+        super(message, path_name: path_name, raw_content: raw_content)
+        @attribute = attribute
+      end
+    end
 
     FILE_NAME = "sider.yml".freeze
     FILE_NAME_OLD = "sideci.yml".freeze
@@ -38,7 +57,19 @@ module Runners
     end
 
     def content
-      @content ||= check_schema(parse_yaml(raw_content || "")).freeze
+      @content ||= check_schema(parse).freeze
+    end
+    alias validate content
+
+    def valid?
+      validate
+      true
+    rescue Error
+      false
+    end
+
+    def invalid?
+      !valid?
     end
 
     def path_name
@@ -92,25 +123,34 @@ module Runners
       end
     end
 
-    private
-
-    def parse_yaml(text)
-      YAML.safe_load(text, symbolize_names: true, filename: path_name)
-    rescue Psych::SyntaxError => exn
-      message = "Your `#{exn.file}` is broken at line #{exn.line} and column #{exn.column}. Please fix and retry."
-      raise BrokenYAML.new(message, text)
+    def parse
+      yaml = raw_content || ""
+      begin
+        YAML.safe_load(yaml, symbolize_names: true, filename: path_name)
+      rescue Psych::SyntaxError => exn
+        raise BrokenYAML.new(
+          "`#{exn.file}` is broken at line #{exn.line} and column #{exn.column}",
+          path_name: path_name, raw_content: yaml, line: exn.line, column: exn.column,
+        )
+      end
     end
+
+    private
 
     def check_schema(object)
       object ? Schema::Config.payload.coerce(object) : {}
     rescue StrongJSON::Type::UnexpectedAttributeError => exn
-      attr = "#{exn.path}.#{exn.attribute}".delete_prefix("$.")
-      message = "The attribute `#{attr}` in your `#{path_name}` is unsupported. Please fix and retry."
-      raise InvalidConfiguration.new(message, raw_content!)
+      attr = [exn.path, exn.attribute].join(".")
+      raise InvalidConfiguration.new(
+        "`#{attr.delete_prefix('$.')}` in `#{path_name}` is unsupported",
+        path_name: path_name, raw_content: raw_content || "", attribute: attr,
+      )
     rescue StrongJSON::Type::TypeError => exn
-      attr = exn.path.to_s.delete_prefix("$.")
-      message = "The value of the attribute `#{attr}` in your `#{path_name}` is invalid. Please fix and retry."
-      raise InvalidConfiguration.new(message, raw_content!)
+      attr = exn.path.to_s
+      raise InvalidConfiguration.new(
+        "`#{attr.delete_prefix('$.')}` value in `#{path_name}` is invalid",
+        path_name: path_name, raw_content: raw_content || "", attribute: attr,
+      )
     end
   end
 end

@@ -33,7 +33,7 @@ index 740c016..cc737a5 100644
     PATCH
   end
 
-  def test_calculate
+  def test_all
     mktmpdir do |dir|
       (dir / "changed_2.rb").write("hello world")
       (dir / "changed_1.rb").write("hello world")
@@ -46,7 +46,7 @@ index 740c016..cc737a5 100644
       (dir / ".github" / ".added_2.rb").write("")
       (dir / "empty_dir").mkpath
 
-      changes = Changes.calculate(working_dir: dir)
+      changes = Changes.all(working_dir: dir)
 
       assert_equal Set[Pathname(".added_1.rb"),
                        Pathname(".github") / ".added_2.rb",
@@ -137,7 +137,7 @@ index 740c016..cc737a5 100644
         end
       USER
 
-      changes = Changes.calculate(working_dir: dir)
+      changes = Changes.all(working_dir: dir)
 
       assert_includes changes, Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 1), id: "a", message: "a")
       assert_includes changes, Issue.new(path: Pathname("user.rb"), location: nil, id: "a", message: "a")
