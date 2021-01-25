@@ -127,7 +127,7 @@ s.add_test(
 s.add_test(
   "invalid_runner_config",
   type: "failure",
-  message: "The attribute `linter.phinder.format` in your `sideci.yml` is unsupported. Please fix and retry.",
+  message: "`linter.phinder.format` in `sideci.yml` is unsupported",
   analyzer: :_
 )
 

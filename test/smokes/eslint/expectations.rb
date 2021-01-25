@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "7.15.0"
+default_version = "7.18.0"
 
 s.add_test(
   "no_config",
@@ -162,8 +162,7 @@ s.add_test(
 s.add_test(
   "broken_sideci_yml",
   type: "failure",
-  message:
-    "The value of the attribute `linter.eslint.npm_install` in your `sideci.yml` is invalid. Please fix and retry.",
+  message: "`linter.eslint.npm_install` value in `sideci.yml` is invalid",
   analyzer: :_
 )
 

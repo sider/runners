@@ -4,7 +4,7 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM sider/devon_rex_swift:master
 
-ARG SWIFTLINT_VERSION=0.41.0
+ARG SWIFTLINT_VERSION=0.42.0
 
 # Build SwiftLint
 RUN cd /tmp && \
@@ -26,8 +26,11 @@ RUN cd ${RUNNERS_DIR} && \
     bundle config set --global jobs 4 && \
     bundle config set --global retry 3 && \
     bundle config && \
-    BUNDLE_WITHOUT=development:test bundle install && \
-    bundle list
+    BUNDLE_WITHOUT=development bundle install && \
+    bundle list && \
+    echo 'Checking if the Bundler version is expected...' && \
+    lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler::LockfileParser.new(File.read "Gemfile.lock").bundler_version') && \
+    bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
 # Copy the main source code
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} exe ${RUNNERS_DIR}/exe

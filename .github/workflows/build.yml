@@ -88,14 +88,7 @@ jobs:
           ANALYZER: ${{ matrix.analyzer }}
           TAG: ${{ steps.define_vars.outputs.tag }}
       - name: Run smoke test
-        run: |
-          if [[ $ANALYZER == 'swiftlint' ]]; then
-            # HACK: SwiftLint test is unstable, so retry if failed.
-            export JOBS=1
-            bundle exec rake docker:smoke || bundle exec rake docker:smoke
-          else
-            bundle exec rake docker:smoke
-          fi
+        run: bundle exec rake docker:smoke
         env:
           ANALYZER: ${{ matrix.analyzer }}
           TAG: ${{ steps.define_vars.outputs.tag }}

@@ -61,9 +61,9 @@ module Runners
         return Results::Success.new(guid: guid, analyzer: analyzer)
       end
 
-      stderr.match(/Could not read configuration file at path '(.+)'/) do |m|
+      stderr.match(/SwiftLint Configuration Error: Could not read file at path: (.+)\n/) do |m|
         path = m.captures.first or raise "Unexpected match data: #{m.inspect}"
-        message = "Could not read configuration file at path '#{relative_path(path)}'."
+        message = "SwiftLint Configuration Error: Could not read file at path: #{relative_path(path)}"
         return Results::Failure.new(guid: guid, message: message, analyzer: analyzer)
       end
 

@@ -111,8 +111,10 @@ class ConfigTest < Minitest::Test
     exn = assert_raises Runners::Config::InvalidConfiguration do
       Runners::Config.new(path: Pathname(FILE_NAME), raw_content: yaml).content
     end
-    assert_equal "The attribute `linter.unknown_linter` in your `sider.yml` is unsupported. Please fix and retry.", exn.message
+    assert_equal "`linter.unknown_linter` in `sider.yml` is unsupported", exn.message
+    assert_equal "sider.yml", exn.path_name
     assert_equal yaml, exn.raw_content
+    assert_equal "$.linter.unknown_linter", exn.attribute
   end
 
   def test_content_with_invalid_type_of_linter
@@ -123,8 +125,10 @@ class ConfigTest < Minitest::Test
     exn = assert_raises Runners::Config::InvalidConfiguration do
       Runners::Config.new(path: Pathname(FILE_NAME), raw_content: yaml).content
     end
-    assert_equal "The value of the attribute `linter` in your `sider.yml` is invalid. Please fix and retry.", exn.message
+    assert_equal "`linter` value in `sider.yml` is invalid", exn.message
+    assert_equal "sider.yml", exn.path_name
     assert_equal yaml, exn.raw_content
+    assert_equal "$.linter", exn.attribute
   end
 
   def test_content_with_ignore_section
@@ -153,9 +157,14 @@ class ConfigTest < Minitest::Test
 
   def test_content_with_broken_yaml
     exn = assert_raises Runners::Config::BrokenYAML do
-      Runners::Config.new(path: Pathname(FILE_NAME), raw_content: "@").content
+      Runners::Config.new(path: Pathname(FILE_NAME), raw_content: "\n  @\n").content
     end
-    assert_equal "`sider.yml` is broken at line 1 and column 1", exn.message
+    assert_equal "`sider.yml` is broken at line 2 and column 3 (found character that cannot start any token)", exn.message
+    assert_equal "sider.yml", exn.path_name
+    assert_equal "\n  @\n", exn.raw_content
+    assert_equal 2, exn.line
+    assert_equal 3, exn.column
+    assert_equal "found character that cannot start any token", exn.problem
   end
 
   def test_path_name
