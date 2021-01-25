@@ -14,11 +14,13 @@ module Runners
     class BrokenYAML < Error
       attr_reader :line
       attr_reader :column
+      attr_reader :problem
 
-      def initialize(message, path_name:, raw_content:, line:, column:)
+      def initialize(message, path_name:, raw_content:, line:, column:, problem:)
         super(message, path_name: path_name, raw_content: raw_content)
         @line = line
         @column = column
+        @problem = problem
       end
     end
 
@@ -129,8 +131,8 @@ module Runners
         YAML.safe_load(yaml, symbolize_names: true, filename: path_name)
       rescue Psych::SyntaxError => exn
         raise BrokenYAML.new(
-          "`#{exn.file}` is broken at line #{exn.line} and column #{exn.column}",
-          path_name: path_name, raw_content: yaml, line: exn.line, column: exn.column,
+          "`#{exn.file}` is broken at line #{exn.line} and column #{exn.column} (#{exn.problem})",
+          path_name: path_name, raw_content: yaml, line: exn.line, column: exn.column, problem: exn.problem,
         )
       end
     end
