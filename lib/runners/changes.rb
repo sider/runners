@@ -59,7 +59,7 @@ module Runners
       end
     end
 
-    def self.calculate(working_dir:)
+    def self.all(working_dir:)
       new(changed_paths: all_files_in(working_dir).sort,
           unchanged_paths: [],
           patches: nil)

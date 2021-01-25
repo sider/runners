@@ -597,8 +597,7 @@ s.add_test(
   "broken_sideci_yml",
   analyzer: :_,
   type: "failure",
-  message:
-    "The value of the attribute `linter.stylelint.options.ignore-path` in your `sideci.yml` is invalid. Please fix and retry."
+  message: "`linter.stylelint.options.ignore-path` value in `sideci.yml` is invalid"
 )
 
 s.add_test(

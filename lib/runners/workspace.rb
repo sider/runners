@@ -28,9 +28,7 @@ module Runners
               Changes.calculate_by_patches(working_dir: working_dir, patches: patches)
             end
           else
-            trace_writer.message "Calculating changes..." do
-              Changes.calculate(working_dir: working_dir)
-            end
+            Changes.all(working_dir: working_dir)
           end
 
         yield git_ssh_path, changes
