@@ -159,11 +159,12 @@ class ConfigTest < Minitest::Test
     exn = assert_raises Runners::Config::BrokenYAML do
       Runners::Config.new(path: Pathname(FILE_NAME), raw_content: "\n  @\n").content
     end
-    assert_equal "`sider.yml` is broken at line 2 and column 3", exn.message
+    assert_equal "`sider.yml` is broken at line 2 and column 3 (found character that cannot start any token)", exn.message
     assert_equal "sider.yml", exn.path_name
     assert_equal "\n  @\n", exn.raw_content
     assert_equal 2, exn.line
     assert_equal 3, exn.column
+    assert_equal "found character that cannot start any token", exn.problem
   end
 
   def test_path_name
