@@ -23,6 +23,7 @@ Updated tools:
 - **Querly** 1.1.0 -> 1.2.0 [#1807](https://github.com/sider/runners/pull/1807)
 - **Reek** 6.0.2 -> 6.0.3 [#1948](https://github.com/sider/runners/pull/1948)
 - **RuboCop** 1.6.1 -> 1.8.1 [#1947](https://github.com/sider/runners/pull/1947)
+- **stylelint** 13.8.0 -> 13.9.0 [#1966](https://github.com/sider/runners/pull/1966)
 - **SwiftLint** 0.41.0 -> 0.42.0 [#1750](https://github.com/sider/runners/pull/1750)
 
 Misc:
