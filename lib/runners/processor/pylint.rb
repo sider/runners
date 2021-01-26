@@ -2,7 +2,9 @@ module Runners
   class Processor::Pylint < Processor
     include Python
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
           target: enum?(string, array(string)),
@@ -12,7 +14,7 @@ module Runners
         })
       }
 
-      let :rule, object(
+      let :issue, object(
         severity: string,
         'message-id': string,
         module: string,
@@ -24,51 +26,7 @@ module Runners
 
     DEFAULT_TARGET = ["**/*.{py}"].freeze
 
-    def analyze(changes)
-      run_analyzer
-    end
-
-    private
-
-    def rcfile
-      config_linter[:rcfile].then { |file| file ? ["--rcfile=#{file}"] : [] }
-    end
-
-    def ignore
-      Array(config_linter[:ignore] || []).then { |arr| arr.empty? ? nil : "--ignore=#{arr.join(",")}" }
-    end
-
-    def erros_only
-      config_linter[:'errors-only'].then { |value| value ? ["--errors-only"] : [] }
-    end
-
-    def analyzed_files
-      # Via glob
-      targets = Array(config_linter[:target] || DEFAULT_TARGET)
-      globs = targets.select { |glob| glob.is_a? String }
-      Dir.glob(globs, File::FNM_EXTGLOB, base: current_dir)
-    end
-
-    def parse_result(output)
-      json = JSON.parse(output, symbolize_names: true)
-      json.flat_map do |issue|
-        yield Issue.new(
-          id: issue[:symbol],
-          path: relative_path(issue[:path]),
-          location: Location.new(start_line: issue[:line], start_column: issue[:column]),
-          message: issue[:message],
-          object: {
-            severity: issue[:type],
-            'message-id': issue[:'message-id'],
-            module: issue[:module],
-            obj: issue[:obj],
-          },
-          schema: Schema.rule,
-        )
-      end
-    end
-
-    def run_analyzer
+    def analyze(_changes)
       files = analyzed_files
 
       if files.empty?
@@ -103,5 +61,42 @@ module Runners
       end
     end
 
+    private
+
+    def rcfile
+      config_linter[:rcfile].then { |file| file ? ["--rcfile=#{file}"] : [] }
+    end
+
+    def ignore
+      Array(config_linter[:ignore] || []).then { |arr| arr.empty? ? [] : ["--ignore=#{arr.join(",")}"] }
+    end
+
+    def erros_only
+      config_linter[:'errors-only'].then { |value| value ? ["--errors-only"] : [] }
+    end
+
+    def analyzed_files
+      targets = Array(config_linter[:target] || DEFAULT_TARGET)
+      Dir.glob(targets, File::FNM_EXTGLOB, base: current_dir.to_path)
+    end
+
+    def parse_result(output)
+      json = JSON.parse(output, symbolize_names: true)
+      json.flat_map do |issue|
+        yield Issue.new(
+          id: issue[:symbol],
+          path: relative_path(issue[:path]),
+          location: Location.new(start_line: issue[:line], start_column: issue[:column]),
+          message: issue[:message],
+          object: {
+            severity: issue[:type],
+            'message-id': issue[:'message-id'],
+            module: issue[:module],
+            obj: issue[:obj],
+          },
+          schema: Schema.issue,
+        )
+      end
+    end
   end
 end

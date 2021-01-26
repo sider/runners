@@ -8,6 +8,8 @@ class ProcessorTest < Minitest::Test
   Analyzer = Runners::Analyzer
   Shell = Runners::Shell
 
+  private
+
   def trace_writer
     @trace_writer ||= new_trace_writer
   end
@@ -20,39 +22,17 @@ class ProcessorTest < Minitest::Test
     end
   end
 
-  def new_processor(workspace:, git_ssh_path: nil, config_yaml: nil)
+  def new_processor(workspace:, config_yaml: nil)
     processor_class.new(
       guid: SecureRandom.uuid,
       working_dir: workspace.working_dir,
       config: config(config_yaml),
-      git_ssh_path: git_ssh_path,
+      shell: Shell.new(current_dir: workspace.working_dir, trace_writer: trace_writer),
       trace_writer: trace_writer,
     )
   end
 
-  def test_capture3_env_setup
-    with_workspace do |workspace|
-      mock_status = Minitest::Mock.new
-      mock_status.expect :success?, false
-      mock_status.expect :exited?, true
-      mock_status.expect :exitstatus, 3
-
-      mock_capture3 = Minitest::Mock.new
-      mock_capture3.expect :call, ["", "", mock_status], [
-        { "RUBYOPT" => nil, "GIT_SSH_COMMAND" => "ssh -F '#{workspace.working_dir / 'id_rsa'}'" },
-        "ls",
-        chdir: workspace.working_dir.to_s, stdin_data: nil
-      ]
-
-      Open3.stub :capture3, mock_capture3 do
-        processor = new_processor(workspace: workspace, git_ssh_path: (workspace.working_dir / "id_rsa"))
-        processor.capture3_trace("ls")
-
-        assert_mock mock_status
-        assert_mock mock_capture3
-      end
-    end
-  end
+  public
 
   def test_capture3_success
     with_workspace do |workspace|
@@ -383,21 +363,6 @@ class ProcessorTest < Minitest::Test
     end
   end
 
-  def test_env_hash
-    with_workspace do |workspace|
-      processor = new_processor(workspace: workspace)
-
-      assert_equal({ "RUBYOPT" => nil, "GIT_SSH_COMMAND" => nil }, processor.env_hash)
-
-      processor.push_env_hash({ "RBENV_VERSION" => "2.5.0" }) do
-        assert_equal({ "RUBYOPT" => nil, "GIT_SSH_COMMAND" => nil, "RBENV_VERSION" => "2.5.0" },
-                     processor.env_hash)
-      end
-
-      assert_equal({ "RUBYOPT" => nil, "GIT_SSH_COMMAND" => nil }, processor.env_hash)
-    end
-  end
-
   def test_directory_traversal_attack?
     with_workspace do |workspace|
       processor = new_processor(workspace: workspace)
@@ -521,14 +486,20 @@ class ProcessorTest < Minitest::Test
 
   def test_read_report_xml_failed
     with_workspace do |workspace|
-      file = (workspace.working_dir / "a_file.xml").tap { |f| f.write "" }.then(&:to_path)
+      file = (workspace.working_dir / "a_file.xml").tap { |f| f.write "" }
 
       processor = new_processor(workspace: workspace)
-      error = assert_raises(Processor::InvalidXML) { processor.read_report_xml(file) }
-      assert_equal "Output XML is invalid from #{file}", error.message
+      error = assert_raises(Processor::InvalidXML) { processor.read_report_xml(file.to_path) }
+      assert_equal 'Invalid XML: ""', error.message
 
-      File.write file, "<foo"
-      assert_raises(REXML::ParseException) { processor.read_report_xml(file) }
+      file.write "<foo"
+      error = assert_raises(Processor::InvalidXML) { processor.read_report_xml(file.to_path) }
+      assert_equal <<~MSG, error.message
+        Start tag isn't ended
+        Line: 1
+        Position: 4
+        Last 80 unconsumed characters:
+      MSG
     end
   end
 

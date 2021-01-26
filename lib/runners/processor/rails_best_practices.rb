@@ -2,7 +2,9 @@ module Runners
   class Processor::RailsBestPractices < Processor
     include Ruby
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :runner_config, Schema::BaseConfig.ruby.update_fields { |fields|
         fields.merge!({
                         vendor: boolean?,
@@ -38,90 +40,95 @@ module Runners
       GemInstaller::Spec.new(name: "rake", version: []),
     ].freeze
 
+    GEM_NAME = "rails_best_practices".freeze
     CONSTRAINTS = {
-      "rails_best_practices" => [">= 1.19.1", "< 2.0"]
+      GEM_NAME => [">= 1.19.1", "< 2.0"]
     }.freeze
 
     def setup
       add_warning_if_deprecated_options
 
       prepare_config
-      install_gems default_gem_specs, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS do
-        yield
-      end
+      install_gems(default_gem_specs(GEM_NAME), optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS) { yield }
     rescue InstallGemsFailure => exn
       trace_writer.error exn.message
       return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
     end
 
     def analyze(_changes)
-      options = [vendor, spec, test, features, exclude, only, config_option].compact
-      run_analyzer(options)
+      run_analyzer
     end
 
     private
 
-    def vendor
+    def option_vendor
       vendor = config_linter[:vendor]
       vendor = config_linter.dig(:options, :vendor) if vendor.nil?
       if vendor == false
-        nil
+        []
       else
-        "--vendor"
+        ["--vendor"]
       end
     end
 
-    def spec
+    def option_spec
       spec = config_linter[:spec] || config_linter.dig(:options, :spec)
-      "--spec" if spec
+      spec ? ["--spec"] : []
     end
 
-    def test
+    def option_test
       test = config_linter[:test] || config_linter.dig(:options, :test)
-      "--test" if test
+      test ? ["--test"] : []
     end
 
-    def features
+    def option_features
       features = config_linter[:features] || config_linter.dig(:options, :features)
-      "--features" if features
+      features ? ["--features"] : []
     end
 
-    def exclude
+    def option_exclude
       exclude = config_linter[:exclude] || config_linter.dig(:options, :exclude)
-      "--exclude=#{exclude}" if exclude
+      exclude ? ["--exclude", exclude] : []
     end
 
-    def only
+    def option_only
       only = config_linter[:only] || config_linter.dig(:options, :only)
-      "--only=#{only}" if only
+      only ? ["--only", only] : []
     end
 
-    def config_option
+    def option_config
       config = config_linter[:config] || config_linter.dig(:options, :config)
-      "--config=#{config}" if config
+      config ? ["--config", config] : []
     end
 
     def prepare_config
       # NOTE: We expect sider_rails_best_practices.yml to be located in $HOME.
       default_config = Pathname(Dir.home) / 'sider_rails_best_practices.yml'
-      path = Pathname("#{current_dir.to_s}/config/rails_best_practices.yml")
+      path = current_dir / 'config' / 'rails_best_practices.yml'
       return if path.exist?
       path.parent.mkpath
-      FileUtils.cp(default_config, path)
+      FileUtils.copy_file(default_config, path)
     end
 
-    def run_analyzer(options)
-      # NOTE: rails_best_practices exit with status code n (issue count)
-      #       when some issues are found.
-      #       We use `capture3` instead of `capture3!`
-      capture3(
-        *ruby_analyzer_bin,
+    def run_analyzer
+      cmd = ruby_analyzer_command(
         '--without-color',
         '--silent',
         '--output-file', report_file,
-        '--format=yaml',
-        *options
+        '--format', 'yaml',
+        *option_vendor,
+        *option_spec,
+        *option_test,
+        *option_features,
+        *option_exclude,
+        *option_only,
+        *option_config,
       )
+
+      # NOTE: rails_best_practices exit with status code n (issue count)
+      #       when some issues are found.
+      #       We use `capture3` instead of `capture3!`
+      capture3(cmd.bin, *cmd.args)
 
       # NOTE: rails_best_practices returns top-level YAML array with tags.
       #       We want to just parse a YAML, so we remove YAML tags before passing.

@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "1.18.2"
+default_version = "1.19.0"
 
 s.add_test(
   "config_option",
@@ -56,6 +56,17 @@ s.add_test(
       object: { severity: "warning" },
       git_blame_info: {
         commit: :_, line_hash: "5ce64e3cdf80180d43ccdc2ad8ca56e7a3d5d678", original_line: 4, final_line: 4
+      }
+    },
+    {
+      id: "DL3031",
+      links: %w[https://github.com/hadolint/hadolint/wiki/DL3031],
+      path: "src/Dockerfile",
+      location: { start_line: 8, start_column: 1 },
+      message: "Do not use yum update.",
+      object: { severity: "error" },
+      git_blame_info: {
+        commit: :_, line_hash: "c6292a1322790770c4eed92927df26b55be75c67", original_line: 8, final_line: 8
       }
     },
     {

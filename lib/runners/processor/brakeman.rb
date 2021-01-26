@@ -2,7 +2,9 @@ module Runners
   class Processor::Brakeman < Processor
     include Ruby
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :runner_config, Schema::BaseConfig.ruby
 
       let :issue, object(
@@ -12,22 +14,20 @@ module Runners
 
     register_config_schema(name: :brakeman, schema: Schema.runner_config)
 
+    GEM_NAME = "brakeman".freeze
     CONSTRAINTS = {
-      "brakeman" => [">= 4.0.0", "< 5.0.0"]
+      GEM_NAME => [">= 4.0.0", "< 5.0.0"]
     }.freeze
 
     def setup
-      install_gems default_gem_specs, constraints: CONSTRAINTS do
-        yield
-      end
+      install_gems(default_gem_specs(GEM_NAME), constraints: CONSTRAINTS) { yield }
     rescue InstallGemsFailure => exn
       trace_writer.error exn.message
       return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
     end
 
     def analyze(changes)
-      _, stderr, status = capture3(
-        *ruby_analyzer_bin,
+      cmd = ruby_analyzer_command(
         '--format=json',
         '--output', report_file,
         '--no-exit-on-warn',
@@ -35,6 +35,7 @@ module Runners
         '--no-progress',
         '--quiet',
       )
+      _, stderr, status = capture3(cmd.bin, *cmd.args)
 
       unless status.success?
         if stderr.include?("Please supply the path to a Rails application")

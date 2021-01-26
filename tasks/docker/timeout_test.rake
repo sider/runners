@@ -11,7 +11,7 @@ namespace :docker do
     Dir.mktmpdir do |dir|
       FileUtils.cp_r('.', dir)
       Dir.chdir(dir) do
-        File.write('lib/runners/cli.rb', runners_cli_code)
+        File.write('lib/runners/cli.rb', Pathname(__dir__).join('cli_dummy.rb').read)
         Rake::Task['docker:build'].invoke
       end
     end
@@ -22,29 +22,5 @@ namespace :docker do
     sh "pgrep", "sleep" do |ok|
       abort "sleep(1) still remains! It's unexpected." if ok
     end
-  end
-
-  def runners_cli_code
-    <<~EOF
-      require 'minitest/mock'
-
-      module Runners
-        class CLI
-          def initialize(**args)
-          end
-
-          def run
-            Open3.capture3('sleep 10')
-          end
-        end
-      end
-
-      mock = Minitest::Mock.new
-      mock.expect(:called, nil)
-      Bugsnag.stub :notify, nil do
-        mock.called
-      end
-      at_exit { mock.verify }
-    EOF
   end
 end

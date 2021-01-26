@@ -4,7 +4,7 @@ module Runners
 
     Schema = _ = StrongJSON.new do
       # @type self: SchemaClass
-      let :runner_config, Runners::Schema::BaseConfig.npm.update_fields { |fields|
+      let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
         fields.merge!({
                         file: string?,
                         # DO NOT ADD ANY OPTIONS in `options` option.

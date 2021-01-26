@@ -149,6 +149,17 @@ s.add_test(
       git_blame_info: {
         commit: :_, line_hash: "7685a618e081e273bac47658d6b0e4dbf76597a6", original_line: 2, final_line: 2
       }
+    },
+    {
+      path: "foo2.py",
+      location: { start_line: 3, start_column: 6 },
+      id: "TAE002",
+      message: "too complex annotation (4 > 3)",
+      links: [],
+      object: nil,
+      git_blame_info: {
+        commit: :_, line_hash: "de436b94e2ba3f59e974ac43c742803eede574cf", original_line: 3, final_line: 3
+      }
     }
   ],
   analyzer: { name: "Flake8", version: default_version }
@@ -209,15 +220,14 @@ s.add_test(
 s.add_test(
   "broken_sideci_yml",
   type: "failure",
-  message:
-    "The value of the attribute `linter.flake8.plugins` in your `sideci.yml` is invalid. Please fix and retry.",
+  message: "`linter.flake8.plugins` value in `sideci.yml` is invalid",
   analyzer: :_
 )
 
 s.add_test(
   "python2",
   type: "failure",
-  message: "The attribute `linter.flake8.version` in your `sider.yml` is unsupported. Please fix and retry.",
+  message: "`linter.flake8.version` in `sider.yml` is unsupported",
   analyzer: :_
 )
 

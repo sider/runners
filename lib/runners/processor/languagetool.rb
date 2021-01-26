@@ -2,7 +2,9 @@ module Runners
   class Processor::LanguageTool < Processor
     include Java
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!(
           target: string?,
@@ -83,12 +85,12 @@ module Runners
     end
 
     def config_encoding
-      Encoding.find(config_linter[:encoding] || DEFAULT_ENCODING)
+      @config_encoding ||= Encoding.find(config_linter[:encoding] || DEFAULT_ENCODING).name
     end
 
     def cli_comma_separated_list(config_option, default_value, cli_option)
-      values = config_linter[config_option] || default_value
-      values.empty? ? [] : [cli_option, values.join(",")]
+      value = comma_separated_list(config_linter[config_option] || default_value)
+      value ? [cli_option, value] : []
     end
 
     def cli_disable
@@ -116,7 +118,7 @@ module Runners
         "--json",
         "--recursive",
         "--language", config_language,
-        "--encoding", config_encoding.to_s,
+        "--encoding", config_encoding,
         *cli_disable,
         *cli_enable,
         *cli_enabledonly,
@@ -128,16 +130,18 @@ module Runners
 
     def run_analyzer
       begin
-        stdout_and_stderr, = capture3!(analyzer_bin, *cli_args, merge_output: true)
+        stdout_and_stderr, _status = capture3!(analyzer_bin, *cli_args, merge_output: true)
       rescue Shell::ExecError => error
         error.stdout_str.match(/\bjava\.lang\.IllegalArgumentException: (.+)$/) do |m|
-          msg = m.captures.first
+          msg = m.captures.first or raise "Invalid match data: #{m.inspect}"
           msg << "\nPlease check your `#{config.path_name}`" if config.path_name
           return Results::Failure.new(guid: guid, analyzer: analyzer, message: msg)
         end
 
         raise
       end
+
+      raise "stdout and stderr must not be empty" unless stdout_and_stderr
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
         parse_output(stdout_and_stderr) do |filepath, data|

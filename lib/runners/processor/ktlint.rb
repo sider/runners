@@ -3,7 +3,9 @@ module Runners
     include Java
     include Kotlin
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :runner_config, Schema::BaseConfig.java.update_fields { |fields|
         fields.merge!({
           target: enum?(string, array(string)),
@@ -32,25 +34,21 @@ module Runners
       stdout, = capture3(
         analyzer_bin,
         "--reporter", "json",
-        *(Array(config_linter[:ruleset]).map { |r| ["--ruleset", r] }),
-        *(comma_separated_list(config_linter[:disabled_rules])&.then { |d| ["--disabled_rules", d] }),
-        *(config_linter[:experimental] ? ["--experimental"] : nil),
+        *((config_linter[:ruleset] || []).map { |r| ["--ruleset", r] }),
+        *(comma_separated_list(config_linter[:disabled_rules]).then { |d| d ? ["--disabled_rules", d] : [] }),
+        *(config_linter[:experimental] ? ["--experimental"] : []),
         *(Array(config_linter[:target]))
       )
 
-      Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        parse_json_output(stdout) do |issue|
-          result.add_issue issue
-        end
-      end
+      Results::Success.new(guid: guid, analyzer: analyzer, issues: parse_json_output(stdout))
     end
 
     private
 
     def parse_json_output(output)
-      JSON.parse(output, symbolize_names: true).each do |hash|
-        hash.fetch(:errors).each do |error|
-          yield Issue.new(
+      JSON.parse(output, symbolize_names: true).flat_map do |hash|
+        hash.fetch(:errors).map do |error|
+          Issue.new(
             path: relative_path(hash.fetch(:file)),
             location: Location.new(start_line: error[:line], start_column: error[:column]),
             id: error[:rule],

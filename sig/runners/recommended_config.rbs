@@ -1,9 +1,11 @@
 module Runners
-  module RecommendedConfig
-    def warn_recommended_config_file_release: (untyped config_filename, untyped deadline) -> (nil | untyped)
+  module RecommendedConfig : Processor
+    def warn_recommended_config_file_release: (String, String) -> void
 
-    def deploy_recommended_config_file: (untyped config_filename) -> (nil | untyped)
+    def deploy_recommended_config_file: (String) -> void
 
-    def exists_in_repository?: (untyped config_filename) -> untyped
+    private
+
+    def exists_in_repository?: (String) -> bool
   end
 end

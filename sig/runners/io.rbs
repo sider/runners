@@ -1,11 +1,15 @@
 module Runners
-  class IO
-    attr_reader ios: Array[::IO]
+  type io = IO::AwsS3
 
-    def initialize: (*::IO) -> void
+  class IO
+    attr_reader ios: Array[::IO | io]
+
+    def initialize: (*(::IO | io)) -> void
 
     def write: (*_ToS) -> void
+
     def flush: () -> void
+
     def flush!: () -> void
   end
 end

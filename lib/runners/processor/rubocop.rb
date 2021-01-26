@@ -2,7 +2,9 @@ module Runners
   class Processor::RuboCop < Processor
     include Ruby
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :runner_config, Schema::BaseConfig.ruby.update_fields { |fields|
         fields.merge!({
                         config: string?,
@@ -39,6 +41,7 @@ module Runners
 
     OPTIONAL_GEMS = [
       *OFFICIAL_RUBOCOP_PLUGINS,
+      GemInstaller::Spec.new(name: "chefstyle", version: []),
       GemInstaller::Spec.new(name: "cookstyle", version: []),
       GemInstaller::Spec.new(name: "deka_eiwakun", version: []),
       GemInstaller::Spec.new(name: "ezcater_rubocop", version: []),
@@ -52,18 +55,25 @@ module Runners
       GemInstaller::Spec.new(name: "onkcop", version: []),
       GemInstaller::Spec.new(name: "otacop", version: []),
       GemInstaller::Spec.new(name: "pulis", version: []),
+      GemInstaller::Spec.new(name: "rubocop-betterment", version: []),
       GemInstaller::Spec.new(name: "rubocop-cask", version: []),
       GemInstaller::Spec.new(name: "rubocop-codetakt", version: []),
       GemInstaller::Spec.new(name: "rubocop-config-umbrellio", version: []),
+      GemInstaller::Spec.new(name: "rubocop-discourse", version: []),
       GemInstaller::Spec.new(name: "rubocop-github", version: []),
+      GemInstaller::Spec.new(name: "rubocop-govuk", version: []),
+      GemInstaller::Spec.new(name: "rubocop-graphql", version: []),
       GemInstaller::Spec.new(name: "rubocop-i18n", version: []),
+      GemInstaller::Spec.new(name: "rubocop-jekyll", version: []),
       GemInstaller::Spec.new(name: "rubocop-packaging", version: []),
       GemInstaller::Spec.new(name: "rubocop-rails_config", version: []),
       GemInstaller::Spec.new(name: "rubocop-require_tools", version: []),
       GemInstaller::Spec.new(name: "rubocop-salemove", version: []),
-      GemInstaller::Spec.new(name: "rubocop-sequel", version: []),
+      GemInstaller::Spec.new(name: "rubocop-sketchup", version: []),
+      GemInstaller::Spec.new(name: "rubocop-shopify", version: []),
       GemInstaller::Spec.new(name: "rubocop-sorbet", version: []),
       GemInstaller::Spec.new(name: "rubocop-thread_safety", version: []),
+      GemInstaller::Spec.new(name: "rubocop-vendor", version: []),
       GemInstaller::Spec.new(name: "salsify_rubocop", version: []),
       GemInstaller::Spec.new(name: "sanelint", version: []),
       GemInstaller::Spec.new(name: "standard", version: []),
@@ -72,37 +82,97 @@ module Runners
       GemInstaller::Spec.new(name: "ws-style", version: []),
     ].freeze
 
+    GEM_NAME = "rubocop".freeze
     CONSTRAINTS = {
-      "rubocop" => [">= 0.61.0", "< 2.0.0"]
+      GEM_NAME => [">= 0.61.0", "< 2.0.0"]
     }.freeze
 
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "default_rubocop.yml").to_path.freeze
 
-    def default_gem_specs
-      super.tap do |gems|
-        if setup_default_config
-          # NOTE: The latest MeowCop requires usually the latest RuboCop.
-          #       (e.g. MeowCop 2.4.0 requires RuboCop 0.75.0+)
-          #       So, MeowCop versions must be unspecified because the installation will fail when a user's RuboCop is 0.60.0.
-          #       Bundler will select an appropriate version automatically unless versions.
-          gems << GemInstaller::Spec.new(name: "meowcop", version: [])
-        end
-      end
-    end
-
     def setup
       add_warning_if_deprecated_options
 
-      install_gems default_gem_specs, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS do
-        yield
+      default_gems = default_gem_specs(GEM_NAME)
+      if setup_default_config
+        # NOTE: The latest MeowCop requires usually the latest RuboCop.
+        #       (e.g. MeowCop 2.4.0 requires RuboCop 0.75.0+)
+        #       So, MeowCop versions must be unspecified because the installation will fail when a user's RuboCop is 0.60.0.
+        #       Bundler will select an appropriate version automatically unless versions.
+        default_gems << GemInstaller::Spec.new(name: "meowcop", version: [])
       end
+
+      install_gems(default_gems, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS) { yield }
     rescue InstallGemsFailure => exn
       trace_writer.error exn.message
       return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
     end
 
-    def analyze(_)
-      run_analyzer
+    def analyze(_changes)
+      cmd = ruby_analyzer_command(
+        "--display-style-guide",
+        "--no-display-cop-names",
+
+        # NOTE: `--parallel` requires a cache.
+        #
+        # @see https://github.com/rubocop-hq/rubocop/blob/v1.3.1/lib/rubocop/options.rb#L353-L355
+        "--parallel",
+        "--cache=true",
+        *cache_root,
+
+        # NOTE: `--out` option must be after `--format` option.
+        #
+        # @see https://docs.rubocop.org/rubocop/1.3/formatters.html
+        "--format=json",
+        "--out=#{report_file}",
+
+        *rails_option,
+        *config_file,
+        *safe,
+      )
+
+      _, stderr, status = capture3(cmd.bin, *cmd.args)
+      check_rubocop_yml_warning(stderr)
+
+      # 0: no offences
+      # 1: offences exist
+      # 2: RuboCop crashes by unhandled errors.
+      unless [0, 1].include?(status.exitstatus)
+        error_message = stderr.strip
+        if error_message.empty?
+          error_message = "RuboCop raised an unexpected error. See the analysis log for details."
+        end
+        return Results::Failure.new(guid: guid, message: error_message, analyzer: analyzer)
+      end
+
+      output_json = read_report_json { nil }
+
+      Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+        break result unless output_json # No offenses
+
+        output_json.fetch(:files).reject { |v| v[:offenses].empty? }.each do |hash|
+          hash[:offenses].each do |offense|
+            loc = Location.new(
+              start_line: offense[:location][:line],
+              start_column: offense[:location][:column],
+              end_line: offense[:location][:last_line] || offense[:location][:line],
+              end_column: offense[:location][:last_column] || offense[:location][:column]
+            )
+            links = extract_links(offense[:message])
+            result.add_issue Issue.new(
+              path: relative_path(hash[:path]),
+              location: loc,
+              id: offense[:cop_name],
+              message: normalize_message(offense[:message], links, offense[:cop_name]),
+              links: links + build_cop_links(offense[:cop_name]),
+              object: {
+                severity: offense[:severity],
+                corrected: offense[:corrected],
+              },
+              schema: Schema.issue,
+            )
+          end
+        end
+      end
     end
 
     private
@@ -112,29 +182,31 @@ module Runners
       rails = config_linter.dig(:options, :rails) if rails.nil?
       case
       when rails && !rails_cops_removed?
-        '--rails'
+        ['--rails']
       when rails && rails_cops_removed?
-        add_warning(<<~WARNING, file: config.path_name)
-          The `#{config_field_path("rails")}` option in your `#{config.path_name}` is ignored.
+        add_warning <<~WARNING, file: config.path_name
+          The `#{config_field_path(:rails)}` option in your `#{config.path_name}` is ignored.
           Because the `--rails` option was removed from RuboCop 0.72. Use the `rubocop-rails` gem instead.
         WARNING
-        nil
+        []
       when rails == false
-        nil
+        []
       when rails_cops_removed?
-        nil
+        []
       when %w[bin/rails script/rails].any? { |path| current_dir.join(path).exist? }
-        '--rails'
+        ['--rails']
+      else
+        []
       end
     end
 
     def config_file
       config_path = config_linter[:config] || config_linter.dig(:options, :config)
-      "--config=#{config_path}" if config_path
+      config_path ? ["--config=#{config_path}"] : []
     end
 
     def safe
-      "--safe" if config_linter[:safe]
+      config_linter[:safe] ? ["--safe"] : []
     end
 
     def setup_default_config
@@ -180,89 +252,35 @@ module Runners
       warnings.each { |msg, file| add_warning(msg, file: file) }
     end
 
-    def run_analyzer
-      options = [
-        "--display-style-guide",
-        "--no-display-cop-names",
-
-        # NOTE: `--parallel` requires a cache.
-        #
-        # @see https://github.com/rubocop-hq/rubocop/blob/v1.3.1/lib/rubocop/options.rb#L353-L355
-        "--parallel",
-        "--cache=true",
-        *cache_root,
-
-        # NOTE: `--out` option must be after `--format` option.
-        #
-        # @see https://docs.rubocop.org/rubocop/1.3/formatters.html
-        "--format=json",
-        "--out=#{report_file}",
-
-        *rails_option,
-        *config_file,
-        *safe,
-      ]
-
-      _, stderr, status = capture3(*ruby_analyzer_bin, *options)
-      check_rubocop_yml_warning(stderr)
-
-      # 0: no offences
-      # 1: offences exist
-      # 2: RuboCop crashes by unhandled errors.
-      unless [0, 1].include?(status.exitstatus)
-        error_message = stderr.strip
-        if error_message.empty?
-          error_message = "RuboCop raised an unexpected error. See the analysis log for details."
-        end
-        return Results::Failure.new(guid: guid, message: error_message, analyzer: analyzer)
-      end
-
-      output_json = read_report_json { nil }
-
-      Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        break result unless output_json # No offenses
-
-        output_json[:files].reject { |v| v[:offenses].empty? }.each do |hash|
-          hash[:offenses].each do |offense|
-            loc = Location.new(
-              start_line: offense[:location][:line],
-              start_column: offense[:location][:column],
-              end_line: offense[:location][:last_line] || offense[:location][:line],
-              end_column: offense[:location][:last_column] || offense[:location][:column]
-            )
-            links = extract_links(offense[:message])
-            result.add_issue Issue.new(
-              path: relative_path(hash[:path]),
-              location: loc,
-              id: offense[:cop_name],
-              message: normalize_message(offense[:message], links, offense[:cop_name]),
-              links: links + build_cop_links(offense[:cop_name]),
-              object: {
-                severity: offense[:severity],
-                corrected: offense[:corrected],
-              },
-              schema: Schema.issue,
-            )
-          end
-        end
-      end
-    end
-
     # @see https://github.com/rubocop-hq/rubocop/blob/v0.76.0/lib/rubocop/cop/message_annotator.rb#L62-L63
-    def extract_links(original_message)
-      URI.extract(original_message, %w(http https))
-        .map { |uri| uri.delete_suffix(",").delete_suffix(")") }
+    def extract_links(text)
+      @uri_regexp ||= URI::DEFAULT_PARSER.make_regexp(["http", "https"])
+      text.to_enum(:scan, @uri_regexp).map do
+        match = Regexp.last_match or raise
+        uri = match[0] or raise
+        uri.delete_suffix(",").delete_suffix(")")
+      end.uniq
     end
 
     def build_cop_links(cop_name)
-      department, cop = cop_name.split("/")
+      department, *extra = cop_name.split("/")
 
-      if department && cop
-        gem_name = department_to_gem_name[department]
-        if gem_name
-          department.downcase!
-          cop.downcase!
-          return ["https://docs.rubocop.org/#{gem_name}/cops_#{department}.html##{department}#{cop}"]
+      if department && !extra.empty?
+        case
+        when department_to_gem_name.key?(department)
+          gem_name = department_to_gem_name.fetch(department)
+          fragment = cop_name.downcase.delete("/")
+          if extra.size == 1
+            return ["https://docs.rubocop.org/#{gem_name}/cops_#{department.downcase}.html##{fragment}"]
+          else
+            return ["https://docs.rubocop.org/#{gem_name}/cops_#{department.downcase}/#{extra.first&.downcase}.html##{fragment}"]
+          end
+        when department_to_gem_name_ext.key?(department)
+          gem_name = department_to_gem_name_ext.fetch(department)
+          return [
+            "https://www.rubydoc.info/gems/#{gem_name}/RuboCop/Cop/#{cop_name}",
+            *extract_links(gem_info(gem_name)),
+          ]
         end
       end
 
@@ -295,7 +313,42 @@ module Runners
 
         # rubocop-performance
         "Performance" => "rubocop-performance",
+
+        # rubocop-packaging
+        "Packaging" => "rubocop-packaging",
       }.freeze
+    end
+
+    def department_to_gem_name_ext
+      @department_to_gem_name_ext ||= {
+        "Chef" => "chefstyle",
+        "Discourse" => "rubocop-discourse",
+        "GitHub" => "rubocop-github",
+        "GraphQL" => "rubocop-graphql",
+        "I18n" => "rubocop-i18n",
+        "Jekyll" => "rubocop-jekyll",
+        "Rake" => "rubocop-rake",
+        "Rubycw" => "rubocop-rubycw",
+        "Sequel" => "rubocop-sequel",
+        "SketchupBugs" => "rubocop-sketchup",
+        "SketchupDeprecations" => "rubocop-sketchup",
+        "SketchupPerformance" => "rubocop-sketchup",
+        "SketchupRequirements" => "rubocop-sketchup",
+        "SketchupSuggestions" => "rubocop-sketchup",
+        "Sorbet" => "rubocop-sorbet",
+        "ThreadSafety" => "rubocop-thread_safety",
+        "Vendor" => "rubocop-vendor",
+      }.freeze
+    end
+
+    def gem_info(gem_name)
+      @gem_info ||= {}
+      info = @gem_info[gem_name]
+      unless info
+        info, _ = capture3! "gem", "info", "--both", "--exact", "--quiet", gem_name
+        @gem_info[gem_name] = info
+      end
+      info
     end
 
     def normalize_message(original_message, links, cop_name)
@@ -310,9 +363,9 @@ module Runners
     def cache_root
       # @see https://github.com/rubocop-hq/rubocop/blob/v0.91.0/CHANGELOG.md
       if Gem::Version.create(analyzer_version) >= Gem::Version.create("0.91.0")
-        "--cache-root=#{File.join(Dir.tmpdir, 'rubocop-cache')}"
+        ["--cache-root=#{File.join(Dir.tmpdir, 'rubocop-cache')}"]
       else
-        nil
+        []
       end
     end
   end

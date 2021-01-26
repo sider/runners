@@ -2,3 +2,4 @@ linter:
   flake8:
     plugins:
       - flake8-builtins==1.4.1
+      - git+https://github.com/best-doctor/flake8-annotations-complexity.git@b678cafb3ac7471163fad5b11eb1bdc4880c5c74

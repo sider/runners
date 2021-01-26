@@ -1,6 +1,8 @@
 module Runners
   class Processor::FxCop < Processor
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :runner_config, Schema::BaseConfig.base
 
       let :issue, object(
@@ -26,11 +28,13 @@ module Runners
           .map(&:to_s))
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        construct_result(result, read_report_json)
+        construct_result(read_report_json) { |issue| result.add_issue(issue) }
       end
     end
 
-    def construct_result(result, json)
+    private
+
+    def construct_result(json)
       json.each do |hash|
         path = relative_path(hash[:SourceCodeFilePath])
         hash[:Diagnostics].each do |diag|
@@ -39,7 +43,7 @@ module Runners
                             end_line: diag.dig(:Location, :End, :Line) + 1,
                             end_column: diag.dig(:Location, :End, :Character) + 1)
 
-          result.add_issue Issue.new(
+          yield Issue.new(
             path: path,
             location: location,
             id: diag[:Id],

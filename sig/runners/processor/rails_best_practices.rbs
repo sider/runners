@@ -2,32 +2,33 @@ module Runners
   class Processor::RailsBestPractices < Processor
     include Ruby
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
-    OPTIONAL_GEMS: untyped
+    OPTIONAL_GEMS: Array[Ruby::GemInstaller::Spec]
+    GEM_NAME: String
+    CONSTRAINTS: Ruby::constraints
 
-    CONSTRAINTS: untyped
+    private
 
-    def setup: () { () -> untyped } -> untyped
+    def option_vendor: () -> Array[String]
 
-    def analyze: (untyped _changes) -> untyped
+    def option_spec: () -> Array[String]
 
-    def vendor: () -> untyped
+    def option_test: () -> Array[String]
 
-    def spec: () -> untyped
+    def option_features: () -> Array[String]
 
-    def test: () -> untyped
+    def option_exclude: () -> Array[String]
 
-    def features: () -> untyped
+    def option_only: () -> Array[String]
 
-    def exclude: () -> untyped
+    def option_config: () -> Array[String]
 
-    def only: () -> untyped
+    def prepare_config: () -> void
 
-    def config_option: () -> untyped
-
-    def prepare_config: () -> (nil | untyped)
-
-    def run_analyzer: (untyped options) -> untyped
+    def run_analyzer: () -> result
   end
 end

@@ -29,23 +29,19 @@ module Runners
 
         def self.from_gems(gems_items)
           gems_items.map do |item|
-            # @type var hash: gems_item
-            hash = case (_ = item)
-                   when Hash
-                     _ = item
-                   when String
-                     { name: item.to_s, version: nil }
-                   end
-
-            name = hash[:name]
-            version = hash[:version]
-
-            spec_source = Source.create(hash)
+            # TODO: Ignored Steep error
+            gem = _ =
+              case item
+              when Hash
+                item
+              when String
+                { name: item.to_s, version: nil, source: nil, git: nil }
+              end
 
             self.new(
-              name: name,
-              version: version ? [version] : [],
-              source: spec_source
+              name: gem.fetch(:name),
+              version: Array(gem[:version]),
+              source: Source.create(gem),
             )
           end
         end

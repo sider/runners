@@ -2,8 +2,10 @@ module Runners
   class Processor::RemarkLint < Processor
     include Nodejs
 
-    Schema = StrongJSON.new do
-      let(:runner_config, Schema::BaseConfig.npm.update_fields { |fields|
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
+      let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
         fields.merge!(
           target: enum?(string, array(string)),
           ext: string?,
@@ -11,7 +13,7 @@ module Runners
           "ignore-path": string?,
           use: enum?(string, array(string)),
         )
-      })
+      }
 
       let :issue, object(
         severity: string,
@@ -46,19 +48,23 @@ module Runners
     end
 
     def analyze(_changes)
-      run_analyzer
+      _, stderr, _ = capture3(nodejs_analyzer_bin, *cli_options, *analysis_target)
+
+      issues, errors = parse_result(stderr)
+
+      if errors.empty?
+        Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+          issues.each { |i| result.add_issue(i) }
+        end
+      else
+        errors.each { |e| trace_writer.error(e) }
+
+        msg = "#{errors.size} error(s) reported. See the log for details."
+        Results::Failure.new(guid: guid, analyzer: analyzer, message: msg)
+      end
     end
 
     private
-
-    def remark_lint_version!(global: false)
-      pkg = "remark-lint"
-      chdir = global ? Pathname(Dir.home).join(analyzer_id) : nil
-      deps = list_installed_nodejs_deps only: [pkg], chdir: chdir
-      deps.fetch(pkg).tap do |version|
-        raise "No version of `#{pkg}`" if version.empty?
-      end
-    end
 
     def analysis_target
       Array(config_linter[:target] || DEFAULT_TARGET)
@@ -82,7 +88,7 @@ module Runners
 
     # @see https://github.com/unifiedjs/unified-engine/blob/master/doc/configure.md
     def no_rc_files?
-      Dir.glob("**/.remarkrc{,.*}", File::FNM_DOTMATCH, base: current_dir).empty?
+      Dir.glob("**/.remarkrc{,.*}", File::FNM_DOTMATCH, base: current_dir.to_path).empty?
     end
 
     # @see https://github.com/unifiedjs/unified-engine/blob/master/doc/configure.md
@@ -116,23 +122,6 @@ module Runners
       ]
     end
 
-    def run_analyzer
-      _, stderr, _ = capture3(nodejs_analyzer_bin, *cli_options, *analysis_target)
-
-      issues, errors = parse_result(stderr)
-
-      if errors.empty?
-        Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-          issues.each { |i| result.add_issue(i) }
-        end
-      else
-        errors.each { |e| trace_writer.error(e) }
-
-        msg = "#{errors.size} error(s) reported. See the log for details."
-        Results::Failure.new(guid: guid, analyzer: analyzer, message: msg)
-      end
-    end
-
     def parse_result(output)
       issues = []
       errors = []
@@ -140,28 +129,28 @@ module Runners
       JSON.parse(output, symbolize_names: true).each do |file|
         path = relative_path(file[:path])
 
-        file[:messages].each do |message|
-          if message[:stack]
-            errors << "#{message[:reason]}\n#{message[:stack]}"
-            next
+        file.fetch(:messages).each do |message|
+          stack = message[:stack]
+          if stack
+            errors << "#{message[:reason]}\n#{stack}"
+          else
+            # NOTE: When `fatal` is `true`, then `severity` is `error`.
+            #
+            # @see https://github.com/remarkjs/remark-lint/blob/7.0.0/packages/unified-lint-rule/index.js#L27
+            # @see https://github.com/remarkjs/remark-lint/blob/7.0.0/doc/rules.md#configuration
+            severity = message[:fatal] ? "error" : "warn"
+
+            issues << Issue.new(
+              path: path,
+              location: message[:line]&.then { |line| Location.new(start_line: line, start_column: message[:column]) },
+              id: message[:ruleId],
+              message: message[:reason],
+              object: {
+                severity: severity,
+              },
+              schema: Schema.issue,
+            )
           end
-
-          # NOTE: When `fatal` is `true`, then `severity` is `error`.
-          #
-          # @see https://github.com/remarkjs/remark-lint/blob/7.0.0/packages/unified-lint-rule/index.js#L27
-          # @see https://github.com/remarkjs/remark-lint/blob/7.0.0/doc/rules.md#configuration
-          severity = message[:fatal] ? "error" : "warn"
-
-          issues << Issue.new(
-            path: path,
-            location: message[:line]&.then { |line| Location.new(start_line: line, start_column: message[:column]) },
-            id: message[:ruleId],
-            message: message[:reason],
-            object: {
-              severity: severity,
-            },
-            schema: Schema.issue,
-          )
         end
       end
 

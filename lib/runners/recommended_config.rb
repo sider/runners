@@ -16,13 +16,13 @@ module Runners
       end
 
       trace_writer.message "The #{analyzer_name} configuration file called `#{config_filename}` does not exist in your repository. Sider uses our recommended ruleset instead."
-      FileUtils.copy(Pathname(Dir.home) / "sider_recommended_#{config_filename}", current_dir / config_filename)
+      FileUtils.copy_file(Pathname(Dir.home) / "sider_recommended_#{config_filename}", current_dir / config_filename)
     end
 
     private
 
-    def exists_in_repository?(config_filename)
-      Dir.glob("**/#{config_filename}", File::FNM_DOTMATCH, base: working_dir).any?
+    def exists_in_repository?(filename)
+      Dir.glob("**/#{filename}", File::FNM_DOTMATCH, base: working_dir.to_path).any?
     end
   end
 end

@@ -3,7 +3,6 @@ module Runners
   # So, before using this, make sure AWS credentials available.
   # Also, prepare the S3 bucket and allow this instance to upload an S3 object.
   class IO::AwsS3
-    # @type const BUFFER_SIZE: Integer
     BUFFER_SIZE = 300
 
     # Only for test

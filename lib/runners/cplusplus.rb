@@ -18,15 +18,15 @@ module Runners
       trace_writer.message "Installing apt packages..."
 
       # select development packages and report others as warning for security concerns
-      packages = Array(config_linter[:apt])
-        .select do |pkg|
-          if pkg.match?(/-dev(=.+)?$/)
-            true
-          else
-            add_warning "Installing the package `#{pkg}` is blocked.", file: config.path_name
-            false
-          end
+      packages = Array(config_linter[:apt]).select do |pkg|
+        # @type var pkg: String
+        if pkg.match?(/-dev(=.+)?$/)
+          true
+        else
+          add_warning "Installing the package `#{pkg}` is blocked.", file: config.path_name
+          false
         end
+      end
 
       if packages.empty?
         trace_writer.message "No apt packages to install."

@@ -28,4 +28,16 @@ class LocationTest < Minitest::Test
       Location.new(start_line: 1).to_s,
     )
   end
+
+  def test_include_line
+    assert Location.new(start_line: 1).include_line?(1)
+    refute Location.new(start_line: 1).include_line?(2)
+    refute Location.new(start_line: nil).include_line?(1)
+
+    assert Location.new(start_line: 1, end_line: 1).include_line?(1)
+    assert Location.new(start_line: 1, end_line: 2).include_line?(1)
+    assert Location.new(start_line: 1, end_line: 2).include_line?(2)
+    refute Location.new(start_line: 1, end_line: 2).include_line?(0)
+    refute Location.new(start_line: 1, end_line: 2).include_line?(3)
+  end
 end

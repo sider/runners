@@ -1,29 +1,25 @@
 module Runners
   class Issue
-    attr_reader path: untyped
+    attr_reader path: Pathname
+    attr_reader location: Location?
+    attr_reader id: String?
+    attr_reader message: String
+    attr_reader links: Array[String]
+    attr_reader object: Hash[Symbol, untyped]?
+    attr_reader git_blame_info: GitBlameInfo?
 
-    attr_reader location: untyped
+    def initialize: (path: Pathname,
+                     location: Location?,
+                     id: String?,
+                     message: String,
+                     ?links: Array[String],
+                     ?object: Hash[Symbol, untyped]?,
+                     ?schema: StrongJSON::Type::Object[untyped]?) -> void
 
-    attr_reader id: untyped
+    def missing_id?: () -> bool
 
-    attr_reader message: untyped
+    def as_json: () -> Hash[Symbol, untyped]
 
-    attr_reader links: untyped
-
-    attr_reader object: untyped
-
-    attr_reader git_blame_info: untyped
-
-    def initialize: (path: untyped path, location: untyped location, id: untyped id, message: untyped message, ?links: untyped links, ?object: untyped? object, ?schema: untyped? schema) -> untyped
-
-    def missing_id?: () -> untyped
-
-    def ==: (untyped other) -> untyped
-
-    def hash: () -> untyped
-
-    def as_json: () -> untyped
-
-    def add_git_blame_info: (untyped workspace) -> untyped
+    def add_git_blame_info: (Workspace) -> void
   end
 end

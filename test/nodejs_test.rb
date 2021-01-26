@@ -14,6 +14,8 @@ class NodejsTest < Minitest::Test
   INSTALL_OPTION_PRODUCTION = Runners::Nodejs::INSTALL_OPTION_PRODUCTION
   INSTALL_OPTION_DEVELOPMENT = Runners::Nodejs::INSTALL_OPTION_DEVELOPMENT
 
+  private
+
   def processor_class
     @processor_class ||= Class.new(Runners::Processor) do
       include Runners::Nodejs
@@ -57,7 +59,7 @@ class NodejsTest < Minitest::Test
       guid: SecureRandom.uuid,
       working_dir: workspace.working_dir,
       config: config,
-      git_ssh_path: nil,
+      shell: Runners::Shell.new(current_dir: workspace.working_dir, trace_writer: trace_writer),
       trace_writer: trace_writer,
     )
   end
@@ -71,6 +73,8 @@ class NodejsTest < Minitest::Test
       silence_warnings { Runners::Nodejs.const_set(name, saved_value) }
     end
   end
+
+  public
 
   def test_nodejs_analyzer_local_command
     with_workspace do |workspace|
@@ -422,22 +426,37 @@ class NodejsTest < Minitest::Test
       node_modules = workspace.working_dir / "node_modules"
       eslint = node_modules / "eslint"
 
+      yarnrc = (workspace.working_dir / ".yarnrc").tap { _1.write 'yarn-path "foo"' }
+      yarnrc_yml = (workspace.working_dir / ".yarnrc.yml").tap { _1.write 'yarnPath: "foo"' }
+      yarnrc_yaml = (workspace.working_dir / ".yarnrc.yaml").tap { _1.write 'yarnPath: "foo"' }
+
       processor.package_json_path.write(JSON.generate(dependencies: { "eslint" => "6.0.1" }))
       FileUtils.cp data("yarn.lock"), processor.yarn_lock_path
 
       processor.send(:yarn_install, INSTALL_OPTION_NONE)
-      refute eslint.exist?
+      refute_path_exists eslint
+      assert_path_exists yarnrc
+      assert_path_exists yarnrc_yml
+      assert_path_exists yarnrc_yaml
 
       processor.send(:yarn_install, INSTALL_OPTION_ALL)
-      assert eslint.exist?
+      assert_path_exists eslint
+      assert_path_exists yarnrc
+      assert_path_exists yarnrc_yml
+      assert_path_exists yarnrc_yaml
 
       eslint.rmtree
+      yarnrc_yml.rmtree
+      yarnrc_yaml.rmtree
       processor.send(:yarn_install, INSTALL_OPTION_PRODUCTION)
-      assert eslint.exist?
+      assert_path_exists eslint
+      assert_path_exists yarnrc
+      refute_path_exists yarnrc_yml
+      refute_path_exists yarnrc_yaml
 
       node_modules.rmtree
       processor.send(:yarn_install, INSTALL_OPTION_DEVELOPMENT)
-      assert eslint.exist?
+      assert_path_exists eslint
 
       expected_commands = [
         %w[yarn install --ignore-engines --ignore-scripts --no-progress --non-interactive --frozen-lockfile],

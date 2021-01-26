@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "1.0.0"
+default_version = "1.8.1"
 
 s.add_test(
   "sandbox_rails",
@@ -71,7 +71,7 @@ s.add_test(
       }
     }
   ],
-  analyzer: { name: "RuboCop", version: default_version }
+  analyzer: { name: "RuboCop", version: "1.6.1" }
 )
 
 s.add_test(
@@ -218,8 +218,7 @@ s.add_test(
   "broken_sideci_yml",
   type: "failure",
   analyzer: :_,
-  message:
-    "The value of the attribute `linter.rubocop.gems[0]` in your `sideci.yml` is invalid. Please fix and retry."
+  message: "`linter.rubocop.gems[0]` value in `sideci.yml` is invalid"
 )
 
 s.add_test(

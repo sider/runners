@@ -2,32 +2,22 @@ module Runners
   class Processor::Flake8 < Processor
     include Python
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
-    # Output example:
-    #
-    # E999:::app1/views.py:::6:::12:::IndentationError: unexpected indent
-    #
-    # `:::` is a separater
-    #
-    OUTPUT_FORMAT: untyped
+    OUTPUT_FORMAT: String
+    OUTPUT_PATTERN: Regexp
+    DEFAULT_TARGET: String
+    IGNORED_CONFIG_PATH: String
 
-    OUTPUT_PATTERN: untyped
+    private
 
-    DEFAULT_TARGET: untyped
+    def prepare_config: () -> void
 
-    def setup: () { () -> untyped } -> untyped
+    def prepare_plugins: () -> void
 
-    def analyze: (untyped changes) -> untyped
-
-    def prepare_config: () -> untyped
-
-    def prepare_plugins: () -> untyped
-
-    def ignored_config_path: () -> untyped
-
-    def parse_result: (untyped output) { (untyped) -> untyped } -> untyped
-
-    def run_analyzer: () -> untyped
+    def parse_result: (String) { (Issue) -> void } -> void
   end
 end

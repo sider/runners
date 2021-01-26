@@ -99,5 +99,5 @@ s.add_test(
   "broken_sider_yml",
   type: "failure",
   analyzer: :_,
-  message: "The attribute `linter.ktlint.cli` in your `sider.yml` is unsupported. Please fix and retry."
+  message: "`linter.ktlint.cli` in `sider.yml` is unsupported"
 )

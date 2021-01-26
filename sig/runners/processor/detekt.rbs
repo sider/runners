@@ -1,31 +1,32 @@
 module Runners
   class Processor::Detekt < Processor
     include Java
-
     include Kotlin
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[untyped]
+      def issue: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
-    def setup: () { () -> untyped } -> untyped
+    private
 
-    def analyze: (untyped changes) -> untyped
+    def cli_baseline: () -> Array[String]
 
-    def cli_baseline: () -> untyped
+    def cli_config: () -> Array[String]
 
-    def cli_config: () -> untyped
+    def cli_config_resource: () -> Array[String]
 
-    def cli_config_resource: () -> untyped
+    def cli_disable_default_rulesets: () -> Array[String]
 
-    def cli_disable_default_rulesets: () -> untyped
+    def cli_excludes: () -> Array[String]
 
-    def cli_excludes: () -> untyped
+    def cli_includes: () -> Array[String]
 
-    def cli_includes: () -> untyped
+    def cli_input: () -> Array[String]
 
-    def cli_input: () -> untyped
+    def cli_report: () -> Array[String]
 
-    def cli_report: () -> ::Array["--report" | ::String]
-
-    def parse_output: () -> untyped
+    def parse_output: () -> Array[Issue]
   end
 end

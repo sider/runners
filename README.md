@@ -1,3 +1,5 @@
+![Build](https://github.com/sider/runners/workflows/Build/badge.svg)
+
 # Sider Runners
 
 This is a Sider analyzer framework.
@@ -97,19 +99,23 @@ $ tree -F -L 1 -d
 .
 ├── bin
 ├── docs
+├── exe
 ├── images
 ├── lib
 ├── sig
+├── tasks
 └── test
 
 6 directories
 ```
 
-- `bin`: Entry point to launch a runner
+- `bin`: Scripts
 - `docs`: Documents
+- `exe`: Entry point
 - `images`: Docker images
 - `lib`: Core programs
 - `sig`: Ruby signature files for type-checking
+- `tasks`: Rake tasks
 - `test`: Unit tests and smoke tests
 
 ### Testing

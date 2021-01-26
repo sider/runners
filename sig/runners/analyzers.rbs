@@ -1,15 +1,20 @@
 module Runners
   class Analyzers
-    def name: (untyped id) -> untyped
+    type analyzer = Hash[Symbol, untyped]
+    type analyzer_id = Symbol | String
 
-    def github: (untyped id) -> untyped
+    def name: (analyzer_id) -> String
 
-    def doc: (untyped id) -> untyped
+    def github: (analyzer_id) -> String
 
-    def deprecated?: (untyped id) -> untyped
+    def doc: (analyzer_id) -> String
 
-    def content: () -> untyped
+    def deprecated?: (analyzer_id) -> bool
 
-    def analyzer: (untyped id) -> untyped
+    private
+
+    def content: () -> Hash[Symbol, analyzer]
+
+    def analyzer: (analyzer_id) -> analyzer
   end
 end

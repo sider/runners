@@ -8,7 +8,7 @@ module Runners
 
     Schema = _ = StrongJSON.new do
       # @type self: SchemaClass
-      let :runner_config, Runners::Schema::BaseConfig.cplusplus.update_fields { |fields|
+      let :runner_config, Schema::BaseConfig.cplusplus.update_fields { |fields|
         fields.merge!(
           target: enum?(string, array(string)),
           ignore: enum?(string, array(string)),
@@ -37,7 +37,31 @@ module Runners
     DEFAULT_IGNORE = [].freeze
 
     def analyze(_changes)
-      run_analyzer
+      issues = []
+
+      begin
+        ret = step_analyzer(*enable, *std, *addon)
+        case ret
+        when Results::Success
+          issues.push(*ret.issues)
+        else
+          return ret
+        end
+      rescue NoTargetFiles
+        return Results::Success.new(guid: guid, analyzer: analyzer)
+      end
+
+      if config_linter[:'bug-hunting']
+        ret = step_analyzer("--bug-hunting")
+        case ret
+        when Results::Success
+          issues.push(*ret.issues)
+        else
+          return ret
+        end
+      end
+
+      Results::Success.new(guid: guid, analyzer: analyzer, issues: issues)
     end
 
     private
@@ -85,34 +109,6 @@ module Runners
         else
           []
         end
-    end
-
-    def run_analyzer
-      issues = []
-
-      begin
-        ret = step_analyzer(*enable, *std, *addon)
-        case ret
-        when Results::Success
-          issues.push(*ret.issues)
-        else
-          return ret
-        end
-      rescue NoTargetFiles
-        return Results::Success.new(guid: guid, analyzer: analyzer)
-      end
-
-      if config_linter[:'bug-hunting']
-        ret = step_analyzer("--bug-hunting")
-        case ret
-        when Results::Success
-          issues.push(*ret.issues)
-        else
-          return ret
-        end
-      end
-
-      Results::Success.new(guid: guid, analyzer: analyzer, issues: issues)
     end
 
     def step_analyzer(*args)
