@@ -157,6 +157,13 @@ updates:
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
   - package-ecosystem: pip
+    directory: "/images/metrics_complexity"
+    schedule:
+      interval: weekly
+      time: "09:00"
+      timezone: Asia/Tokyo
+    open-pull-requests-limit: 10
+  - package-ecosystem: pip
     directory: "/images/flake8"
     schedule:
       interval: weekly

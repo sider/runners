@@ -77,6 +77,27 @@ class ShellTest < Minitest::Test
     end
   end
 
+  def test_capture3_trace_with_pathname_args
+    mktmpdir do |path|
+      test_files = [path / "foo.txt", path / "bar.txt"]
+        .each { |f| f.write("#{f.basename('.txt')}...") }
+        .map { |f| f.relative_path_from(path) }
+
+      shell = Shell.new(current_dir: path, trace_writer: trace_writer, env_hash: {})
+
+      stdout, stderr, status = shell.capture3_trace("cat", *test_files)
+
+      assert_equal "foo...bar...", stdout
+      assert_equal "", stderr
+      assert status.success?
+      assert_trace_writer [
+        { trace: :command_line, command_line: ["cat", "foo.txt", "bar.txt"] },
+        { trace: :stdout, string: "foo...bar...", truncated: false },
+        { trace: :status, status: 0 },
+      ]
+    end
+  end
+
   def test_capture3_trace_without_tracing_stdout
     mktmpdir do |path|
       shell = Shell.new(current_dir: path, trace_writer: trace_writer, env_hash: {})

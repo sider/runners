@@ -1,0 +1,25 @@
+module Runners
+  class Processor::MetricsFileInfo < Processor
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[untyped]
+      def issue: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
+
+    private
+
+    def generate_issue: (String)-> Issue
+
+    def lines_of_code: () -> Hash[String, Integer]
+
+    def analyze_lines_of_code: (Array[String]) -> void
+
+    def last_committed_at: () -> Hash[String, String]
+
+    def analyze_last_committed_at: (Array[String]) -> void
+
+    def text_files: () -> Set[String]
+
+    def text_file?: (String) -> bool
+  end
+end
