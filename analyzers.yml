@@ -84,6 +84,10 @@ analyzers:
     name: Metrics Code Clone
     github: pmd/pmd
     doc: tools/metrics/codeclone
+  metrics_fileinfo:
+    name: Metrics File Info
+    github: coreutils/coreutils
+    doc: tools/metrics/fileinfo
   misspell:
     name: Misspell
     github: client9/misspell

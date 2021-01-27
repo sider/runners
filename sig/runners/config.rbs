@@ -10,8 +10,9 @@ module Runners
     class BrokenYAML < Error
       attr_reader line: Integer
       attr_reader column: Integer
+      attr_reader problem: String
 
-      def initialize: (String, path_name: String, raw_content: String, line: Integer, column: Integer) -> void
+      def initialize: (String, path_name: String, raw_content: String, line: Integer, column: Integer, problem: String) -> void
     end
 
     class InvalidConfiguration < Error

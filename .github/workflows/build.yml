@@ -50,6 +50,7 @@ jobs:
           - languagetool
           - metrics_codeclone
           - misspell
+          - metrics_fileinfo
           - phinder
           - phpmd
           - pmd_cpd
