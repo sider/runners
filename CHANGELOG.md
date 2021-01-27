@@ -6,10 +6,6 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.40.7...HEAD)
 
-New supported:
-
-- **Metrics Code Clone** [#1878](https://github.com/sider/runners/pull/1878)
-
 Updated environments:
 
 - **devon_rex** 2.30.1 -> master [#1954](https://github.com/sider/runners/pull/1954)
@@ -34,6 +30,7 @@ Misc:
 
 - Improve behavior about `Changes` class [#1955](https://github.com/sider/runners/pull/1955)
 - Improve `Runners::Config::Error` classes [#1959](https://github.com/sider/runners/pull/1959) [#1961](https://github.com/sider/runners/pull/1961) [#1972](https://github.com/sider/runners/pull/1972)
+- Add **Metrics Code Clone** runner [#1878](https://github.com/sider/runners/pull/1878)
 - Add **Metrics File Info** runner [#1937](https://github.com/sider/runners/pull/1937)
 
 ## 0.40.7
