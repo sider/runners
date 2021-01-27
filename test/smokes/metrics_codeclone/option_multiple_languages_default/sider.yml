@@ -1,0 +1,9 @@
+linter:
+  pmd_cpd:
+    minimum-tokens: 15
+    ignore-literals: true
+    ignore-identifiers: true
+    ignore-annotations: true
+    ignore-usings: true
+    no-skip-blocks: false
+    skip-blocks-pattern: '#ifdef TEST|#endif'

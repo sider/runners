@@ -1,0 +1,1 @@
+<%= render_erb 'images/pmd_cpd/Dockerfile.erb' %>

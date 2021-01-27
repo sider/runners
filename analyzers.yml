@@ -80,10 +80,18 @@ analyzers:
     github: languagetool-org/languagetool
     doc: tools/others/languagetool
     dependabot: false
+  metrics_codeclone:
+    name: Metrics Code Clone
+    github: pmd/pmd
+    doc: tools/metrics/codeclone
   metrics_complexity:
     name: Metrics Complexity
     github: terryyin/lizard
     doc: tools/metrics/complexity
+  metrics_fileinfo:
+    name: Metrics File Info
+    github: coreutils/coreutils
+    doc: tools/metrics/fileinfo
   misspell:
     name: Misspell
     github: client9/misspell

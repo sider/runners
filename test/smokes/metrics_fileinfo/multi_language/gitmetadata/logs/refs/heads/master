@@ -1,0 +1,7 @@
+0000000000000000000000000000000000000000 1e57642a732361d8988e3c3b3b1c4c8b70a1f461 Gaku Nakagawa <gaku@sleeek.io> 1610946846 +0900	commit (initial): add a UTF-8 encoded text file
+1e57642a732361d8988e3c3b3b1c4c8b70a1f461 03f77bbc2df77dfe925ecd3f48a61e25f34d6385 Gaku Nakagawa <gaku@sleeek.io> 1610949920 +0900	commit: add Shift JiS encoded file
+03f77bbc2df77dfe925ecd3f48a61e25f34d6385 1e57642a732361d8988e3c3b3b1c4c8b70a1f461 Gaku Nakagawa <gaku@sleeek.io> 1610950011 +0900	reset: moving to 1e57642a732361d8988e3c3b3b1c4c8b70a1f461
+1e57642a732361d8988e3c3b3b1c4c8b70a1f461 dcc9dad41ccb8f6c07b8d36e81790143366c022f Gaku Nakagawa <gaku@sleeek.io> 1610950025 +0900	commit: add Shift JIS encoded file
+dcc9dad41ccb8f6c07b8d36e81790143366c022f 7f41b550286e50a5ea13697ff1849668f55a2b66 Gaku Nakagawa <gaku@sleeek.io> 1610950137 +0900	commit: add EUC-JP encoded text
+7f41b550286e50a5ea13697ff1849668f55a2b66 fb10a79fa0dcdd82e4121fac872cf0325eae3309 Gaku Nakagawa <gaku@sleeek.io> 1610951098 +0900	commit: add a ISO-2022 encoded text
+fb10a79fa0dcdd82e4121fac872cf0325eae3309 430dd018bc95915da5f0813759bf580c56561044 Gaku Nakagawa <gaku@sleeek.io> 1610951770 +0900	commit (amend): add a ISO-2022 encoded text

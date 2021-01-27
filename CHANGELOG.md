@@ -13,22 +13,29 @@ New supported:
 Updated environments:
 
 - **devon_rex** 2.30.1 -> master [#1954](https://github.com/sider/runners/pull/1954)
-- **Bundler** 2.2.3 -> 2.2.6 [#1960](https://github.com/sider/runners/pull/1960)
+- **Bundler** 2.2.3 -> 2.2.7 [#1960](https://github.com/sider/runners/pull/1960) [#1975](https://github.com/sider/runners/pull/1975)
 
 Updated tools:
 
-- **Brakeman** 4.10.0 -> 4.10.1 [#1881](https://github.com/sider/runners/pull/1881)
+- **Brakeman** 4.10.0 -> 5.0.0 [#1881](https://github.com/sider/runners/pull/1881) [#1976](https://github.com/sider/runners/pull/1976)
 - **Checkstyle** 8.38 -> 8.39 [#1891](https://github.com/sider/runners/pull/1891)
 - **detekt** 1.14.2 -> 1.15.0 [#1815](https://github.com/sider/runners/pull/1815)
+- **ESLint** 7.15.0 -> 7.18.0 [#1949](https://github.com/sider/runners/pull/1949)
+- **GolangCI-Lint** 1.33.0 -> 1.36.0 [#1946](https://github.com/sider/runners/pull/1946) [#1977](https://github.com/sider/runners/pull/1977)
 - **HAML-Lint** 0.36.0 -> 0.37.0 [#1920](https://github.com/sider/runners/pull/1920)
 - **LanguageTool** 5.1 -> 5.2 [#1885](https://github.com/sider/runners/pull/1885)
 - **Querly** 1.1.0 -> 1.2.0 [#1807](https://github.com/sider/runners/pull/1807)
+- **Reek** 6.0.2 -> 6.0.3 [#1948](https://github.com/sider/runners/pull/1948)
+- **RuboCop** 1.6.1 -> 1.8.1 [#1947](https://github.com/sider/runners/pull/1947)
+- **stylelint** 13.8.0 -> 13.9.0 [#1966](https://github.com/sider/runners/pull/1966)
 - **SwiftLint** 0.41.0 -> 0.42.0 [#1750](https://github.com/sider/runners/pull/1750)
 
 Misc:
 
 - Improve behavior about `Changes` class [#1955](https://github.com/sider/runners/pull/1955)
-- Improve `Runners::Config::Error` classes [#1959](https://github.com/sider/runners/pull/1959) [#1961](https://github.com/sider/runners/pull/1961)
+- Improve `Runners::Config::Error` classes [#1959](https://github.com/sider/runners/pull/1959) [#1961](https://github.com/sider/runners/pull/1961) [#1972](https://github.com/sider/runners/pull/1972)
+- Add **Metrics Code Clone** runner [#1878](https://github.com/sider/runners/pull/1878)
+- Add **Metrics File Info** runner [#1937](https://github.com/sider/runners/pull/1937)
 
 ## 0.40.7
 
