@@ -224,7 +224,7 @@ class HarnessTest < Minitest::Test
       mock_capture3.expect :call, ["", "", mock_status], [
         { "RUBYOPT" => nil, "GIT_SSH_COMMAND" => "ssh -F '#{git_ssh_path}'" },
         "ls",
-        chdir: working_dir.to_path, stdin_data: nil
+        chdir: working_dir, stdin_data: nil
       ]
 
       Open3.stub :capture3, mock_capture3 do

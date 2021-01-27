@@ -107,7 +107,7 @@ module Runners
       trace_writer.command_line(command_line) if trace_command_line
 
       method = merge_output ? :capture2e : :capture3
-      Open3.public_send(method, env_hash, command, *new_args, chdir: chdir&.to_path, stdin_data: stdin_data).then do |stdout_str, stderr_str, status|
+      Open3.public_send(method, env_hash, command, *new_args, chdir: chdir, stdin_data: stdin_data).then do |stdout_str, stderr_str, status|
         if merge_output
           status = stderr_str
           stderr_str = ""
