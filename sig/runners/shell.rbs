@@ -1,5 +1,7 @@
 module Runners
   class Shell
+    type command_argument = String | Pathname
+
     class ExecError < SystemError
       attr_reader type: Symbol
       attr_reader args: Array[String]
@@ -34,15 +36,15 @@ module Runners
 
     def env_hash: () -> Hash[String, String?]
 
-    def capture3: (String, *(String | Pathname), **untyped) -> [String, String, Process::Status]
+    def capture3: (String, *command_argument, **untyped) -> [String, String, Process::Status]
 
-    def capture3!: (String, *(String | Pathname), **untyped) -> [String, String]
+    def capture3!: (String, *command_argument, **untyped) -> [String, String]
 
-    def capture3_with_retry!: (String, *(String | Pathname),
+    def capture3_with_retry!: (String, *command_argument,
                                ?tries: Integer,
                                ?sleep: ^(Numeric) -> Numeric) -> [String, String]
 
-    def capture3_trace: (String, *(String | Pathname),
+    def capture3_trace: (String, *command_argument,
                          ?trace_stdout: boolish,
                          ?trace_stderr: boolish,
                          ?trace_command_line: boolish,
