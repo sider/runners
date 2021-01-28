@@ -1,6 +1,7 @@
 module Runners
   class Processor::CodeSniffer < Processor
     include PHP
+    include RecommendedConfig
 
     Schema = _ = StrongJSON.new do
       # @type self: SchemaClass
