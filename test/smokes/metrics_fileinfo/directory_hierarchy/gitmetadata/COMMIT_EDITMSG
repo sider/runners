@@ -1,0 +1,23 @@
+first commit
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Author:    John Doe <john@example.com>
+# Date:      Fri Jan 1 14:00:00 2021 +0900
+#
+# On branch master
+#
+# Initial commit
+#
+# Changes to be committed:
+#	new file:   README.txt
+#	new file:   lib/about_libs.txt
+#	new file:   lib/libbar/libbar.rb
+#	new file:   lib/libfoo/libfoo.rb
+#	new file:   src/main.rb
+#	new file:   src/module_piyo/piyo.rb
+#
+# Untracked files:
+#	gitmetadata/
+#

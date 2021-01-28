@@ -1,0 +1,5 @@
+linter:
+  pmd_cpd:
+    minimum-tokens: 70
+    language: cs
+    encoding: Shift_JIS

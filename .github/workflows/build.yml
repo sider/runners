@@ -48,7 +48,10 @@ jobs:
           - jshint
           - ktlint
           - languagetool
+          - metrics_codeclone
+          - metrics_complexity
           - misspell
+          - metrics_fileinfo
           - phinder
           - phpmd
           - pmd_cpd
