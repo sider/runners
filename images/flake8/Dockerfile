@@ -31,6 +31,7 @@ RUN cd ${RUNNER_USER_HOME} && \
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/flake8/sider_config.ini ${RUNNER_USER_HOME}/.config/flake8
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/flake8/ignored-config.ini ${RUNNER_USER_HOME}/.config/ignored-config.ini
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/flake8/sider_recommended_config.ini ${RUNNER_USER_HOME}/.config/recommended_flake8
 
 
 # Copy the main source code

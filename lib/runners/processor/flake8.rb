@@ -1,6 +1,7 @@
 module Runners
   class Processor::Flake8 < Processor
     include Python
+    include RecommendedConfig
 
     Schema = _ = StrongJSON.new do
       # @type self: SchemaClass
@@ -31,6 +32,7 @@ module Runners
     def setup
       prepare_config
       prepare_plugins
+      warn_recommended_config_file_release(config_linter[:config], "mid Feb in 2021")
       yield
     end
 
