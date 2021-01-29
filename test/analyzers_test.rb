@@ -34,6 +34,11 @@ class AnalyzersTest < Minitest::Test
     assert_raises(KeyError) { analyzers.doc(:foo) }
   end
 
+  def test_website
+    assert_equal "https://eslint.org", analyzers.website(:eslint)
+    assert_equal "https://eslint.org", analyzers.website("eslint")
+  end
+
   def test_deprecated
     refute analyzers.deprecated?(:eslint)
     refute analyzers.deprecated?("eslint")

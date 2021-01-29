@@ -9,6 +9,8 @@ module Runners
 
     def doc: (analyzer_id) -> String
 
+    def website: (analyzer_id) -> String?
+
     def deprecated?: (analyzer_id) -> bool
 
     private

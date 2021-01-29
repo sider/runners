@@ -23,7 +23,7 @@ namespace :readme do
     end
 
     generated_content = <<~MARKDOWN
-      All #{analyzers.size} analyzers are provided as a Docker image:
+      All **#{analyzers.size}** analyzers are provided as a Docker image:
 
       | Name | Links | Status |
       |:-----|:------|:------:|

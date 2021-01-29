@@ -12,6 +12,10 @@ module Runners
       analyzer(id).fetch(:doc).then { |path| "https://help.sider.review/#{path}" }
     end
 
+    def website(id)
+      analyzer(id)[:website]
+    end
+
     def deprecated?(id)
       analyzer(id).fetch(:deprecated, false)
     end
