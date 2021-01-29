@@ -1,7 +1,6 @@
 module Runners
   class Processor::Flake8 < Processor
     include Python
-    include RecommendedConfig
 
     Schema = _ = StrongJSON.new do
       # @type self: SchemaClass
@@ -32,7 +31,6 @@ module Runners
     def setup
       prepare_config
       prepare_plugins
-      warn_recommended_config_file_release(config_linter[:config], "mid Mar in 2021")
       yield
     end
 
@@ -64,6 +62,11 @@ module Runners
         path.exist? && path.read.match(/^\[flake8\]$/m)
       end
       return default_config.delete unless configs.empty?
+
+      add_warning <<~MSG, file: nil
+        Sider's recommended configuration file is about to be released in early Mar 2021.
+        After the release, Sider will automatically apply our recommended ruleset if you don't have the Flake8 configuration file in your repository.
+      MSG
     end
 
     def prepare_plugins

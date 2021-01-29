@@ -5,6 +5,5 @@ FROM sider/devon_rex_python:master
 
 COPY --chown=<%= chown %> images/flake8/sider_config.ini ${RUNNER_USER_HOME}/.config/flake8
 COPY --chown=<%= chown %> images/flake8/ignored-config.ini ${RUNNER_USER_HOME}/.config/ignored-config.ini
-#COPY --chown=<%= chown %> images/flake8/sider_recommended_config.ini ${RUNNER_USER_HOME}/.config/flake8 # おすすめルールを適用後
 
 <%= render_erb 'images/Dockerfile.end.erb' %>
