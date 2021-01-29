@@ -53,7 +53,7 @@ analyzers:
     name: FxCop
     github: dotnet/roslyn-analyzers
     doc: tools/csharp/fxcop
-    website: https://docs.microsoft.com/en-us/visualstudio/code-quality/fxcop-analyzers
+    website: https://docs.microsoft.com/en-us/visualstudio/code-quality/static-code-analysis-for-managed-code-overview
     dependabot: false
   golangci_lint:
     name: GolangCI-Lint
