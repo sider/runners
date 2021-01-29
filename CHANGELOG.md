@@ -34,6 +34,7 @@ Misc:
 - Add **Metrics Code Clone** runner [#1878](https://github.com/sider/runners/pull/1878)
 - Add **Metrics Complexity** runner [#1631](https://github.com/sider/runners/pull/1631)
 - Add **Metrics File Info** runner [#1937](https://github.com/sider/runners/pull/1937)
+- Add `website` to analyzers [#1986](https://github.com/sider/runners/pull/1986)
 
 ## 0.40.7
 
