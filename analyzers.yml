@@ -141,6 +141,7 @@ analyzers:
     name: SCSS-Lint
     github: sds/scss-lint
     doc: tools/css/scss-lint
+    deprecated: true
   shellcheck:
     name: ShellCheck
     github: koalaman/shellcheck
@@ -158,6 +159,7 @@ analyzers:
     name: TSLint
     github: palantir/tslint
     doc: tools/javascript/tslint
+    deprecated: true
   tyscan:
     name: TyScan
     github: sider/TyScan
