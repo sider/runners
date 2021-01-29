@@ -10,3 +10,5 @@ RUN basepath=${COMPOSER_HOME}/vendor && \
 
 <%= render_erb 'images/Dockerfile.base.erb' %>
 <%= render_erb 'images/Dockerfile.end.erb' %>
+
+COPY --chown=<%= chown %> images/code_sniffer/sider_recommended_config.xml ${RUNNER_USER_HOME}/phpcs.xml

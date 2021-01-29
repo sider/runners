@@ -5,6 +5,9 @@ default_version = "3.5.8"
 s.add_test(
   "phpcs3/success",
   type: "success",
+  warnings: [
+    { message: "Sider's recommended configuration file is about to be released in early Mar 2021.\nAfter the release, Sider will automatically apply our recommended ruleset if you don't have the CodeSniffer configuration file in your repository.", file: nil }
+  ],
   issues: [
     {
       path: "app.php",
@@ -24,6 +27,9 @@ s.add_test(
 s.add_test(
   "phpcs3/specified_dir",
   type: "success",
+  warnings: [
+    { message: "Sider's recommended configuration file is about to be released in early Mar 2021.\nAfter the release, Sider will automatically apply our recommended ruleset if you don't have the CodeSniffer configuration file in your repository.", file: nil }
+  ],
   issues: [
     {
       path: "app/app.php",
@@ -219,6 +225,9 @@ s.add_test(
 s.add_test(
   "phpcs3/with_php_version",
   type: "success",
+  warnings: [
+    { message: "Sider's recommended configuration file is about to be released in early Mar 2021.\nAfter the release, Sider will automatically apply our recommended ruleset if you don't have the CodeSniffer configuration file in your repository.", file: nil }
+  ],
   issues: :_,
   analyzer: { name: "PHP_CodeSniffer", version: default_version }
 )

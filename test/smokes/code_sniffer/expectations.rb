@@ -7,6 +7,9 @@ default_version = "3.5.8"
 s.add_test(
   "success",
   type: "success",
+  warnings: [
+    { message: "Sider's recommended configuration file is about to be released in early Mar 2021.\nAfter the release, Sider will automatically apply our recommended ruleset if you don't have the CodeSniffer configuration file in your repository.", file: nil }
+  ],
   issues: [
     {
       path: "app.php",
@@ -44,11 +47,19 @@ s.add_test(
     {
       message: /The `linter.code_sniffer.options` option is deprecated/,
       file: "sideci.yml"
-    }
+    },
+    { message: "Sider's recommended configuration file is about to be released in early Mar 2021.\nAfter the release, Sider will automatically apply our recommended ruleset if you don't have the CodeSniffer configuration file in your repository.", file: nil }
   ]
 )
 
-s.add_test("with_php_version", type: "success", issues: :_, analyzer: { name: "PHP_CodeSniffer", version: default_version })
+s.add_test(
+  "with_php_version",
+  type: "success",
+  warnings: [
+    { message: "Sider's recommended configuration file is about to be released in early Mar 2021.\nAfter the release, Sider will automatically apply our recommended ruleset if you don't have the CodeSniffer configuration file in your repository.", file: nil }
+  ],
+  issues: :_, analyzer: { name: "PHP_CodeSniffer", version: default_version }
+)
 
 s.add_test(
   "broken_sideci_yml",
@@ -109,6 +120,9 @@ s.add_test(
 s.add_test(
   "option_extensions",
   type: "success",
+  warnings: [
+    { message: "Sider's recommended configuration file is about to be released in early Mar 2021.\nAfter the release, Sider will automatically apply our recommended ruleset if you don't have the CodeSniffer configuration file in your repository.", file: nil }
+  ],
   issues: [
     {
       path: "foo.fcgi",
@@ -139,6 +153,9 @@ s.add_test(
 s.add_test(
   "option_ignore",
   type: "success",
+  warnings: [
+    { message: "Sider's recommended configuration file is about to be released in early Mar 2021.\nAfter the release, Sider will automatically apply our recommended ruleset if you don't have the CodeSniffer configuration file in your repository.", file: nil }
+  ],
   issues: [
     {
       path: "src/foo.php",

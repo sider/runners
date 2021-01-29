@@ -45,6 +45,12 @@ module Runners
 
     def setup
       add_warning_if_deprecated_options
+      if !config_linter[:standard] && !config_linter.dig(:options, :standard) && !php_framework
+        add_warning <<~MSG, file: nil
+          Sider's recommended configuration file is about to be released in early Mar 2021.
+          After the release, Sider will automatically apply our recommended ruleset if you don't have the CodeSniffer configuration file in your repository.
+        MSG
+      end
       yield
     end
 
