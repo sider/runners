@@ -17,7 +17,7 @@ All **39** analyzers are provided as a Docker image:
 | Checkstyle | [docker](https://hub.docker.com/r/sider/runner_checkstyle), [source](https://github.com/checkstyle/checkstyle), [doc](https://help.sider.review/tools/java/checkstyle), [website](https://checkstyle.org) | ✅ |
 | Clang-Tidy | [docker](https://hub.docker.com/r/sider/runner_clang_tidy), [source](https://github.com/llvm/llvm-project), [doc](https://help.sider.review/tools/cplusplus/clang-tidy), [website](https://clang.llvm.org/extra/clang-tidy) | ✅ |
 | CoffeeLint | [docker](https://hub.docker.com/r/sider/runner_coffeelint), [source](https://github.com/coffeelint/coffeelint), [doc](https://help.sider.review/tools/javascript/coffeelint), [website](https://coffeelint.github.io) | ✅ |
-| Cppcheck | [docker](https://hub.docker.com/r/sider/runner_cppcheck), [source](https://github.com/danmar/cppcheck), [doc](https://help.sider.review/tools/cplusplus/cppcheck) | ✅ |
+| Cppcheck | [docker](https://hub.docker.com/r/sider/runner_cppcheck), [source](https://github.com/danmar/cppcheck), [doc](https://help.sider.review/tools/cplusplus/cppcheck), [website](http://cppcheck.sourceforge.net) | ✅ |
 | cpplint | [docker](https://hub.docker.com/r/sider/runner_cpplint), [source](https://github.com/cpplint/cpplint), [doc](https://help.sider.review/tools/cplusplus/cpplint) | ✅ |
 | detekt | [docker](https://hub.docker.com/r/sider/runner_detekt), [source](https://github.com/detekt/detekt), [doc](https://help.sider.review/tools/kotlin/detekt), [website](https://detekt.github.io/detekt) | ✅ |
 | ESLint | [docker](https://hub.docker.com/r/sider/runner_eslint), [source](https://github.com/eslint/eslint), [doc](https://help.sider.review/tools/javascript/eslint), [website](https://eslint.org) | ✅ |

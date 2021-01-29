@@ -28,6 +28,7 @@ analyzers:
     name: Cppcheck
     github: danmar/cppcheck
     doc: tools/cplusplus/cppcheck
+    website: http://cppcheck.sourceforge.net
     dependabot: false
   cpplint:
     name: cpplint
