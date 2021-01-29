@@ -18,7 +18,7 @@ analyzers:
     doc: tools/php/code-sniffer
   coffeelint:
     name: CoffeeLint
-    github: clutchski/coffeelint
+    github: coffeelint/coffeelint
     doc: tools/javascript/coffeelint
   cppcheck:
     name: Cppcheck

@@ -16,7 +16,7 @@ All 39 analyzers are provided as a Docker image:
 | Brakeman | [docker](https://hub.docker.com/r/sider/runner_brakeman), [source](https://github.com/presidentbeef/brakeman), [doc](https://help.sider.review/tools/ruby/brakeman) | ✅ |
 | Checkstyle | [docker](https://hub.docker.com/r/sider/runner_checkstyle), [source](https://github.com/checkstyle/checkstyle), [doc](https://help.sider.review/tools/java/checkstyle) | ✅ |
 | Clang-Tidy | [docker](https://hub.docker.com/r/sider/runner_clang_tidy), [source](https://github.com/llvm/llvm-project), [doc](https://help.sider.review/tools/cplusplus/clang-tidy) | ✅ |
-| CoffeeLint | [docker](https://hub.docker.com/r/sider/runner_coffeelint), [source](https://github.com/clutchski/coffeelint), [doc](https://help.sider.review/tools/javascript/coffeelint) | ✅ |
+| CoffeeLint | [docker](https://hub.docker.com/r/sider/runner_coffeelint), [source](https://github.com/coffeelint/coffeelint), [doc](https://help.sider.review/tools/javascript/coffeelint) | ✅ |
 | Cppcheck | [docker](https://hub.docker.com/r/sider/runner_cppcheck), [source](https://github.com/danmar/cppcheck), [doc](https://help.sider.review/tools/cplusplus/cppcheck) | ✅ |
 | cpplint | [docker](https://hub.docker.com/r/sider/runner_cpplint), [source](https://github.com/cpplint/cpplint), [doc](https://help.sider.review/tools/cplusplus/cpplint) | ✅ |
 | detekt | [docker](https://hub.docker.com/r/sider/runner_detekt), [source](https://github.com/detekt/detekt), [doc](https://help.sider.review/tools/kotlin/detekt) | ✅ |
