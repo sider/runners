@@ -12,8 +12,8 @@ namespace :readme do
       links = []
       links << "[docker](https://hub.docker.com/r/sider/runner_#{id})"
       links << "[source](https://github.com/#{analyzer.fetch(:github)})" if analyzer.key?(:github)
-      links << "[website](#{analyzer.fetch(:website)})" if analyzer.key?(:website)
       links << "[doc](https://help.sider.review/#{analyzer.fetch(:doc)})" if analyzer.key?(:doc)
+      links << "[website](#{analyzer.fetch(:website)})" if analyzer.key?(:website)
 
       item = []
       item << analyzer.fetch(:name)
