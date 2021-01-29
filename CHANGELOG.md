@@ -35,6 +35,7 @@ Misc:
 - Add **Metrics Complexity** runner [#1631](https://github.com/sider/runners/pull/1631)
 - Add **Metrics File Info** runner [#1937](https://github.com/sider/runners/pull/1937)
 - Add `website` to analyzers [#1986](https://github.com/sider/runners/pull/1986)
+- Add `beta` to analyzers [#1988](https://github.com/sider/runners/pull/1988)
 
 ## 0.40.7
 
