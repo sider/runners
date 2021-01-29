@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 
 Updated environments:
 
-- **devon_rex** 2.30.1 -> master [#1954](https://github.com/sider/runners/pull/1954)
+- **devon_rex** 2.30.1 -> 2.40.0 [#1954](https://github.com/sider/runners/pull/1954) [#1982](https://github.com/sider/runners/pull/1982)
 - **Bundler** 2.2.3 -> 2.2.7 [#1960](https://github.com/sider/runners/pull/1960) [#1975](https://github.com/sider/runners/pull/1975)
 
 Updated tools:
