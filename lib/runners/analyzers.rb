@@ -11,6 +11,10 @@ module Runners
       @content = YAML.safe_load(File.read(file), symbolize_names: true, filename: file).fetch(:analyzers).freeze
     end
 
+    def include?(id)
+      @content.include?(id.to_sym)
+    end
+
     def name(id)
       name = analyzer(id).fetch(:name)
       return name if name.is_a? String

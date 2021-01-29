@@ -31,6 +31,11 @@ class AnalyzersTest < Minitest::Test
     assert_instance_of Integer, analyzers.size
   end
 
+  def test_include?
+    assert analyzers.include?(:eslint)
+    refute analyzers.include?("foo")
+  end
+
   def test_name
     assert_equal "ESLint", analyzers.name(:eslint)
     assert_equal "ESLint", analyzers.name("eslint")

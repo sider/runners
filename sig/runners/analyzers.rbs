@@ -14,6 +14,8 @@ module Runners
 
     def size: () -> Integer
 
+    def include?: (analyzer_id) -> bool
+
     def name: (analyzer_id) -> String
 
     def github: (analyzer_id) -> String
