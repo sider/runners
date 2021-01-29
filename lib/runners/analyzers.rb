@@ -4,7 +4,12 @@ module Runners
   class Analyzers
     extend Forwardable
 
-    def_delegators :content, :each, :map, :size
+    def_delegators :@content, :each, :map, :size
+
+    def initialize
+      file = File.expand_path("../../../analyzers.yml", __FILE__)
+      @content = YAML.safe_load(File.read(file), symbolize_names: true, filename: file).fetch(:analyzers).freeze
+    end
 
     def name(id)
       name = analyzer(id).fetch(:name)
@@ -41,15 +46,8 @@ module Runners
 
     private
 
-    def content
-      @content ||= begin
-        file = File.expand_path("../../../analyzers.yml", __FILE__)
-        YAML.safe_load(File.read(file), symbolize_names: true, filename: file).fetch(:analyzers).freeze
-      end
-    end
-
     def analyzer(id)
-      content.fetch(id.to_sym)
+      @content.fetch(id.to_sym)
     end
   end
 end

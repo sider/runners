@@ -5,6 +5,8 @@ module Runners
 
     extend Forwardable
 
+    @content: Hash[Symbol, analyzer]
+
     def each: () { ([Symbol, analyzer]) -> void } -> self
             | () -> Enumerator[[Symbol, analyzer], self]
 
@@ -27,8 +29,6 @@ module Runners
     def beta?: (analyzer_id) -> bool
 
     private
-
-    def content: () -> Hash[Symbol, analyzer]
 
     def analyzer: (analyzer_id) -> analyzer
   end
