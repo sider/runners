@@ -1,25 +1,34 @@
-require "yaml"
+require "runners/analyzers"
 
 namespace :readme do
   desc "Generate README file"
   task :generate do
-    filename = "analyzers.yml"
-    analyzers = YAML.safe_load(File.read(filename), filename: filename, symbolize_names: true)
-      .fetch(:analyzers)
-      .sort_by { |_, analyzer| analyzer.fetch(:name).downcase }
+    analyzers = Runners::Analyzers.new
 
     list = analyzers.map do |id, analyzer|
-      links = []
-      links << "[docker](https://hub.docker.com/r/sider/runner_#{id})"
-      links << "[source](https://github.com/#{analyzer.fetch(:github)})" if analyzer.key?(:github)
-      links << "[doc](https://help.sider.review/#{analyzer.fetch(:doc)})" if analyzer.key?(:doc)
-      links << "[website](#{analyzer.fetch(:website)})" if analyzer.key?(:website)
+      links = [
+        "[docker](#{analyzers.docker(id)})",
+        "[source](#{analyzers.github(id)})",
+        "[doc](#{analyzers.doc(id)})",
+      ]
+      analyzers.website(id).tap do |url|
+        links << "[website](#{url})" if url
+      end
 
-      item = []
-      item << analyzer.fetch(:name)
-      item << (!links.empty? ? links.join(", ") : "-")
-      item << (analyzer[:deprecated] ? "⚠️ *deprecated*" : "✅")
-      "| #{item.join(' | ')} |"
+      items = [
+        analyzers.name(id),
+        links.join(", "),
+      ]
+      items << case
+               when analyzers.deprecated?(id)
+                 "⚠️ *deprecated*"
+               when analyzers.beta?(id)
+                 "✅ *beta*"
+               else
+                 "✅"
+               end
+
+      "| #{items.join(' | ')} |"
     end
 
     generated_content = <<~MARKDOWN
@@ -27,7 +36,7 @@ namespace :readme do
 
       | Name | Links | Status |
       |:-----|:------|:------:|
-      #{list.join("\n")}
+      #{list.sort_by(&:downcase).join("\n")}
     MARKDOWN
 
     start_tag = "<!-- AUTO-GENERATED-CONTENT:START (analyzers) -->"

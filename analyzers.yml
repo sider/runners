@@ -15,6 +15,7 @@ analyzers:
     github: llvm/llvm-project
     doc: tools/cplusplus/clang-tidy
     website: https://clang.llvm.org/extra/clang-tidy
+    beta: true
   code_sniffer:
     name: PHP_CodeSniffer
     github: squizlabs/PHP_CodeSniffer
@@ -39,6 +40,7 @@ analyzers:
     github: detekt/detekt
     doc: tools/kotlin/detekt
     website: https://detekt.github.io/detekt
+    beta: true
   eslint:
     name: ESLint
     github: eslint/eslint
@@ -54,6 +56,7 @@ analyzers:
     github: dotnet/roslyn-analyzers
     doc: tools/csharp/fxcop
     website: https://docs.microsoft.com/en-us/visualstudio/code-quality/static-code-analysis-for-managed-code-overview
+    beta: true
     dependabot: false
   golangci_lint:
     name: GolangCI-Lint
@@ -88,24 +91,29 @@ analyzers:
     github: pinterest/ktlint
     doc: tools/kotlin/ktlint
     website: https://ktlint.github.io
+    beta: true
   languagetool:
     name: LanguageTool
     github: languagetool-org/languagetool
     doc: tools/others/languagetool
     website: https://languagetool.org
+    beta: true
     dependabot: false
   metrics_codeclone:
     name: Metrics Code Clone
     github: pmd/pmd
     doc: tools/metrics/codeclone
+    beta: true
   metrics_complexity:
     name: Metrics Complexity
     github: terryyin/lizard
     doc: tools/metrics/complexity
+    beta: true
   metrics_fileinfo:
     name: Metrics File Info
     github: coreutils/coreutils
     doc: tools/metrics/fileinfo
+    beta: true
   misspell:
     name: Misspell
     github: client9/misspell
@@ -125,6 +133,7 @@ analyzers:
     github: pmd/pmd
     doc: tools/others/pmd-cpd
     website: https://pmd.github.io
+    beta: true
   pmd_java:
     name: PMD Java
     github: pmd/pmd
@@ -135,6 +144,7 @@ analyzers:
     github: PyCQA/pylint
     doc: tools/python/pylint
     website: https://pylint.pycqa.org
+    beta: true
   querly:
     name: Querly
     github: soutaro/querly

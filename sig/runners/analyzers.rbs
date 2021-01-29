@@ -1,7 +1,16 @@
 module Runners
   class Analyzers
-    type analyzer = Hash[Symbol, untyped]
+    type analyzer = Hash[Symbol, String | bool | nil]
     type analyzer_id = Symbol | String
+
+    extend Forwardable
+
+    def each: () { ([Symbol, analyzer]) -> void } -> self
+            | () -> Enumerator[[Symbol, analyzer], self]
+
+    def map: [T] () { ([Symbol, analyzer]) -> T } -> Array[T]
+
+    def size: () -> Integer
 
     def name: (analyzer_id) -> String
 
@@ -11,7 +20,11 @@ module Runners
 
     def website: (analyzer_id) -> String?
 
+    def docker: (analyzer_id) -> String
+
     def deprecated?: (analyzer_id) -> bool
+
+    def beta?: (analyzer_id) -> bool
 
     private
 
