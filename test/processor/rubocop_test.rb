@@ -72,6 +72,7 @@ class Runners::Processor::RuboCopTest < Minitest::Test
       assert_links.call %w[https://docs.rubocop.org/rubocop-packaging/cops_packaging.html#packagingbundlersetupintests], "Packaging/BundlerSetupInTests"
 
       # extensions...
+      skip "<https://www.rubydoc.info> is unavailable now. Please remove this skip if the website will recover."
       assert_links.call %w[
         https://www.rubydoc.info/gems/chefstyle/RuboCop/Cop/Chef/Ruby/GemspecRequireRubygems
         https://github.com/chef/chefstyle
