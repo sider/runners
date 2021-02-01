@@ -59,9 +59,8 @@ module Runners
       text_files.each_slice(1000) do |files|
         stdout, _ = capture3!("wc", "-l", *files)
         lines = stdout.lines(chomp: true).tap do |l|
-          # wc command outputs total count when we pass multiple targets. remove it if exist
-          last_line = (l.last or break)
-          l.pop if last_line.match?(/^\d+ total$/)
+          # `wc` command outputs total count when we pass multiple targets. remove it if exist
+          l.pop if l.last&.match?(/^\d+ total$/)
         end
         lines.each do |line|
           fields = line.split(" ")
