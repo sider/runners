@@ -22,6 +22,7 @@ Updated tools:
 - **hadolint** 1.19.0 -> 1.21.0 [#1979](https://github.com/sider/runners/pull/1979) [#1992](https://github.com/sider/runners/pull/1992)
 - **HAML-Lint** 0.36.0 -> 0.37.0 [#1920](https://github.com/sider/runners/pull/1920)
 - **LanguageTool** 5.1 -> 5.2 [#1885](https://github.com/sider/runners/pull/1885)
+- **PMD Java** 6.30.0 -> 6.31.0 [#1995](https://github.com/sider/runners/pull/1995)
 - **Querly** 1.1.0 -> 1.2.0 [#1807](https://github.com/sider/runners/pull/1807)
 - **Reek** 6.0.2 -> 6.0.3 [#1948](https://github.com/sider/runners/pull/1948)
 - **RuboCop** 1.6.1 -> 1.8.1 [#1947](https://github.com/sider/runners/pull/1947)
