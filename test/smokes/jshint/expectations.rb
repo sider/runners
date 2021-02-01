@@ -85,7 +85,7 @@ s.add_test(
   "broken_sideci_yml",
   type: "failure",
   analyzer: :_,
-  message: "The value of the attribute `linter.jshint.config` in your `sideci.yml` is invalid. Please fix and retry."
+  message: "`linter.jshint.config` value in `sideci.yml` is invalid"
 )
 
 s.add_test(
@@ -124,6 +124,6 @@ s.add_test(
 s.add_test(
   "invalid_output_xml",
   type: "failure",
-  message: 'The output XML is invalid: Illegal character "\\u0000" in raw string "Unexpected &apos;\\u0000&apos;."',
+  message: 'Illegal character "\\u0000" in raw string "Unexpected &apos;\\u0000&apos;."',
   analyzer: { name: "JSHint", version: default_version }
 )

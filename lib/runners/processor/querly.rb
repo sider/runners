@@ -2,7 +2,9 @@ module Runners
   class Processor::Querly < Processor
     include Ruby
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :runner_config, Schema::BaseConfig.ruby.update_fields { |fields|
         fields.merge!({
           config: string?,
@@ -24,8 +26,9 @@ module Runners
       GemInstaller::Spec.new(name: "haml", version: []),
     ].freeze
 
+    GEM_NAME = "querly".freeze
     CONSTRAINTS = {
-      "querly" => [">= 0.5.0", "< 2.0.0"]
+      GEM_NAME => [">= 0.5.0", "< 2.0.0"]
     }.freeze
 
     CONFIG_FILE = "querly.yml".freeze
@@ -35,13 +38,11 @@ module Runners
       "version"
     end
 
-    def setup(&block)
-      begin
-        install_gems default_gem_specs, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS, &block
-      rescue InstallGemsFailure => exn
-        trace_writer.error exn.message
-        return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
-      end
+    def setup
+      install_gems(default_gem_specs(GEM_NAME), optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS) { yield }
+    rescue InstallGemsFailure => exn
+      trace_writer.error exn.message
+      return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
     end
 
     def analyze(changes)
@@ -50,20 +51,21 @@ module Runners
         return missing_config_file_result(CONFIG_FILE)
       end
 
-      test_config_file
+      querly_test
 
-      stdout, _ = capture3!(
-        *ruby_analyzer_bin,
+      cmd = ruby_analyzer_command(
         "check",
         "--format=json",
-        *(config_file ? ["--config", config_file] : []),
+        *option_config_file,
         ".",
       )
+      stdout, _ = capture3!(cmd.bin, *cmd.args)
 
       json = JSON.parse(stdout, symbolize_names: true)
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
         Array(json[:issues]).each do |hash|
+          # @type var hash: Hash[Symbol, untyped]
           start_line, start_column = hash[:location][:start]
           end_line, end_column = hash[:location][:end]
           rule = hash[:rule]
@@ -92,6 +94,11 @@ module Runners
       config_linter[:config]
     end
 
+    def option_config_file
+      file = config_file
+      file ? ["--config", file] : []
+    end
+
     def default_config_file
       return @default_config_file if defined? @default_config_file
 
@@ -107,15 +114,16 @@ module Runners
       @default_config_file ||= config_files.first
     end
 
-    def test_config_file
-      stdout, _stderr, _status = capture3(
-        *ruby_analyzer_bin,
-        "test",
-        *(config_file ? ["--config", config_file] : []),
-      )
+    def querly_test
+      cmd = ruby_analyzer_command("test", *option_config_file)
+      stdout, _stderr, _status = capture3(cmd.bin, *cmd.args)
 
       stdout.scan(/^  (\S+:\t.+)$/) do |message, _|
-        add_warning message, file: config_file || default_config_file
+        if message.is_a? String
+          add_warning message, file: config_file || default_config_file
+        else
+          raise "Scan failed: message=#{message.inspect}"
+        end
       end
     end
   end

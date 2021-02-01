@@ -33,7 +33,7 @@ index 740c016..cc737a5 100644
     PATCH
   end
 
-  def test_calculate
+  def test_all
     mktmpdir do |dir|
       (dir / "changed_2.rb").write("hello world")
       (dir / "changed_1.rb").write("hello world")
@@ -46,7 +46,7 @@ index 740c016..cc737a5 100644
       (dir / ".github" / ".added_2.rb").write("")
       (dir / "empty_dir").mkpath
 
-      changes = Changes.calculate(working_dir: dir)
+      changes = Changes.all(working_dir: dir)
 
       assert_equal Set[Pathname(".added_1.rb"),
                        Pathname(".github") / ".added_2.rb",
@@ -137,11 +137,11 @@ index 740c016..cc737a5 100644
         end
       USER
 
-      changes = Changes.calculate(working_dir: dir)
+      changes = Changes.all(working_dir: dir)
 
-      assert_includes changes, Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 1), id: "a", message: "a", links: [])
-      assert_includes changes, Issue.new(path: Pathname("user.rb"), location: nil, id: "a", message: "a", links: [])
-      refute_includes changes, Issue.new(path: Pathname("foo.rb"), location: nil, id: "a", message: "a", links: [])
+      assert_includes changes, Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 1), id: "a", message: "a")
+      assert_includes changes, Issue.new(path: Pathname("user.rb"), location: nil, id: "a", message: "a")
+      refute_includes changes, Issue.new(path: Pathname("foo.rb"), location: nil, id: "a", message: "a")
     end
   end
 
@@ -162,17 +162,34 @@ index 740c016..cc737a5 100644
 
       changes = Changes.calculate_by_patches(working_dir: dir, patches: patches)
 
-      refute_includes changes, Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 1), id: "a", message: "a", links: [])
-      assert_includes changes, Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 2), id: "a", message: "a", links: [])
-      assert_includes changes, Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 3), id: "a", message: "a", links: [])
-      refute_includes changes, Issue.new(path: Pathname("group.rb"), location: Location.new(start_line: 4), id: "a", message: "a", links: [])
-      assert_includes changes, Issue.new(path: Pathname("user.rb"), location: nil, id: "a", message: "a", links: [])
-      refute_includes changes, Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 1), id: "a", message: "a", links: [])
-      assert_includes changes, Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 2), id: "a", message: "a", links: [])
-      refute_includes changes, Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 3), id: "a", message: "a", links: [])
-      refute_includes changes, Issue.new(path: Pathname("user.rb"), location: Location.new(start_line: 4), id: "a", message: "a", links: [])
-      refute_includes changes, Issue.new(path: Pathname("foo.rb"), location: nil, id: "a", message: "a", links: [])
-      refute_includes changes, Issue.new(path: Pathname("foo.rb"), location: Location.new(start_line: 2), id: "a", message: "a", links: [])
+      issue = ->(path:, start_line: nil, end_line: nil, no_location: false) {
+        Issue.new(path: Pathname(path), location: no_location ? nil : Location.new(start_line: start_line, end_line: end_line), id: "a", message: "a")
+      }
+
+      refute_includes changes, issue.(path: "group.rb", start_line: 1)
+      assert_includes changes, issue.(path: "group.rb", start_line: 2)
+      assert_includes changes, issue.(path: "group.rb", start_line: 3)
+      refute_includes changes, issue.(path: "group.rb", start_line: 4)
+      refute_includes changes, issue.(path: "group.rb", start_line: 1, end_line: 1)
+      assert_includes changes, issue.(path: "group.rb", start_line: 1, end_line: 2)
+      assert_includes changes, issue.(path: "group.rb", start_line: 2, end_line: 3)
+      assert_includes changes, issue.(path: "group.rb", start_line: 3, end_line: 4)
+      refute_includes changes, issue.(path: "group.rb", start_line: 4, end_line: 4)
+
+      assert_includes changes, issue.(path: "user.rb", no_location: true)
+      refute_includes changes, issue.(path: "user.rb", start_line: 1)
+      assert_includes changes, issue.(path: "user.rb", start_line: 2)
+      refute_includes changes, issue.(path: "user.rb", start_line: 3)
+      refute_includes changes, issue.(path: "user.rb", start_line: 4)
+      refute_includes changes, issue.(path: "user.rb", start_line: 1, end_line: 1)
+      assert_includes changes, issue.(path: "user.rb", start_line: 1, end_line: 2)
+      assert_includes changes, issue.(path: "user.rb", start_line: 1, end_line: 3)
+      assert_includes changes, issue.(path: "user.rb", start_line: 2, end_line: 3)
+      refute_includes changes, issue.(path: "user.rb", start_line: 3, end_line: 5)
+
+      refute_includes changes, issue.(path: "foo.rb", no_location: true)
+      refute_includes changes, issue.(path: "foo.rb", start_line: 2)
+      refute_includes changes, issue.(path: "foo.rb", start_line: 2, end_line: 3)
     end
   end
 end

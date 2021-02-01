@@ -1,121 +1,139 @@
 GIT
   remote: https://github.com/ybiquitous/aufgaben.git
-  revision: e0bcbfe52d426d4efc6214f01997516eec5e5062
-  tag: 0.5.1
+  revision: 3a17f6a7a722e37f60a393246edc44ef78373588
+  tag: 0.6.0
   specs:
-    aufgaben (0.5.1)
+    aufgaben (0.6.0)
+
+PATH
+  remote: .
+  specs:
+    runners (0.40.7)
+      aws-sdk-s3 (>= 1.87)
+      bugsnag (>= 6.18)
+      bundler (>= 2.2.6, < 2.3.0)
+      fileutils (>= 1.5)
+      forwardable (>= 1.3)
+      git_diff_parser (>= 3.2)
+      json (>= 2.5)
+      jsonseq (>= 0.2)
+      open3 (>= 0.1)
+      psych (>= 3.2)
+      retryable (>= 3.0)
+      rexml (>= 3.2)
+      strong_json (>= 2.1)
+      strscan (>= 3.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (6.0.3.4)
+    activesupport (6.1.0)
       concurrent-ruby (~> 1.0, >= 1.0.2)
-      i18n (>= 0.7, < 2)
-      minitest (~> 5.1)
-      tzinfo (~> 1.1)
-      zeitwerk (~> 2.2, >= 2.2.2)
+      i18n (>= 1.6, < 2)
+      minitest (>= 5.1)
+      tzinfo (~> 2.0)
+      zeitwerk (~> 2.3)
     amazing_print (1.2.2)
     ast (2.4.1)
     ast_utils (0.3.0)
       parser (~> 2.4)
       thor (>= 0.19)
     aws-eventstream (1.1.0)
-    aws-partitions (1.393.0)
-    aws-sdk-core (3.109.2)
+    aws-partitions (1.416.0)
+    aws-sdk-core (3.111.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.239.0)
       aws-sigv4 (~> 1.1)
       jmespath (~> 1.0)
-    aws-sdk-kms (1.39.0)
+    aws-sdk-kms (1.41.0)
       aws-sdk-core (~> 3, >= 3.109.0)
       aws-sigv4 (~> 1.1)
-    aws-sdk-s3 (1.84.1)
+    aws-sdk-s3 (1.87.0)
       aws-sdk-core (~> 3, >= 3.109.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.1)
     aws-sigv4 (1.2.2)
       aws-eventstream (~> 1, >= 1.0.2)
-    bugsnag (6.18.0)
+    bugsnag (6.19.0)
       concurrent-ruby (~> 1.0)
     concurrent-ruby (1.1.7)
-    ffi (1.13.1)
+    ffi (1.14.2)
+    fileutils (1.5.0)
+    forwardable (1.3.2)
     git_diff_parser (3.2.0)
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
     jmespath (1.4.0)
+    json (2.5.1)
     jsonseq (0.2.0)
     language_server-protocol (3.15.0.1)
     lefthook (0.7.2)
-    listen (3.3.1)
+    listen (3.3.3)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    locale (2.1.3)
     minitest (5.14.2)
-    parallel (1.20.0)
+    open3 (0.1.1)
+    parallel (1.20.1)
     parser (2.7.2.0)
       ast (~> 2.4.1)
+    psych (3.3.0)
     rainbow (3.0.0)
-    rake (13.0.1)
+    rake (13.0.3)
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    rbs (0.17.0)
-    regexp_parser (1.8.2)
+    rbs (0.20.1)
+    regexp_parser (2.0.1)
     retryable (3.0.5)
     rexml (3.2.4)
-    rubocop (1.3.0)
+    rubocop (1.6.1)
       parallel (~> 1.10)
       parser (>= 2.7.1.5)
       rainbow (>= 2.2.2, < 4.0)
-      regexp_parser (>= 1.8)
+      regexp_parser (>= 1.8, < 3.0)
       rexml
-      rubocop-ast (>= 1.1.1)
+      rubocop-ast (>= 1.2.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 2.0)
-    rubocop-ast (1.1.1)
+    rubocop-ast (1.3.0)
       parser (>= 2.7.1.5)
     ruby-progressbar (1.10.1)
-    steep (0.35.0)
+    steep (0.37.0)
       activesupport (>= 5.1)
       ast_utils (~> 0.3.0)
       language_server-protocol (~> 3.15.0.1)
       listen (~> 3.0)
       parser (~> 2.7.0)
       rainbow (>= 2.2.2, < 4.0)
-      rbs (~> 0.17.0)
+      rbs (>= 0.20.0)
     strong_json (2.1.2)
+    strscan (3.0.0)
     thor (1.0.1)
-    thread_safe (0.3.6)
-    tzinfo (1.2.8)
-      thread_safe (~> 0.1)
+    tzinfo (2.0.4)
+      concurrent-ruby (~> 1.0)
     unicode-display_width (1.7.0)
     unification_assertion (0.0.1)
       minitest (~> 5)
-    zeitwerk (2.4.1)
+    zeitwerk (2.4.2)
 
 PLATFORMS
   ruby
+  x86_64-darwin-19
+  x86_64-linux
 
 DEPENDENCIES
   amazing_print
   aufgaben!
-  aws-sdk-s3
-  bugsnag
-  bundler (>= 1.12, < 3.0)
-  git_diff_parser
-  jsonseq
   lefthook
-  locale
   minitest
   parallel
   rainbow
   rake
-  retryable
-  rexml (>= 3.2, < 4.0)
+  rbs
   rubocop
-  steep
-  strong_json
+  runners!
+  steep (= 0.37.0)
   unification_assertion
 
 BUNDLED WITH
-   2.1.4
+   2.2.7

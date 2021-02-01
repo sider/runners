@@ -5,6 +5,8 @@ class ShellTest < Minitest::Test
 
   Shell = Runners::Shell
 
+  private
+
   def trace_writer
     @trace_writer ||= new_trace_writer
   end
@@ -15,6 +17,8 @@ class ShellTest < Minitest::Test
     end
     assert_equal expected, actual
   end
+
+  public
 
   def test_chdir
     mktmpdir do |path|
@@ -42,6 +46,20 @@ class ShellTest < Minitest::Test
     end
   end
 
+  def test_push_env_hash
+    mktmpdir do |dir|
+      shell = Shell.new(current_dir: dir, trace_writer: trace_writer, env_hash: { "RUBYOPT" => nil, "GIT_SSH_COMMAND" => "foo" })
+
+      assert_equal({ "RUBYOPT" => nil, "GIT_SSH_COMMAND" => "foo" }, shell.env_hash)
+
+      shell.push_env_hash({ "RBENV_VERSION" => "2.5.0" }) do
+        assert_equal({ "RUBYOPT" => nil, "GIT_SSH_COMMAND" => "foo", "RBENV_VERSION" => "2.5.0" }, shell.env_hash)
+      end
+
+      assert_equal({ "RUBYOPT" => nil, "GIT_SSH_COMMAND" => "foo" }, shell.env_hash)
+    end
+  end
+
   def test_capture3_trace
     mktmpdir do |path|
       shell = Shell.new(current_dir: path, trace_writer: trace_writer, env_hash: {})
@@ -54,6 +72,27 @@ class ShellTest < Minitest::Test
       assert_trace_writer [
         { trace: :command_line, command_line: ["echo", "Hello"] },
         { trace: :stdout, string: "Hello", truncated: false },
+        { trace: :status, status: 0 },
+      ]
+    end
+  end
+
+  def test_capture3_trace_with_pathname_args
+    mktmpdir do |path|
+      test_files = [path / "foo.txt", path / "bar.txt"]
+        .each { |f| f.write("#{f.basename('.txt')}...") }
+        .map { |f| f.relative_path_from(path) }
+
+      shell = Shell.new(current_dir: path, trace_writer: trace_writer, env_hash: {})
+
+      stdout, stderr, status = shell.capture3_trace("cat", *test_files)
+
+      assert_equal "foo...bar...", stdout
+      assert_equal "", stderr
+      assert status.success?
+      assert_trace_writer [
+        { trace: :command_line, command_line: ["cat", "foo.txt", "bar.txt"] },
+        { trace: :stdout, string: "foo...bar...", truncated: false },
         { trace: :status, status: 0 },
       ]
     end
@@ -114,14 +153,14 @@ class ShellTest < Minitest::Test
         { trace: :status, status: 1 },
       ]
 
-      assert_equal({
-        details: {
-          args: ["echo Error | tee /dev/stderr && exit 1"],
-          stdout: "Error\n",
-          stderr: "Error\n",
-          status: 1,
-        }
-      }, error.bugsnag_meta_data)
+      bugsnag = error.bugsnag_meta_data.fetch(:details)
+      assert_equal ["echo Error | tee /dev/stderr && exit 1"], bugsnag.fetch(:args)
+      assert_equal "Error\n", bugsnag.fetch(:stdout)
+      assert_equal "Error\n", bugsnag.fetch(:stderr)
+      assert_match %r{#<Process::Status: pid \d+ exit 1>}, bugsnag.fetch(:status)
+      assert_equal 1, bugsnag.fetch(:exitstatus)
+      assert_nil bugsnag.fetch(:stopsig)
+      assert_nil bugsnag.fetch(:termsig)
     end
   end
 

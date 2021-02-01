@@ -2,28 +2,19 @@ module Runners
   class Processor::Cpplint < Processor
     include RecommendedConfig
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[untyped]
+      def issue: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
-    DEFAULT_TARGET: untyped
+    DEFAULT_TARGET: String
+    CONFIG_FILE_NAME: String
 
-    CONFIG_FILE_NAME: untyped
+    private
 
-    def setup: () { () -> untyped } -> untyped
+    def analyzer_options: () -> Array[String]
 
-    def analyze: (untyped changes) -> untyped
-
-    def analyzer_options: () -> untyped
-
-    # Output format:
-    #
-    #     {line}: {message} [{category}] [{confidence}]
-    #
-    # Example:
-    #
-    #     3: Tab found; better to use spaces [whitespace/tab] [1]
-    #
-    # @see https://github.com/cpplint/cpplint/blob/1.5.2/cpplint.py#L1396
-    # @see https://github.com/cpplint/cpplint/blob/1.5.2/cpplint.py#L1686-L1693
-    def parse_result: (untyped xml_root) -> untyped
+    def parse_result: (REXML::Element) -> Array[Issue]
   end
 end

@@ -10,6 +10,8 @@ class HarnessTest < Minitest::Test
   Location = Runners::Location
   Analyzer = Runners::Analyzer
 
+  private
+
   def trace_writer
     @trace_writer ||= new_trace_writer
   end
@@ -44,6 +46,8 @@ class HarnessTest < Minitest::Test
       Results::Success.new(guid: guid, analyzer: analyzer)
     end
   end
+
+  public
 
   def test_run
     with_harness do |harness|
@@ -134,7 +138,7 @@ class HarnessTest < Minitest::Test
       (harness.working_dir / "sider.yml").write('1: 1:')
       result = harness.run
       assert_instance_of Results::Failure, result
-      assert_equal "Your `sider.yml` is broken at line 1 and column 5. Please fix and retry.", result.message
+      assert_equal "`sider.yml` is broken at line 1 and column 5 (mapping values are not allowed in this context)", result.message
     end
   end
 
@@ -145,7 +149,7 @@ class HarnessTest < Minitest::Test
       assert_instance_of Results::Error, result
       assert_instance_of JSON::ParserError, result.exception
       assert_equal(
-        [{ trace: :error, message: "783: unexpected token at 'something wrong' (JSON::ParserError)" }],
+        [{ trace: :error, message: "809: unexpected token at 'something wrong' (JSON::ParserError)" }],
         trace_writer.writer.map { |entry| entry.slice(:trace, :message) },
       )
     end
@@ -180,6 +184,55 @@ class HarnessTest < Minitest::Test
 
       assert_instance_of Results::Success, result
       assert_path_exists harness.working_dir / ".git" / "config"
+    end
+  end
+
+  def test_not_exclude_special_dirs
+    processor_class = Class.new(TestProcessor) do
+      def use_git_metadata_dir?
+        true
+      end
+
+      def analyze(_)
+        if (working_dir / ".git").exist?
+          super
+        else
+          raise
+        end
+      end
+    end
+
+    with_harness(processor_class: processor_class) do |harness|
+      result = harness.run
+
+      assert_instance_of Results::Success, result
+      assert_path_exists harness.working_dir / ".git" / "config"
+    end
+  end
+
+  def test_build_shell
+    with_harness do |harness|
+      working_dir = harness.working_dir
+      git_ssh_path = working_dir / "id_rsa"
+
+      mock_status = Minitest::Mock.new
+      mock_status.expect :success?, false
+      mock_status.expect :exited?, true
+      mock_status.expect :exitstatus, 3
+
+      mock_capture3 = Minitest::Mock.new
+      mock_capture3.expect :call, ["", "", mock_status], [
+        { "RUBYOPT" => nil, "GIT_SSH_COMMAND" => "ssh -F '#{git_ssh_path}'" },
+        "ls",
+        chdir: working_dir, stdin_data: nil
+      ]
+
+      Open3.stub :capture3, mock_capture3 do
+        harness.send(:build_shell, git_ssh_path).capture3_trace("ls")
+
+        assert_mock mock_status
+        assert_mock mock_capture3
+      end
     end
   end
 end

@@ -2,16 +2,16 @@ module Runners
   class Processor::Javasee < Processor
     include Java
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[untyped]
+      def rule: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
-    DEFAULT_CONFIG_FILE: untyped
+    DEFAULT_CONFIG_FILE: String
 
-    def extract_version_option: () -> "version"
+    private
 
-    def setup: () { () -> untyped } -> untyped
-
-    def analyze: (untyped changes) -> untyped
-
-    def construct_result: (untyped result, untyped stdout, untyped stderr) -> untyped
+    def construct_result: (String) { (Issue) -> void } -> void
   end
 end

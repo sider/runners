@@ -2,16 +2,18 @@ module Runners
   class Processor::Phinder < Processor
     include PHP
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[untyped]
+      def issue: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
-    DEFAULT_RULE_FILE: untyped
+    DEFAULT_RULE_FILE: String
 
-    def test_phinder_config: () -> untyped
+    private
 
-    def run_phinder: () -> untyped
+    def test_phinder_config: () -> void
 
-    def setup: () { () -> untyped } -> untyped
-
-    def analyze: (untyped changes) -> untyped
+    def run_phinder: () -> result
   end
 end

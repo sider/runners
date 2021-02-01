@@ -58,8 +58,7 @@ s.add_test(
   "broken_sideci_yml",
   type: "failure",
   analyzer: :_,
-  message:
-    "The value of the attribute `linter.rails_best_practices.exclude` in your `sideci.yml` is invalid. Please fix and retry."
+  message: "`linter.rails_best_practices.exclude` value in `sideci.yml` is invalid"
 )
 
 s.add_test(

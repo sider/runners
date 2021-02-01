@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "0.36.0"
+default_version = "0.37.0"
 
 s.add_test(
   "success",
@@ -156,8 +156,7 @@ s.add_test(
 s.add_test(
   "broken_sideci_yml",
   type: "failure",
-  message:
-    "The value of the attribute `linter.haml_lint.config` in your `sideci.yml` is invalid. Please fix and retry.",
+  message: "`linter.haml_lint.config` value in `sideci.yml` is invalid",
   analyzer: :_
 )
 

@@ -6,19 +6,20 @@ module Runners
       class InvalidGemfileLock < InstallGemsFailure
       end
 
-      attr_reader root_dir: untyped
+      attr_reader root_dir: Pathname
+      attr_reader shell: Shell
 
-      attr_reader shell: untyped
+      def initialize: (root_dir: Pathname, shell: Shell) -> void
 
-      def initialize: (root_dir: untyped root_dir, shell: untyped shell) -> untyped
+      def ensure_lockfile: [X] () { (Lockfile) -> X } -> X
 
-      def ensure_lockfile: () { (untyped) -> untyped } -> untyped
+      private
 
-      def gemfile_path: () -> untyped
+      def gemfile_path: () -> Pathname
 
-      def gemfile_lock_path: () -> untyped
+      def gemfile_lock_path: () -> Pathname
 
-      def generate_lockfile: (untyped lockfile_path) -> (untyped | nil)
+      def generate_lockfile: (Pathname) -> String?
     end
   end
 end

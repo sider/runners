@@ -2,26 +2,26 @@ module Runners
   class Processor::Querly < Processor
     include Ruby
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[untyped]
+      def rule: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
-    OPTIONAL_GEMS: untyped
+    OPTIONAL_GEMS: Array[Ruby::GemInstaller::Spec]
+    GEM_NAME: String
+    CONSTRAINTS: Ruby::constraints
+    CONFIG_FILE: String
+    CONFIG_FILES_GLOB: String
 
-    CONSTRAINTS: untyped
+    private
 
-    CONFIG_FILE: untyped
+    def config_file: () -> String?
 
-    CONFIG_FILES_GLOB: untyped
+    def option_config_file: () -> Array[String]
 
-    def extract_version_option: () -> "version"
+    def default_config_file: () -> String?
 
-    def setup: () { () -> untyped } -> untyped
-
-    def analyze: (untyped changes) -> untyped
-
-    def config_file: () -> untyped
-
-    def default_config_file: () -> untyped
-
-    def test_config_file: () -> untyped
+    def querly_test: () -> void
   end
 end

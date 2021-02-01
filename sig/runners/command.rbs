@@ -1,0 +1,10 @@
+module Runners
+  class Command
+    attr_reader bin: String
+    attr_reader args: Array[String]
+
+    def initialize: (String, ?Array[String]) -> void
+
+    def to_a: () -> Array[String]
+  end
+end

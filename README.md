@@ -1,3 +1,5 @@
+![Build](https://github.com/sider/runners/workflows/Build/badge.svg)
+
 # Sider Runners
 
 This is a Sider analyzer framework.
@@ -7,7 +9,7 @@ See also another related project, called [devon_rex](https://github.com/sider/de
 ## Supported analyzers
 
 <!-- AUTO-GENERATED-CONTENT:START (analyzers) -->
-All 36 analyzers are provided as a Docker image:
+All 39 analyzers are provided as a Docker image:
 
 | Name | Links | Status |
 |:-----|:------|:------:|
@@ -29,6 +31,9 @@ All 36 analyzers are provided as a Docker image:
 | JSHint | [docker](https://hub.docker.com/r/sider/runner_jshint), [source](https://github.com/jshint/jshint), [doc](https://help.sider.review/tools/javascript/jshint) | ✅ |
 | ktlint | [docker](https://hub.docker.com/r/sider/runner_ktlint), [source](https://github.com/pinterest/ktlint), [doc](https://help.sider.review/tools/kotlin/ktlint) | ✅ |
 | LanguageTool | [docker](https://hub.docker.com/r/sider/runner_languagetool), [source](https://github.com/languagetool-org/languagetool), [doc](https://help.sider.review/tools/others/languagetool) | ✅ |
+| Metrics Code Clone | [docker](https://hub.docker.com/r/sider/runner_metrics_codeclone), [source](https://github.com/pmd/pmd), [doc](https://help.sider.review/tools/metrics/codeclone) | ✅ |
+| Metrics Complexity | [docker](https://hub.docker.com/r/sider/runner_metrics_complexity), [source](https://github.com/terryyin/lizard), [doc](https://help.sider.review/tools/metrics/complexity) | ✅ |
+| Metrics File Info | [docker](https://hub.docker.com/r/sider/runner_metrics_fileinfo), [source](https://github.com/coreutils/coreutils), [doc](https://help.sider.review/tools/metrics/fileinfo) | ✅ |
 | Misspell | [docker](https://hub.docker.com/r/sider/runner_misspell), [source](https://github.com/client9/misspell), [doc](https://help.sider.review/tools/others/misspell) | ✅ |
 | Phinder | [docker](https://hub.docker.com/r/sider/runner_phinder), [source](https://github.com/sider/phinder), [doc](https://help.sider.review/tools/php/phinder) | ✅ |
 | PHP_CodeSniffer | [docker](https://hub.docker.com/r/sider/runner_code_sniffer), [source](https://github.com/squizlabs/PHP_CodeSniffer), [doc](https://help.sider.review/tools/php/code-sniffer) | ✅ |
@@ -97,19 +102,23 @@ $ tree -F -L 1 -d
 .
 ├── bin
 ├── docs
+├── exe
 ├── images
 ├── lib
 ├── sig
+├── tasks
 └── test
 
 6 directories
 ```
 
-- `bin`: Entry point to launch a runner
+- `bin`: Scripts
 - `docs`: Documents
+- `exe`: Entry point
 - `images`: Docker images
 - `lib`: Core programs
 - `sig`: Ruby signature files for type-checking
+- `tasks`: Rake tasks
 - `test`: Unit tests and smoke tests
 
 ### Testing

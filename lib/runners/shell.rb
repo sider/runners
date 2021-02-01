@@ -29,7 +29,10 @@ module Runners
             args: args,
             stdout: stdout_str,
             stderr: stderr_str,
-            status: status.exitstatus,
+            status: status.inspect,
+            exitstatus: status.exitstatus,
+            stopsig: status.stopsig,
+            termsig: status.termsig,
           }
         }
       end
@@ -42,7 +45,7 @@ module Runners
     # signal number for analyse timeout
     SIGUSR2 = Signal.list.fetch('USR2')
 
-    def initialize(current_dir:, trace_writer:, env_hash:)
+    def initialize(current_dir:, trace_writer:, env_hash: {})
       @trace_writer = trace_writer
       @current_dir = current_dir
       @env_hash_stack = [env_hash]
@@ -81,7 +84,7 @@ module Runners
       [stdout, stderr]
     end
 
-    def capture3_with_retry!(command, *args, tries: 3, sleep: -> (n) { n + 1 })
+    def capture3_with_retry!(command, *args, tries: 3, sleep: -> (n) { Integer(n) + 1 })
       Retryable.retryable(
         tries: tries,
         on: ExecError,
@@ -89,26 +92,22 @@ module Runners
         exception_cb: -> (_ex) { trace_writer.message "Command failed. Retrying..." }
       ) do
         capture3!(command, *args)
-      end
+      end or raise "Unexpected result (tries=#{tries}): #{command} #{args.join(' ')}"
     end
 
-    # TODO: After migrating to Steep (>= 0.14), use keyword arguments like `trace_stdout: true, ...`
-    def capture3_trace(command, *args, **options)
-      # @type var options: untyped
-      trace_stdout = options.fetch(:trace_stdout, true)
-      trace_stderr = options.fetch(:trace_stderr, true)
-      trace_command_line = options.fetch(:trace_command_line, true)
-      raise_on_failure = options.fetch(:raise_on_failure, false)
-      chdir = options[:chdir] || current_dir
-      is_success = options.fetch(:is_success) { ->(status) { status.success? } }
-      stdin_data = options.fetch(:stdin_data, nil)
-      merge_output = options.fetch(:merge_output, false)
+    def capture3_trace(command, *args,
+                       trace_stdout: true, trace_stderr: true, trace_command_line: true,
+                       raise_on_failure: false, chdir: nil,
+                       is_success: ->(status) { status.success? },
+                       stdin_data: nil, merge_output: false)
+      chdir ||= current_dir
+      new_args = args.map { |arg| arg.is_a?(Pathname) ? arg.to_path : arg }
+      command_line = [command] + new_args
 
-      command_line = [command] + args
       trace_writer.command_line(command_line) if trace_command_line
 
       method = merge_output ? :capture2e : :capture3
-      Open3.public_send(method, env_hash, command, *args, chdir: chdir.to_s, stdin_data: stdin_data).then do |stdout_str, stderr_str, status|
+      Open3.public_send(method, env_hash, command, *new_args, chdir: chdir, stdin_data: stdin_data).then do |stdout_str, stderr_str, status|
         if merge_output
           status = stderr_str
           stderr_str = ""
@@ -135,7 +134,7 @@ module Runners
                                 stdout_str: trace_writer.filter.mask(stdout_str),
                                 stderr_str: trace_writer.filter.mask(stderr_str),
                                 status: status,
-                                dir: current_dir)
+                                dir: chdir)
           end
         end
 

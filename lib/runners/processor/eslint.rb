@@ -2,7 +2,9 @@ module Runners
   class Processor::Eslint < Processor
     include Nodejs
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
         fields.merge!({
                         target: enum?(string, array(string)),
@@ -186,7 +188,7 @@ module Runners
         Results::Success.new(guid: guid, analyzer: analyzer)
       elsif no_eslint_config?(stderr)
         trace_writer.message "Retrying with the default configuration file because no configuration files were found..."
-        FileUtils.copy(DEFAULT_ESLINT_CONFIG, ".eslintrc.yml")
+        FileUtils.copy_file(DEFAULT_ESLINT_CONFIG, ".eslintrc.yml")
         run_analyzer
       else
         Results::Failure.new(guid: guid, analyzer: analyzer)

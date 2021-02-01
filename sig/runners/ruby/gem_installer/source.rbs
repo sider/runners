@@ -1,58 +1,31 @@
 module Runners
   class Ruby::GemInstaller
     class Source
-      DEFAULT: untyped
+      DEFAULT: String
 
-      def self.default: () -> untyped
+      def self.default: () -> instance
 
-      def self.rubygems: (untyped source) -> untyped
+      def self.create: (gems_item) -> instance
 
-      def self.git: (untyped repo, **untyped options) -> untyped
+      def rubygems?: () -> bool
 
-      def self.create: (untyped gems_item) -> untyped
+      def git?: () -> bool
 
-      def rubygems?: () -> ::FalseClass
+      def default?: () -> bool
 
-      def git?: () -> ::FalseClass
-
-      def default?: () -> ::FalseClass
-
-      # @see https://bundler.io/man/gemfile.5.html#SOURCE
       class Rubygems < Source
-        attr_reader source: untyped
+        attr_reader source: String
 
-        def initialize: (untyped source) -> untyped
-
-        def rubygems?: () -> ::TrueClass
-
-        def default?: () -> untyped
-
-        def ==: (untyped other) -> untyped
-
-        def hash: () -> untyped
-
-        def to_s: () -> ::String
+        def initialize: (String) -> void
       end
 
-      # @see https://bundler.io/man/gemfile.5.html#GIT
       class Git < Source
-        attr_reader repo: untyped
+        attr_reader repo: String
+        attr_reader ref: String?
+        attr_reader branch: String?
+        attr_reader tag: String?
 
-        attr_reader ref: untyped
-
-        attr_reader branch: untyped
-
-        attr_reader tag: untyped
-
-        def initialize: (untyped repo, ?ref: untyped? ref, ?branch: untyped? branch, ?tag: untyped? tag) -> untyped
-
-        def git?: () -> ::TrueClass
-
-        def ==: (untyped other) -> untyped
-
-        def hash: () -> untyped
-
-        def to_s: () -> untyped
+        def initialize: (git_source) -> void
       end
     end
   end

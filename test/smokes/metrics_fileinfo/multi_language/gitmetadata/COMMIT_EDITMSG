@@ -1,0 +1,16 @@
+add a ISO-2022 encoded text
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Author:    John Doe <john@example.com>
+# Date:      Fri Jan 1 13:00:00 2021 +0900
+#
+# On branch master
+# Changes to be committed:
+#	new file:   iso_2022_jp.txt
+#
+# Untracked files:
+#	foo.txt~
+#	gitmetadata/
+#

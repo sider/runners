@@ -2,7 +2,9 @@ module Runners
   class Processor::PmdCpd < Processor
     include Java
 
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :available_languages, enum(
         literal("apex"),
         literal("cpp"),
@@ -73,11 +75,7 @@ module Runners
       @analyzer_version ||= capture3!("show_pmd_version").yield_self { |stdout,| stdout.strip }
     end
 
-    def analyze(changes)
-      run_analyzer
-    end
-
-    def run_analyzer
+    def analyze(_changes)
       issues = []
 
       languages.each do |language|
@@ -88,6 +86,8 @@ module Runners
 
       Results::Success.new(guid: guid, analyzer: analyzer, issues: issues)
     end
+
+    private
 
     def raise_warnings(stderr)
       stderr.each_line do |line|
@@ -102,9 +102,8 @@ module Runners
       #       The PMD CPD writes an XML report as UTF-8 with the inconsistent encoding attribute value when the --encoding option is specified.
       stdout.sub!(/<\?xml version="1\.0" encoding=".+"\?>/, '<?xml version="1.0" encoding="UTF-8"?>')
 
-      REXML::Document.new(stdout).each_element('pmd-cpd/duplication') do |elem_dupli|
+      read_xml(stdout).each_element('duplication') do |elem_dupli|
         files = elem_dupli.get_elements('file').map{ |f| to_fileinfo(f) }
-        issueobj = create_issue_object(elem_dupli, files)
 
         files.each do |file|
           yield Issue.new(
@@ -112,7 +111,7 @@ module Runners
             path: file[:path],
             location: file[:location],
             message: "Code duplications found (#{files.length} occurrences).",
-            object: issueobj,
+            object: create_issue_object(elem_dupli, files),
             schema: Schema.issue,
           )
         end
@@ -120,40 +119,42 @@ module Runners
     end
 
     def to_fileinfo(elem_file)
-      path = relative_path(elem_file[:path])
+      filename = elem_file[:path] or raise "required path: #{elem_file.inspect}"
+      path = relative_path(filename)
+
       location = Location.new(
         start_line: elem_file[:line],
         start_column: elem_file[:column],
         end_line: elem_file[:endline],
         end_column: elem_file[:endcolumn],
       )
-      id = Digest::SHA1.hexdigest(path.to_s + location.to_s) # In case multiple duplicates are found in a file, generate a hash from the file path and the location.
+      id = Digest::SHA1.hexdigest("#{path}#{location}") # In case multiple duplicates are found in a file, generate a hash from the file path and the location.
 
-      return {
-        id: id,
-        path: path,
-        location: location
-      }
+      { id: id, path: path, location: location }
     end
 
     def create_issue_object(elem_dupli, files)
-      lines = Integer(elem_dupli[:lines])
-      tokens = Integer(elem_dupli[:tokens])
-      codefragment = elem_dupli.elements['codefragment'].cdatas[0].value
+      lines_text = elem_dupli[:lines] or raise "required lines: #{elem_dupli.inspect}"
+      lines = Integer(lines_text)
 
-      # @see https://github.com/pmd/pmd/pull/2633
-      codefragment = CGI.unescape_html(codefragment)
+      tokens_text = elem_dupli[:tokens] or raise "required tokens: #{elem_dupli.inspect}"
+      tokens = Integer(tokens_text)
 
-      fileobjs = files.map { |f| {
-        id: f[:id],
-        path: f[:path].to_s,
-        start_line: f[:location].start_line,
-        start_column: f[:location].start_column,
-        end_line: f[:location].end_line,
-        end_column: f[:location].end_column,
-      }}
+      codefragment = elem_dupli.elements['codefragment']&.cdatas&.first&.value
+      codefragment or raise "required codefragment: #{elem_dupli.inspect}"
 
-      return {
+      fileobjs = files.map do |f|
+        {
+          id: f[:id],
+          path: f[:path].to_path,
+          start_line: f[:location].start_line,
+          start_column: f[:location].start_column,
+          end_line: f[:location].end_line,
+          end_column: f[:location].end_column,
+        }
+      end
+
+      {
         lines: lines,
         tokens: tokens,
         files: fileobjs,

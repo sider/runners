@@ -2,8 +2,9 @@ module Runners
   class Processor::Tyscan < Processor
     include Nodejs
 
-    # Define schema in sider.yml
-    Schema = StrongJSON.new do
+    Schema = _ = StrongJSON.new do
+      # @type self: SchemaClass
+
       let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
         fields.merge!({
                         config: string?,
@@ -12,7 +13,7 @@ module Runners
                       })
       }
 
-      let :issue_object, object(
+      let :issue, object(
         id: string,
         message: string,
       )
@@ -44,6 +45,8 @@ module Runners
       tyscan_test
       tyscan_scan
     end
+
+    private
 
     def tyscan_test
       args = []
@@ -89,7 +92,7 @@ module Runners
               id: match[:rule][:id],
               message: match[:rule][:message],
             },
-            schema: Schema.issue_object,
+            schema: Schema.issue,
           )
         end
       end

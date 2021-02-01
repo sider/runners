@@ -1,9 +1,9 @@
 module Runners
   module Schema
     Options = _ = StrongJSON.new do
-      # @type self: Types::Options
+      # @type self: OptionsClass
 
-      let :source, object?(
+      let :source, object(
         head: string,
         base: string?,
         git_url: string,
@@ -16,7 +16,6 @@ module Runners
         outputs: array?(string),
         ssh_key: string?,
         s3: object?(endpoint: string),
-        new_issue_schema: boolean?,
       )
     end
   end

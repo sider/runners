@@ -2,24 +2,17 @@ module Runners
   class Processor::ScssLint < Processor
     include Ruby
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
-    # https://github.com/brigade/scss-lint#exit-status-codes
-    EXIT_CODE_FILES_NOT_EXIST: ::Integer
+    EXIT_CODE_FILES_NOT_EXIST: Integer
 
-    def analyzer_bin: () -> "scss-lint"
+    private
 
-    def analyzer_version: () -> untyped
+    def scss_lint_config: () -> Array[String]
 
-    def setup: () { () -> untyped } -> untyped
-
-    def analyze: (untyped _changes) -> untyped
-
-    def scss_lint_config: () -> untyped
-
-    # @param stdout [String]
-    def parse_result: (untyped stdout) -> untyped
-
-    def run_analyzer: (untyped options) -> untyped
+    def parse_result: (String) -> Array[Issue]
   end
 end

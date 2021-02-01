@@ -2,48 +2,43 @@ module Runners
   class Processor::Eslint < Processor
     include Nodejs
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[untyped]
+      def issue: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
-    CONSTRAINTS: untyped
+    CONSTRAINTS: Nodejs::constraints
+    CUSTOM_FORMATTER: String
+    DEFAULT_ESLINT_CONFIG: String
+    DEFAULT_TARGET: String
 
-    CUSTOM_FORMATTER: untyped
+    private
 
-    DEFAULT_ESLINT_CONFIG: untyped
+    def target: () -> Array[String]
 
-    DEFAULT_TARGET: untyped
+    def eslint_config: () -> String?
 
-    def setup: () { () -> untyped } -> untyped
+    def ext: () -> Array[String]
 
-    def analyze: (untyped _changes) -> untyped
+    def ignore_path: () -> Array[String]
 
-    def target: () -> untyped
+    def ignore_pattern: () -> Array[String]
 
-    def eslint_config: () -> untyped
+    def no_ignore: () -> Array[String]
 
-    def ext: () -> untyped
+    def global: () -> Array[String]
 
-    def ignore_path: () -> untyped
+    def quiet: () -> Array[String]
 
-    def ignore_pattern: () -> untyped
+    def normalize_severity: (Integer) -> String
 
-    def no_ignore: () -> untyped
+    def parse_result: (Array[untyped]) { (Issue) -> void } -> void
 
-    def global: () -> untyped
+    def run_analyzer: (?config: String) -> result
 
-    def quiet: () -> untyped
+    def no_linting_files?: (String) -> bool
 
-    # @see https://eslint.org/docs/user-guide/configuring#configuring-rules
-    def normalize_severity: (untyped severity) -> untyped
-
-    # @see https://eslint.org/docs/developer-guide/working-with-custom-formatters#the-results-object
-    def parse_result: (untyped result) { (untyped) -> untyped } -> untyped
-
-    def run_analyzer: (?config: untyped? config) -> untyped
-
-    # NOTE: Linting nonexistent files is a fatal error since v5.0.0.
-    # @see https://eslint.org/docs/user-guide/migrating-to-5.0.0#-linting-nonexistent-files-from-the-command-line-is-now-a-fatal-error
-    def no_linting_files?: (untyped stderr) -> untyped
-
-    def no_eslint_config?: (untyped stderr) -> untyped
+    def no_eslint_config?: (String) -> bool
   end
 end

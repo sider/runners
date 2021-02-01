@@ -1,0 +1,15 @@
+modify
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Author:    John Doe <john@example.com>
+# Date:      Fri Jan 1 12:00:00 2021 +0900
+#
+# On branch master
+# Changes to be committed:
+#	modified:   hello.rb
+#
+# Untracked files:
+#	gitmetadata/
+#

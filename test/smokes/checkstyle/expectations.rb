@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "8.36.2"
+default_version = "8.39"
 
 s.add_test(
   "success",
@@ -110,6 +110,17 @@ s.add_test(
       }
     },
     {
+      message: "Missing a Javadoc comment.",
+      links: %w[https://checkstyle.org/config_javadoc.html#MissingJavadocType],
+      id: "MissingJavadocTypeCheck",
+      path: "src/Hello.java",
+      location: { start_line: 3, start_column: 1 },
+      object: { severity: "warning" },
+      git_blame_info: {
+        commit: :_, line_hash: "b4aa7ff94732722c55d79ff3788d3d5f22b197b2", original_line: 3, final_line: 3
+      }
+    },
+    {
       message: "The name of the outer type and the file do not match.",
       links: %w[https://checkstyle.org/config_misc.html#OuterTypeFilename],
       id: "OuterTypeFilenameCheck",
@@ -196,8 +207,7 @@ s.add_test(
 s.add_test(
   "broken_sideci_yml",
   type: "failure",
-  message:
-    "The value of the attribute `linter.checkstyle.exclude` in your `sideci.yml` is invalid. Please fix and retry.",
+  message: "`linter.checkstyle.exclude` value in `sideci.yml` is invalid",
   analyzer: :_
 )
 

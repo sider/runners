@@ -28,16 +28,14 @@ module Runners
               Changes.calculate_by_patches(working_dir: working_dir, patches: patches)
             end
           else
-            trace_writer.message "Calculating changes..." do
-              Changes.calculate(working_dir: working_dir)
-            end
+            Changes.all(working_dir: working_dir)
           end
 
         yield git_ssh_path, changes
       end
     end
 
-    def range_git_blame_info(path_string, start_line, end_line)
+    def range_git_blame_info(path_string, start_line, end_line, trace: false)
       []
     end
 

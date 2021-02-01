@@ -23,7 +23,9 @@ s.add_test(
 
 s.add_test(
   "invalid_rule",
-  type: "failure", message: 'Invalid rule: "invalid_rule"', analyzer: { name: "PHPMD", version: default_version }
+  type: "failure",
+  message: 'Invalid rule: "invalid_rule"',
+  analyzer: { name: "PHPMD", version: default_version }
 )
 
 s.add_test(
@@ -123,7 +125,7 @@ s.add_test(
   "broken_sideci_yml",
   type: "failure",
   message:
-    "The value of the attribute `linter.phpmd.minimumpriority` in your `sideci.yml` is invalid. Please fix and retry.",
+    "`linter.phpmd.minimumpriority` value in `sideci.yml` is invalid",
   analyzer: :_
 )
 
@@ -171,7 +173,7 @@ s.add_test(
 s.add_test(
   "invalid_output_xml",
   type: "failure",
-  message: "Invalid XML was output. See the log for details.",
+  message: %r{Illegal character "\\u0010" in raw string "Unexpected token: \\u0010, line: 3, col: 7, file: .+/test\.php\.},
   analyzer: { name: "PHPMD", version: default_version }
 )
 

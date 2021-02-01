@@ -5,17 +5,27 @@ class Runners::Processor::PhpmdTest < Minitest::Test
 
   Phpmd = Runners::Processor::Phpmd
 
+  private
+
   def trace_writer
     @trace_writer ||= new_trace_writer
   end
 
-  def subject(workspace, yaml: nil)
-    Phpmd.new(guid: SecureRandom.uuid, working_dir: workspace.working_dir, config: config(yaml), git_ssh_path: nil, trace_writer: trace_writer).tap do |s|
+  def subject(workspace, yaml: "")
+    Phpmd.new(
+      guid: SecureRandom.uuid,
+      working_dir: workspace.working_dir,
+      config: config(yaml),
+      shell: Runners::Shell.new(current_dir: workspace.working_dir, trace_writer: trace_writer),
+      trace_writer: trace_writer,
+    ).tap do |s|
       def s.analyzer_id
         "phpmd"
       end
     end
   end
+
+  public
 
   def test_target_files
     with_workspace do |workspace|

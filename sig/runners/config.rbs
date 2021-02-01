@@ -1,45 +1,64 @@
 module Runners
   class Config
     class Error < UserError
-      attr_reader raw_content: untyped
+      attr_reader path_name: String
+      attr_reader raw_content: String
 
-      def initialize: (untyped message, untyped raw_content) -> untyped
+      def initialize: (String, path_name: String, raw_content: String) -> void
     end
 
     class BrokenYAML < Error
+      attr_reader line: Integer
+      attr_reader column: Integer
+      attr_reader problem: String
+
+      def initialize: (String, path_name: String, raw_content: String, line: Integer, column: Integer, problem: String) -> void
     end
 
     class InvalidConfiguration < Error
+      attr_reader attribute: String
+
+      def initialize: (String, path_name: String, raw_content: String, attribute: String) -> void
     end
 
-    CONFIG_FILE_NAME: untyped
+    FILE_NAME: String
+    FILE_NAME_OLD: String
 
-    OLD_CONFIG_FILE_NAME: untyped
+    def self.load_from_dir: (Pathname) -> instance
 
-    attr_reader working_dir: untyped
+    attr_reader path: Pathname?
+    attr_reader raw_content: String?
 
-    attr_reader raw_content: untyped
+    def initialize: (path: (Pathname | String)?, raw_content: String?) -> void
 
-    attr_reader content: untyped
+    def raw_content!: () -> String
 
-    def initialize: (untyped working_dir) -> untyped
+    def content: () -> Hash[Symbol, untyped]
 
-    def raw_content!: () -> untyped
+    alias validate content
 
-    def path_name: () -> untyped
+    def valid?: () -> bool
 
-    def path_exist?: () -> untyped
+    def invalid?: () -> bool
 
-    def ignore_patterns: () -> untyped
+    def path_name: () -> String
 
-    def linter: (untyped id) -> untyped
+    def path_exist?: () -> bool
 
-    def linter?: (untyped id) -> untyped
+    def ignore_patterns: () -> Array[String]
 
-    def path: () -> untyped
+    def linter: (Symbol | String) -> Hash[Symbol, untyped]
 
-    def parse_yaml: () -> untyped
+    def linter?: (Symbol | String) -> bool
 
-    def check_schema: (untyped object) -> untyped
+    def check_unsupported_linters: (Array[String]) -> String
+
+    def exclude_branch?: (String) -> bool
+
+    def parse: () -> untyped
+
+    private
+
+    def check_schema: (untyped) -> Hash[Symbol, untyped]
   end
 end

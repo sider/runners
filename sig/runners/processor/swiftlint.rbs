@@ -2,26 +2,24 @@ module Runners
   class Processor::Swiftlint < Processor
     include Swift
 
-    Schema: untyped
+    class SchemaClass < StrongJSON
+      def runner_config: () -> StrongJSON::Type::Object[untyped]
+      def issue: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
 
-    def extract_version_option: () -> "version"
+    private
 
-    def setup: () { () -> untyped } -> untyped
+    def ignore_warnings?: () -> boolish
 
-    def analyze: (untyped changes) -> untyped
+    def cli_path: () -> Array[String]
 
-    def ignore_warnings?: () -> untyped
+    def cli_config: () -> Array[String]
 
-    def cli_path: () -> untyped
+    def cli_lenient: () -> Array[String]
 
-    def cli_config: () -> untyped
+    def cli_enable_all_rules: () -> Array[String]
 
-    def cli_lenient: () -> untyped
-
-    def cli_enable_all_rules: () -> untyped
-
-    def parse_result: (untyped output) -> untyped
-
-    def run_analyzer: () -> untyped
+    def parse_result: (String) -> Array[Issue]
   end
 end

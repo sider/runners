@@ -117,7 +117,7 @@ class JavaTest < Minitest::Test
       guid: "test-guid",
       working_dir: workspace.working_dir,
       config: config(config_yaml),
-      git_ssh_path: nil,
+      shell: Runners::Shell.new(current_dir: workspace.working_dir, trace_writer: trace_writer),
       trace_writer: trace_writer,
     )
   end

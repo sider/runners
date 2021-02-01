@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "7.12.1"
+default_version = "7.18.0"
 
 s.add_test(
   "no_config",
@@ -162,8 +162,7 @@ s.add_test(
 s.add_test(
   "broken_sideci_yml",
   type: "failure",
-  message:
-    "The value of the attribute `linter.eslint.npm_install` in your `sideci.yml` is invalid. Please fix and retry.",
+  message: "`linter.eslint.npm_install` value in `sideci.yml` is invalid",
   analyzer: :_
 )
 
@@ -417,7 +416,7 @@ s.add_test(
       id: "@typescript-eslint/no-unused-vars",
       message: "'x' is assigned a value but never used.",
       links: %w[
-        https://github.com/typescript-eslint/typescript-eslint/blob/v4.8.1/packages/eslint-plugin/docs/rules/no-unused-vars.md
+        https://github.com/typescript-eslint/typescript-eslint/blob/v4.14.1/packages/eslint-plugin/docs/rules/no-unused-vars.md
       ],
       path: "index.ts",
       location: { start_line: 1, start_column: 7, end_line: 1, end_column: 8 },
@@ -486,4 +485,18 @@ s.add_test(
   ],
   analyzer: { name: "ESLint", version: default_version },
   config_file: "sider.yml"
+)
+
+s.add_test(
+  "yarnrc",
+  type: "success",
+  issues: [],
+  analyzer: { name: "ESLint", version: "7.14.0" }
+)
+
+s.add_test(
+  "yarnrc_yml",
+  type: "success",
+  issues: [],
+  analyzer: { name: "ESLint", version: "7.13.0" }
 )

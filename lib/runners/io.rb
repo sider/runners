@@ -16,7 +16,10 @@ module Runners
 
     def flush!
       ios.each do |io|
-        io.flush! if io.respond_to?(:flush!)
+        if io.respond_to?(:flush!)
+          # @type var io: io
+          io.flush!
+        end
       end
     end
   end

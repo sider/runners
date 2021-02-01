@@ -1,0 +1,15 @@
+module Runners
+  class Processor::MetricsCodeClone < Processor
+
+    class SchemaClass < StrongJSON
+      def issue: () -> StrongJSON::Type::Object[untyped]
+    end
+    Schema: SchemaClass
+
+    def initialize: (**untyped) -> void
+
+    private
+
+    def construct_file_issue: (Array[Issue], Pathname) -> Issue
+  end
+end

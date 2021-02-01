@@ -4,9 +4,149 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-- Add the new option `new_issue_schema` [#1674](https://github.com/sider/runners/pull/1674)
+[Full diff](https://github.com/sider/runners/compare/0.40.7...HEAD)
 
-[Full diff](https://github.com/sider/runners/compare/0.38.0...HEAD)
+Updated environments:
+
+- **devon_rex** 2.30.1 -> master [#1954](https://github.com/sider/runners/pull/1954)
+- **Bundler** 2.2.3 -> 2.2.7 [#1960](https://github.com/sider/runners/pull/1960) [#1975](https://github.com/sider/runners/pull/1975)
+
+Updated tools:
+
+- **Brakeman** 4.10.0 -> 5.0.0 [#1881](https://github.com/sider/runners/pull/1881) [#1976](https://github.com/sider/runners/pull/1976)
+- **Checkstyle** 8.38 -> 8.39 [#1891](https://github.com/sider/runners/pull/1891)
+- **detekt** 1.14.2 -> 1.15.0 [#1815](https://github.com/sider/runners/pull/1815)
+- **ESLint** 7.15.0 -> 7.18.0 [#1949](https://github.com/sider/runners/pull/1949)
+- **GolangCI-Lint** 1.33.0 -> 1.36.0 [#1946](https://github.com/sider/runners/pull/1946) [#1977](https://github.com/sider/runners/pull/1977)
+- **hadolint** 1.19.0 -> 1.20.0 [#1979](https://github.com/sider/runners/pull/1979)
+- **HAML-Lint** 0.36.0 -> 0.37.0 [#1920](https://github.com/sider/runners/pull/1920)
+- **LanguageTool** 5.1 -> 5.2 [#1885](https://github.com/sider/runners/pull/1885)
+- **Querly** 1.1.0 -> 1.2.0 [#1807](https://github.com/sider/runners/pull/1807)
+- **Reek** 6.0.2 -> 6.0.3 [#1948](https://github.com/sider/runners/pull/1948)
+- **RuboCop** 1.6.1 -> 1.8.1 [#1947](https://github.com/sider/runners/pull/1947)
+- **stylelint** 13.8.0 -> 13.9.0 [#1966](https://github.com/sider/runners/pull/1966)
+- **SwiftLint** 0.41.0 -> 0.42.0 [#1750](https://github.com/sider/runners/pull/1750)
+
+Misc:
+
+- Improve behavior about `Changes` class [#1955](https://github.com/sider/runners/pull/1955)
+- Improve `Runners::Config::Error` classes [#1959](https://github.com/sider/runners/pull/1959) [#1961](https://github.com/sider/runners/pull/1961) [#1972](https://github.com/sider/runners/pull/1972)
+- Add **Metrics Code Clone** runner [#1878](https://github.com/sider/runners/pull/1878)
+- Add **Metrics Complexity** runner [#1631](https://github.com/sider/runners/pull/1631)
+- Add **Metrics File Info** runner [#1937](https://github.com/sider/runners/pull/1937)
+
+## 0.40.7
+
+[Full diff](https://github.com/sider/runners/compare/0.40.6...0.40.7)
+
+- Make internal changes for the `Runners::Config` class [#1950](https://github.com/sider/runners/pull/1950) [#1951](https://github.com/sider/runners/pull/1951) [#1952](https://github.com/sider/runners/pull/1952)
+
+## 0.40.6
+
+[Full diff](https://github.com/sider/runners/compare/0.40.5...0.40.6)
+
+- **ESLint** Add `eslint-plugin-cypress` to pre-installed packages [#1936](https://github.com/sider/runners/pull/1936)
+- **RuboCop** Revert rubydoc.info links [#1942](https://github.com/sider/runners/pull/1942)
+
+## 0.40.5
+
+[Full diff](https://github.com/sider/runners/compare/0.40.4...0.40.5)
+
+- **ESLint** Add `@vue/eslint-config-typescript` to pre-installed packages [#1934](https://github.com/sider/runners/pull/1934)
+- **ShellCheck** Exclude directories named `*.sh` [#1935](https://github.com/sider/runners/pull/1935)
+
+## 0.40.4
+
+[Full diff](https://github.com/sider/runners/compare/0.40.3...0.40.4)
+
+- Rename `duration_in_sec` to `duration_in_ms` for `finish` trace [#1930](https://github.com/sider/runners/pull/1930)
+
+## 0.40.3
+
+[Full diff](https://github.com/sider/runners/compare/0.40.2...0.40.3)
+
+- **RuboCop** Fix issue links for rubydoc.info [#1925](https://github.com/sider/runners/pull/1925)
+- Relax Bundler requirement [#1917](https://github.com/sider/runners/pull/1917)
+
+## 0.40.2
+
+[Full diff](https://github.com/sider/runners/compare/0.40.1...0.40.2)
+
+- **ESLint** Add `eslint-config-react-app` as pre-installed [#1902](https://github.com/sider/runners/pull/1902)
+- Fix checking unsupported tools [#1911](https://github.com/sider/runners/pull/1911)
+- Add `Runners::Config#exclude_branch?` method [#1913](https://github.com/sider/runners/pull/1913)
+- Add a new trace schema `finish` [#1914](https://github.com/sider/runners/pull/1914)
+- Do not use `--no-default-rc` flag for `yarn` [#1916](https://github.com/sider/runners/pull/1916)
+
+## 0.40.1
+
+[Full diff](https://github.com/sider/runners/compare/0.40.0...0.40.1)
+
+- Commit `Gemfile.lock` on `rake release` [#1898](https://github.com/sider/runners/pull/1898)
+
+## 0.40.0
+
+[Full diff](https://github.com/sider/runners/compare/0.39.3...0.40.0)
+
+- Remove unused `locale` gem [#1817](https://github.com/sider/runners/pull/1817)
+- **PMD CPD** Remove needless `CGI.unescape_html`[#1821](https://github.com/sider/runners/pull/1821)
+- Move `bin/runners` to `exe/runners` [#1833](https://github.com/sider/runners/pull/1833)
+- **RuboCop** Add supported gems [#1834](https://github.com/sider/runners/pull/1834)
+- Bump devon_rex images from 2.28.0 to 2.30.1 [#1859](https://github.com/sider/runners/pull/1859) [#1864](https://github.com/sider/runners/pull/1864) [#1875](https://github.com/sider/runners/pull/1875) [#1894](https://github.com/sider/runners/pull/1894)
+- Gemification [#1858](https://github.com/sider/runners/pull/1858)
+- Use always Yarn v1 even if `.yarnrc` exists [#1876](https://github.com/sider/runners/pull/1876)
+- Prevent Git hooks [#1879](https://github.com/sider/runners/pull/1879)
+- Improve `pip install` [#1893](https://github.com/sider/runners/pull/1893) [#1895](https://github.com/sider/runners/pull/1895)
+
+## 0.39.3
+
+[Full diff](https://github.com/sider/runners/compare/0.39.2...0.39.3)
+
+- **PMD Java** NoMethodError: undefined method `gsub' for 2:Integer [#1818](https://github.com/sider/runners/pull/1818)
+
+## 0.39.2
+
+[Full diff](https://github.com/sider/runners/compare/0.39.1...0.39.2)
+
+- **remark-lint** Bump remark-preset-lint-sider from 0.5.0 to 0.6.0 [#1762](https://github.com/sider/runners/pull/1762)
+- Add `use_git_metadata_dir?` method for analysis processors. [#1775](https://github.com/sider/runners/pull/1775)
+- Consider line range in `Runners::Changes#include?` [#1781](https://github.com/sider/runners/pull/1781)
+
+## 0.39.1
+
+[Full diff](https://github.com/sider/runners/compare/0.39.0...0.39.1)
+
+- Set `error` to Bugsnag severity [#1758](https://github.com/sider/runners/pull/1758)
+- Add `Runners::Workspace::Git::Error` class [#1759](https://github.com/sider/runners/pull/1759)
+
+## 0.39.0
+
+[Full diff](https://github.com/sider/runners/compare/0.38.1...0.39.0)
+
+Updated environments:
+
+- **devon_rex** 2.27.1 -> 2.28.0 [#1708](https://github.com/sider/runners/pull/1708) [#1749](https://github.com/sider/runners/pull/1749)
+
+Updated tools:
+
+- **Checkstyle** 8.36.2 -> 8.38 [#1685](https://github.com/sider/runners/pull/1685)
+- **CoffeeLint** 1.16.0 -> 4.1.2 [#1690](https://github.com/sider/runners/pull/1690)
+- **Cppcheck** 2.2 -> 2.3 [#1727](https://github.com/sider/runners/pull/1727)
+- **ESLint** 7.12.1 -> 7.15.0 [#1669](https://github.com/sider/runners/pull/1669) [#1742](https://github.com/sider/runners/pull/1742)
+- **GolangCI-Lint** 1.32.1 -> 1.33.0 [#1680](https://github.com/sider/runners/pull/1680)
+- **Goodcheck** 2.5.2 -> 2.7.0 [#1696](https://github.com/sider/runners/pull/1696)
+- **hadolint** 1.18.2 -> 1.19.0 [#1665](https://github.com/sider/runners/pull/1665)
+- **PMD CPD** 6.29.0 -> 6.30.0 [#1747](https://github.com/sider/runners/pull/1747)
+- **PMD Java** 6.29.0 -> 6.30.0 [#1746](https://github.com/sider/runners/pull/1746)
+- **RuboCop** 1.0.0 -> 1.6.1 [#1695](https://github.com/sider/runners/pull/1695) [#1741](https://github.com/sider/runners/pull/1741)
+- **stylelint** 13.7.2 -> 13.8.0 [#1670](https://github.com/sider/runners/pull/1670)
+- **SwiftLint** 0.40.3 -> 0.41.0 [#1638](https://github.com/sider/runners/pull/1638)
+
+## 0.38.1
+
+[Full diff](https://github.com/sider/runners/compare/0.38.0...0.38.1)
+
+- Add `issue_count` to the result schema [#1688](https://github.com/sider/runners/pull/1688)
 
 ## 0.38.0
 

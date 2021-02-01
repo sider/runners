@@ -5,45 +5,37 @@ module Runners
 
     class CIConfigBroken < UserError; end
 
-    attr_reader :guid, :working_dir, :git_ssh_path, :trace_writer, :warnings, :config, :shell
-
-    def_delegators :@shell,
-      :chdir, :current_dir,
-      :capture3, :capture3!, :capture3_trace, :capture3_with_retry!,
-      :env_hash, :push_env_hash
-
-    def self.register_config_schema(**args)
-      Schema::Config.register(**args)
+    def self.register_config_schema(name:, schema:)
+      Schema::Config.register(name: name, schema: schema)
     end
 
     # TODO: Keep the following schemas for the backward compatibility.
-    RemovedGoToolSchema = StrongJSON.new do
-      # @type self: StrongJSON
+    RemovedGoToolSchema = _ = StrongJSON.new do
+      # @type self: RemovedGoToolSchemaClass
       let :config, any?
     end
     register_config_schema(name: :golint, schema: RemovedGoToolSchema.config)
     register_config_schema(name: :go_vet, schema: RemovedGoToolSchema.config)
     register_config_schema(name: :gometalinter, schema: RemovedGoToolSchema.config)
 
-    def initialize(guid:, working_dir:, config:, git_ssh_path:, trace_writer:)
+    attr_reader :guid, :working_dir, :config, :shell, :trace_writer, :warnings
+
+    def_delegators :@shell,
+      :chdir, :current_dir,
+      :capture3, :capture3!, :capture3_trace, :capture3_with_retry!,
+      :env_hash, :push_env_hash
+
+    def initialize(guid:, working_dir:, config:, shell:, trace_writer:)
       @guid = guid
       @working_dir = working_dir
-      @git_ssh_path = git_ssh_path
+      @config = config
+      @shell = shell
       @trace_writer = trace_writer
       @warnings = []
-      @config = config
 
       if config.path_exist?
         trace_writer.ci_config(config.content, raw_content: config.raw_content!, file: config.path_name)
       end
-
-      hash = {
-        "RUBYOPT" => nil,
-        "GIT_SSH_COMMAND" => git_ssh_path&.then { |path| "ssh -F '#{path}'" },
-      }
-      @shell = Shell.new(current_dir: working_dir,
-                         env_hash: hash,
-                         trace_writer: trace_writer)
     end
 
     def relative_path(original, from: working_dir)
@@ -55,14 +47,15 @@ module Runners
       path.relative_path_from(from)
     end
 
-    def setup
+    def check_unsupported_linters
       # TODO: Keep the following schemas for the backward compatibility.
-      if ["golint", "go_vet", "gometalinter"].any? { |id| config.linter?(id) }
-        add_warning <<~MSG, file: config.path_name
-          The `golint`, `go_vet`, and `gometalinter` options in your `#{config.path_name}` has been unsupported. Please remove them.
-        MSG
+      message = config.check_unsupported_linters ["golint", "go_vet", "gometalinter"]
+      unless message.empty?
+        add_warning message, file: config.path_name
       end
+    end
 
+    def setup
       trace_writer.message "No setup..."
       yield
     end
@@ -112,7 +105,8 @@ module Runners
       cmd_opts = command_line.drop(1).tap do |opts|
         raise ArgumentError, "Unspecified command: `#{command_line.inspect}`" if opts.empty?
       end
-      outputs = capture3!(cmd, *cmd_opts)
+      # TODO: Ignored Steep error
+      outputs = capture3!(_ = cmd, *(_ = cmd_opts))
       outputs.each do |output|
         pattern.match(output) do |match|
           found = match[1]
@@ -122,6 +116,11 @@ module Runners
       raise ArgumentError, "Not found version from the command `#{command_line.join(' ')}`"
     end
 
+    # If a processor needs git metadata('.git' dir), override this method as returning true.
+    def use_git_metadata_dir?
+      false
+    end
+
     def config_linter
       config.linter(analyzer_id)
     end
@@ -129,7 +128,7 @@ module Runners
     def check_root_dir_exist
       return if root_dir.directory?
 
-      message = "`#{relative_path(root_dir)}` directory is not found! Please check `#{config_field_path("root_dir")}` in your `#{config.path_name}`"
+      message = "`#{relative_path(root_dir)}` directory is not found! Please check `#{config_field_path(:root_dir)}` in your `#{config.path_name}`"
       trace_writer.error message
       Results::Failure.new(guid: guid, message: message)
     end
@@ -159,6 +158,8 @@ module Runners
     end
 
     def delete_unchanged_files(changes, except: [], only: [])
+      return if changes.unchanged_paths.empty?
+
       trace_writer.message "Deleting unchanged files from working copy..." do
         files = changes.delete_unchanged(dir: working_dir, except: except, only: only)
         trace_writer.message files.join("\n")
@@ -173,11 +174,11 @@ module Runners
 
     def add_warning_if_deprecated_version(minimum:, file: nil, deadline: nil)
       unless Gem::Version.create(minimum) <= Gem::Version.create(analyzer_version)
-        deadline_str = deadline ? (_ = deadline).strftime('on %B %-d, %Y') : 'in the near future'
+        deadline_str = deadline ? deadline.strftime('on %B %-d, %Y') : 'in the near future'
         add_warning <<~MSG, file: file
           DEPRECATION WARNING!!!
           The `#{analyzer_version}` and older versions are deprecated, and these versions will be dropped #{deadline_str}.
-          Please consider upgrading to #{minimum} or a newer version.
+          Please consider upgrading to `#{minimum}` or a newer version.
         MSG
       end
     end
@@ -214,7 +215,7 @@ module Runners
     end
 
     def add_warning_for_deprecated_linter(alternative:, ref:, deadline: nil)
-      deadline_str = deadline ? (_ = deadline).strftime("on %B %-d, %Y") : "in the near future"
+      deadline_str = deadline ? deadline.strftime("on %B %-d, %Y") : "in the near future"
       add_warning <<~MSG, file: config.path_name
         DEPRECATION WARNING!!!
         The support for #{analyzer_name} is deprecated and will be removed #{deadline_str}.
@@ -256,16 +257,29 @@ module Runners
 
     class InvalidXML < SystemError; end
 
-    def read_report_xml(file_path = report_file)
-      output = read_report_file(file_path)
-      root = REXML::Document.new(output).root
+    def read_xml(text)
+      root = REXML::Document.new(text).root
       if root
         root
       else
-        message = "Output XML is invalid from #{file_path}"
+        message = "Invalid XML: #{text.inspect}"
         trace_writer.error message
         raise InvalidXML, message
       end
+    rescue REXML::ParseException => exn
+      message =
+        if exn.cause.instance_of? RuntimeError
+          exn.cause.message
+        else
+          exn.message
+        end
+      trace_writer.error message
+      raise InvalidXML, message
+    end
+
+    def read_report_xml(file_path = report_file)
+      output = read_report_file(file_path)
+      read_xml(output)
     end
 
     def read_report_json(file_path = report_file)
@@ -278,7 +292,8 @@ module Runners
     end
 
     def comma_separated_list(value)
-      values = Array(value).flat_map { |s| s.split(/\s*,\s*/) }
+      # TODO: Ignored Steep error
+      values = Array(value).flat_map { |s| (_ = s).split(/\s*,\s*/) }
       values.empty? ? nil : values.join(",")
     end
   end
