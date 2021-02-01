@@ -7,7 +7,7 @@ s.add_test(
   type: "success",
   analyzer: { name: "Checkstyle", version: default_version },
   warnings: [
-    { message: "Sider's recommended configuration file is about to be released in early Mar 2021.\nAfter the release, Sider will automatically apply our recommended ruleset if you don't specify the `config` option in your `sider.yml`.", file: "sider.yml" }
+    { message: "Sider's recommended configuration file is about to be released in early March 2021.\nAfter the release, Sider will automatically apply our recommended ruleset if you don't specify the `config` option in your `sider.yml`.", file: "sider.yml" }
   ],
   issues: [
     {
@@ -201,7 +201,7 @@ s.add_test(
   "syntax_error",
   type: "failure",
   warnings: [
-    { message: "Sider's recommended configuration file is about to be released in early Mar 2021.\nAfter the release, Sider will automatically apply our recommended ruleset if you don't specify the `config` option in your `sider.yml`.", file: "sider.yml" }
+    { message: "Sider's recommended configuration file is about to be released in early March 2021.\nAfter the release, Sider will automatically apply our recommended ruleset if you don't specify the `config` option in your `sider.yml`.", file: "sider.yml" }
   ],
   message: "Analysis failed. See the log for details.",
   analyzer: { name: "Checkstyle", version: default_version }
