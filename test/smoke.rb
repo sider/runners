@@ -191,7 +191,7 @@ module Runners
 
           FileUtils.copy_entry "#{smoke_target}/.", smoke_dir
           sh! "git", "add", ".", out: out
-          sh! "git", "commit", "-m", "add all test files", out: out
+          sh! "git", "commit", "--quiet", "-m", "add all test files", out: out
 
           sh! "git", "push", out: out
           head_commit, _ = sh! "git", "rev-parse", "HEAD", out: out
