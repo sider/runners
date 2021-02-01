@@ -14,7 +14,7 @@ Updated environments:
 Updated tools:
 
 - **Brakeman** 4.10.0 -> 5.0.0 [#1881](https://github.com/sider/runners/pull/1881) [#1976](https://github.com/sider/runners/pull/1976)
-- **Checkstyle** 8.38 -> 8.39 [#1891](https://github.com/sider/runners/pull/1891)
+- **Checkstyle** 8.38 -> 8.40 [#1891](https://github.com/sider/runners/pull/1891) [#1994](https://github.com/sider/runners/pull/1994)
 - **detekt** 1.14.2 -> 1.15.0 [#1815](https://github.com/sider/runners/pull/1815)
 - **ESLint** 7.15.0 -> 7.19.0 [#1949](https://github.com/sider/runners/pull/1949) [#1993](https://github.com/sider/runners/pull/1993)
 - **GolangCI-Lint** 1.33.0 -> 1.36.0 [#1946](https://github.com/sider/runners/pull/1946) [#1977](https://github.com/sider/runners/pull/1977)
