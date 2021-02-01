@@ -41,7 +41,7 @@ module Runners
       #   trace_writer.message "The `config` option in `#{config.path_name}` is not specified. Sider uses our recommended ruleset instead."
       #end
 
-      warn_recommended_config_option_release(:config, "in early Mar 2021")
+      warn_recommended_config_option_release(:config, "in early March 2021")
       yield
     end
 
