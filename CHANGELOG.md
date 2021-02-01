@@ -10,6 +10,7 @@ Updated environments:
 
 - **devon_rex** 2.30.1 -> master [#1954](https://github.com/sider/runners/pull/1954)
 - **Bundler** 2.2.3 -> 2.2.7 [#1960](https://github.com/sider/runners/pull/1960) [#1975](https://github.com/sider/runners/pull/1975)
+- **Flake8** Provide Sider's recommended ruleset [#1980](https://github.com/sider/runners/pull/1980)
 
 Updated tools:
 

@@ -66,6 +66,8 @@ module Runners
       add_warning <<~MSG, file: nil
         Sider's recommended configuration file is about to be released in early Mar 2021.
         After the release, Sider will automatically apply our recommended ruleset if you don't have the Flake8 configuration file in your repository.
+        Current) https://github.com/sider/runners/blob/master/images/flake8/sider_config.ini
+        After) https://github.com/sider/runners/blob/master/images/flake8/sider_recommended_config.ini
       MSG
     end
 
