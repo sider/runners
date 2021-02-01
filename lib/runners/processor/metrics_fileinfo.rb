@@ -58,10 +58,11 @@ module Runners
       text_files = targets.select { |f| text_file?(f) }
       text_files.each_slice(1000) do |files|
         stdout, _ = capture3!("wc", "-l", *files)
-        lines = stdout.lines(chomp: true).tap do |l|
-          # `wc` command outputs total count when we pass multiple targets. remove it if exist
-          l.pop if l.last&.match?(/^\d+ total$/)
-        end
+        lines = stdout.lines(chomp: true)
+
+        # `wc` command outputs total count when we pass multiple targets. remove it if exist
+        lines.pop if lines.last&.match?(/^\d+ total$/)
+
         lines.each do |line|
           fields = line.split(" ")
           loc = (fields[0] or raise)
