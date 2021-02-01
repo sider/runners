@@ -6,7 +6,7 @@ s.add_test(
   "sandbox_django",
   type: "success",
   warnings: [
-    { message: /Sider's recommended configuration file is about to be released in early Mar 2021.\nAfter the release, Sider will automatically apply our recommended ruleset if you don't have the Flake8 configuration file in your repository./, file: nil }
+    { message: /Sider's recommended configuration file is about to be updated in early March 2021./, file: nil }
   ],
   issues: [
     {
@@ -135,7 +135,7 @@ s.add_test(
   "no_user_config_enabled",
   type: "success",
   warnings: [
-    { message: /Sider's recommended configuration file is about to be released in early Mar 2021.\nAfter the release, Sider will automatically apply our recommended ruleset if you don't have the Flake8 configuration file in your repository./, file: nil }
+    { message: /Sider's recommended configuration file is about to be updated in early March 2021./, file: nil }
   ],
   issues: [], # W191 is not issued.
   analyzer: { name: "Flake8", version: default_version }
@@ -145,7 +145,7 @@ s.add_test(
   "with_plugins",
   type: "success",
   warnings: [
-    { message: /Sider's recommended configuration file is about to be released in early Mar 2021.\nAfter the release, Sider will automatically apply our recommended ruleset if you don't have the Flake8 configuration file in your repository./, file: nil }
+    { message: /Sider's recommended configuration file is about to be updated in early March 2021./, file: nil }
   ],
   issues: [
     {
@@ -244,16 +244,17 @@ s.add_test(
   "dot_python_version",
   type: "success",
   warnings: [
-    { message: /Sider's recommended configuration file is about to be released in early Mar 2021.\nAfter the release, Sider will automatically apply our recommended ruleset if you don't have the Flake8 configuration file in your repository./, file: nil }
+    { message: /Sider's recommended configuration file is about to be updated in early March 2021./, file: nil }
   ],
-  issues: [], analyzer: { name: "Flake8", version: default_version }
+  issues: [],
+  analyzer: { name: "Flake8", version: default_version }
 )
 
 s.add_test(
   "dot_python_version_2",
   type: "success",
   warnings: [
-    { message: /Sider's recommended configuration file is about to be released in early Mar 2021.\nAfter the release, Sider will automatically apply our recommended ruleset if you don't have the Flake8 configuration file in your repository./, file: nil }
+    { message: /Sider's recommended configuration file is about to be updated in early March 2021./, file: nil }
   ],
   issues: [],
   analyzer: { name: "Flake8", version: default_version }
@@ -263,7 +264,7 @@ s.add_test(
   "option_config",
   type: "success",
   warnings: [
-    { message: /Sider's recommended configuration file is about to be released in early Mar 2021.\nAfter the release, Sider will automatically apply our recommended ruleset if you don't have the Flake8 configuration file in your repository./, file: nil }
+    { message: /Sider's recommended configuration file is about to be updated in early March 2021./, file: nil }
   ],
   issues: [],
   analyzer: { name: "Flake8", version: default_version }
@@ -273,7 +274,7 @@ s.add_test(
   "option_target",
   type: "success",
   warnings: [
-    { message: /Sider's recommended configuration file is about to be released in early Mar 2021.\nAfter the release, Sider will automatically apply our recommended ruleset if you don't have the Flake8 configuration file in your repository./, file: nil }
+    { message: /Sider's recommended configuration file is about to be updated in early March 2021./, file: nil }
   ],
   issues: [
     {
@@ -295,7 +296,7 @@ s.add_test(
   "option_target_multiple",
   type: "success",
   warnings: [
-    { message: /Sider's recommended configuration file is about to be released in early Mar 2021.\nAfter the release, Sider will automatically apply our recommended ruleset if you don't have the Flake8 configuration file in your repository./, file: nil }
+    { message: /Sider's recommended configuration file is about to be updated in early March 2021./, file: nil }
   ],
   issues: [
     {
