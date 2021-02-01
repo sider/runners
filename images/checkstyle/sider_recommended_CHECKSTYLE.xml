@@ -69,7 +69,6 @@
     <module name="UpperEll"/>
 
     <!-- Modifiers -->
-    <module name="InterfaceMemberImpliedModifier"/>
     <module name="ModifierOrder"/>
 
     <!-- Naming Conventions -->
