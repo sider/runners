@@ -21,7 +21,7 @@ module Runners
     end
 
     def prepare_head_source
-      shell.capture3!("git", "init")
+      shell.capture3!("git", "init", "--initial-branch=main")
       shell.capture3!("git", "config", "gc.auto", "0")
       shell.capture3!("git", "config", "advice.detachedHead", "false")
       shell.capture3!("git", "config", "core.quotePath", "false")
