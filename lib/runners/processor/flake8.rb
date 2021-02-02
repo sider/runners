@@ -65,7 +65,7 @@ module Runners
 
       add_warning <<~MSG, file: nil
         Sider's recommended configuration file is about to be updated in early March 2021.
-        [New configuration file](https://github.com/sider/runners/blob/master/images/flake8/sider_recommended_config.ini) has more strict rules than the [current configuration file](https://github.com/sider/runners/blob/master/images/flake8/sider_config.ini) and may give you more useful issues.
+        [New configuration file](https://github.com/sider/runners/blob/master/images/flake8/sider_recommended_flake8.ini) has more strict rules than the [current configuration file](https://github.com/sider/runners/blob/master/images/flake8/sider_config.ini) and may give you more useful issues.
         If you want to keep using the current configuration file, you need to save a copy of the [file](https://github.com/sider/runners/blob/master/images/flake8/sider_config.ini) with a file name `.flake8` in your repository.
       MSG
     end
