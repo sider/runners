@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.41.0...HEAD)
 
+- Suppress verbose message of `git init` [#2006](https://github.com/sider/runners/pull/2006)
+
 ## 0.41.0
 
 [Full diff](https://github.com/sider/runners/compare/0.40.7...0.41.0)
