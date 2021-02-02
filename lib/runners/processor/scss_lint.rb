@@ -32,7 +32,7 @@ module Runners
     def setup
       add_warning_for_deprecated_linter(
         alternative: analyzers.name(:stylelint),
-        ref: "https://github.com/sds/scss-lint/blob/master/README.md#notice-consider-other-tools-before-adopting-scss-lint",
+        ref: "#{analyzer_github}#readme",
       )
 
       yield

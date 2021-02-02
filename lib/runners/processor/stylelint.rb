@@ -180,7 +180,7 @@ module Runners
               .filter(&:directory?)
               .each_with_object({}) do |dir, hash|
                 rule = dir.basename.to_s
-                hash[rule] = "https://github.com/stylelint/stylelint/tree/#{analyzer_version}/lib/rules/#{rule}"
+                hash[rule] = "#{analyzer_github}/tree/#{analyzer_version}/lib/rules/#{rule}"
               end
           else
             {}

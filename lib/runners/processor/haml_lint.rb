@@ -157,7 +157,7 @@ module Runners
       # NOTE: Syntax errors are produced by HAML itself, not HAML-Lint.
       return [] if issue_id == "Syntax"
 
-      ["https://github.com/sds/haml-lint/blob/v#{analyzer_version}/lib/haml_lint/linter##{issue_id.downcase}"]
+      ["#{analyzer_github}/blob/v#{analyzer_version}/lib/haml_lint/linter##{issue_id.downcase}"]
     end
 
     # NOTE: HAML-Lint exits successfully even if RuboCop fails.
