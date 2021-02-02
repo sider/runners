@@ -10,7 +10,6 @@ Updated environments:
 
 - **devon_rex** 2.30.1 -> master [#1954](https://github.com/sider/runners/pull/1954)
 - **Bundler** 2.2.3 -> 2.2.7 [#1960](https://github.com/sider/runners/pull/1960) [#1975](https://github.com/sider/runners/pull/1975)
-- **Checkstyle** Provide Sider's recommended ruleset [#1619](https://github.com/sider/runners/pull/1619)
 
 Updated tools:
 
@@ -35,6 +34,7 @@ Misc:
 - Add **Metrics Code Clone** runner [#1878](https://github.com/sider/runners/pull/1878)
 - Add **Metrics Complexity** runner [#1631](https://github.com/sider/runners/pull/1631)
 - Add **Metrics File Info** runner [#1937](https://github.com/sider/runners/pull/1937)
+- **Checkstyle** Provide Sider's recommended ruleset [#1619](https://github.com/sider/runners/pull/1619)
 
 ## 0.40.7
 
