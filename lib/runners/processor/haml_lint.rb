@@ -119,7 +119,11 @@ module Runners
     end
 
     def config_parallel
-      config_linter[:parallel] ? ["--parallel"] : []
+      if Gem::Version.create(analyzer_version) >= Gem::Version.create("0.36.0")
+        config_linter.fetch(:parallel, true) ? ["--parallel"] : []
+      else
+        []
+      end
     end
 
     def parse_result(output)
