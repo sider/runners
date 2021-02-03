@@ -1,5 +1,9 @@
 module Runners
   module RuboCopUtils : Processor, Ruby
+    def official_rubocop_plugins: () -> Array[Ruby::GemInstaller::Spec]
+
+    def third_party_rubocop_plugins: () -> Array[Ruby::GemInstaller::Spec]
+
     def setup_default_rubocop_config: () -> Pathname?
 
     def build_rubocop_links: (String) -> Array[String]

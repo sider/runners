@@ -9,8 +9,6 @@ module Runners
     end
     Schema: SchemaClass
 
-    OFFICIAL_RUBOCOP_PLUGINS: Array[Ruby::GemInstaller::Spec]
-    OPTIONAL_GEMS: Array[Ruby::GemInstaller::Spec]
     GEM_NAME: String
     CONSTRAINTS: Hash[String, Array[String]]
 

@@ -1,5 +1,68 @@
 module Runners
   module RuboCopUtils
+    # The followings are maintained by RuboCop Headquarters.
+    # @see https://github.com/rubocop-hq
+    def official_rubocop_plugins
+      @official_rubocop_plugins ||= %w[
+        rubocop-md
+        rubocop-minitest
+        rubocop-performance
+        rubocop-rails
+        rubocop-rake
+        rubocop-rspec
+        rubocop-rubycw
+        rubocop-sequel
+      ].map do |name|
+        Ruby::GemInstaller::Spec.new(name: name, version: [])
+      end.freeze
+    end
+
+    def third_party_rubocop_plugins
+      @third_party_rubocop_plugins ||= %w[
+        chefstyle
+        cookstyle
+        deka_eiwakun
+        ezcater_rubocop
+        fincop
+        forkwell_cop
+        gc_ruboconfig
+        gitlab-styles
+        hint-rubocop_style
+        mad_rubocop
+        meowcop
+        onkcop
+        otacop
+        pulis
+        rubocop-betterment
+        rubocop-cask
+        rubocop-codetakt
+        rubocop-config-umbrellio
+        rubocop-discourse
+        rubocop-github
+        rubocop-govuk
+        rubocop-graphql
+        rubocop-i18n
+        rubocop-jekyll
+        rubocop-packaging
+        rubocop-rails_config
+        rubocop-require_tools
+        rubocop-salemove
+        rubocop-shopify
+        rubocop-sketchup
+        rubocop-sorbet
+        rubocop-thread_safety
+        rubocop-vendor
+        salsify_rubocop
+        sanelint
+        standard
+        unasukecop
+        unifacop
+        ws-style
+      ].map do |name|
+        Ruby::GemInstaller::Spec.new(name: name, version: [])
+      end.freeze
+    end
+
     def setup_default_rubocop_config
       path = current_dir / ".rubocop.yml"
       return if path.exist?

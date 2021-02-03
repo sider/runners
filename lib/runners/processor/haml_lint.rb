@@ -1,5 +1,3 @@
-require_relative 'rubocop'
-
 module Runners
   class Processor::HamlLint < Processor
     include Ruby
@@ -35,17 +33,11 @@ module Runners
 
     register_config_schema(name: :haml_lint, schema: Schema.runner_config)
 
-    OPTIONAL_GEMS = [
-      *Processor::RuboCop::OPTIONAL_GEMS,
-      # additional gems for HAML-Lint
-    ].freeze
-
     GEM_NAME = "haml_lint".freeze
     REQUIRED_GEM_NAMES = ["rubocop"].freeze
     CONSTRAINTS = {
       GEM_NAME => [">= 0.26.0", "< 1.0.0"]
     }.freeze
-
     DEFAULT_TARGET = ".".freeze
 
     def analyzer_bin
@@ -62,7 +54,8 @@ module Runners
         default_gems << GemInstaller::Spec.new(name: "meowcop", version: [])
       end
 
-      install_gems(default_gems, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS) { yield }
+      optionals = official_rubocop_plugins + third_party_rubocop_plugins
+      install_gems(default_gems, optionals: optionals, constraints: CONSTRAINTS) { yield }
     rescue InstallGemsFailure => exn
       trace_writer.error exn.message
       return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)

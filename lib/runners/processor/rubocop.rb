@@ -27,62 +27,6 @@ module Runners
 
     register_config_schema(name: :rubocop, schema: Schema.runner_config)
 
-    # The followings are maintained by RuboCop Headquarters.
-    # @see https://github.com/rubocop-hq
-    OFFICIAL_RUBOCOP_PLUGINS = [
-      GemInstaller::Spec.new(name: "rubocop-md", version: []),
-      GemInstaller::Spec.new(name: "rubocop-minitest", version: []),
-      GemInstaller::Spec.new(name: "rubocop-performance", version: []),
-      GemInstaller::Spec.new(name: "rubocop-rails", version: []),
-      GemInstaller::Spec.new(name: "rubocop-rake", version: []),
-      GemInstaller::Spec.new(name: "rubocop-rspec", version: []),
-      GemInstaller::Spec.new(name: "rubocop-rubycw", version: []),
-      GemInstaller::Spec.new(name: "rubocop-sequel", version: []),
-    ].freeze
-
-    OPTIONAL_GEMS = [
-      *OFFICIAL_RUBOCOP_PLUGINS,
-      GemInstaller::Spec.new(name: "chefstyle", version: []),
-      GemInstaller::Spec.new(name: "cookstyle", version: []),
-      GemInstaller::Spec.new(name: "deka_eiwakun", version: []),
-      GemInstaller::Spec.new(name: "ezcater_rubocop", version: []),
-      GemInstaller::Spec.new(name: "fincop", version: []),
-      GemInstaller::Spec.new(name: "forkwell_cop", version: []),
-      GemInstaller::Spec.new(name: "gc_ruboconfig", version: []),
-      GemInstaller::Spec.new(name: "gitlab-styles", version: []),
-      GemInstaller::Spec.new(name: "hint-rubocop_style", version: []),
-      GemInstaller::Spec.new(name: "mad_rubocop", version: []),
-      GemInstaller::Spec.new(name: "meowcop", version: []),
-      GemInstaller::Spec.new(name: "onkcop", version: []),
-      GemInstaller::Spec.new(name: "otacop", version: []),
-      GemInstaller::Spec.new(name: "pulis", version: []),
-      GemInstaller::Spec.new(name: "rubocop-betterment", version: []),
-      GemInstaller::Spec.new(name: "rubocop-cask", version: []),
-      GemInstaller::Spec.new(name: "rubocop-codetakt", version: []),
-      GemInstaller::Spec.new(name: "rubocop-config-umbrellio", version: []),
-      GemInstaller::Spec.new(name: "rubocop-discourse", version: []),
-      GemInstaller::Spec.new(name: "rubocop-github", version: []),
-      GemInstaller::Spec.new(name: "rubocop-govuk", version: []),
-      GemInstaller::Spec.new(name: "rubocop-graphql", version: []),
-      GemInstaller::Spec.new(name: "rubocop-i18n", version: []),
-      GemInstaller::Spec.new(name: "rubocop-jekyll", version: []),
-      GemInstaller::Spec.new(name: "rubocop-packaging", version: []),
-      GemInstaller::Spec.new(name: "rubocop-rails_config", version: []),
-      GemInstaller::Spec.new(name: "rubocop-require_tools", version: []),
-      GemInstaller::Spec.new(name: "rubocop-salemove", version: []),
-      GemInstaller::Spec.new(name: "rubocop-sketchup", version: []),
-      GemInstaller::Spec.new(name: "rubocop-shopify", version: []),
-      GemInstaller::Spec.new(name: "rubocop-sorbet", version: []),
-      GemInstaller::Spec.new(name: "rubocop-thread_safety", version: []),
-      GemInstaller::Spec.new(name: "rubocop-vendor", version: []),
-      GemInstaller::Spec.new(name: "salsify_rubocop", version: []),
-      GemInstaller::Spec.new(name: "sanelint", version: []),
-      GemInstaller::Spec.new(name: "standard", version: []),
-      GemInstaller::Spec.new(name: "unasukecop", version: []),
-      GemInstaller::Spec.new(name: "unifacop", version: []),
-      GemInstaller::Spec.new(name: "ws-style", version: []),
-    ].freeze
-
     GEM_NAME = "rubocop".freeze
     CONSTRAINTS = {
       GEM_NAME => [">= 0.61.0", "< 2.0.0"]
@@ -100,7 +44,8 @@ module Runners
         default_gems << GemInstaller::Spec.new(name: "meowcop", version: [])
       end
 
-      install_gems(default_gems, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS) { yield }
+      optionals = official_rubocop_plugins + third_party_rubocop_plugins
+      install_gems(default_gems, optionals: optionals, constraints: CONSTRAINTS) { yield }
     rescue InstallGemsFailure => exn
       trace_writer.error exn.message
       return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)

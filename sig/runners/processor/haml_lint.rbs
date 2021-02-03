@@ -9,8 +9,6 @@ module Runners
     end
     Schema: SchemaClass
 
-    OPTIONAL_GEMS: Array[Ruby::GemInstaller::Spec]
-    DEFAULT_GEMS: Array[String]
     GEM_NAME: String
     REQUIRED_GEM_NAMES: Array[String]
     CONSTRAINTS: Ruby::constraints
