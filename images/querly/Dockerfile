@@ -32,7 +32,7 @@ RUN cd ${RUNNER_USER_HOME} && \
     bundle config unset --local system && \
     cd ${RUNNER_USER_HOME} && \
     rm -rf querly && \
-    gem info querly
+    gem info --local --exact --quiet querly | grep querly
 
 # Copy the main source code
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} exe ${RUNNERS_DIR}/exe

@@ -32,7 +32,7 @@ RUN cd ${RUNNER_USER_HOME} && \
     bundle config unset --local system && \
     cd ${RUNNER_USER_HOME} && \
     rm -rf reek && \
-    gem info reek
+    gem info --local --exact --quiet reek | grep reek
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/reek/v5.reek.yml ${RUNNER_USER_HOME}/.reek.yml
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/reek/v4.reek.yml ${RUNNER_USER_HOME}/config.reek

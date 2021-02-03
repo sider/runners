@@ -32,7 +32,7 @@ RUN cd ${RUNNER_USER_HOME} && \
     bundle config unset --local system && \
     cd ${RUNNER_USER_HOME} && \
     rm -rf rubocop && \
-    gem info rubocop
+    gem info --local --exact --quiet rubocop | grep rubocop
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/rubocop/default_rubocop.yml ${RUNNER_USER_HOME}/
 

@@ -32,7 +32,7 @@ RUN cd ${RUNNER_USER_HOME} && \
     bundle config unset --local system && \
     cd ${RUNNER_USER_HOME} && \
     rm -rf scss_lint && \
-    gem info scss_lint
+    gem info --local --exact --quiet scss_lint | grep scss_lint
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/scss_lint/scss-lint.default.yml ${RUNNER_USER_HOME}/.scss-lint.yml
 

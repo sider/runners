@@ -32,7 +32,7 @@ RUN cd ${RUNNER_USER_HOME} && \
     bundle config unset --local system && \
     cd ${RUNNER_USER_HOME} && \
     rm -rf haml_lint && \
-    gem info haml_lint
+    gem info --local --exact --quiet haml_lint | grep haml_lint
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/haml_lint/default_rubocop.yml ${RUNNER_USER_HOME}/
 
