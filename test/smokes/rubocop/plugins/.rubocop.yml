@@ -2,18 +2,8 @@ require:
   - rubocop-rubycw
   - rubocop-thread_safety
 
-AllCops:
-  Exclude:
-    - Gemfile
-
 Lint:
   Enabled: false
 
 Style:
   Enabled: false
-
-Rubycw:
-  Enabled: true
-
-ThreadSafety:
-  Enabled: true
