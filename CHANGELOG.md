@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.41.1...HEAD)
 
+- Verify gem installation in Dockerfiles [#2010](https://github.com/sider/runners/pull/2010)
+
 ## 0.41.1
 
 [Full diff](https://github.com/sider/runners/compare/0.41.0...0.41.1)
