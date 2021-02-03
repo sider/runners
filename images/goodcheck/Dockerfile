@@ -32,7 +32,7 @@ RUN cd ${RUNNER_USER_HOME} && \
     bundle config unset --local system && \
     cd ${RUNNER_USER_HOME} && \
     rm -rf goodcheck && \
-    gem info goodcheck
+    gem info --local --exact --quiet goodcheck | grep goodcheck
 
 # Copy the main source code
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} exe ${RUNNERS_DIR}/exe

@@ -32,7 +32,7 @@ RUN cd ${RUNNER_USER_HOME} && \
     bundle config unset --local system && \
     cd ${RUNNER_USER_HOME} && \
     rm -rf rails_best_practices && \
-    gem info rails_best_practices
+    gem info --local --exact --quiet rails_best_practices | grep rails_best_practices
 
 # For backward compatibility
 RUN gem install require_all:1.5.0
