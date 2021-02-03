@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "6.30.0"
+default_version = "6.31.0"
 
 s.add_test(
   "success",
@@ -129,6 +129,11 @@ s.add_test(
     {
       message:
         "Use Rule name category/java/performance.xml/RedundantFieldInitializer instead of the deprecated Rule name rulesets/java/optimizations.xml/RedundantFieldInitializer. PMD 7.0.0 will remove support for this deprecated Rule name usage.",
+      file: nil
+    },
+    {
+      message:
+        "Discontinue using Rule name category/java/performance.xml/SimplifyStartsWith as it is scheduled for removal from PMD. PMD 7.0.0 will remove support for this Rule.",
       file: nil
     },
     {

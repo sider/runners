@@ -296,5 +296,16 @@ module Runners
       values = Array(value).flat_map { |s| (_ = s).split(/\s*,\s*/) }
       values.empty? ? nil : values.join(",")
     end
+
+    def extract_urls(text)
+      return [] unless text
+
+      @extract_urls_regexp ||= URI::DEFAULT_PARSER.make_regexp(["http", "https"])
+      text.to_enum(:scan, @extract_urls_regexp).map do
+        match = Regexp.last_match or raise
+        uri = match[0] or raise
+        uri.delete_suffix(",").delete_suffix(")")
+      end.uniq
+    end
   end
 end

@@ -1,5 +1,3 @@
-module URI
-  def self.parse: (String) -> URI::Generic
-  def self.join: (*String) -> URI::Generic
-  def self.extract: (String, ?Array[String]) -> Array[String]
+class URI::RFC2396_Parser
+  def make_regexp: (?Array[String] schemes) -> Regexp
 end

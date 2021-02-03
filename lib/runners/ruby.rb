@@ -98,5 +98,15 @@ module Runners
         GemInstaller::Spec.new(name: name, version: versions)
       end
     end
+
+    def gem_info(gem_name)
+      @gem_info ||= {}
+      info = @gem_info[gem_name]
+      unless info
+        info, _ = capture3! "gem", "info", "--both", "--exact", "--quiet", gem_name
+        @gem_info[gem_name] = info
+      end
+      info
+    end
   end
 end
