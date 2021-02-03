@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - **HAML-Lint** Improve issue ID and links for RuboCop [#2009](https://github.com/sider/runners/pull/2009)
 - **HAML-Lint** Enable `parallel` option by default [#2012](https://github.com/sider/runners/pull/2012)
 - Verify gem installation in Dockerfiles [#2010](https://github.com/sider/runners/pull/2010)
+- **Slim-Lint** New support [#2014](https://github.com/sider/runners/pull/2014)
 
 ## 0.41.1
 
