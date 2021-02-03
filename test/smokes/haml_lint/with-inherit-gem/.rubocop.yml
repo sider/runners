@@ -1,3 +1,6 @@
 inherit_gem:
   meowcop:
     - "config/rubocop.yml"
+
+AllCops:
+  DisplayCopNames: false

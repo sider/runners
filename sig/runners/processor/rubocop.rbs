@@ -1,6 +1,7 @@
 module Runners
   class Processor::RuboCop < Processor
     include Ruby
+    include RuboCopUtils
 
     class SchemaClass < StrongJSON
       def runner_config: () -> StrongJSON::Type::Object[untyped]
@@ -12,7 +13,6 @@ module Runners
     OPTIONAL_GEMS: Array[Ruby::GemInstaller::Spec]
     GEM_NAME: String
     CONSTRAINTS: Hash[String, Array[String]]
-    DEFAULT_CONFIG_FILE: String
 
     private
 
@@ -22,19 +22,7 @@ module Runners
 
     def safe: () -> Array[String]
 
-    def setup_default_config: () -> bool
-
     def check_rubocop_yml_warning: (String) -> void
-
-    def extract_links: (String) -> Array[String]
-
-    def build_cop_links: (String) -> Array[String]
-
-    def department_to_gem_name: () -> Hash[String, String]
-
-    def department_to_gem_name_ext: () -> Hash[String, String]
-
-    def gem_info: (String) -> String
 
     def normalize_message: (String, Array[String], String) -> String
 

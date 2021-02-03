@@ -1,6 +1,7 @@
 module Runners
   class Processor::HamlLint < Processor
     include Ruby
+    include RuboCopUtils
 
     class SchemaClass < StrongJSON
       def runner_config: () -> StrongJSON::Type::Object[untyped]
@@ -14,11 +15,8 @@ module Runners
     REQUIRED_GEM_NAMES: Array[String]
     CONSTRAINTS: Ruby::constraints
     DEFAULT_TARGET: String
-    DEFAULT_RUBOCOP_CONFIG: String
 
     private
-
-    def setup_default_rubocop_config: () -> String?
 
     def target: () -> Array[String]
 
@@ -34,7 +32,9 @@ module Runners
 
     def parse_result: (String) -> Array[Issue]
 
-    def build_links: (String) -> Array[::String]
+    def extract_cop_name: (String) -> String?
+
+    def build_links: (String?, String?) -> Array[String]
 
     def add_rubocop_warnings_if_exists: (String) -> void
   end

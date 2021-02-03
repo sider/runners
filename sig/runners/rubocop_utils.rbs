@@ -1,0 +1,13 @@
+module Runners
+  module RuboCopUtils : Processor, Ruby
+    def setup_default_rubocop_config: () -> Pathname?
+
+    def build_rubocop_links: (String) -> Array[String]
+
+    private
+
+    def department_to_gem_name: () -> Hash[String, String]
+
+    def department_to_gem_name_ext: () -> Hash[String, String]
+  end
+end

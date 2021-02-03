@@ -1,40 +1,13 @@
 require "test_helper"
 
-class Runners::Processor::RuboCopTest < Minitest::Test
+class RuboCopUtilsTest < Minitest::Test
   include TestHelper
 
-  private
-
-  def trace_writer
-    @trace_writer ||= new_trace_writer
-  end
-
-  def subject
-    @subject
-  end
-
-  def setup_subject(workspace)
-    @subject = Runners::Processor::RuboCop.new(
-      guid: SecureRandom.uuid,
-      working_dir: workspace.working_dir,
-      config: config,
-      shell: Runners::Shell.new(current_dir: workspace.working_dir, trace_writer: trace_writer),
-      trace_writer: trace_writer,
-    ).tap do |s|
-      def s.analyzer_id
-        "rubocop"
-      end
-    end
-  end
-
-  public
-
-  def test_build_cop_links
+  def test_build_rubocop_links
     with_workspace do |workspace|
-      setup_subject(workspace)
-
+      processor = new_processor(workspace)
       assert_links = ->(expected, actual) {
-        assert_equal expected, subject.send(:build_cop_links, actual)
+        assert_equal expected, processor.build_rubocop_links(actual)
         expected.each do |url|
           assert_includes ["200", "202"], Net::HTTP.get_response(URI(url)).code, url
         end
@@ -128,6 +101,29 @@ class Runners::Processor::RuboCopTest < Minitest::Test
       # unknown
       assert_links.call [], "Foo"
       assert_links.call [], "Foo/Bar"
+    end
+  end
+
+  private
+
+  def new_processor(workspace)
+    @processor ||= begin
+      trace_writer = new_trace_writer
+      klass = Class.new(Runners::Processor) do
+        include Runners::RuboCopUtils
+        include Runners::Ruby
+
+        def analyzer_id
+          "rubocop"
+        end
+      end
+      klass.new(
+        guid: "test-guid",
+        working_dir: workspace.working_dir,
+        config: config,
+        shell: Runners::Shell.new(current_dir: workspace.working_dir, trace_writer: trace_writer),
+        trace_writer: trace_writer,
+      )
     end
   end
 end

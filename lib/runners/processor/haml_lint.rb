@@ -3,6 +3,7 @@ require_relative 'rubocop'
 module Runners
   class Processor::HamlLint < Processor
     include Ruby
+    include RuboCopUtils
 
     Schema = _ = StrongJSON.new do
       # @type self: SchemaClass
@@ -46,7 +47,6 @@ module Runners
     }.freeze
 
     DEFAULT_TARGET = ".".freeze
-    DEFAULT_RUBOCOP_CONFIG = (Pathname(Dir.home) / 'default_rubocop.yml').to_path.freeze
 
     def analyzer_bin
       "haml-lint"
@@ -93,14 +93,6 @@ module Runners
 
     private
 
-    def setup_default_rubocop_config
-      config_file = ".rubocop.yml"
-      return if File.exist? config_file
-
-      FileUtils.copy_file(DEFAULT_RUBOCOP_CONFIG, config_file)
-      config_file
-    end
-
     def target
       Array(config_linter[:target] || config_linter[:file] ||
             config_linter.dig(:options, :file) || DEFAULT_TARGET)
@@ -135,15 +127,16 @@ module Runners
         path = file.fetch(:path)
         file.fetch(:offenses).map do |offense|
           id = offense[:linter_name]
-          message = offense[:message]
+          message = offense.fetch(:message)
           line = offense.dig(:location, :line)
+          cop_name = id == "RuboCop" ? extract_cop_name(message) : nil
 
           Issue.new(
             path: relative_path(path),
             location: line == 0 ? nil : Location.new(start_line: line),
-            id: id,
+            id: cop_name ? "RuboCop:#{cop_name}" : id,
             message: message,
-            links: build_links(id),
+            links: build_links(id, cop_name),
             object: {
               severity: offense[:severity],
             },
@@ -153,11 +146,17 @@ module Runners
       end
     end
 
-    def build_links(issue_id)
-      # NOTE: Syntax errors are produced by HAML itself, not HAML-Lint.
-      return [] if issue_id == "Syntax"
+    def extract_cop_name(message)
+      message.match(/\A(?<name>[\w\/]+): /)&.then { |m| m[:name] }
+    end
 
-      ["#{analyzer_github}/blob/v#{analyzer_version}/lib/haml_lint/linter##{issue_id.downcase}"]
+    def build_links(issue_id, cop_name)
+      # NOTE: Syntax errors are produced by HAML itself, not HAML-Lint.
+      return [] if issue_id.nil? || issue_id == "Syntax"
+
+      ["#{analyzer_github}/blob/v#{analyzer_version}/lib/haml_lint/linter##{issue_id.downcase}"].tap do |links|
+        links.push(*build_rubocop_links(cop_name)) if cop_name
+      end
     end
 
     # NOTE: HAML-Lint exits successfully even if RuboCop fails.

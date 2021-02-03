@@ -1,6 +1,7 @@
 module Runners
   class Processor::RuboCop < Processor
     include Ruby
+    include RuboCopUtils
 
     Schema = _ = StrongJSON.new do
       # @type self: SchemaClass
@@ -87,13 +88,11 @@ module Runners
       GEM_NAME => [">= 0.61.0", "< 2.0.0"]
     }.freeze
 
-    DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "default_rubocop.yml").to_path.freeze
-
     def setup
       add_warning_if_deprecated_options
 
       default_gems = default_gem_specs(GEM_NAME)
-      if setup_default_config
+      if setup_default_rubocop_config
         # NOTE: The latest MeowCop requires usually the latest RuboCop.
         #       (e.g. MeowCop 2.4.0 requires RuboCop 0.75.0+)
         #       So, MeowCop versions must be unspecified because the installation will fail when a user's RuboCop is 0.60.0.
@@ -157,13 +156,13 @@ module Runners
               end_line: offense[:location][:last_line] || offense[:location][:line],
               end_column: offense[:location][:last_column] || offense[:location][:column]
             )
-            links = extract_links(offense[:message])
+            links = extract_urls(offense[:message])
             result.add_issue Issue.new(
               path: relative_path(hash[:path]),
               location: loc,
               id: offense[:cop_name],
               message: normalize_message(offense[:message], links, offense[:cop_name]),
-              links: links + build_cop_links(offense[:cop_name]),
+              links: links + build_rubocop_links(offense[:cop_name]),
               object: {
                 severity: offense[:severity],
                 corrected: offense[:corrected],
@@ -209,16 +208,6 @@ module Runners
       config_linter[:safe] ? ["--safe"] : []
     end
 
-    def setup_default_config
-      path = current_dir / ".rubocop.yml"
-      return false if path.exist?
-
-      path.parent.mkpath
-      FileUtils.copy_file DEFAULT_CONFIG_FILE, path
-      trace_writer.message "Setup the default RuboCop configuration file."
-      true
-    end
-
     def check_rubocop_yml_warning(stderr)
       patterns = [
         # @see https://github.com/rubocop-hq/rubocop/blob/v0.89.1/lib/rubocop/cop/registry.rb#L263
@@ -250,105 +239,6 @@ module Runners
       warnings.uniq!
       warnings.sort_by! { |_, file| file ? file : "" } # 1. no file, 2. filename
       warnings.each { |msg, file| add_warning(msg, file: file) }
-    end
-
-    # @see https://github.com/rubocop-hq/rubocop/blob/v0.76.0/lib/rubocop/cop/message_annotator.rb#L62-L63
-    def extract_links(text)
-      @uri_regexp ||= URI::DEFAULT_PARSER.make_regexp(["http", "https"])
-      text.to_enum(:scan, @uri_regexp).map do
-        match = Regexp.last_match or raise
-        uri = match[0] or raise
-        uri.delete_suffix(",").delete_suffix(")")
-      end.uniq
-    end
-
-    def build_cop_links(cop_name)
-      department, *extra = cop_name.split("/")
-
-      if department && !extra.empty?
-        case
-        when department_to_gem_name.key?(department)
-          gem_name = department_to_gem_name.fetch(department)
-          fragment = cop_name.downcase.delete("/")
-          if extra.size == 1
-            return ["https://docs.rubocop.org/#{gem_name}/cops_#{department.downcase}.html##{fragment}"]
-          else
-            return ["https://docs.rubocop.org/#{gem_name}/cops_#{department.downcase}/#{extra.first&.downcase}.html##{fragment}"]
-          end
-        when department_to_gem_name_ext.key?(department)
-          gem_name = department_to_gem_name_ext.fetch(department)
-          return [
-            "https://www.rubydoc.info/gems/#{gem_name}/RuboCop/Cop/#{cop_name}",
-            *extract_links(gem_info(gem_name)),
-          ]
-        end
-      end
-
-      []
-    end
-
-    def department_to_gem_name
-      @department_to_gem_name ||= {
-        # rubocop
-        "Bundler" => "rubocop",
-        "Gemspec" => "rubocop",
-        "Layout" => "rubocop",
-        "Lint" => "rubocop",
-        "Metrics" => "rubocop",
-        "Migration" => "rubocop",
-        "Naming" => "rubocop",
-        "Security" => "rubocop",
-        "Style" => "rubocop",
-
-        # rubocop-rails
-        "Rails" => "rubocop-rails",
-
-        # rubocop-rspec
-        "Capybara" => "rubocop-rspec",
-        "FactoryBot" => "rubocop-rspec",
-        "RSpec" => "rubocop-rspec",
-
-        # rubocop-minitest
-        "Minitest" => "rubocop-minitest",
-
-        # rubocop-performance
-        "Performance" => "rubocop-performance",
-
-        # rubocop-packaging
-        "Packaging" => "rubocop-packaging",
-      }.freeze
-    end
-
-    def department_to_gem_name_ext
-      @department_to_gem_name_ext ||= {
-        "Chef" => "chefstyle",
-        "Discourse" => "rubocop-discourse",
-        "GitHub" => "rubocop-github",
-        "GraphQL" => "rubocop-graphql",
-        "I18n" => "rubocop-i18n",
-        "Jekyll" => "rubocop-jekyll",
-        "Rake" => "rubocop-rake",
-        "Rubycw" => "rubocop-rubycw",
-        "Sequel" => "rubocop-sequel",
-        "SketchupBugs" => "rubocop-sketchup",
-        "SketchupDeprecations" => "rubocop-sketchup",
-        "SketchupPerformance" => "rubocop-sketchup",
-        "SketchupRequirements" => "rubocop-sketchup",
-        "SketchupSuggestions" => "rubocop-sketchup",
-        "Sorbet" => "rubocop-sorbet",
-        "ThreadSafety" => "rubocop-thread_safety",
-        "Vendor" => "rubocop-vendor",
-      }.freeze
-    end
-
-    def gem_info(gem_name)
-      @gem_info ||= {}
-      info = @gem_info[gem_name]
-      unless info
-        info, _ = capture3! "gem", "info", "--both", "--exact", "--quiet", gem_name
-        @gem_info[gem_name] = info
-      end
-      info
     end
 
     def normalize_message(original_message, links, cop_name)
