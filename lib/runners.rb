@@ -92,6 +92,7 @@ require "runners/processor/ktlint"
 require "runners/processor/languagetool"
 require "runners/processor/metrics_codeclone"
 require "runners/processor/metrics_complexity"
+require "runners/processor/metrics_fileinfo"
 require "runners/processor/misspell"
 require "runners/processor/phinder"
 require "runners/processor/phpmd"
@@ -109,7 +110,6 @@ require "runners/processor/stylelint"
 require "runners/processor/swiftlint"
 require "runners/processor/tslint"
 require "runners/processor/tyscan"
-require "runners/processor/metrics_fileinfo"
 
 module Runners
 end
