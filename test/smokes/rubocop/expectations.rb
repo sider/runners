@@ -509,3 +509,39 @@ s.add_test(
     }
   ]
 )
+
+s.add_test(
+  "plugins",
+  type: "success",
+  issues: [
+    {
+      path: "foo.rb",
+      location: { start_line: 1, start_column: 1, end_line: 1, end_column: 1 },
+      id: "Rubycw/Rubycw",
+      message: "assigned but unused variable - a",
+      links: %w[
+        https://www.rubydoc.info/gems/rubocop-rubycw/RuboCop/Cop/Rubycw/Rubycw
+        https://github.com/rubocop-hq/rubocop-rubycw
+      ],
+      object: { severity: "convention", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "b88f1ec0c9fe96fde96a6f9dabcbeee661dd7afe", original_line: 1, final_line: 1
+      }
+    },
+    {
+      path: "foo.rb",
+      location: { start_line: 3, start_column: 1, end_line: 3, end_column: 10 },
+      id: "ThreadSafety/NewThread",
+      message: "Avoid starting new threads.",
+      links: %w[
+        https://www.rubydoc.info/gems/rubocop-thread_safety/RuboCop/Cop/ThreadSafety/NewThread
+        https://github.com/covermymeds/rubocop-thread_safety
+      ],
+      object: { severity: "convention", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "11b92bcabd991bd7aff3c1edfccb2c02eb8c51f7", original_line: 3, final_line: 3
+      }
+    }
+  ],
+  analyzer: { name: "RuboCop", version: default_version }
+)
