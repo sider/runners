@@ -21,8 +21,10 @@ module Runners
     end
 
     def analyze(changes)
+      capture3!("python", "-c", "import sys; print(sys.getrecursionlimit())")
+      capture3!("python", "-c", "import resource; print(resource.getrlimit(resource.RLIMIT_STACK))")
+
       capture3!(analyzer_bin,
-        '--working_threads', Etc.nprocessors.to_s,
         '--xml',
         '--output_file', report_file,
         '.')
