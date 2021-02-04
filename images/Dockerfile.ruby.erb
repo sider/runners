@@ -1,12 +1,12 @@
 # Install the default version
 COPY --chown=<%= chown %> images/<%= analyzer %>/Gemfile ${RUNNER_USER_HOME}/<%= analyzer %>_Gemfile
-RUN cd ${RUNNER_USER_HOME} && \
+RUN cd "${RUNNER_USER_HOME}" && \
     mkdir <%= analyzer %> && \
     mv <%= analyzer %>_Gemfile <%= analyzer %>/Gemfile && \
     cd <%= analyzer %> && \
     bundle config set --local system 'true' && \
     bundle install --gemfile=Gemfile && \
     bundle config unset --local system && \
-    cd ${RUNNER_USER_HOME} && \
+    cd .. && \
     rm -rf <%= analyzer %> && \
     gem info --local --exact --quiet <%= analyzer %> | grep <%= analyzer %>

@@ -10,7 +10,7 @@ USER root
 RUN curl -fsSL https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
     add-apt-repository "deb http://apt.llvm.org/buster/ llvm-toolchain-buster-10 main" && \
     apt-get update && \
-    grep -v "^\s*#" ${RUNNER_USER_HOME}/packages.list | xargs apt-get install -qq -y --no-install-recommends && \
+    grep -v "^\s*#" "${RUNNER_USER_HOME}/packages.list" | xargs apt-get install -qq -y --no-install-recommends && \
     apt-get clean && \
     update-alternatives --install /usr/local/bin/clang-tidy clang-tidy /usr/lib/llvm-10/bin/clang-tidy 20
 USER $RUNNER_USER
@@ -22,7 +22,7 @@ ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} Gemfile Gemfile.lock runners.gemspec analyzers.yml ${RUNNERS_DIR}/
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} lib/runners/version.rb ${RUNNERS_DIR}/lib/runners/
 
-RUN cd ${RUNNERS_DIR} && \
+RUN cd "${RUNNERS_DIR}" && \
     bundle config set --global jobs 4 && \
     bundle config set --global retry 3 && \
     bundle config && \

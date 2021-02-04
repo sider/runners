@@ -11,7 +11,7 @@ ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} Gemfile Gemfile.lock runners.gemspec analyzers.yml ${RUNNERS_DIR}/
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} lib/runners/version.rb ${RUNNERS_DIR}/lib/runners/
 
-RUN cd ${RUNNERS_DIR} && \
+RUN cd "${RUNNERS_DIR}" && \
     bundle config set --global jobs 4 && \
     bundle config set --global retry 3 && \
     bundle config && \
@@ -23,7 +23,7 @@ RUN cd ${RUNNERS_DIR} && \
 
 # Install the default version
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/tyscan/package.json ${RUNNER_USER_HOME}/tyscan_package.json
-RUN cd ${RUNNER_USER_HOME} && \
+RUN cd "${RUNNER_USER_HOME}" && \
     mkdir tyscan && \
     mv tyscan_package.json tyscan/package.json && \
     cd tyscan && \

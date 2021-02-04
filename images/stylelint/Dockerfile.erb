@@ -4,7 +4,7 @@ FROM sider/devon_rex_npm:2.40.0
 <%= render_erb 'images/Dockerfile.npm.erb' %>
 
 # NOTE: Install the older version to run `stylelint-config-recommended` with stylelint v8.
-RUN cd ${RUNNER_USER_HOME} && \
+RUN cd "${RUNNER_USER_HOME}" && \
     mkdir stylelint-config-recommended.old && \
     cd stylelint-config-recommended.old && \
     npm install stylelint-config-recommended@2

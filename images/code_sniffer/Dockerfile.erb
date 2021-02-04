@@ -3,9 +3,9 @@ FROM sider/devon_rex_php:2.40.0
 <%= render_erb 'images/Dockerfile.php.erb' %>
 
 # Set install paths
-RUN basepath=${COMPOSER_HOME}/vendor && \
+RUN basepath="${COMPOSER_HOME}/vendor" && \
     phpcs --config-set installed_paths \
-      ${basepath}/cakephp/cakephp-codesniffer,${basepath}/escapestudios/symfony2-coding-standard,${basepath}/wp-coding-standards/wpcs && \
+      "${basepath}/cakephp/cakephp-codesniffer,${basepath}/escapestudios/symfony2-coding-standard,${basepath}/wp-coding-standards/wpcs" && \
     phpcs -i
 
 <%= render_erb 'images/Dockerfile.base.erb' %>
