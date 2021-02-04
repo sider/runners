@@ -6,9 +6,6 @@ s.add_test(
   "success",
   type: "success",
   analyzer: { name: "Checkstyle", version: default_version },
-  warnings: [
-    { message: "Sider's recommended configuration file is about to be released in early March 2021.\nAfter the release, Sider will automatically apply our recommended ruleset if you don't specify the `config` option in your `sider.yml`.", file: "sider.yml" }
-  ],
   issues: [
     {
       message: "'method def modifier' has incorrect indentation level 4, expected level should be 2.",
@@ -200,9 +197,6 @@ s.add_test(
 s.add_test(
   "syntax_error",
   type: "failure",
-  warnings: [
-    { message: "Sider's recommended configuration file is about to be released in early March 2021.\nAfter the release, Sider will automatically apply our recommended ruleset if you don't specify the `config` option in your `sider.yml`.", file: "sider.yml" }
-  ],
   message: "Analysis failed. See the log for details.",
   analyzer: { name: "Checkstyle", version: default_version }
 )
@@ -262,4 +256,34 @@ s.add_test(
   backtrace: :_,
   inspect: /#<Runners::Shell::ExecError: type=capture3, args=\["gradle", "--no-build-cache",/,
   analyzer: :_
+)
+
+s.add_test(
+  "default_rules",
+  type: "success",
+  analyzer: { name: "Checkstyle", version: default_version },
+  issues: [
+    {
+      message: "The name of the outer type and the file do not match.",
+      links: %w[https://checkstyle.org/config_misc.html#OuterTypeFilename],
+      id: "OuterTypeFilenameCheck",
+      path: "src/Hello.java",
+      location: { start_line: 3, start_column: 1 },
+      object: { severity: "info" },
+      git_blame_info: {
+        commit: :_, line_hash: "b4aa7ff94732722c55d79ff3788d3d5f22b197b2", original_line: 3, final_line: 3
+      }
+    },
+    {
+      message: "Package name is not same as directory.",
+      links: %w[https://checkstyle.org/config_coding.html#PackageDeclaration],
+      id: "PackageDeclarationCheck",
+      path: "src/Hello.java",
+      location: { start_line: 1, start_column: 1 },
+      object: { severity: "info" },
+      git_blame_info: {
+        commit: :_, line_hash: "cbce17a507d2e4fd00c89efee19480c0104e0932", original_line: 1, final_line: 1
+      }
+    }
+  ]
 )

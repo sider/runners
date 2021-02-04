@@ -26,7 +26,7 @@ module Runners
     register_config_schema(name: :checkstyle, schema: Schema.runner_config)
 
     DEFAULT_TARGET = ".".freeze
-    CONFIG_FILE_NAME = "CHECKSTYLE.xml".freeze
+    CONFIG_FILE_NAME = "checkstyle.xml".freeze
 
     def setup
       begin
@@ -41,7 +41,7 @@ module Runners
       #   trace_writer.message "The `config` option in `#{config.path_name}` is not specified. Sider uses our recommended ruleset instead."
       #end
 
-      warn_recommended_config_option_release(:config, "in early March 2021")
+      #warn_recommended_config_option_release(:config, "in early March 2021")
       yield
     end
 
@@ -162,8 +162,8 @@ module Runners
         "/sun_checks.xml"
       when "google"
         "/google_checks.xml"
-      #when "sider"
-      #  original_recommended_file_path(CONFIG_FILE_NAME)
+      when "sider"
+        original_recommended_file_path(CONFIG_FILE_NAME)
       else
         file
       end
