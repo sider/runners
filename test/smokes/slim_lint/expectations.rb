@@ -94,3 +94,24 @@ s.add_test(
   ],
   analyzer: { name: "Slim-Lint", version: default_version }
 )
+
+s.add_test(
+  "no_target_files",
+  type: "success",
+  issues: [],
+  analyzer: { name: "Slim-Lint", version: default_version }
+)
+
+s.add_test(
+  "invalid_target",
+  type: "failure",
+  message: "File path 'not_found/' does not exist",
+  analyzer: { name: "Slim-Lint", version: default_version }
+)
+
+s.add_test(
+  "invalid_config",
+  type: "failure",
+  message: "Unable to load configuration from 'not_found.yml': No such file or directory @ rb_sysopen - not_found.yml",
+  analyzer: { name: "Slim-Lint", version: default_version }
+)

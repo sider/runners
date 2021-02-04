@@ -53,24 +53,27 @@ module Runners
         *Array(config_linter[:target] || DEFAULT_TARGET),
       )
 
-      stdout, _, status = capture3(cmd.bin, *cmd.args)
+      stdout, stderr, status = capture3(cmd.bin, *cmd.args)
 
-      # @see https://github.com/ybiquitous/slim-lint/blob/v0.20.2/lib/slim_lint/cli.rb#L93
-      if [0, 65].include? status.exitstatus
+      # @see https://github.com/sds/slim-lint/blob/v0.20.2/lib/slim_lint/cli.rb#L11-L16
+      case status.exitstatus
+      when 0, 65
         Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
           parse_result(stdout) do |issue|
             result.add_issue(issue)
           end
         end
+      when 67, 78
+        Results::Failure.new(guid: guid, analyzer: analyzer, message: stdout.strip)
       else
-        raise
+        raise "#{stdout}\n#{stderr}"
       end
     end
 
     private
 
     def parse_result(output)
-      # @see https://github.com/ybiquitous/slim-lint/blob/v0.20.2/lib/slim_lint/reporter/default_reporter.rb
+      # @see https://github.com/sds/slim-lint/blob/v0.20.2/lib/slim_lint/reporter/default_reporter.rb
       pattern = /^(.+):(\d+) \[(E|W)\] (?:(.+): )?(.+)$/
       severities = { "E" => "error", "W" => "warning" }
 
