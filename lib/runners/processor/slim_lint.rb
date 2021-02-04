@@ -73,6 +73,9 @@ module Runners
     private
 
     def parse_result(output)
+      # NOTE: The Slim-Lint JSON repoter does not output linter names, so we cannot set issue IDs.
+      # @see https://github.com/sds/slim-lint/blob/v0.20.2/lib/slim_lint/reporter/json_reporter.rb
+
       # @see https://github.com/sds/slim-lint/blob/v0.20.2/lib/slim_lint/reporter/default_reporter.rb
       pattern = /^(.+):(\d+) \[(E|W)\] (?:(.+): )?(.+)$/
       severities = { "E" => "error", "W" => "warning" }
