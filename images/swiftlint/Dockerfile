@@ -8,12 +8,12 @@ ARG SWIFTLINT_VERSION=0.42.0
 
 # Build SwiftLint
 RUN cd /tmp && \
-    curl -sSL --compressed https://github.com/realm/SwiftLint/archive/${SWIFTLINT_VERSION}.tar.gz | tar -xz && \
-    cd SwiftLint-${SWIFTLINT_VERSION} && \
-    make install BINARIES_FOLDER=${RUNNER_USER_HOME}/bin && \
+    curl -sSL --compressed "https://github.com/realm/SwiftLint/archive/${SWIFTLINT_VERSION}.tar.gz" | tar -xz && \
+    cd "SwiftLint-${SWIFTLINT_VERSION}" && \
+    make install "BINARIES_FOLDER=${RUNNER_USER_HOME}/bin" && \
     cd .. && \
-    rm -rf SwiftLint-${SWIFTLINT_VERSION} && \
-    swiftlint version
+    rm -rf "SwiftLint-${SWIFTLINT_VERSION}" && \
+    swiftlint version | grep "${SWIFTLINT_VERSION}"
 
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
@@ -22,7 +22,7 @@ ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} Gemfile Gemfile.lock runners.gemspec analyzers.yml ${RUNNERS_DIR}/
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} lib/runners/version.rb ${RUNNERS_DIR}/lib/runners/
 
-RUN cd ${RUNNERS_DIR} && \
+RUN cd "${RUNNERS_DIR}" && \
     bundle config set --global jobs 4 && \
     bundle config set --global retry 3 && \
     bundle config && \

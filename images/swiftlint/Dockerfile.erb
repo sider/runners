@@ -4,12 +4,12 @@ ARG SWIFTLINT_VERSION=0.42.0
 
 # Build SwiftLint
 RUN cd /tmp && \
-    curl -sSL --compressed https://github.com/realm/SwiftLint/archive/${SWIFTLINT_VERSION}.tar.gz | tar -xz && \
-    cd SwiftLint-${SWIFTLINT_VERSION} && \
-    make install BINARIES_FOLDER=${RUNNER_USER_HOME}/bin && \
+    curl -sSL --compressed "https://github.com/realm/SwiftLint/archive/${SWIFTLINT_VERSION}.tar.gz" | tar -xz && \
+    cd "SwiftLint-${SWIFTLINT_VERSION}" && \
+    make install "BINARIES_FOLDER=${RUNNER_USER_HOME}/bin" && \
     cd .. && \
-    rm -rf SwiftLint-${SWIFTLINT_VERSION} && \
-    swiftlint version
+    rm -rf "SwiftLint-${SWIFTLINT_VERSION}" && \
+    swiftlint version | grep "${SWIFTLINT_VERSION}"
 
 <%= render_erb 'images/Dockerfile.base.erb' %>
 <%= render_erb 'images/Dockerfile.end.erb' %>

@@ -11,7 +11,7 @@ ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} Gemfile Gemfile.lock runners.gemspec analyzers.yml ${RUNNERS_DIR}/
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} lib/runners/version.rb ${RUNNERS_DIR}/lib/runners/
 
-RUN cd ${RUNNERS_DIR} && \
+RUN cd "${RUNNERS_DIR}" && \
     bundle config set --global jobs 4 && \
     bundle config set --global retry 3 && \
     bundle config && \
@@ -23,14 +23,14 @@ RUN cd ${RUNNERS_DIR} && \
 
 # Install the default version
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/haml_lint/Gemfile ${RUNNER_USER_HOME}/haml_lint_Gemfile
-RUN cd ${RUNNER_USER_HOME} && \
+RUN cd "${RUNNER_USER_HOME}" && \
     mkdir haml_lint && \
     mv haml_lint_Gemfile haml_lint/Gemfile && \
     cd haml_lint && \
     bundle config set --local system 'true' && \
     bundle install --gemfile=Gemfile && \
     bundle config unset --local system && \
-    cd ${RUNNER_USER_HOME} && \
+    cd .. && \
     rm -rf haml_lint && \
     gem info --local --exact --quiet haml_lint | grep haml_lint
 

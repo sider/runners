@@ -15,12 +15,12 @@ ARG LIBZ3_VERSION=4.4.1-1~deb10u1
 
 USER root
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends libz3-dev=${LIBZ3_VERSION} && \
+    apt-get install -y --no-install-recommends "libz3-dev=${LIBZ3_VERSION}" && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     cd /tmp && \
-    curl -sSL https://github.com/danmar/cppcheck/archive/${CPPCHECK_VERSION}.tar.gz | tar -xz && \
-    cd cppcheck-${CPPCHECK_VERSION} && \
+    curl -sSL --compressed "https://github.com/danmar/cppcheck/archive/${CPPCHECK_VERSION}.tar.gz" | tar -xz && \
+    cd "cppcheck-${CPPCHECK_VERSION}" && \
     # NOTE: We cannot use the latest version due to a potential segmentation fault.
     cp -v externals/z3_version_old.h externals/z3_version.h && \
     make install -s \
@@ -29,7 +29,7 @@ RUN apt-get update && \
       HAVE_RULES=yes \
       USE_Z3=yes \
       CPPFLAGS="-DUSE_Z3 -Wno-deprecated-declarations -Wno-unused-function" && \
-    rm -rf cppcheck-${CPPCHECK_VERSION}
+    rm -rf "cppcheck-${CPPCHECK_VERSION}"
 
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
@@ -38,7 +38,7 @@ ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} Gemfile Gemfile.lock runners.gemspec analyzers.yml ${RUNNERS_DIR}/
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} lib/runners/version.rb ${RUNNERS_DIR}/lib/runners/
 
-RUN cd ${RUNNERS_DIR} && \
+RUN cd "${RUNNERS_DIR}" && \
     bundle config set --global jobs 4 && \
     bundle config set --global retry 3 && \
     bundle config && \
