@@ -10,9 +10,9 @@ COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/code_sniffer/composer.json im
 RUN composer global install
 
 # Set install paths
-RUN basepath=${COMPOSER_HOME}/vendor && \
+RUN basepath="${COMPOSER_HOME}/vendor" && \
     phpcs --config-set installed_paths \
-      ${basepath}/cakephp/cakephp-codesniffer,${basepath}/escapestudios/symfony2-coding-standard,${basepath}/wp-coding-standards/wpcs && \
+      "${basepath}/cakephp/cakephp-codesniffer,${basepath}/escapestudios/symfony2-coding-standard,${basepath}/wp-coding-standards/wpcs" && \
     phpcs -i
 
 

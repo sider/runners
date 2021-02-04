@@ -8,15 +8,15 @@ ARG JAVASEE_VERSION=0.2.0
 
 RUN mkdir /tmp/work && \
     cd /tmp/work && \
-    curl -fsSLO --compressed https://github.com/sider/JavaSee/releases/download/${JAVASEE_VERSION}/JavaSee-bin-${JAVASEE_VERSION}.zip && \
-    unzip JavaSee-bin-${JAVASEE_VERSION}.zip && \
-    mkdir ${RUNNER_USER_HOME}/JavaSee && \
-    cp -rv JavaSee-bin-${JAVASEE_VERSION}/bin ${RUNNER_USER_HOME}/JavaSee/bin && \
-    cp -rv JavaSee-bin-${JAVASEE_VERSION}/lib ${RUNNER_USER_HOME}/JavaSee/lib && \
-    ln -sv ${RUNNER_USER_HOME}/JavaSee/bin/javasee ${RUNNER_USER_HOME}/bin/javasee && \
+    curl -fsSLO --compressed "https://github.com/sider/JavaSee/releases/download/${JAVASEE_VERSION}/JavaSee-bin-${JAVASEE_VERSION}.zip" && \
+    unzip "JavaSee-bin-${JAVASEE_VERSION}.zip" && \
+    mkdir "${RUNNER_USER_HOME}/JavaSee" && \
+    cp -rv "JavaSee-bin-${JAVASEE_VERSION}/bin" "${RUNNER_USER_HOME}/JavaSee/bin" && \
+    cp -rv "JavaSee-bin-${JAVASEE_VERSION}/lib" "${RUNNER_USER_HOME}/JavaSee/lib" && \
+    ln -sv "${RUNNER_USER_HOME}/JavaSee/bin/javasee" "${RUNNER_USER_HOME}/bin/javasee" && \
     cd .. && \
     rm -rf /tmp/work && \
-    javasee version
+    javasee version | grep "${JAVASEE_VERSION}"
 
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
