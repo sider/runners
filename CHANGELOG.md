@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.41.1...HEAD)
 
+Updated environments:
+
+- **devon_rex** 2.40.0 -> 2.40.1 [#2017](https://github.com/sider/runners/pull/2017)
+- **Bundler** 2.2.7 -> 2.2.8 [#2017](https://github.com/sider/runners/pull/2017)
+
+Misc:
+
 - **HAML-Lint** Improve issue ID and links for RuboCop [#2009](https://github.com/sider/runners/pull/2009)
 - **HAML-Lint** Enable `parallel` option by default [#2012](https://github.com/sider/runners/pull/2012)
 - Verify gem installation in Dockerfiles [#2010](https://github.com/sider/runners/pull/2010)
