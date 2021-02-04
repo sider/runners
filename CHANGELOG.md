@@ -18,6 +18,7 @@ Misc:
 - Verify gem installation in Dockerfiles [#2010](https://github.com/sider/runners/pull/2010)
 - **Slim-Lint** New support [#2014](https://github.com/sider/runners/pull/2014)
 - **RuboCop** Set up default config only when no user config [#2020](https://github.com/sider/runners/pull/2020)
+- **Metrics Complexity** Run lizard as single thread to avoid timeout error [#2019](https://github.com/sider/runners/pull/2019)
 
 ## 0.41.1
 
