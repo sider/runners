@@ -1,5 +1,3 @@
-require "etc"
-
 module Runners
   class Processor::MetricsComplexity < Processor
     include Python
@@ -21,9 +19,6 @@ module Runners
     end
 
     def analyze(changes)
-      capture3!("python", "-c", "import sys; print(sys.getrecursionlimit())")
-      capture3!("python", "-c", "import resource; print(resource.getrlimit(resource.RLIMIT_STACK))")
-
       capture3!(analyzer_bin,
         '--xml',
         '--output_file', report_file,
