@@ -64,6 +64,7 @@ jobs:
           - rubocop
           - scss_lint
           - shellcheck
+          - slim_lint
           - stylelint
           - swiftlint
           - tslint
