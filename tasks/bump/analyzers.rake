@@ -20,7 +20,7 @@ namespace :bump do
         puts "  --> #{t.current_version} => #{t.latest_version}"
         next if dry_run
       else
-        puts "  --> none"
+        puts "  --> #{t.current_version} is up-to-date"
         next
       end
 
