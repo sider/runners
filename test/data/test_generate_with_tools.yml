@@ -5,13 +5,20 @@
 
 ## Customize each tools. For example:
 # linter:
-<%- tools.each do |tool| -%>
-  ## <%= analyzers.name(tool) %>. See <%= analyzers.doc(tool) %>
-  # <%= tool %>:
-    <%- tool_examples.fetch(tool).each do |line| -%>
-  #   <%= line.start_with?("- ") ? "  #{line}" : line %>
-    <%- end -%>
-<%- end -%>
+  ## ESLint. See https://help.sider.review/tools/javascript/eslint
+  # eslint:
+  #   root_dir: frontend/
+  #   npm_install: false
+  #   target:
+  #     - src/
+  #     - lib/
+  #   ext: ".js,.jsx"
+  #   config: config/.eslintrc.js
+  #   ignore-path: config/.eslintignore
+  #   ignore-pattern: vendor/**
+  #   no-ignore: true
+  #   global: require,exports:true
+  #   quiet: true
 
 ## Ignore specific files. For example:
 # ignore:

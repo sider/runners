@@ -5,13 +5,6 @@
 
 ## Customize each tools. For example:
 # linter:
-<%- tools.each do |tool| -%>
-  ## <%= analyzers.name(tool) %>. See <%= analyzers.doc(tool) %>
-  # <%= tool %>:
-    <%- tool_examples.fetch(tool).each do |line| -%>
-  #   <%= line.start_with?("- ") ? "  #{line}" : line %>
-    <%- end -%>
-<%- end -%>
 
 ## Ignore specific files. For example:
 # ignore:
