@@ -7,5 +7,7 @@ module Runners
     def load_template: (Array[Symbol]) -> String
 
     def validate: (String) -> String
+
+    def deep_stringify_keys: (untyped) -> Hash[String, untyped]
   end
 end

@@ -17,7 +17,7 @@ module Runners
         tool_examples: tools.each_with_object({}) do |tool, examples|
           examples[tool] = (_ = Processor.children.fetch(tool)) # TODO: Ignored Steep error
             .config_example
-            .then { |hash| deep_transform_keys_in_object(hash, &:to_s) }
+            .then { |hash| deep_stringify_keys(hash) }
             .to_yaml
             .delete_prefix("---")
             .strip
@@ -32,14 +32,15 @@ module Runners
     end
 
     # @see https://github.com/rails/rails/blob/c03933af23557945dd7d5d1359779d2ea461542c/activesupport/lib/active_support/core_ext/hash/keys.rb#L116
-    def deep_transform_keys_in_object(object, &block)
+    def deep_stringify_keys(object)
       case object
       when Hash
-        object.each_with_object({}) do |(key, value), result|
-          result[yield(key)] = deep_transform_keys_in_object(value, &block)
+        object.each_with_object({}) do |entry, result|
+          key, value = entry
+          result[key.to_s] = deep_stringify_keys(value)
         end
       when Array
-        object.map { |e| deep_transform_keys_in_object(e, &block) }
+        object.map { |elem| deep_stringify_keys(elem) }
       else
         object
       end
