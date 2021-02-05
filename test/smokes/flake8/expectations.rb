@@ -5,9 +5,6 @@ default_version = "3.8.4"
 s.add_test(
   "sandbox_django",
   type: "success",
-  warnings: [
-    { message: /Sider's recommended configuration file is about to be updated in early March 2021./, file: nil }
-  ],
   issues: [
     {
       path: "app1/views.py",
@@ -134,9 +131,6 @@ s.add_test(
 s.add_test(
   "no_user_config_enabled",
   type: "success",
-  warnings: [
-    { message: /Sider's recommended configuration file is about to be updated in early March 2021./, file: nil }
-  ],
   issues: [], # W191 is not issued.
   analyzer: { name: "Flake8", version: default_version }
 )
@@ -144,9 +138,6 @@ s.add_test(
 s.add_test(
   "with_plugins",
   type: "success",
-  warnings: [
-    { message: /Sider's recommended configuration file is about to be updated in early March 2021./, file: nil }
-  ],
   issues: [
     {
       path: "foo.py",
@@ -243,9 +234,6 @@ s.add_test(
 s.add_test(
   "dot_python_version",
   type: "success",
-  warnings: [
-    { message: /Sider's recommended configuration file is about to be updated in early March 2021./, file: nil }
-  ],
   issues: [],
   analyzer: { name: "Flake8", version: default_version }
 )
@@ -253,9 +241,6 @@ s.add_test(
 s.add_test(
   "dot_python_version_2",
   type: "success",
-  warnings: [
-    { message: /Sider's recommended configuration file is about to be updated in early March 2021./, file: nil }
-  ],
   issues: [],
   analyzer: { name: "Flake8", version: default_version }
 )
@@ -263,9 +248,6 @@ s.add_test(
 s.add_test(
   "option_config",
   type: "success",
-  warnings: [
-    { message: /Sider's recommended configuration file is about to be updated in early March 2021./, file: nil }
-  ],
   issues: [],
   analyzer: { name: "Flake8", version: default_version }
 )
@@ -273,9 +255,6 @@ s.add_test(
 s.add_test(
   "option_target",
   type: "success",
-  warnings: [
-    { message: /Sider's recommended configuration file is about to be updated in early March 2021./, file: nil }
-  ],
   issues: [
     {
       message: "local variable 'a' is assigned to but never used",
@@ -295,9 +274,6 @@ s.add_test(
 s.add_test(
   "option_target_multiple",
   type: "success",
-  warnings: [
-    { message: /Sider's recommended configuration file is about to be updated in early March 2021./, file: nil }
-  ],
   issues: [
     {
       message: "local variable 'a' is assigned to but never used",
