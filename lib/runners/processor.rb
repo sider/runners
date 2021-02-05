@@ -68,8 +68,22 @@ module Runners
       @analyzers ||= Analyzers.new
     end
 
-    # NOTE: This method should be defined dynamically.
-    # def analyzer_id; end
+    def self.children
+      @children ||= ObjectSpace.each_object(Class)
+        .filter { |cls| cls.name && cls < self }
+        .to_h { |cls| [cls.analyzer_id, cls] }
+        .freeze
+    end
+
+    def self.analyzer_id
+      # Naming convention
+      source_file, _ = Module.const_source_location(self.name.to_s)
+      File.basename(source_file, ".rb").to_sym
+    end
+
+    def analyzer_id
+      @analyzer_id ||= self.class.analyzer_id
+    end
 
     def analyzer_name
       analyzers.name(analyzer_id)
@@ -88,7 +102,7 @@ module Runners
     end
 
     def analyzer_bin
-      analyzer_id
+      analyzer_id.to_s
     end
 
     def analyzer_version

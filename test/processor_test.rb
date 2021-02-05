@@ -17,14 +17,14 @@ class ProcessorTest < Minitest::Test
   def processor_class
     @processor_class ||= Class.new(Runners::Processor) do
       def analyzer_id
-        "eslint"
+        :eslint
       end
     end
   end
 
   def new_processor(workspace:, config_yaml: nil)
     processor_class.new(
-      guid: SecureRandom.uuid,
+      guid: "test-guid",
       working_dir: workspace.working_dir,
       config: config(config_yaml),
       shell: Shell.new(current_dir: workspace.working_dir, trace_writer: trace_writer),
@@ -561,5 +561,11 @@ class ProcessorTest < Minitest::Test
                    processor.extract_urls("(https://example.com/foo, https://example.com/bar)")
       assert_equal [], processor.extract_urls("ftp://example.com foo@example.com")
     end
+  end
+
+  def test_children
+    assert_equal Runners::Processor::Eslint, Runners::Processor.children[:eslint]
+    assert_equal Runners::Processor::RuboCop, Runners::Processor.children[:rubocop]
+    assert_nil Runners::Processor.children[:unknown]
   end
 end

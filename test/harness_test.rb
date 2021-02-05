@@ -31,7 +31,7 @@ class HarnessTest < Minitest::Test
 
   class TestProcessor < Processor
     def analyzer_id
-      "test"
+      :test
     end
 
     def analyzer_name
@@ -74,7 +74,7 @@ class HarnessTest < Minitest::Test
   def test_run_filters_issues
     processor_class = Class.new(Processor) do
       def analyzer_id
-        'test'
+        :test
       end
 
       def analyzer_name

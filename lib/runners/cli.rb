@@ -17,18 +17,28 @@ module Runners
       setup_bugsnag!(argv.dup)
       setup_aws!
 
-      OptionParser.new do |opts|
+      option_parser = OptionParser.new do |opts|
         opts.banner = "Usage: runners [options] <GUID>"
 
-        opts.on("--analyzer=ANALYZER", "Analyzer tool name", all_processor_classes.keys) do |analyzer|
-          @analyzer = analyzer
+        opts.on("--analyzer=ANALYZER", "Analyzer name", Processor.children.keys) do |analyzer|
+          @analyzer = analyzer.to_sym
         end
-      end.parse!(argv)
+      end
 
-      raise OptionParser::MissingArgument.new("--analyzer is required") unless analyzer
+      begin
+        option_parser.parse!(argv)
+      rescue OptionParser::ParseError
+        option_parser.abort
+      end
 
-      guid = argv.shift or raise OptionParser::MissingArgument.new("GUID is required")
-      @guid = guid
+      @analyzer or abort option_parser.help
+
+      guid = argv.shift
+      if guid
+        @guid = guid
+      else
+        option_parser.abort "missing GUID"
+      end
 
       @options = Options.new(options_json, stdout, stderr)
     end
@@ -44,7 +54,8 @@ module Runners
         trace_writer.message "Runners version #{VERSION}"
         trace_writer.message "Build GUID #{guid}"
 
-        harness = Harness.new(guid: guid, processor_class: processor_class, options: options, working_dir: working_dir, trace_writer: trace_writer)
+        harness = Harness.new(guid: guid, processor_class: processor_class, options: options,
+                              working_dir: working_dir, trace_writer: trace_writer)
 
         result = harness.run
         warnings = harness.warnings
@@ -117,24 +128,8 @@ module Runners
       mktmpdir(&block)
     end
 
-    def all_processor_classes
-      @processor_classes ||= ObjectSpace.each_object(Class).each_with_object({}) do |cls, classes|
-        next unless cls.name
-        next unless cls < Processor
-
-        # NOTE: Generate an analyzer ID from the file name convention.
-        filename, _ = Module.const_source_location(cls.name)
-        analyzer_id = File.basename(filename, ".rb")
-        unless cls.method_defined?(:analyzer_id)
-          cls.define_method(:analyzer_id) { analyzer_id }
-        end
-
-        classes[analyzer_id] = cls
-      end
-    end
-
     def processor_class
-      all_processor_classes.fetch(analyzer)
+      Processor.children.fetch(analyzer)
     end
 
     def io
