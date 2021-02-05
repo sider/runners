@@ -1,0 +1,3 @@
+class Object
+  def to_yaml: () -> String
+end

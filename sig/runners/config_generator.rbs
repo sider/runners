@@ -1,0 +1,11 @@
+module Runners
+  class ConfigGenerator
+    def generate: (?tools: Array[Symbol]) -> String
+
+    private
+
+    def load_template: (Array[Symbol]) -> String
+
+    def validate: (String) -> String
+  end
+end

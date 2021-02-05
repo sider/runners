@@ -10,6 +10,7 @@ target :lib do
   library "forwardable"
   library "time"
   library "uri"
+  library "erb"
   library "strong_json"
   library "retryable"
 end

@@ -18,6 +18,10 @@ module Runners
     register_config_schema(name: :go_vet, schema: RemovedGoToolSchema.config)
     register_config_schema(name: :gometalinter, schema: RemovedGoToolSchema.config)
 
+    def self.config_example
+      raise NotImplementedError
+    end
+
     attr_reader :guid, :working_dir, :config, :shell, :trace_writer, :warnings
 
     def_delegators :@shell,

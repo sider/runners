@@ -48,6 +48,21 @@ module Runners
     DEFAULT_ESLINT_CONFIG = (Pathname(Dir.home) / "eslint" / "sider_eslintrc.yml").to_path.freeze
     DEFAULT_TARGET = ".".freeze
 
+    def self.config_example
+      {
+        root_dir: "frontend/",
+        npm_install: false,
+        target: ["src/", "lib/"],
+        ext: ".js,.jsx",
+        config: "config/.eslintrc.js",
+        "ignore-path": "config/.eslintignore",
+        "ignore-pattern": "vendor/**",
+        "no-ignore": true,
+        global: "require,exports:true",
+        quiet: true,
+      }
+    end
+
     def setup
       add_warning_if_deprecated_options
       add_warning_for_deprecated_option :dir, to: :target
