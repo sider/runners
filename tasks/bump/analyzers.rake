@@ -10,7 +10,7 @@ namespace :bump do
     BumpAnalyzers.each do |t|
       puts "Bumping #{t.analyzer}..."
 
-      if t.latest_version.match? /(alpha|beta|rc)/i
+      if t.latest_version.match?(/(alpha|beta|rc)/i)
         puts "  --> #{t.latest_version.inspect} unsupported"
         next
       end
