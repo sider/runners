@@ -20,7 +20,8 @@ class ConfigGeneratorTest < Minitest::Test
   def assert_yaml(expected, actual)
     assert_equal expected, actual
 
-    # Check YAML commented out
-    YAML.parse actual.gsub(/^\s*# /, "")
+    # Comment out
+    yaml = actual.gsub(/^# /, "").gsub(/^#/, "")
+    Runners::Config.new(path: "foo.yml", raw_content: yaml).validate
   end
 end
