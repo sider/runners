@@ -20,10 +20,12 @@ module Runners
     }.freeze
 
     def self.config_example
-      {
-        root_dir: "lib/",
-        gems: [{ name: "brakeman", version: "4.3.0" }]
-      }
+      <<~YAML
+        root_dir: webapp/
+        gems:
+          - name: brakeman
+            version: 4.3.0
+      YAML
     end
 
     def setup

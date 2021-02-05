@@ -18,7 +18,7 @@ module Runners
 
     def self.analyzer_id: () -> Symbol
 
-    def self.config_example: () -> Hash[Symbol, untyped]
+    def self.config_example: () -> String
 
     attr_reader guid: String
     attr_reader working_dir: Pathname

@@ -26,6 +26,19 @@ module Runners
 
     DEFAULT_TARGET = ".".freeze
 
+    def self.config_example
+      <<~YAML
+        root_dir: server/
+        jvm_deps:
+          - [com.github.sevntu-checkstyle, sevntu-checks, 1.37.1]
+        config: custom-checkstyle.xml
+        dir: src/
+        exclude: vendor/
+        ignore: [warning, info]
+        properties: custom-checkstyle.properties
+      YAML
+    end
+
     def setup
       begin
         install_jvm_deps

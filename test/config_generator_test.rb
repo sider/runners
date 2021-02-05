@@ -12,7 +12,7 @@ class ConfigGeneratorTest < Minitest::Test
   end
 
   def test_generate_with_tools
-    assert_yaml data("#{__method__}.yml").read, @subject.generate(tools: [:brakeman, :eslint])
+    assert_yaml data("#{__method__}.yml").read, @subject.generate(tools: [:brakeman, :checkstyle, :eslint])
   end
 
   private

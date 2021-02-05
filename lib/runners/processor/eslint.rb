@@ -49,18 +49,20 @@ module Runners
     DEFAULT_TARGET = ".".freeze
 
     def self.config_example
-      {
-        root_dir: "frontend/",
-        npm_install: false,
-        target: ["src/", "lib/"],
-        ext: ".js,.jsx",
-        config: "config/.eslintrc.js",
-        "ignore-path": "config/.eslintignore",
-        "ignore-pattern": "vendor/**",
-        "no-ignore": true,
-        global: "require,exports:true",
-        quiet: true,
-      }
+      <<~YAML
+        root_dir: frontend/
+        npm_install: false
+        target:
+          - src/
+          - lib/
+        ext: ".js,.jsx"
+        config: config/.eslintrc.js
+        ignore-path: config/.eslintignore
+        ignore-pattern: "vendor/**"
+        no-ignore: true
+        global: "require,exports:true"
+        quiet: true
+      YAML
     end
 
     def setup
