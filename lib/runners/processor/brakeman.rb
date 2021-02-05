@@ -19,6 +19,13 @@ module Runners
       GEM_NAME => [">= 4.0.0", "< 6.0.0"]
     }.freeze
 
+    def self.config_example
+      {
+        root_dir: "lib/",
+        gems: [{ name: "brakeman", version: "4.3.0" }]
+      }
+    end
+
     def setup
       install_gems(default_gem_specs(GEM_NAME), constraints: CONSTRAINTS) { yield }
     rescue InstallGemsFailure => exn

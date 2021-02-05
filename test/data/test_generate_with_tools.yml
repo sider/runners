@@ -5,20 +5,28 @@
 
 ## Customize each tools. For example:
 # linter:
-  ## ESLint. See https://help.sider.review/tools/javascript/eslint
-  # eslint:
-  #   root_dir: frontend/
-  #   npm_install: false
-  #   target:
-  #     - src/
-  #     - lib/
-  #   ext: ".js,.jsx"
-  #   config: config/.eslintrc.js
-  #   ignore-path: config/.eslintignore
-  #   ignore-pattern: vendor/**
-  #   no-ignore: true
-  #   global: require,exports:true
-  #   quiet: true
+#
+#   # Brakeman. See https://help.sider.review/tools/ruby/brakeman
+#   brakeman:
+#     root_dir: lib/
+#     gems:
+#     - name: brakeman
+#       version: 4.3.0
+#
+#   # ESLint. See https://help.sider.review/tools/javascript/eslint
+#   eslint:
+#     root_dir: frontend/
+#     npm_install: false
+#     target:
+#     - src/
+#     - lib/
+#     ext: ".js,.jsx"
+#     config: config/.eslintrc.js
+#     ignore-path: config/.eslintignore
+#     ignore-pattern: vendor/**
+#     no-ignore: true
+#     global: require,exports:true
+#     quiet: true
 
 ## Ignore specific files. For example:
 # ignore:
