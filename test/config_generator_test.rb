@@ -8,21 +8,23 @@ class ConfigGeneratorTest < Minitest::Test
   end
 
   def test_generate
-    assert_equal <<~YAML, @subject.generate
-      # This is a configuration file to customize code analysis by Sider.
-      #
-      # For more information, see the documentation:
-      # https://help.sider.review/getting-started/custom-configuration
+    assert_yaml <<~YAML, @subject.generate
+      ## This is a configuration file to customize code analysis by Sider.
+      ##
+      ## For more information, see the documentation:
+      ## https://help.sider.review/getting-started/custom-configuration
 
+      ## Customize each tools. For example:
+      # linter:
 
-      # Ignore specific files. For example:
+      ## Ignore specific files. For example:
       # ignore:
       #   - "*.pdf"
       #   - "*.mp4"
       #   - "*.min.*"
       #   - "images/**"
 
-      # Exclude specific branches. For example:
+      ## Exclude specific branches. For example:
       # branches:
       #   exclude:
       #     - master
@@ -32,15 +34,15 @@ class ConfigGeneratorTest < Minitest::Test
   end
 
   def test_generate_with_tools
-    assert_equal <<~YAML, @subject.generate(tools: [:eslint])
-      # This is a configuration file to customize code analysis by Sider.
-      #
-      # For more information, see the documentation:
-      # https://help.sider.review/getting-started/custom-configuration
+    assert_yaml <<~YAML, @subject.generate(tools: [:eslint])
+      ## This is a configuration file to customize code analysis by Sider.
+      ##
+      ## For more information, see the documentation:
+      ## https://help.sider.review/getting-started/custom-configuration
 
-      linter:
-        # ESLint configuration. See: https://help.sider.review/tools/javascript/eslint
-        # For example:
+      ## Customize each tools. For example:
+      # linter:
+        ## ESLint configuration. See: https://help.sider.review/tools/javascript/eslint
         # eslint:
         #   root_dir: frontend/
         #   npm_install: false
@@ -55,19 +57,28 @@ class ConfigGeneratorTest < Minitest::Test
         #   global: require,exports:true
         #   quiet: true
 
-      # Ignore specific files. For example:
+      ## Ignore specific files. For example:
       # ignore:
       #   - "*.pdf"
       #   - "*.mp4"
       #   - "*.min.*"
       #   - "images/**"
 
-      # Exclude specific branches. For example:
+      ## Exclude specific branches. For example:
       # branches:
       #   exclude:
       #     - master
       #     - development
       #     - /^release-.*$/
     YAML
+  end
+
+  private
+
+  def assert_yaml(expected, actual)
+    assert_equal expected, actual
+
+    # Check YAML commented out
+    YAML.parse actual.gsub(/^\s*# /, "")
   end
 end

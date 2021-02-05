@@ -1,28 +1,26 @@
-# This is a configuration file to customize code analysis by Sider.
-#
-# For more information, see the documentation:
-# https://help.sider.review/getting-started/custom-configuration
+## This is a configuration file to customize code analysis by Sider.
+##
+## For more information, see the documentation:
+## https://help.sider.review/getting-started/custom-configuration
 
-<%- unless tools.empty? -%>
-linter:
-  <%- tools.each do |tool| -%>
-  # <%= analyzers.name(tool) %> configuration. See: <%= analyzers.doc(tool) %>
-  # For example:
+## Customize each tools. For example:
+# linter:
+<%- tools.each do |tool| -%>
+  ## <%= analyzers.name(tool) %> configuration. See: <%= analyzers.doc(tool) %>
   # <%= tool %>:
     <%- tool_examples.fetch(tool).each do |line| -%>
   #   <%= line.start_with?("- ") ? "  #{line}" : line %>
     <%- end -%>
-  <%- end -%>
 <%- end -%>
 
-# Ignore specific files. For example:
+## Ignore specific files. For example:
 # ignore:
 #   - "*.pdf"
 #   - "*.mp4"
 #   - "*.min.*"
 #   - "images/**"
 
-# Exclude specific branches. For example:
+## Exclude specific branches. For example:
 # branches:
 #   exclude:
 #     - master
