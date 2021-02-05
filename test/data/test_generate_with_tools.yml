@@ -1,9 +1,9 @@
-## This is a configuration file to customize code analysis by Sider.
-##
-## For more information, see the documentation:
-## https://help.sider.review/getting-started/custom-configuration
+# This is a configuration file to customize code analysis by Sider.
+#
+# For more information, see the documentation:
+# https://help.sider.review/getting-started/custom-configuration
 
-## Customize each tools. For example:
+# # Customize each tools. For example:
 # linter:
 #
 #   # Brakeman. See https://help.sider.review/tools/ruby/brakeman
@@ -28,14 +28,14 @@
 #     global: require,exports:true
 #     quiet: true
 
-## Ignore specific files. For example:
+# # Ignore specific files. For example:
 # ignore:
 #   - "*.pdf"
 #   - "*.mp4"
 #   - "*.min.*"
 #   - "images/**"
 
-## Exclude specific branches. For example:
+# # Exclude specific branches. For example:
 # branches:
 #   exclude:
 #     - master

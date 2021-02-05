@@ -21,7 +21,13 @@ class ConfigGeneratorTest < Minitest::Test
     assert_equal expected, actual
 
     # Comment out
-    yaml = actual.gsub(/^# /, "").gsub(/^#/, "")
+    yaml = actual.lines.map.with_index(1) do |line, line_num|
+      if line_num <= 4 # Skip header
+        line
+      else
+        line.delete_prefix("# ")
+      end
+    end.join
     Runners::Config.new(path: "foo.yml", raw_content: yaml).validate
   end
 end
