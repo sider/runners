@@ -855,4 +855,16 @@ EOF
       end
     end
   end
+
+  def test_gem_info
+    with_workspace do |workspace|
+      processor = new_processor(workspace: workspace)
+
+      assert_match %r{^bundler \([0-9.]+\)$}, processor.gem_info("bundler")
+      assert_match %r{The best way to manage your application's dependencies}, processor.gem_info("bundler")
+      assert_match %r{^uri \([0-9.]+\)$}, processor.gem_info("uri")
+      assert_match %r{URI is a module providing classes to handle Uniform Resource}, processor.gem_info("uri")
+      assert_equal 2, trace_writer.writer.count { |trace| trace.key?(:command_line) }
+    end
+  end
 end

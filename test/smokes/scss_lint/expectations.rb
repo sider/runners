@@ -56,7 +56,7 @@ s.add_test(
       message: <<~MSG.strip,
         DEPRECATION WARNING!!!
         The support for SCSS-Lint is deprecated and will be removed in the near future.
-        Please migrate to stylelint as an alternative. See https://github.com/sds/scss-lint/blob/master/README.md#notice-consider-other-tools-before-adopting-scss-lint
+        Please migrate to stylelint as an alternative. See https://github.com/sds/scss-lint#readme
       MSG
       file: "sider.yml"
     }

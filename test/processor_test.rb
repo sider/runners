@@ -548,4 +548,18 @@ class ProcessorTest < Minitest::Test
       assert_equal "a,b,c,d,e", processor.comma_separated_list(["a,b", "c", "d , e"])
     end
   end
+
+  def test_extract_urls
+    with_workspace do |workspace|
+      processor = new_processor(workspace: workspace)
+
+      assert_equal [], processor.extract_urls(nil)
+      assert_equal [], processor.extract_urls("")
+      assert_equal ["http://example.com"], processor.extract_urls("http://example.com")
+      assert_equal ["https://example.com"], processor.extract_urls("https://example.com")
+      assert_equal ["https://example.com/foo", "https://example.com/bar"],
+                   processor.extract_urls("(https://example.com/foo, https://example.com/bar)")
+      assert_equal [], processor.extract_urls("ftp://example.com foo@example.com")
+    end
+  end
 end

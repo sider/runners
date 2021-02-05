@@ -248,6 +248,7 @@ module Runners
       all_constraints_satisfied = true
 
       constraints.each do |name, constraint|
+        # @type break: nil
         unless installed_deps.key? name
           # NOTE: No required dependencies. Instead, use the default version.
           break

@@ -4,26 +4,32 @@ analyzers:
     name: Brakeman
     github: presidentbeef/brakeman
     doc: tools/ruby/brakeman
+    website: https://brakemanscanner.org
   checkstyle:
     name: Checkstyle
     github: checkstyle/checkstyle
     doc: tools/java/checkstyle
+    website: https://checkstyle.org
   clang_tidy:
     name: Clang-Tidy
     github: llvm/llvm-project
     doc: tools/cplusplus/clang-tidy
+    website: https://clang.llvm.org/extra/clang-tidy
+    beta: true
   code_sniffer:
     name: PHP_CodeSniffer
     github: squizlabs/PHP_CodeSniffer
     doc: tools/php/code-sniffer
   coffeelint:
     name: CoffeeLint
-    github: clutchski/coffeelint
+    github: coffeelint/coffeelint
     doc: tools/javascript/coffeelint
+    website: https://coffeelint.github.io
   cppcheck:
     name: Cppcheck
     github: danmar/cppcheck
     doc: tools/cplusplus/cppcheck
+    website: http://cppcheck.sourceforge.net
     dependabot: false
   cpplint:
     name: cpplint
@@ -33,27 +39,35 @@ analyzers:
     name: detekt
     github: detekt/detekt
     doc: tools/kotlin/detekt
+    website: https://detekt.github.io/detekt
+    beta: true
   eslint:
     name: ESLint
     github: eslint/eslint
     doc: tools/javascript/eslint
+    website: https://eslint.org
   flake8:
     name: Flake8
     github: PyCQA/flake8
     doc: tools/python/flake8
+    website: https://flake8.pycqa.org
   fxcop:
     name: FxCop
     github: dotnet/roslyn-analyzers
     doc: tools/csharp/fxcop
+    website: https://docs.microsoft.com/en-us/visualstudio/code-quality/static-code-analysis-for-managed-code-overview
+    beta: true
     dependabot: false
   golangci_lint:
     name: GolangCI-Lint
     github: golangci/golangci-lint
     doc: tools/go/golangci-lint
+    website: https://golangci-lint.run
   goodcheck:
     name: Goodcheck
     github: sider/goodcheck
     doc: tools/others/goodcheck
+    website: https://sider.github.io/goodcheck
   hadolint:
     name: hadolint
     github: hadolint/hadolint
@@ -71,27 +85,35 @@ analyzers:
     name: JSHint
     github: jshint/jshint
     doc: tools/javascript/jshint
+    website: https://jshint.com
   ktlint:
     name: ktlint
     github: pinterest/ktlint
     doc: tools/kotlin/ktlint
+    website: https://ktlint.github.io
+    beta: true
   languagetool:
     name: LanguageTool
     github: languagetool-org/languagetool
     doc: tools/others/languagetool
+    website: https://languagetool.org
+    beta: true
     dependabot: false
   metrics_codeclone:
     name: Metrics Code Clone
     github: pmd/pmd
     doc: tools/metrics/codeclone
+    beta: true
   metrics_complexity:
     name: Metrics Complexity
     github: terryyin/lizard
     doc: tools/metrics/complexity
+    beta: true
   metrics_fileinfo:
     name: Metrics File Info
     github: coreutils/coreutils
     doc: tools/metrics/fileinfo
+    beta: true
   misspell:
     name: Misspell
     github: client9/misspell
@@ -105,18 +127,24 @@ analyzers:
     name: PHPMD
     github: phpmd/phpmd
     doc: tools/php/phpmd
+    website: https://phpmd.org
   pmd_cpd:
     name: PMD CPD
     github: pmd/pmd
     doc: tools/others/pmd-cpd
+    website: https://pmd.github.io
+    beta: true
   pmd_java:
     name: PMD Java
     github: pmd/pmd
     doc: tools/java/pmd
+    website: https://pmd.github.io
   pylint:
     name: Pylint
     github: PyCQA/pylint
     doc: tools/python/pylint
+    website: https://pylint.pycqa.org
+    beta: true
   querly:
     name: Querly
     github: soutaro/querly
@@ -125,6 +153,7 @@ analyzers:
     name: Rails Best Practices
     github: flyerhzm/rails_best_practices
     doc: tools/ruby/rails-best-practices
+    website: https://rails-bestpractices.com
   reek:
     name: Reek
     github: troessner/reek
@@ -137,27 +166,34 @@ analyzers:
     name: RuboCop
     github: rubocop-hq/rubocop
     doc: tools/ruby/rubocop
+    website: https://rubocop.org
   scss_lint:
     name: SCSS-Lint
     github: sds/scss-lint
     doc: tools/css/scss-lint
+    deprecated: true
   shellcheck:
     name: ShellCheck
     github: koalaman/shellcheck
     doc: tools/shellscript/shellcheck
+    website: https://www.shellcheck.net
   stylelint:
     name: stylelint
     github: stylelint/stylelint
     doc: tools/css/stylelint
+    website: https://stylelint.io
   swiftlint:
     name: SwiftLint
     github: realm/SwiftLint
     doc: tools/swift/swiftlint
+    website: https://realm.github.io/SwiftLint
     dependabot: false
   tslint:
     name: TSLint
     github: palantir/tslint
     doc: tools/javascript/tslint
+    website: https://palantir.github.io/tslint
+    deprecated: true
   tyscan:
     name: TyScan
     github: sider/TyScan

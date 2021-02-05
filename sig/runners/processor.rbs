@@ -107,5 +107,7 @@ module Runners
                         | (?String) -> untyped
 
     def comma_separated_list: (String | Array[String] | nil) -> String?
+
+    def extract_urls: (String?) -> Array[String]
   end
 end

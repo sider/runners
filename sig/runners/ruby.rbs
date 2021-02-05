@@ -13,6 +13,8 @@ module Runners
 
     def default_gem_specs: (String, *String) -> Array[GemInstaller::Spec]
 
+    def gem_info: (String) -> String
+
     private
 
     def default_specs: (Array[GemInstaller::Spec], constraints, LockfileLoader::Lockfile) -> Array[GemInstaller::Spec]

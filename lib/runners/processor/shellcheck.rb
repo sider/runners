@@ -140,7 +140,7 @@ module Runners
             end_column: comment[:endColumn],
           ),
           message: comment[:message],
-          links: ["https://github.com/koalaman/shellcheck/wiki/#{id}"],
+          links: ["#{analyzer_github}/wiki/#{id}"],
           object: {
             code: comment[:code],
             severity: comment[:level],

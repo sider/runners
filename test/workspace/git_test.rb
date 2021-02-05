@@ -5,6 +5,8 @@ class WorkspaceGitTest < Minitest::Test
 
   GitBlameInfo = Runners::GitBlameInfo
 
+  private
+
   def with_workspace(**params)
     super(**params) do |workspace|
       workspace.stub :try_count, 1 do
@@ -14,6 +16,8 @@ class WorkspaceGitTest < Minitest::Test
       end
     end
   end
+
+  public
 
   def test_instance_class
     with_workspace do |workspace|
@@ -40,6 +44,9 @@ class WorkspaceGitTest < Minitest::Test
       assert_path_exists dest / "README.md"
       assert_path_exists dest / ".git"
       assert_path_exists dest / ".git" / "hooks" / "post-checkout"
+
+      # Suppress hint via `git init`
+      refute workspace.trace_writer.writer.find { _1[:string]&.include?("git config --global init.defaultBranch <name>") }
     end
   end
 

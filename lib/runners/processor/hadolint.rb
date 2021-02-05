@@ -100,9 +100,9 @@ module Runners
 
     def link_to_wiki(id)
       if id.start_with? "DL"
-        ["https://github.com/hadolint/hadolint/wiki/#{id}"]
+        ["#{analyzer_github}/wiki/#{id}"]
       else
-        ["https://github.com/koalaman/shellcheck/wiki/#{id}"]
+        ["#{analyzers.github(:shellcheck)}/wiki/#{id}"]
       end
     end
   end
