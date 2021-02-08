@@ -105,8 +105,6 @@ module Runners
 
         # @see https://docs.bugsnag.com/platforms/ruby/customizing-error-reports/#adding-callbacks
         config.add_on_error(proc do |report|
-          # TODO: Ignored Steep error
-          # @type var report: untyped
           report.add_tab :task_guid, guid
           report.add_tab :arguments, argv
         end)

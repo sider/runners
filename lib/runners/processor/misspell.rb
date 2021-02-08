@@ -58,7 +58,7 @@ module Runners
               start_line: line,
               start_column: col,
               end_line: line,
-              end_column: Integer(col) + (_ = incorrect).size, # TODO: Ignored Steep error
+              end_column: Integer(col) + incorrect.size,
             ),
             id: correct,
             message: message,
