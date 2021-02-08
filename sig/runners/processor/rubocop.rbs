@@ -16,7 +16,9 @@ module Runners
 
     def rails_option: () -> Array[String]
 
-    def config_file: () -> Array[String]
+    def rubocop_config_file: () -> String?
+
+    def rubocop_config_file_option: () -> Array[String]
 
     def safe: () -> Array[String]
 

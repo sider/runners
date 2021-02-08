@@ -9,7 +9,7 @@ See also another related project, called [devon_rex](https://github.com/sider/de
 ## Supported analyzers
 
 <!-- AUTO-GENERATED-CONTENT:START (analyzers) -->
-All **39** analyzers are provided as a Docker image:
+All **40** analyzers are provided as a Docker image:
 
 | Name | Links | Status |
 |:-----|:------|:------:|
@@ -48,6 +48,7 @@ All **39** analyzers are provided as a Docker image:
 | RuboCop | [docker](https://hub.docker.com/r/sider/runner_rubocop), [source](https://github.com/rubocop-hq/rubocop), [doc](https://help.sider.review/tools/ruby/rubocop), [website](https://rubocop.org) | ✅ |
 | SCSS-Lint | [docker](https://hub.docker.com/r/sider/runner_scss_lint), [source](https://github.com/sds/scss-lint), [doc](https://help.sider.review/tools/css/scss-lint) | ⚠️ *deprecated* |
 | ShellCheck | [docker](https://hub.docker.com/r/sider/runner_shellcheck), [source](https://github.com/koalaman/shellcheck), [doc](https://help.sider.review/tools/shellscript/shellcheck), [website](https://www.shellcheck.net) | ✅ |
+| Slim-Lint | [docker](https://hub.docker.com/r/sider/runner_slim_lint), [source](https://github.com/sds/slim-lint), [doc](https://help.sider.review/tools/ruby/slim-lint) | ✅ *beta* |
 | stylelint | [docker](https://hub.docker.com/r/sider/runner_stylelint), [source](https://github.com/stylelint/stylelint), [doc](https://help.sider.review/tools/css/stylelint), [website](https://stylelint.io) | ✅ |
 | SwiftLint | [docker](https://hub.docker.com/r/sider/runner_swiftlint), [source](https://github.com/realm/SwiftLint), [doc](https://help.sider.review/tools/swift/swiftlint), [website](https://realm.github.io/SwiftLint) | ✅ |
 | TSLint | [docker](https://hub.docker.com/r/sider/runner_tslint), [source](https://github.com/palantir/tslint), [doc](https://help.sider.review/tools/javascript/tslint), [website](https://palantir.github.io/tslint) | ⚠️ *deprecated* |

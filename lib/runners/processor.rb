@@ -68,8 +68,22 @@ module Runners
       @analyzers ||= Analyzers.new
     end
 
-    # NOTE: This method should be defined dynamically.
-    # def analyzer_id; end
+    def self.children
+      @children ||= ObjectSpace.each_object(Class)
+        .filter { |cls| cls.name && cls < self }
+        .to_h { |cls| [cls.analyzer_id, cls] }
+        .freeze
+    end
+
+    def self.analyzer_id
+      # Naming convention
+      source_file, _ = Module.const_source_location(self.name.to_s)
+      File.basename(source_file, ".rb").to_sym
+    end
+
+    def analyzer_id
+      @analyzer_id ||= self.class.analyzer_id
+    end
 
     def analyzer_name
       analyzers.name(analyzer_id)
@@ -88,7 +102,7 @@ module Runners
     end
 
     def analyzer_bin
-      analyzer_id
+      analyzer_id.to_s
     end
 
     def analyzer_version
@@ -105,8 +119,7 @@ module Runners
       cmd_opts = command_line.drop(1).tap do |opts|
         raise ArgumentError, "Unspecified command: `#{command_line.inspect}`" if opts.empty?
       end
-      # TODO: Ignored Steep error
-      outputs = capture3!(_ = cmd, *(_ = cmd_opts))
+      outputs = capture3!(cmd, *cmd_opts)
       outputs.each do |output|
         pattern.match(output) do |match|
           found = match[1]
@@ -292,8 +305,7 @@ module Runners
     end
 
     def comma_separated_list(value)
-      # TODO: Ignored Steep error
-      values = Array(value).flat_map { |s| (_ = s).split(/\s*,\s*/) }
+      values = Array(value).flat_map { |s| s.split(/\s*,\s*/) }
       values.empty? ? nil : values.join(",")
     end
 

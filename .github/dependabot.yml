@@ -243,3 +243,11 @@ updates:
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
     versioning-strategy: increase
+  - package-ecosystem: bundler
+    directory: "/images/slim_lint"
+    schedule:
+      interval: weekly
+      time: "09:00"
+      timezone: Asia/Tokyo
+    open-pull-requests-limit: 10
+    versioning-strategy: increase
