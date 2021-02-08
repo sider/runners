@@ -1,7 +1,6 @@
 module Runners
   class Processor::Checkstyle < Processor
     include Java
-    include RecommendedConfig
 
     Schema = _ = StrongJSON.new do
       # @type self: SchemaClass
@@ -26,7 +25,7 @@ module Runners
     register_config_schema(name: :checkstyle, schema: Schema.runner_config)
 
     DEFAULT_TARGET = ".".freeze
-    CONFIG_FILE_NAME = "checkstyle.xml".freeze
+    DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_recommended_checkstyle.xml").to_path.freeze
 
     def setup
       begin
@@ -34,14 +33,6 @@ module Runners
       rescue UserError => exn
         return Results::Failure.new(guid: guid, message: exn.message)
       end
-
-      #if config_linter[:config]
-      #  trace_writer.message "The `config` option in `#{config.path_name}` is specified. The Sider's recommended ruleset is ignored."
-      #else
-      #   trace_writer.message "The `config` option in `#{config.path_name}` is not specified. Sider uses our recommended ruleset instead."
-      #end
-
-      #warn_recommended_config_option_release(:config, "in early March 2021")
       yield
     end
 
@@ -163,7 +154,7 @@ module Runners
       when "google"
         "/google_checks.xml"
       when "sider"
-        original_recommended_file_path(CONFIG_FILE_NAME)
+        DEFAULT_CONFIG_FILE
       else
         file
       end
