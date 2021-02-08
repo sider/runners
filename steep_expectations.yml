@@ -1,0 +1,150 @@
+---
+- file: lib/runners/cli.rb
+  diagnostics:
+  - range:
+      start:
+        line: 107
+        character: 28
+      end:
+        line: 110
+        character: 11
+    severity: ERROR
+    message: |-
+      Cannot pass a value of type `::Proc` as an argument of type `^(::Bugsnag::Report) -> void`
+        ::Proc <: ^(::Bugsnag::Report) -> void
+    code: Ruby::ArgumentTypeMismatch
+  - range:
+      start:
+        line: 108
+        character: 17
+      end:
+        line: 108
+        character: 24
+    severity: ERROR
+    message: Type `nil` does not have method `add_tab`
+    code: Ruby::NoMethod
+  - range:
+      start:
+        line: 109
+        character: 17
+      end:
+        line: 109
+        character: 24
+    severity: ERROR
+    message: Type `nil` does not have method `add_tab`
+    code: Ruby::NoMethod
+- file: lib/runners/issue.rb
+  diagnostics:
+  - range:
+      start:
+        line: 13
+        character: 67
+      end:
+        line: 13
+        character: 74
+    severity: ERROR
+    message: Type `bot` does not have method `inspect`
+    code: Ruby::NoMethod
+- file: lib/runners/processor/checkstyle.rb
+  diagnostics:
+  - range:
+      start:
+        line: 167
+        character: 10
+      end:
+        line: 167
+        character: 13
+    severity: ERROR
+    message: The branch is unreachable because the condition is exhaustive
+    code: Ruby::ElseOnExhaustiveCase
+- file: lib/runners/processor/misspell.rb
+  diagnostics:
+  - range:
+      start:
+        line: 61
+        character: 51
+      end:
+        line: 61
+        character: 55
+    severity: ERROR
+    message: Type `bot` does not have method `size`
+    code: Ruby::NoMethod
+- file: lib/runners/processor/shellcheck.rb
+  diagnostics:
+  - range:
+      start:
+        line: 101
+        character: 6
+      end:
+        line: 101
+        character: 57
+    severity: ERROR
+    message: |-
+      Cannot assign a value of type `::Array[::Runners::Processor::ShellCheck::target]` to a variable of type `::Array[::String]`
+        ::Array[::Runners::Processor::ShellCheck::target] <: ::Array[::String]
+          ::Runners::Processor::ShellCheck::target <: ::String
+            (::String | ::Hash[::Symbol, bool]) <: ::String
+              ::Hash[::Symbol, bool] <: ::String
+                ::Object <: ::String
+                  ::BasicObject <: ::String
+    code: Ruby::IncompatibleAssignment
+- file: lib/runners/processor.rb
+  diagnostics:
+  - range:
+      start:
+        line: 122
+        character: 26
+      end:
+        line: 122
+        character: 29
+    severity: ERROR
+    message: |-
+      Cannot pass a value of type `(::String | ::Array[::String])` as an argument of type `::String`
+        (::String | ::Array[::String]) <: ::String
+          ::Array[::String] <: ::String
+            ::Object <: ::String
+              ::BasicObject <: ::String
+    code: Ruby::ArgumentTypeMismatch
+  - range:
+      start:
+        line: 122
+        character: 31
+      end:
+        line: 122
+        character: 40
+    severity: ERROR
+    message: |-
+      Cannot pass a value of type `::Array[(::String | ::Array[::String])]` as an argument of type `::Array[::Runners::Shell::command_argument]`
+        ::Array[(::String | ::Array[::String])] <: ::Array[::Runners::Shell::command_argument]
+          (::String | ::Array[::String]) <: ::Runners::Shell::command_argument
+            (::String | ::Array[::String]) <: (::String | ::Pathname)
+              ::Array[::String] <: (::String | ::Pathname)
+                ::Array[::String] <: ::String
+                  ::Object <: ::String
+                    ::BasicObject <: ::String
+    code: Ruby::ArgumentTypeMismatch
+  - range:
+      start:
+        line: 308
+        character: 45
+      end:
+        line: 308
+        character: 50
+    severity: ERROR
+    message: Type `(::String | ::Array[::String] | nil)` does not have method `split`
+    code: Ruby::NoMethod
+- file: lib/runners/ruby/gem_installer/spec.rb
+  diagnostics:
+  - range:
+      start:
+        line: 41
+        character: 20
+      end:
+        line: 41
+        character: 36
+    severity: ERROR
+    message: |-
+      Cannot assign a value of type `(::String | nil | ::Runners::Ruby::GemInstaller::git_source)` to an expression of type `::String`
+        (::String | nil | ::Runners::Ruby::GemInstaller::git_source) <: ::String
+          nil <: ::String
+    code: Ruby::IncompatibleAssignment

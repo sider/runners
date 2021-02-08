@@ -10,7 +10,7 @@ module Runners
 
     def initialize(path:, location:, id:, message:, links: [], object: nil, schema: nil)
       path.is_a?(Pathname) or
-        raise ArgumentError, "`path` must be a #{Pathname}: #{(_ = path).inspect}" # TODO: Ignored Steep error
+        raise ArgumentError, "`path` must be a #{Pathname}: #{path.inspect}"
 
       (message && !message.empty?) or
         raise ArgumentError, "`message` must be required: #{message.inspect}"

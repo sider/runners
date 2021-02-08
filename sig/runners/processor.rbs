@@ -7,12 +7,16 @@ module Runners
     class CIConfigBroken < UserError
     end
 
-    def self.register_config_schema: (name: Symbol, schema: StrongJSON::_Schema[untyped]) -> void
-
     class RemovedGoToolSchemaClass < StrongJSON
       def config: () -> StrongJSON::_Schema[untyped]
     end
     RemovedGoToolSchema: RemovedGoToolSchemaClass
+
+    def self.register_config_schema: (name: Symbol, schema: StrongJSON::_Schema[untyped]) -> void
+
+    def self.children: () -> Hash[Symbol, Class]
+
+    def self.analyzer_id: () -> Symbol
 
     attr_reader guid: String
     attr_reader working_dir: Pathname
@@ -42,7 +46,7 @@ module Runners
 
     def analyzers: () -> Analyzers
 
-    def analyzer_id: () -> String
+    def analyzer_id: () -> Symbol
 
     def analyzer_name: () -> String
 

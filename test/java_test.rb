@@ -102,8 +102,7 @@ class JavaTest < Minitest::Test
   def new_processor(workspace, config_yaml:)
     klass = Class.new(Runners::Processor) do
       include Runners::Java
-      def analyzer_id; "checkstyle"; end
-      def analyzer_bin; "checkstyle"; end
+      def analyzer_id; :checkstyle; end
       def analyzer_name; "Checkstyle"; end
       def jvm_deps_dir
         (working_dir / "deps").tap { _1.mkpath }

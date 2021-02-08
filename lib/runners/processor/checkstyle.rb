@@ -160,8 +160,6 @@ module Runners
 
     def excluded_directories
       Array(config_linter[:exclude]).map do |dir|
-        # TODO: Ignored Steep error
-        # @type var dir: untyped
         case dir
         when String
           { string: dir }

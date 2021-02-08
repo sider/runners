@@ -1,0 +1,6 @@
+linters:
+  ControlStatementSpacing:
+    enabled: false
+
+  LineLength:
+    max: 10

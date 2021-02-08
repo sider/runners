@@ -36,7 +36,7 @@ module Runners
       add_warning_if_deprecated_options
 
       default_gems = default_gem_specs(GEM_NAME)
-      if setup_default_rubocop_config
+      if !rubocop_config_file && setup_default_rubocop_config
         # NOTE: The latest MeowCop requires usually the latest RuboCop.
         #       (e.g. MeowCop 2.4.0 requires RuboCop 0.75.0+)
         #       So, MeowCop versions must be unspecified because the installation will fail when a user's RuboCop is 0.60.0.
@@ -70,7 +70,7 @@ module Runners
         "--out=#{report_file}",
 
         *rails_option,
-        *config_file,
+        *rubocop_config_file_option,
         *safe,
       )
 
@@ -144,9 +144,12 @@ module Runners
       end
     end
 
-    def config_file
-      config_path = config_linter[:config] || config_linter.dig(:options, :config)
-      config_path ? ["--config=#{config_path}"] : []
+    def rubocop_config_file
+      config_linter[:config] || config_linter.dig(:options, :config)
+    end
+
+    def rubocop_config_file_option
+      rubocop_config_file.then { |path| path ? ["--config=#{path}"] : [] }
     end
 
     def safe

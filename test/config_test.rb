@@ -91,6 +91,7 @@ class ConfigTest < Minitest::Test
         remark_lint: nil,
         scss_lint: nil,
         shellcheck: nil,
+        slim_lint: nil,
         stylelint: nil,
         swiftlint: nil,
         tslint: nil,
