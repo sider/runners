@@ -28,10 +28,6 @@ module Runners
       FileUtils.copy_file(Pathname(Dir.home) / "sider_recommended_#{config_filename}", current_dir / config_filename)
     end
 
-    def original_recommended_file_path(config_filename)
-      (Pathname(Dir.home) / "sider_recommended_#{config_filename}").to_s
-    end
-
     private
 
     def exists_in_repository?(filename)
