@@ -119,8 +119,7 @@ module Runners
       cmd_opts = command_line.drop(1).tap do |opts|
         raise ArgumentError, "Unspecified command: `#{command_line.inspect}`" if opts.empty?
       end
-      # TODO: Ignored Steep error
-      outputs = capture3!(_ = cmd, *(_ = cmd_opts))
+      outputs = capture3!(cmd, *cmd_opts)
       outputs.each do |output|
         pattern.match(output) do |match|
           found = match[1]
@@ -306,8 +305,7 @@ module Runners
     end
 
     def comma_separated_list(value)
-      # TODO: Ignored Steep error
-      values = Array(value).flat_map { |s| (_ = s).split(/\s*,\s*/) }
+      values = Array(value).flat_map { |s| s.split(/\s*,\s*/) }
       values.empty? ? nil : values.join(",")
     end
 
