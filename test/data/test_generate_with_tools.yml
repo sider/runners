@@ -24,6 +24,48 @@
 #     ignore: [warning, info]
 #     properties: custom-checkstyle.properties
 #
+#   # Clang-Tidy. See https://help.sider.review/tools/cplusplus/clang-tidy
+#   clang_tidy:
+#     root_dir: project/
+#     apt:
+#       - libgdbm-dev
+#       - libfastjson-dev=0.99.8-2
+#     include-path:
+#       - myinclude
+#       - foo/include
+#       - /usr/include/libfastjson
+#
+#   # PHP_CodeSniffer. See https://help.sider.review/tools/php/code-sniffer
+#   code_sniffer:
+#     root_dir: web/
+#     dir: app/
+#     standard: CakePHP
+#     extensions: [php, inc]
+#     encoding: utf-8
+#     ignore:
+#       - app/vendor/
+#
+#   # CoffeeLint. See https://help.sider.review/tools/javascript/coffeelint
+#   coffeelint:
+#     root_dir: app/
+#     npm_install: false
+#     file: config/coffeelint.json
+#
+#   # Cppcheck. See https://help.sider.review/tools/cplusplus/cppcheck
+#   cppcheck:
+#     root_dir: project/
+#     include-path:
+#       - include/
+#     target: src/
+#     ignore: vendor/
+#     enable: all
+#     std: c99
+#     project: my_project.sln
+#     language: c++
+#     addon: [cert, misra]
+#     bug-hunting: true
+#     parallel: false
+#
 #   # ESLint. See https://help.sider.review/tools/javascript/eslint
 #   eslint:
 #     root_dir: frontend/

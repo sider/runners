@@ -36,6 +36,23 @@ module Runners
     DEFAULT_TARGET = ".".freeze
     DEFAULT_IGNORE = [].freeze
 
+    def self.config_example
+      <<~YAML
+        root_dir: project/
+        include-path:
+          - include/
+        target: src/
+        ignore: vendor/
+        enable: all
+        std: c99
+        project: my_project.sln
+        language: c++
+        addon: [cert, misra]
+        bug-hunting: true
+        parallel: false
+      YAML
+    end
+
     def analyze(_changes)
       issues = []
 

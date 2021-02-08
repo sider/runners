@@ -3,24 +3,20 @@ require "test_helper"
 class ConfigGeneratorTest < Minitest::Test
   include TestHelper
 
-  def setup
-    @subject = Runners::ConfigGenerator.new
-  end
-
   def test_generate
-    assert_yaml data("test_generate.yml").read,
-                @subject.generate
+    assert_yaml "test_generate.yml", []
   end
 
   def test_generate_with_tools
-    assert_yaml data("test_generate_with_tools.yml").read,
-                @subject.generate(tools: [:brakeman, :checkstyle, :eslint])
+    assert_yaml "test_generate_with_tools.yml", %i[brakeman checkstyle clang_tidy code_sniffer coffeelint cppcheck eslint]
   end
 
   private
 
-  def assert_yaml(expected, actual)
-    assert_equal expected, actual
+  def assert_yaml(expected_filename, actual_tools)
+    actual = Runners::ConfigGenerator.new.generate(tools: actual_tools)
+
+    assert_equal data(expected_filename).read, actual
 
     # Comment out
     content = actual.lines.map.with_index(1) do |line, line_num|
@@ -35,11 +31,10 @@ class ConfigGeneratorTest < Minitest::Test
     assert_equal ["*.pdf", "*.mp4", "*.min.*", "images/**"], config.content[:ignore]
     assert_equal ["master", "development", "/^release-.*$/"], config.content[:branches][:exclude]
 
-    linter = config.content[:linter]
-    if linter
-      refute_nil linter[:brakeman]
-      refute_nil linter[:checkstyle]
-      refute_nil linter[:eslint]
+    unless actual_tools.empty?
+      linters = config.content[:linter]
+      actual_tools.each { |tool| assert_instance_of Hash, linters[tool] }
+      # TODO: assert_equal linters.size, actual_tools.size
     end
   end
 end

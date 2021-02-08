@@ -14,6 +14,19 @@ module Runners
 
     register_config_schema(name: :clang_tidy, schema: Schema.runner_config)
 
+    def self.config_example
+      <<~YAML
+        root_dir: project/
+        apt:
+          - libgdbm-dev
+          - libfastjson-dev=0.99.8-2
+        include-path:
+          - myinclude
+          - foo/include
+          - /usr/include/libfastjson
+      YAML
+    end
+
     def setup
       install_apt_packages
       yield

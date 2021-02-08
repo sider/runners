@@ -23,6 +23,14 @@ module Runners
       "@coffeelint/cli" => Constraint.new(">= 4.0.0", "< 5.0.0"),
     }.freeze
 
+    def self.config_example
+      <<~YAML
+        root_dir: app/
+        npm_install: false
+        file: config/coffeelint.json
+      YAML
+    end
+
     def setup
       add_warning_if_deprecated_options
 

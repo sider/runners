@@ -38,6 +38,18 @@ module Runners
     OPTIONS_SYMFONY = DefaultOptions.new(standard: "Symfony", extensions: "php", dir: "src/").freeze
     OPTIONS_PSR2 = DefaultOptions.new(standard: "PSR2", extensions: "php", dir: "./").freeze
 
+    def self.config_example
+      <<~YAML
+        root_dir: web/
+        dir: app/
+        standard: CakePHP
+        extensions: [php, inc]
+        encoding: utf-8
+        ignore:
+          - app/vendor/
+      YAML
+    end
+
     def analyzer_bin
       "phpcs"
     end
