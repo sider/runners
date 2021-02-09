@@ -2,7 +2,7 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM hadolint/hadolint:v1.21.0-debian as hadolint
+FROM hadolint/hadolint:v1.22.1-debian as hadolint
 
 FROM sider/devon_rex_base:2.40.1
 
