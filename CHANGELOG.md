@@ -12,7 +12,7 @@ New features:
 
 Updated environments:
 
-- **devon_rex** 2.40.0 -> 2.40.1 [#2017](https://github.com/sider/runners/pull/2017)
+- **devon_rex** 2.40.0 -> 2.40.3 [#2017](https://github.com/sider/runners/pull/2017) [#2040](https://github.com/sider/runners/pull/2040)
 - **Bundler** 2.2.7 -> 2.2.8 [#2017](https://github.com/sider/runners/pull/2017)
 
 Updated tools:
