@@ -6,14 +6,18 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.41.1...HEAD)
 
+New features:
+
+- **Slim-Lint** New support [#2014](https://github.com/sider/runners/pull/2014)
+
 Updated environments:
 
 - **devon_rex** 2.40.0 -> 2.40.1 [#2017](https://github.com/sider/runners/pull/2017)
 - **Bundler** 2.2.7 -> 2.2.8 [#2017](https://github.com/sider/runners/pull/2017)
 
-New features:
+Updated tools:
 
-- **Slim-Lint** New support [#2014](https://github.com/sider/runners/pull/2014)
+- **hadolint** 1.21.0 -> 1.22.1 [#2038](https://github.com/sider/runners/pull/2038)
 
 Misc:
 
