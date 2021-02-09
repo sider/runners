@@ -11,12 +11,15 @@ Updated environments:
 - **devon_rex** 2.40.0 -> 2.40.1 [#2017](https://github.com/sider/runners/pull/2017)
 - **Bundler** 2.2.7 -> 2.2.8 [#2017](https://github.com/sider/runners/pull/2017)
 
+New features:
+
+- **Slim-Lint** New support [#2014](https://github.com/sider/runners/pull/2014)
+
 Misc:
 
 - **HAML-Lint** Improve issue ID and links for RuboCop [#2009](https://github.com/sider/runners/pull/2009)
 - **HAML-Lint** Enable `parallel` option by default [#2012](https://github.com/sider/runners/pull/2012)
 - Verify gem installation in Dockerfiles [#2010](https://github.com/sider/runners/pull/2010)
-- **Slim-Lint** New support [#2014](https://github.com/sider/runners/pull/2014)
 - **RuboCop** Set up default config only when no user config [#2020](https://github.com/sider/runners/pull/2020)
 - **Metrics Complexity** Run lizard as single thread to avoid timeout error [#2019](https://github.com/sider/runners/pull/2019)
 
