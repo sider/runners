@@ -3,6 +3,6 @@ FROM sider/devon_rex_ruby:2.40.3
 <%= render_erb 'images/Dockerfile.base.erb' %>
 <%= render_erb 'images/Dockerfile.ruby.erb' %>
 
-COPY --chown=<%= chown %> images/slim_lint/default_rubocop.yml ${RUNNER_USER_HOME}/
+COPY --chown=<%= chown %> images/slim_lint/*.yml ${RUNNER_USER_HOME}/
 
 <%= render_erb 'images/Dockerfile.end.erb' %>

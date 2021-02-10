@@ -34,7 +34,7 @@ RUN cd "${RUNNER_USER_HOME}" && \
     rm -rf slim_lint && \
     gem info --local --exact --quiet slim_lint | grep slim_lint
 
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/slim_lint/default_rubocop.yml ${RUNNER_USER_HOME}/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/slim_lint/*.yml ${RUNNER_USER_HOME}/
 
 
 # Copy the main source code

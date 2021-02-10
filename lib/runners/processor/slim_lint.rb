@@ -26,6 +26,7 @@ module Runners
       GEM_NAME => [">= 0.20.2", "< 1.0.0"]
     }.freeze
     DEFAULT_TARGET = ".".freeze
+    DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_recommended_slim_lint.yml").to_path.freeze
     MISSING_ID = "missing-ID".freeze
 
     def analyzer_bin
@@ -33,6 +34,8 @@ module Runners
     end
 
     def setup
+      setup_slim_lint_config
+
       default_gems = default_gem_specs(GEM_NAME, *REQUIRED_GEM_NAMES)
 
       if setup_default_rubocop_config
@@ -71,6 +74,16 @@ module Runners
     end
 
     private
+
+    def setup_slim_lint_config
+      return if config_linter[:config]
+
+      path = current_dir / ".slim-lint.yml"
+      return if path.exist?
+
+      FileUtils.copy_file DEFAULT_CONFIG_FILE, path
+      trace_writer.message "Set up the default #{analyzer_name} configuration file."
+    end
 
     def parse_result(output)
       # NOTE: The Slim-Lint JSON repoter does not output linter names, so we cannot set issue IDs.

@@ -1,0 +1,4 @@
+linter:
+  LineLength:
+    enabled: true
+    max: 200 # large enough
