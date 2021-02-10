@@ -57,6 +57,18 @@
     severity: ERROR
     message: The branch is unreachable because the condition is exhaustive
     code: Ruby::ElseOnExhaustiveCase
+- file: lib/runners/processor/cpplint.rb
+  diagnostics:
+  - range:
+      start:
+        line: 32
+        character: 8
+      end:
+        line: 32
+        character: 38
+    severity: ERROR
+    message: Type `::Runners::Processor::Cpplint` does not have method `deploy_recommended_config_file`
+    code: Ruby::NoMethod
 - file: lib/runners/processor/misspell.rb
   diagnostics:
   - range:
