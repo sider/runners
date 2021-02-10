@@ -3,14 +3,20 @@ require "test_helper"
 class Runners::Processor::HamlLintTest < Minitest::Test
   include TestHelper
 
-  def test_config_parallel
+  def test_config_parallel_with_unsupported_versions
     with_subject do |subject|
       subject.stub :analyzer_version, "0.35.0" do
         assert_equal [], subject.send(:config_parallel)
       end
+    end
+  end
 
+  def test_config_parallel_with_supported_versions
+    with_subject do |subject|
       subject.stub :analyzer_version, "0.36.0" do
-        assert_equal ["--parallel"], subject.send(:config_parallel)
+        subject.stub :config_linter, {} do
+          assert_equal ["--parallel"], subject.send(:config_parallel)
+        end
 
         subject.stub :config_linter, { parallel: true } do
           assert_equal ["--parallel"], subject.send(:config_parallel)
