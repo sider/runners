@@ -90,7 +90,7 @@ module Runners
     private
 
     def setup_haml_lint_config
-      return if config_linter[:config]
+      return unless haml_lint_config.empty?
 
       path = current_dir / ".haml-lint.yml"
       return if path.exist?
