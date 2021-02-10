@@ -112,11 +112,18 @@ module Runners
     end
 
     def config_parallel
-      if Gem::Version.create(analyzer_version) >= Gem::Version.create("0.36.0")
-        config_linter.fetch(:parallel, true) ? ["--parallel"] : []
-      else
-        []
+      minimum_version = "0.36.0"
+      if Gem::Version.create(analyzer_version) >= Gem::Version.create(minimum_version)
+        parallel = config_linter[:parallel]
+        if parallel == true || parallel.nil?
+          return ["--parallel"]
+        end
+      elsif config_linter[:parallel] == true
+        add_warning "The option `#{config_field_path(:parallel)}` is ignored with #{analyzer_name} #{analyzer_version}. Please update it to **#{minimum_version}+** or use our default version.",
+                    file: config.path_name
       end
+
+      []
     end
 
     def parse_result(output)
