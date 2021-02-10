@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 
 New features:
 
-- **Slim-Lint** New support [#2014](https://github.com/sider/runners/pull/2014)
+- **Slim-Lint** New support [#2014](https://github.com/sider/runners/pull/2014) [#2046](https://github.com/sider/runners/pull/2046)
 
 Updated environments:
 
