@@ -23,6 +23,7 @@ Misc:
 
 - **HAML-Lint** Improve issue ID and links for RuboCop [#2009](https://github.com/sider/runners/pull/2009)
 - **HAML-Lint** Enable `parallel` option by default [#2012](https://github.com/sider/runners/pull/2012) [#2042](https://github.com/sider/runners/pull/2042)
+- **HAML-Lint** Set up recommended ruleset [#2048](https://github.com/sider/runners/pull/2048)
 - Verify gem installation in Dockerfiles [#2010](https://github.com/sider/runners/pull/2010)
 - **RuboCop** Set up default config only when no user config [#2020](https://github.com/sider/runners/pull/2020)
 - **Metrics Complexity** Run lizard as single thread to avoid timeout error [#2019](https://github.com/sider/runners/pull/2019)
