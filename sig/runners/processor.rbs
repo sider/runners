@@ -76,7 +76,7 @@ module Runners
 
     def missing_config_file_result: (String) -> Results::Success
 
-    def config_field_path: (*Symbol) -> String
+    def config_field_path: (*(Symbol | String)) -> String
 
     def delete_unchanged_files: (Changes, ?except: Array[String], ?only: Array[String]) -> void
 

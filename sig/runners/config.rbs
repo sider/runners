@@ -57,6 +57,10 @@ module Runners
 
     def parse: () -> untyped
 
+    def field_path: (*(Symbol | String)) -> String
+
+    def linter_field_path: (*(Symbol | String)) -> String
+
     private
 
     def check_schema: (untyped) -> Hash[Symbol, untyped]

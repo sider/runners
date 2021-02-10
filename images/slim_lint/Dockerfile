@@ -2,7 +2,7 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM sider/devon_rex_ruby:2.40.1
+FROM sider/devon_rex_ruby:2.40.3
 
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
@@ -34,7 +34,7 @@ RUN cd "${RUNNER_USER_HOME}" && \
     rm -rf slim_lint && \
     gem info --local --exact --quiet slim_lint | grep slim_lint
 
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/slim_lint/default_rubocop.yml ${RUNNER_USER_HOME}/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/slim_lint/*.yml ${RUNNER_USER_HOME}/
 
 
 # Copy the main source code

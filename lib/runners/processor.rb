@@ -165,9 +165,8 @@ module Runners
       Results::Success.new(guid: guid, analyzer: analyzer)
     end
 
-    # Returns e.g. "linter.rubocop.gems"
     def config_field_path(*fields)
-      "linter.#{analyzer_id}.#{fields.join('.')}"
+      config.linter_field_path(analyzer_id, *fields)
     end
 
     def delete_unchanged_files(changes, except: [], only: [])
