@@ -33,6 +33,7 @@ module Runners
       rescue UserError => exn
         return Results::Failure.new(guid: guid, message: exn.message)
       end
+
       yield
     end
 
@@ -147,7 +148,7 @@ module Runners
     end
 
     def config_file
-      file = config_linter[:config] || "google" # Change "sider" when recommended ruleset is released.
+      file = config_linter[:config] || "google" # TODO: Change "sider" when recommended ruleset is released.
       case file
       when "sun"
         "/sun_checks.xml"
