@@ -6,15 +6,23 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.41.1...HEAD)
 
+New features:
+
+- **Slim-Lint** New support [#2014](https://github.com/sider/runners/pull/2014) [#2046](https://github.com/sider/runners/pull/2046)
+
 Updated environments:
 
-- **devon_rex** 2.40.0 -> 2.40.1 [#2017](https://github.com/sider/runners/pull/2017)
+- **devon_rex** 2.40.0 -> 2.40.3 [#2017](https://github.com/sider/runners/pull/2017) [#2040](https://github.com/sider/runners/pull/2040)
 - **Bundler** 2.2.7 -> 2.2.8 [#2017](https://github.com/sider/runners/pull/2017)
+
+Updated tools:
+
+- **hadolint** 1.21.0 -> 1.22.1 [#2038](https://github.com/sider/runners/pull/2038)
 
 Misc:
 
 - **HAML-Lint** Improve issue ID and links for RuboCop [#2009](https://github.com/sider/runners/pull/2009)
-- **HAML-Lint** Enable `parallel` option by default [#2012](https://github.com/sider/runners/pull/2012)
+- **HAML-Lint** Enable `parallel` option by default [#2012](https://github.com/sider/runners/pull/2012) [#2042](https://github.com/sider/runners/pull/2042)
 - Verify gem installation in Dockerfiles [#2010](https://github.com/sider/runners/pull/2010)
 - **Flake8** Provide Sider's recommended ruleset [#1980](https://github.com/sider/runners/pull/1980)
 - **Slim-Lint** New support [#2014](https://github.com/sider/runners/pull/2014)

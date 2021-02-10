@@ -22,7 +22,6 @@ jobs:
       - run: |
           bundle exec rake steep:check | ruby -pe 'sub(/^\+ (.+):(\d+):(\d+): (.+)$/, %q{::error file=\1,line=\2,col=\3::\4})'
         shell: bash
-        continue-on-error: true
 
   stats:
     runs-on: ubuntu-latest

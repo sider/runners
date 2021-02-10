@@ -181,7 +181,8 @@ s.add_test(
       }
     }
   ],
-  analyzer: { name: "HAML-Lint", version: "0.26.0" }
+  analyzer: { name: "HAML-Lint", version: "0.26.0" },
+  warnings: [{ message: "The option `linter.haml_lint.parallel` is ignored with HAML-Lint 0.26.0. Please update it to **0.36.0+** or use our default version.", file: "sider.yml" }]
 )
 
 s.add_test(

@@ -76,25 +76,13 @@ $ rbenv install
 
 If you don't want to use [rbenv](https://github.com/rbenv/rbenv), you need to manually install Ruby with the version in the [`.ruby-version`](.ruby-version) file.
 
-Next, let's install gem dependencies via [Bundler](https://bundler.io):
+Next, let's set up via [Bundler](https://bundler.io):
 
 ```shell-session
-$ bundle install
+$ bin/setup
 ```
 
-Then, install Git hooks via [Lefthook](https://github.com/Arkweid/lefthook):
-
-```shell-session
-$ bundle exec lefthook install
-```
-
-Last, run the following command to show available commands in the project:
-
-```shell-session
-$ bundle exec rake --tasks
-```
-
-These commands will help you develop! :wink:
+All is done. The [Rake](https://ruby.github.io/rake/) tasks will help you develop! :wink:
 
 ### Project structure
 

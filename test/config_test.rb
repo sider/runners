@@ -308,4 +308,16 @@ class ConfigTest < Minitest::Test
       Runners::Config.new(path: Pathname(FILE_NAME), raw_content: "`").parse
     end
   end
+
+  def test_field_path
+    config = Runners::Config.new(path: Pathname(FILE_NAME), raw_content: nil)
+    assert_equal "", config.field_path
+    assert_equal "foo.bar", config.field_path(:foo, "bar")
+  end
+
+  def test_linter_field_path
+    config = Runners::Config.new(path: Pathname(FILE_NAME), raw_content: nil)
+    assert_equal "linter", config.linter_field_path
+    assert_equal "linter.foo.bar", config.linter_field_path(:foo, "bar")
+  end
 end

@@ -13,9 +13,12 @@ module Runners
     REQUIRED_GEM_NAMES: Array[String]
     CONSTRAINTS: Ruby::constraints
     DEFAULT_TARGET: String
+    DEFAULT_CONFIG_FILE: String
     MISSING_ID: String
 
     private
+
+    def setup_slim_lint_config: () -> void
 
     def parse_result: (String) { (Issue) -> void } -> void
 
