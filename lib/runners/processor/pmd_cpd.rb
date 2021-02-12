@@ -71,9 +71,7 @@ module Runners
 
     register_config_schema(name: :pmd_cpd, schema: Schema.runner_config)
 
-    def force_option_skip_lexical_errors
-      @force_option_skip_lexical_errors = true
-    end
+    attr_writer :force_option_skip_lexical_errors
 
     def analyzer_version
       @analyzer_version ||= capture3!("show_pmd_version").yield_self { |stdout,| stdout.strip }
