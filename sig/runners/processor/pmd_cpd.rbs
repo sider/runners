@@ -13,7 +13,7 @@ module Runners
     DEFAULT_FILES: String
     DEFAULT_LANGUAGE: Array[String]
 
-    attr_writer force_option_skip_lexical_errors: bool
+    attr_accessor force_option_skip_lexical_errors: bool
 
     private
 
