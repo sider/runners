@@ -9,10 +9,16 @@ module Runners
         category: string,
         description: string,
         severity: string,
-        )
+      )
     end
 
     register_config_schema(name: :fxcop, schema: Schema.runner_config)
+
+    def self.config_example
+      <<~YAML
+        root_dir: src/
+      YAML
+    end
 
     def analyzer_version
       ENV.fetch('FXCOP_VERSION')

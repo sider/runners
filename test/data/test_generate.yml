@@ -3,17 +3,15 @@
 # For more information, see the documentation:
 # https://help.sider.review/getting-started/custom-configuration
 
-# # Customize each tools. For example:
-# linter:
 
-# # Ignore specific files. For example:
+# Ignore specific files. Example:
 # ignore:
 #   - "*.pdf"
 #   - "*.mp4"
 #   - "*.min.*"
 #   - "images/**"
 
-# # Exclude specific branches. For example:
+# Exclude specific branches. Example:
 # branches:
 #   exclude:
 #     - master

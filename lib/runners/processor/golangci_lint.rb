@@ -52,6 +52,32 @@ module Runners
       .golangci.json
     ].freeze
 
+    def self.config_example
+      <<~'YAML'
+        root_dir: app/
+        target: src/...
+        config: config/.golangci.yml
+        disable:
+          - govet
+          - unused
+        disable-all: true
+        enable:
+          - golint
+          - gosec
+        fast: true
+        no-config: true
+        presets: [bugs, performance]
+        skip-dirs:
+          - src/external_libs/
+        skip-dirs-use-default: false
+        skip-files:
+          - ".*\\.my\\.go$"
+          - lib/bad.go
+        tests: false
+        uniq-by-line: false
+      YAML
+    end
+
     def analyzer_bin
       "golangci-lint"
     end

@@ -28,6 +28,19 @@ module Runners
     DEFAULT_TARGET = ".".freeze
     IGNORED_CONFIG_PATH = (Pathname(Dir.home) / '.config/ignored-config.ini').to_path.freeze
 
+    def self.config_example
+      <<~YAML
+        root_dir: app/
+        target: src/
+        config: config/.flake8
+        plugins:
+          - flake8-bandit
+          - flake8-builtins==1.4.1
+          - flake8-docstrings>=1.4.0
+          - git+https://github.com/PyCQA/flake8-import-order.git@51e16f33065512afa1a85a20b2c2d3be768f78ea
+      YAML
+    end
+
     def setup
       prepare_config
       prepare_plugins

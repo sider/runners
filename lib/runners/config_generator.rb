@@ -12,7 +12,7 @@ module Runners
       erb = ERB.new((Pathname(__dir__.to_s) / filename).read, trim_mode: "-")
       erb.filename = filename
       erb.result_with_hash({
-        tools: tools,
+        tools: tools.sort,
         analyzers: Analyzers.new,
         tool_examples: tools.each_with_object({}) do |tool, examples|
           examples[tool] = (_ = Processor.children.fetch(tool)) # TODO: Ignored Steep error

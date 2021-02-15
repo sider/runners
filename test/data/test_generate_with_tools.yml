@@ -3,17 +3,17 @@
 # For more information, see the documentation:
 # https://help.sider.review/getting-started/custom-configuration
 
-# # Customize each tools. For example:
-# linter:
-#
-#   # Brakeman. See https://help.sider.review/tools/ruby/brakeman
+# Customize each tools. For example:
+linter:
+
+#   # Brakeman example <https://help.sider.review/tools/ruby/brakeman>:
 #   brakeman:
 #     root_dir: webapp/
 #     gems:
 #       - name: brakeman
 #         version: 4.3.0
-#
-#   # Checkstyle. See https://help.sider.review/tools/java/checkstyle
+
+#   # Checkstyle example <https://help.sider.review/tools/java/checkstyle>:
 #   checkstyle:
 #     root_dir: server/
 #     jvm_deps:
@@ -23,8 +23,8 @@
 #     exclude: vendor/
 #     ignore: [warning, info]
 #     properties: custom-checkstyle.properties
-#
-#   # Clang-Tidy. See https://help.sider.review/tools/cplusplus/clang-tidy
+
+#   # Clang-Tidy example <https://help.sider.review/tools/cplusplus/clang-tidy>:
 #   clang_tidy:
 #     root_dir: project/
 #     apt:
@@ -34,8 +34,8 @@
 #       - myinclude
 #       - foo/include
 #       - /usr/include/libfastjson
-#
-#   # PHP_CodeSniffer. See https://help.sider.review/tools/php/code-sniffer
+
+#   # PHP_CodeSniffer example <https://help.sider.review/tools/php/code-sniffer>:
 #   code_sniffer:
 #     root_dir: web/
 #     dir: app/
@@ -44,14 +44,14 @@
 #     encoding: utf-8
 #     ignore:
 #       - app/vendor/
-#
-#   # CoffeeLint. See https://help.sider.review/tools/javascript/coffeelint
+
+#   # CoffeeLint example <https://help.sider.review/tools/javascript/coffeelint>:
 #   coffeelint:
 #     root_dir: app/
 #     npm_install: false
 #     file: config/coffeelint.json
-#
-#   # Cppcheck. See https://help.sider.review/tools/cplusplus/cppcheck
+
+#   # Cppcheck example <https://help.sider.review/tools/cplusplus/cppcheck>:
 #   cppcheck:
 #     root_dir: project/
 #     include-path:
@@ -65,8 +65,8 @@
 #     addon: [cert, misra]
 #     bug-hunting: true
 #     parallel: false
-#
-#   # ESLint. See https://help.sider.review/tools/javascript/eslint
+
+#   # ESLint example <https://help.sider.review/tools/javascript/eslint>:
 #   eslint:
 #     root_dir: frontend/
 #     npm_install: false
@@ -81,14 +81,53 @@
 #     global: "require,exports:true"
 #     quiet: true
 
-# # Ignore specific files. For example:
+#   # Flake8 example <https://help.sider.review/tools/python/flake8>:
+#   flake8:
+#     root_dir: app/
+#     target: src/
+#     config: config/.flake8
+#     plugins:
+#       - flake8-bandit
+#       - flake8-builtins==1.4.1
+#       - flake8-docstrings>=1.4.0
+#       - git+https://github.com/PyCQA/flake8-import-order.git@51e16f33065512afa1a85a20b2c2d3be768f78ea
+
+#   # FxCop example <https://help.sider.review/tools/csharp/fxcop>:
+#   fxcop:
+#     root_dir: src/
+
+#   # GolangCI-Lint example <https://help.sider.review/tools/go/golangci-lint>:
+#   golangci_lint:
+#     root_dir: app/
+#     target: src/...
+#     config: config/.golangci.yml
+#     disable:
+#       - govet
+#       - unused
+#     disable-all: true
+#     enable:
+#       - golint
+#       - gosec
+#     fast: true
+#     no-config: true
+#     presets: [bugs, performance]
+#     skip-dirs:
+#       - src/external_libs/
+#     skip-dirs-use-default: false
+#     skip-files:
+#       - ".*\\.my\\.go$"
+#       - lib/bad.go
+#     tests: false
+#     uniq-by-line: false
+
+# Ignore specific files. Example:
 # ignore:
 #   - "*.pdf"
 #   - "*.mp4"
 #   - "*.min.*"
 #   - "images/**"
 
-# # Exclude specific branches. For example:
+# Exclude specific branches. Example:
 # branches:
 #   exclude:
 #     - master
