@@ -97,7 +97,7 @@ module Runners
         opts << "--concurrency=2"
 
         # NOTE: Set `--timeout` to prevent a user-defined timeout value via `.golangci.yml`.
-        #       This value should be less than the top-level timeout value `ENV['RUNNERS_TIMEOUT']`.
+        #       This value should be enough greater than the top-level timeout value `ENV['RUNNERS_TIMEOUT']`.
         opts << "--timeout=10h"
 
         opts << "--tests=#{config_linter[:tests]}" unless config_linter[:tests].nil?
