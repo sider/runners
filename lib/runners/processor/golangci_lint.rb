@@ -24,7 +24,7 @@ module Runners
           })
         }
 
-        # @see https://github.com/golangci/golangci-lint/blob/306cbb0e6e9e27357fc3e70535988b71ed0cbc39/pkg/result/issue.go#L27
+        # @see https://github.com/golangci/golangci-lint/blob/v1.36.0/pkg/result/issue.go#L27
         let :issue, object(
           severity: string,
           replacement: object?(
@@ -57,28 +57,25 @@ module Runners
     end
 
     def analyze(_changes)
-      # @see https://github.com/golangci/golangci-lint/blob/v1.25.1/pkg/exitcodes/exitcodes.go
-      #     Success              = 0
-      #     IssuesFound          = 1
-      #     WarningInTest        = 2
-      #     Failure              = 3
-      #     Timeout              = 4
-      #     NoGoFiles            = 5
-      #     NoConfigFileDetected = 6
-      #     ErrorWasLogged       = 7
+      # @see https://github.com/golangci/golangci-lint/blob/v1.36.0/pkg/exitcodes/exitcodes.go#L4-L11
+      ex_success = 0
+      ex_issues_found = 1
+      ex_failure = 3
+      ex_no_go_files = 5
 
       stdout, stderr, status = capture3(analyzer_bin, "run", *analyzer_options)
-      if (status.exitstatus == 0 || status.exitstatus == 1) && !stdout.empty? && stderr.empty?
+
+      if [ex_success, ex_issues_found].include?(status.exitstatus) && !stdout.empty? && stderr.empty?
         return Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
           parse_result(stdout) { |v| result.add_issue(v) }
         end
       end
 
-      if status.exitstatus == 3
+      if status.exitstatus == ex_failure
         return Results::Failure.new(guid: guid, analyzer: analyzer)
       end
 
-      if status.exitstatus == 5
+      if status.exitstatus == ex_no_go_files
         return Results::Success.new(guid: guid, analyzer: analyzer)
       end
 
