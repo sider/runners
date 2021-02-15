@@ -96,10 +96,9 @@ module Runners
         opts << "--color=never"
         opts << "--concurrency=2"
 
-        # NOTE: The value should be less than the top-level timeout value.
-        #
-        # @see https://github.com/sider/runners/blob/1231de0ca047c7a23449ab1a7bb0751f39f16643/images/Dockerfile.end.erb#L11
-        opts << "--timeout=15m"
+        # NOTE: Set `--timeout` to prevent a user-defined timeout value via `.golangci.yml`.
+        #       This value should be less than the top-level timeout value `ENV['RUNNERS_TIMEOUT']`.
+        opts << "--timeout=10h"
 
         opts << "--tests=#{config_linter[:tests]}" unless config_linter[:tests].nil?
         opts << "--config=#{path_to_config}" if path_to_config
