@@ -20,6 +20,11 @@ module Runners
     end
 
     def analyze(changes)
+      # Generate pre-computed cache for Git metadata access (https://git-scm.com/docs/git-commit-graph)
+      # This improves the performance of access to Git metadata for a large repository.
+      # You can see the efficacy here: https://github.com/sider/runners/issues/2028#issuecomment-776534408
+      capture3!("git", "commit-graph", "write", "--reachable", "--changed-paths", "--no-progress")
+
       target_files = changes.changed_paths.map(&:to_path)
       analyze_last_committed_at(target_files)
       analyze_lines_of_code(target_files)
@@ -78,7 +83,7 @@ module Runners
 
     def analyze_last_committed_at(targets)
       targets.each do |target|
-        stdout, _ = capture3!("git", "log", "-1", "--format=format:%aI", target)
+        stdout, _ = capture3!("git", "log", "-1", "--format=format:%aI", target, trace_stdout: false)
         last_committed_at[target] = stdout
       end
     end

@@ -16,6 +16,17 @@ s.add_test(
       git_blame_info: {
         commit: :_, line_hash: "2f024a2bdf291a1ab61e026140f7e709028266a8", original_line: 4, final_line: 4
       }
+    },
+    {
+      message: "Line is too long. [204/200]",
+      links: %W[https://github.com/sds/haml-lint/blob/v#{default_version}/lib/haml_lint/linter#linelength],
+      id: "LineLength",
+      path: "test.haml",
+      location: { start_line: 7 },
+      object: { severity: "warning" },
+      git_blame_info: {
+        commit: :_, line_hash: "416b409e6b7628da6f061cd2c159b03157c38192", original_line: 7, final_line: 7
+      }
     }
   ],
   analyzer: { name: "HAML-Lint", version: default_version }
@@ -141,6 +152,17 @@ s.add_test(
       object: { severity: "warning" },
       git_blame_info: {
         commit: :_, line_hash: "da7cbdf991191af285867e39fd1239b6a030b465", original_line: 2, final_line: 2
+      }
+    },
+    {
+      message: "Line is too long. [84/80]",
+      links: %W[https://github.com/sds/haml-lint/blob/v#{default_version}/lib/haml_lint/linter#linelength],
+      id: "LineLength",
+      path: "hello.haml",
+      location: { start_line: 7 },
+      object: { severity: "warning" },
+      git_blame_info: {
+        commit: :_, line_hash: "53d100be96dfb32b768bb472f9f7da2409f73ab6", original_line: 7, final_line: 7
       }
     },
     {

@@ -22,7 +22,7 @@ module Runners
 
     def initialize(**params)
       super(**params)
-      @pmd_cpd = PmdCpd.new(**params)
+      @pmd_cpd = PmdCpd.new(**params).tap { _1.force_option_skip_lexical_errors = true }
     end
 
     def analyze(changes)

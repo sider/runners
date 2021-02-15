@@ -4,7 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.41.1...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.42.1...HEAD)
+
+## 0.42.1
+
+[Full diff](https://github.com/sider/runners/compare/0.42.0...0.42.1)
+
+- **GolangCI-Lint** Fix too short timeout value [#2063](https://github.com/sider/runners/pull/2063)
+
+## 0.42.0
+
+[Full diff](https://github.com/sider/runners/compare/0.41.1...0.42.0)
 
 New features:
 
@@ -23,11 +33,14 @@ Misc:
 
 - **HAML-Lint** Improve issue ID and links for RuboCop [#2009](https://github.com/sider/runners/pull/2009)
 - **HAML-Lint** Enable `parallel` option by default [#2012](https://github.com/sider/runners/pull/2012) [#2042](https://github.com/sider/runners/pull/2042)
+- **HAML-Lint** Set up recommended ruleset [#2048](https://github.com/sider/runners/pull/2048)
 - Verify gem installation in Dockerfiles [#2010](https://github.com/sider/runners/pull/2010)
 - **Checkstyle** Provide Sider's recommended ruleset [#1619](https://github.com/sider/runners/pull/1619)
 - **Slim-Lint** New support [#2014](https://github.com/sider/runners/pull/2014)
 - **RuboCop** Set up default config only when no user config [#2020](https://github.com/sider/runners/pull/2020)
 - **Metrics Complexity** Run lizard as single thread to avoid timeout error [#2019](https://github.com/sider/runners/pull/2019)
+- **Metrics Code Clone** Force to set the option `--skip-lexical-errors` of PMD CPD to avoid Lexical error [#2050](https://github.com/sider/runners/pull/2050)
+- **Metrics File Info** Improve analysis performance with pre-computed git metadata cache [#2051](https://github.com/sider/runners/pull/2051)
 
 ## 0.41.1
 
