@@ -18,7 +18,8 @@ Gem::Specification.new do |spec|
   spec.metadata["source_code_uri"] = spec.homepage
   spec.metadata["changelog_uri"] = "#{spec.homepage}/blob/master/CHANGELOG.md"
 
-  spec.files         = Dir["CHANGELOG.md", "LICENSE", "README.md", "analyzers.yml", "exe/*", "lib/runners/**/*.rb", "sig/runners/**/*.rbs"]
+  spec.files         = Dir["CHANGELOG.md", "LICENSE", "README.md", "analyzers.yml", "exe/*",
+                           "lib/runners/**/*.{rb,erb}", "sig/runners/**/*.rbs"]
   spec.bindir        = "exe"
   spec.executables   = ["runners"]
   spec.require_paths = ["lib"]
