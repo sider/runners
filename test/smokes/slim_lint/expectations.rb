@@ -18,6 +18,17 @@ s.add_test(
       }
     },
     {
+      path: "foo.slim",
+      location: { start_line: 4 },
+      id: "LineLength",
+      message: "Line is too long. [81/80]",
+      links: %W[https://github.com/sds/slim-lint/blob/v#{default_version}/lib/slim_lint/linter/README.md#linelength],
+      object: { severity: "warning" },
+      git_blame_info: {
+        commit: :_, line_hash: "84a61674282e916a3d2fb186f5909cbaeb1245f8", original_line: 4, final_line: 4
+      }
+    },
+    {
       path: "rubocop.slim",
       location: { start_line: 2 },
       id: "RuboCop:Lint/UselessAssignment",
@@ -113,5 +124,24 @@ s.add_test(
   "invalid_config",
   type: "failure",
   message: "Unable to load configuration from 'not_found.yml': No such file or directory @ rb_sysopen - not_found.yml",
+  analyzer: { name: "Slim-Lint", version: default_version }
+)
+
+s.add_test(
+  "default_config",
+  type: "success",
+  issues: [
+    {
+      path: "foo.slim",
+      location: { start_line: 2 },
+      id: "LineLength",
+      message: "Line is too long. [201/200]",
+      links: %W[https://github.com/sds/slim-lint/blob/v#{default_version}/lib/slim_lint/linter/README.md#linelength],
+      object: { severity: "warning" },
+      git_blame_info: {
+        commit: :_, line_hash: "d626bb1e60255b6036c470a4818cf804988c4329", original_line: 2, final_line: 2
+      }
+    }
+  ],
   analyzer: { name: "Slim-Lint", version: default_version }
 )

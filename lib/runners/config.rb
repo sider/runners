@@ -95,12 +95,12 @@ module Runners
     end
 
     def check_unsupported_linters(linter_ids)
-      list = linter_ids.filter { |id| linter?(id) }
+      ids = linter_ids.filter { |id| linter?(id) }
 
-      if list.empty?
+      if ids.empty?
         ""
       else
-        list = list.map { |id| "- `linter.#{id}`" }.join("\n")
+        list = ids.map { |id| "- `#{linter_field_path(id)}`" }.join("\n")
         <<~MSG
           The following linters in your `#{path_name}` are no longer supported. Please remove them.
           #{list}
@@ -135,6 +135,14 @@ module Runners
           path_name: path_name, raw_content: yaml, line: exn.line, column: exn.column, problem: exn.problem,
         )
       end
+    end
+
+    def field_path(*fields)
+      fields.map(&:to_s).join(".")
+    end
+
+    def linter_field_path(*fields)
+      field_path(:linter, *fields)
     end
 
     private

@@ -1,6 +1,6 @@
 FROM golangci/golangci-lint:v1.36.0 as golangci-lint
 
-FROM sider/devon_rex_go:2.40.1
+FROM sider/devon_rex_go:2.40.3
 
 COPY --chown=<%= chown %> --from=golangci-lint /usr/bin/golangci-lint ${RUNNER_USER_HOME}/bin/
 

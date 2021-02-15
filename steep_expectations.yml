@@ -125,10 +125,10 @@
     code: Ruby::ArgumentTypeMismatch
   - range:
       start:
-        line: 308
+        line: 307
         character: 45
       end:
-        line: 308
+        line: 307
         character: 50
     severity: ERROR
     message: Type `(::String | ::Array[::String] | nil)` does not have method `split`
