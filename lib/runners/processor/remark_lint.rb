@@ -132,7 +132,7 @@ module Runners
         file.fetch(:messages).each do |message|
           stack = message[:stack]
           if stack
-            errors << "#{message[:reason]}\n#{stack}"
+            errors << "#{message[:reason]} (at `#{path}`)\n#{stack}"
           else
             # NOTE: When `fatal` is `true`, then `severity` is `error`.
             #
