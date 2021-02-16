@@ -10,6 +10,8 @@ updates:
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
     versioning-strategy: increase
+    labels: ["dependencies", "language: ruby"]
+
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
@@ -17,7 +19,7 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
 
-  # Docker
+  # Docker images
   - package-ecosystem: docker
     directory: "/images/golangci_lint"
     schedule:
@@ -25,6 +27,8 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    labels: ["dependencies", "language: go"]
+
   - package-ecosystem: docker
     directory: "/images/hadolint"
     schedule:
@@ -32,6 +36,8 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    labels: ["dependencies", "language: misc"]
+
   - package-ecosystem: docker
     directory: "/images/shellcheck"
     schedule:
@@ -39,6 +45,7 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    labels: ["dependencies", "language: misc"]
 
   # Java
   - package-ecosystem: gradle
@@ -48,6 +55,8 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    labels: ["dependencies", "language: java"]
+
   - package-ecosystem: gradle
     directory: "/images/pmd_cpd"
     schedule:
@@ -55,6 +64,8 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    labels: ["dependencies", "language: java"]
+
   - package-ecosystem: gradle
     directory: "/images/pmd_java"
     schedule:
@@ -62,6 +73,7 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    labels: ["dependencies", "language: java"]
 
   # Java (Kotlin)
   - package-ecosystem: gradle
@@ -71,6 +83,8 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    labels: ["dependencies", "language: kotlin"]
+
   - package-ecosystem: gradle
     directory: "/images/ktlint"
     schedule:
@@ -78,9 +92,9 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    labels: ["dependencies", "language: kotlin"]
 
   # JavaScript
-  # TODO: CoffeeLint's package name seems moved. See https://github.com/sider/runners/issues/821
   - package-ecosystem: npm
     directory: "/images/eslint"
     schedule:
@@ -89,6 +103,8 @@ updates:
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
     versioning-strategy: increase
+    labels: ["dependencies", "language: javascript"]
+
   - package-ecosystem: npm
     directory: "/images/jshint"
     schedule:
@@ -97,6 +113,18 @@ updates:
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
     versioning-strategy: increase
+    labels: ["dependencies", "language: javascript"]
+
+  - package-ecosystem: npm
+    directory: "/images/coffeelint"
+    schedule:
+      interval: weekly
+      time: "09:00"
+      timezone: Asia/Tokyo
+    open-pull-requests-limit: 10
+    versioning-strategy: increase
+    labels: ["dependencies", "language: javascript"]
+
   - package-ecosystem: npm
     directory: "/images/remark_lint"
     schedule:
@@ -105,6 +133,8 @@ updates:
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
     versioning-strategy: increase
+    labels: ["dependencies", "language: markdown"]
+
   - package-ecosystem: npm
     directory: "/images/stylelint"
     schedule:
@@ -113,6 +143,8 @@ updates:
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
     versioning-strategy: increase
+    labels: ["dependencies", "language: css"]
+
   - package-ecosystem: npm
     directory: "/images/tyscan"
     schedule:
@@ -121,6 +153,7 @@ updates:
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
     versioning-strategy: increase
+    labels: ["dependencies", "language: typescript"]
 
   # PHP
   - package-ecosystem: composer
@@ -131,6 +164,8 @@ updates:
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
     versioning-strategy: increase
+    labels: ["dependencies", "language: php"]
+
   - package-ecosystem: composer
     directory: "/images/phinder"
     schedule:
@@ -139,6 +174,8 @@ updates:
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
     versioning-strategy: increase
+    labels: ["dependencies", "language: php"]
+
   - package-ecosystem: composer
     directory: "/images/phpmd"
     schedule:
@@ -147,6 +184,7 @@ updates:
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
     versioning-strategy: increase
+    labels: ["dependencies", "language: php"]
 
   # Python
   - package-ecosystem: pip
@@ -156,6 +194,8 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    labels: ["dependencies", "language: c/c++"]
+
   - package-ecosystem: pip
     directory: "/images/metrics_complexity"
     schedule:
@@ -163,6 +203,8 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    labels: ["dependencies", "language: misc"]
+
   - package-ecosystem: pip
     directory: "/images/flake8"
     schedule:
@@ -170,6 +212,8 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    labels: ["dependencies", "language: python"]
+
   - package-ecosystem: pip
     directory: "/images/pylint"
     schedule:
@@ -177,6 +221,7 @@ updates:
       time: "09:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
+    labels: ["dependencies", "language: python"]
 
   # Ruby
   - package-ecosystem: bundler
@@ -187,6 +232,8 @@ updates:
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
     versioning-strategy: increase
+    labels: ["dependencies", "language: ruby"]
+
   - package-ecosystem: bundler
     directory: "/images/goodcheck"
     schedule:
@@ -195,6 +242,8 @@ updates:
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
     versioning-strategy: increase
+    labels: ["dependencies", "language: misc"]
+
   - package-ecosystem: bundler
     directory: "/images/haml_lint"
     schedule:
@@ -203,6 +252,8 @@ updates:
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
     versioning-strategy: increase
+    labels: ["dependencies", "language: ruby"]
+
   - package-ecosystem: bundler
     directory: "/images/querly"
     schedule:
@@ -211,6 +262,8 @@ updates:
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
     versioning-strategy: increase
+    labels: ["dependencies", "language: ruby"]
+
   - package-ecosystem: bundler
     directory: "/images/rails_best_practices"
     schedule:
@@ -219,6 +272,8 @@ updates:
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
     versioning-strategy: increase
+    labels: ["dependencies", "language: ruby"]
+
   - package-ecosystem: bundler
     directory: "/images/reek"
     schedule:
@@ -227,6 +282,8 @@ updates:
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
     versioning-strategy: increase
+    labels: ["dependencies", "language: ruby"]
+
   - package-ecosystem: bundler
     directory: "/images/rubocop"
     schedule:
@@ -235,6 +292,8 @@ updates:
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
     versioning-strategy: increase
+    labels: ["dependencies", "language: ruby"]
+
   - package-ecosystem: bundler
     directory: "/images/scss_lint"
     schedule:
@@ -243,6 +302,8 @@ updates:
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
     versioning-strategy: increase
+    labels: ["dependencies", "language: css"]
+
   - package-ecosystem: bundler
     directory: "/images/slim_lint"
     schedule:
@@ -251,3 +312,4 @@ updates:
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
     versioning-strategy: increase
+    labels: ["dependencies", "language: ruby"]
