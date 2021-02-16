@@ -131,8 +131,11 @@ module Runners
 
         file.fetch(:messages).each do |message|
           stack = message[:stack]
+          reason = message[:reason]
+          ruleId = message[:ruleId]
+
           if stack
-            errors << "#{message[:reason]} (at `#{path}`)\n#{stack}"
+            errors << "#{reason} (at `#{path}`; rule: `#{ruleId || '<none>'}`)\n#{stack}"
           else
             # NOTE: When `fatal` is `true`, then `severity` is `error`.
             #
@@ -143,8 +146,8 @@ module Runners
             issues << Issue.new(
               path: path,
               location: message[:line]&.then { |line| Location.new(start_line: line, start_column: message[:column]) },
-              id: message[:ruleId],
-              message: message[:reason],
+              id: ruleId,
+              message: reason,
               object: {
                 severity: severity,
               },
