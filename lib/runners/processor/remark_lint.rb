@@ -135,7 +135,7 @@ module Runners
           ruleId = message[:ruleId]
 
           if stack
-            errors << "#{reason} (at `#{path}`; rule: `#{ruleId || '<none>'}`)\n#{stack}"
+            errors << "#{reason} (at `#{path}`; rule: #{ruleId || '<none>'})\n#{stack}"
           else
             # NOTE: When `fatal` is `true`, then `severity` is `error`.
             #
