@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 [Full diff](https://github.com/sider/runners/compare/0.42.1...HEAD)
 
 - **remark-lint** Add file path to error message [#2067](https://github.com/sider/runners/pull/2067)
+- **remark-lint** Add rule ID to error message [#2076](https://github.com/sider/runners/pull/2076)
 
 ## 0.42.1
 
