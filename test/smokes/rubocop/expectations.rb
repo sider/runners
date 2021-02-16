@@ -543,5 +543,5 @@ s.add_test(
       }
     }
   ],
-  analyzer: { name: "RuboCop", version: default_version }
+  analyzer: { name: "RuboCop", version: "1.9.0" }
 )
