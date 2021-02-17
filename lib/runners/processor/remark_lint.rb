@@ -86,12 +86,12 @@ module Runners
       Array(config_linter[:use]).flat_map { |v| ["--use", v] }
     end
 
-    # @see https://github.com/unifiedjs/unified-engine/blob/master/doc/configure.md
+    # @see https://github.com/unifiedjs/unified-engine/blob/8.0.0/doc/configure.md
     def no_rc_files?
       Dir.glob("**/.remarkrc{,.*}", File::FNM_DOTMATCH, base: current_dir.to_path).empty?
     end
 
-    # @see https://github.com/unifiedjs/unified-engine/blob/master/doc/configure.md
+    # @see https://github.com/unifiedjs/unified-engine/blob/8.0.0/doc/configure.md
     def no_config_in_package_json?
       !(package_json_path.exist? && package_json.key?(:remarkConfig))
     end
@@ -131,8 +131,11 @@ module Runners
 
         file.fetch(:messages).each do |message|
           stack = message[:stack]
+          reason = message[:reason]
+          ruleId = message[:ruleId]
+
           if stack
-            errors << "#{message[:reason]}\n#{stack}"
+            errors << "#{reason} (at `#{path}`; rule: #{ruleId || '<none>'})\n#{stack}"
           else
             # NOTE: When `fatal` is `true`, then `severity` is `error`.
             #
@@ -143,8 +146,8 @@ module Runners
             issues << Issue.new(
               path: path,
               location: message[:line]&.then { |line| Location.new(start_line: line, start_column: message[:column]) },
-              id: message[:ruleId],
-              message: message[:reason],
+              id: ruleId,
+              message: reason,
               object: {
                 severity: severity,
               },
