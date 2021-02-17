@@ -2,7 +2,7 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM sider/devon_rex_base:2.40.3
+FROM sider/devon_rex_base:2.40.4
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/clang_tidy/packages.list ${RUNNER_USER_HOME}/
 
