@@ -11,6 +11,7 @@ Updated tools:
 - **CoffeeLint** 4.1.2 -> 4.1.3 [#2071](https://github.com/sider/runners/pull/2071)
 - **ESLint** 7.19.0 -> 7.20.0 [#2057](https://github.com/sider/runners/pull/2057)
 - **Pylint** 2.6.0 -> 2.6.2 [#2072](https://github.com/sider/runners/pull/2072)
+- **RuboCop** 1.9.1 -> 1.10.0 [#2070](https://github.com/sider/runners/pull/2070)
 - **stylelint** 13.9.0 -> 13.10.0 [#2053](https://github.com/sider/runners/pull/2053)
 
 Misc:
