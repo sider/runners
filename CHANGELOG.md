@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - **remark-lint** Add file path to error message [#2067](https://github.com/sider/runners/pull/2067)
 - **remark-lint** Add rule ID to error message [#2076](https://github.com/sider/runners/pull/2076)
+- **remark-lint** Bump remark-preset-lint-sider from 0.6.0 to 0.7.0 (**breaking**) [#2078](https://github.com/sider/runners/pull/2078)
 
 ## 0.42.1
 
