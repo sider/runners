@@ -6,7 +6,17 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.42.1...HEAD)
 
+Updated tools:
+
+- **CoffeeLint** 4.1.2 -> 4.1.3 [#2071](https://github.com/sider/runners/pull/2071)
+- **ESLint** 7.19.0 -> 7.20.0 [#2057](https://github.com/sider/runners/pull/2057)
+- **stylelint** 13.9.0 -> 13.10.0 [#2053](https://github.com/sider/runners/pull/2053)
+
+Misc:
+
 - **remark-lint** Add file path to error message [#2067](https://github.com/sider/runners/pull/2067)
+- **remark-lint** Add rule ID to error message [#2076](https://github.com/sider/runners/pull/2076)
+- **remark-lint** Bump remark-preset-lint-sider from 0.6.0 to 0.7.0 (**breaking**) [#2078](https://github.com/sider/runners/pull/2078)
 
 ## 0.42.1
 
