@@ -6,9 +6,24 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.42.1...HEAD)
 
+Updated environments:
+
+- **devon_rex** 2.40.3 -> 2.40.4 [#2081](https://github.com/sider/runners/pull/2081)
+
+Updated tools:
+
+- **CoffeeLint** 4.1.2 -> 4.1.3 [#2071](https://github.com/sider/runners/pull/2071)
+- **ESLint** 7.19.0 -> 7.20.0 [#2057](https://github.com/sider/runners/pull/2057)
+- **Pylint** 2.6.0 -> 2.6.2 [#2072](https://github.com/sider/runners/pull/2072)
+- **RuboCop** 1.9.1 -> 1.10.0 [#2070](https://github.com/sider/runners/pull/2070)
+- **stylelint** 13.9.0 -> 13.10.0 [#2053](https://github.com/sider/runners/pull/2053)
+
+Misc:
+
 - **remark-lint** Add file path to error message [#2067](https://github.com/sider/runners/pull/2067)
 - **remark-lint** Add rule ID to error message [#2076](https://github.com/sider/runners/pull/2076)
 - **remark-lint** Bump remark-preset-lint-sider from 0.6.0 to 0.7.0 (**breaking**) [#2078](https://github.com/sider/runners/pull/2078)
+- **Checkstyle** Provide Sider's recommended ruleset [#1619](https://github.com/sider/runners/pull/1619)
 - **Flake8** Provide Sider's recommended ruleset [#1980](https://github.com/sider/runners/pull/1980)
 
 ## 0.42.1

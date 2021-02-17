@@ -2,7 +2,7 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM sider/devon_rex_base:2.40.3
+FROM sider/devon_rex_base:2.40.4
 
 ARG MISSPELL_VERSION=0.3.4
 

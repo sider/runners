@@ -25,6 +25,7 @@ module Runners
     register_config_schema(name: :checkstyle, schema: Schema.runner_config)
 
     DEFAULT_TARGET = ".".freeze
+    DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_recommended_checkstyle.xml").to_path.freeze
 
     def setup
       begin
@@ -147,12 +148,14 @@ module Runners
     end
 
     def config_file
-      file = config_linter[:config] || "google"
+      file = config_linter[:config] || "google" # TODO: Change "sider" when recommended ruleset is released.
       case file
       when "sun"
         "/sun_checks.xml"
       when "google"
         "/google_checks.xml"
+      when "sider"
+        DEFAULT_CONFIG_FILE
       else
         file
       end

@@ -1,14 +1,5 @@
 module Runners
   module RecommendedConfig
-    def warn_recommended_config_file_release(config_filename, deadline)
-      return if exists_in_repository?(config_filename)
-
-      add_warning <<~MSG, file: config_filename
-        Sider's recommended configuration file is about to be released #{deadline}.
-        After the release, Sider will automatically apply our recommended ruleset if you don't have the #{analyzer_name} configuration file called `#{config_filename}` in your repository.
-      MSG
-    end
-
     def deploy_recommended_config_file(config_filename)
       if exists_in_repository?(config_filename)
         trace_writer.message "The #{analyzer_name} configuration file called `#{config_filename}` exists in your repository. The Sider's recommended ruleset is ignored."
