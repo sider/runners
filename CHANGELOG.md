@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - **remark-lint** Add file path to error message [#2067](https://github.com/sider/runners/pull/2067)
 - **remark-lint** Add rule ID to error message [#2076](https://github.com/sider/runners/pull/2076)
 - **remark-lint** Bump remark-preset-lint-sider from 0.6.0 to 0.7.0 (**breaking**) [#2078](https://github.com/sider/runners/pull/2078)
+- **Checkstyle** Provide Sider's recommended ruleset [#1619](https://github.com/sider/runners/pull/1619)
 
 ## 0.42.1
 
@@ -39,7 +40,6 @@ Misc:
 - **HAML-Lint** Enable `parallel` option by default [#2012](https://github.com/sider/runners/pull/2012) [#2042](https://github.com/sider/runners/pull/2042)
 - **HAML-Lint** Set up recommended ruleset [#2048](https://github.com/sider/runners/pull/2048)
 - Verify gem installation in Dockerfiles [#2010](https://github.com/sider/runners/pull/2010)
-- **Checkstyle** Provide Sider's recommended ruleset [#1619](https://github.com/sider/runners/pull/1619)
 - **Slim-Lint** New support [#2014](https://github.com/sider/runners/pull/2014)
 - **RuboCop** Set up default config only when no user config [#2020](https://github.com/sider/runners/pull/2020)
 - **Metrics Complexity** Run lizard as single thread to avoid timeout error [#2019](https://github.com/sider/runners/pull/2019)

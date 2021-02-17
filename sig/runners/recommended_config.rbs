@@ -1,5 +1,7 @@
 module Runners
   module RecommendedConfig : Processor
+    def deploy_recommended_config_file: (String) -> void
+
     private
 
     def exists_in_repository?: (String) -> bool
