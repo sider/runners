@@ -1,3 +1,0 @@
-class URI::RFC2396_Parser
-  def make_regexp: (?Array[String] schemes) -> Regexp
-end

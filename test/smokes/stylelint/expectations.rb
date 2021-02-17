@@ -588,7 +588,7 @@ s.add_test("failed_to_npm_install", analyzer: :_, type: "failure", message: /`np
 
 s.add_test(
   "without_npm_install",
-  analyzer: { 'name': "stylelint", version: "8.4.0" },
+  analyzer: { name: "stylelint", version: "8.4.0" },
   type: "failure",
   message: /Could not find "stylelint-processor-html"/
 )
@@ -615,7 +615,7 @@ s.add_test(
 
 s.add_test(
   "additional_options",
-  analyzer: { 'name': "stylelint", version: "9.10.1" },
+  analyzer: { name: "stylelint", version: "9.10.1" },
   type: "success",
   issues: [
     {
@@ -656,7 +656,7 @@ s.add_test(
 
 s.add_test(
   "allow_empty_input_option_with_v10.0.0",
-  analyzer: { 'name': "stylelint", version: "10.0.0" }, type: "success", issues: []
+  analyzer: { name: "stylelint", version: "10.0.0" }, type: "success", issues: []
 )
 
 s.add_test(
