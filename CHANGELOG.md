@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 Updated tools:
 
+- **CoffeeLint** 4.1.2 -> 4.1.3 [#2071](https://github.com/sider/runners/pull/2071)
 - **stylelint** 13.9.0 -> 13.10.0 [#2053](https://github.com/sider/runners/pull/2053)
 
 Misc:
