@@ -22,33 +22,13 @@ class CLITest < Minitest::Test
   def test_parsing_options
     cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: options_json)
     assert_equal "test-guid", cli.guid
-    assert_equal 'rubocop', cli.analyzer
+    assert_equal :rubocop, cli.analyzer
     assert_instance_of Runners::Options, cli.options
-  end
-
-  def test_validate_options
-    assert_raises OptionParser::MissingArgument do
-      CLI.new(argv: ["test-guid"], stdout: stdout, stderr: stderr, options_json: options_json)
-    end.tap do |error|
-      assert_equal "missing argument: --analyzer is required", error.message
-    end
-
-    assert_raises OptionParser::InvalidArgument do
-      CLI.new(argv: ["--analyzer=FOO", "test-guid"], stdout: stdout, stderr: stderr, options_json: options_json)
-    end.tap do |error|
-      assert_equal "invalid argument: --analyzer=FOO", error.message
-    end
-
-    assert_raises OptionParser::MissingArgument do
-      CLI.new(argv: ["--analyzer=rubocop"], stdout: stdout, stderr: stderr, options_json: options_json)
-    end.tap do |error|
-      assert_equal "missing argument: GUID is required", error.message
-    end
   end
 
   class TestProcessor < Runners::Processor
     def analyzer_id
-      "rubocop"
+      :rubocop
     end
 
     def analyzer_version

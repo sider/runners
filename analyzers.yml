@@ -177,6 +177,11 @@ analyzers:
     github: koalaman/shellcheck
     doc: tools/shellscript/shellcheck
     website: https://www.shellcheck.net
+  slim_lint:
+    name: Slim-Lint
+    github: sds/slim-lint
+    doc: tools/ruby/slim-lint
+    beta: true
   stylelint:
     name: stylelint
     github: stylelint/stylelint

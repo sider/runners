@@ -114,7 +114,7 @@ class RuboCopUtilsTest < Minitest::Test
         include Runners::Ruby
 
         def analyzer_id
-          "rubocop"
+          :rubocop
         end
       end
       klass.new(

@@ -8,21 +8,7 @@ on:
     branches: ["**"]
 
 jobs:
-  # https://gist.github.com/ybiquitous/c80f15c18319c63cae8447a3be341267
-  # https://github.com/actions/runner/issues/774
-  check_skip:
-    runs-on: ubuntu-latest
-    if: |
-      !contains(format('{0} {1}', github.event.head_commit.message, github.event.pull_request.title), '[skip ci]')
-    steps:
-      - run: |
-          echo 'github.event_name: ${{ github.event_name }}'
-          echo 'github.event:'
-          cat <<'EOD'
-          ${{ toJson(github.event) }}
-          EOD
   test:
-    needs: check_skip
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

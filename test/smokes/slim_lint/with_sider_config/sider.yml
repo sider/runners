@@ -1,0 +1,6 @@
+linter:
+  slim_lint:
+    target:
+      - "views/"
+      - "*.slim"
+    config: "my-slim-lint.yml"

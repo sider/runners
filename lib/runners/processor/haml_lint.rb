@@ -39,6 +39,7 @@ module Runners
       GEM_NAME => [">= 0.26.0", "< 1.0.0"]
     }.freeze
     DEFAULT_TARGET = ".".freeze
+    DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_recommended_haml_lint.yml").to_path.freeze
 
     def analyzer_bin
       "haml-lint"
@@ -47,6 +48,8 @@ module Runners
     def setup
       add_warning_if_deprecated_options
       add_warning_for_deprecated_option :file, to: :target
+
+      setup_haml_lint_config
 
       default_gems = default_gem_specs(GEM_NAME, *REQUIRED_GEM_NAMES)
       if setup_default_rubocop_config
@@ -86,6 +89,16 @@ module Runners
 
     private
 
+    def setup_haml_lint_config
+      return unless haml_lint_config.empty?
+
+      path = current_dir / ".haml-lint.yml"
+      return if path.exist?
+
+      FileUtils.copy_file DEFAULT_CONFIG_FILE, path
+      trace_writer.message "Set up the default #{analyzer_name} configuration file."
+    end
+
     def target
       Array(config_linter[:target] || config_linter[:file] ||
             config_linter.dig(:options, :file) || DEFAULT_TARGET)
@@ -112,11 +125,18 @@ module Runners
     end
 
     def config_parallel
-      if Gem::Version.create(analyzer_version) >= Gem::Version.create("0.36.0")
-        config_linter.fetch(:parallel, true) ? ["--parallel"] : []
-      else
-        []
+      minimum_version = "0.36.0"
+      if Gem::Version.create(analyzer_version) >= Gem::Version.create(minimum_version)
+        parallel = config_linter[:parallel]
+        if parallel == true || parallel.nil?
+          return ["--parallel"]
+        end
+      elsif config_linter[:parallel] == true
+        add_warning "The option `#{config_field_path(:parallel)}` is ignored with #{analyzer_name} #{analyzer_version}. Please update it to **#{minimum_version}+** or use our default version.",
+                    file: config.path_name
       end
+
+      []
     end
 
     def parse_result(output)

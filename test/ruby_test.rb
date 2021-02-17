@@ -21,7 +21,7 @@ class RubyTest < Minitest::Test
       include Runners::Ruby
 
       def analyzer_id
-        "rubocop"
+        :rubocop
       end
     end
   end
