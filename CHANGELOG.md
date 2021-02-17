@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.42.1...HEAD)
 
+Updated environments:
+
+- **devon_rex** 2.40.3 -> 2.40.4 [#2081](https://github.com/sider/runners/pull/2081)
+
 Updated tools:
 
 - **CoffeeLint** 4.1.2 -> 4.1.3 [#2071](https://github.com/sider/runners/pull/2071)
