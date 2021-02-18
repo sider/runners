@@ -1,0 +1,3 @@
+linter:
+  slim_lint:
+    target: not_found/

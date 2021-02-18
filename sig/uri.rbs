@@ -1,5 +1,0 @@
-module URI
-  def self.parse: (String) -> URI::Generic
-  def self.join: (*String) -> URI::Generic
-  def self.extract: (String, ?Array[String]) -> Array[String]
-end

@@ -1,6 +1,7 @@
 <%= render_erb 'images/Dockerfile.java.erb' %>
 
 COPY images/checkstyle/checkstyle /usr/local/bin/
+COPY --chown=<%= chown %> images/checkstyle/sider_recommended_checkstyle.xml ${RUNNER_USER_HOME}/
 
 <%= render_erb 'images/Dockerfile.base.erb' %>
 <%= render_erb 'images/Dockerfile.end.erb' %>

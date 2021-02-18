@@ -4,26 +4,96 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.40.7...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.43.0...HEAD)
+
+## 0.43.0
+
+[Full diff](https://github.com/sider/runners/compare/0.42.1...0.43.0)
 
 Updated environments:
 
-- **devon_rex** 2.30.1 -> master [#1954](https://github.com/sider/runners/pull/1954)
+- **devon_rex** 2.40.3 -> 2.40.4 [#2081](https://github.com/sider/runners/pull/2081)
+
+Updated tools:
+
+- **CoffeeLint** 4.1.2 -> 4.1.3 [#2071](https://github.com/sider/runners/pull/2071)
+- **ESLint** 7.19.0 -> 7.20.0 [#2057](https://github.com/sider/runners/pull/2057)
+- **Pylint** 2.6.0 -> 2.6.2 [#2072](https://github.com/sider/runners/pull/2072)
+- **RuboCop** 1.9.1 -> 1.10.0 [#2070](https://github.com/sider/runners/pull/2070)
+- **stylelint** 13.9.0 -> 13.10.0 [#2053](https://github.com/sider/runners/pull/2053)
+
+Misc:
+
+- **remark-lint** Add file path to error message [#2067](https://github.com/sider/runners/pull/2067)
+- **remark-lint** Add rule ID to error message [#2076](https://github.com/sider/runners/pull/2076)
+- **remark-lint** Bump remark-preset-lint-sider from 0.6.0 to 0.7.0 (**breaking**) [#2078](https://github.com/sider/runners/pull/2078)
+- **Checkstyle** Provide Sider's recommended ruleset [#1619](https://github.com/sider/runners/pull/1619)
+
+## 0.42.1
+
+[Full diff](https://github.com/sider/runners/compare/0.42.0...0.42.1)
+
+- **GolangCI-Lint** Fix too short timeout value [#2063](https://github.com/sider/runners/pull/2063)
+
+## 0.42.0
+
+[Full diff](https://github.com/sider/runners/compare/0.41.1...0.42.0)
+
+New features:
+
+- **Slim-Lint** New support [#2014](https://github.com/sider/runners/pull/2014) [#2046](https://github.com/sider/runners/pull/2046)
+
+Updated environments:
+
+- **devon_rex** 2.40.0 -> 2.40.3 [#2017](https://github.com/sider/runners/pull/2017) [#2040](https://github.com/sider/runners/pull/2040)
+- **Bundler** 2.2.7 -> 2.2.8 [#2017](https://github.com/sider/runners/pull/2017)
+
+Updated tools:
+
+- **hadolint** 1.21.0 -> 1.22.1 [#2038](https://github.com/sider/runners/pull/2038)
+
+Misc:
+
+- **HAML-Lint** Improve issue ID and links for RuboCop [#2009](https://github.com/sider/runners/pull/2009)
+- **HAML-Lint** Enable `parallel` option by default [#2012](https://github.com/sider/runners/pull/2012) [#2042](https://github.com/sider/runners/pull/2042)
+- **HAML-Lint** Set up recommended ruleset [#2048](https://github.com/sider/runners/pull/2048)
+- Verify gem installation in Dockerfiles [#2010](https://github.com/sider/runners/pull/2010)
+- **RuboCop** Set up default config only when no user config [#2020](https://github.com/sider/runners/pull/2020)
+- **Metrics Complexity** Run lizard as single thread to avoid timeout error [#2019](https://github.com/sider/runners/pull/2019)
+- **Metrics Code Clone** Force to set the option `--skip-lexical-errors` of PMD CPD to avoid Lexical error [#2050](https://github.com/sider/runners/pull/2050)
+- **Metrics File Info** Improve analysis performance with pre-computed git metadata cache [#2051](https://github.com/sider/runners/pull/2051)
+
+## 0.41.1
+
+[Full diff](https://github.com/sider/runners/compare/0.41.0...0.41.1)
+
+- Suppress verbose message of `git init` [#2006](https://github.com/sider/runners/pull/2006)
+
+## 0.41.0
+
+[Full diff](https://github.com/sider/runners/compare/0.40.7...0.41.0)
+
+Updated environments:
+
+- **devon_rex** 2.30.1 -> 2.40.0 [#1954](https://github.com/sider/runners/pull/1954) [#1982](https://github.com/sider/runners/pull/1982)
 - **Bundler** 2.2.3 -> 2.2.7 [#1960](https://github.com/sider/runners/pull/1960) [#1975](https://github.com/sider/runners/pull/1975)
 
 Updated tools:
 
 - **Brakeman** 4.10.0 -> 5.0.0 [#1881](https://github.com/sider/runners/pull/1881) [#1976](https://github.com/sider/runners/pull/1976)
-- **Checkstyle** 8.38 -> 8.39 [#1891](https://github.com/sider/runners/pull/1891)
+- **Checkstyle** 8.38 -> 8.40 [#1891](https://github.com/sider/runners/pull/1891) [#1994](https://github.com/sider/runners/pull/1994)
 - **detekt** 1.14.2 -> 1.15.0 [#1815](https://github.com/sider/runners/pull/1815)
-- **ESLint** 7.15.0 -> 7.18.0 [#1949](https://github.com/sider/runners/pull/1949)
+- **ESLint** 7.15.0 -> 7.19.0 [#1949](https://github.com/sider/runners/pull/1949) [#1993](https://github.com/sider/runners/pull/1993)
+- **FxCop** 3.3.1 -> 3.3.2 [#1997](https://github.com/sider/runners/pull/1997)
 - **GolangCI-Lint** 1.33.0 -> 1.36.0 [#1946](https://github.com/sider/runners/pull/1946) [#1977](https://github.com/sider/runners/pull/1977)
-- **hadolint** 1.19.0 -> 1.20.0 [#1979](https://github.com/sider/runners/pull/1979)
+- **hadolint** 1.19.0 -> 1.21.0 [#1979](https://github.com/sider/runners/pull/1979) [#1992](https://github.com/sider/runners/pull/1992)
 - **HAML-Lint** 0.36.0 -> 0.37.0 [#1920](https://github.com/sider/runners/pull/1920)
 - **LanguageTool** 5.1 -> 5.2 [#1885](https://github.com/sider/runners/pull/1885)
+- **PMD CPD** 6.30.0 -> 6.31.0 [#1996](https://github.com/sider/runners/pull/1996)
+- **PMD Java** 6.30.0 -> 6.31.0 [#1995](https://github.com/sider/runners/pull/1995)
 - **Querly** 1.1.0 -> 1.2.0 [#1807](https://github.com/sider/runners/pull/1807)
 - **Reek** 6.0.2 -> 6.0.3 [#1948](https://github.com/sider/runners/pull/1948)
-- **RuboCop** 1.6.1 -> 1.8.1 [#1947](https://github.com/sider/runners/pull/1947)
+- **RuboCop** 1.6.1 -> 1.9.1 [#1947](https://github.com/sider/runners/pull/1947) [#2003](https://github.com/sider/runners/pull/2003)
 - **stylelint** 13.8.0 -> 13.9.0 [#1966](https://github.com/sider/runners/pull/1966)
 - **SwiftLint** 0.41.0 -> 0.42.0 [#1750](https://github.com/sider/runners/pull/1750)
 
@@ -34,6 +104,8 @@ Misc:
 - Add **Metrics Code Clone** runner [#1878](https://github.com/sider/runners/pull/1878)
 - Add **Metrics Complexity** runner [#1631](https://github.com/sider/runners/pull/1631)
 - Add **Metrics File Info** runner [#1937](https://github.com/sider/runners/pull/1937)
+- Add `website` to analyzers [#1986](https://github.com/sider/runners/pull/1986)
+- Add `beta` to analyzers [#1988](https://github.com/sider/runners/pull/1988)
 
 ## 0.40.7
 

@@ -177,7 +177,7 @@ module Runners
       def prepare_new_git_repository(workdir:, smoke_target:, out:)
         # Create a bare repository
         bare_dir = workdir.join("bare").to_path
-        sh! "git", "init", "--bare", bare_dir, out: out
+        sh! "git", "init", "--initial-branch=main", "--bare", bare_dir, out: out
 
         # Push a smoke test project to the bare directory
         smoke_dir = workdir.join("smoke").to_path
@@ -191,7 +191,7 @@ module Runners
 
           FileUtils.copy_entry "#{smoke_target}/.", smoke_dir
           sh! "git", "add", ".", out: out
-          sh! "git", "commit", "-m", "add all test files", out: out
+          sh! "git", "commit", "--quiet", "-m", "add all test files", out: out
 
           sh! "git", "push", out: out
           head_commit, _ = sh! "git", "rev-parse", "HEAD", out: out

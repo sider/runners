@@ -9,6 +9,7 @@ module Runners
     Schema: SchemaClass
 
     DEFAULT_TARGET: String
+    DEFAULT_CONFIG_FILE: String
     OFFICIAL_RULE_NAMESPACE: String
 
     private

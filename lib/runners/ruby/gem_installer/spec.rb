@@ -29,8 +29,7 @@ module Runners
 
         def self.from_gems(gems_items)
           gems_items.map do |item|
-            # TODO: Ignored Steep error
-            gem = _ =
+            gem =
               case item
               when Hash
                 item

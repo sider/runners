@@ -1,5 +1,3 @@
-require "etc"
-
 module Runners
   class Processor::MetricsComplexity < Processor
     include Python
@@ -22,7 +20,6 @@ module Runners
 
     def analyze(changes)
       capture3!(analyzer_bin,
-        '--working_threads', Etc.nprocessors.to_s,
         '--xml',
         '--output_file', report_file,
         '.')

@@ -4,7 +4,7 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM koalaman/shellcheck:v0.7.1 as shellcheck
 
-FROM sider/devon_rex_base:master
+FROM sider/devon_rex_base:2.40.4
 
 USER root
 RUN apt-get update && \
@@ -22,14 +22,14 @@ ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} Gemfile Gemfile.lock runners.gemspec analyzers.yml ${RUNNERS_DIR}/
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} lib/runners/version.rb ${RUNNERS_DIR}/lib/runners/
 
-RUN cd ${RUNNERS_DIR} && \
+RUN cd "${RUNNERS_DIR}" && \
     bundle config set --global jobs 4 && \
     bundle config set --global retry 3 && \
     bundle config && \
     BUNDLE_WITHOUT=development bundle install && \
     bundle list && \
     echo 'Checking if the Bundler version is expected...' && \
-    lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler::LockfileParser.new(File.read "Gemfile.lock").bundler_version') && \
+    lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler.locked_gems.bundler_version') && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
 # Copy the main source code

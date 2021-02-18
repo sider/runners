@@ -1,8 +1,7 @@
-require_relative 'rubocop'
-
 module Runners
   class Processor::HamlLint < Processor
     include Ruby
+    include RuboCopUtils
 
     Schema = _ = StrongJSON.new do
       # @type self: SchemaClass
@@ -34,19 +33,13 @@ module Runners
 
     register_config_schema(name: :haml_lint, schema: Schema.runner_config)
 
-    OPTIONAL_GEMS = [
-      *Processor::RuboCop::OPTIONAL_GEMS,
-      # additional gems for HAML-Lint
-    ].freeze
-
     GEM_NAME = "haml_lint".freeze
     REQUIRED_GEM_NAMES = ["rubocop"].freeze
     CONSTRAINTS = {
       GEM_NAME => [">= 0.26.0", "< 1.0.0"]
     }.freeze
-
     DEFAULT_TARGET = ".".freeze
-    DEFAULT_RUBOCOP_CONFIG = (Pathname(Dir.home) / 'default_rubocop.yml').to_path.freeze
+    DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_recommended_haml_lint.yml").to_path.freeze
 
     def analyzer_bin
       "haml-lint"
@@ -56,13 +49,16 @@ module Runners
       add_warning_if_deprecated_options
       add_warning_for_deprecated_option :file, to: :target
 
+      setup_haml_lint_config
+
       default_gems = default_gem_specs(GEM_NAME, *REQUIRED_GEM_NAMES)
       if setup_default_rubocop_config
         # NOTE: See rubocop.rb about no versions.
         default_gems << GemInstaller::Spec.new(name: "meowcop", version: [])
       end
 
-      install_gems(default_gems, optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS) { yield }
+      optionals = official_rubocop_plugins + third_party_rubocop_plugins
+      install_gems(default_gems, optionals: optionals, constraints: CONSTRAINTS) { yield }
     rescue InstallGemsFailure => exn
       trace_writer.error exn.message
       return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
@@ -93,12 +89,14 @@ module Runners
 
     private
 
-    def setup_default_rubocop_config
-      config_file = ".rubocop.yml"
-      return if File.exist? config_file
+    def setup_haml_lint_config
+      return unless haml_lint_config.empty?
 
-      FileUtils.copy_file(DEFAULT_RUBOCOP_CONFIG, config_file)
-      config_file
+      path = current_dir / ".haml-lint.yml"
+      return if path.exist?
+
+      FileUtils.copy_file DEFAULT_CONFIG_FILE, path
+      trace_writer.message "Set up the default #{analyzer_name} configuration file."
     end
 
     def target
@@ -127,7 +125,18 @@ module Runners
     end
 
     def config_parallel
-      config_linter[:parallel] ? ["--parallel"] : []
+      minimum_version = "0.36.0"
+      if Gem::Version.create(analyzer_version) >= Gem::Version.create(minimum_version)
+        parallel = config_linter[:parallel]
+        if parallel == true || parallel.nil?
+          return ["--parallel"]
+        end
+      elsif config_linter[:parallel] == true
+        add_warning "The option `#{config_field_path(:parallel)}` is ignored with #{analyzer_name} #{analyzer_version}. Please update it to **#{minimum_version}+** or use our default version.",
+                    file: config.path_name
+      end
+
+      []
     end
 
     def parse_result(output)
@@ -135,15 +144,16 @@ module Runners
         path = file.fetch(:path)
         file.fetch(:offenses).map do |offense|
           id = offense[:linter_name]
-          message = offense[:message]
+          message = offense.fetch(:message)
           line = offense.dig(:location, :line)
+          cop_name = id == "RuboCop" ? extract_cop_name(message) : nil
 
           Issue.new(
             path: relative_path(path),
             location: line == 0 ? nil : Location.new(start_line: line),
-            id: id,
+            id: cop_name ? "RuboCop:#{cop_name}" : id,
             message: message,
-            links: build_links(id),
+            links: build_links(id, cop_name),
             object: {
               severity: offense[:severity],
             },
@@ -153,11 +163,16 @@ module Runners
       end
     end
 
-    def build_links(issue_id)
-      # NOTE: Syntax errors are produced by HAML itself, not HAML-Lint.
-      return [] if issue_id == "Syntax"
+    def extract_cop_name(message)
+      message.match(/\A(?<name>[\w\/]+): /)&.then { |m| m[:name] }
+    end
 
-      ["https://github.com/sds/haml-lint/blob/v#{analyzer_version}/lib/haml_lint/linter##{issue_id.downcase}"]
+    def build_links(issue_id, cop_name)
+      # NOTE: Syntax errors are produced by HAML itself, not HAML-Lint.
+      return [] if issue_id.nil? || issue_id == "Syntax"
+
+      links = ["#{analyzer_github}/blob/v#{analyzer_version}/lib/haml_lint/linter##{issue_id.downcase}"]
+      cop_name ? links + build_rubocop_links(cop_name) : links
     end
 
     # NOTE: HAML-Lint exits successfully even if RuboCop fails.

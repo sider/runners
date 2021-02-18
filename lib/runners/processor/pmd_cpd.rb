@@ -71,6 +71,8 @@ module Runners
 
     register_config_schema(name: :pmd_cpd, schema: Schema.runner_config)
 
+    attr_accessor :force_option_skip_lexical_errors
+
     def analyzer_version
       @analyzer_version ||= capture3!("show_pmd_version").yield_self { |stdout,| stdout.strip }
     end
@@ -191,7 +193,7 @@ module Runners
     end
 
     def option_skip_lexical_errors
-      config_linter[:'skip-lexical-errors'].then { |v| v ? ["--skip-lexical-errors"] : [] }
+      (force_option_skip_lexical_errors || config_linter[:'skip-lexical-errors']).then { |v| v ? ["--skip-lexical-errors"] : [] }
     end
 
     def option_ignore_annotations

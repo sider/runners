@@ -4,6 +4,8 @@ class OptionParser
   def initialize: { (OptionParser) -> void } -> void
   def on: (String, String, Array[untyped]) { (String) -> void } -> void
   def parse!: (Array[String]) -> void
+  def help: () -> String
+  def abort: (?String) -> void
 end
 
 class OptionParser::ParseError < RuntimeError

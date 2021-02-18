@@ -2,18 +2,18 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM sider/devon_rex_swift:master
+FROM sider/devon_rex_swift:2.40.4
 
 ARG SWIFTLINT_VERSION=0.42.0
 
 # Build SwiftLint
 RUN cd /tmp && \
-    curl -sSL --compressed https://github.com/realm/SwiftLint/archive/${SWIFTLINT_VERSION}.tar.gz | tar -xz && \
-    cd SwiftLint-${SWIFTLINT_VERSION} && \
-    make install BINARIES_FOLDER=${RUNNER_USER_HOME}/bin && \
+    curl -sSL --compressed "https://github.com/realm/SwiftLint/archive/${SWIFTLINT_VERSION}.tar.gz" | tar -xz && \
+    cd "SwiftLint-${SWIFTLINT_VERSION}" && \
+    make install "BINARIES_FOLDER=${RUNNER_USER_HOME}/bin" && \
     cd .. && \
-    rm -rf SwiftLint-${SWIFTLINT_VERSION} && \
-    swiftlint version
+    rm -rf "SwiftLint-${SWIFTLINT_VERSION}" && \
+    swiftlint version | grep "${SWIFTLINT_VERSION}"
 
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
@@ -22,14 +22,14 @@ ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} Gemfile Gemfile.lock runners.gemspec analyzers.yml ${RUNNERS_DIR}/
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} lib/runners/version.rb ${RUNNERS_DIR}/lib/runners/
 
-RUN cd ${RUNNERS_DIR} && \
+RUN cd "${RUNNERS_DIR}" && \
     bundle config set --global jobs 4 && \
     bundle config set --global retry 3 && \
     bundle config && \
     BUNDLE_WITHOUT=development bundle install && \
     bundle list && \
     echo 'Checking if the Bundler version is expected...' && \
-    lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler::LockfileParser.new(File.read "Gemfile.lock").bundler_version') && \
+    lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler.locked_gems.bundler_version') && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
 # Copy the main source code

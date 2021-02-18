@@ -8,7 +8,7 @@ module Bugsnag
     attr_accessor app_version: String
     attr_accessor release_stage: String
 
-    def add_on_error: (untyped) -> void
+    def add_on_error: (^(Report) -> void) -> void
   end
 
   class Report

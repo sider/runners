@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "6.30.0"
+default_version = "6.31.0"
 
 s.add_test(
   "success",
@@ -189,10 +189,14 @@ s.add_test(
 
 s.add_test(
   "option_encoding_error",
-  type: "error",
-  class: "Runners::Shell::ExecError",
-  backtrace: :_,
-  inspect: :_,
+  type: "success",
+  issues: [],
+  warnings: [
+    {
+      message: "Skipping ./hello.eucjp.cs. Reason: Lexical error in file ./hello.eucjp.cs at line 20, column 13.  Encountered: token recognition error at: '｣'",
+      file: nil
+    }
+  ],
   analyzer: { name: "Metrics Code Clone", version: default_version }
 )
 

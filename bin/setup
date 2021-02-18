@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo '> Installing dependencies...'
+bundle install
+bundle exec lefthook install
+
+echo
+echo '> Updating gem_rbs_collection...'
+git submodule init
+git submodule update
+
+echo
+echo '> Available Rake tasks:'
+bundle exec rake --tasks

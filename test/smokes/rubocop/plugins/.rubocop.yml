@@ -1,0 +1,9 @@
+require:
+  - rubocop-rubycw
+  - rubocop-thread_safety
+
+Lint:
+  Enabled: false
+
+Style:
+  Enabled: false

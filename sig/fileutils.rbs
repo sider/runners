@@ -1,8 +1,0 @@
-module FileUtils
-  def self.rm_rf: (String | Pathname | Array[String] | Array[Pathname] list,
-                   ?noop: bool,
-                   ?verbose: bool,
-                   ?secure: bool) -> void
-  def self.copy_entry: (String | Pathname, String | Pathname) -> void
-  def self.copy_file: (String | Pathname, String | Pathname) -> void
-end

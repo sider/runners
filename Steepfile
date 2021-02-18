@@ -1,6 +1,6 @@
 target :lib do
   signature "sig"
-  repo_path "vendor/rbs/gem_rbs/gems"
+  repo_path "vendor/rbs/gem_rbs_collection/gems"
 
   check "lib"
 
@@ -8,6 +8,7 @@ target :lib do
   library "set"
   library "tmpdir"
   library "forwardable"
+  library "time"
   library "uri"
   library "strong_json"
   library "retryable"
