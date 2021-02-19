@@ -249,10 +249,8 @@ s.add_test(
 s.add_test(
   "dot_python_version",
   type: "success",
-  warnings: [
-    { message: "Sider's recommended configuration file is about to be released mid Mar in 2021.\nAfter the release, Sider will automatically apply our recommended ruleset if you don't have the Flake8 configuration file in your repository.", file: nil }
-  ],
-  issues: [], analyzer: { name: "Flake8", version: default_version }
+  issues: [],
+  analyzer: { name: "Flake8", version: default_version }
 )
 
 s.add_test(
