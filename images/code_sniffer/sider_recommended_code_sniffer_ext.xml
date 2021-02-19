@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name="Sider Recommended Extension">
-    <description>Sider Recommended Extension</description>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="SiderRecExt">
+    <description>The Sider's recommended ruleset extension (SiderRecExt) is a set of useful rules except PSR12, and is intended to be used in combination with SiderRecPSR12.</description>
 
     <rule ref="Generic.Files.OneObjectStructurePerFile"/>
     <rule ref="Generic.Metrics.NestingLevel"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name="Sider Recommended">
-    <description>Sider Recommended</description>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="SiderRecPSR12">
+    <description>The Sider's recommended ruleset (SiderRecPSR12) provides a set of useful rules distilled from PSR12.</description>
 
     <rule ref="Generic.ControlStructures.InlineControlStructure"/>
     <rule ref="Generic.Files.ByteOrderMark"/>
