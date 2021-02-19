@@ -44,5 +44,3 @@ WORKDIR $RUNNER_USER_HOME
 
 COPY images/docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh", "runners", "--analyzer=code_sniffer"]
-
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/code_sniffer/sider_recommended_config.xml ${RUNNER_USER_HOME}/phpcs.xml

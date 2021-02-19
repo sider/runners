@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 [Full diff](https://github.com/sider/runners/compare/0.43.0...HEAD)
 
 - **Flake8** Provide Sider's recommended ruleset [#1980](https://github.com/sider/runners/pull/1980)
+- **Code sniffer** Provide Sider's recommended ruleset [#2082](https://github.com/sider/runners/pull/2082)
 
 ## 0.43.0
 
