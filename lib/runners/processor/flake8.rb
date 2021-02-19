@@ -32,7 +32,6 @@ module Runners
     def setup
       prepare_config
       prepare_plugins
-      warn_recommended_config_file_release(config_linter[:config], "mid Mar in 2021")
       yield
     end
 
