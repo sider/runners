@@ -52,5 +52,4 @@
     <rule ref="Squiz.WhiteSpace.ScopeClosingBrace"/>
     <rule ref="Squiz.WhiteSpace.ScopeKeywordSpacing"/>
     <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
-
 </ruleset>

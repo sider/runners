@@ -76,5 +76,4 @@
     <rule ref="Squiz.PHP.InnerFunctions"/>
     <rule ref="Squiz.Scope.MemberVarScope"/>
     <rule ref="Squiz.Scope.StaticThisUsage"/>
-
 </ruleset>
