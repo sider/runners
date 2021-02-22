@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 Updated tools:
 
 - **GolangCI-Lint** 1.36.0 -> 1.37.1 [#2086](https://github.com/sider/runners/pull/2086)
+- **stylelint** 13.10.0 -> 13.11.0 [#2088](https://github.com/sider/runners/pull/2088)
 
 Misc:
 
