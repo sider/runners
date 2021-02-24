@@ -1,7 +1,6 @@
 module Runners
   class Processor::MetricsFileInfo < Processor
     class SchemaClass < StrongJSON
-      def runner_config: () -> StrongJSON::Type::Object[untyped]
       def issue: () -> StrongJSON::Type::Object[untyped]
     end
     Schema: SchemaClass

@@ -3,7 +3,6 @@ module Runners
     Schema = _ = StrongJSON.new do
       # @type self: SchemaClass
 
-      let :runner_config, Schema::BaseConfig.base
       let :issue, object(
         lines_of_code: integer?,
         last_committed_at: string

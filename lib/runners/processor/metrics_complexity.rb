@@ -5,14 +5,10 @@ module Runners
     Schema = _ = StrongJSON.new do
       # @type self: SchemaClass
 
-      let :runner_config, Schema::BaseConfig.base
-
       let :issue, object(
         CCN: integer,
-        )
+      )
     end
-
-    register_config_schema(name: :metrics_complexity, schema: Schema.runner_config)
 
     def analyzer_bin
       "lizard"
