@@ -23,6 +23,14 @@ module Runners
 
     DEFAULT_RULE_FILE = "phinder.yml".freeze
 
+    def self.config_example
+      <<~'YAML'
+        root_dir: project/
+        rule: rules/
+        php: src/
+      YAML
+    end
+
     private def test_phinder_config
       args = []
       args.push("--config", config_linter[:rule]) if config_linter[:rule]

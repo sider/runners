@@ -19,7 +19,7 @@ module Runners
     @analyzer: Analyzer?
 
     def initialize: (guid: String,
-                     processor_class: Class,
+                     processor_class: singleton(Processor),
                      options: Options,
                      working_dir: Pathname,
                      trace_writer: TraceWriter) -> void

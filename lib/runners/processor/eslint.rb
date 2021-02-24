@@ -49,8 +49,8 @@ module Runners
     DEFAULT_TARGET = ".".freeze
 
     def self.config_example
-      <<~YAML
-        root_dir: frontend/
+      <<~'YAML'
+        root_dir: project/
         npm_install: false
         target:
           - src/

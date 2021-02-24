@@ -41,6 +41,21 @@ module Runners
     DEFAULT_TARGET = ".".freeze
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_recommended_haml_lint.yml").to_path.freeze
 
+    def self.config_example
+      <<~'YAML'
+        root_dir: project/
+        target:
+          - "images/**/Dockerfile"
+        ignore:
+          - DL3003
+          - SC1010
+        trusted-registry:
+          - docker.io
+          - my-company.com:5000
+        config: config/hadolint.yaml
+      YAML
+    end
+
     def analyzer_bin
       "haml-lint"
     end

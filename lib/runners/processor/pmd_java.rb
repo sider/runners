@@ -25,6 +25,14 @@ module Runners
     DEFAULT_RULESET = (Pathname(Dir.home) / "default-ruleset.xml").to_path.freeze
     DEFAULT_DIR = ".".freeze
 
+    def self.config_example
+      <<~'YAML'
+        root_dir: project/
+        jvm_deps:
+          - [my.company.com, pmd-ruleset, 1.2.3]
+      YAML
+    end
+
     def analyzer_version
       @analyzer_version ||= capture3!("show_pmd_version").yield_self { |stdout,| stdout.strip }
     end

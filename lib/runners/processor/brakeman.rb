@@ -20,8 +20,8 @@ module Runners
     }.freeze
 
     def self.config_example
-      <<~YAML
-        root_dir: webapp/
+      <<~'YAML'
+        root_dir: project/
         gems:
           - name: brakeman
             version: 4.3.0

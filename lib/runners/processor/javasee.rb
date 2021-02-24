@@ -23,6 +23,16 @@ module Runners
 
     DEFAULT_CONFIG_FILE = "javasee.yml".freeze
 
+    def self.config_example
+      <<~'YAML'
+        root_dir: project/
+        dir:
+          - src/
+          - test/
+        config: config/javasee.yml
+      YAML
+    end
+
     def extract_version_option
       "version"
     end

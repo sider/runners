@@ -39,8 +39,8 @@ module Runners
     OPTIONS_PSR2 = DefaultOptions.new(standard: "PSR2", extensions: "php", dir: "./").freeze
 
     def self.config_example
-      <<~YAML
-        root_dir: web/
+      <<~'YAML'
+        root_dir: project/
         dir: app/
         standard: CakePHP
         extensions: [php, inc]

@@ -29,6 +29,16 @@ module Runners
     DEFAULT_TARGET = ".".freeze
     DEFAULT_CONFIG_FILE = "goodcheck.yml".freeze
 
+    def self.config_example
+      <<~'YAML'
+        root_dir: project/
+        config: config/goodcheck.yml
+        target:
+          - src/
+          - test/
+      YAML
+    end
+
     def extract_version_option
       "version"
     end

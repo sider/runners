@@ -24,8 +24,8 @@ module Runners
     }.freeze
 
     def self.config_example
-      <<~YAML
-        root_dir: app/
+      <<~'YAML'
+        root_dir: project/
         npm_install: false
         file: config/coffeelint.json
       YAML

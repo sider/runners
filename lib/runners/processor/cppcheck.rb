@@ -37,7 +37,7 @@ module Runners
     DEFAULT_IGNORE = [].freeze
 
     def self.config_example
-      <<~YAML
+      <<~'YAML'
         root_dir: project/
         include-path:
           - include/

@@ -40,6 +40,28 @@ module Runners
     DEFAULT_DISABLECATEGORIES = [].freeze
     DEFAULT_ENABLECATEGORIES = [].freeze
 
+    def self.config_example
+      <<~'YAML'
+        root_dir: project/
+        target: docs/
+        ext: [.md, .html]
+        exclude:
+          - "**/test/*"
+        language: en-GB
+        encoding: ISO-8859-1
+        disable:
+          - EN_QUOTES
+          - UPPERCASE_SENTENCE_START
+        enable:
+          - EN_A_VS_AN
+        enabledonly: true
+        disablecategories:
+          - CASING
+        enablecategories:
+          - MISC
+      YAML
+    end
+
     def analyze(changes)
       delete_files_except_targets
       delete_unchanged_files(changes)

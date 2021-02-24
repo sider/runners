@@ -14,6 +14,10 @@ module Runners
 
     register_config_schema(name: :metrics_complexity, schema: Schema.runner_config)
 
+    def self.config_example
+      ""
+    end
+
     def analyzer_bin
       "lizard"
     end

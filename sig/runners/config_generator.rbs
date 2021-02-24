@@ -1,6 +1,6 @@
 module Runners
   class ConfigGenerator
-    def generate: (?tools: Array[Symbol]) -> String
+    def generate: (?tools: Array[Symbol | String]) -> String
 
     private
 

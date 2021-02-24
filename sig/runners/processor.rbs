@@ -14,7 +14,7 @@ module Runners
 
     def self.register_config_schema: (name: Symbol, schema: StrongJSON::_Schema[untyped]) -> void
 
-    def self.children: () -> Hash[Symbol, Class]
+    def self.children: () -> Hash[Symbol, singleton(Processor)]
 
     def self.analyzer_id: () -> Symbol
 

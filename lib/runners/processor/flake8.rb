@@ -29,8 +29,8 @@ module Runners
     IGNORED_CONFIG_PATH = (Pathname(Dir.home) / '.config/ignored-config.ini').to_path.freeze
 
     def self.config_example
-      <<~YAML
-        root_dir: app/
+      <<~'YAML'
+        root_dir: project/
         target: src/
         config: config/.flake8
         plugins:

@@ -71,6 +71,25 @@ module Runners
 
     register_config_schema(name: :pmd_cpd, schema: Schema.runner_config)
 
+    def self.config_example
+      <<~'YAML'
+        root_dir: project/
+        minimum-tokens: 70
+        files: src/
+        language: [ecmascript, ruby]
+        encoding: ISO-8859-1
+        skip-duplicate-files: true
+        non-recursive: true
+        skip-lexical-errors: true
+        ignore-annotations: true
+        ignore-identifiers: true
+        ignore-literals: true
+        ignore-usings: true
+        no-skip-blocks: true
+        skip-blocks-pattern: "#ifdef TEST|#endif"
+      YAML
+    end
+
     attr_accessor :force_option_skip_lexical_errors
 
     def analyzer_version

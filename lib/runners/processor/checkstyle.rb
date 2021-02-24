@@ -28,8 +28,8 @@ module Runners
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_recommended_checkstyle.xml").to_path.freeze
 
     def self.config_example
-      <<~YAML
-        root_dir: server/
+      <<~'YAML'
+        root_dir: project/
         jvm_deps:
           - [com.github.sevntu-checkstyle, sevntu-checks, 1.37.1]
         config: custom-checkstyle.xml

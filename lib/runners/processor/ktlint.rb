@@ -18,6 +18,24 @@ module Runners
 
     register_config_schema(name: :ktlint, schema: Schema.runner_config)
 
+    def self.config_example
+      <<~'YAML'
+        root_dir: project/
+        jvm_deps:
+          - [my.company.com, ktlint-rules, 1.0.0]
+        target:
+          - "src/**/*.kt"
+          - "!src/**/*Test.kt"
+          - "test/"
+        ruleset:
+          - rules/my-ktlint-rules.jar
+        disabled_rules:
+          - no-wildcard-imports
+          - indent
+        experimental: true
+      YAML
+    end
+
     def setup
       begin
         install_jvm_deps

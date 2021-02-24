@@ -15,7 +15,7 @@ module Runners
     register_config_schema(name: :clang_tidy, schema: Schema.runner_config)
 
     def self.config_example
-      <<~YAML
+      <<~'YAML'
         root_dir: project/
         apt:
           - libgdbm-dev

@@ -28,6 +28,16 @@ module Runners
 
     DEFAULT_TARGET = ".".freeze
 
+    def self.config_example
+      <<~'YAML'
+        root_dir: project/
+        target: [src/, test/]
+        exclude: ["**/*.min.*"]
+        locale: UK
+        ignore: [center, behavior]
+      YAML
+    end
+
     def extract_version_option
       "-v"
     end

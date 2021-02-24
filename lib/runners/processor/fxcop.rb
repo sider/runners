@@ -15,8 +15,8 @@ module Runners
     register_config_schema(name: :fxcop, schema: Schema.runner_config)
 
     def self.config_example
-      <<~YAML
-        root_dir: src/
+      <<~'YAML'
+        root_dir: projectx/
       YAML
     end
 

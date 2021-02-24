@@ -22,6 +22,16 @@ module Runners
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / 'sider_jshintrc').to_path.freeze
     DEFAULT_IGNORE_FILE = (Pathname(Dir.home) / 'sider_jshintignore').to_path.freeze
 
+    def self.config_example
+      <<~'YAML'
+        root_dir: project/
+        dir:
+          - src/
+          - test/
+        config: config/.jshintrc.json
+      YAML
+    end
+
     def setup
       add_warning_if_deprecated_options
       yield

@@ -54,8 +54,8 @@ module Runners
 
     def self.config_example
       <<~'YAML'
-        root_dir: app/
-        target: src/...
+        root_dir: project/
+        target: "src/..."
         config: config/.golangci.yml
         disable:
           - govet

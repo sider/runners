@@ -22,6 +22,21 @@ module Runners
     DEFAULT_TARGET = "**/Dockerfile{,.*}".freeze
     DEFAULT_TARGET_EXCLUDED = "*.{erb,txt}".freeze # Exclude templates
 
+    def self.config_example
+      <<~'YAML'
+        root_dir: project/
+        target:
+          - "images/**/Dockerfile"
+        ignore:
+          - DL3003
+          - SC1010
+        trusted-registry:
+          - docker.io
+          - my-company.com:5000
+        config: config/hadolint.yaml
+      YAML
+    end
+
     def analyze(_changes)
       if analysis_target.empty?
         trace_writer.message "Dockerfile not found."

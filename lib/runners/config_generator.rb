@@ -1,7 +1,7 @@
 module Runners
   class ConfigGenerator
     def generate(tools: [])
-      content = load_template(tools)
+      content = load_template(tools.map(&:to_sym))
       validate(content)
     end
 
@@ -15,8 +15,7 @@ module Runners
         tools: tools.sort,
         analyzers: Analyzers.new,
         tool_examples: tools.each_with_object({}) do |tool, examples|
-          examples[tool] = (_ = Processor.children.fetch(tool)) # TODO: Ignored Steep error
-            .config_example.strip.lines(chomp: true)
+          examples[tool] = Processor.children.fetch(tool).config_example.strip.lines(chomp: true)
         end
       })
     end

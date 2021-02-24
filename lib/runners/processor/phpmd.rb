@@ -31,6 +31,21 @@ module Runners
     DEFAULT_TARGET = ".".freeze
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_config.xml").to_path.freeze
 
+    def self.config_example
+      <<~'YAML'
+        root_dir: project/
+        target: [src/, test/]
+        rule: [cleancode, codesize]
+        minimumpriority: 3
+        suffixes: [php, phtml]
+        exclude: [vendor/, "test/*.php"]
+        strict: true
+        custom_rule_path:
+          - Custom_PHPMD_Rule.php
+          - "custom/phpmd/rules/**/*.php"
+      YAML
+    end
+
     def setup
       add_warning_if_deprecated_options
       yield

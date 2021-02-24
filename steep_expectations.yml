@@ -49,10 +49,10 @@
   diagnostics:
   - range:
       start:
-        line: 170
+        line: 183
         character: 10
       end:
-        line: 170
+        line: 183
         character: 13
     severity: ERROR
     message: The branch is unreachable because the condition is exhaustive
@@ -92,10 +92,10 @@
   diagnostics:
   - range:
       start:
-        line: 122
+        line: 126
         character: 26
       end:
-        line: 122
+        line: 126
         character: 29
     severity: ERROR
     message: |-
@@ -107,10 +107,10 @@
     code: Ruby::ArgumentTypeMismatch
   - range:
       start:
-        line: 122
+        line: 126
         character: 31
       end:
-        line: 122
+        line: 126
         character: 40
     severity: ERROR
     message: |-
@@ -125,10 +125,10 @@
     code: Ruby::ArgumentTypeMismatch
   - range:
       start:
-        line: 307
+        line: 311
         character: 45
       end:
-        line: 307
+        line: 311
         character: 50
     severity: ERROR
     message: Type `(::String | ::Array[::String] | nil)` does not have method `split`
