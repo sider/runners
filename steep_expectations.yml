@@ -49,10 +49,10 @@
   diagnostics:
   - range:
       start:
-        line: 167
+        line: 170
         character: 10
       end:
-        line: 167
+        line: 170
         character: 13
     severity: ERROR
     message: The branch is unreachable because the condition is exhaustive

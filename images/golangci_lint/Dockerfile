@@ -2,9 +2,9 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM golangci/golangci-lint:v1.36.0 as golangci-lint
+FROM golangci/golangci-lint:v1.37.1 as golangci-lint
 
-FROM sider/devon_rex_go:2.40.3
+FROM sider/devon_rex_go:2.40.4
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=golangci-lint /usr/bin/golangci-lint ${RUNNER_USER_HOME}/bin/
 
@@ -22,7 +22,7 @@ RUN cd "${RUNNERS_DIR}" && \
     BUNDLE_WITHOUT=development bundle install && \
     bundle list && \
     echo 'Checking if the Bundler version is expected...' && \
-    lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler::LockfileParser.new(File.read "Gemfile.lock").bundler_version') && \
+    lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler.locked_gems.bundler_version') && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/golangci_lint/sider_golangci.yml ${RUNNER_USER_HOME}/

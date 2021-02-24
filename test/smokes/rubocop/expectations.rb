@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "1.9.1"
+default_version = "1.10.0"
 
 s.add_test(
   "sandbox_rails",
@@ -543,5 +543,5 @@ s.add_test(
       }
     }
   ],
-  analyzer: { name: "RuboCop", version: default_version }
+  analyzer: { name: "RuboCop", version: "1.9.0" }
 )

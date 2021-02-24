@@ -231,7 +231,12 @@ s.add_test(
   analyzer: :_
 )
 
-s.add_test("dot_python_version", type: "success", issues: [], analyzer: { name: "Flake8", version: default_version })
+s.add_test(
+  "dot_python_version",
+  type: "success",
+  issues: [],
+  analyzer: { name: "Flake8", version: default_version }
+)
 
 s.add_test(
   "dot_python_version_2",

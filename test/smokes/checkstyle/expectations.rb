@@ -257,3 +257,33 @@ s.add_test(
   inspect: /#<Runners::Shell::ExecError: type=capture3, args=\["gradle", "--no-build-cache",/,
   analyzer: :_
 )
+
+s.add_test(
+  "default_rules",
+  type: "success",
+  analyzer: { name: "Checkstyle", version: default_version },
+  issues: [
+    {
+      message: "The name of the outer type and the file do not match.",
+      links: %w[https://checkstyle.org/config_misc.html#OuterTypeFilename],
+      id: "OuterTypeFilenameCheck",
+      path: "src/Hello.java",
+      location: { start_line: 3, start_column: 1 },
+      object: { severity: "info" },
+      git_blame_info: {
+        commit: :_, line_hash: "b4aa7ff94732722c55d79ff3788d3d5f22b197b2", original_line: 3, final_line: 3
+      }
+    },
+    {
+      message: "Package name is not same as directory.",
+      links: %w[https://checkstyle.org/config_coding.html#PackageDeclaration],
+      id: "PackageDeclarationCheck",
+      path: "src/Hello.java",
+      location: { start_line: 1, start_column: 1 },
+      object: { severity: "info" },
+      git_blame_info: {
+        commit: :_, line_hash: "cbce17a507d2e4fd00c89efee19480c0104e0932", original_line: 1, final_line: 1
+      }
+    }
+  ]
+)

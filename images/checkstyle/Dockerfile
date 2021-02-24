@@ -2,7 +2,7 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM sider/devon_rex_java:2.40.3
+FROM sider/devon_rex_java:2.40.4
 
 # Install dependencies via Gradle
 ARG DEPS_DIR=${RUNNER_USER_HOME}/dependencies
@@ -17,6 +17,7 @@ RUN cd "${DEPS_DIR}" && \
     rm build.gradle
 
 COPY images/checkstyle/checkstyle /usr/local/bin/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/checkstyle/sider_recommended_checkstyle.xml ${RUNNER_USER_HOME}/
 
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
@@ -32,7 +33,7 @@ RUN cd "${RUNNERS_DIR}" && \
     BUNDLE_WITHOUT=development bundle install && \
     bundle list && \
     echo 'Checking if the Bundler version is expected...' && \
-    lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler::LockfileParser.new(File.read "Gemfile.lock").bundler_version') && \
+    lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler.locked_gems.bundler_version') && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
 # Copy the main source code

@@ -4,7 +4,7 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM hadolint/hadolint:v1.22.1-debian as hadolint
 
-FROM sider/devon_rex_base:2.40.3
+FROM sider/devon_rex_base:2.40.4
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=hadolint /bin/hadolint ${RUNNER_USER_HOME}/bin/
 
@@ -22,7 +22,7 @@ RUN cd "${RUNNERS_DIR}" && \
     BUNDLE_WITHOUT=development bundle install && \
     bundle list && \
     echo 'Checking if the Bundler version is expected...' && \
-    lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler::LockfileParser.new(File.read "Gemfile.lock").bundler_version') && \
+    lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler.locked_gems.bundler_version') && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
 # Copy the main source code
