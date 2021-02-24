@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/HEAD/phpcs.xsd" name="SiderPSR12">
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/HEAD/phpcs.xsd"
+    name="SiderPSR12">
     <description>The Sider's recommended ruleset provides a set of useful rules distilled from PSR12.</description>
 
     <rule ref="Generic.ControlStructures.InlineControlStructure"/>
