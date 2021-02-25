@@ -14,6 +14,7 @@ Updated tools:
 Misc:
 
 - **Flake8** Provide Sider's recommended ruleset [#1980](https://github.com/sider/runners/pull/1980)
+- **PHP_CodeSniffer** Provide Sider's recommended ruleset [#2084](https://github.com/sider/runners/pull/2084)
 
 ## 0.43.0
 

@@ -19,6 +19,17 @@ s.add_test(
     },
     {
       id: "metrics_file-complexity",
+      path: "src/baz/fizzbuzz.py",
+      location: nil,
+      message: "The sum of complexity of total 2 function(s) is 7.",
+      object: {
+        CCN: 7
+      },
+      links: [],
+      git_blame_info: nil
+    },
+    {
+      id: "metrics_file-complexity",
       path: "src/baz/hello.php",
       location: nil,
       message: "The sum of complexity of total 1 function(s) is 1.",
@@ -64,6 +75,17 @@ s.add_test(
     {
       id: "metrics_file-complexity",
       path: "src/baz/qux/hello.rs",
+      location: nil,
+      message: "The sum of complexity of total 2 function(s) is 2.",
+      object: {
+        CCN: 2
+      },
+      links: [],
+      git_blame_info: nil
+    },
+    {
+      id: "metrics_file-complexity",
+      path: "src/baz/qux/今日は世界.go",
       location: nil,
       message: "The sum of complexity of total 2 function(s) is 2.",
       object: {
@@ -130,47 +152,6 @@ s.add_test(
     {
       id: "metrics_file-complexity",
       path: "src/foo/hello.js",
-      location: nil,
-      message: "The sum of complexity of total 1 function(s) is 1.",
-      object: {
-        CCN: 1
-      },
-      links: [],
-      git_blame_info: nil
-    }
-  ],
-  analyzer: { name: "Metrics Complexity", version: default_version }
-)
-
-s.add_test(
-  "root_dir",
-  type: "success",
-  issues: [
-    {
-      id: "metrics_file-complexity",
-      path: "src/baz/fizzbuzz.py",
-      location: nil,
-      message: "The sum of complexity of total 2 function(s) is 7.",
-      object: {
-        CCN: 7
-      },
-      links: [],
-      git_blame_info: nil
-    },
-    {
-      id: "metrics_file-complexity",
-      path: "src/baz/qux/今日は世界.go",
-      location: nil,
-      message: "The sum of complexity of total 2 function(s) is 2.",
-      object: {
-        CCN: 2
-      },
-      links: [],
-      git_blame_info: nil
-    },
-    {
-      id: "metrics_file-complexity",
-      path: "src/baz/こんにちは.py",
       location: nil,
       message: "The sum of complexity of total 1 function(s) is 1.",
       object: {
