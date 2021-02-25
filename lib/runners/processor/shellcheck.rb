@@ -52,6 +52,21 @@ module Runners
       "/env bats script",
     ).freeze
 
+    def self.config_example
+      <<~'YAML'
+        root_dir: project/
+        target:
+          - "**/*.{sh,bash}"
+          - shebang: true
+        include: [SC2104, SC2105]
+        exclude: [SC1000, SC1118]
+        enable: all
+        shell: bash
+        severity: error
+        norc: true
+      YAML
+    end
+
     def analyze(_changes)
       files = analyzed_files
 

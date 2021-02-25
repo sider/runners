@@ -9,10 +9,6 @@ module Runners
       )
     end
 
-    def self.config_example
-      ""
-    end
-
     def analyzer_version
       Runners::VERSION
     end

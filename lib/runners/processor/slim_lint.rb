@@ -29,6 +29,16 @@ module Runners
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_recommended_slim_lint.yml").to_path.freeze
     MISSING_ID = "missing-ID".freeze
 
+    def self.config_example
+      <<~'YAML'
+        root_dir: project/
+        gems:
+          - { name: rubocop, version: 1.0.0 }
+        target: [app/views/]
+        config: config/.slim-lint.yml
+      YAML
+    end
+
     def analyzer_bin
       "slim-lint"
     end

@@ -10,10 +10,6 @@ module Runners
       )
     end
 
-    def self.config_example
-      ""
-    end
-
     def_delegators :@pmd_cpd,
       :warnings,
       :config_linter,

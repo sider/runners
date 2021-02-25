@@ -32,6 +32,17 @@ module Runners
       GEM_NAME => [">= 0.61.0", "< 2.0.0"]
     }.freeze
 
+    def self.config_example
+      <<~'YAML'
+        root_dir: project/
+        gems:
+          - rubocop-rails
+          - { name: rubocop-rspec, version: 2.1.0 }
+        config: config/.rubocop.yml
+        safe: true
+      YAML
+    end
+
     def setup
       add_warning_if_deprecated_options
 
