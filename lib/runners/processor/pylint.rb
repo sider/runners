@@ -26,6 +26,20 @@ module Runners
 
     DEFAULT_TARGET = ["**/*.{py}"].freeze
 
+    def self.config_example
+      <<~'YAML'
+        root_dir: project/
+        target:
+          - "src/**/*.py"
+          - "test/**/*.py"
+        rcfile: config/.pylintrc
+        errors-only: true
+        ignore:
+          - src/ignored.py
+          - test/ignored.py
+      YAML
+    end
+
     def analyze(_changes)
       files = analyzed_files
 

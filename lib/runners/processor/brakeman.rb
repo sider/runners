@@ -23,8 +23,7 @@ module Runners
       <<~'YAML'
         root_dir: project/
         gems:
-          - name: brakeman
-            version: 4.3.0
+          - { name: "brakeman", version: "< 6" }
       YAML
     end
 

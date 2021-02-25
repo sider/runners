@@ -30,6 +30,12 @@ module Runners
         root_dir: project/
         jvm_deps:
           - [my.company.com, pmd-ruleset, 1.2.3]
+        dir: src/
+        rulesets:
+          - category/java/errorprone.xml
+          - your_pmd_custom_rules.xml
+        encoding: ISO-8859-1
+        min_priority: 3
       YAML
     end
 

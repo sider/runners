@@ -45,6 +45,21 @@ module Runners
       GEM_NAME => [">= 1.19.1", "< 2.0"]
     }.freeze
 
+    def self.config_example
+      <<~'YAML'
+        root_dir: project/
+        gems:
+          - { name: "rails_best_practices", version: "< 2" }
+        vendor: false
+        spec: true
+        test: true
+        features: true
+        exclude: "app/models/excluded.rb,test/models/excluded_test.rb"
+        only: "app/models/only1.rb,app/models/only2.rb"
+        config: .rails_best_practices.yml
+      YAML
+    end
+
     def setup
       add_warning_if_deprecated_options
 

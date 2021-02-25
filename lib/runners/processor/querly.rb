@@ -34,6 +34,15 @@ module Runners
     CONFIG_FILE = "querly.yml".freeze
     CONFIG_FILES_GLOB = "querly.{yml,yaml}".freeze
 
+    def self.config_example
+      <<~'YAML'
+        root_dir: project/
+        gems:
+          - { name: "querly", version: "< 2" }
+        config: config/querly.yml
+      YAML
+    end
+
     def extract_version_option
       "version"
     end

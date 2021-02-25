@@ -22,6 +22,16 @@ module Runners
 
     DEFAULT_TARGET = ".".freeze
 
+    def self.config_example
+      <<~'YAML'
+        root_dir: project/
+        gems:
+          - { name: "reek", version: "< 6" }
+        target: [lib/, test/]
+        config: config/reek.yml
+      YAML
+    end
+
     def setup
       install_gems(default_gem_specs(GEM_NAME), constraints: CONSTRAINTS) { yield }
     rescue InstallGemsFailure => exn

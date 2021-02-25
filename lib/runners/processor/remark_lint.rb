@@ -29,6 +29,20 @@ module Runners
     DEFAULT_TARGET = ".".freeze
     DEFAULT_PRESET = "remark-preset-lint-sider".freeze
 
+    def self.config_example
+      <<~'YAML'
+        root_dir: project/
+        npm_install: false
+        target: [docs/]
+        ext: "md,markdown"
+        rc-path: config/.remarkrc
+        ignore-path: config/.remarkignore
+        use:
+          - remark-lint-file-extension
+          - remark-lint-no-heading-punctuation
+      YAML
+    end
+
     def analyzer_bin
       "remark"
     end
