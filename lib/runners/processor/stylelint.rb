@@ -44,6 +44,20 @@ module Runners
     DEFAULT_CONFIG_FILE_OLD = (Pathname(Dir.home) / 'sider_recommended_config.old.yaml').to_path.freeze
     DEFAULT_IGNORE_FILE = (Pathname(Dir.home) / 'sider_recommended_stylelintignore').to_path.freeze
 
+    def self.config_example
+      <<~'YAML'
+        root_dir: project/
+        npm_install: false
+        config: config/.stylelintrc.yml
+        syntax: scss
+        ignore-path: config/.stylelintignore
+        ignore-disables: true
+        report-needless-disables: true
+        quiet: true
+        glob: app/**/*.scss
+      YAML
+    end
+
     def setup
       add_warning_if_deprecated_options
 

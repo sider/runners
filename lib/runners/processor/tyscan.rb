@@ -27,6 +27,16 @@ module Runners
 
     DEFAULT_CONFIG_FILE = "tyscan.yml".freeze
 
+    def self.config_example
+      <<~'YAML'
+        root_dir: project/
+        npm_install: false
+        config: config/tyscan.yml
+        tsconfig: src/tsconfig.json
+        paths: [src/]
+      YAML
+    end
+
     def setup
       if !config_linter[:config] && !File.exist?(DEFAULT_CONFIG_FILE)
         return missing_config_file_result(DEFAULT_CONFIG_FILE)

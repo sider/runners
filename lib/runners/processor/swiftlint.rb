@@ -28,6 +28,17 @@ module Runners
 
     register_config_schema(name: :swiftlint, schema: Schema.runner_config)
 
+    def self.config_example
+      <<~'YAML'
+        root_dir: project/
+        ignore_warnings: true
+        path: src/
+        config: config/.swiftlint.yml
+        lenient: true
+        enable-all-rules: true
+      YAML
+    end
+
     def extract_version_option
       "version"
     end
