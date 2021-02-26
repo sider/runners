@@ -410,16 +410,3 @@ s.add_test(
   ],
   analyzer: { name: "GolangCI-Lint", version: default_version }
 )
-
-s.add_test(
-  "deprecated_tools",
-  type: "success",
-  issues: [],
-  analyzer: { name: "GolangCI-Lint", version: default_version },
-  warnings: [{ message: <<~MSG.strip, file: "sider.yml" }]
-    The following linters in your `sider.yml` are no longer supported. Please remove them.
-    - `linter.golint`
-    - `linter.go_vet`
-    - `linter.gometalinter`
-  MSG
-)

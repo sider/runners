@@ -35,7 +35,6 @@ class ConfigTest < Minitest::Test
     YAML
     assert_equal(
       { linter: {
-        golint: nil, go_vet: nil, gometalinter: nil,
         brakeman: nil,
         checkstyle: nil,
         clang_tidy: nil,
@@ -227,34 +226,17 @@ class ConfigTest < Minitest::Test
     refute Runners::Config.new(path: file, raw_content: "").linter?("foo")
   end
 
-  def test_removed_go_tools_do_not_break
-    yaml = <<~YAML
-      linter:
-        golint:
-          root_dir: src/
-        go_vet:
-          root_dir: lib/
-        gometalinter:
-          root_dir: module/
-          import_path: foo
-    YAML
-    config = Runners::Config.new(path: Pathname(FILE_NAME), raw_content: yaml)
-    assert_equal({ root_dir: "src/" }, config.linter("golint"))
-    assert_equal({ root_dir: "lib/" }, config.linter("go_vet"))
-    assert_equal({ root_dir: "module/", import_path: "foo" }, config.linter("gometalinter"))
-  end
-
   def test_check_unsupported_linters
     yaml = <<~YAML
       linter:
-        golint: {}
-        go_vet: {}
+        foo: {}
+        baz: {}
     YAML
     config = Runners::Config.new(path: Pathname(FILE_NAME), raw_content: yaml)
-    assert_equal <<~MSG, config.check_unsupported_linters(%w[golint go_vet gometalinter])
+    assert_equal <<~MSG, config.check_unsupported_linters(%w[foo bar baz])
       The following linters in your `sider.yml` are no longer supported. Please remove them.
-      - `linter.golint`
-      - `linter.go_vet`
+      - `linter.foo`
+      - `linter.baz`
     MSG
   end
 

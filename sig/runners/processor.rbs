@@ -7,11 +7,6 @@ module Runners
     class CIConfigBroken < UserError
     end
 
-    class RemovedGoToolSchemaClass < StrongJSON
-      def config: () -> StrongJSON::_Schema[untyped]
-    end
-    RemovedGoToolSchema: RemovedGoToolSchemaClass
-
     def self.register_config_schema: (name: Symbol, schema: StrongJSON::_Schema[untyped]) -> void
 
     def self.children: () -> Hash[Symbol, singleton(Processor)]

@@ -95,7 +95,8 @@ module Runners
     end
 
     def check_unsupported_linters(linter_ids)
-      ids = linter_ids.filter { |id| linter?(id) }
+      parsed_content = parse # must not do schema-check
+      ids = linter_ids.map(&:to_sym).filter { |id| parsed_content&.dig(:linter, id) }
 
       if ids.empty?
         ""

@@ -92,10 +92,10 @@
   diagnostics:
   - range:
       start:
-        line: 122
+        line: 113
         character: 26
       end:
-        line: 122
+        line: 113
         character: 29
     severity: ERROR
     message: |-
@@ -107,10 +107,10 @@
     code: Ruby::ArgumentTypeMismatch
   - range:
       start:
-        line: 122
+        line: 113
         character: 31
       end:
-        line: 122
+        line: 113
         character: 40
     severity: ERROR
     message: |-
@@ -125,10 +125,10 @@
     code: Ruby::ArgumentTypeMismatch
   - range:
       start:
-        line: 307
+        line: 298
         character: 45
       end:
-        line: 307
+        line: 298
         character: 50
     severity: ERROR
     message: Type `(::String | ::Array[::String] | nil)` does not have method `split`
