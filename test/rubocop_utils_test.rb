@@ -6,10 +6,10 @@ class RuboCopUtilsTest < Minitest::Test
   def test_build_rubocop_links
     with_workspace do |workspace|
       processor = new_processor(workspace)
-      assert_links = ->(expected, actual) {
+      assert_links = ->(expected, actual, additional_statuses: []) {
         assert_equal expected, processor.build_rubocop_links(actual)
         expected.each do |url|
-          assert_includes ["200", "202"], Net::HTTP.get_response(URI(url)).code, url
+          assert_includes ["200", "202", *additional_statuses.map(&:to_s)], Net::HTTP.get_response(URI(url)).code, url
         end
       }
 
@@ -72,11 +72,11 @@ class RuboCopUtilsTest < Minitest::Test
       assert_links.call %w[
         https://www.rubydoc.info/gems/rubocop-rake/RuboCop/Cop/Rake/Desc
         https://github.com/rubocop-hq/rubocop-rake
-      ], "Rake/Desc"
+      ], "Rake/Desc", additional_statuses: [301] # TODO: Remove `additional_statuses`
       assert_links.call %w[
         https://www.rubydoc.info/gems/rubocop-rubycw/RuboCop/Cop/Rubycw/Rubycw
         https://github.com/rubocop-hq/rubocop-rubycw
-      ], "Rubycw/Rubycw"
+      ], "Rubycw/Rubycw", additional_statuses: [301] # TODO: Remove `additional_statuses`
       assert_links.call %w[
         https://www.rubydoc.info/gems/rubocop-sequel/RuboCop/Cop/Sequel/ColumnDefault
         https://github.com/rubocop-hq/rubocop-sequel

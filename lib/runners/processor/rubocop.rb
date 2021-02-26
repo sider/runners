@@ -58,7 +58,7 @@ module Runners
 
         # NOTE: `--parallel` requires a cache.
         #
-        # @see https://github.com/rubocop-hq/rubocop/blob/v1.3.1/lib/rubocop/options.rb#L353-L355
+        # @see https://github.com/rubocop/rubocop/blob/v1.3.1/lib/rubocop/options.rb#L353-L355
         "--parallel",
         "--cache=true",
         *cache_root,
@@ -158,13 +158,13 @@ module Runners
 
     def check_rubocop_yml_warning(stderr)
       patterns = [
-        # @see https://github.com/rubocop-hq/rubocop/blob/v0.89.1/lib/rubocop/cop/registry.rb#L263
+        # @see https://github.com/rubocop/rubocop/blob/v0.89.1/lib/rubocop/cop/registry.rb#L263
         /(?<file>.+): .+ has the wrong namespace/,
 
-        # @see https://github.com/rubocop-hq/rubocop/blob/v0.71.0/lib/rubocop/runner.rb#L30
+        # @see https://github.com/rubocop/rubocop/blob/v0.71.0/lib/rubocop/runner.rb#L30
         /Rails cops will be removed from RuboCop 0.72/,
 
-        # @see https://github.com/rubocop-hq/rubocop/blob/v0.89.1/lib/rubocop/cop/team.rb#L244
+        # @see https://github.com/rubocop/rubocop/blob/v0.89.1/lib/rubocop/cop/team.rb#L244
         /An error occurred while .+ inspecting (?<file>.+):.+:/,
       ]
 
@@ -193,13 +193,13 @@ module Runners
       original_message.delete_suffix("(" + links.join(", ") + ")").strip
     end
 
-    # @see https://github.com/rubocop-hq/rubocop/blob/v0.72.0/CHANGELOG.md
+    # @see https://github.com/rubocop/rubocop/blob/v0.72.0/CHANGELOG.md
     def rails_cops_removed?
       Gem::Version.create(analyzer_version) >= Gem::Version.create("0.72.0")
     end
 
     def cache_root
-      # @see https://github.com/rubocop-hq/rubocop/blob/v0.91.0/CHANGELOG.md
+      # @see https://github.com/rubocop/rubocop/blob/v0.91.0/CHANGELOG.md
       if Gem::Version.create(analyzer_version) >= Gem::Version.create("0.91.0")
         ["--cache-root=#{File.join(Dir.tmpdir, 'rubocop-cache')}"]
       else
