@@ -73,10 +73,9 @@ module Runners
     end
 
     def self.children
-      @children ||= ObjectSpace.each_object(Class)
+      ObjectSpace.each_object(Class)
         .filter { |cls| cls.name && cls < self }
         .to_h { |cls| [cls.analyzer_id, cls] }
-        .freeze
     end
 
     def self.analyzer_id
