@@ -15,6 +15,7 @@ Misc:
 
 - **Flake8** Provide Sider's recommended ruleset [#1980](https://github.com/sider/runners/pull/1980)
 - **PHP_CodeSniffer** Provide Sider's recommended ruleset [#2084](https://github.com/sider/runners/pull/2084)
+- Remove *removed* Go tools from `sider.yml` [#2099](https://github.com/sider/runners/pull/2099)
 
 ## 0.43.0
 

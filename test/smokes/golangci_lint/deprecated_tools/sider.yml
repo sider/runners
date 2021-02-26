@@ -1,4 +1,0 @@
-linter:
-  golint: {}
-  go_vet: {}
-  gometalinter: {}
