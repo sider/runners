@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.43.0...HEAD)
 
+Updated environments:
+
+- **devon_rex** 2.40.4 -> 2.40.5 [#2102](https://github.com/sider/runners/pull/2102)
+
 Updated tools:
 
 - **GolangCI-Lint** 1.36.0 -> 1.37.1 [#2086](https://github.com/sider/runners/pull/2086)
