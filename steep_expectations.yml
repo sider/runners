@@ -61,10 +61,10 @@
   diagnostics:
   - range:
       start:
-        line: 61
+        line: 71
         character: 51
       end:
-        line: 61
+        line: 71
         character: 55
     severity: ERROR
     message: Type `bot` does not have method `size`
@@ -73,10 +73,10 @@
   diagnostics:
   - range:
       start:
-        line: 101
+        line: 116
         character: 6
       end:
-        line: 101
+        line: 116
         character: 57
     severity: ERROR
     message: |-
