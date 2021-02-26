@@ -20,7 +20,7 @@ module Runners
 
     def with_working_dir: [X] () { (Pathname) -> X } -> X
 
-    def processor_class: () -> Class
+    def processor_class: () -> singleton(Processor)
 
     def io: () -> Runners::IO
 
