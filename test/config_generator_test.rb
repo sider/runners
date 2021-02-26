@@ -48,7 +48,7 @@ class ConfigGeneratorTest < Minitest::Test
     unless tools.empty?
       linters = config.content[:linter]
       tools.each { |tool| assert_instance_of Hash, linters[tool] }
-      # TODO: assert_equal linters.size, tools.size
+      assert_equal linters.keys.sort - %i[golint go_vet gometalinter scss_lint tslint], tools.sort
     end
   end
 end
