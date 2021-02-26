@@ -25,6 +25,20 @@ module Runners
     DEFAULT_TARGET = ".".freeze
     CONFIG_FILE_NAME = "CPPLINT.cfg".freeze
 
+    def self.config_example
+      <<~'YAML'
+        root_dir: project/
+        target: [src/, lib/]
+        extensions: c,cc
+        headers: hpp,hxx
+        filter: "-whitespace,+whitespace/braces"
+        linelength: 100
+        exclude:
+          - src/*.cpp
+          - lib/*.cpp
+      YAML
+    end
+
     def setup
       if config_linter[:filter]
         trace_writer.message "The `filter` option in `#{config.path_name}` is specified. The Sider's recommended ruleset is ignored."

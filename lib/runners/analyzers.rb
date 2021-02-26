@@ -48,6 +48,11 @@ module Runners
       !!analyzer(id).fetch(:beta, false)
     end
 
+    def metrics?(id)
+      analyzer(id) # check if exists
+      id.to_s.start_with?("metrics_")
+    end
+
     private
 
     def analyzer(id)

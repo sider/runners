@@ -26,7 +26,7 @@ module Runners
       <<~'YAML'
         root_dir: project/
         target:
-          - "images/**/Dockerfile"
+          - images/**/Dockerfile
         ignore:
           - DL3003
           - SC1010

@@ -30,6 +30,8 @@ module Runners
 
     def beta?: (analyzer_id) -> bool
 
+    def metrics?: (analyzer_id) -> bool
+
     private
 
     def analyzer: (analyzer_id) -> analyzer

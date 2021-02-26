@@ -19,7 +19,7 @@ module Runners
     register_config_schema(name: :gometalinter, schema: RemovedGoToolSchema.config)
 
     def self.config_example
-      raise NotImplementedError
+      raise NotImplementedError, name
     end
 
     attr_reader :guid, :working_dir, :config, :shell, :trace_writer, :warnings

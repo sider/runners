@@ -16,7 +16,7 @@ module Runners
 
     def self.config_example
       <<~'YAML'
-        root_dir: projectx/
+        root_dir: project/
       YAML
     end
 

@@ -24,6 +24,27 @@ module Runners
 
     register_config_schema(name: :detekt, schema: Schema.runner_config)
 
+    def self.config_example
+      <<~'YAML'
+        root_dir: project/
+        jvm_deps:
+          - [com.example, detekt-rules, 1.0.0]
+        baseline: config/detekt-baseline.xml
+        config:
+          - config/detekt-config.yml
+        config-resource:
+          - /detekt-config-on-classpath.yml
+        disable-default-rulesets: true
+        excludes:
+          - "**/vendor/**"
+        includes:
+          - "**/important/**"
+        input:
+          - src/
+          - test/
+      YAML
+    end
+
     def setup
       begin
         install_jvm_deps

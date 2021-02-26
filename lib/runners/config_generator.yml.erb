@@ -4,11 +4,12 @@
 # https://help.sider.review/getting-started/custom-configuration
 
 <%- unless tools.empty? -%>
-# Customize each tools. For example:
+# Customize each tools. If an analysis fails, try adjusting each option
+# referencing the following example.
 linter:
   <%- tools.each do |tool| -%>
 
-#   # <%= analyzers.name(tool) %> example <<%= analyzers.doc(tool) %>>:
+#   # <%= analyzers.name(tool) %> example. See <%= analyzers.doc(tool) %>
 #   <%= tool %>:
     <%- tool_examples.fetch(tool).each do |line| -%>
 #     <%= line %>

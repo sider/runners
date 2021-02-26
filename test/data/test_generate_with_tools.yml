@@ -3,19 +3,19 @@
 # For more information, see the documentation:
 # https://help.sider.review/getting-started/custom-configuration
 
-# Customize each tools. For example:
+# Customize each tools. If an analysis fails, try adjusting each option
+# referencing the following example.
 linter:
 
-#   # Brakeman example <https://help.sider.review/tools/ruby/brakeman>:
+#   # Brakeman example. See https://help.sider.review/tools/ruby/brakeman
 #   brakeman:
-#     root_dir: webapp/
+#     root_dir: project/
 #     gems:
-#       - name: brakeman
-#         version: 4.3.0
+#       - { name: "brakeman", version: "< 6" }
 
-#   # Checkstyle example <https://help.sider.review/tools/java/checkstyle>:
+#   # Checkstyle example. See https://help.sider.review/tools/java/checkstyle
 #   checkstyle:
-#     root_dir: server/
+#     root_dir: project/
 #     jvm_deps:
 #       - [com.github.sevntu-checkstyle, sevntu-checks, 1.37.1]
 #     config: custom-checkstyle.xml
@@ -24,7 +24,7 @@ linter:
 #     ignore: [warning, info]
 #     properties: custom-checkstyle.properties
 
-#   # Clang-Tidy example <https://help.sider.review/tools/cplusplus/clang-tidy>:
+#   # Clang-Tidy example. See https://help.sider.review/tools/cplusplus/clang-tidy
 #   clang_tidy:
 #     root_dir: project/
 #     apt:
@@ -35,9 +35,9 @@ linter:
 #       - foo/include
 #       - /usr/include/libfastjson
 
-#   # PHP_CodeSniffer example <https://help.sider.review/tools/php/code-sniffer>:
+#   # PHP_CodeSniffer example. See https://help.sider.review/tools/php/code-sniffer
 #   code_sniffer:
-#     root_dir: web/
+#     root_dir: project/
 #     dir: app/
 #     standard: CakePHP
 #     extensions: [php, inc]
@@ -45,13 +45,13 @@ linter:
 #     ignore:
 #       - app/vendor/
 
-#   # CoffeeLint example <https://help.sider.review/tools/javascript/coffeelint>:
+#   # CoffeeLint example. See https://help.sider.review/tools/javascript/coffeelint
 #   coffeelint:
-#     root_dir: app/
+#     root_dir: project/
 #     npm_install: false
 #     file: config/coffeelint.json
 
-#   # Cppcheck example <https://help.sider.review/tools/cplusplus/cppcheck>:
+#   # Cppcheck example. See https://help.sider.review/tools/cplusplus/cppcheck
 #   cppcheck:
 #     root_dir: project/
 #     include-path:
@@ -66,9 +66,40 @@ linter:
 #     bug-hunting: true
 #     parallel: false
 
-#   # ESLint example <https://help.sider.review/tools/javascript/eslint>:
+#   # cpplint example. See https://help.sider.review/tools/cplusplus/cpplint
+#   cpplint:
+#     root_dir: project/
+#     target: [src/, lib/]
+#     extensions: c,cc
+#     headers: hpp,hxx
+#     filter: "-whitespace,+whitespace/braces"
+#     linelength: 100
+#     exclude:
+#       - src/*.cpp
+#       - lib/*.cpp
+
+#   # detekt example. See https://help.sider.review/tools/kotlin/detekt
+#   detekt:
+#     root_dir: project/
+#     jvm_deps:
+#       - [com.example, detekt-rules, 1.0.0]
+#     baseline: config/detekt-baseline.xml
+#     config:
+#       - config/detekt-config.yml
+#     config-resource:
+#       - /detekt-config-on-classpath.yml
+#     disable-default-rulesets: true
+#     excludes:
+#       - "**/vendor/**"
+#     includes:
+#       - "**/important/**"
+#     input:
+#       - src/
+#       - test/
+
+#   # ESLint example. See https://help.sider.review/tools/javascript/eslint
 #   eslint:
-#     root_dir: frontend/
+#     root_dir: project/
 #     npm_install: false
 #     target:
 #       - src/
@@ -81,9 +112,9 @@ linter:
 #     global: "require,exports:true"
 #     quiet: true
 
-#   # Flake8 example <https://help.sider.review/tools/python/flake8>:
+#   # Flake8 example. See https://help.sider.review/tools/python/flake8
 #   flake8:
-#     root_dir: app/
+#     root_dir: project/
 #     target: src/
 #     config: config/.flake8
 #     plugins:
@@ -92,14 +123,14 @@ linter:
 #       - flake8-docstrings>=1.4.0
 #       - git+https://github.com/PyCQA/flake8-import-order.git@51e16f33065512afa1a85a20b2c2d3be768f78ea
 
-#   # FxCop example <https://help.sider.review/tools/csharp/fxcop>:
+#   # FxCop example. See https://help.sider.review/tools/csharp/fxcop
 #   fxcop:
-#     root_dir: src/
+#     root_dir: project/
 
-#   # GolangCI-Lint example <https://help.sider.review/tools/go/golangci-lint>:
+#   # GolangCI-Lint example. See https://help.sider.review/tools/go/golangci-lint
 #   golangci_lint:
-#     root_dir: app/
-#     target: src/...
+#     root_dir: project/
+#     target: "src/..."
 #     config: config/.golangci.yml
 #     disable:
 #       - govet
@@ -119,6 +150,258 @@ linter:
 #       - lib/bad.go
 #     tests: false
 #     uniq-by-line: false
+
+#   # Goodcheck example. See https://help.sider.review/tools/others/goodcheck
+#   goodcheck:
+#     root_dir: project/
+#     config: config/goodcheck.yml
+#     target:
+#       - src/
+#       - test/
+
+#   # hadolint example. See https://help.sider.review/tools/dockerfile/hadolint
+#   hadolint:
+#     root_dir: project/
+#     target:
+#       - images/**/Dockerfile
+#     ignore:
+#       - DL3003
+#       - SC1010
+#     trusted-registry:
+#       - docker.io
+#       - my-company.com:5000
+#     config: config/hadolint.yaml
+
+#   # HAML-Lint example. See https://help.sider.review/tools/ruby/haml-lint
+#   haml_lint:
+#     root_dir: project/
+#     gems:
+#       - { name: rubocop, version: 1.0.0 }
+#     target: [app/, lib/]
+#     include_linter:
+#       - EmptyScript
+#       - MultilinePipe
+#     exclude_linter:
+#       - TagName
+#     config: config/.haml-lint.yml
+#     parallel: false
+
+#   # JavaSee example. See https://help.sider.review/tools/java/javasee
+#   javasee:
+#     root_dir: project/
+#     dir:
+#       - src/
+#       - test/
+#     config: config/javasee.yml
+
+#   # JSHint example. See https://help.sider.review/tools/javascript/jshint
+#   jshint:
+#     root_dir: project/
+#     dir: src/
+#     config: config/.jshintrc.json
+
+#   # ktlint example. See https://help.sider.review/tools/kotlin/ktlint
+#   ktlint:
+#     root_dir: project/
+#     jvm_deps:
+#       - [my.company.com, ktlint-rules, 1.0.0]
+#     target:
+#       - "src/**/*.kt"
+#       - "!src/**/*Test.kt"
+#       - "test/"
+#     ruleset:
+#       - rules/my-ktlint-rules.jar
+#     disabled_rules:
+#       - no-wildcard-imports
+#       - indent
+#     experimental: true
+
+#   # LanguageTool example. See https://help.sider.review/tools/others/languagetool
+#   languagetool:
+#     root_dir: project/
+#     target: docs/
+#     ext: [.md, .html]
+#     exclude:
+#       - "**/test/*"
+#     language: en-GB
+#     encoding: ISO-8859-1
+#     disable:
+#       - EN_QUOTES
+#       - UPPERCASE_SENTENCE_START
+#     enable:
+#       - EN_A_VS_AN
+#     enabledonly: true
+#     disablecategories:
+#       - CASING
+#     enablecategories:
+#       - MISC
+
+#   # Misspell example. See https://help.sider.review/tools/others/misspell
+#   misspell:
+#     root_dir: project/
+#     target: [src/, test/]
+#     exclude: ["**/*.min.*"]
+#     locale: UK
+#     ignore: [center, behavior]
+
+#   # Phinder example. See https://help.sider.review/tools/php/phinder
+#   phinder:
+#     root_dir: project/
+#     rule: rules/
+#     php: src/
+
+#   # PHPMD example. See https://help.sider.review/tools/php/phpmd
+#   phpmd:
+#     root_dir: project/
+#     target: [src/, test/]
+#     rule: [cleancode, codesize]
+#     minimumpriority: 3
+#     suffixes: [php, phtml]
+#     exclude: [vendor/, "test/*.php"]
+#     strict: true
+#     custom_rule_path:
+#       - Custom_PHPMD_Rule.php
+#       - "custom/phpmd/rules/**/*.php"
+
+#   # PMD CPD example. See https://help.sider.review/tools/others/pmd-cpd
+#   pmd_cpd:
+#     root_dir: project/
+#     minimum-tokens: 70
+#     files: src/
+#     language: [ecmascript, ruby]
+#     encoding: ISO-8859-1
+#     skip-duplicate-files: true
+#     non-recursive: true
+#     skip-lexical-errors: true
+#     ignore-annotations: true
+#     ignore-identifiers: true
+#     ignore-literals: true
+#     ignore-usings: true
+#     no-skip-blocks: true
+#     skip-blocks-pattern: "#ifdef TEST|#endif"
+
+#   # PMD Java example. See https://help.sider.review/tools/java/pmd
+#   pmd_java:
+#     root_dir: project/
+#     jvm_deps:
+#       - [my.company.com, pmd-ruleset, 1.2.3]
+#     dir: src/
+#     rulesets:
+#       - category/java/errorprone.xml
+#       - your_pmd_custom_rules.xml
+#     encoding: ISO-8859-1
+#     min_priority: 3
+
+#   # Pylint example. See https://help.sider.review/tools/python/pylint
+#   pylint:
+#     root_dir: project/
+#     target:
+#       - "src/**/*.py"
+#       - "test/**/*.py"
+#     rcfile: config/.pylintrc
+#     errors-only: true
+#     ignore:
+#       - src/ignored.py
+#       - test/ignored.py
+
+#   # Querly example. See https://help.sider.review/tools/ruby/querly
+#   querly:
+#     root_dir: project/
+#     gems:
+#       - { name: "querly", version: "< 2" }
+#     config: config/querly.yml
+
+#   # Rails Best Practices example. See https://help.sider.review/tools/ruby/rails-best-practices
+#   rails_best_practices:
+#     root_dir: project/
+#     gems:
+#       - { name: "rails_best_practices", version: "< 2" }
+#     vendor: false
+#     spec: true
+#     test: true
+#     features: true
+#     exclude: "app/models/excluded.rb,test/models/excluded_test.rb"
+#     only: "app/models/only1.rb,app/models/only2.rb"
+#     config: .rails_best_practices.yml
+
+#   # Reek example. See https://help.sider.review/tools/ruby/reek
+#   reek:
+#     root_dir: project/
+#     gems:
+#       - { name: "reek", version: "< 6" }
+#     target: [lib/, test/]
+#     config: config/reek.yml
+
+#   # remark-lint example. See https://help.sider.review/tools/markdown/remark-lint
+#   remark_lint:
+#     root_dir: project/
+#     npm_install: false
+#     target: [docs/]
+#     ext: "md,markdown"
+#     rc-path: config/.remarkrc
+#     ignore-path: config/.remarkignore
+#     use:
+#       - remark-lint-file-extension
+#       - remark-lint-no-heading-punctuation
+
+#   # RuboCop example. See https://help.sider.review/tools/ruby/rubocop
+#   rubocop:
+#     root_dir: project/
+#     gems:
+#       - rubocop-rails
+#       - { name: rubocop-rspec, version: 2.1.0 }
+#     config: config/.rubocop.yml
+#     safe: true
+
+#   # ShellCheck example. See https://help.sider.review/tools/shellscript/shellcheck
+#   shellcheck:
+#     root_dir: project/
+#     target:
+#       - "**/*.{sh,bash}"
+#       - shebang: true
+#     include: [SC2104, SC2105]
+#     exclude: [SC1000, SC1118]
+#     enable: all
+#     shell: bash
+#     severity: error
+#     norc: true
+
+#   # Slim-Lint example. See https://help.sider.review/tools/ruby/slim-lint
+#   slim_lint:
+#     root_dir: project/
+#     gems:
+#       - { name: rubocop, version: 1.0.0 }
+#     target: [app/views/]
+#     config: config/.slim-lint.yml
+
+#   # stylelint example. See https://help.sider.review/tools/css/stylelint
+#   stylelint:
+#     root_dir: project/
+#     npm_install: false
+#     config: config/.stylelintrc.yml
+#     syntax: scss
+#     ignore-path: config/.stylelintignore
+#     ignore-disables: true
+#     report-needless-disables: true
+#     quiet: true
+#     glob: app/**/*.scss
+
+#   # SwiftLint example. See https://help.sider.review/tools/swift/swiftlint
+#   swiftlint:
+#     root_dir: project/
+#     ignore_warnings: true
+#     path: src/
+#     config: config/.swiftlint.yml
+#     lenient: true
+#     enable-all-rules: true
+
+#   # TyScan example. See https://help.sider.review/tools/javascript/tyscan
+#   tyscan:
+#     root_dir: project/
+#     npm_install: false
+#     config: config/tyscan.yml
+#     tsconfig: src/tsconfig.json
+#     paths: [src/]
 
 # Ignore specific files. Example:
 # ignore:

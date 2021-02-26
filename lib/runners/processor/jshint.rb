@@ -25,9 +25,7 @@ module Runners
     def self.config_example
       <<~'YAML'
         root_dir: project/
-        dir:
-          - src/
-          - test/
+        dir: src/
         config: config/.jshintrc.json
       YAML
     end

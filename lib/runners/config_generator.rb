@@ -8,8 +8,8 @@ module Runners
     private
 
     def load_template(tools)
-      filename = "config_template.yml.erb"
-      erb = ERB.new((Pathname(__dir__.to_s) / filename).read, trim_mode: "-")
+      filename = __FILE__.sub(".rb", ".yml.erb")
+      erb = ERB.new(File.read(filename), trim_mode: "-")
       erb.filename = filename
       erb.result_with_hash({
         tools: tools.sort,

@@ -10,10 +10,14 @@ class ConfigGeneratorTest < Minitest::Test
   end
 
   def test_generate_with_tools
+    # NOTE: Use all the tools to check schema for the whole example.
+    analyzers = Runners::Analyzers.new
+    tools = Runners::Processor.children.keys
+      .reject { |id| analyzers.deprecated?(id) || analyzers.metrics?(id) }
+
     assert_yaml "test_generate_with_tools.yml",
-                tools: %i[brakeman checkstyle clang_tidy code_sniffer coffeelint cppcheck eslint flake8 fxcop
-                          golangci_lint],
-                comment_out_lines: [9..121, 124..128, 131..135]
+                tools: tools,
+                comment_out_lines: [10..404, 407..411, 414..418]
   end
 
   private
@@ -33,8 +37,8 @@ class ConfigGeneratorTest < Minitest::Test
     end.join
 
     config = Runners::Config.new(path: "foo.yml", raw_content: content)
-    assert_equal ["*.pdf", "*.mp4", "*.min.*", "images/**"], config.content[:ignore]
-    assert_equal ["master", "development", "/^release-.*$/"], config.content[:branches][:exclude]
+    assert_equal ["*.pdf", "*.mp4", "*.min.*", "images/**"], config.content[:ignore], content
+    assert_equal ["master", "development", "/^release-.*$/"], config.content[:branches][:exclude], content
 
     unless tools.empty?
       linters = config.content[:linter]

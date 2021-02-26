@@ -44,15 +44,16 @@ module Runners
     def self.config_example
       <<~'YAML'
         root_dir: project/
-        target:
-          - "images/**/Dockerfile"
-        ignore:
-          - DL3003
-          - SC1010
-        trusted-registry:
-          - docker.io
-          - my-company.com:5000
-        config: config/hadolint.yaml
+        gems:
+          - { name: rubocop, version: 1.0.0 }
+        target: [app/, lib/]
+        include_linter:
+          - EmptyScript
+          - MultilinePipe
+        exclude_linter:
+          - TagName
+        config: config/.haml-lint.yml
+        parallel: false
       YAML
     end
 
