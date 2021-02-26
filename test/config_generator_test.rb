@@ -32,7 +32,7 @@ class ConfigGeneratorTest < Minitest::Test
 
     assert_equal data(expected_filename).read, actual
 
-    # Comment out
+    # Uncomment
     content = actual.lines.map.with_index(1) do |line, line_num|
       if comment_out_lines.any? { |lines| lines.include?(line_num) }
         line.delete_prefix("# ")
