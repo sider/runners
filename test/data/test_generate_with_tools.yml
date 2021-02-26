@@ -3,8 +3,7 @@
 # For more information, see the documentation:
 # https://help.sider.review/getting-started/custom-configuration
 
-# Customize each tools. If an analysis fails, try adjusting each option
-# referencing the following example.
+# Customize each tools. If analysis fails, try adjusting each option referencing the following example.
 linter:
 
 #   # Brakeman example. See https://help.sider.review/tools/ruby/brakeman
