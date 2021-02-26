@@ -21,6 +21,7 @@ Misc:
 - **PHP_CodeSniffer** Provide Sider's recommended ruleset [#2084](https://github.com/sider/runners/pull/2084)
 - Remove *removed* Go tools from `sider.yml` [#2099](https://github.com/sider/runners/pull/2099)
 - Add `Runners::ConfigGenerator` class [#2029](https://github.com/sider/runners/pull/2029)
+- **GolangCI-Lint** Remove `DEFAULT_TARGET` [#2103](https://github.com/sider/runners/pull/2103)
 
 ## 0.43.0
 
