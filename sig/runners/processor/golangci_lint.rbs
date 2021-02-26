@@ -8,7 +8,6 @@ module Runners
     end
     Schema: SchemaClass
 
-    DEFAULT_TARGET: String
     DEFAULT_CONFIG_FILE: String
     SUPPORTED_CONFIG_FILES: Array[String]
 

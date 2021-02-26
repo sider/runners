@@ -41,7 +41,6 @@ module Runners
 
     register_config_schema(name: :golangci_lint, schema: Schema.runner_config)
 
-    DEFAULT_TARGET = "./...".freeze
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_golangci.yml").to_path.freeze
 
     # @see https://golangci-lint.run/usage/configuration/#config-file
@@ -151,7 +150,7 @@ module Runners
     end
 
     def analysis_targets
-      Array(config_linter[:target] || DEFAULT_TARGET)
+      Array(config_linter[:target])
     end
 
     # Output format:
