@@ -1,7 +1,7 @@
 module Runners
   module RuboCopUtils
-    # The followings are maintained by RuboCop Headquarters.
-    # @see https://github.com/rubocop-hq
+    # The followings are maintained by the RuboCop organization.
+    # @see https://github.com/rubocop
     def official_rubocop_plugins
       @official_rubocop_plugins ||= %w[
         rubocop-md

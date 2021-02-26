@@ -164,7 +164,7 @@ analyzers:
     doc: tools/markdown/remark-lint
   rubocop:
     name: RuboCop
-    github: rubocop-hq/rubocop
+    github: rubocop/rubocop
     doc: tools/ruby/rubocop
     website: https://rubocop.org
   scss_lint:

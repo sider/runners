@@ -40,10 +40,10 @@ class RubyTest < Minitest::Test
 
   def test_gemfile_content
     specs = [
-      Spec.new(name: "rubocop", version: [], source: Source.create({ git: { repo: "https://github.com/rubocop-hq/rubocop.git", branch: "master" } })),
+      Spec.new(name: "rubocop", version: [], source: Source.create({ git: { repo: "https://github.com/rubocop/rubocop.git", branch: "master" } })),
       Spec.new(name: "runners", version: [], source: Source.create({ git: { repo: "git@github.com:sider/runners.git", ref: "e66806c02849a0d0bdea66be88b5967d5eb3305d" } })),
-      Spec.new(name: "rubocop-rails", version: [], source: Source.create({ git: { repo: "https://github.com/rubocop-hq/rubocop-rails.git", branch: "dev" } })),
-      Spec.new(name: "rubocop-rspec", version: [], source: Source.create({ git: { repo: "https://github.com/rubocop-hq/rubocop-rspec.git", tag: "v1.13.0" } })),
+      Spec.new(name: "rubocop-rails", version: [], source: Source.create({ git: { repo: "https://github.com/rubocop/rubocop-rails.git", branch: "dev" } })),
+      Spec.new(name: "rubocop-rspec", version: [], source: Source.create({ git: { repo: "https://github.com/rubocop/rubocop-performance.git", tag: "v1.9.0" } })),
       Spec.new(name: "rubocop-sider", version: [], source: Source.create({ source: "https://gems.sider.review" })),
       Spec.new(name: "rubocop-nyan", version: [], source: Source.create({ source: "https://gems.sider.review" })),
       Spec.new(name: "meowcop", version: ["1.2.0"]),
@@ -72,7 +72,7 @@ class RubyTest < Minitest::Test
           gem "rubocop-nyan"
         end
 
-        git "https://github.com/rubocop-hq/rubocop.git", branch: "master" do
+        git "https://github.com/rubocop/rubocop.git", branch: "master" do
           gem "rubocop"
         end
 
@@ -80,11 +80,11 @@ class RubyTest < Minitest::Test
           gem "runners"
         end
 
-        git "https://github.com/rubocop-hq/rubocop-rails.git", branch: "dev" do
+        git "https://github.com/rubocop/rubocop-rails.git", branch: "dev" do
           gem "rubocop-rails"
         end
 
-        git "https://github.com/rubocop-hq/rubocop-rspec.git", tag: "v1.13.0" do
+        git "https://github.com/rubocop/rubocop-performance.git", tag: "v1.9.0" do
           gem "rubocop-rspec"
         end
       CONTENT
@@ -139,8 +139,8 @@ class RubyTest < Minitest::Test
   def test_install_success
     specs = [
       Spec.new(name: "strong_json", version: ["0.5.0"]),
-      Spec.new(name: "rubocop-rspec", version: ["1.32.0"],
-               source: Source.create({ git: { repo: "https://github.com/rubocop-hq/rubocop-rspec.git", tag: "v1.32.0" } })),
+      Spec.new(name: "rubocop-rails", version: ["2.9.0"],
+               source: Source.create({ git: { repo: "https://github.com/rubocop/rubocop-rails.git", tag: "v2.9.0" } })),
     ]
 
     mktmpdir do |path|
@@ -158,9 +158,9 @@ class RubyTest < Minitest::Test
         stdout, _ = shell.capture3("bundle", "exec", "gem", "list")
         lines = stdout.lines(chomp: true)
         assert_includes lines, "strong_json (0.5.0)"
-        assert_includes lines, "rubocop-rspec (1.32.0)"
+        assert_includes lines, "rubocop-rails (2.9.0)"
         assert_equal "0.5.0", hash["strong_json"]
-        assert_equal "1.32.0", hash["rubocop-rspec"]
+        assert_equal "2.9.0", hash["rubocop-rails"]
       end
 
       gemfile_content_log = <<~RUBY.strip
@@ -169,8 +169,8 @@ class RubyTest < Minitest::Test
 
         gem "strong_json", "0.5.0", "<= 0.8.0"
 
-        git "https://github.com/rubocop-hq/rubocop-rspec.git", tag: "v1.32.0" do
-          gem "rubocop-rspec"
+        git "https://github.com/rubocop/rubocop-rails.git", tag: "v2.9.0" do
+          gem "rubocop-rails"
         end
       RUBY
       assert system("ruby", "-ce", gemfile_content_log)
@@ -209,8 +209,8 @@ class RubyTest < Minitest::Test
       { name: "strong_json", version: "0.7.0", source: "https://my.gems.org" },
       { name: "rubocop-sider", git: { repo: "https://github.com/sider/rubocop-sider.git" } },
       { name: "runners", git: { repo: "git@github.com:sider/runners.git", ref: "e66806c02849a0d0bdea66be88b5967d5eb3305d" } },
-      { name: "rubocop-rails", git: { repo: "https://github.com/rubocop-hq/rubocop-rails.git", branch: "dev" } },
-      { name: "rubocop-rspec", git: { repo: "https://github.com/rubocop-hq/rubocop-rspec.git", tag: "v1.13.0" } },
+      { name: "rubocop-rails", git: { repo: "https://github.com/rubocop/rubocop-rails.git", branch: "dev" } },
+      { name: "rubocop-performance", git: { repo: "https://github.com/rubocop/rubocop-performance.git", tag: "v1.9.0" } },
     ])
 
     assert_equal [
@@ -218,8 +218,8 @@ class RubyTest < Minitest::Test
       Spec.new(name: "strong_json", version: ["0.7.0"], source: Source.create({ source: "https://my.gems.org" })),
       Spec.new(name: "rubocop-sider", version: [], source: Source.create({ git: { repo: "https://github.com/sider/rubocop-sider.git" } })),
       Spec.new(name: "runners", version: [], source: Source.create({ git: { repo: "git@github.com:sider/runners.git", ref: "e66806c02849a0d0bdea66be88b5967d5eb3305d" } })),
-      Spec.new(name: "rubocop-rails", version: [], source: Source.create({ git: { repo: "https://github.com/rubocop-hq/rubocop-rails.git", branch: "dev" } })),
-      Spec.new(name: "rubocop-rspec", version: [], source: Source.create({ git: { repo: "https://github.com/rubocop-hq/rubocop-rspec.git", tag: "v1.13.0" } })),
+      Spec.new(name: "rubocop-rails", version: [], source: Source.create({ git: { repo: "https://github.com/rubocop/rubocop-rails.git", branch: "dev" } })),
+      Spec.new(name: "rubocop-performance", version: [], source: Source.create({ git: { repo: "https://github.com/rubocop/rubocop-performance.git", tag: "v1.9.0" } })),
     ], specs
   end
 
