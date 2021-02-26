@@ -11,9 +11,14 @@ class ConfigGeneratorTest < Minitest::Test
 
   def test_generate_with_tools
     # NOTE: Use all the tools to check schema for the whole example.
-    analyzers = Runners::Analyzers.new
-    tools = Runners::Processor.children.keys
-      .reject { |id| analyzers.deprecated?(id) || analyzers.metrics?(id) }
+    tools = Runners::Processor.children.filter_map do |id, klass|
+      begin
+        klass.config_example
+        id
+      rescue NotImplementedError
+        nil
+      end
+    end
 
     assert_yaml "test_generate_with_tools.yml",
                 tools: tools,
