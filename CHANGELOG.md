@@ -12,6 +12,7 @@ Updated environments:
 
 Updated tools:
 
+- **ESLint** 7.20.0 -> 7.21.0 [#2104](https://github.com/sider/runners/pull/2104)
 - **GolangCI-Lint** 1.36.0 -> 1.37.1 [#2086](https://github.com/sider/runners/pull/2086)
 - **Pylint** 2.6.2 -> 2.7.2 [#2111](https://github.com/sider/runners/pull/2111)
 - **stylelint** 13.10.0 -> 13.11.0 [#2088](https://github.com/sider/runners/pull/2088)
