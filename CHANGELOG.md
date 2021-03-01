@@ -12,7 +12,11 @@ Updated environments:
 
 Updated tools:
 
+- **Checkstyle** 8.40 -> 8.41 [#2113](https://github.com/sider/runners/pull/2113)
+- **ESLint** 7.20.0 -> 7.21.0 [#2104](https://github.com/sider/runners/pull/2104)
 - **GolangCI-Lint** 1.36.0 -> 1.37.1 [#2086](https://github.com/sider/runners/pull/2086)
+- **PMD Java** 6.31.0 -> 6.32.0 [#2114](https://github.com/sider/runners/pull/2114)
+- **Pylint** 2.6.2 -> 2.7.2 [#2111](https://github.com/sider/runners/pull/2111)
 - **stylelint** 13.10.0 -> 13.11.0 [#2088](https://github.com/sider/runners/pull/2088)
 
 Misc:
@@ -22,6 +26,7 @@ Misc:
 - Remove *removed* Go tools from `sider.yml` [#2099](https://github.com/sider/runners/pull/2099)
 - Add `Runners::ConfigGenerator` class [#2029](https://github.com/sider/runners/pull/2029)
 - **Metrics FileInfo** Modify target file generation [#2100](https://github.com/sider/runners/pull/2100)
+- **GolangCI-Lint** Remove `DEFAULT_TARGET` [#2103](https://github.com/sider/runners/pull/2103)
 
 ## 0.43.0
 

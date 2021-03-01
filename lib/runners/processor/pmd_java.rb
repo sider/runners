@@ -62,22 +62,21 @@ module Runners
 
       _, stderr, status = capture3(analyzer_bin, *cli_args)
 
-      if status.success? || status.exitstatus == 4
-        stderr.each_line do |line|
-          case line
-          when /WARNING: This analysis could be faster, please consider using Incremental Analysis/
-            # We cannot support "incremental analysis" for now. So, ignore it.
-          when /WARNING: (.+)$/
-            add_warning $1
-          end
-        end
+      unless status.success?
+        return Results::Failure.new(guid: guid, analyzer: analyzer)
+      end
 
-        Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-          xml = read_report_xml
-          construct_result(xml) { |issue| result.add_issue(issue) }
+      stderr.each_line do |line|
+        /WARNING: (.+)$/.match(line) do |m|
+          msg = m[1] or raise m.inspect
+          add_warning msg
         end
-      else
-        Results::Failure.new(guid: guid, analyzer: analyzer)
+      end
+
+      Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+        construct_result do |issue|
+          result.add_issue(issue)
+        end
       end
     end
 
@@ -87,19 +86,21 @@ module Runners
       [
         "-language", "java",
         "-threads", "2",
+        "-failOnViolation", "false",
+        "-no-cache",
         "-format", "xml",
         "-reportfile", report_file,
-        "-dir", dir,
-        "-rulesets", rulesets.join(","),
-        *min_priority,
-        *encoding,
+        "-dir", (config_linter[:dir] || DEFAULT_DIR),
+        "-rulesets", comma_separated_list(config_linter[:rulesets] || DEFAULT_RULESET),
+        *(config_linter[:min_priority].then { |num| num ? ["-minimumpriority", num.to_s] : [] }),
+        *(config_linter[:encoding].then { |enc| enc ? ["-encoding", enc] : [] }),
       ]
     end
 
-    def construct_result(xml)
+    def construct_result
       # https://github.com/pmd/pmd.github.io/blob/8b0c31ff8e18215ed213b7df400af27b9137ee67/report_2_0_0.xsd
 
-      xml.each_element do |element|
+      read_report_xml.each_element do |element|
         case element.name
         when "file"
           filename = element[:name] or raise "Unexpected element: #{element.inspect}"
@@ -136,24 +137,6 @@ module Runners
           add_warning "#{rule}: #{msg}"
         end
       end
-    end
-
-    def rulesets
-      Array(config_linter[:rulesets] || DEFAULT_RULESET)
-    end
-
-    def dir
-      config_linter[:dir] || DEFAULT_DIR
-    end
-
-    def encoding
-      enc = config_linter[:encoding]
-      enc ? ["-encoding", enc] : []
-    end
-
-    def min_priority
-      num = config_linter[:min_priority]
-      num ? ["-minimumpriority", num.to_s] : []
     end
   end
 end

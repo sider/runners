@@ -5,11 +5,11 @@ module Runners
 
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
-                        target: enum?(string, array(string)),
-                        ignore: enum?(string, array(string)),
-                        'trusted-registry': enum?(string, array(string)),
-                        config: string?,
-                      })
+          target: enum?(string, array(string)),
+          ignore: enum?(string, array(string)),
+          'trusted-registry': enum?(string, array(string)),
+          config: string?,
+        })
       }
 
       let :issue, object(
@@ -45,30 +45,25 @@ module Runners
 
       stdout, stderr, status = capture3(analyzer_bin, *analyzer_options, *analysis_target)
 
-      if status.exitstatus == 1 && stderr.include?("openBinaryFile: does not exist (No such file or directory)")
-        return Results::Failure.new(guid: guid, analyzer: analyzer, message: "Invalid Dockerfile(s) specified.")
-      end
-
-      begin
+      if status.success?
         Results::Success.new(guid: guid, analyzer: analyzer, issues: parse_result(stdout))
-      rescue JSON::ParserError
-        Results::Failure.new(guid: guid, analyzer: analyzer)
+      elsif stderr.include?("openBinaryFile: does not exist (No such file or directory)")
+        Results::Failure.new(guid: guid, analyzer: analyzer, message: "Invalid Dockerfile(s) specified.")
+      else
+        raise "Unexpected error: status=#{status.inspect}, stderr=#{stderr.inspect}"
       end
     end
 
     private
 
     def analyzer_options
-      [].tap do |opts|
-        opts << "--format=json"
-        Array(config_linter[:'trusted-registry']).each do |trusted|
-          opts << "--trusted-registry=#{trusted}"
-        end
-        Array(config_linter[:ignore]).each do |ignore|
-          opts << "--ignore=#{ignore}"
-        end
-        opts << "--config=#{config_linter[:config]}" if config_linter[:config]
-      end
+      [
+        "--no-fail",
+        "--format=json",
+        *Array(config_linter[:'trusted-registry']).map { |r| "--trusted-registry=#{r}" },
+        *Array(config_linter[:ignore]).map { |i| "--ignore=#{i}" },
+        *(config_linter[:config].then { |c| c ? ["--config=#{c}"] : [] }),
+      ]
     end
 
     def analysis_target

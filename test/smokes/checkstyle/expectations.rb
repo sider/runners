@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "8.40"
+default_version = "8.41"
 
 s.add_test(
   "success",
@@ -225,14 +225,25 @@ s.add_test(
   type: "success",
   issues: [
     {
-      message: "Lambda argument has unnecessary parentheses.",
+      message: "header.missing",
       links: [],
-      id: "io.spring.javaformat.checkstyle.check.SpringLambdaCheck",
+      id: "io.spring.javaformat.checkstyle.check.SpringHeaderCheck",
       path: "Foo.java",
-      location: { start_line: 3, start_column: 21 },
+      location: { start_line: 1 },
       object: { severity: "error" },
       git_blame_info: {
-        commit: :_, line_hash: "8dedd49bab7f8372d3784a0d03ee1e6cfa8a61e4", original_line: 3, final_line: 3
+        commit: :_, line_hash: "1e643aae3d233605968d1478dacf8c5d2aa2d8f9", original_line: 1, final_line: 1
+      }
+    },
+    {
+      message: "Method 'test' in private class should not be public.",
+      links: [],
+      id: "io.spring.javaformat.checkstyle.check.SpringMethodVisibilityCheck",
+      path: "Foo.java",
+      location: { start_line: 2, start_column: 42 },
+      object: { severity: "error" },
+      git_blame_info: {
+        commit: :_, line_hash: "90197448a8c98cf1c4808732ed982164b5aff23e", original_line: 2, final_line: 2
       }
     }
   ],
