@@ -15,14 +15,6 @@ module Runners
 
     def cli_args: () -> Array[String]
 
-    def construct_result: (REXML::Element) { (Issue) -> void } -> void
-
-    def rulesets: () -> Array[String]
-
-    def dir: () -> String
-
-    def encoding: () -> Array[String]
-
-    def min_priority: () -> Array[String]
+    def construct_result: () { (Issue) -> void } -> void
   end
 end
