@@ -15,6 +15,7 @@ Updated tools:
 - **Checkstyle** 8.40 -> 8.41 [#2113](https://github.com/sider/runners/pull/2113)
 - **ESLint** 7.20.0 -> 7.21.0 [#2104](https://github.com/sider/runners/pull/2104)
 - **GolangCI-Lint** 1.36.0 -> 1.37.1 [#2086](https://github.com/sider/runners/pull/2086)
+- **PMD CPD** 6.31.0 -> 6.32.0 [#2115](https://github.com/sider/runners/pull/2115)
 - **PMD Java** 6.31.0 -> 6.32.0 [#2114](https://github.com/sider/runners/pull/2114)
 - **Pylint** 2.6.2 -> 2.7.2 [#2111](https://github.com/sider/runners/pull/2111)
 - **stylelint** 13.10.0 -> 13.11.0 [#2088](https://github.com/sider/runners/pull/2088)
