@@ -228,3 +228,35 @@ s.add_test_with_git_metadata(
     ],
     analyzer: { name: "Metrics File Info", version: default_version } }
 )
+
+s.add_test_with_git_metadata(
+  "with_ignore_setting",
+  { type: "success",
+    issues: [
+      {
+        id: "metrics_fileinfo",
+        path: "hello.rb",
+        location: nil,
+        message: "hello.rb: loc = 7, last commit datetime = 2021-01-01T10:00:00+09:00",
+        links: [],
+        object: {
+          lines_of_code: 7,
+          last_committed_at: "2021-01-01T10:00:00+09:00"
+        },
+        git_blame_info: nil
+      },
+      {
+        id: "metrics_fileinfo",
+        path: "sider.yml",
+        location: nil,
+        message: "sider.yml: loc = 2, last commit datetime = 2021-01-01T10:00:00+09:00",
+        links: [],
+        object: {
+          lines_of_code: 2,
+          last_committed_at: "2021-01-01T10:00:00+09:00"
+        },
+        git_blame_info: nil
+      }
+    ],
+    analyzer: { name: "Metrics File Info", version: default_version } }
+)

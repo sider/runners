@@ -24,7 +24,10 @@ module Runners
       # You can see the efficacy here: https://github.com/sider/runners/issues/2028#issuecomment-776534408
       capture3!("git", "commit-graph", "write", "--reachable", "--changed-paths", "--no-progress")
 
-      target_files = changes.changed_paths.map(&:to_path)
+      target_files = Pathname.glob("**/*", File::FNM_DOTMATCH).filter do |path|
+        path.file? && !path.fnmatch?("**/.git/*", File::FNM_DOTMATCH)
+      end
+
       analyze_last_committed_at(target_files)
       analyze_lines_of_code(target_files)
 
@@ -42,7 +45,7 @@ module Runners
       commit = last_committed_at.fetch(path)
 
       Issue.new(
-        path: Pathname(path),
+        path: path,
         location: nil,
         id: "metrics_fileinfo",
         message: "#{path}: loc = #{loc || "(no info)"}, last commit datetime = #{commit}",
@@ -71,7 +74,7 @@ module Runners
           fields = line.split(" ")
           loc = (fields[0] or raise)
           fname = (fields[1] or raise)
-          lines_of_code[fname] = Integer(loc)
+          lines_of_code[Pathname(fname)] = Integer(loc)
         end
       end
     end
@@ -81,9 +84,11 @@ module Runners
     end
 
     def analyze_last_committed_at(targets)
-      targets.each do |target|
-        stdout, _ = capture3!("git", "log", "-1", "--format=format:%aI", target, trace_stdout: false)
-        last_committed_at[target] = stdout
+      trace_writer.message "Analyzing last commit time..." do
+        targets.each do |target|
+          stdout, _ = capture3!("git", "log", "-1", "--format=format:%aI", "--", target, trace_stdout: false, trace_command_line: false)
+          last_committed_at[target] = stdout
+        end
       end
     end
 
@@ -129,7 +134,7 @@ module Runners
           type = (fields[1] or raise)
           file = (fields[3] or raise)
           if type != "w/-text"
-            result << file
+            result << Pathname(file)
           end
         end
       end

@@ -7,18 +7,18 @@ module Runners
 
     private
 
-    def generate_issue: (String)-> Issue
+    def generate_issue: (Pathname)-> Issue
 
-    def lines_of_code: () -> Hash[String, Integer]
+    def lines_of_code: () -> Hash[Pathname, Integer]
 
-    def analyze_lines_of_code: (Array[String]) -> void
+    def analyze_lines_of_code: (Array[Pathname]) -> void
 
-    def last_committed_at: () -> Hash[String, String]
+    def last_committed_at: () -> Hash[Pathname, String]
 
-    def analyze_last_committed_at: (Array[String]) -> void
+    def analyze_last_committed_at: (Array[Pathname]) -> void
 
-    def text_files: () -> Set[String]
+    def text_files: () -> Set[Pathname]
 
-    def text_file?: (String) -> bool
+    def text_file?: (Pathname) -> bool
   end
 end
