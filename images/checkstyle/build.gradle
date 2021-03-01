@@ -7,5 +7,5 @@ repositories {
 }
 
 dependencies {
-    implementation "com.puppycrawl.tools:checkstyle:8.40"
+    implementation "com.puppycrawl.tools:checkstyle:8.41"
 }
