@@ -67,11 +67,9 @@ module Runners
       end
 
       stderr.each_line do |line|
-        case line
-        when /WARNING: This analysis could be faster, please consider using Incremental Analysis/
-          # We cannot support "incremental analysis" for now. So, ignore it.
-        when /WARNING: (.+)$/
-          add_warning $1
+        /WARNING: (.+)$/.match(line) do |m|
+          msg = m[1] or raise m.inspect
+          add_warning msg
         end
       end
 
@@ -89,6 +87,7 @@ module Runners
         "-language", "java",
         "-threads", "2",
         "-failOnViolation", "false",
+        "-no-cache",
         "-format", "xml",
         "-reportfile", report_file,
         "-dir", (config_linter[:dir] || DEFAULT_DIR),
