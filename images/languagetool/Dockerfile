@@ -4,7 +4,7 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM sider/devon_rex_java:2.40.5
 
-ARG LANGUAGETOOL_VERSION=5.2
+ARG LANGUAGETOOL_VERSION=5.2.3
 
 RUN cd "${RUNNER_USER_HOME}" && \
     curl -sSLO --compressed https://languagetool.org/download/LanguageTool-${LANGUAGETOOL_VERSION}.zip && \
