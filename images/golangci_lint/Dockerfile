@@ -4,7 +4,7 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM golangci/golangci-lint:v1.37.1 as golangci-lint
 
-FROM sider/devon_rex_go:2.40.5
+FROM sider/devon_rex_go:2.40.6
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=golangci-lint /usr/bin/golangci-lint ${RUNNER_USER_HOME}/bin/
 
