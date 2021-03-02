@@ -22,7 +22,7 @@ class ConfigGeneratorTest < Minitest::Test
 
     assert_yaml "test_generate_with_tools.yml",
                 tools: tools,
-                comment_out_lines: [9..403, 406..410, 413..417]
+                comment_out_lines: [9..404, 407..411, 414..418]
   end
 
   private

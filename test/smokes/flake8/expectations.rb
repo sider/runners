@@ -300,3 +300,22 @@ s.add_test(
   ],
   analyzer: { name: "Flake8", version: default_version }
 )
+
+s.add_test(
+  "option_parallel",
+  type: "success",
+  issues: [
+    {
+      message: "local variable 'a' is assigned to but never used",
+      links: [],
+      id: "F841",
+      path: "foo.py",
+      location: { start_line: 2, start_column: 3 },
+      object: nil,
+      git_blame_info: {
+        commit: :_, line_hash: "2195b5c8fadfde3b82ab9aecaf510b7dc1112d91", original_line: 2, final_line: 2
+      }
+    }
+  ],
+  analyzer: { name: "Flake8", version: default_version }
+)
