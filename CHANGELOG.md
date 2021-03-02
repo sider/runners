@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.44.1...HEAD)
 
+- **GolangCI-Lint** Set explicitly `GO111MODULE=auto` [#2129](https://github.com/sider/runners/pull/2129)
+
 ## 0.44.1
 
 [Full diff](https://github.com/sider/runners/compare/0.44.0...0.44.1)
