@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.44.1...HEAD)
 
+- **Flake8** Add `parallel` option [#2130](https://github.com/sider/runners/pull/2130)
+
 ## 0.44.1
 
 [Full diff](https://github.com/sider/runners/compare/0.44.0...0.44.1)
