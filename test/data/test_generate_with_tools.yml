@@ -43,6 +43,7 @@ linter:
 #     encoding: utf-8
 #     ignore:
 #       - app/vendor/
+#     parallel: true
 
 #   # CoffeeLint example. See https://help.sider.review/tools/javascript/coffeelint
 #   coffeelint:

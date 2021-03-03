@@ -159,3 +159,33 @@ s.add_test(
   ],
   analyzer: { name: "PHP_CodeSniffer", version: default_version }
 )
+
+s.add_test(
+  "option_parallel",
+  type: "success",
+  issues: [
+    {
+      path: "a.php",
+      location: { start_line: 2, start_column: 1 },
+      id: "PSR2.Files.ClosingTag.NotAllowed",
+      message: "A closing tag is not permitted at the end of a PHP file",
+      links: [],
+      object: { type: "ERROR", severity: 5, fixable: true },
+      git_blame_info: {
+        commit: :_, line_hash: "48ee9fdb6490aadc28bbb90cee75350be54532de", original_line: 2, final_line: 2
+      }
+    },
+    {
+      path: "b.php",
+      location: { start_line: 2, start_column: 1 },
+      id: "PSR2.Files.ClosingTag.NotAllowed",
+      message: "A closing tag is not permitted at the end of a PHP file",
+      links: [],
+      object: { type: "ERROR", severity: 5, fixable: true },
+      git_blame_info: {
+        commit: :_, line_hash: "48ee9fdb6490aadc28bbb90cee75350be54532de", original_line: 2, final_line: 2
+      }
+    }
+  ],
+  analyzer: { name: "PHP_CodeSniffer", version: default_version }
+)

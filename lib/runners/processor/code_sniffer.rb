@@ -16,6 +16,7 @@ module Runners
           extensions: enum?(string, array(string)),
           encoding: string?,
           ignore: enum?(string, array(string)),
+          parallel: boolean?,
         })
       }
 
@@ -42,6 +43,7 @@ module Runners
         encoding: utf-8
         ignore:
           - app/vendor/
+        parallel: true
       YAML
     end
 
@@ -101,6 +103,7 @@ module Runners
           "--extensions=#{comma_separated_list(config_linter[:extensions] || default_options.extensions)}",
           *(config_linter[:encoding].then { |enc| enc ? ["--encoding=#{enc}"] : [] }),
           *(comma_separated_list(config_linter[:ignore]).then { |list| list ? ["--ignore=#{list}"] : [] }),
+          *(config_linter[:parallel] ? ["--parallel=2"] : []),
         ]
       end
     end
