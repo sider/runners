@@ -95,6 +95,7 @@ linter:
 #     input:
 #       - src/
 #       - test/
+#     parallel: true
 
 #   # ESLint example. See https://help.sider.review/tools/javascript/eslint
 #   eslint:
