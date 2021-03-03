@@ -40,3 +40,8 @@ WORKDIR $RUNNER_USER_HOME
 
 COPY images/docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh", "runners", "--analyzer=golangci_lint"]
+
+# NOTE: Make the `go.mod` file needless (compatible with Go 1.15). See below:
+#       - https://golang.org/doc/go1.16#go-command
+#       - https://golang.org/ref/mod#mod-commands
+ENV GO111MODULE auto

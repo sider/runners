@@ -9,3 +9,8 @@ COPY --chown=<%= chown %> --from=golangci-lint /usr/bin/golangci-lint ${RUNNER_U
 COPY --chown=<%= chown %> images/golangci_lint/sider_golangci.yml ${RUNNER_USER_HOME}/
 
 <%= render_erb 'images/Dockerfile.end.erb' %>
+
+# NOTE: Make the `go.mod` file needless (compatible with Go 1.15). See below:
+#       - https://golang.org/doc/go1.16#go-command
+#       - https://golang.org/ref/mod#mod-commands
+ENV GO111MODULE auto
