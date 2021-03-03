@@ -44,7 +44,7 @@ module Runners
           - "**/vendor/**"
         includes:
           - "**/important/**"
-        input:
+        target:
           - src/
           - test/
         parallel: true
