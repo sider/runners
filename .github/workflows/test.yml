@@ -15,6 +15,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+      - run: npm install --global npm@latest
       - run: bundle exec rake test
         env:
           TESTOPTS: --verbose

@@ -32,11 +32,6 @@ ENV PATH ${RUNNER_USER_HOME}/jshint/node_modules/.bin:${PATH}
 # See https://nodejs.org/api/cli.html#cli_node_path_path
 ENV NODE_PATH ${RUNNER_USER_HOME}/jshint/node_modules:${NODE_PATH}
 
-# TODO: Wait for npm 7. See #1963
-USER root
-RUN npm install --global npm@6
-USER $RUNNER_USER
-
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/jshint/sider_jshintignore images/jshint/sider_jshintrc $RUNNER_USER_HOME/
 
 
