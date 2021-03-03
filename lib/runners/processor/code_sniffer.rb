@@ -37,7 +37,7 @@ module Runners
       <<~'YAML'
         root_dir: project/
         target: [app/, test/]
-        standard: [CakePHP, PSR12]
+        standard: [CakePHP, custom-ruleset.xml]
         extensions: [php, inc]
         encoding: utf-8
         ignore:

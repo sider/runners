@@ -1,4 +1,4 @@
 linter:
   code_sniffer:
-    standard: ruleset.xml
+    standard: [ruleset.xml, PSR2]
     ignore: vendor
