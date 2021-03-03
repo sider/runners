@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - **GolangCI-Lint** Set explicitly `GO111MODULE=auto` [#2129](https://github.com/sider/runners/pull/2129)
 - **Flake8** Add `parallel` option [#2130](https://github.com/sider/runners/pull/2130)
+- **detekt** Add `parallel` option [#2131](https://github.com/sider/runners/pull/2131)
 
 ## 0.44.1
 
