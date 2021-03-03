@@ -6,6 +6,8 @@ module Runners
     Schema = _ = StrongJSON.new do
       # @type self: SchemaClass
 
+      let :target, enum?(string, array(string))
+
       let :runner_config, Runners::Schema::BaseConfig.java.update_fields { |fields|
         fields.merge!({
           baseline: string?,
@@ -14,7 +16,8 @@ module Runners
           "disable-default-rulesets": boolean?,
           excludes: enum?(string, array(string)),
           includes: enum?(string, array(string)),
-          input: enum?(string, array(string)),
+          target: target,
+          input: target, # alias for `target`
           parallel: boolean?,
         })
       }
@@ -71,7 +74,7 @@ module Runners
         *(config_linter[:parallel] ? ["--parallel"] : []),
         *(comma_separated_list(config_linter[:excludes]).then { |list| list ? ["--excludes", list] : [] }),
         *(comma_separated_list(config_linter[:includes]).then { |list| list ? ["--includes", list] : [] }),
-        *(comma_separated_list(config_linter[:input]).then { |list| list ? ["--input", list] : []}),
+        *(comma_separated_list(config_linter[:target] || config_linter[:input]).then { |list| list ? ["--input", list] : []}),
       )
 
       # detekt has some exit codes.

@@ -237,3 +237,22 @@ s.add_test(
     }
   ]
 )
+
+s.add_test(
+  "with_option_target",
+  type: "success",
+  analyzer: { name: "detekt", version: default_version },
+  issues: [
+    {
+      id: "detekt.EmptyClassBlock",
+      path: "src/Foo.kt",
+      location: { start_line: 1, start_column: 11 },
+      message: "The class or object Foo is empty.",
+      links: [],
+      object: { severity: "info" },
+      git_blame_info: {
+        commit: :_, line_hash: "313d20acfe186ea3594870fc6d56c119f658fef2", original_line: 1, final_line: 1
+      }
+    }
+  ]
+)
