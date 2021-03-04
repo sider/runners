@@ -21,6 +21,11 @@ RUN cd "${RUNNERS_DIR}" && \
     lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler.locked_gems.bundler_version') && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
+# TODO: Wait for npm 7. See #1963
+USER root
+RUN npm install --global npm@6
+USER $RUNNER_USER
+
 # Install the default version
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/stylelint/package.json ${RUNNER_USER_HOME}/stylelint_package.json
 RUN cd "${RUNNER_USER_HOME}" && \

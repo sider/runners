@@ -1,3 +1,8 @@
+# TODO: Wait for npm 7. See #1963
+USER root
+RUN npm install --global npm@6
+USER $RUNNER_USER
+
 # Install the default version
 COPY --chown=<%= chown %> images/<%= analyzer %>/package.json ${RUNNER_USER_HOME}/<%= analyzer %>_package.json
 RUN cd "${RUNNER_USER_HOME}" && \
