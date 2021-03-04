@@ -4,28 +4,13 @@ module Runners
     include Kotlin
 
     class SchemaClass < StrongJSON
+      def target: () -> StrongJSON::Type::Optional[untyped]
       def runner_config: () -> StrongJSON::Type::Object[untyped]
       def issue: () -> StrongJSON::Type::Object[untyped]
     end
     Schema: SchemaClass
 
     private
-
-    def cli_baseline: () -> Array[String]
-
-    def cli_config: () -> Array[String]
-
-    def cli_config_resource: () -> Array[String]
-
-    def cli_disable_default_rulesets: () -> Array[String]
-
-    def cli_excludes: () -> Array[String]
-
-    def cli_includes: () -> Array[String]
-
-    def cli_input: () -> Array[String]
-
-    def cli_report: () -> Array[String]
 
     def parse_output: () -> Array[Issue]
   end

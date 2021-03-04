@@ -7,10 +7,11 @@ module Runners
 
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
-                        target: enum?(string, array(string)),
-                        config: string?,
-                        plugins: enum?(string, array(string)),
-                      })
+          target: enum?(string, array(string)),
+          config: string?,
+          plugins: enum?(string, array(string)),
+          parallel: boolean?,
+        })
       }
     end
 
@@ -38,6 +39,7 @@ module Runners
           - flake8-builtins==1.4.1
           - flake8-docstrings>=1.4.0
           - git+https://github.com/PyCQA/flake8-import-order.git@51e16f33065512afa1a85a20b2c2d3be768f78ea
+        parallel: false
       YAML
     end
 
@@ -48,12 +50,15 @@ module Runners
     end
 
     def analyze(changes)
+      parallel = [true, nil].include?(config_linter[:parallel])
+
       capture3!(
         analyzer_bin,
         "--exit-zero",
         "--output-file", report_file,
         "--format", OUTPUT_FORMAT,
         "--append-config", IGNORED_CONFIG_PATH,
+        "--jobs", parallel ? "auto" : "1",
         *(config_linter[:config]&.then { |c| ["--config", c] }),
         *Array(config_linter[:target] || DEFAULT_TARGET),
       )

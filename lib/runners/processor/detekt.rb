@@ -5,6 +5,9 @@ module Runners
 
     Schema = _ = StrongJSON.new do
       # @type self: SchemaClass
+
+      let :target, enum?(string, array(string))
+
       let :runner_config, Runners::Schema::BaseConfig.java.update_fields { |fields|
         fields.merge!({
           baseline: string?,
@@ -13,7 +16,9 @@ module Runners
           "disable-default-rulesets": boolean?,
           excludes: enum?(string, array(string)),
           includes: enum?(string, array(string)),
-          input: enum?(string, array(string)),
+          target: target,
+          input: target, # alias for `target`
+          parallel: boolean?,
         })
       }
 
@@ -39,9 +44,10 @@ module Runners
           - "**/vendor/**"
         includes:
           - "**/important/**"
-        input:
+        target:
           - src/
           - test/
+        parallel: true
       YAML
     end
 
@@ -60,14 +66,15 @@ module Runners
 
       _stdout, stderr, status = capture3(
         analyzer_bin,
-        *cli_baseline,
-        *cli_config,
-        *cli_config_resource,
-        *cli_disable_default_rulesets,
-        *cli_excludes,
-        *cli_includes,
-        *cli_input,
-        *cli_report,
+        "--report", "xml:#{report_file}",
+        *(config_linter[:baseline].then { |value| value ? ["--baseline", value] : [] }),
+        *(comma_separated_list(config_linter[:config]).then { |list| list ? ["--config", list] : [] }),
+        *(comma_separated_list(config_linter[:"config-resource"]).then { |list| list ? ["--config-resource", list] : [] }),
+        *(config_linter[:"disable-default-rulesets"] ? ["--disable-default-rulesets"] : []),
+        *(config_linter[:parallel] ? ["--parallel"] : []),
+        *(comma_separated_list(config_linter[:excludes]).then { |list| list ? ["--excludes", list] : [] }),
+        *(comma_separated_list(config_linter[:includes]).then { |list| list ? ["--includes", list] : [] }),
+        *(comma_separated_list(config_linter[:target] || config_linter[:input]).then { |list| list ? ["--input", list] : []}),
       )
 
       # detekt has some exit codes.
@@ -83,38 +90,6 @@ module Runners
     end
 
     private
-
-    def cli_baseline
-      config_linter[:baseline].then { |value| value ? ["--baseline", value] : [] }
-    end
-
-    def cli_config
-      Array(config_linter[:config]).then { |arr| arr.empty? ? [] : ["--config", arr.join(",")] }
-    end
-
-    def cli_config_resource
-      Array(config_linter[:"config-resource"]).then { |arr| arr.empty? ? [] : ["--config-resource", arr.join(",")] }
-    end
-
-    def cli_disable_default_rulesets
-      config_linter[:"disable-default-rulesets"] ? ["--disable-default-rulesets"] : []
-    end
-
-    def cli_excludes
-      Array(config_linter[:excludes]).then { |arr| arr.empty? ? [] : ["--excludes", arr.join(",")] }
-    end
-
-    def cli_includes
-      Array(config_linter[:includes]).then { |arr| arr.empty? ? [] : ["--includes", arr.join(",")] }
-    end
-
-    def cli_input
-      Array(config_linter[:input]).then { |arr| arr.empty? ? [] : ["--input", arr.join(",")] }
-    end
-
-    def cli_report
-      ["--report", "xml:#{report_file}"]
-    end
 
     def parse_output
       issues = []
