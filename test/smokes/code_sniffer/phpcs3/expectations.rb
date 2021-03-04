@@ -58,6 +58,17 @@ s.add_test(
     {
       path: "app.php",
       location: { start_line: 8, start_column: 1 },
+      id: "PSR2.Files.ClosingTag.NotAllowed",
+      message: "A closing tag is not permitted at the end of a PHP file",
+      links: [],
+      object: { type: "ERROR", severity: 5, fixable: true },
+      git_blame_info: {
+        commit: :_, line_hash: "48ee9fdb6490aadc28bbb90cee75350be54532de", original_line: 8, final_line: 8
+      }
+    },
+    {
+      path: "app.php",
+      location: { start_line: 8, start_column: 1 },
       id: "Zend.Files.ClosingTag.NotAllowed",
       message: "A closing tag is not permitted at the end of a PHP file",
       links: [],

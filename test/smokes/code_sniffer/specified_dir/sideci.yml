@@ -1,4 +1,3 @@
 linter:
   code_sniffer:
-    options:
-      dir: app/
+    target: [app/, test/]

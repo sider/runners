@@ -37,12 +37,13 @@ linter:
 #   # PHP_CodeSniffer example. See https://help.sider.review/tools/php/code-sniffer
 #   code_sniffer:
 #     root_dir: project/
-#     dir: app/
-#     standard: CakePHP
+#     target: [app/, test/]
+#     standard: [CakePHP, custom-ruleset.xml]
 #     extensions: [php, inc]
 #     encoding: utf-8
 #     ignore:
 #       - app/vendor/
+#     parallel: true
 
 #   # CoffeeLint example. See https://help.sider.review/tools/javascript/coffeelint
 #   coffeelint:
