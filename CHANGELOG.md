@@ -6,6 +6,12 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.44.1...HEAD)
 
+Updated environments:
+
+- **devon_rex** 2.40.6 -> master [#2128](https://github.com/sider/runners/pull/2128)
+
+Misc:
+
 - **GolangCI-Lint** Set explicitly `GO111MODULE=auto` [#2129](https://github.com/sider/runners/pull/2129)
 - **Flake8** Add `parallel` option [#2130](https://github.com/sider/runners/pull/2130)
 - **detekt** Add `parallel` and `target` options [#2131](https://github.com/sider/runners/pull/2131)
