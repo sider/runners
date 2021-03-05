@@ -10,6 +10,10 @@ Updated environments:
 
 - **devon_rex** 2.40.6 -> master [#2128](https://github.com/sider/runners/pull/2128)
 
+Updated tools:
+
+- **SwiftLint** 0.42.0 -> 0.44.0 [#2133](https://github.com/sider/runners/pull/2133)
+
 Misc:
 
 - **GolangCI-Lint** Set explicitly `GO111MODULE=auto` [#2129](https://github.com/sider/runners/pull/2129)
