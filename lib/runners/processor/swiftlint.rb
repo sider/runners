@@ -39,10 +39,6 @@ module Runners
       YAML
     end
 
-    def extract_version_option
-      "version"
-    end
-
     def setup
       add_warning_if_deprecated_options
       yield
