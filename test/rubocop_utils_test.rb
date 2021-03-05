@@ -80,7 +80,7 @@ class RuboCopUtilsTest < Minitest::Test
       assert_links.call %w[
         https://www.rubydoc.info/gems/rubocop-sequel/RuboCop/Cop/Sequel/ColumnDefault
         https://github.com/rubocop-hq/rubocop-sequel
-      ], "Sequel/ColumnDefault"
+      ], "Sequel/ColumnDefault", additional_statuses: [301] # TODO: Remove `additional_statuses`
       assert_links.call %w[
         https://www.rubydoc.info/gems/rubocop-sketchup/RuboCop/Cop/SketchupBugs/RenderMode
         https://github.com/sketchup/rubocop-sketchup
