@@ -20,6 +20,7 @@ Misc:
 - **Flake8** Add `parallel` option [#2130](https://github.com/sider/runners/pull/2130)
 - **detekt** Add `parallel` and `target` options [#2131](https://github.com/sider/runners/pull/2131)
 - **PHP_CodeSniffer** Re-consider options (`target`, `standard`, `parallel`) [#2132](https://github.com/sider/runners/pull/2132)
+- **Checkstyle** Enable new recommended configuration [#2137](https://github.com/sider/runners/pull/2137)
 
 ## 0.44.1
 
