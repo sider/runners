@@ -164,11 +164,15 @@ class BumpAnalyzers
     "master"
   end
 
+  def dockerfiles
+    Pathname.glob("images/#{analyzer}/Dockerfile*")
+  end
+
   def update_version!(dry_run: false)
     updated = false
     current_version = nil
 
-    Pathname.glob("images/#{analyzer}/Dockerfile*").each do |file|
+    dockerfiles.each do |file|
       old_content = file.read
 
       new_content = old_content.sub(/\b(ARG|ENV) (\w+)=(\d+\.\d+(\.\d+)?)\b/) do
@@ -205,7 +209,8 @@ class BumpAnalyzers
     run "git", "config", "user.email", ENV.fetch("GITHUB_AUTHOR_EMAIL")
     run "git", "checkout", "--quiet", default_branch
     run "git", "checkout", "--quiet", "-B", head_branch
-    run "git", "commit", "--quiet", "--all", "--message", <<~MSG
+    run "git", "add", *dockerfiles.map(&:to_path)
+    run "git", "commit", "--quiet", "--message", <<~MSG
       #{pull_request_title}
 
       #{pull_request_body}
