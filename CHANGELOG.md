@@ -12,7 +12,7 @@ Updated environments:
 
 Updated tools:
 
-- **SwiftLint** 0.42.0 -> 0.44.0 [#2133](https://github.com/sider/runners/pull/2133)
+- **SwiftLint** 0.42.0 -> 0.43.0 [#2133](https://github.com/sider/runners/pull/2133)
 
 Misc:
 
