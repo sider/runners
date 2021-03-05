@@ -161,7 +161,7 @@ module Runners
     end
 
     def config_file
-      file = config_linter[:config] || "google" # TODO: Change "sider" when recommended ruleset is released.
+      file = config_linter[:config] || "sider"
       case file
       when "sun"
         "/sun_checks.xml"

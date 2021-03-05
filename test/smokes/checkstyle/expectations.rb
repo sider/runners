@@ -8,69 +8,25 @@ s.add_test(
   analyzer: { name: "Checkstyle", version: default_version },
   issues: [
     {
-      message: "'method def modifier' has incorrect indentation level 4, expected level should be 2.",
-      links: %w[https://checkstyle.org/config_misc.html#Indentation],
-      id: "IndentationCheck",
-      path: "src/Hello.java",
-      location: { start_line: 9, start_column: 5 },
-      object: { severity: "warning" },
-      git_blame_info: {
-        commit: :_, line_hash: "97c8f652b768ead8c8ae633a28485000d16ad703", original_line: 9, final_line: 9
-      }
-    },
-    {
-      message: "'method def' child has incorrect indentation level 8, expected level should be 4.",
-      links: %w[https://checkstyle.org/config_misc.html#Indentation],
-      id: "IndentationCheck",
-      path: "src/Hello.java",
-      location: { start_line: 10, start_column: 9 },
-      object: { severity: "warning" },
-      git_blame_info: {
-        commit: :_, line_hash: "addb4c033c4233fd7e9025796b0a22ff829782f9", original_line: 10, final_line: 10
-      }
-    },
-    {
-      message: "'method def rcurly' has incorrect indentation level 4, expected level should be 2.",
-      links: %w[https://checkstyle.org/config_misc.html#Indentation],
-      id: "IndentationCheck",
-      path: "src/Hello.java",
-      location: { start_line: 11, start_column: 5 },
-      object: { severity: "warning" },
-      git_blame_info: {
-        commit: :_, line_hash: "e266bf187351d458abacf0d6374d1c6659d82428", original_line: 11, final_line: 11
-      }
-    },
-    {
-      message: "Missing a Javadoc comment.",
-      links: %w[https://checkstyle.org/config_javadoc.html#MissingJavadocType],
-      id: "MissingJavadocTypeCheck",
-      path: "src/Hello.java",
-      location: { start_line: 3, start_column: 1 },
-      object: { severity: "warning" },
-      git_blame_info: {
-        commit: :_, line_hash: "b4aa7ff94732722c55d79ff3788d3d5f22b197b2", original_line: 3, final_line: 3
-      }
-    },
-    {
       message: "The name of the outer type and the file do not match.",
       links: %w[https://checkstyle.org/config_misc.html#OuterTypeFilename],
       id: "OuterTypeFilenameCheck",
       path: "src/Hello.java",
       location: { start_line: 3, start_column: 1 },
-      object: { severity: "warning" },
+      object: { severity: "info" },
       git_blame_info: {
         commit: :_, line_hash: "b4aa7ff94732722c55d79ff3788d3d5f22b197b2", original_line: 3, final_line: 3
       }
     },
     {
-      message: "Javadoc tag '@param' should be preceded with an empty line.",
-      links: %w[https://checkstyle.org/config_javadoc.html#RequireEmptyLineBeforeBlockTagGroup],
-      id: "RequireEmptyLineBeforeBlockTagGroupCheck",
+      message: "Package name is not same as directory.",
+      links: %w[https://checkstyle.org/config_coding.html#PackageDeclaration],
+      id: "PackageDeclarationCheck",
       path: "src/Hello.java",
-      location: { start_line: 7 },
-      object: { severity: "warning" },
+      location: { start_line: 1, start_column: 1 },
+      object: { severity: "info" },
       git_blame_info: {
-        commit: :_, line_hash: "c5eac3efafa02a21624306960aebdf27b3ce1706", original_line: 7, final_line: 7
+        commit: :_, line_hash: "cbce17a507d2e4fd00c89efee19480c0104e0932", original_line: 1, final_line: 1
       }
     }
   ]
