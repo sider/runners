@@ -1,10 +1,10 @@
 > Explain a summary, purpose, or background for this change.
 
-<!-- E.g This change aims to fix... -->
+...
 
-> Link related issues or pull requests.
+> Refer related issues or pull requests (e.g. `Close #123` or `None`).
 
-<!-- E.g. Fix #123, Related to #456, or None etc. -->
+...
 
 > Check the following if needed.
 
