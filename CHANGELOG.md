@@ -13,6 +13,7 @@ Updated environments:
 Updated tools:
 
 - **GolangCI-Lint** 1.37.1 -> 1.38.0 [#2138](https://github.com/sider/runners/pull/2138)
+- **stylelint** 13.11.0 -> 13.12.0 [#2143](https://github.com/sider/runners/pull/2143)
 - **SwiftLint** 0.42.0 -> 0.43.0 [#2133](https://github.com/sider/runners/pull/2133)
 
 Misc:
