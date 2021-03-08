@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "1.37.1"
+default_version = "1.38.0"
 
 s.add_test(
   "target",
@@ -10,7 +10,7 @@ s.add_test(
       path: "dir1/sample.go",
       location: { start_line: 9, start_column: 10 },
       id: "errcheck",
-      message: "Error return value of `validate` is not checked",
+      message: "Error return value is not checked",
       links: [],
       object: { severity: "", replacement: nil },
       git_blame_info: {
@@ -21,7 +21,7 @@ s.add_test(
       path: "dir2/src/sample.go",
       location: { start_line: 9, start_column: 10 },
       id: "errcheck",
-      message: "Error return value of `validate` is not checked",
+      message: "Error return value is not checked",
       links: [],
       object: { severity: "", replacement: nil },
       git_blame_info: {
@@ -89,7 +89,8 @@ s.add_test(
       }
     }
   ],
-  analyzer: { name: "GolangCI-Lint", version: default_version }
+  analyzer: { name: "GolangCI-Lint", version: default_version },
+  warnings: [{ message: "The linter 'interfacer' is deprecated due to: The repository of the linter has been archived by the owner.", file: nil }]
 )
 
 s.add_test(
@@ -340,7 +341,7 @@ s.add_test(
       path: "vendor/third_party.go",
       location: { start_line: 9, start_column: 10 },
       id: "errcheck",
-      message: "Error return value of `validate` is not checked",
+      message: "Error return value is not checked",
       links: [],
       object: { severity: "", replacement: nil },
       git_blame_info: {
@@ -361,7 +362,7 @@ s.add_test(
       path: "src/libs/sample.go",
       location: { start_line: 9, start_column: 10 },
       id: "errcheck",
-      message: "Error return value of `validate` is not checked",
+      message: "Error return value is not checked",
       links: [],
       object: { severity: "", replacement: nil },
       git_blame_info: {

@@ -13,7 +13,8 @@ s.add_test(
       message: "The number of code clones is 2 with total 56 lines.",
       links: [],
       object: {
-        clones: 2
+        clones: 2,
+        total_clone_lines: 56
       },
       git_blame_info: nil
     }
@@ -53,7 +54,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 28 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 28
       },
       git_blame_info: nil
     },
@@ -64,7 +66,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 28 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 28
       },
       git_blame_info: nil
     }
@@ -83,7 +86,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 14 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 14
       },
       git_blame_info: nil
     },
@@ -94,7 +98,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 14 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 14
       },
       git_blame_info: nil
     }
@@ -113,7 +118,8 @@ s.add_test(
       message: "The number of code clones is 3 with total 10 lines.",
       links: [],
       object: {
-        clones: 3
+        clones: 3,
+        total_clone_lines: 10
       },
       git_blame_info: nil
     },
@@ -124,7 +130,8 @@ s.add_test(
       message: "The number of code clones is 3 with total 10 lines.",
       links: [],
       object: {
-        clones: 3
+        clones: 3,
+        total_clone_lines: 10
       },
       git_blame_info: nil
     }
@@ -143,7 +150,8 @@ s.add_test(
       message: "The number of code clones is 2 with total 22 lines.",
       links: [],
       object: {
-        clones: 2
+        clones: 2,
+        total_clone_lines: 22
       },
       git_blame_info: nil
     }
@@ -162,7 +170,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 24 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 24
       },
       git_blame_info: nil
     },
@@ -173,7 +182,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 24 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 24
       },
       git_blame_info: nil
     }
@@ -211,7 +221,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 15 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 15
       },
       git_blame_info: nil
     },
@@ -222,7 +233,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 15 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 15
       },
       git_blame_info: nil
     }
@@ -251,7 +263,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 40 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 40
       },
       git_blame_info: nil
     },
@@ -262,7 +275,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 40 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 40
       },
       git_blame_info: nil
     }
@@ -281,7 +295,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 15 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 15
       },
       git_blame_info: nil
     },
@@ -292,7 +307,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 15 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 15
       },
       git_blame_info: nil
     }
@@ -325,7 +341,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 15 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 15
       },
       git_blame_info: nil
     },
@@ -336,7 +353,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 12 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 12
       },
       git_blame_info: nil
     },
@@ -347,7 +365,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 5 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 5
       },
       git_blame_info: nil
     },
@@ -358,7 +377,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 10 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 10
       },
       git_blame_info: nil
     },
@@ -369,7 +389,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 13 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 13
       },
       git_blame_info: nil
     },
@@ -380,7 +401,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 7 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 7
       },
       git_blame_info: nil
     },
@@ -391,7 +413,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 8 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 8
       },
       git_blame_info: nil
     },
@@ -402,7 +425,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 7 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 7
       },
       git_blame_info: nil
     },
@@ -413,7 +437,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 24 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 24
       },
       git_blame_info: nil
     },
@@ -424,7 +449,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 9 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 9
       },
       git_blame_info: nil
     },
@@ -435,7 +461,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 15 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 15
       },
       git_blame_info: nil
     },
@@ -446,7 +473,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 12 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 12
       },
       git_blame_info: nil
     },
@@ -457,7 +485,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 5 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 5
       },
       git_blame_info: nil
     },
@@ -468,7 +497,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 10 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 10
       },
       git_blame_info: nil
     },
@@ -479,7 +509,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 13 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 13
       },
       git_blame_info: nil
     },
@@ -490,7 +521,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 7 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 7
       },
       git_blame_info: nil
     },
@@ -501,7 +533,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 8 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 8
       },
       git_blame_info: nil
     },
@@ -512,7 +545,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 7 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 7
       },
       git_blame_info: nil
     },
@@ -523,7 +557,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 24 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 24
       },
       git_blame_info: nil
     },
@@ -534,7 +569,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 9 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 9
       },
       git_blame_info: nil
     }
@@ -553,7 +589,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 7 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 7
       },
       git_blame_info: nil
     },
@@ -564,7 +601,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 9 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 9
       },
       git_blame_info: nil
     },
@@ -575,7 +613,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 7 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 7
       },
       git_blame_info: nil
     },
@@ -586,7 +625,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 7 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 7
       },
       git_blame_info: nil
     },
@@ -597,7 +637,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 9 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 9
       },
       git_blame_info: nil
     },
@@ -608,7 +649,8 @@ s.add_test(
       message: "The number of code clones is 1 with total 7 lines.",
       links: [],
       object: {
-        clones: 1
+        clones: 1,
+        total_clone_lines: 7
       },
       git_blame_info: nil
     }
