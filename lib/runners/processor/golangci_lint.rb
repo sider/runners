@@ -88,9 +88,9 @@ module Runners
       ex_failure = 3
       ex_no_go_files = 5
 
-      stdout, stderr, status = capture3(analyzer_bin, "run", *analyzer_options)
+      stdout, _stderr, status = capture3(analyzer_bin, "run", *analyzer_options)
 
-      if [ex_success, ex_issues_found].include?(status.exitstatus) && !stdout.empty? && stderr.empty?
+      if [ex_success, ex_issues_found].include?(status.exitstatus) && !stdout.empty?
         return Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
           parse_result(stdout) { |v| result.add_issue(v) }
         end
@@ -153,22 +153,12 @@ module Runners
       Array(config_linter[:target])
     end
 
-    # Output format:
-    #
-    #      ["{"Issues":[{"FromLinter":"govet","Text":"printf: Printf call has arguments but no formatting directives",
-    #      "SourceLines":["\tfmt.Printf(\\\"text\\\", awesome_text)\"],\"Replacement\":null,
-    #      \"Pos\":{\"Filename\":\"test/smokes/golangci_lint/success/main.go\",\"Offset\":85,\"Line\":7,\"Column\":12}}],
-    #      \"Report\":{\"Linters\":[{\"Name\":\"govet\",\"Enabled\":true,\"EnabledByDefault\":true},
-    #      {\"Name\":\"bodyclose\"}...
-    #
-    # Example:
-    #
-    #     {:FromLinter=>"govet", :Text=>"printf: Printf call has arguments but no formatting directives",
-    #     :SourceLines=>["\tfmt.Printf(\"text\", awesome_text)"], :Replacement=>nil,
-    #     :Pos=>{:Filename=>"test/smokes/golangci_lint/success/main.go", :Offset=>85, :Line=>7, :Column=>12}}
-    #
     def parse_result(output)
       json = JSON.parse(output, symbolize_names: true)
+
+      (json.dig(:Report, :Warnings) || []).each do |warning|
+        add_warning warning.fetch(:Text)
+      end
 
       (json[:Issues] || []).each do |issue|
         linter = issue[:FromLinter]
