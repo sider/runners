@@ -7,7 +7,7 @@ module Runners
 
       let :issue, object(
         clones: integer,
-        'total-clone-lines': integer,
+        total_clone_lines: integer,
       )
     end
 
@@ -58,7 +58,7 @@ module Runners
         message: msg,
         object: {
           clones: clones,
-          'total-clone-lines': sum_of_lines,
+          total_clone_lines: sum_of_lines,
         },
         schema: Schema.issue,
       )

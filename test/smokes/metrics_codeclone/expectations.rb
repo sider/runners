@@ -14,7 +14,7 @@ s.add_test(
       links: [],
       object: {
         clones: 2,
-        'total-clone-lines': 56
+        total_clone_lines: 56
       },
       git_blame_info: nil
     }
@@ -55,7 +55,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 28
+        total_clone_lines: 28
       },
       git_blame_info: nil
     },
@@ -67,7 +67,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 28
+        total_clone_lines: 28
       },
       git_blame_info: nil
     }
@@ -87,7 +87,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 14
+        total_clone_lines: 14
       },
       git_blame_info: nil
     },
@@ -99,7 +99,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 14
+        total_clone_lines: 14
       },
       git_blame_info: nil
     }
@@ -119,7 +119,7 @@ s.add_test(
       links: [],
       object: {
         clones: 3,
-        'total-clone-lines': 10
+        total_clone_lines: 10
       },
       git_blame_info: nil
     },
@@ -131,7 +131,7 @@ s.add_test(
       links: [],
       object: {
         clones: 3,
-        'total-clone-lines': 10
+        total_clone_lines: 10
       },
       git_blame_info: nil
     }
@@ -151,7 +151,7 @@ s.add_test(
       links: [],
       object: {
         clones: 2,
-        'total-clone-lines': 22
+        total_clone_lines: 22
       },
       git_blame_info: nil
     }
@@ -171,7 +171,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 24
+        total_clone_lines: 24
       },
       git_blame_info: nil
     },
@@ -183,7 +183,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 24
+        total_clone_lines: 24
       },
       git_blame_info: nil
     }
@@ -222,7 +222,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 15
+        total_clone_lines: 15
       },
       git_blame_info: nil
     },
@@ -234,7 +234,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 15
+        total_clone_lines: 15
       },
       git_blame_info: nil
     }
@@ -264,7 +264,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 40
+        total_clone_lines: 40
       },
       git_blame_info: nil
     },
@@ -276,7 +276,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 40
+        total_clone_lines: 40
       },
       git_blame_info: nil
     }
@@ -296,7 +296,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 15
+        total_clone_lines: 15
       },
       git_blame_info: nil
     },
@@ -308,7 +308,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 15
+        total_clone_lines: 15
       },
       git_blame_info: nil
     }
@@ -342,7 +342,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 15
+        total_clone_lines: 15
       },
       git_blame_info: nil
     },
@@ -354,7 +354,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 12
+        total_clone_lines: 12
       },
       git_blame_info: nil
     },
@@ -366,7 +366,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 5
+        total_clone_lines: 5
       },
       git_blame_info: nil
     },
@@ -378,7 +378,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 10
+        total_clone_lines: 10
       },
       git_blame_info: nil
     },
@@ -390,7 +390,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 13
+        total_clone_lines: 13
       },
       git_blame_info: nil
     },
@@ -402,7 +402,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 7
+        total_clone_lines: 7
       },
       git_blame_info: nil
     },
@@ -414,7 +414,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 8
+        total_clone_lines: 8
       },
       git_blame_info: nil
     },
@@ -426,7 +426,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 7
+        total_clone_lines: 7
       },
       git_blame_info: nil
     },
@@ -438,7 +438,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 24
+        total_clone_lines: 24
       },
       git_blame_info: nil
     },
@@ -450,7 +450,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 9
+        total_clone_lines: 9
       },
       git_blame_info: nil
     },
@@ -462,7 +462,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 15
+        total_clone_lines: 15
       },
       git_blame_info: nil
     },
@@ -474,7 +474,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 12
+        total_clone_lines: 12
       },
       git_blame_info: nil
     },
@@ -486,7 +486,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 5
+        total_clone_lines: 5
       },
       git_blame_info: nil
     },
@@ -498,7 +498,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 10
+        total_clone_lines: 10
       },
       git_blame_info: nil
     },
@@ -510,7 +510,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 13
+        total_clone_lines: 13
       },
       git_blame_info: nil
     },
@@ -522,7 +522,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 7
+        total_clone_lines: 7
       },
       git_blame_info: nil
     },
@@ -534,7 +534,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 8
+        total_clone_lines: 8
       },
       git_blame_info: nil
     },
@@ -546,7 +546,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 7
+        total_clone_lines: 7
       },
       git_blame_info: nil
     },
@@ -558,7 +558,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 24
+        total_clone_lines: 24
       },
       git_blame_info: nil
     },
@@ -570,7 +570,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 9
+        total_clone_lines: 9
       },
       git_blame_info: nil
     }
@@ -590,7 +590,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 7
+        total_clone_lines: 7
       },
       git_blame_info: nil
     },
@@ -602,7 +602,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 9
+        total_clone_lines: 9
       },
       git_blame_info: nil
     },
@@ -614,7 +614,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 7
+        total_clone_lines: 7
       },
       git_blame_info: nil
     },
@@ -626,7 +626,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 7
+        total_clone_lines: 7
       },
       git_blame_info: nil
     },
@@ -638,7 +638,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 9
+        total_clone_lines: 9
       },
       git_blame_info: nil
     },
@@ -650,7 +650,7 @@ s.add_test(
       links: [],
       object: {
         clones: 1,
-        'total-clone-lines': 7
+        total_clone_lines: 7
       },
       git_blame_info: nil
     }
