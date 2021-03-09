@@ -21,25 +21,21 @@ RUN cd "${RUNNERS_DIR}" && \
     lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler.locked_gems.bundler_version') && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
-# TODO: Wait for npm 7. See #1963
-USER root
-RUN npm install --global npm@6
-USER $RUNNER_USER
-
 # Install the default version
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/tslint/package.json ${RUNNER_USER_HOME}/tslint_package.json
 RUN cd "${RUNNER_USER_HOME}" && \
     mkdir tslint && \
     mv tslint_package.json tslint/package.json && \
     cd tslint && \
-    npm config set ignore-scripts true && \
-    npm config set progress false && \
-    npm config set package-lock false && \
-    npm install && \
-    npm ls --depth 0 # Check required peer dependencies
+    npm install --strict-peer-deps --ignore-scripts --engine-strict --no-progress --no-save
 ENV PATH ${RUNNER_USER_HOME}/tslint/node_modules/.bin:${PATH}
 # See https://nodejs.org/api/cli.html#cli_node_path_path
 ENV NODE_PATH ${RUNNER_USER_HOME}/tslint/node_modules:${NODE_PATH}
+
+# TODO: Wait for npm 7. See #1963
+USER root
+RUN npm install --global npm@6
+USER $RUNNER_USER
 
 # By default, TSLint looks for a configuration file named tslint.json in the directory of the file being linted and, if not found, searches ancestor directories.
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/tslint/default_tslint.json ${RUNNER_USER_HOME}/tslint.json
