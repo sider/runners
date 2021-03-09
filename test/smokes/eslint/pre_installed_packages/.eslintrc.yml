@@ -1,0 +1,30 @@
+# Packages defined in `images/eslint/package.json`.
+#
+# According to the npmjs.com ranking:
+#
+#   https://www.npmjs.com/search?q=keywords%3Aeslint-plugin%2Ceslint-config
+#
+
+extends:
+  - "@vue/typescript"
+  - airbnb
+  - prettier
+  - react-app
+
+plugins:
+  - "@typescript-eslint"
+  - cypress
+  - flowtype
+  - import
+  - jest
+  - jsx-a11y
+  - mocha
+  - node
+  - prettier
+  - promise
+  - react
+  - react-hooks
+  - unicorn
+  - vue
+
+parser: "@babel/eslint-parser"

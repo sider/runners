@@ -500,3 +500,10 @@ s.add_test(
   issues: [],
   analyzer: { name: "ESLint", version: "7.13.0" }
 )
+
+s.add_test(
+  "pre_installed_packages",
+  type: "success",
+  issues: [],
+  analyzer: { name: "ESLint", version: default_version }
+)
