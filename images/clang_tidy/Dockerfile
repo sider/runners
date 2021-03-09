@@ -6,13 +6,16 @@ FROM sider/devon_rex_base:master
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/clang_tidy/packages.list ${RUNNER_USER_HOME}/
 
+ARG LLVM_VERSION=10
+
 USER root
 RUN curl -fsSL https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
-    add-apt-repository "deb http://apt.llvm.org/buster/ llvm-toolchain-buster-10 main" && \
+    add-apt-repository "deb http://apt.llvm.org/buster/ llvm-toolchain-buster-${LLVM_VERSION} main" && \
     apt-get update && \
-    grep -v "^\s*#" "${RUNNER_USER_HOME}/packages.list" | xargs apt-get install -qq -y --no-install-recommends && \
+    grep -v "^\s*#" "${RUNNER_USER_HOME}/packages.list" | xargs apt-get install -qq -y --no-install-recommends "clang-tidy-${LLVM_VERSION}" && \
     apt-get clean && \
-    update-alternatives --install /usr/local/bin/clang-tidy clang-tidy /usr/lib/llvm-10/bin/clang-tidy 20
+    update-alternatives --install /usr/local/bin/clang-tidy clang-tidy "/usr/lib/llvm-${LLVM_VERSION}/bin/clang-tidy" 20 && \
+    clang-tidy --version | grep "LLVM version ${LLVM_VERSION}"
 USER $RUNNER_USER
 
 

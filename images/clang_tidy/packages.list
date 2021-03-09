@@ -1,6 +1,3 @@
-# Main Clang-Tidy package
-clang-tidy-10
-
 # Popular packages of https://github.com/fffaraz/awesome-cpp
 libapr1-dev
 libasio-dev
