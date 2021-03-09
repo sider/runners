@@ -1,3 +1,5 @@
 linter:
   checkstyle:
     config: google
+    dir:
+      - src
