@@ -1,5 +1,5 @@
 # Main Clang-Tidy package
-clang-tidy-10=1:10.0.1~++20200708124224+ef32c611aa2-1~exp1~20200707224822.188
+clang-tidy-10
 
 # Popular packages of https://github.com/fffaraz/awesome-cpp
 libapr1-dev
