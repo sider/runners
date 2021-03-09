@@ -26,6 +26,7 @@ Misc:
 - **detekt** Add `parallel` and `target` options [#2131](https://github.com/sider/runners/pull/2131)
 - **PHP_CodeSniffer** Re-consider options (`target`, `standard`, `parallel`) [#2132](https://github.com/sider/runners/pull/2132)
 - **Metrics Code Clone** Report the total number of duplicated lines [#2146](https://github.com/sider/runners/pull/2146)
+- Install default npm dependencies via npm 7 [#2150](https://github.com/sider/runners/pull/2150)
 
 ## 0.44.1
 
