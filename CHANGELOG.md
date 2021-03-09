@@ -12,15 +12,21 @@ Updated environments:
 
 Updated tools:
 
+- **GolangCI-Lint** 1.37.1 -> 1.38.0 [#2138](https://github.com/sider/runners/pull/2138)
+- **hadolint** 1.22.1 -> 1.23.0 [#2145](https://github.com/sider/runners/pull/2145)
+- **RuboCop** 1.10.0 -> 1.11.0 [#2140](https://github.com/sider/runners/pull/2140)
+- **stylelint** 13.11.0 -> 13.12.0 [#2143](https://github.com/sider/runners/pull/2143)
 - **SwiftLint** 0.42.0 -> 0.43.0 [#2133](https://github.com/sider/runners/pull/2133)
 
 Misc:
 
 - **GolangCI-Lint** Set explicitly `GO111MODULE=auto` [#2129](https://github.com/sider/runners/pull/2129)
+- **GolangCI-Lint** Output warnings [#2138](https://github.com/sider/runners/pull/2138)
 - **Flake8** Add `parallel` option [#2130](https://github.com/sider/runners/pull/2130)
 - **detekt** Add `parallel` and `target` options [#2131](https://github.com/sider/runners/pull/2131)
 - **PHP_CodeSniffer** Re-consider options (`target`, `standard`, `parallel`) [#2132](https://github.com/sider/runners/pull/2132)
 - **Checkstyle** Enable new recommended configuration [#2137](https://github.com/sider/runners/pull/2137)
+- **Metrics Code Clone** Report the total number of duplicated lines [#2146](https://github.com/sider/runners/pull/2146)
 
 ## 0.44.1
 
