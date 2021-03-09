@@ -17,6 +17,7 @@ Updated tools:
 - **RuboCop** 1.10.0 -> 1.11.0 [#2140](https://github.com/sider/runners/pull/2140)
 - **stylelint** 13.11.0 -> 13.12.0 [#2143](https://github.com/sider/runners/pull/2143)
 - **SwiftLint** 0.42.0 -> 0.43.0 [#2133](https://github.com/sider/runners/pull/2133)
+- **Clang-Tidy** 10 -> 11 [#2154](https://github.com/sider/runners/pull/2154)
 
 Misc:
 
