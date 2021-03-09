@@ -21,25 +21,21 @@ RUN cd "${RUNNERS_DIR}" && \
     lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler.locked_gems.bundler_version') && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
-# TODO: Wait for npm 7. See #1963
-USER root
-RUN npm install --global npm@6
-USER $RUNNER_USER
-
 # Install the default version
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/tyscan/package.json ${RUNNER_USER_HOME}/tyscan_package.json
 RUN cd "${RUNNER_USER_HOME}" && \
     mkdir tyscan && \
     mv tyscan_package.json tyscan/package.json && \
     cd tyscan && \
-    npm config set ignore-scripts true && \
-    npm config set progress false && \
-    npm config set package-lock false && \
-    npm install && \
-    npm ls --depth 0 # Check required peer dependencies
+    npm install --strict-peer-deps --ignore-scripts --engine-strict --no-progress --no-save
 ENV PATH ${RUNNER_USER_HOME}/tyscan/node_modules/.bin:${PATH}
 # See https://nodejs.org/api/cli.html#cli_node_path_path
 ENV NODE_PATH ${RUNNER_USER_HOME}/tyscan/node_modules:${NODE_PATH}
+
+# TODO: Wait for npm 7. See #1963
+USER root
+RUN npm install --global npm@6
+USER $RUNNER_USER
 
 # Copy the main source code
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} exe ${RUNNERS_DIR}/exe
