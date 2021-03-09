@@ -12,6 +12,7 @@ Updated environments:
 
 Updated tools:
 
+- **Clang-Tidy** 10 -> 11 [#2154](https://github.com/sider/runners/pull/2154)
 - **GolangCI-Lint** 1.37.1 -> 1.38.0 [#2138](https://github.com/sider/runners/pull/2138)
 - **hadolint** 1.22.1 -> 1.23.0 [#2145](https://github.com/sider/runners/pull/2145)
 - **RuboCop** 1.10.0 -> 1.11.0 [#2140](https://github.com/sider/runners/pull/2140)
@@ -27,6 +28,8 @@ Misc:
 - **PHP_CodeSniffer** Re-consider options (`target`, `standard`, `parallel`) [#2132](https://github.com/sider/runners/pull/2132)
 - **Checkstyle** Enable new recommended configuration [#2137](https://github.com/sider/runners/pull/2137)
 - **Metrics Code Clone** Report the total number of duplicated lines [#2146](https://github.com/sider/runners/pull/2146)
+- Install default npm dependencies via npm 7 [#2150](https://github.com/sider/runners/pull/2150)
+- **Clang-Tidy** Loosen the version constraint for clang-tidy [#2153](https://github.com/sider/runners/pull/2153)
 
 ## 0.44.1
 
