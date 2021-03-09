@@ -16,7 +16,8 @@ jobs:
         analyzer:
           - brakeman
           - checkstyle
-          - clang_tidy
+          # TODO: https://github.com/sider/runners/issues/2152
+          # - clang_tidy
           - code_sniffer
           - coffeelint
           - cppcheck
