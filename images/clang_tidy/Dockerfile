@@ -6,7 +6,7 @@ FROM sider/devon_rex_base:master
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/clang_tidy/packages.list ${RUNNER_USER_HOME}/
 
-ARG LLVM_VERSION=10
+ARG LLVM_VERSION=11
 
 USER root
 RUN curl -fsSL https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
