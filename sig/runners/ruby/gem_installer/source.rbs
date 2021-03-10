@@ -3,7 +3,7 @@ module Runners
     class Source
       DEFAULT: String
 
-      def self.default: () -> instance
+      def self.default: () -> Source
 
       def self.create: (gems_item) -> instance
 

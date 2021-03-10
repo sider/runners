@@ -11,6 +11,7 @@ target :lib do
   library "time"
   library "uri"
   library "erb"
+  library "rubygems"
   library "strong_json"
   library "retryable"
 end
