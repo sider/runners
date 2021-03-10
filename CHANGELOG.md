@@ -31,6 +31,7 @@ Misc:
 - Install default npm dependencies via npm 7 [#2150](https://github.com/sider/runners/pull/2150)
 - **Clang-Tidy** Loosen the version constraint for clang-tidy [#2153](https://github.com/sider/runners/pull/2153)
 - **ESLint** Update pre-installed packages [#2155](https://github.com/sider/runners/pull/2155)
+- **Flake8** Enable new recommended configuration [#2157](https://github.com/sider/runners/pull/2157)
 
 ## 0.44.1
 
