@@ -103,7 +103,7 @@ rules:
   no-useless-return: [error]
   no-warning-comments: [error]
   no-with: [error]
-  prefer-promise-reject- [error]s: [error]
+  prefer-promise-reject-errors: [error]
   prefer-regex-literals: [error]
   radix: [error]
   require-await: [error]
