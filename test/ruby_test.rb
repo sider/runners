@@ -818,40 +818,23 @@ EOF
     end
   end
 
-  def test_installed_gem_versions
-    with_workspace do |workspace|
-      processor = new_processor(workspace: workspace)
-
-      processor.stub :capture3!, "rubocop (0.75.1, 0.75.0)\nmeowcop (2.4.0)\n" do
-        assert_equal({ "rubocop" => ["0.75.1", "0.75.0"], "meowcop" => ["2.4.0"] },
-                     processor.installed_gem_versions(["rubocop", "meowcop"]))
-      end
-
-      processor.stub :capture3!, "" do
-        error = assert_raises(RuntimeError) { processor.installed_gem_versions(["foo"]) }
-        assert_equal 'Not found installed gem "foo"', error.message
-      end
-
-      processor.stub :capture3!, "meowcop (2.4.0)\n" do
-        assert_equal({ "meowcop" => ["2.4.0"] },
-                     processor.installed_gem_versions(["foo", "meowcop"], exception: false))
-      end
-    end
-  end
-
   def test_default_gem_specs
     with_workspace do |workspace|
       processor = new_processor(workspace: workspace)
 
       processor.stub :capture3!, "rubocop (0.75.1, 0.75.0)\n" do
-        assert_equal [Spec.new(name: "rubocop", version: ["0.75.1", "0.75.0"])], processor.default_gem_specs("rubocop")
+        assert_equal [Spec.new(name: "rubocop", version: ["0.75.1", "0.75.0"])],
+                     processor.default_gem_specs("rubocop")
       end
 
       processor.stub :capture3!, "foo (1.2.3)\nbar (4.5.6)\n" do
-        assert_equal [
-          Spec.new(name: "foo", version: ["1.2.3"]),
-          Spec.new(name: "bar", version: ["4.5.6"]),
-        ], processor.default_gem_specs("foo", "bar")
+        assert_equal [Spec.new(name: "foo", version: ["1.2.3"]), Spec.new(name: "bar", version: ["4.5.6"])],
+                     processor.default_gem_specs("foo", "bar")
+      end
+
+      processor.stub :capture3!, "" do
+        error = assert_raises(RuntimeError) { processor.default_gem_specs("foo") }
+        assert_equal 'Not found installed gem "foo"', error.message
       end
     end
   end
