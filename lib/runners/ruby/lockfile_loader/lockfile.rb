@@ -32,7 +32,7 @@ module Runners
           found = find_spec(spec)
           version, = found&.version
           if found && version
-            Gem::Requirement.create(constraints[found.name]).satisfied_by?(Gem::Version.new(version))
+            Gem::Requirement.create(constraints[found.name]).satisfied_by?(Gem::Version.create(version))
           else
             raise "Spec not found: #{spec}, lockfile=#{specs.inspect}"
           end
