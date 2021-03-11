@@ -36,5 +36,7 @@ module Runners
     def user_specs: (Array[GemInstaller::Spec] specs, LockfileLoader::Lockfile) -> Array[GemInstaller::Spec]
 
     def config_gems: () -> Array[GemInstaller::Spec]
+
+    def merge_specs: (Array[GemInstaller::Spec], Array[GemInstaller::Spec]) -> Array[GemInstaller::Spec]
   end
 end

@@ -26,37 +26,6 @@ module Runners
           new_version = locked_version ? [locked_version] : version
           Spec.new(name: name, version: new_version, source: source)
         end
-
-        def self.merge(default_gems, user_gems)
-          specs = []
-
-          default_gems_hash = default_gems.each.with_object({}) do |spec, hash|
-            hash[spec.name] = spec
-          end
-          user_gems_hash = user_gems.each.with_object({}) do |spec, hash|
-            hash[spec.name] = spec
-          end
-
-          default_gems_hash.each do |_, spec|
-            if (user_spec = user_gems_hash[spec.name])
-              specs << GemInstaller::Spec.new(
-                name: spec.name,
-                version: user_spec.version,
-                source: user_spec.source
-              )
-            else
-              specs << spec
-            end
-          end
-
-          user_gems_hash.each do |_, spec|
-            unless default_gems_hash.key?(spec.name)
-              specs << spec
-            end
-          end
-
-          specs
-        end
       end
     end
   end

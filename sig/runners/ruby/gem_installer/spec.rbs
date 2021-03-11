@@ -9,8 +9,6 @@ module Runners
         def initialize: (name: String, version: Array[String], ?source: Source) -> void
 
         def override_by_lockfile: (LockfileLoader::Lockfile) -> Spec
-
-        def self.merge: (Array[Spec], Array[Spec]) -> Array[Spec]
       end
     end
   end

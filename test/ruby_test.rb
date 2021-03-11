@@ -486,22 +486,25 @@ EOF
   end
 
   def test_merge_specs
-    default_specs = [
-      Spec.new(name: "rubocop", version: ["0.4.0"]),
-      Spec.new(name: "strong_json", version: ["0.4.0"])
-    ]
+    with_workspace do |workspace|
+      processor = new_processor(workspace: workspace)
 
-    user_specs = [
-      Spec.new(name: "rubocop", version: ["0.5.0"], source: "https://some.source.org"),
-      Spec.new(name: "rubocop-rspec", version: ["1.2.3"])
-    ]
+      defaults = [
+        Spec.new(name: "rubocop", version: ["0.4.0"]),
+        Spec.new(name: "strong_json", version: ["0.4.0"]),
+      ]
 
-    assert_equal [
-                   Spec.new(name: "rubocop", version: ["0.5.0"], source: "https://some.source.org"),
-                   Spec.new(name: "strong_json", version: ["0.4.0"]),
-                   Spec.new(name: "rubocop-rspec", version: ["1.2.3"])
-                 ],
-                 Spec.merge(default_specs, user_specs)
+      users = [
+        Spec.new(name: "rubocop", version: ["0.5.0"], source: "https://some.source.org"),
+        Spec.new(name: "rubocop-rspec", version: ["1.2.3"]),
+      ]
+
+      assert_equal [
+        Spec.new(name: "rubocop", version: ["0.5.0"], source: "https://some.source.org"),
+        Spec.new(name: "strong_json", version: ["0.4.0"]),
+        Spec.new(name: "rubocop-rspec", version: ["1.2.3"]),
+      ], processor.send(:merge_specs, defaults, users)
+    end
   end
 
   def test_install_no_gems

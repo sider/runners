@@ -11,8 +11,10 @@ module Runners
         optionals = optional_specs(optionals, lockfile)
         user_specs = user_specs(user_specs, lockfile)
       end
+
       use_local = (user_specs + optionals).empty? && original_default_specs == default_specs
-      specs = GemInstaller::Spec.merge(default_specs, user_specs.size > 0 ? user_specs : optionals)
+
+      specs = merge_specs(default_specs, user_specs.empty? ? optionals : user_specs)
 
       mktmpdir do |path|
         installer = GemInstaller.new(shell: shell,
@@ -122,6 +124,32 @@ module Runners
           source: GemInstaller::Source.create(gem),
         )
       end
+    end
+
+    def merge_specs(defaults, users)
+      defaults_hash = defaults.to_h { |spec| [spec.name, spec] }
+      users_hash = users.to_h { |spec| [spec.name, spec] }
+
+      specs = []
+
+      specs += defaults_hash.map do |name, spec|
+        user_spec = users_hash[name]
+        if user_spec
+          GemInstaller::Spec.new(
+            name: name,
+            version: user_spec.version,
+            source: user_spec.source
+          )
+        else
+          spec
+        end
+      end
+
+      specs += users_hash.filter_map do |name, spec|
+        spec unless defaults_hash.include?(name)
+      end
+
+      specs
     end
   end
 end
