@@ -1,6 +1,6 @@
 module Runners
   module Ruby : Processor
-    type constraints = Hash[String, Array[String]]
+    type constraints = Hash[String, Gem::Requirement]
 
     class InstallGemsFailure < UserError
     end

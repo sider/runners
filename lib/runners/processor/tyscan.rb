@@ -22,7 +22,7 @@ module Runners
     register_config_schema(name: :tyscan, schema: Schema.runner_config)
 
     CONSTRAINTS = {
-      "tyscan" => Gem::Requirement.new(">= 0.2.1", "< 1.0.0")
+      "tyscan" => Gem::Requirement.new(">= 0.2.1", "< 1.0.0").freeze,
     }.freeze
 
     DEFAULT_CONFIG_FILE = "tyscan.yml".freeze

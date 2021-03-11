@@ -56,7 +56,7 @@ class RubyTest < Minitest::Test
         specs: specs,
         home: path,
         config_path_name: "sider.yml",
-        constraints: { "strong_json" => ["<= 0.8"], "rubocop" => [">= 0.55.0"] },
+        constraints: { "strong_json" => Gem::Requirement.new("<= 0.8"), "rubocop" => Gem::Requirement.new(">= 0.55.0") },
         trace_writer: trace_writer,
         use_local: false,
       )
@@ -64,8 +64,8 @@ class RubyTest < Minitest::Test
       assert_equal <<~CONTENT, installer.gemfile_content
         source "https://rubygems.org"
 
-        gem "meowcop", "1.2.0"
-        gem "strong_json", "0.4.0", "<= 0.8"
+        gem "meowcop", "= 1.2.0"
+        gem "strong_json", "= 0.4.0", "<= 0.8"
 
         source "https://gems.sider.review" do
           gem "rubocop-sider"
@@ -150,7 +150,7 @@ class RubyTest < Minitest::Test
         home: path,
         config_path_name: "sider.yml",
         trace_writer: trace_writer,
-        constraints: { "strong_json" => ["<= 0.8.0"] },
+        constraints: { "strong_json" => Gem::Requirement.new("<= 0.8.0") },
         use_local: false,
       )
 
@@ -167,7 +167,7 @@ class RubyTest < Minitest::Test
         ### Auto-generated Gemfile ###
         source "https://rubygems.org"
 
-        gem "strong_json", "0.5.0", "<= 0.8.0"
+        gem "strong_json", "= 0.5.0", "<= 0.8.0"
 
         git "https://github.com/rubocop/rubocop-rails.git", tag: "v2.9.0" do
           gem "rubocop-rails"
@@ -192,7 +192,7 @@ class RubyTest < Minitest::Test
         home: path,
         config_path_name: "sider.yml",
         trace_writer: trace_writer,
-        constraints: { "strong_json" => ["> 0.6.0"] },
+        constraints: { "strong_json" => Gem::Requirement.new("> 0.6.0") },
         use_local: false,
       )
 
@@ -615,7 +615,7 @@ EOF
 
       processor.install_gems([Spec.new(name: "public_suffix", version: ["4.0.3"])],
                              optionals: [Spec.new(name: "meowcop", version: ["1.17.1"])],
-                             constraints: { "rubocop" => [">= 4.0.0"] }) do
+                             constraints: { "rubocop" => Gem::Requirement.new(">= 4.0.0") }) do
         stdout, _ = processor.shell.capture3!("bundle", "list")
         assert_match(/\* public_suffix \(4.0.0\)/, stdout)
         assert_match(/\* strong_json \(0.7.1\)/, stdout)
@@ -650,7 +650,7 @@ EOF
       YAML
 
       processor.install_gems([Spec.new(name: "multi_json", version: ["1.14.0"])],
-                             constraints: { "multi_json" => ["> 1.13.0", "< 2.0.0"] }) do
+                             constraints: { "multi_json" => Gem::Requirement.new("> 1.13.0", "< 2.0.0") }) do
         assert_equal 1, processor.warnings.count
         assert trace_writer.writer.find { |m| m[:trace] == :command_line && m[:command_line] == %w[bundle install] }
         assert_equal <<~MESSAGE.strip, processor.warnings.first[:message]
@@ -680,7 +680,7 @@ EOF
 
       assert_raises GemInstaller::InstallationFailure do
         processor.install_gems([Spec.new(name: "rubocop", version: ["0.66.0"])],
-                               constraints: { "rubocop" => ["> 0.65.0"] }) do
+                               constraints: { "rubocop" => Gem::Requirement.new("> 0.65.0") }) do
           # noop
         end
       end

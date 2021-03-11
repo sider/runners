@@ -28,7 +28,7 @@ module Runners
     register_config_schema(name: :tslint, schema: Schema.runner_config)
 
     CONSTRAINTS = {
-      "tslint" => Gem::Requirement.new(">= 5.0.0", "< 7.0.0"),
+      "tslint" => Gem::Requirement.new(">= 5.0.0", "< 7.0.0").freeze,
     }.freeze
 
     DEFAULT_TARGET = "**/*.ts{,x}".freeze
