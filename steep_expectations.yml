@@ -240,10 +240,10 @@
   diagnostics:
   - range:
       start:
-        line: 122
+        line: 124
         character: 46
       end:
-        line: 122
+        line: 124
         character: 49
     severity: ERROR
     message: |-
@@ -252,3 +252,31 @@
           (::Hash[untyped, untyped] | ::Hash[::Symbol, (::String | nil)]) <: { :git => (::Runners::Ruby::git_source | nil), :name => ::String, :source => (::String | nil), :version => (::String | nil) }
             ::Hash[untyped, untyped] <: { :git => (::Runners::Ruby::git_source | nil), :name => ::String, :source => (::String | nil), :version => (::String | nil) }
     code: Ruby::ArgumentTypeMismatch
+  - range:
+      start:
+        line: 130
+        character: 22
+      end:
+        line: 130
+        character: 64
+    severity: ERROR
+    message: |-
+      Cannot find compatible overloading of method `to_h` of type `::Array[::Runners::Ruby::GemInstaller::Spec]`
+      Method types:
+        def to_h: () -> ::Hash[untyped, untyped]
+                | [T, S] () { (::Runners::Ruby::GemInstaller::Spec) -> [T, S] } -> ::Hash[T, S]
+    code: Ruby::UnresolvedOverloading
+  - range:
+      start:
+        line: 131
+        character: 19
+      end:
+        line: 131
+        character: 58
+    severity: ERROR
+    message: |-
+      Cannot find compatible overloading of method `to_h` of type `::Array[::Runners::Ruby::GemInstaller::Spec]`
+      Method types:
+        def to_h: () -> ::Hash[untyped, untyped]
+                | [T, S] () { (::Runners::Ruby::GemInstaller::Spec) -> [T, S] } -> ::Hash[T, S]
+    code: Ruby::UnresolvedOverloading
