@@ -1,0 +1,9 @@
+{
+  "name": "@sider/runners",
+  "private": true,
+  "repository": "github:sider/runners",
+  "engines": {
+    "node": "14",
+    "npm": "6"
+  }
+}
