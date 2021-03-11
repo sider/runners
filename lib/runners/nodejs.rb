@@ -10,8 +10,10 @@ module Runners
 
     INSTALL_OPTION_NONE = false
     INSTALL_OPTION_ALL = true
-    INSTALL_OPTION_PRODUCTION = "production"
-    INSTALL_OPTION_DEVELOPMENT = "development"
+    INSTALL_OPTION_PRODUCTION = "production".freeze
+    INSTALL_OPTION_DEVELOPMENT = "development".freeze
+
+    PACKAGE_JSON = "package.json".freeze
 
     # Return the locally installed analyzer command.
     def nodejs_analyzer_local_command
@@ -29,7 +31,7 @@ module Runners
 
     # Return the actual file path of `package.json`.
     def package_json_path
-      current_dir / "package.json"
+      current_dir / PACKAGE_JSON
     end
 
     # Return the `Hash` content of `package.json`.
@@ -53,9 +55,8 @@ module Runners
 
       unless package_json_path.exist?
         if install_option
-          file = package_json_path.basename.to_path
-          add_warning <<~MSG, file: file
-            The `npm_install` option is specified in your `#{config.path_name}`, but a `#{file}` file is not found in the repository.
+          add_warning <<~MSG, file: PACKAGE_JSON
+            The `npm_install` option is specified in your `#{config.path_name}`, but a `#{PACKAGE_JSON}` file is not found in the repository.
             In this case, any npm packages are not installed.
           MSG
         end
@@ -144,7 +145,7 @@ module Runners
         if subcommand == "ci"
           subcommand = "install"
           cli_options << "--package-lock=false"
-          add_warning <<~MSG, file: "package.json"
+          add_warning <<~MSG, file: PACKAGE_JSON
             The `npm ci --only=development` command does not install anything, so `npm install --only=development` will be used instead.
             If you want to use `npm ci`, please change your install option from `#{INSTALL_OPTION_DEVELOPMENT}` to `#{INSTALL_OPTION_ALL}`.
             For details about the npm behavior, see https://npm.community/t/npm-ci-only-dev-does-not-install-anything/3068
@@ -218,7 +219,7 @@ module Runners
       begin
         run_yarn "install", *cli_options
       rescue Shell::ExecError
-        message = "`yarn install` failed. Please confirm `yarn.lock` is consistent with `package.json`."
+        message = "`yarn install` failed. Please confirm `yarn.lock` is consistent with `#{PACKAGE_JSON}`."
         trace_writer.error message
         raise YarnInstallFailed, message
       end
@@ -256,7 +257,7 @@ module Runners
 
         version = installed_deps.fetch(name)
         if version.empty?
-          add_warning "The required dependency `#{name}` may not be installed and be a missing peer dependency.", file: "package.json"
+          add_warning "The required dependency `#{name}` may not be installed and be a missing peer dependency.", file: PACKAGE_JSON
           next
         end
 

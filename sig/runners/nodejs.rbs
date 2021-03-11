@@ -25,6 +25,8 @@ module Runners
     INSTALL_OPTION_PRODUCTION: String
     INSTALL_OPTION_DEVELOPMENT: String
 
+    PACKAGE_JSON: String
+
     type install_option = bool | String
 
     def nodejs_analyzer_local_command: () -> String
