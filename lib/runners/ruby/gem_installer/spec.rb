@@ -27,24 +27,6 @@ module Runners
           Spec.new(name: name, version: new_version, source: source)
         end
 
-        def self.from_gems(gems_items)
-          gems_items.map do |item|
-            gem =
-              case item
-              when Hash
-                item
-              when String
-                { name: item.to_s, version: nil, source: nil, git: nil }
-              end
-
-            self.new(
-              name: gem.fetch(:name),
-              version: Array(gem[:version]),
-              source: Source.create(gem),
-            )
-          end
-        end
-
         def self.merge(default_gems, user_gems)
           specs = []
 

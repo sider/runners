@@ -4,7 +4,7 @@ module Runners
 
     def install_gems(default_specs, constraints:, optionals: [], &block)
       original_default_specs = default_specs.dup
-      user_specs = GemInstaller::Spec.from_gems(config_linter[:gems] || [])
+      user_specs = config_gems
 
       LockfileLoader.new(root_dir: root_dir, shell: shell).ensure_lockfile do |lockfile|
         default_specs = default_specs(default_specs, constraints, lockfile)
@@ -101,6 +101,27 @@ module Runners
         @gem_info[gem_name] = info
       end
       info
+    end
+
+    private
+
+    def config_gems
+      (config_linter[:gems] || []).map do |item|
+        gem = case item
+              when Hash
+                item
+              when String
+                { name: item.to_s, version: nil, source: nil, git: nil }
+              else
+                raise item.inspect
+              end
+
+        GemInstaller::Spec.new(
+          name: gem.fetch(:name),
+          version: Array(gem[:version]),
+          source: GemInstaller::Source.create(gem),
+        )
+      end
     end
   end
 end

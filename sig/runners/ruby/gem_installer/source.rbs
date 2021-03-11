@@ -5,7 +5,7 @@ module Runners
 
       def self.default: () -> Source
 
-      def self.create: (gems_item) -> instance
+      def self.create: (Ruby::gems_item) -> instance
 
       def rubygems?: () -> bool
 
@@ -25,7 +25,7 @@ module Runners
         attr_reader branch: String?
         attr_reader tag: String?
 
-        def initialize: (git_source) -> void
+        def initialize: (Ruby::git_source) -> void
       end
     end
   end

@@ -10,8 +10,6 @@ module Runners
 
         def override_by_lockfile: (LockfileLoader::Lockfile) -> Spec
 
-        def self.from_gems: (Array[gems_item | String]) -> Array[Spec]
-
         def self.merge: (Array[Spec], Array[Spec]) -> Array[Spec]
       end
     end

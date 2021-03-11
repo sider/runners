@@ -221,21 +221,6 @@
     severity: ERROR
     message: Type `(::String | ::Array[::String] | nil)` does not have method `split`
     code: Ruby::NoMethod
-- file: lib/runners/ruby/gem_installer/spec.rb
-  diagnostics:
-  - range:
-      start:
-        line: 41
-        character: 20
-      end:
-        line: 41
-        character: 36
-    severity: ERROR
-    message: |-
-      Cannot assign a value of type `(::String | nil | ::Runners::Ruby::GemInstaller::git_source)` to an expression of type `::String`
-        (::String | nil | ::Runners::Ruby::GemInstaller::git_source) <: ::String
-          nil <: ::String
-    code: Ruby::IncompatibleAssignment
 - file: lib/runners/ruby/lockfile_loader/lockfile.rb
   diagnostics:
   - range:
@@ -250,4 +235,20 @@
       Cannot pass a value of type `(::Gem::Version | nil)` as an argument of type `::Gem::Version`
         (::Gem::Version | nil) <: ::Gem::Version
           nil <: ::Gem::Version
+    code: Ruby::ArgumentTypeMismatch
+- file: lib/runners/ruby.rb
+  diagnostics:
+  - range:
+      start:
+        line: 122
+        character: 46
+      end:
+        line: 122
+        character: 49
+    severity: ERROR
+    message: |-
+      Cannot pass a value of type `(::Hash[untyped, untyped] | ::Hash[::Symbol, (::String | nil)])` as an argument of type `::Runners::Ruby::gems_item`
+        (::Hash[untyped, untyped] | ::Hash[::Symbol, (::String | nil)]) <: ::Runners::Ruby::gems_item
+          (::Hash[untyped, untyped] | ::Hash[::Symbol, (::String | nil)]) <: { :git => (::Runners::Ruby::git_source | nil), :name => ::String, :source => (::String | nil), :version => (::String | nil) }
+            ::Hash[untyped, untyped] <: { :git => (::Runners::Ruby::git_source | nil), :name => ::String, :source => (::String | nil), :version => (::String | nil) }
     code: Ruby::ArgumentTypeMismatch

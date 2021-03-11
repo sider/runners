@@ -1,20 +1,6 @@
 module Runners
   module Ruby
     class GemInstaller
-      type git_source = {
-        repo: String,
-        ref: String?,
-        branch: String?,
-        tag: String?
-      }
-
-      type gems_item = {
-        name: String,
-        version: String?,
-        source: String?,
-        git: git_source?
-      }
-
       class InstallationFailure < InstallGemsFailure
       end
 

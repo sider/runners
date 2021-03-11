@@ -203,24 +203,29 @@ class RubyTest < Minitest::Test
     end
   end
 
-  def test_from_gems
-    specs = Spec.from_gems([
-      "rubocop",
-      { name: "strong_json", version: "0.7.0", source: "https://my.gems.org" },
-      { name: "rubocop-sider", git: { repo: "https://github.com/sider/rubocop-sider.git" } },
-      { name: "runners", git: { repo: "git@github.com:sider/runners.git", ref: "e66806c02849a0d0bdea66be88b5967d5eb3305d" } },
-      { name: "rubocop-rails", git: { repo: "https://github.com/rubocop/rubocop-rails.git", branch: "dev" } },
-      { name: "rubocop-performance", git: { repo: "https://github.com/rubocop/rubocop-performance.git", tag: "v1.9.0" } },
-    ])
+  def test_config_gems
+    with_workspace do |workspace|
+      processor = new_processor(workspace: workspace, config_yaml: <<~YAML)
+        linter:
+          rubocop:
+            gems:
+              - rubocop
+              - { name: "strong_json", version: "0.7.0", source: "https://my.gems.org" }
+              - { name: "runners", git: { repo: "git@github.com:sider/runners.git", ref: "e66806c02849a0d0bdea66be88b5967d5eb3305d" } }
+              - { name: "rubocop-rails", git: { repo: "https://github.com/rubocop/rubocop-rails.git", branch: "dev" } }
+              - { name: "rubocop-performance", git: { repo: "https://github.com/rubocop/rubocop-performance.git", tag: "v1.9.0" } }
+      YAML
 
-    assert_equal [
-      Spec.new(name: "rubocop", version: []),
-      Spec.new(name: "strong_json", version: ["0.7.0"], source: Source.create({ source: "https://my.gems.org" })),
-      Spec.new(name: "rubocop-sider", version: [], source: Source.create({ git: { repo: "https://github.com/sider/rubocop-sider.git" } })),
-      Spec.new(name: "runners", version: [], source: Source.create({ git: { repo: "git@github.com:sider/runners.git", ref: "e66806c02849a0d0bdea66be88b5967d5eb3305d" } })),
-      Spec.new(name: "rubocop-rails", version: [], source: Source.create({ git: { repo: "https://github.com/rubocop/rubocop-rails.git", branch: "dev" } })),
-      Spec.new(name: "rubocop-performance", version: [], source: Source.create({ git: { repo: "https://github.com/rubocop/rubocop-performance.git", tag: "v1.9.0" } })),
-    ], specs
+      assert_equal [
+        Spec.new(name: "rubocop", version: []),
+        Spec.new(name: "strong_json", version: ["0.7.0"], source: Source.create({ source: "https://my.gems.org" })),
+        Spec.new(name: "runners", version: [], source: Source.create({ git: { repo: "git@github.com:sider/runners.git", ref: "e66806c02849a0d0bdea66be88b5967d5eb3305d" } })),
+        Spec.new(name: "rubocop-rails", version: [], source: Source.create({ git: { repo: "https://github.com/rubocop/rubocop-rails.git", branch: "dev" } })),
+        Spec.new(name: "rubocop-performance", version: [], source: Source.create({ git: { repo: "https://github.com/rubocop/rubocop-performance.git", tag: "v1.9.0" } })),
+      ], processor.send(:config_gems)
+
+      assert_empty new_processor(workspace: workspace).send(:config_gems)
+    end
   end
 
   def test_ensure_lockfile_with_gemfile_lock

@@ -2,6 +2,20 @@ module Runners
   module Ruby : Processor
     type constraints = Hash[String, Gem::Requirement]
 
+    type git_source = {
+      repo: String,
+      ref: String?,
+      branch: String?,
+      tag: String?,
+    }
+
+    type gems_item = {
+      name: String,
+      version: String?,
+      source: String?,
+      git: git_source?,
+    }
+
     class InstallGemsFailure < UserError
     end
 
@@ -20,5 +34,7 @@ module Runners
     def optional_specs: (Array[GemInstaller::Spec], LockfileLoader::Lockfile) -> Array[GemInstaller::Spec]
 
     def user_specs: (Array[GemInstaller::Spec] specs, LockfileLoader::Lockfile) -> Array[GemInstaller::Spec]
+
+    def config_gems: () -> Array[GemInstaller::Spec]
   end
 end
