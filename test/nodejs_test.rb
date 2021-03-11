@@ -3,8 +3,6 @@ require 'test_helper'
 class NodejsTest < Minitest::Test
   include TestHelper
 
-  Constraint = Runners::Nodejs::Constraint
-  Dependency = Runners::Nodejs::Dependency
   ConstraintsNotSatisfied = Runners::Nodejs::ConstraintsNotSatisfied
   NpmInstallFailed = Runners::Nodejs::NpmInstallFailed
   YarnInstallFailed = Runners::Nodejs::YarnInstallFailed
@@ -165,8 +163,8 @@ class NodejsTest < Minitest::Test
         "eslint" => "5.0.0", "eslint-plugin-react" => "7.10.0"
       }))
       constraints = {
-        "eslint" => Constraint.new(">= 5.0.0", "< 7.0.0"),
-        "eslint-plugin-react" => Constraint.new(">= 4.2.1", "< 8.0.0"),
+        "eslint" => Gem::Requirement.new(">= 5.0.0", "< 7.0.0"),
+        "eslint-plugin-react" => Gem::Requirement.new(">= 4.2.1", "< 8.0.0"),
       }
 
       processor.stub :nodejs_analyzer_global_version, "5.15.0" do
@@ -183,7 +181,7 @@ class NodejsTest < Minitest::Test
     with_workspace do |workspace|
       new_processor(workspace: workspace)
 
-      constraints = { "eslint" => Constraint.new(">= 5.0.0", "< 7.0.0") }
+      constraints = { "eslint" => Gem::Requirement.new(">= 5.0.0", "< 7.0.0") }
 
       processor.stub :nodejs_analyzer_global_version, "5.15.0" do
         processor.install_nodejs_deps(constraints: constraints, install_option: INSTALL_OPTION_ALL)
@@ -200,7 +198,7 @@ class NodejsTest < Minitest::Test
     with_workspace do |workspace|
       new_processor(workspace: workspace)
 
-      constraints = { "eslint" => Constraint.new(">= 5.0.0", "< 7.0.0") }
+      constraints = { "eslint" => Gem::Requirement.new(">= 5.0.0", "< 7.0.0") }
 
       processor.stub :nodejs_analyzer_global_version, "5.15.0" do
         processor.install_nodejs_deps(constraints: constraints, install_option: nil)
@@ -218,7 +216,7 @@ class NodejsTest < Minitest::Test
       new_processor(workspace: workspace)
 
       processor.package_json_path.write(JSON.generate(dependencies: { "eslint" => "6.0.0" }))
-      constraints = { "eslint" => Constraint.new(">= 5.0.0", "< 7.0.0") }
+      constraints = { "eslint" => Gem::Requirement.new(">= 5.0.0", "< 7.0.0") }
 
       processor.stub :nodejs_analyzer_global_version, "5.15.0" do
         processor.install_nodejs_deps(constraints: constraints, install_option: nil)
@@ -234,7 +232,7 @@ class NodejsTest < Minitest::Test
     with_workspace do |workspace|
       new_processor(workspace: workspace)
 
-      constraints = { "eslint" => Constraint.new(">= 5.0.0", "< 7.0.0") }
+      constraints = { "eslint" => Gem::Requirement.new(">= 5.0.0", "< 7.0.0") }
 
       processor.stub :nodejs_analyzer_global_version, "5.15.0" do
         processor.install_nodejs_deps(constraints: constraints, install_option: INSTALL_OPTION_NONE)
@@ -251,7 +249,7 @@ class NodejsTest < Minitest::Test
       new_processor(workspace: workspace)
 
       processor.package_json_path.write(JSON.generate(dependencies: { "eslint" => "6.0.0" }))
-      constraints = { "eslint" => Constraint.new(">= 5.0.0", "< 7.0.0") }
+      constraints = { "eslint" => Gem::Requirement.new(">= 5.0.0", "< 7.0.0") }
 
       processor.stub :nodejs_analyzer_global_version, "5.15.0" do
         processor.install_nodejs_deps(constraints: constraints, install_option: INSTALL_OPTION_NONE)
@@ -270,7 +268,7 @@ class NodejsTest < Minitest::Test
       processor.package_json_path.write(JSON.generate(dependencies: { "eslint" => "6.0.1" }))
       FileUtils.cp data("yarn.lock"), processor.yarn_lock_path
 
-      constraints = { "eslint" => Constraint.new(">= 5.0.0", "< 7.0.0") }
+      constraints = { "eslint" => Gem::Requirement.new(">= 5.0.0", "< 7.0.0") }
 
       processor.stub :nodejs_analyzer_global_version, "5.15.0" do
         processor.install_nodejs_deps(constraints: constraints, install_option: INSTALL_OPTION_ALL)
@@ -290,7 +288,7 @@ class NodejsTest < Minitest::Test
       FileUtils.cp data("yarn.lock"), processor.yarn_lock_path
       FileUtils.cp data("package-lock.json"), processor.package_lock_json_path
 
-      constraints = { "eslint" => Constraint.new(">= 5.0.0", "< 7.0.0") }
+      constraints = { "eslint" => Gem::Requirement.new(">= 5.0.0", "< 7.0.0") }
 
       processor.stub :nodejs_analyzer_global_version, "5.15.0" do
         processor.install_nodejs_deps(constraints: constraints, install_option: INSTALL_OPTION_ALL)
@@ -556,7 +554,7 @@ class NodejsTest < Minitest::Test
         processor.send(:npm_install, INSTALL_OPTION_ALL)
       }
 
-      constraints = { "eslint" => Constraint.new(">= 5.0.0") }
+      constraints = { "eslint" => Gem::Requirement.new(">= 5.0.0") }
 
       npm_install.call(dependencies: {})
       processor.send(:check_installed_nodejs_deps, constraints)

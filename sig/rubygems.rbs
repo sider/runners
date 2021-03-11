@@ -1,6 +1,7 @@
 module Gem
   class Requirement
-    def self.create: (Array[String] | nil) -> Gem::Requirement
+    def self.create: (Array[String] | nil) -> instance
+    def initialize: (*String) -> instance
     def satisfied_by?: (Gem::Version) -> bool
   end
 end

@@ -15,7 +15,7 @@ module Runners
 
     # Return the locally installed analyzer command.
     def nodejs_analyzer_local_command
-      "node_modules/.bin/#{analyzer_bin}"
+      File.join("node_modules", ".bin", analyzer_bin)
     end
 
     # Return the analyzer command which will actually be ran.
@@ -260,22 +260,26 @@ module Runners
           next
         end
 
-        installed_dependency = Dependency.new(name: name, version: version)
-        unless constraint.satisfied_by? installed_dependency
-          trace_writer.error "The installed dependency `#{installed_dependency}` does not satisfy our constraint `#{constraint}`."
+        unless constraint.satisfied_by? Gem::Version.new(version)
+          trace_writer.error "The installed dependency `#{name}@#{version}` does not satisfy our constraint `#{npm_constraint_format(constraint)}`."
           all_constraints_satisfied = false
           next
         end
       end
 
       unless all_constraints_satisfied
-        constraints_text = constraints.map { |name, constraint| "`#{name}@#{constraint}`" }.join(", ")
+        constraints_text = constraints.map { |name, constraint| "`#{name}@#{npm_constraint_format(constraint)}`" }.join(", ")
         message = <<~MSG.strip
           Your #{analyzer_name} dependencies do not satisfy our constraints #{constraints_text}. Please update them.
         MSG
         trace_writer.error message
         raise ConstraintsNotSatisfied, message
       end
+    end
+
+    def npm_constraint_format(constraint)
+      # @see https://docs.npmjs.com/cli/v7/configuring-npm/package-json#dependencies
+      constraint.to_s.delete(" ").sub(",", " ")
     end
   end
 end

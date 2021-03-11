@@ -1,6 +1,6 @@
 module Runners
   module Nodejs : Processor
-    type constraints = Hash[String, Constraint]
+    type constraints = Hash[String, Gem::Requirement]
 
     class InvalidNodeVersion < SystemError
     end
@@ -58,5 +58,7 @@ module Runners
     def list_installed_nodejs_deps: (?only: Array[String], ?chdir: Pathname | String | nil) -> Hash[String, String]
 
     def check_installed_nodejs_deps: (constraints) -> void
+
+    def npm_constraint_format: (Gem::Requirement) -> String
   end
 end
