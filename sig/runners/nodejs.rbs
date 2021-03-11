@@ -39,7 +39,7 @@ module Runners
 
     def yarn_lock_path: () -> Pathname
 
-    def install_nodejs_deps: (constraints: constraints, install_option: install_option) -> void
+    def install_nodejs_deps: (constraints: constraints, ?install_option: install_option) -> void
 
     private
 

@@ -48,7 +48,7 @@ module Runners
     end
 
     # Install Node.js dependencies by using given parameters.
-    def install_nodejs_deps(constraints:, install_option:)
+    def install_nodejs_deps(constraints:, install_option: config_linter[:npm_install])
       return if install_option == INSTALL_OPTION_NONE
 
       unless package_json_path.exist?
