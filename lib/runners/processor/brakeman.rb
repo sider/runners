@@ -16,7 +16,7 @@ module Runners
 
     GEM_NAME = "brakeman".freeze
     CONSTRAINTS = {
-      GEM_NAME => [">= 4.0.0", "< 6.0.0"]
+      GEM_NAME => Gem::Requirement.new(">= 4.0.0", "< 6.0.0").freeze,
     }.freeze
 
     def self.config_example

@@ -23,7 +23,7 @@ module Runners
     register_config_schema(name: :remark_lint, schema: Schema.runner_config)
 
     CONSTRAINTS = {
-      "remark-cli" => Constraint.new(">= 7.0.0", "< 10.0.0"),
+      "remark-cli" => Gem::Requirement.new(">= 7.0.0", "< 10.0.0").freeze,
     }.freeze
 
     DEFAULT_TARGET = ".".freeze
@@ -53,7 +53,7 @@ module Runners
 
     def setup
       begin
-        install_nodejs_deps(constraints: CONSTRAINTS, install_option: config_linter[:npm_install])
+        install_nodejs_deps constraints: CONSTRAINTS
       rescue UserError => exn
         return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
       end

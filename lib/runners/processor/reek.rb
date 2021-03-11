@@ -17,7 +17,7 @@ module Runners
 
     GEM_NAME = "reek".freeze
     CONSTRAINTS = {
-      GEM_NAME => [">= 4.4.0", "< 7.0.0"]
+      GEM_NAME => Gem::Requirement.new(">= 4.4.0", "< 7.0.0").freeze,
     }.freeze
 
     DEFAULT_TARGET = ".".freeze

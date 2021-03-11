@@ -17,7 +17,13 @@ Aufgaben::Bump::Ruby.new do |t|
   t.files = [".ruby-version", "runners.gemspec"]
 end
 
+desc "Check the current Node.js environment"
+task :check_nodejs do
+  sh "npm", "install", "--no-progress", "--no-save"
+end
+
 Rake::TestTask.new(:test) do |t|
+  t.deps = [:check_nodejs]
   t.libs << "test"
   t.libs << "lib"
   t.test_files = FileList['test/**/*_test.rb'].exclude(%r{^test/smokes})

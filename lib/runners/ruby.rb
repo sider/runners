@@ -33,10 +33,9 @@ module Runners
             spec.override_by_lockfile(lockfile)
           else
             locked_version = lockfile.locked_version!(spec)
-            constraints_text = constraints.fetch(spec.name).join(", ")
             add_warning <<~MESSAGE
               `#{spec.name} #{spec.version.first}` is installed instead of `#{locked_version}` in your `Gemfile.lock`.
-              Because `#{locked_version}` does not satisfy our constraints `#{constraints_text}`.
+              Because `#{locked_version}` does not satisfy our constraints `#{constraints.fetch(spec.name)}`.
 
               If you want to use a different version of `#{spec.name}`, please do either:
               - Update your `Gemfile.lock` to satisfy the constraint
@@ -79,23 +78,18 @@ module Runners
       @analyzer_version ||= extract_version! ruby_analyzer_command.to_a
     end
 
-    def installed_gem_versions(gem_names, exception: true)
+    def default_gem_specs(*gem_names)
       # @see https://guides.rubygems.org/command-reference/#gem-list
       stdout, = capture3! "gem", "list", "--quiet", "--exact", *gem_names
-      gem_names.each_with_object({}) do |name, hash|
+
+      gem_names.map do |name|
         # NOTE: A format example: `rubocop (0.75.1, 0.75.0)`
-        version, = /#{Regexp.escape(name)} \((.+)\)/.match(stdout)&.captures
+        version = /#{Regexp.escape(name)} \((.+)\)/.match(stdout)&.captures&.first
         if version
-          hash[name] = version.split(/,\s*/)
-        elsif exception
+          GemInstaller::Spec.new(name: name, version: version.split(/,\s*/))
+        else
           raise "Not found installed gem #{name.inspect}"
         end
-      end
-    end
-
-    def default_gem_specs(gem_name, *gem_names)
-      installed_gem_versions([gem_name, *gem_names]).map do |name, versions|
-        GemInstaller::Spec.new(name: name, version: versions)
       end
     end
 

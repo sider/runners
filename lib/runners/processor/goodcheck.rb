@@ -23,7 +23,7 @@ module Runners
 
     GEM_NAME = "goodcheck".freeze
     CONSTRAINTS = {
-      GEM_NAME => [">= 1.0.0", "< 3.0"]
+      GEM_NAME => Gem::Requirement.new(">= 1.0.0", "< 3.0.0").freeze,
     }.freeze
 
     DEFAULT_TARGET = ".".freeze

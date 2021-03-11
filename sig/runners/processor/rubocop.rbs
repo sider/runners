@@ -10,7 +10,7 @@ module Runners
     Schema: SchemaClass
 
     GEM_NAME: String
-    CONSTRAINTS: Hash[String, Array[String]]
+    CONSTRAINTS: Ruby::constraints
 
     private
 

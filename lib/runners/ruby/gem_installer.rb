@@ -96,17 +96,22 @@ module Runners
           end
       end
 
-      def gem(spec, constraints)
-        declaration = "gem #{spec.name.inspect}"
-        constraint = constraints.map(&:inspect).join(", ")
-        (constraint.empty? ? declaration : "#{declaration}, #{constraint}")
+      def gem(spec, constraint)
+        declaration = %{gem "#{spec.name}"}
+        unless constraint.none?
+          declaration << ", "
+          declaration << constraint.to_s.split(",").map { |c| %{"#{c.strip}"} }.uniq.join(", ")
+        end
+        declaration
       end
 
       def gem_constraints(spec, source)
         # NOTE: Gems with Git source do not need constraints.
-        return [] if source.git?
+        return Gem::Requirement.create if source.git?
 
-        (spec.version + (constraints[spec.name] || [])).uniq
+        req = Gem::Requirement.create(*spec.version)
+        req.concat(constraints[spec.name].to_s.split(","))
+        req
       end
     end
   end

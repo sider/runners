@@ -23,7 +23,7 @@ module Runners
     GEM_NAME = "slim_lint".freeze
     REQUIRED_GEM_NAMES = ["rubocop"].freeze
     CONSTRAINTS = {
-      GEM_NAME => [">= 0.20.2", "< 1.0.0"]
+      GEM_NAME => Gem::Requirement.new(">= 0.20.2", "< 1.0.0").freeze,
     }.freeze
     DEFAULT_TARGET = ".".freeze
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_recommended_slim_lint.yml").to_path.freeze

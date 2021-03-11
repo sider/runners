@@ -28,7 +28,7 @@ module Runners
     register_config_schema(name: :tslint, schema: Schema.runner_config)
 
     CONSTRAINTS = {
-      "tslint" => Constraint.new(">= 5.0.0", "< 7.0.0"),
+      "tslint" => Gem::Requirement.new(">= 5.0.0", "< 7.0.0").freeze,
     }.freeze
 
     DEFAULT_TARGET = "**/*.ts{,x}".freeze
@@ -39,7 +39,7 @@ module Runners
                                         deadline: Time.new(2020, 12, 1))
 
       begin
-        install_nodejs_deps(constraints: CONSTRAINTS, install_option: config_linter[:npm_install])
+        install_nodejs_deps constraints: CONSTRAINTS
       rescue UserError => exn
         return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
       end

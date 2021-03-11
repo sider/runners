@@ -35,7 +35,7 @@ module Runners
     register_config_schema(name: :stylelint, schema: Schema.runner_config)
 
     CONSTRAINTS = {
-      "stylelint" => Constraint.new(">= 8.3.0", "< 14.0.0"),
+      "stylelint" => Gem::Requirement.new(">= 8.3.0", "< 14.0.0").freeze,
     }.freeze
 
     DEFAULT_TARGET_FILES = "*.{css,less,sass,scss,sss}".freeze
@@ -64,7 +64,7 @@ module Runners
       prepare_ignore_file
 
       begin
-        install_nodejs_deps(constraints: CONSTRAINTS, install_option: config_linter[:npm_install])
+        install_nodejs_deps constraints: CONSTRAINTS
       rescue UserError => exn
         return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
       end

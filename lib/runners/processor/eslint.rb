@@ -41,7 +41,7 @@ module Runners
     register_config_schema(name: :eslint, schema: Schema.runner_config)
 
     CONSTRAINTS = {
-      "eslint" => Constraint.new(">= 5.0.0", "< 8.0.0")
+      "eslint" => Gem::Requirement.new(">= 5.0.0", "< 8.0.0").freeze,
     }.freeze
 
     CUSTOM_FORMATTER = (Pathname(Dir.home) / "eslint" / "custom-eslint-json-formatter.js").to_path.freeze
@@ -70,7 +70,7 @@ module Runners
       add_warning_for_deprecated_option :dir, to: :target
 
       begin
-        install_nodejs_deps(constraints: CONSTRAINTS, install_option: config_linter[:npm_install])
+        install_nodejs_deps constraints: CONSTRAINTS
       rescue UserError => exn
         return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
       end

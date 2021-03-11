@@ -42,7 +42,7 @@ module Runners
 
     GEM_NAME = "rails_best_practices".freeze
     CONSTRAINTS = {
-      GEM_NAME => [">= 1.19.1", "< 2.0"]
+      GEM_NAME => Gem::Requirement.new(">= 1.19.1", "< 2.0").freeze,
     }.freeze
 
     def self.config_example

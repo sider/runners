@@ -19,8 +19,8 @@ module Runners
     register_config_schema(name: :coffeelint, schema: Schema.runner_config)
 
     CONSTRAINTS = {
-      "coffeelint" => Constraint.new(">= 1.16.0", "< 3.0.0"),
-      "@coffeelint/cli" => Constraint.new(">= 4.0.0", "< 5.0.0"),
+      "coffeelint" => Gem::Requirement.new(">= 1.16.0", "< 3.0.0").freeze,
+      "@coffeelint/cli" => Gem::Requirement.new(">= 4.0.0", "< 5.0.0").freeze,
     }.freeze
 
     def self.config_example
@@ -35,7 +35,7 @@ module Runners
       add_warning_if_deprecated_options
 
       begin
-        install_nodejs_deps(constraints: CONSTRAINTS, install_option: config_linter[:npm_install])
+        install_nodejs_deps constraints: CONSTRAINTS
       rescue UserError => exn
         return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
       end

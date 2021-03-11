@@ -8,6 +8,28 @@ s.add_test(
   issues: [
     {
       path: "app1/views.py",
+      location: { start_line: 6, start_column: 13 },
+      id: "E113",
+      message: "unexpected indentation",
+      links: [],
+      object: nil,
+      git_blame_info: {
+        commit: :_, line_hash: "8d97b13e6750c908c25104463cd720d809a07218", original_line: 6, final_line: 6
+      }
+    },
+    {
+      path: "app1/views.py",
+      location: { start_line: 7, start_column: 17 },
+      id: "E113",
+      message: "unexpected indentation",
+      links: [],
+      object: nil,
+      git_blame_info: {
+        commit: :_, line_hash: "b3250f6063f80804987089c29421b404957cdf1f", original_line: 7, final_line: 7
+      }
+    },
+    {
+      path: "app1/views.py",
       location: { start_line: 6, start_column: 12 },
       id: "E999",
       message: "IndentationError: unexpected indent",
@@ -131,7 +153,19 @@ s.add_test(
 s.add_test(
   "no_user_config_enabled",
   type: "success",
-  issues: [], # W191 is not issued.
+  issues: [
+    {
+      path: "foo.py",
+      location: { start_line: 2, start_column: 1 },
+      id: "W191",
+      message: 'indentation contains tabs',
+      links: [],
+      object: nil,
+      git_blame_info: {
+        commit: :_, line_hash: "9d412fa2df982c5c605cc6bba5187bda2a476519", original_line: 2, final_line: 2
+      }
+    }
+  ],
   analyzer: { name: "Flake8", version: default_version }
 )
 
@@ -305,6 +339,17 @@ s.add_test(
   "option_parallel",
   type: "success",
   issues: [
+    {
+      message: "indentation is not a multiple of four",
+      links: [],
+      id: "E111",
+      path: "foo.py",
+      location: { start_line: 2, start_column: 3 },
+      object: nil,
+      git_blame_info: {
+        commit: :_, line_hash: "2195b5c8fadfde3b82ab9aecaf510b7dc1112d91", original_line: 2, final_line: 2
+      }
+    },
     {
       message: "local variable 'a' is assigned to but never used",
       links: [],

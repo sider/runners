@@ -29,7 +29,7 @@ module Runners
 
     GEM_NAME = "rubocop".freeze
     CONSTRAINTS = {
-      GEM_NAME => [">= 0.61.0", "< 2.0.0"]
+      GEM_NAME => Gem::Requirement.new(">= 0.61.0", "< 2.0.0").freeze,
     }.freeze
 
     def self.config_example

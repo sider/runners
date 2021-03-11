@@ -29,7 +29,7 @@ RUN cd "${RUNNER_USER_HOME}" && \
     cd flake8 && \
     pipenv install --system --skip-lock
 
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/flake8/sider_config.ini ${RUNNER_USER_HOME}/.config/flake8
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/flake8/sider_recommended_flake8.ini ${RUNNER_USER_HOME}/.config/flake8
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/flake8/ignored-config.ini ${RUNNER_USER_HOME}/.config/ignored-config.ini
 
 
