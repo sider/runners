@@ -57,7 +57,7 @@ module Runners
 
         # @type var lines: Array[String]
         lines = []
-        lines << %{source "#{Gem::DEFAULT_HOST}"}
+        lines << %{source "#{Source.default.uri}"}
         lines << ""
 
         specs.sort_by(&:name).each do |spec|
