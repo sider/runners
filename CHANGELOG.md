@@ -32,6 +32,7 @@ Misc:
 - **Clang-Tidy** Loosen the version constraint for clang-tidy [#2153](https://github.com/sider/runners/pull/2153)
 - **ESLint** Update pre-installed packages [#2155](https://github.com/sider/runners/pull/2155)
 - **Flake8** Enable new recommended configuration [#2157](https://github.com/sider/runners/pull/2157)
+- Simplify generated `Gemfile` [#2168](https://github.com/sider/runners/pull/2168)
 
 ## 0.44.1
 
