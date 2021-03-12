@@ -19,7 +19,7 @@ module Runners
     class InstallGemsFailure < UserError
     end
 
-    def install_gems: [X] (Array[GemInstaller::Spec], constraints: constraints, ?optionals: Array[GemInstaller::Spec]) { (Hash[String, String]) -> X } -> X
+    def install_gems: [X] (Array[GemInstaller::Spec], constraints: constraints, ?optionals: Array[GemInstaller::Spec]) { () -> X } -> X
 
     def ruby_analyzer_command: (*String) -> Command
 
