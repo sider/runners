@@ -240,20 +240,6 @@
   diagnostics:
   - range:
       start:
-        line: 124
-        character: 46
-      end:
-        line: 124
-        character: 49
-    severity: ERROR
-    message: |-
-      Cannot pass a value of type `(::Hash[untyped, untyped] | ::Hash[::Symbol, (::String | nil)])` as an argument of type `::Runners::Ruby::gems_item`
-        (::Hash[untyped, untyped] | ::Hash[::Symbol, (::String | nil)]) <: ::Runners::Ruby::gems_item
-          (::Hash[untyped, untyped] | ::Hash[::Symbol, (::String | nil)]) <: { :git => (::Runners::Ruby::git_source | nil), :name => ::String, :source => (::String | nil), :version => (::String | nil) }
-            ::Hash[untyped, untyped] <: { :git => (::Runners::Ruby::git_source | nil), :name => ::String, :source => (::String | nil), :version => (::String | nil) }
-    code: Ruby::ArgumentTypeMismatch
-  - range:
-      start:
         line: 130
         character: 22
       end:

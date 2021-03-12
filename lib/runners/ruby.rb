@@ -121,7 +121,7 @@ module Runners
         GemInstaller::Spec.new(
           name: gem.fetch(:name),
           version: Array(gem[:version]),
-          source: GemInstaller::Source.create(gem),
+          source: GemInstaller::Source.new(uri: gem[:source], git: gem[:git]),
         )
       end
     end

@@ -30,11 +30,9 @@ module Runners
 
       private
 
-      def group_specs: () -> Array[[Source, Array[Spec]]]
-
       def gem: (Spec, Gem::Requirement) -> String
 
-      def gem_constraints: (Spec, Source) -> Gem::Requirement
+      def gem_constraints: (Spec) -> Gem::Requirement
     end
   end
 end
