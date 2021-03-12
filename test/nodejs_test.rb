@@ -306,7 +306,7 @@ class NodejsTest < Minitest::Test
     with_workspace do |workspace|
       new_processor(workspace: workspace)
 
-      processor.package_json_path.write({ dependencies: { "classcat": "5.0.3" }}.to_json)
+      processor.package_json_path.write({ dependencies: { "classcat" => "5.0.3" }}.to_json)
       constraints = { "is-string" => Gem::Requirement.new(">= 1.0.0") }
 
       processor.stub :nodejs_analyzer_global_version, "1.0.1" do
@@ -326,7 +326,7 @@ class NodejsTest < Minitest::Test
     with_workspace do |workspace|
       new_processor(workspace: workspace)
 
-      processor.package_json_path.write({ dependencies: { "classcat": "5.0.3", "is-string": "1.0.5" }}.to_json)
+      processor.package_json_path.write({ dependencies: { "classcat" => "5.0.3", "is-string" => "1.0.5" }}.to_json)
       constraints = {
         "classcat" => Gem::Requirement.new(">= 6.0.0"),
         "is-string" => Gem::Requirement.new(">= 1.0.0"),
