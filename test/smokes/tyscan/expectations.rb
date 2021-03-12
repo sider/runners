@@ -60,9 +60,22 @@ s.add_test(
 
 s.add_test(
   "typescript_not_found",
-  type: "failure",
-  message: "Your TyScan dependencies do not satisfy our constraints `tyscan@>=0.2.1 <1.0.0`. Please update them.",
-  analyzer: :_
+  type: "success",
+  issues: [
+    {
+      path: "index.tsx",
+      location: { start_line: 14, start_column: 19, end_line: 14, end_column: 28 },
+      id: "com.example.user_name",
+      message: "Note that the `name` is not full name, but nickname",
+      links: [],
+      object: { id: "com.example.user_name", message: "Note that the `name` is not full name, but nickname" },
+      git_blame_info: {
+        commit: :_, line_hash: "f2ac2b1c90b987577202ad96cd4660145c5ae6ff", original_line: 14, final_line: 14
+      }
+    }
+  ],
+  analyzer: { name: "TyScan", version: default_version },
+  warnings: [{ message: "Installed `tyscan@0.1.3` does not satisfy our constraint `>=0.2.1 <1.0.0`. Please update it as possible.", file: "package.json" }]
 )
 
 s.add_test(

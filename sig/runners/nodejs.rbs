@@ -11,9 +11,6 @@ module Runners
     class InvalidYarnVersion < SystemError
     end
 
-    class ConstraintsNotSatisfied < UserError
-    end
-
     class NpmInstallFailed < UserError
     end
 
@@ -41,9 +38,13 @@ module Runners
 
     def yarn_lock_path: () -> Pathname
 
+    def node_modules_path: () -> Pathname
+
     def install_nodejs_deps: (constraints: constraints, ?install_option: install_option) -> void
 
     private
+
+    def nodejs_use_local_version?: () -> bool
 
     def nodejs_analyzer_locally_installed?: () -> bool
 
@@ -57,9 +58,9 @@ module Runners
 
     def yarn_install: (install_option) -> void
 
-    def list_installed_nodejs_deps: (?only: Array[String], ?chdir: Pathname | String | nil) -> Hash[String, String]
+    def list_installed_npm_deps_with: (names: Array[String]) -> Hash[String, { name: String, version: String }]
 
-    def check_installed_nodejs_deps: (constraints) -> void
+    def all_npm_deps_statisfied_constraint?: (Hash[String, { name: String, version: String }], constraints) -> bool
 
     def npm_constraint_format: (Gem::Requirement) -> String
   end

@@ -285,10 +285,13 @@ s.add_test(
 
 s.add_test(
   "invalid-tslint-version",
-  type: "failure",
-  message: "Your TSLint dependencies do not satisfy our constraints `tslint@>=5.0.0 <7.0.0`. Please update them.",
-  analyzer: :_,
-  warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }]
+  type: "success",
+  issues: [],
+  analyzer: { name: "TSLint", version: default_version },
+  warnings: [
+    { message: /The support for TSLint is deprecated/, file: "sider.yml" },
+    { message: "Installed `tslint@4.0.0` does not satisfy our constraint `>=5.0.0 <7.0.0`. Please update it as possible.", file: "package.json" }
+  ]
 )
 
 s.add_test(

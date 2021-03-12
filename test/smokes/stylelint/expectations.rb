@@ -438,8 +438,24 @@ s.add_test(
 
 s.add_test(
   "pinned_stylelint_version",
-  analyzer: :_, type: "failure",
-  message: "Your stylelint dependencies do not satisfy our constraints `stylelint@>=8.3.0 <14.0.0`. Please update them."
+  analyzer: { name: "stylelint", version: default_version },
+  type: "success",
+  issues: [
+    {
+      message: "Unknown rule declaration-block-no-ignored-properties.",
+      links: %w[
+        https://github.com/stylelint/stylelint/tree/13.12.0/lib/rules/declaration-block-no-ignored-properties
+      ],
+      id: "declaration-block-no-ignored-properties",
+      path: "test.css",
+      location: { start_line: 1, start_column: 1 },
+      object: { severity: "error" },
+      git_blame_info: {
+        commit: :_, line_hash: "6cb82c7c1bab86194932ba32abd0fe35f7cd6109", original_line: 1, final_line: 1
+      }
+    }
+  ],
+  warnings: [{ message: "Installed `stylelint@7.13.0` does not satisfy our constraint `>=8.3.0 <14.0.0`. Please update it as possible.", file: "package.json" }]
 )
 
 s.add_test(
@@ -578,9 +594,6 @@ s.add_test(
         commit: :_, line_hash: "b73282b5b554ad849a657f6278d9a8601d48da8b", original_line: 13, final_line: 13
       }
     }
-  ],
-  warnings: [
-    { message: "The required dependency `stylelint` may not be installed and be a missing peer dependency.", file: "package.json" }
   ]
 )
 

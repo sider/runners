@@ -3,7 +3,6 @@ require 'test_helper'
 class NodejsTest < Minitest::Test
   include TestHelper
 
-  ConstraintsNotSatisfied = Runners::Nodejs::ConstraintsNotSatisfied
   NpmInstallFailed = Runners::Nodejs::NpmInstallFailed
   YarnInstallFailed = Runners::Nodejs::YarnInstallFailed
 
@@ -37,11 +36,11 @@ class NodejsTest < Minitest::Test
   end
 
   def actual_errors
-    trace_writer.writer.select { |entry| entry[:trace] == :error }.map { |entry| entry[:message] }
+    trace_writer.writer.filter_map { |e| e.fetch(:message) if e[:trace] == :error }
   end
 
-  def assert_warning_count(expected)
-    assert_equal expected, processor.warnings.size
+  def actual_messages
+    trace_writer.writer.filter_map { |e| e.fetch(:message) if e[:trace] == :message }
   end
 
   def assert_warnings(expected)
@@ -118,62 +117,29 @@ class NodejsTest < Minitest::Test
     end
   end
 
-  def test_package_json_path
-    with_workspace do |workspace|
-      new_processor(workspace: workspace)
-
-      assert_equal(workspace.working_dir / "package.json", processor.package_json_path)
-    end
-  end
-
-  def test_package_json
-    with_workspace do |workspace|
-      new_processor(workspace: workspace)
-
-      assert_raises Errno::ENOENT do
-        processor.package_json
-      end
-
-      (workspace.working_dir / "package.json").write(JSON.generate(name: "foo", version: "1.0.0", number: 999, bool: false))
-      assert_equal({ name: "foo", version: "1.0.0", number: 999, bool: false }, processor.package_json)
-    end
-  end
-
-  def test_package_lock_json_path
-    with_workspace do |workspace|
-      new_processor(workspace: workspace)
-
-      assert_equal(workspace.working_dir / "package-lock.json", processor.package_lock_json_path)
-    end
-  end
-
-  def test_yarn_lock_path
-    with_workspace do |workspace|
-      new_processor(workspace: workspace)
-
-      assert_equal(workspace.working_dir / "yarn.lock", processor.yarn_lock_path)
-    end
-  end
-
   def test_install_nodejs_deps
     with_workspace do |workspace|
       new_processor(workspace: workspace)
 
-      processor.package_json_path.write(JSON.generate(devDependencies: {
-        "eslint" => "5.0.0", "eslint-plugin-react" => "7.10.0"
-      }))
+      processor.package_json_path.write({ devDependencies: { "eslint" => "5.0.0", "is-string" => "1.0.5" } }.to_json)
       constraints = {
         "eslint" => Gem::Requirement.new(">= 5.0.0", "< 7.0.0"),
-        "eslint-plugin-react" => Gem::Requirement.new(">= 4.2.1", "< 8.0.0"),
+        "is-string" => Gem::Requirement.new(">= 1.0.0", "< 2.0.0"),
       }
 
       processor.stub :nodejs_analyzer_global_version, "5.15.0" do
         processor.install_nodejs_deps(constraints: constraints, install_option: INSTALL_OPTION_ALL)
-
-        stdout, _ = processor.capture3!(processor.nodejs_analyzer_bin, "-v")
-        assert_equal "v5.0.0\n", stdout
-        assert_warning_count 0
       end
+
+      refute_path_exists processor.package_lock_json_path
+      assert_empty processor.warnings
+      refute_empty actual_commands
+      assert_equal [
+        "Installing npm packages...",
+        "`node_modules/.bin/eslint` was successfully installed with the version `5.0.0`.",
+      ], actual_messages
+      assert_empty actual_errors
+      assert_equal "5.0.0", processor.analyzer_version
     end
   end
 
@@ -185,12 +151,15 @@ class NodejsTest < Minitest::Test
 
       processor.stub :nodejs_analyzer_global_version, "5.15.0" do
         processor.install_nodejs_deps(constraints: constraints, install_option: INSTALL_OPTION_ALL)
-
-        assert_warnings [{ message: <<~MSG.strip, file: "package.json" }]
-          The `npm_install` option is specified in your `sider.yml`, but a `package.json` file is not found in the repository.
-          In this case, any npm packages are not installed.
-        MSG
       end
+
+      assert_warnings [{ message: <<~MSG.strip, file: "package.json" }]
+        The `npm_install` option is specified in your `sider.yml`, but a `package.json` file is not found in the repository.
+        In this case, any npm packages are not installed.
+      MSG
+      assert_empty actual_commands
+      assert_empty actual_messages
+      assert_empty actual_errors
     end
   end
 
@@ -202,12 +171,12 @@ class NodejsTest < Minitest::Test
 
       processor.stub :nodejs_analyzer_global_version, "5.15.0" do
         processor.install_nodejs_deps(constraints: constraints, install_option: nil)
-
-        refute processor.package_json_path.exist?
-        assert_equal "5.15.0", processor.analyzer_version
-        assert_warning_count 0
-        assert_equal [], trace_writer.writer.filter { |e| e.key? :command_line }
       end
+
+      assert_empty processor.warnings
+      assert_empty actual_commands
+      assert_empty actual_messages
+      assert_empty actual_errors
     end
   end
 
@@ -215,16 +184,19 @@ class NodejsTest < Minitest::Test
     with_workspace do |workspace|
       new_processor(workspace: workspace)
 
-      processor.package_json_path.write(JSON.generate(dependencies: { "eslint" => "6.0.0" }))
-      constraints = { "eslint" => Gem::Requirement.new(">= 5.0.0", "< 7.0.0") }
+      processor.package_json_path.write({ dependencies: { "is-string" => "1.0.5" } }.to_json)
+      constraints = { "is-string" => Gem::Requirement.new(">= 1.0.0", "< 2.0.0") }
 
-      processor.stub :nodejs_analyzer_global_version, "5.15.0" do
+      processor.stub :nodejs_analyzer_global_version, "1.0.0" do
         processor.install_nodejs_deps(constraints: constraints, install_option: nil)
-
-        assert processor.package_json_path.exist?
-        assert_equal "6.0.0", processor.analyzer_version
-        assert_warning_count 0
       end
+
+      assert_path_exists processor.package_json_path
+      refute_path_exists processor.package_lock_json_path
+      assert_empty processor.warnings
+      refute_empty actual_commands
+      refute_empty actual_messages
+      assert_empty actual_errors
     end
   end
 
@@ -236,11 +208,13 @@ class NodejsTest < Minitest::Test
 
       processor.stub :nodejs_analyzer_global_version, "5.15.0" do
         processor.install_nodejs_deps(constraints: constraints, install_option: INSTALL_OPTION_NONE)
-
-        refute processor.package_json_path.exist?
-        assert_equal "5.15.0", processor.analyzer_version
-        assert_warning_count 0
       end
+
+      refute_path_exists processor.package_json_path
+      assert_empty processor.warnings
+      assert_empty actual_commands
+      assert_empty actual_messages
+      assert_empty actual_errors
     end
   end
 
@@ -248,16 +222,18 @@ class NodejsTest < Minitest::Test
     with_workspace do |workspace|
       new_processor(workspace: workspace)
 
-      processor.package_json_path.write(JSON.generate(dependencies: { "eslint" => "6.0.0" }))
+      processor.package_json_path.write({ dependencies: { "eslint" => "6.0.0" } }.to_json)
       constraints = { "eslint" => Gem::Requirement.new(">= 5.0.0", "< 7.0.0") }
 
       processor.stub :nodejs_analyzer_global_version, "5.15.0" do
         processor.install_nodejs_deps(constraints: constraints, install_option: INSTALL_OPTION_NONE)
-
-        assert processor.package_json_path.exist?
-        assert_equal "5.15.0", processor.analyzer_version
-        assert_warning_count 0
       end
+
+      assert_path_exists processor.package_json_path
+      assert_empty processor.warnings
+      assert_empty actual_commands
+      assert_empty actual_messages
+      assert_empty actual_errors
     end
   end
 
@@ -265,18 +241,20 @@ class NodejsTest < Minitest::Test
     with_workspace do |workspace|
       new_processor(workspace: workspace)
 
-      processor.package_json_path.write(JSON.generate(dependencies: { "eslint" => "6.0.1" }))
+      processor.package_json_path.write({ dependencies: { "eslint" => "6.0.1" } }.to_json)
       FileUtils.cp data("yarn.lock"), processor.yarn_lock_path
 
       constraints = { "eslint" => Gem::Requirement.new(">= 5.0.0", "< 7.0.0") }
 
       processor.stub :nodejs_analyzer_global_version, "5.15.0" do
         processor.install_nodejs_deps(constraints: constraints, install_option: INSTALL_OPTION_ALL)
-
-        stdout, _ = processor.capture3!(processor.nodejs_analyzer_bin, "-v")
-        assert_equal "v6.0.1\n", stdout
-        assert_warning_count 0
       end
+
+      refute_path_exists processor.package_lock_json_path
+      assert_empty processor.warnings
+      assert_empty actual_errors
+      refute_empty actual_commands
+      assert_equal "6.0.1", processor.analyzer_version
     end
   end
 
@@ -284,7 +262,7 @@ class NodejsTest < Minitest::Test
     with_workspace do |workspace|
       new_processor(workspace: workspace)
 
-      processor.package_json_path.write(JSON.generate(dependencies: { "eslint" => "6.0.1" }))
+      processor.package_json_path.write({ dependencies: { "eslint" => "6.0.1" } }.to_json)
       FileUtils.cp data("yarn.lock"), processor.yarn_lock_path
       FileUtils.cp data("package-lock.json"), processor.package_lock_json_path
 
@@ -292,14 +270,79 @@ class NodejsTest < Minitest::Test
 
       processor.stub :nodejs_analyzer_global_version, "5.15.0" do
         processor.install_nodejs_deps(constraints: constraints, install_option: INSTALL_OPTION_ALL)
-
-        stdout, _ = processor.capture3!(processor.nodejs_analyzer_bin, "-v")
-        assert_equal "v6.0.1\n", stdout
-
-        assert_warnings [{ message: <<~MSG.strip, file: "yarn.lock" }]
-          Two lock files `package-lock.json` and `yarn.lock` are found. Sider uses `yarn.lock` in this case, but please consider deleting either file for more accurate analysis.
-        MSG
       end
+
+      assert_warnings [{ message: <<~MSG.strip, file: "yarn.lock" }]
+        Two lock files `package-lock.json` and `yarn.lock` are found. Sider uses `yarn.lock` in this case, but please consider deleting either file for more accurate analysis.
+      MSG
+      refute_empty actual_commands
+      refute_empty actual_messages
+      assert_empty actual_errors
+      assert_equal "6.0.1", processor.analyzer_version
+    end
+  end
+
+  def test_install_nodejs_deps_without_deps
+    with_workspace do |workspace|
+      new_processor(workspace: workspace)
+
+      processor.package_json_path.write({}.to_json)
+      constraints = { "eslint" => Gem::Requirement.new(">= 5.0.0") }
+
+      processor.stub :nodejs_analyzer_global_version, "5.15.0" do
+        processor.install_nodejs_deps(constraints: constraints, install_option: INSTALL_OPTION_ALL)
+      end
+
+      assert_empty processor.warnings
+      refute_empty actual_commands
+      assert_empty actual_errors
+      assert_includes actual_messages, "`eslint` is required but not installed (not in your `package.json`)."
+      assert_includes actual_messages, "All constraints are not satisfied. The default version `5.15.0` will be used instead."
+      assert_equal "5.15.0", processor.analyzer_version
+    end
+  end
+
+  def test_install_nodejs_deps_with_missing_deps
+    with_workspace do |workspace|
+      new_processor(workspace: workspace)
+
+      processor.package_json_path.write({ dependencies: { "classcat": "5.0.3" }}.to_json)
+      constraints = { "is-string" => Gem::Requirement.new(">= 1.0.0") }
+
+      processor.stub :nodejs_analyzer_global_version, "1.0.1" do
+        processor.install_nodejs_deps(constraints: constraints, install_option: INSTALL_OPTION_ALL)
+      end
+
+      assert_empty processor.warnings
+      refute_empty actual_commands
+      assert_empty actual_errors
+      assert_includes actual_messages, "`is-string` is required but not installed (not in your `package.json`)."
+      assert_includes actual_messages, "All constraints are not satisfied. The default version `1.0.1` will be used instead."
+      assert_equal "1.0.1", processor.analyzer_version
+    end
+  end
+
+  def test_install_nodejs_deps_with_unsatisfied_deps
+    with_workspace do |workspace|
+      new_processor(workspace: workspace)
+
+      processor.package_json_path.write({ dependencies: { "classcat": "5.0.3", "is-string": "1.0.5" }}.to_json)
+      constraints = {
+        "classcat" => Gem::Requirement.new(">= 6.0.0"),
+        "is-string" => Gem::Requirement.new(">= 1.0.0"),
+      }
+
+      processor.stub :nodejs_analyzer_global_version, "1.0.0" do
+        processor.install_nodejs_deps(constraints: constraints, install_option: INSTALL_OPTION_ALL)
+      end
+
+      assert_warnings [{ message: <<~MSG.strip, file: "package.json" }]
+        Installed `classcat@5.0.3` does not satisfy our constraint `>=6.0.0`. Please update it as possible.
+      MSG
+      refute_empty actual_commands
+      assert_empty actual_errors
+      assert_includes actual_messages, "All constraints are not satisfied. The default version `1.0.0` will be used instead."
+      assert_equal "1.0.0", processor.analyzer_version
     end
   end
 
@@ -314,27 +357,27 @@ class NodejsTest < Minitest::Test
         dependencies: { "typescript" => "3.5.3" },
         scripts: { "postinstall" => "exit 1" },
         engines: { "node" => "8.0.0" },
-      }
-      processor.package_json_path.write(JSON.generate(package_json))
+      }.to_json
+      processor.package_json_path.write(package_json)
       (workspace.working_dir / ".npmrc").write("engine-strict = true")
 
       processor.send(:npm_install, INSTALL_OPTION_NONE)
-      refute node_modules.exist?
+      refute_path_exists node_modules
 
       processor.send(:npm_install, INSTALL_OPTION_ALL)
-      assert typescript.exist?
+      assert_path_exists typescript
 
       node_modules.rmtree
       processor.send(:npm_install, INSTALL_OPTION_PRODUCTION)
-      assert typescript.exist?
+      assert_path_exists typescript
 
       node_modules.rmtree
       processor.send(:npm_install, INSTALL_OPTION_DEVELOPMENT)
-      refute node_modules.exist?
+      refute_path_exists node_modules
 
-      processor.package_json_path.write(JSON.generate(devDependencies: { "typescript" => "3.5.3" }))
+      processor.package_json_path.write({ devDependencies: { "typescript" => "3.5.3" } }.to_json)
       processor.send(:npm_install, INSTALL_OPTION_DEVELOPMENT)
-      assert typescript.exist?
+      assert_path_exists typescript
 
       expected_commands = [
         %w[npm install --ignore-scripts --progress=false --engine-strict=false --package-lock=false],
@@ -350,35 +393,35 @@ class NodejsTest < Minitest::Test
     with_workspace do |workspace|
       new_processor(workspace: workspace)
 
-      node_modules = workspace.working_dir / "node_modules"
+      node_modules = processor.node_modules_path
       typescript = node_modules / "typescript"
 
-      processor.package_json_path.write(JSON.generate(dependencies: { "typescript" => "3.5.3" }))
+      processor.package_json_path.write({ dependencies: { "typescript" => "3.5.3" } }.to_json)
       FileUtils.cp data("package-lock.json"), processor.package_lock_json_path
 
       processor.send(:npm_install, INSTALL_OPTION_ALL)
-      assert typescript.exist?
+      assert_path_exists typescript
 
       node_modules.rmtree
       processor.send(:npm_install, INSTALL_OPTION_PRODUCTION)
-      assert typescript.exist?
+      assert_path_exists typescript
 
       node_modules.rmtree
       processor.send(:npm_install, INSTALL_OPTION_DEVELOPMENT)
-      refute typescript.exist?
+      refute_path_exists typescript
 
-      processor.package_json_path.write(JSON.generate(devDependencies: { "typescript" => "3.5.3" }))
+      processor.package_json_path.write({ devDependencies: { "typescript" => "3.5.3" } }.to_json)
       FileUtils.cp data("package-lock.dev.json"), processor.package_lock_json_path
 
       processor.send(:npm_install, INSTALL_OPTION_ALL)
-      assert typescript.exist?
+      assert_path_exists typescript
 
       node_modules.rmtree
       processor.send(:npm_install, INSTALL_OPTION_PRODUCTION)
-      refute typescript.exist?
+      refute_path_exists typescript
 
       processor.send(:npm_install, INSTALL_OPTION_DEVELOPMENT)
-      assert typescript.exist?
+      assert_path_exists typescript
 
       expected_commands = [
         %w[npm ci --ignore-scripts --progress=false --engine-strict=false],
@@ -403,7 +446,7 @@ class NodejsTest < Minitest::Test
     with_workspace do |workspace|
       new_processor(workspace: workspace)
 
-      processor.package_json_path.write(JSON.generate(dependencies: { "foo" => "github:sider/foo" }))
+      processor.package_json_path.write({ dependencies: { "foo" => "github:sider/foo" } }.to_json)
 
       error = assert_raises NpmInstallFailed do
         processor.send(:npm_install, INSTALL_OPTION_ALL)
@@ -421,14 +464,14 @@ class NodejsTest < Minitest::Test
     with_workspace do |workspace|
       new_processor(workspace: workspace)
 
-      node_modules = workspace.working_dir / "node_modules"
+      node_modules = processor.node_modules_path
       eslint = node_modules / "eslint"
 
       yarnrc = (workspace.working_dir / ".yarnrc").tap { _1.write 'yarn-path "foo"' }
       yarnrc_yml = (workspace.working_dir / ".yarnrc.yml").tap { _1.write 'yarnPath: "foo"' }
       yarnrc_yaml = (workspace.working_dir / ".yarnrc.yaml").tap { _1.write 'yarnPath: "foo"' }
 
-      processor.package_json_path.write(JSON.generate(dependencies: { "eslint" => "6.0.1" }))
+      processor.package_json_path.write({ dependencies: { "eslint" => "6.0.1" } }.to_json)
       FileUtils.cp data("yarn.lock"), processor.yarn_lock_path
 
       processor.send(:yarn_install, INSTALL_OPTION_NONE)
@@ -489,111 +532,6 @@ class NodejsTest < Minitest::Test
       MSG
       assert_equal expected_error_message, error.message
       assert_equal [expected_error_message], actual_errors
-    end
-  end
-
-  def test_list_installed_nodejs_deps
-    with_workspace do |workspace|
-      new_processor(workspace: workspace)
-
-      processor.package_json_path.write JSON.generate(dependencies: { "is-arguments" => "1.0.0" })
-      processor.capture3! "npm", "install"
-
-      assert_equal({ "is-arguments" => "1.0.0" }, processor.send(:list_installed_nodejs_deps))
-    end
-  end
-
-  def test_list_installed_nodejs_deps_without_version
-    with_workspace do |workspace|
-      new_processor(workspace: workspace)
-
-      processor.package_json_path.write JSON.generate(dependencies: { "is-arguments" => "1.0.0" })
-
-      assert_equal({ "is-arguments" => "" }, processor.send(:list_installed_nodejs_deps))
-    end
-  end
-
-  def test_list_installed_nodejs_deps_with_only
-    with_workspace do |workspace|
-      new_processor(workspace: workspace)
-
-      processor.package_json_path.write JSON.generate(dependencies: { "is-arguments" => "1.0.0", "isarray" => "2.0.0" })
-      processor.capture3! "npm", "install"
-
-      assert_equal({ "isarray" => "2.0.0" }, processor.send(:list_installed_nodejs_deps, only: ["isarray"]))
-    end
-  end
-
-  def test_list_installed_nodejs_deps_with_chdir
-    with_workspace do |workspace|
-      new_processor(workspace: workspace)
-
-      another_dir = (workspace.working_dir / "foo").tap(&:mkdir)
-      (another_dir / "package.json").write JSON.generate(dependencies: { "isarray" => "1.0.0" })
-
-      assert_equal({ "isarray" => "" }, processor.send(:list_installed_nodejs_deps, chdir: another_dir))
-    end
-  end
-
-  def test_list_installed_nodejs_deps_without_results
-    with_workspace do |workspace|
-      new_processor(workspace: workspace)
-
-      processor.package_json_path.write JSON.generate({})
-
-      assert_equal({}, processor.send(:list_installed_nodejs_deps))
-    end
-  end
-
-  def test_check_installed_nodejs_deps
-    with_workspace do |workspace|
-      new_processor(workspace: workspace)
-
-      npm_install = ->(json) {
-        processor.package_json_path.write(JSON.generate(json))
-        processor.send(:npm_install, INSTALL_OPTION_ALL)
-      }
-
-      constraints = { "eslint" => Gem::Requirement.new(">= 5.0.0") }
-
-      npm_install.call(dependencies: {})
-      processor.send(:check_installed_nodejs_deps, constraints)
-      pass "when no dependencies"
-
-      npm_install.call(dependencies: { "ci-info" => "2.0.0" })
-      processor.send(:check_installed_nodejs_deps, constraints)
-      pass "when no dependencies satisfying constraints"
-
-      expected_error_message = <<~MSG.strip
-        Your ESLint dependencies do not satisfy our constraints `eslint@>=5.0.0`. Please update them.
-      MSG
-
-      npm_install.call(dependencies: { "eslint-config-standard" => "10.0.0" })
-      processor.send(:check_installed_nodejs_deps, constraints)
-      pass expected_error_message
-
-      npm_install.call(dependencies: { "eslint" => "4.0.0" })
-      error = assert_raises ConstraintsNotSatisfied do
-        processor.send(:check_installed_nodejs_deps, constraints)
-      end
-      assert_equal expected_error_message, error.message
-
-      ### assert warnings output
-
-      expected_warnings = [
-        "The required dependency `eslint` may not be installed and be a missing peer dependency."
-      ]
-      actual_warnings = trace_writer.writer.select { |e| e[:trace] == :warning }.map { |e| e[:message] }
-      assert_equal expected_warnings, actual_warnings
-      assert_equal [
-        { message: expected_warnings[0], file: "package.json" },
-      ], processor.warnings
-
-      expected_errors = [
-        "The installed dependency `eslint@4.0.0` does not satisfy our constraint `>=5.0.0`.",
-        expected_error_message,
-      ]
-      assert_equal expected_errors, actual_errors
     end
   end
 end

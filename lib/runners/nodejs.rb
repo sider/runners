@@ -4,7 +4,6 @@ module Runners
     class InvalidNpmVersion < SystemError; end
     class InvalidYarnVersion < SystemError; end
 
-    class ConstraintsNotSatisfied < UserError; end
     class NpmInstallFailed < UserError; end
     class YarnInstallFailed < UserError; end
 
@@ -22,11 +21,11 @@ module Runners
 
     # Return the analyzer command which will actually be ran.
     def nodejs_analyzer_bin
-      nodejs_analyzer_locally_installed? ? nodejs_analyzer_local_command : analyzer_bin
+      nodejs_use_local_version? ? nodejs_analyzer_local_command : analyzer_bin
     end
 
     def analyzer_version
-      @analyzer_version ||= nodejs_analyzer_locally_installed? ? nodejs_analyzer_local_version : nodejs_analyzer_global_version
+      @analyzer_version ||= nodejs_use_local_version? ? nodejs_analyzer_local_version : nodejs_analyzer_global_version
     end
 
     # Return the actual file path of `package.json`.
@@ -47,6 +46,10 @@ module Runners
     # Return the actual file path of `yarn.lock`.
     def yarn_lock_path
       current_dir / "yarn.lock"
+    end
+
+    def node_modules_path
+      current_dir / "node_modules"
     end
 
     # Install Node.js dependencies by using given parameters.
@@ -80,16 +83,16 @@ module Runners
         npm_install(install_option)
       end
 
-      check_installed_nodejs_deps(constraints)
+      installed_deps = list_installed_npm_deps_with(names: constraints.keys)
 
-      if nodejs_analyzer_locally_installed?
-        trace_writer.message <<~MSG
-          `#{nodejs_analyzer_local_command}` was successfully installed with the version #{analyzer_version}.
-        MSG
+      case
+      when !all_npm_deps_statisfied_constraint?(installed_deps, constraints)
+        @nodejs_force_default_version = true
+        trace_writer.message "All constraints are not satisfied. The default version `#{analyzer_version}` will be used instead."
+      when nodejs_analyzer_locally_installed?
+        trace_writer.message "`#{nodejs_analyzer_local_command}` was successfully installed with the version `#{analyzer_version}`."
       else
-        trace_writer.message <<~MSG
-          `#{nodejs_analyzer_local_command}` was not installed. The default version #{analyzer_version} will be used instead.
-        MSG
+        trace_writer.message "`#{nodejs_analyzer_local_command}` was not installed. The default version `#{analyzer_version}` will be used instead."
       end
     end
 
@@ -100,6 +103,10 @@ module Runners
     end
 
     private
+
+    def nodejs_use_local_version?
+      !@nodejs_force_default_version && nodejs_analyzer_locally_installed?
+    end
 
     def nodejs_analyzer_locally_installed?
       (current_dir / nodejs_analyzer_local_command).exist?
@@ -225,57 +232,45 @@ module Runners
       end
     end
 
-    def list_installed_nodejs_deps(only: [], chdir: nil)
-      opts = { trace_stdout: false, chdir: chdir&.to_s }.compact
+    def list_installed_npm_deps_with(names:)
+      return {} unless node_modules_path.exist?
 
-      # NOTE: `npm ls` fails when any peer dependencies are missing.
-      #        Also, this scans `node_modules/` without `package-lock.json`.
-      #        Also, the command output can be too long.
-      stdout, _, _ = capture3 "npm", "ls", *only, "--depth=0", "--json", "--package-lock=false", **opts
+      names.each_with_object({}) do |name, result|
+        pkg = node_modules_path / name / PACKAGE_JSON
+        next unless pkg.exist?
 
-      parsed = JSON.parse(stdout).dig("dependencies") or return {}
+        installed = JSON.parse(pkg.read(encoding: Encoding::UTF_8), symbolize_names: true)
 
-      parsed.each_with_object({}) do |pair, deps|
-        name, obj = pair
-        deps[name] = obj["version"] || ""
+        unless name == installed.fetch(:name)
+          raise "Name mismatch: #{name.inspect} != #{installed.fetch(:name).inspect}"
+        end
+
+        version = installed.fetch(:version)
+        result[name] = { name: name, version: version }
       end
     end
 
-    def check_installed_nodejs_deps(constraints)
-      installed_deps = list_installed_nodejs_deps
-
-      return if installed_deps.empty?
-
-      all_constraints_satisfied = true
+    def all_npm_deps_statisfied_constraint?(installed_deps, constraints)
+      all_satisfied = true
 
       constraints.each do |name, constraint|
-        # @type break: nil
-        unless installed_deps.key? name
-          # NOTE: No required dependencies. Instead, use the default version.
-          break
-        end
+        installed = installed_deps[name]
 
-        version = installed_deps.fetch(name)
-        if version.empty?
-          add_warning "The required dependency `#{name}` may not be installed and be a missing peer dependency.", file: PACKAGE_JSON
-          next
-        end
-
-        unless constraint.satisfied_by? Gem::Version.new(version)
-          trace_writer.error "The installed dependency `#{name}@#{version}` does not satisfy our constraint `#{npm_constraint_format(constraint)}`."
-          all_constraints_satisfied = false
-          next
+        if installed
+          version = installed.fetch(:version)
+          unless constraint.satisfied_by? Gem::Version.new(version)
+            add_warning <<~MSG, file: PACKAGE_JSON
+              Installed `#{name}@#{version}` does not satisfy our constraint `#{npm_constraint_format(constraint)}`. Please update it as possible.
+            MSG
+            all_satisfied = false
+          end
+        else
+          trace_writer.message "`#{name}` is required but not installed (not in your `#{PACKAGE_JSON}`)."
+          all_satisfied = false
         end
       end
 
-      unless all_constraints_satisfied
-        constraints_text = constraints.map { |name, constraint| "`#{name}@#{npm_constraint_format(constraint)}`" }.join(", ")
-        message = <<~MSG.strip
-          Your #{analyzer_name} dependencies do not satisfy our constraints #{constraints_text}. Please update them.
-        MSG
-        trace_writer.error message
-        raise ConstraintsNotSatisfied, message
-      end
+      all_satisfied
     end
 
     def npm_constraint_format(constraint)

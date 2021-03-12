@@ -80,11 +80,22 @@ s.add_test(
 
 s.add_test(
   "pinned_old_eslint",
-  type: "failure",
-  message: <<~MSG.strip,
-    Your ESLint dependencies do not satisfy our constraints `eslint@>=5.0.0 <8.0.0`. Please update them.
-  MSG
-  analyzer: :_
+  type: "success",
+  issues: [
+    {
+      message: "'x' is assigned a value but never used.",
+      links: %w[https://eslint.org/docs/rules/no-unused-vars],
+      id: "no-unused-vars",
+      path: "src/index.js",
+      location: { start_line: 1, start_column: 5, end_line: 1, end_column: 6 },
+      object: { severity: "error", category: "Variables", recommended: true },
+      git_blame_info: {
+        commit: :_, line_hash: "41477d1b34124a7763e6dae5cb7067201fed41e4", original_line: 1, final_line: 1
+      }
+    }
+  ],
+  analyzer: { name: "ESLint", version: default_version },
+  warnings: [{ message: "Installed `eslint@4.0.0` does not satisfy our constraint `>=5.0.0 <8.0.0`. Please update it as possible.", file: "package.json" }]
 )
 
 s.add_test("no_files", type: "success", issues: [], analyzer: { name: "ESLint", version: default_version })
