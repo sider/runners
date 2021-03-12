@@ -40,6 +40,7 @@ class RubyTest < Minitest::Test
 
   def test_gemfile_content
     specs = [
+      Spec.new(name: "rubocop-minitest", version: [], source: Source.new(git: { repo: "https://github.com/rubocop/rubocop-minitest.git" })),
       Spec.new(name: "rubocop", version: [], source: Source.new(git: { repo: "https://github.com/rubocop/rubocop.git", branch: "master" })),
       Spec.new(name: "runners", version: [], source: Source.new(git: { repo: "git@github.com:sider/runners.git", ref: "e66806c02849a0d0bdea66be88b5967d5eb3305d" })),
       Spec.new(name: "rubocop-rails", version: [], source: Source.new(git: { repo: "https://github.com/rubocop/rubocop-rails.git", branch: "dev" })),
@@ -67,6 +68,7 @@ class RubyTest < Minitest::Test
 
         gem "meowcop", "= 1.2.0"
         gem "rubocop", git: "https://github.com/rubocop/rubocop.git", branch: "master"
+        gem "rubocop-minitest", git: "https://github.com/rubocop/rubocop-minitest.git"
         gem "rubocop-nyan", "> 1.0", source: "https://gems.sider.review"
         gem "rubocop-rails", git: "https://github.com/rubocop/rubocop-rails.git", branch: "dev"
         gem "rubocop-rspec", git: "https://github.com/rubocop/rubocop-performance.git", tag: "v1.9.0"
