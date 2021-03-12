@@ -33,6 +33,7 @@ Misc:
 - **ESLint** Update pre-installed packages [#2155](https://github.com/sider/runners/pull/2155)
 - **Flake8** Enable new recommended configuration [#2157](https://github.com/sider/runners/pull/2157)
 - Simplify generated `Gemfile` [#2168](https://github.com/sider/runners/pull/2168)
+- Loosen unsatisfied constraints for npm packages [#2171](https://github.com/sider/runners/pull/2171)
 
 ## 0.44.1
 
