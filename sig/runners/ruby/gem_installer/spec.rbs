@@ -3,12 +3,12 @@ module Runners
     class GemInstaller
       class Spec
         attr_reader name: String
-        attr_reader version: Array[String]
+        attr_reader requirement: Gem::Requirement
         attr_reader source: Source
 
-        def initialize: (name: String, version: Array[String], ?source: Source) -> void
+        def initialize: (String, ?requirement: (Array[String | Gem::Version] | Gem::Requirement), ?source: Source) -> void
 
-        def override_by_lockfile: (LockfileLoader::Lockfile) -> Spec
+        def override_by_lockfile: (LockfileLoader::Lockfile) -> instance
       end
     end
   end

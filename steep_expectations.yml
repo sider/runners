@@ -221,21 +221,6 @@
     severity: ERROR
     message: Type `(::String | ::Array[::String] | nil)` does not have method `split`
     code: Ruby::NoMethod
-- file: lib/runners/ruby/lockfile_loader/lockfile.rb
-  diagnostics:
-  - range:
-      start:
-        line: 35
-        character: 75
-      end:
-        line: 35
-        character: 103
-    severity: ERROR
-    message: |-
-      Cannot pass a value of type `(::Gem::Version | nil)` as an argument of type `::Gem::Version`
-        (::Gem::Version | nil) <: ::Gem::Version
-          nil <: ::Gem::Version
-    code: Ruby::ArgumentTypeMismatch
 - file: lib/runners/ruby.rb
   diagnostics:
   - range:

@@ -215,7 +215,7 @@ s.add_test(
   warnings: [
     {
       message: <<~MESSAGE.strip,
-        `rails_best_practices #{default_version}` is installed instead of `1.16.0` in your `Gemfile.lock`.
+        `rails_best_practices = #{default_version}` will be installed instead of `1.16.0` in your `Gemfile.lock`.
         Because `1.16.0` does not satisfy our constraints `>= 1.19.1, < 2.0`.
 
         If you want to use a different version of `rails_best_practices`, please do either:

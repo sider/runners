@@ -2,29 +2,27 @@ module Runners
   module Ruby
     class GemInstaller
       class Spec
-        attr_reader :name, :version, :source
+        attr_reader :name, :requirement, :source
 
-        alias versions version
-
-        def initialize(name:, version:, source: Source.default)
+        def initialize(name, requirement: [], source: Source.default)
           @name = name
-          @version = version
+          @requirement = requirement.is_a?(Gem::Requirement) ? requirement : Gem::Requirement.create(*requirement)
           @source = source
         end
 
         def ==(other)
-          self.class == other.class && name == other.name && version == other.version && source == other.source
+          self.class == other.class && name == other.name && requirement == other.requirement && source == other.source
         end
         alias eql? ==
 
         def hash
-          name.hash ^ version.hash ^ source.hash
+          name.hash ^ requirement.hash ^ source.hash
         end
 
         def override_by_lockfile(lockfile)
           locked_version = lockfile.locked_version(self)
-          new_version = locked_version ? [locked_version] : version
-          Spec.new(name: name, version: new_version, source: source)
+          new_version = locked_version ? [locked_version] : requirement
+          self.class.new(name, requirement: new_version, source: source)
         end
       end
     end

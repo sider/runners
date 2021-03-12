@@ -4,21 +4,23 @@ module Runners
       class Lockfile
         type spec = GemInstaller::Spec | String
 
-        attr_reader specs: Array[GemInstaller::Spec]
-
         def initialize: (String?) -> void
+
+        def empty?: () -> bool
 
         def spec_exists?: (spec) -> bool
 
-        def locked_version: (spec) -> String?
+        def locked_version: (spec) -> Gem::Version?
 
-        def locked_version!: (spec) -> String
+        def locked_version!: (spec) -> Gem::Version
 
         def satisfied_by?: (spec, constraints) -> bool
 
         private
 
-        def find_spec: (spec) -> GemInstaller::Spec?
+        attr_reader specs: Array[Bundler::LazySpecification]
+
+        def find_spec: (spec) -> Bundler::LazySpecification?
       end
     end
   end

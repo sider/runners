@@ -22,8 +22,8 @@ module Runners
     register_config_schema(name: :querly, schema: Schema.runner_config)
 
     OPTIONAL_GEMS = [
-      GemInstaller::Spec.new(name: "slim", version: []),
-      GemInstaller::Spec.new(name: "haml", version: []),
+      GemInstaller::Spec.new("slim"),
+      GemInstaller::Spec.new("haml"),
     ].freeze
 
     GEM_NAME = "querly".freeze

@@ -70,7 +70,7 @@ module Runners
       default_gems = default_gem_specs(GEM_NAME, *REQUIRED_GEM_NAMES)
       if setup_default_rubocop_config
         # NOTE: See rubocop.rb about no versions.
-        default_gems << GemInstaller::Spec.new(name: "meowcop", version: [])
+        default_gems << GemInstaller::Spec.new("meowcop")
       end
 
       optionals = official_rubocop_plugins + third_party_rubocop_plugins

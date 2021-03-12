@@ -31,13 +31,13 @@ module Runners
     register_config_schema(name: :rails_best_practices, schema: Schema.runner_config)
 
     OPTIONAL_GEMS = [
-      GemInstaller::Spec.new(name: "slim", version: []),
-      GemInstaller::Spec.new(name: "haml", version: []),
-      GemInstaller::Spec.new(name: "sass", version: []),
-      GemInstaller::Spec.new(name: "sassc", version: []),
+      GemInstaller::Spec.new("slim"),
+      GemInstaller::Spec.new("haml"),
+      GemInstaller::Spec.new("sass"),
+      GemInstaller::Spec.new("sassc"),
       # HACK: sassc v1.x does not have `rake` dependency, but fail to install if the `rake` missing
       # https://github.com/sass/sassc-ruby/issues/86
-      GemInstaller::Spec.new(name: "rake", version: []),
+      GemInstaller::Spec.new("rake"),
     ].freeze
 
     GEM_NAME = "rails_best_practices".freeze

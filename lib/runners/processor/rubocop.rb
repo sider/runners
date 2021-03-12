@@ -52,7 +52,7 @@ module Runners
         #       (e.g. MeowCop 2.4.0 requires RuboCop 0.75.0+)
         #       So, MeowCop versions must be unspecified because the installation will fail when a user's RuboCop is 0.60.0.
         #       Bundler will select an appropriate version automatically unless versions.
-        default_gems << GemInstaller::Spec.new(name: "meowcop", version: [])
+        default_gems << GemInstaller::Spec.new("meowcop")
       end
 
       optionals = official_rubocop_plugins + third_party_rubocop_plugins

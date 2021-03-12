@@ -97,7 +97,7 @@ module Runners
       end
 
       def gem_constraints(spec)
-        req = Gem::Requirement.create(*spec.version)
+        req = spec.requirement.dup
 
         # NOTE: Gems with Git source do not need constraints.
         req.concat(constraints[spec.name].to_s.split(",")) unless spec.source.git?
