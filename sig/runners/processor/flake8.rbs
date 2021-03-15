@@ -10,7 +10,8 @@ module Runners
     OUTPUT_FORMAT: String
     OUTPUT_PATTERN: Regexp
     DEFAULT_TARGET: String
-    IGNORED_CONFIG_PATH: String
+    DEFAULT_CONFIG_PATH: String
+    DEFAULT_IGNORED_CONFIG_PATH: String
 
     private
 
@@ -18,6 +19,6 @@ module Runners
 
     def prepare_plugins: () -> void
 
-    def parse_result: (String) { (Issue) -> void } -> void
+    def parse_result: (String) -> Array[Issue]
   end
 end
