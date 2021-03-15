@@ -260,3 +260,10 @@ s.add_test_with_git_metadata(
     ],
     analyzer: { name: "Metrics File Info", version: default_version } }
 )
+
+s.add_test_with_git_metadata(
+  "churn",
+  { type: "success",
+    issues: [],
+    analyzer: { name: "Metrics File Info", version: default_version } }
+)
