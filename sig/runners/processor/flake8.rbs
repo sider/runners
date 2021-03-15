@@ -7,8 +7,6 @@ module Runners
     end
     Schema: SchemaClass
 
-    OUTPUT_FORMAT: String
-    OUTPUT_PATTERN: Regexp
     DEFAULT_TARGET: String
     DEFAULT_CONFIG_PATH: String
     DEFAULT_IGNORED_CONFIG_PATH: String

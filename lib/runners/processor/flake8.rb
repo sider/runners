@@ -17,15 +17,6 @@ module Runners
 
     register_config_schema(name: :flake8, schema: Schema.runner_config)
 
-    # Output example:
-    #
-    # E999:::app1/views.py:::6:::12:::IndentationError: unexpected indent
-    #
-    # `:::` is a separater
-    #
-    OUTPUT_FORMAT = '%(code)s:::%(path)s:::%(row)d:::%(col)d:::%(text)s'.freeze
-    OUTPUT_PATTERN = /^([^:]+):::([^:]+):::(\d+):::(\d+):::(.+)$/.freeze
-
     DEFAULT_TARGET = ".".freeze
     DEFAULT_CONFIG_PATH = (Pathname(Dir.home) / '.config' / 'flake8').to_path.freeze
     DEFAULT_IGNORED_CONFIG_PATH = (Pathname(Dir.home) / '.config' / 'ignored-config.ini').to_path.freeze
@@ -57,7 +48,6 @@ module Runners
         analyzer_bin,
         "--exit-zero",
         "--output-file", report_file,
-        "--format", OUTPUT_FORMAT,
         "--append-config", DEFAULT_IGNORED_CONFIG_PATH,
         "--jobs", parallel ? "auto" : "1",
         *(config_linter[:config]&.then { |c| ["--config", c] }),
@@ -89,8 +79,10 @@ module Runners
 
     def parse_result(output)
       issues = []
-      output.scan(OUTPUT_PATTERN) do |match|
-        id, path, line, column, message = match
+
+      # @see https://gitlab.com/pycqa/flake8/-/blob/3.9.0/src/flake8/formatting/default.py#L50
+      output.scan(/^(.+):(\d+):(\d+): ([^\s]+) (.+)$/) do |match|
+        path, line, column, id, message = match
         issues << Issue.new(
           path: relative_path(path),
           location: Location.new(start_line: line, start_column: column),
@@ -98,6 +90,7 @@ module Runners
           message: message,
         )
       end
+
       issues
     end
   end
