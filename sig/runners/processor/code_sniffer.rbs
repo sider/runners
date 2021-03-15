@@ -17,6 +17,8 @@ module Runners
       def initialize: (standard: String, extensions: String, target: String) -> void
     end
 
+    DEFAULT_CONFIG_FILE: String
+
     OPTIONS_CAKE_PHP: DefaultOptions
     OPTIONS_SYMFONY: DefaultOptions
     OPTIONS_PSR2: DefaultOptions
