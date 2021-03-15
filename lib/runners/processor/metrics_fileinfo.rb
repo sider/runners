@@ -32,6 +32,7 @@ module Runners
 
       analyze_last_committed_at(target_files)
       analyze_lines_of_code(target_files)
+      analyze_code_churn()
 
       Results::Success.new(
         guid: guid,
@@ -93,6 +94,20 @@ module Runners
           stdout, _ = capture3!("git", "log", "-1", "--format=format:%aI", "--", target, trace_stdout: false, trace_command_line: false)
           last_committed_at[target] = stdout
         end
+      end
+    end
+
+    def code_churn
+      @code_churn ||= {}
+    end
+
+    def analyze_code_churn
+      trace_writer.message "Analyzing code churn..." do
+        stdout, _ = capture3!("git", "rev-list", "--reverse", "HEAD", "-n", "100", trace_stdout: false, trace_command_line: false)
+        stdout, _ = capture3!("git", "rev-list", "--reverse", "HEAD", "--since", "90 days ago", trace_stdout: false, trace_command_line: false)
+        lines = stdout.lines(chomp: true)
+        end_commit = lines[0]
+        stdout, _ = capture3!("git", "log", "--reverse", "--format=format:%aI", "--numstat", "#{end_commit}..HEAD", trace_stdout: false, trace_command_line: false)
       end
     end
 
