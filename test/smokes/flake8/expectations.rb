@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "3.8.4"
+default_version = "3.9.0"
 
 s.add_test(
   "sandbox_django",
@@ -340,7 +340,7 @@ s.add_test(
   type: "success",
   issues: [
     {
-      message: "indentation is not a multiple of four",
+      message: "indentation is not a multiple of     ",
       links: [],
       id: "E111",
       path: "foo.py",
