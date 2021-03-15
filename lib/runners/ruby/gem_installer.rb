@@ -23,7 +23,7 @@ module Runners
         gemfile_path.sub_ext(".lock")
       end
 
-      def install!
+      def install!(&block)
         gemfile_path.write(gemfile_content)
 
         trace_writer.message "Installing gems..."
@@ -41,13 +41,7 @@ module Runners
             MESSAGE
           end
 
-          versions = LockfileParser.parse(lockfile_path.read).specs.map do |spec|
-            [spec.name, spec.version.version]
-          end.to_h
-
-          shell.push_env_hash({ "BUNDLE_GEMFILE" => gemfile_path.to_s }) do
-            yield versions
-          end
+          shell.push_env_hash({ "BUNDLE_GEMFILE" => gemfile_path.to_s }, &block)
         end
       end
 

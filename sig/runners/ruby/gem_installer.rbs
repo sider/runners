@@ -24,7 +24,7 @@ module Runners
 
       def lockfile_path: () -> Pathname
 
-      def install!: [X] () { (Hash[String, String]) -> X } -> X
+      def install!: [X] () { () -> X } -> X
 
       def gemfile_content: () -> String
 

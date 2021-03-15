@@ -144,12 +144,9 @@ class RubyTest < Minitest::Test
       )
 
       installer.install! do |hash|
-        stdout, _ = shell.capture3("bundle", "exec", "gem", "list")
-        lines = stdout.lines(chomp: true)
-        assert_includes lines, "strong_json (0.5.0)"
-        assert_includes lines, "rubocop-rails (2.9.0)"
-        assert_equal "0.5.0", hash["strong_json"]
-        assert_equal "2.9.0", hash["rubocop-rails"]
+        stdout, _ = shell.capture3!("bundle", "list")
+        assert_match "strong_json (0.5.0)", stdout
+        assert_match "rubocop-rails (2.9.0 e91a433)", stdout
       end
 
       gemfile_content_log = <<~RUBY.strip
