@@ -13,6 +13,7 @@ Updated environments:
 Updated tools:
 
 - **Clang-Tidy** 10 -> 11 [#2154](https://github.com/sider/runners/pull/2154)
+- **ESLint** 7.21.0 -> 7.22.0 [#2178](https://github.com/sider/runners/pull/2178)
 - **GolangCI-Lint** 1.37.1 -> 1.38.0 [#2138](https://github.com/sider/runners/pull/2138)
 - **hadolint** 1.22.1 -> 1.23.0 [#2145](https://github.com/sider/runners/pull/2145)
 - **RuboCop** 1.10.0 -> 1.11.0 [#2140](https://github.com/sider/runners/pull/2140)
