@@ -8,11 +8,13 @@ All notable changes to this project will be documented in this file.
 
 Updated environments:
 
-- **devon_rex** 2.40.6 -> master [#2128](https://github.com/sider/runners/pull/2128)
+- **devon_rex** 2.40.6 -> 2.41.0 [#2128](https://github.com/sider/runners/pull/2128) [#2183](https://github.com/sider/runners/pull/2183)
 
 Updated tools:
 
 - **Clang-Tidy** 10 -> 11 [#2154](https://github.com/sider/runners/pull/2154)
+- **ESLint** 7.21.0 -> 7.22.0 [#2178](https://github.com/sider/runners/pull/2178)
+- **Flake8** 3.8.4 -> 3.9.0 [#2174](https://github.com/sider/runners/pull/2174)
 - **GolangCI-Lint** 1.37.1 -> 1.38.0 [#2138](https://github.com/sider/runners/pull/2138)
 - **hadolint** 1.22.1 -> 1.23.0 [#2145](https://github.com/sider/runners/pull/2145)
 - **RuboCop** 1.10.0 -> 1.11.0 [#2140](https://github.com/sider/runners/pull/2140)
@@ -33,6 +35,7 @@ Misc:
 - **ESLint** Update pre-installed packages [#2155](https://github.com/sider/runners/pull/2155)
 - **Flake8** Enable new recommended configuration [#2157](https://github.com/sider/runners/pull/2157)
 - Simplify generated `Gemfile` [#2168](https://github.com/sider/runners/pull/2168)
+- **Flake8** Use default formatter [#2181](https://github.com/sider/runners/pull/2181)
 
 ## 0.44.1
 
