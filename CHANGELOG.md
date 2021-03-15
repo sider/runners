@@ -35,6 +35,7 @@ Misc:
 - **ESLint** Update pre-installed packages [#2155](https://github.com/sider/runners/pull/2155)
 - **Flake8** Enable new recommended configuration [#2157](https://github.com/sider/runners/pull/2157)
 - Simplify generated `Gemfile` [#2168](https://github.com/sider/runners/pull/2168)
+- **Flake8** Use default formatter [#2181](https://github.com/sider/runners/pull/2181)
 
 ## 0.44.1
 
