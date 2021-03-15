@@ -10,13 +10,46 @@ s.add_test(
   issues: [
     {
       path: "app.php",
-      location: { start_line: 18, start_column: 1 },
+      location: { start_line: 1, start_column: 1 },
+      id: "PSR1.Files.SideEffects.FoundWithSymbols",
+      message: "A file should declare new symbols (classes, functions, constants, etc.) and cause no other side effects, or it should execute logic with side effects, but should not do both. The first symbol is defined on line 12 and the first side effect is on line 3.",
+      links: [],
+      object: { type: "WARNING", severity: 5, fixable: false },
+      git_blame_info: {
+        commit: :_, line_hash: "9166a7b7093b6ef318e436c6b16866e360ab4381", original_line: 1, final_line: 1
+      }
+    },
+    {
+      path: "app.php",
+      location: { start_line: 15, start_column: 1 },
+      id: "PSR12.Classes.ClosingBrace.StatementAfter",
+      message: "Closing brace must not be followed by any comment or statement on the same line",
+      links: [],
+      object: { type: "ERROR", severity: 5, fixable: false },
+      git_blame_info: {
+        commit: :_, line_hash: "10ced3b53ec8f72c1f3a89aa9b7f798f2ddd713a", original_line: 15, final_line: 15
+      }
+    },
+    {
+      path: "app.php",
+      location: { start_line: 15, start_column: 1 },
+      id: "PSR2.Classes.ClassDeclaration.CloseBraceSameLine",
+      message: "Closing class brace must be on a line by itself",
+      links: [],
+      object: { type: "ERROR", severity: 5, fixable: false },
+      git_blame_info: {
+        commit: :_, line_hash: "10ced3b53ec8f72c1f3a89aa9b7f798f2ddd713a", original_line: 15, final_line: 15
+      }
+    },
+    {
+      path: "app.php",
+      location: { start_line: 23, start_column: 1 },
       id: "PSR2.Files.ClosingTag.NotAllowed",
       message: "A closing tag is not permitted at the end of a PHP file",
       links: [],
       object: { type: "ERROR", severity: 5, fixable: true },
       git_blame_info: {
-        commit: :_, line_hash: "48ee9fdb6490aadc28bbb90cee75350be54532de", original_line: 18, final_line: 18
+        commit: :_, line_hash: "48ee9fdb6490aadc28bbb90cee75350be54532de", original_line: 23, final_line: 23
       }
     }
   ],

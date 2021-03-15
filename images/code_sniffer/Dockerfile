@@ -15,6 +15,8 @@ RUN basepath="${COMPOSER_HOME}/vendor" && \
       "${basepath}/cakephp/cakephp-codesniffer,${basepath}/escapestudios/symfony2-coding-standard,${basepath}/wp-coding-standards/wpcs" && \
     phpcs -i
 
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/code_sniffer/sider_recommended_code_sniffer.xml ${RUNNER_USER_HOME}/
+
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
