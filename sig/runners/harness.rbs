@@ -15,8 +15,7 @@ module Runners
     attr_reader trace_writer: TraceWriter
     attr_reader warnings: Array[String]
     attr_reader config: Config?
-
-    @analyzer: Analyzer?
+    attr_reader analyzer: Analyzer?
 
     def initialize: (guid: String,
                      processor_class: singleton(Processor),

@@ -18,6 +18,7 @@ module Runners
     attr_reader :trace_writer
     attr_reader :warnings
     attr_reader :config
+    attr_reader :analyzer
 
     def initialize(guid:, processor_class:, options:, working_dir:, trace_writer:)
       @guid = guid
@@ -101,15 +102,15 @@ module Runners
           ---
           #{exn.raw_content}
         MSG
-        Results::Failure.new(guid: guid, message: exn.message, analyzer: @analyzer)
+        Results::Failure.new(guid: guid, message: exn.message, analyzer: analyzer)
       rescue UserError => exn
-        Results::Failure.new(guid: guid, message: exn.message, analyzer: @analyzer)
+        Results::Failure.new(guid: guid, message: exn.message, analyzer: analyzer)
       rescue => exn
         Bugsnag.notify(exn) do |report|
           report.severity = "error"
         end
         handle_error(exn)
-        Results::Error.new(guid: guid, exception: exn, analyzer: @analyzer)
+        Results::Error.new(guid: guid, exception: exn, analyzer: analyzer)
       end
     end
 
