@@ -144,11 +144,7 @@ module Runners
                           end
         "#{analyzer_name} analysis succeeded. #{issues_message}"
       else
-        if analyzer_name
-        "#{analyzer_name} analysis failed."
-        else
-          "Analysis failed."
-        end
+        analyzer_name ? "#{analyzer_name} analysis failed." : "Analysis failed."
       end
     end
 
