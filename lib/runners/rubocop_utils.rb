@@ -13,7 +13,7 @@ module Runners
         rubocop-rubycw
         rubocop-sequel
       ].map do |name|
-        Ruby::GemInstaller::Spec.new(name: name, version: [])
+        Ruby::GemInstaller::Spec.new(name)
       end.freeze
     end
 
@@ -59,7 +59,7 @@ module Runners
         unifacop
         ws-style
       ].map do |name|
-        Ruby::GemInstaller::Spec.new(name: name, version: [])
+        Ruby::GemInstaller::Spec.new(name)
       end.freeze
     end
 

@@ -2,16 +2,12 @@ module Runners
   module Ruby
     class LockfileLoader
       class Lockfile
-        attr_reader :specs
-
         def initialize(lockfile_content)
-          @specs = if lockfile_content
-                     LockfileParser.parse(lockfile_content).specs.map do |spec|
-                       GemInstaller::Spec.new(name: spec.name, version: Array(spec.version.version))
-                     end
-                   else
-                     []
-                   end
+          @specs = lockfile_content ? LockfileParser.parse(lockfile_content).specs : []
+        end
+
+        def empty?
+          specs.empty?
         end
 
         def spec_exists?(spec)
@@ -19,26 +15,25 @@ module Runners
         end
 
         def locked_version(spec)
-          found = find_spec(spec)
-          found ? found.version.first : nil
+          find_spec(spec)&.version
         end
 
         def locked_version!(spec)
-          locked_version(spec) or
-            raise ArgumentError.new("lockfile=#{inspect}, spec=#{spec.inspect}")
+          locked_version(spec) or raise ArgumentError.new("lockfile=#{inspect}, spec=#{spec.inspect}")
         end
 
         def satisfied_by?(spec, constraints)
           found = find_spec(spec)
-          version, = found&.version
-          if found && version
-            Gem::Requirement.create(constraints[found.name]).satisfied_by?(Gem::Version.create(version))
+          if found
+            Gem::Requirement.create(constraints[found.name]).satisfied_by?(found.version)
           else
             raise "Spec not found: #{spec}, lockfile=#{specs.inspect}"
           end
         end
 
         private
+
+        attr_reader :specs
 
         def find_spec(spec)
           spec_name = spec.is_a?(String) ? spec : spec.name

@@ -1,109 +1,48 @@
 module Runners
   class Ruby::GemInstaller
     class Source
-      DEFAULT = "https://rubygems.org".freeze
-      private_constant :DEFAULT
-
       def self.default
-        Rubygems.new(DEFAULT)
+        new
       end
 
-      def self.create(gems_item)
-        source = gems_item[:source]
-        git_source = gems_item[:git]
+      attr_reader :uri
+      attr_reader :repo, :ref, :branch, :tag # for Git
 
-        case
-        when source.is_a?(String)
-          Rubygems.new(source)
-        when git_source.is_a?(Hash)
-          Git.new(git_source)
-        else
-          default
+      def initialize(uri: nil, git: nil)
+        if git && !git[:repo]
+          raise ArgumentError, "Required repository for Git source"
         end
-      end
 
-      def rubygems?
-        false
+        @uri = uri || Gem::DEFAULT_HOST
+
+        git ||= {}
+        @repo = git[:repo]
+        @ref = git[:ref]
+        @branch = git[:branch]
+        @tag = git[:tag]
       end
 
       def git?
-        false
+        !!repo
       end
 
       def default?
-        false
+        uri == Gem::DEFAULT_HOST
       end
 
-      # @see https://bundler.io/man/gemfile.5.html#SOURCE
-      class Rubygems < Source
-        attr_reader :source
-
-        def initialize(source)
-          source or raise ArgumentError, "Required source for Rubygems source"
-
-          super()
-          @source = source
-        end
-
-        def rubygems?
-          true
-        end
-
-        def default?
-          source == DEFAULT
-        end
-
-        def ==(other)
-          self.class == other.class && source == other.source
-        end
-        alias eql? ==
-
-        def hash
-          source.hash
-        end
-
-        def to_s
-          "source \"#{source}\""
-        end
+      def ==(other)
+        self.class == other.class &&
+          uri == other.uri &&
+          repo == other.repo &&
+          ref == other.ref &&
+          branch == other.branch &&
+          tag == other.tag
       end
-      private_constant :Rubygems
+      alias eql? ==
 
-      # @see https://bundler.io/man/gemfile.5.html#GIT
-      class Git < Source
-        attr_reader :repo, :ref, :branch, :tag
-
-        def initialize(params)
-          repo = params[:repo] or raise ArgumentError, "Required repository for Git source"
-
-          super()
-          @repo = repo
-          @ref = params[:ref]
-          @branch = params[:branch]
-          @tag = params[:tag]
-        end
-
-        def git?
-          true
-        end
-
-        def ==(other)
-          self.class == other.class && repo == other.repo && ref == other.ref && branch == other.branch && tag == other.tag
-        end
-        alias eql? ==
-
-        def hash
-          repo.hash ^ ref.hash ^ branch.hash ^ tag.hash
-        end
-
-        def to_s
-          s = "git \"#{repo}\""
-          s << ", ref: \"#{ref}\"" if ref
-          s << ", branch: \"#{branch}\"" if branch
-          s << ", tag: \"#{tag}\"" if tag
-          s
-        end
+      def hash
+        uri.hash ^ repo.hash ^ ref.hash ^ branch.hash ^ tag.hash
       end
-      private_constant :Git
     end
   end
 end

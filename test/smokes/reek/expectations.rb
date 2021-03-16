@@ -188,7 +188,7 @@ s.add_test(
   warnings: [
     {
       message: <<~MESSAGE.strip,
-        `reek #{default_version}` is installed instead of `4.0.0` in your `Gemfile.lock`.
+        `reek = #{default_version}` will be installed instead of `4.0.0` in your `Gemfile.lock`.
         Because `4.0.0` does not satisfy our constraints `>= 4.4.0, < 7.0.0`.
 
         If you want to use a different version of `reek`, please do either:

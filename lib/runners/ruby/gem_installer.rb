@@ -23,7 +23,7 @@ module Runners
         gemfile_path.sub_ext(".lock")
       end
 
-      def install!
+      def install!(&block)
         gemfile_path.write(gemfile_content)
 
         trace_writer.message "Installing gems..."
@@ -41,37 +41,21 @@ module Runners
             MESSAGE
           end
 
-          versions = LockfileParser.parse(lockfile_path.read).specs.map do |spec|
-            [spec.name, spec.version.version]
-          end.to_h
-
-          shell.push_env_hash({ "BUNDLE_GEMFILE" => gemfile_path.to_s }) do
-            yield versions
-          end
+          shell.push_env_hash({ "BUNDLE_GEMFILE" => gemfile_path.to_s }, &block)
         end
       end
 
+      # @see https://bundler.io/man/gemfile.5.html
       def gemfile_content
         trace_writer.message "Generating optimized Gemfile..."
 
         # @type var lines: Array[String]
         lines = []
-        lines << Source.default.to_s
+        lines << %{source "#{Source.default.uri}"}
         lines << ""
 
-        group_specs.each do |source, specs|
-          if source.default?
-            specs.each do |spec|
-              lines << gem(spec, gem_constraints(spec, source))
-            end
-          else
-            lines << "" if !lines.last&.empty?
-            lines << "#{source} do"
-            specs.each do |spec|
-              lines << "  #{gem(spec, gem_constraints(spec, source))}"
-            end
-            lines << "end"
-          end
+        specs.sort_by(&:name).each do |spec|
+          lines << gem(spec, gem_constraints(spec))
         end
 
         (lines.join("\n") + "\n").tap do |content|
@@ -84,33 +68,34 @@ module Runners
 
       private
 
-      def group_specs
-        specs
-          .group_by(&:source)
-          .sort_by do |source,|
-            case
-            when source.default? then 0
-            when source.rubygems? then 1
-            else 2
-            end
-          end
-      end
-
       def gem(spec, constraint)
-        declaration = %{gem "#{spec.name}"}
-        unless constraint.none?
-          declaration << ", "
-          declaration << constraint.to_s.split(",").map { |c| %{"#{c.strip}"} }.uniq.join(", ")
+        s = %{gem "#{spec.name}"}
+
+        source = spec.source
+
+        if !constraint.none? && !source.git?
+          s << ", "
+          s << constraint.to_s.split(",").map { |c| %{"#{c.strip}"} }.uniq.join(", ")
         end
-        declaration
+
+        if source.git?
+          s << %{, git: "#{source.repo}"}
+          s << %{, ref: "#{source.ref}"} if source.ref
+          s << %{, branch: "#{source.branch}"} if source.branch
+          s << %{, tag: "#{source.tag}"} if source.tag
+        elsif !source.default?
+          s << %{, source: "#{source.uri}"}
+        end
+
+        s
       end
 
-      def gem_constraints(spec, source)
-        # NOTE: Gems with Git source do not need constraints.
-        return Gem::Requirement.create if source.git?
+      def gem_constraints(spec)
+        req = spec.requirement.dup
 
-        req = Gem::Requirement.create(*spec.version)
-        req.concat(constraints[spec.name].to_s.split(","))
+        # NOTE: Gems with Git source do not need constraints.
+        req.concat(constraints[spec.name].to_s.split(",")) unless spec.source.git?
+
         req
       end
     end

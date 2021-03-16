@@ -4,15 +4,17 @@ module Runners
 
     def install_gems(default_specs, constraints:, optionals: [], &block)
       original_default_specs = default_specs.dup
-      user_specs = GemInstaller::Spec.from_gems(config_linter[:gems] || [])
+      user_specs = config_gems
 
       LockfileLoader.new(root_dir: root_dir, shell: shell).ensure_lockfile do |lockfile|
         default_specs = default_specs(default_specs, constraints, lockfile)
         optionals = optional_specs(optionals, lockfile)
         user_specs = user_specs(user_specs, lockfile)
       end
+
       use_local = (user_specs + optionals).empty? && original_default_specs == default_specs
-      specs = GemInstaller::Spec.merge(default_specs, user_specs.size > 0 ? user_specs : optionals)
+
+      specs = merge_specs(default_specs, user_specs.empty? ? optionals : user_specs)
 
       mktmpdir do |path|
         installer = GemInstaller.new(shell: shell,
@@ -34,7 +36,7 @@ module Runners
           else
             locked_version = lockfile.locked_version!(spec)
             add_warning <<~MESSAGE
-              `#{spec.name} #{spec.version.first}` is installed instead of `#{locked_version}` in your `Gemfile.lock`.
+              `#{spec.name} #{spec.requirement}` will be installed instead of `#{locked_version}` in your `Gemfile.lock`.
               Because `#{locked_version}` does not satisfy our constraints `#{constraints.fetch(spec.name)}`.
 
               If you want to use a different version of `#{spec.name}`, please do either:
@@ -56,7 +58,7 @@ module Runners
 
     private def user_specs(specs, lockfile)
       specs.map do |spec|
-        if spec.version.empty?
+        if spec.requirement.none?
           spec.override_by_lockfile(lockfile)
         else
           spec
@@ -86,7 +88,7 @@ module Runners
         # NOTE: A format example: `rubocop (0.75.1, 0.75.0)`
         version = /#{Regexp.escape(name)} \((.+)\)/.match(stdout)&.captures&.first
         if version
-          GemInstaller::Spec.new(name: name, version: version.split(/,\s*/))
+          GemInstaller::Spec.new(name, requirement: version.split(/,\s*/))
         else
           raise "Not found installed gem #{name.inspect}"
         end
@@ -101,6 +103,49 @@ module Runners
         @gem_info[gem_name] = info
       end
       info
+    end
+
+    private
+
+    def config_gems
+      (config_linter[:gems] || []).map do |item|
+        gem = case item
+              when Hash
+                item
+              when String
+                { name: item.to_s, version: nil, source: nil, git: nil }
+              else
+                raise item.inspect
+              end
+
+        GemInstaller::Spec.new(
+          gem.fetch(:name),
+          requirement: Array(gem[:version]),
+          source: GemInstaller::Source.new(uri: gem[:source], git: gem[:git]),
+        )
+      end
+    end
+
+    def merge_specs(defaults, users)
+      defaults_hash = defaults.to_h { |spec| [spec.name, spec] }
+      users_hash = users.to_h { |spec| [spec.name, spec] }
+
+      specs = []
+
+      specs += defaults_hash.map do |name, spec|
+        user_spec = users_hash[name]
+        if user_spec
+          GemInstaller::Spec.new(name, requirement: user_spec.requirement, source: user_spec.source)
+        else
+          spec
+        end
+      end
+
+      specs += users_hash.filter_map do |name, spec|
+        spec unless defaults_hash.include?(name)
+      end
+
+      specs
     end
   end
 end

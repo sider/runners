@@ -40,14 +40,15 @@ class RubyTest < Minitest::Test
 
   def test_gemfile_content
     specs = [
-      Spec.new(name: "rubocop", version: [], source: Source.create({ git: { repo: "https://github.com/rubocop/rubocop.git", branch: "master" } })),
-      Spec.new(name: "runners", version: [], source: Source.create({ git: { repo: "git@github.com:sider/runners.git", ref: "e66806c02849a0d0bdea66be88b5967d5eb3305d" } })),
-      Spec.new(name: "rubocop-rails", version: [], source: Source.create({ git: { repo: "https://github.com/rubocop/rubocop-rails.git", branch: "dev" } })),
-      Spec.new(name: "rubocop-rspec", version: [], source: Source.create({ git: { repo: "https://github.com/rubocop/rubocop-performance.git", tag: "v1.9.0" } })),
-      Spec.new(name: "rubocop-sider", version: [], source: Source.create({ source: "https://gems.sider.review" })),
-      Spec.new(name: "rubocop-nyan", version: [], source: Source.create({ source: "https://gems.sider.review" })),
-      Spec.new(name: "meowcop", version: ["1.2.0"]),
-      Spec.new(name: "strong_json", version: ["0.4.0", "<= 0.8"]),
+      Spec.new("rubocop-minitest", source: Source.new(git: { repo: "https://github.com/rubocop/rubocop-minitest.git" })),
+      Spec.new("rubocop", source: Source.new(git: { repo: "https://github.com/rubocop/rubocop.git", branch: "master" })),
+      Spec.new("runners", source: Source.new(git: { repo: "git@github.com:sider/runners.git", ref: "e66806c02849a0d0bdea66be88b5967d5eb3305d" })),
+      Spec.new("rubocop-rails", source: Source.new(git: { repo: "https://github.com/rubocop/rubocop-rails.git", branch: "dev" })),
+      Spec.new("rubocop-rspec", source: Source.new(git: { repo: "https://github.com/rubocop/rubocop-performance.git", tag: "v1.9.0" })),
+      Spec.new("rubocop-sider", source: Source.new(uri: "https://gems.sider.review")),
+      Spec.new("rubocop-nyan", requirement: ["> 1.0"], source: Source.new(uri: "https://gems.sider.review")),
+      Spec.new("meowcop", requirement: ["1.2.0"]),
+      Spec.new("strong_json", requirement: ["0.4.0", "<= 0.8"]),
     ]
 
     mktmpdir do |path|
@@ -61,33 +62,21 @@ class RubyTest < Minitest::Test
         use_local: false,
       )
 
-      assert_equal <<~CONTENT, installer.gemfile_content
+      content = installer.gemfile_content
+      assert_equal <<~RUBY, content
         source "https://rubygems.org"
 
         gem "meowcop", "= 1.2.0"
+        gem "rubocop", git: "https://github.com/rubocop/rubocop.git", branch: "master"
+        gem "rubocop-minitest", git: "https://github.com/rubocop/rubocop-minitest.git"
+        gem "rubocop-nyan", "> 1.0", source: "https://gems.sider.review"
+        gem "rubocop-rails", git: "https://github.com/rubocop/rubocop-rails.git", branch: "dev"
+        gem "rubocop-rspec", git: "https://github.com/rubocop/rubocop-performance.git", tag: "v1.9.0"
+        gem "rubocop-sider", source: "https://gems.sider.review"
+        gem "runners", git: "git@github.com:sider/runners.git", ref: "e66806c02849a0d0bdea66be88b5967d5eb3305d"
         gem "strong_json", "= 0.4.0", "<= 0.8"
-
-        source "https://gems.sider.review" do
-          gem "rubocop-sider"
-          gem "rubocop-nyan"
-        end
-
-        git "https://github.com/rubocop/rubocop.git", branch: "master" do
-          gem "rubocop"
-        end
-
-        git "git@github.com:sider/runners.git", ref: "e66806c02849a0d0bdea66be88b5967d5eb3305d" do
-          gem "runners"
-        end
-
-        git "https://github.com/rubocop/rubocop-rails.git", branch: "dev" do
-          gem "rubocop-rails"
-        end
-
-        git "https://github.com/rubocop/rubocop-performance.git", tag: "v1.9.0" do
-          gem "rubocop-rspec"
-        end
-      CONTENT
+      RUBY
+      assert_ruby_syntax_ok content
     end
   end
 
@@ -96,7 +85,7 @@ class RubyTest < Minitest::Test
       installer = GemInstaller.new(
         shell: shell,
         specs: [
-          Spec.new(name: "rubocop-sider", version: [], source: Source.create({ source: "https://gems.sider.review" })),
+          Spec.new("rubocop-sider", source: Source.new(uri: "https://gems.sider.review")),
         ],
         home: path,
         config_path_name: "sider.yml",
@@ -105,13 +94,13 @@ class RubyTest < Minitest::Test
         use_local: false,
       )
 
-      assert_equal <<~CONTENT, installer.gemfile_content
+      content = installer.gemfile_content
+      assert_equal <<~RUBY, content
         source "https://rubygems.org"
 
-        source "https://gems.sider.review" do
-          gem "rubocop-sider"
-        end
-      CONTENT
+        gem "rubocop-sider", source: "https://gems.sider.review"
+      RUBY
+      assert_ruby_syntax_ok content
     end
   end
 
@@ -138,9 +127,9 @@ class RubyTest < Minitest::Test
 
   def test_install_success
     specs = [
-      Spec.new(name: "strong_json", version: ["0.5.0"]),
-      Spec.new(name: "rubocop-rails", version: ["2.9.0"],
-               source: Source.create({ git: { repo: "https://github.com/rubocop/rubocop-rails.git", tag: "v2.9.0" } })),
+      Spec.new("strong_json", requirement: ["0.5.0"]),
+      Spec.new("rubocop-rails", requirement: ["2.9.0"],
+               source: Source.new(git: { repo: "https://github.com/rubocop/rubocop-rails.git", tag: "v2.9.0" })),
     ]
 
     mktmpdir do |path|
@@ -155,25 +144,19 @@ class RubyTest < Minitest::Test
       )
 
       installer.install! do |hash|
-        stdout, _ = shell.capture3("bundle", "exec", "gem", "list")
-        lines = stdout.lines(chomp: true)
-        assert_includes lines, "strong_json (0.5.0)"
-        assert_includes lines, "rubocop-rails (2.9.0)"
-        assert_equal "0.5.0", hash["strong_json"]
-        assert_equal "2.9.0", hash["rubocop-rails"]
+        stdout, _ = shell.capture3!("bundle", "list")
+        assert_match "strong_json (0.5.0)", stdout
+        assert_match "rubocop-rails (2.9.0 e91a433)", stdout
       end
 
       gemfile_content_log = <<~RUBY.strip
         ### Auto-generated Gemfile ###
         source "https://rubygems.org"
 
+        gem "rubocop-rails", git: "https://github.com/rubocop/rubocop-rails.git", tag: "v2.9.0"
         gem "strong_json", "= 0.5.0", "<= 0.8.0"
-
-        git "https://github.com/rubocop/rubocop-rails.git", tag: "v2.9.0" do
-          gem "rubocop-rails"
-        end
       RUBY
-      assert system("ruby", "-ce", gemfile_content_log)
+      assert_ruby_syntax_ok gemfile_content_log
 
       messages = trace_writer.writer.select { |m| m[:trace] == :message }.map { |m| m[:message] }
       assert_equal(["Generating optimized Gemfile...", gemfile_content_log, "Installing gems..."], messages)
@@ -182,7 +165,7 @@ class RubyTest < Minitest::Test
 
   def test_install_failure
     specs = [
-      Spec.new(name: "strong_json", version: ["0.5.0"])
+      Spec.new("strong_json", requirement: ["0.5.0"])
     ]
 
     mktmpdir do |path|
@@ -203,24 +186,29 @@ class RubyTest < Minitest::Test
     end
   end
 
-  def test_from_gems
-    specs = Spec.from_gems([
-      "rubocop",
-      { name: "strong_json", version: "0.7.0", source: "https://my.gems.org" },
-      { name: "rubocop-sider", git: { repo: "https://github.com/sider/rubocop-sider.git" } },
-      { name: "runners", git: { repo: "git@github.com:sider/runners.git", ref: "e66806c02849a0d0bdea66be88b5967d5eb3305d" } },
-      { name: "rubocop-rails", git: { repo: "https://github.com/rubocop/rubocop-rails.git", branch: "dev" } },
-      { name: "rubocop-performance", git: { repo: "https://github.com/rubocop/rubocop-performance.git", tag: "v1.9.0" } },
-    ])
+  def test_config_gems
+    with_workspace do |workspace|
+      processor = new_processor(workspace: workspace, config_yaml: <<~YAML)
+        linter:
+          rubocop:
+            gems:
+              - rubocop
+              - { name: "strong_json", version: "0.7.0", source: "https://my.gems.org" }
+              - { name: "runners", git: { repo: "git@github.com:sider/runners.git", ref: "e66806c02849a0d0bdea66be88b5967d5eb3305d" } }
+              - { name: "rubocop-rails", git: { repo: "https://github.com/rubocop/rubocop-rails.git", branch: "dev" } }
+              - { name: "rubocop-performance", git: { repo: "https://github.com/rubocop/rubocop-performance.git", tag: "v1.9.0" } }
+      YAML
 
-    assert_equal [
-      Spec.new(name: "rubocop", version: []),
-      Spec.new(name: "strong_json", version: ["0.7.0"], source: Source.create({ source: "https://my.gems.org" })),
-      Spec.new(name: "rubocop-sider", version: [], source: Source.create({ git: { repo: "https://github.com/sider/rubocop-sider.git" } })),
-      Spec.new(name: "runners", version: [], source: Source.create({ git: { repo: "git@github.com:sider/runners.git", ref: "e66806c02849a0d0bdea66be88b5967d5eb3305d" } })),
-      Spec.new(name: "rubocop-rails", version: [], source: Source.create({ git: { repo: "https://github.com/rubocop/rubocop-rails.git", branch: "dev" } })),
-      Spec.new(name: "rubocop-performance", version: [], source: Source.create({ git: { repo: "https://github.com/rubocop/rubocop-performance.git", tag: "v1.9.0" } })),
-    ], specs
+      assert_equal [
+        Spec.new("rubocop"),
+        Spec.new("strong_json", requirement: ["0.7.0"], source: Source.new(uri: "https://my.gems.org")),
+        Spec.new("runners", source: Source.new(git: { repo: "git@github.com:sider/runners.git", ref: "e66806c02849a0d0bdea66be88b5967d5eb3305d" })),
+        Spec.new("rubocop-rails", source: Source.new(git: { repo: "https://github.com/rubocop/rubocop-rails.git", branch: "dev" })),
+        Spec.new("rubocop-performance", source: Source.new(git: { repo: "https://github.com/rubocop/rubocop-performance.git", tag: "v1.9.0" })),
+      ], processor.send(:config_gems)
+
+      assert_empty new_processor(workspace: workspace).send(:config_gems)
+    end
   end
 
   def test_ensure_lockfile_with_gemfile_lock
@@ -380,7 +368,7 @@ gem 'rubocop', "> 0.60.0"
 EOF
 
       LockfileLoader.new(root_dir: path, shell: shell).ensure_lockfile do |lockfile|
-        assert_empty lockfile.specs
+        assert_empty lockfile
       end
     end
   end
@@ -481,22 +469,25 @@ EOF
   end
 
   def test_merge_specs
-    default_specs = [
-      Spec.new(name: "rubocop", version: ["0.4.0"]),
-      Spec.new(name: "strong_json", version: ["0.4.0"])
-    ]
+    with_workspace do |workspace|
+      processor = new_processor(workspace: workspace)
 
-    user_specs = [
-      Spec.new(name: "rubocop", version: ["0.5.0"], source: "https://some.source.org"),
-      Spec.new(name: "rubocop-rspec", version: ["1.2.3"])
-    ]
+      defaults = [
+        Spec.new("rubocop", requirement: ["0.4.0"]),
+        Spec.new("strong_json", requirement: ["0.4.0"]),
+      ]
 
-    assert_equal [
-                   Spec.new(name: "rubocop", version: ["0.5.0"], source: "https://some.source.org"),
-                   Spec.new(name: "strong_json", version: ["0.4.0"]),
-                   Spec.new(name: "rubocop-rspec", version: ["1.2.3"])
-                 ],
-                 Spec.merge(default_specs, user_specs)
+      users = [
+        Spec.new("rubocop", requirement: ["0.5.0"], source: "https://some.source.org"),
+        Spec.new("rubocop-rspec", requirement: ["1.2.3"]),
+      ]
+
+      assert_equal [
+        Spec.new("rubocop", requirement: ["0.5.0"], source: "https://some.source.org"),
+        Spec.new("strong_json", requirement: ["0.4.0"]),
+        Spec.new("rubocop-rspec", requirement: ["1.2.3"]),
+      ], processor.send(:merge_specs, defaults, users)
+    end
   end
 
   def test_install_no_gems
@@ -529,8 +520,8 @@ EOF
           rubocop:
             gems: ["strong_json"]
       YAML
-      processor.install_gems([Spec.new(name: "public_suffix", version: ["4.0.0"])],
-                             optionals: [Spec.new(name: "meowcop", version: ["1.17.1"])],
+      processor.install_gems([Spec.new("public_suffix", requirement: ["4.0.0"])],
+                             optionals: [Spec.new("meowcop", requirement: ["1.17.1"])],
                              constraints: {}) do
         stdout, _ = processor.shell.capture3!("bundle", "list")
         assert_match(/\* public_suffix \(4.0.0\)/, stdout)
@@ -550,8 +541,8 @@ EOF
       YAML
 
       assert_raises GemInstaller::InstallationFailure do
-        processor.install_gems([Spec.new(name: "rubocop", version: ["0.63.0"])],
-                               optionals: [Spec.new(name: "meowcop", version: ["1.17.1"])],
+        processor.install_gems([Spec.new("rubocop", requirement: ["0.63.0"])],
+                               optionals: [Spec.new("meowcop", requirement: ["1.17.1"])],
                                constraints: {}) do
           # nop
         end
@@ -575,8 +566,8 @@ EOF
       end
 
       processor = new_processor(workspace: workspace)
-      processor.install_gems([Spec.new(name: "multi_json", version: ["1.13.0"])],
-                             optionals: [Spec.new(name: "strong_json", version: ["2.0.0"])],
+      processor.install_gems([Spec.new("multi_json", requirement: ["1.13.0"])],
+                             optionals: [Spec.new("strong_json", requirement: ["2.0.0"])],
                              constraints: {}) do
         stdout, _ = processor.shell.capture3!("bundle", "list")
         assert_match(/\* multi_json \(1.13.0\)/, stdout)
@@ -613,8 +604,8 @@ EOF
                 version: "1.14.1"
       YAML
 
-      processor.install_gems([Spec.new(name: "public_suffix", version: ["4.0.3"])],
-                             optionals: [Spec.new(name: "meowcop", version: ["1.17.1"])],
+      processor.install_gems([Spec.new("public_suffix", requirement: ["4.0.3"])],
+                             optionals: [Spec.new("meowcop", requirement: ["1.17.1"])],
                              constraints: { "rubocop" => Gem::Requirement.new(">= 4.0.0") }) do
         stdout, _ = processor.shell.capture3!("bundle", "list")
         assert_match(/\* public_suffix \(4.0.0\)/, stdout)
@@ -649,12 +640,12 @@ EOF
               - rack
       YAML
 
-      processor.install_gems([Spec.new(name: "multi_json", version: ["1.14.0"])],
+      processor.install_gems([Spec.new("multi_json", requirement: ["1.14.0"])],
                              constraints: { "multi_json" => Gem::Requirement.new("> 1.13.0", "< 2.0.0") }) do
         assert_equal 1, processor.warnings.count
         assert trace_writer.writer.find { |m| m[:trace] == :command_line && m[:command_line] == %w[bundle install] }
         assert_equal <<~MESSAGE.strip, processor.warnings.first[:message]
-          `multi_json 1.14.0` is installed instead of `1.12.0` in your `Gemfile.lock`.
+          `multi_json = 1.14.0` will be installed instead of `1.12.0` in your `Gemfile.lock`.
           Because `1.12.0` does not satisfy our constraints `> 1.13.0, < 2.0.0`.
 
           If you want to use a different version of `multi_json`, please do either:
@@ -679,7 +670,7 @@ EOF
       YAML
 
       assert_raises GemInstaller::InstallationFailure do
-        processor.install_gems([Spec.new(name: "rubocop", version: ["0.66.0"])],
+        processor.install_gems([Spec.new("rubocop", requirement: ["0.66.0"])],
                                constraints: { "rubocop" => Gem::Requirement.new("> 0.65.0") }) do
           # noop
         end
@@ -699,7 +690,7 @@ EOF
                 source: "https://rubygems.cae.me.uk"
       YAML
 
-      processor.install_gems([Spec.new(name: "rubocop", version: ["0.63.0"])],
+      processor.install_gems([Spec.new("rubocop", requirement: ["0.63.0"])],
                              optionals: [],
                              constraints: {}) do
         stdout, _ = processor.shell.capture3!("bundle", "list")
@@ -733,7 +724,7 @@ EOF
                     repo: git@github.com:sider/ruby_private_gem.git
                     branch: gem
         YAML
-        processor.install_gems([Spec.new(name: "rubocop", version: ["0.63.0"])],
+        processor.install_gems([Spec.new("rubocop", requirement: ["0.63.0"])],
                                optionals: [],
                                constraints: {}) do
           stdout, _ = processor.shell.capture3!("bundle", "list")
@@ -809,7 +800,7 @@ EOF
 
       processor = new_processor(workspace: workspace)
 
-      processor.install_gems([Spec.new(name: "rack", version: ["2.2.2"])],
+      processor.install_gems([Spec.new("rack", requirement: ["2.2.2"])],
                              constraints: {}) do
         stdout, _ = processor.shell.capture3!("bundle", "list")
         assert_match %r{\* rack \(2.2.0\)}, stdout
@@ -823,12 +814,12 @@ EOF
       processor = new_processor(workspace: workspace)
 
       processor.stub :capture3!, "rubocop (0.75.1, 0.75.0)\n" do
-        assert_equal [Spec.new(name: "rubocop", version: ["0.75.1", "0.75.0"])],
+        assert_equal [Spec.new("rubocop", requirement: ["0.75.1", "0.75.0"])],
                      processor.default_gem_specs("rubocop")
       end
 
       processor.stub :capture3!, "foo (1.2.3)\nbar (4.5.6)\n" do
-        assert_equal [Spec.new(name: "foo", version: ["1.2.3"]), Spec.new(name: "bar", version: ["4.5.6"])],
+        assert_equal [Spec.new("foo", requirement: ["1.2.3"]), Spec.new("bar", requirement: ["4.5.6"])],
                      processor.default_gem_specs("foo", "bar")
       end
 
@@ -849,5 +840,11 @@ EOF
       assert_match %r{URI is a module providing classes to handle Uniform Resource}, processor.gem_info("uri")
       assert_equal 2, trace_writer.writer.count { |trace| trace.key?(:command_line) }
     end
+  end
+
+  private
+
+  def assert_ruby_syntax_ok(code)
+    assert RubyVM::InstructionSequence.compile(code)
   end
 end

@@ -7,25 +7,6 @@ class CLITest < Minitest::Test
   CLI = Runners::CLI
   TraceWriter = Runners::TraceWriter
 
-  def stdout
-    @stdout ||= StringIO.new
-  end
-
-  def stderr
-    @stderr ||= StringIO.new
-  end
-
-  def options_json(options = { source: new_source })
-    JSON.dump(options)
-  end
-
-  def test_parsing_options
-    cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: options_json)
-    assert_equal "test-guid", cli.guid
-    assert_equal :rubocop, cli.analyzer
-    assert_instance_of Runners::Options, cli.options
-  end
-
   class TestProcessor < Runners::Processor
     def analyzer_id
       :rubocop
@@ -39,7 +20,7 @@ class CLITest < Minitest::Test
       yield
     end
 
-    def analyze(changes)
+    def analyze(_)
       trace_writer.command_line ["test", "command"]
       trace_writer.status Struct.new(:exitstatus).new(31)
 
@@ -49,39 +30,91 @@ class CLITest < Minitest::Test
     end
   end
 
-  def test_run
+  def test_parsing_options
     cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: options_json)
-    cli.stub(:processor_class, TestProcessor) do
-      cli.run
-    end
-
-    # It write JSON objects to stdout
-
-    output = stdout.string
-    reader = JSONSEQ::Reader.new(io: StringIO.new(output), decoder: -> (string) { JSON.parse(string, symbolize_names: true) })
-    objects = reader.each_object.to_a
-
-    assert objects.any? { |hash| hash[:trace] == 'command_line' && hash[:command_line] == ["test", "command"] }
-    assert objects.any? { |hash| hash[:trace] == 'status' && hash[:status] == 31 }
-    assert objects.any? { |hash| hash[:trace] == 'warning' && hash[:message] == 'hogehogewarn' }
-    assert objects.any? { |hash| hash[:warnings] == [{ message: 'hogehogewarn', file: nil }] }
-    assert objects.any? { |hash| hash[:ci_config] == { linter: nil, ignore: [], branches: nil } }
+    assert_equal "test-guid", cli.guid
+    assert_equal :rubocop, cli.analyzer
+    assert_instance_of Runners::Options, cli.options
   end
 
-  def test_run_when_sider_yml_is_broken
+  def test_run
+    cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: options_json)
+    cli.stub(:processor_class, TestProcessor) { cli.run }
+
+    assert traces.any? { _1[:trace] == 'command_line' && _1[:command_line] == ["test", "command"] }
+    assert traces.any? { _1[:trace] == 'status' && _1[:status] == 31 }
+    assert traces.any? { _1[:trace] == 'warning' && _1[:message] == 'hogehogewarn' }
+    assert traces.any? { _1[:warnings] == [{ message: 'hogehogewarn', file: nil }] }
+    assert traces.any? { _1[:ci_config] == { linter: nil, ignore: [], branches: nil } }
+
+    assert_equal ["Start analysis", "Set up source code", "Set up RuboCop", "Run RuboCop", "Finish analysis"],
+                 traces.filter_map { _1[:message] if _1[:trace] == "header" }
+    assert_includes traces.filter_map { _1[:message] if _1[:trace] == 'message' },
+                    "RuboCop analysis succeeded. No issues found."
+  end
+
+  def test_run_with_one_issue
+    klass = Class.new(TestProcessor) do
+      def analyze(_)
+        issues = [Runners::Issue.new(path: Pathname("sider.yml"), location: nil, id: "a", message: "abc")]
+        Runners::Results::Success.new(guid: guid, analyzer: analyzer, issues: issues)
+      end
+    end
+    cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: options_json)
+    cli.stub(:processor_class, klass) { cli.run }
+
+    assert_includes traces.filter_map { _1[:message] if _1[:trace] == 'message' },
+                    "RuboCop analysis succeeded. 1 issue found."
+  end
+
+  def test_run_with_multiple_issues
+    klass = Class.new(TestProcessor) do
+      def analyze(_)
+        issues = ["a", "b"].map { Runners::Issue.new(path: Pathname("sider.yml"), location: nil, id: _1, message: "abc") }
+        Runners::Results::Success.new(guid: guid, analyzer: analyzer, issues: issues)
+      end
+    end
+    cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: options_json)
+    cli.stub(:processor_class, klass) { cli.run }
+
+    assert_includes traces.filter_map { _1[:message] if _1[:trace] == 'message' },
+                    "RuboCop analysis succeeded. 2 issues found."
+  end
+
+  def test_run_with_error
+    klass = Class.new(TestProcessor) do
+      def analyze(_)
+        Runners::Results::Failure.new(guid: guid, analyzer: analyzer)
+      end
+    end
+    cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: options_json)
+    cli.stub(:processor_class, klass) { cli.run }
+
+    assert_includes traces.filter_map { _1[:message] if _1[:trace] == 'message' },
+                    "RuboCop analysis failed."
+  end
+
+  def test_run_with_error_and_no_analyzer
+    klass = Class.new(TestProcessor) do
+      def analyze(_)
+        Runners::Results::Failure.new(guid: guid, analyzer: nil)
+      end
+    end
+    cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: options_json)
+    cli.stub(:processor_class, klass) { cli.run }
+
+    assert_includes traces.filter_map { _1[:message] if _1[:trace] == 'message' },
+                    "Analysis failed."
+  end
+
+  def test_run_with_broken_config
     json = options_json({ source: new_source(head: "07aeaa0b17fb34063cbc3ed24d6d65f986c37884") })
     cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: json)
     cli.run
 
-    # It write JSON objects to stdout
-
-    output = stdout.string
-    reader = JSONSEQ::Reader.new(io: StringIO.new(output), decoder: -> (string) { JSON.parse(string, symbolize_names: true) })
-    objects = reader.each_object.to_a
-
-    assert objects.any? { |hash| hash.dig(:result, :type) == 'failure' }
-    assert objects.any? { |hash| hash[:warnings] == [] }
-    assert objects.any? { |hash| hash[:ci_config] == nil }
+    assert traces.any? { _1.dig(:result, :type) == 'failure' }
+    assert traces.any? { _1[:warnings] == [] }
+    assert traces.any? { _1[:ci_config].nil? }
   end
 
   def test_format_duration
@@ -129,5 +162,26 @@ class CLITest < Minitest::Test
     refute_includes ENV, "AWS_ACCESS_KEY_ID"
     refute_includes ENV, "AWS_SECRET_ACCESS_KEY"
     refute_includes ENV, "AWS_REGION"
+  end
+
+  private
+
+  def stdout
+    @stdout ||= StringIO.new
+  end
+
+  def stderr
+    @stderr ||= StringIO.new
+  end
+
+  def options_json(options = { source: new_source })
+    JSON.dump(options)
+  end
+
+  def traces
+    @traces ||= JSONSEQ::Reader.new(
+      io: StringIO.new(stdout.string),
+      decoder: ->(string) { JSON.parse(string, symbolize_names: true) },
+    ).each_object.to_a
   end
 end

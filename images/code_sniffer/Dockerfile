@@ -2,7 +2,7 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM sider/devon_rex_php:master
+FROM sider/devon_rex_php:2.41.0
 
 
 # Install PHP packages via Composer
@@ -14,6 +14,8 @@ RUN basepath="${COMPOSER_HOME}/vendor" && \
     phpcs --config-set installed_paths \
       "${basepath}/cakephp/cakephp-codesniffer,${basepath}/escapestudios/symfony2-coding-standard,${basepath}/wp-coding-standards/wpcs" && \
     phpcs -i
+
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/code_sniffer/sider_recommended_code_sniffer.xml ${RUNNER_USER_HOME}/
 
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners

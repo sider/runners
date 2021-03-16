@@ -3,10 +3,10 @@
   diagnostics:
   - range:
       start:
-        line: 107
+        line: 103
         character: 28
       end:
-        line: 110
+        line: 106
         character: 11
     severity: ERROR
     message: |-
@@ -15,20 +15,20 @@
     code: Ruby::ArgumentTypeMismatch
   - range:
       start:
-        line: 108
+        line: 104
         character: 17
       end:
-        line: 108
+        line: 104
         character: 24
     severity: ERROR
     message: Type `nil` does not have method `add_tab`
     code: Ruby::NoMethod
   - range:
       start:
-        line: 109
+        line: 105
         character: 17
       end:
-        line: 109
+        line: 105
         character: 24
     severity: ERROR
     message: Type `nil` does not have method `add_tab`
@@ -221,33 +221,33 @@
     severity: ERROR
     message: Type `(::String | ::Array[::String] | nil)` does not have method `split`
     code: Ruby::NoMethod
-- file: lib/runners/ruby/gem_installer/spec.rb
+- file: lib/runners/ruby.rb
   diagnostics:
   - range:
       start:
-        line: 41
-        character: 20
+        line: 130
+        character: 22
       end:
-        line: 41
-        character: 36
+        line: 130
+        character: 64
     severity: ERROR
     message: |-
-      Cannot assign a value of type `(::String | nil | ::Runners::Ruby::GemInstaller::git_source)` to an expression of type `::String`
-        (::String | nil | ::Runners::Ruby::GemInstaller::git_source) <: ::String
-          nil <: ::String
-    code: Ruby::IncompatibleAssignment
-- file: lib/runners/ruby/lockfile_loader/lockfile.rb
-  diagnostics:
+      Cannot find compatible overloading of method `to_h` of type `::Array[::Runners::Ruby::GemInstaller::Spec]`
+      Method types:
+        def to_h: () -> ::Hash[untyped, untyped]
+                | [T, S] () { (::Runners::Ruby::GemInstaller::Spec) -> [T, S] } -> ::Hash[T, S]
+    code: Ruby::UnresolvedOverloading
   - range:
       start:
-        line: 35
-        character: 75
+        line: 131
+        character: 19
       end:
-        line: 35
-        character: 103
+        line: 131
+        character: 58
     severity: ERROR
     message: |-
-      Cannot pass a value of type `(::Gem::Version | nil)` as an argument of type `::Gem::Version`
-        (::Gem::Version | nil) <: ::Gem::Version
-          nil <: ::Gem::Version
-    code: Ruby::ArgumentTypeMismatch
+      Cannot find compatible overloading of method `to_h` of type `::Array[::Runners::Ruby::GemInstaller::Spec]`
+      Method types:
+        def to_h: () -> ::Hash[untyped, untyped]
+                | [T, S] () { (::Runners::Ruby::GemInstaller::Spec) -> [T, S] } -> ::Hash[T, S]
+    code: Ruby::UnresolvedOverloading

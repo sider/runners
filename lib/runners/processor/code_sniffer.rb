@@ -29,10 +29,12 @@ module Runners
 
     register_config_schema(name: :code_sniffer, schema: Schema.runner_config)
 
+    DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_recommended_code_sniffer.xml").to_path.freeze
+
     DefaultOptions = _ = Struct.new(:standard, :extensions, :target, keyword_init: true)
     OPTIONS_CAKE_PHP = DefaultOptions.new(standard: "CakePHP", extensions: "php", target: "app/").freeze
     OPTIONS_SYMFONY = DefaultOptions.new(standard: "Symfony", extensions: "php", target: "src/").freeze
-    OPTIONS_PSR2 = DefaultOptions.new(standard: "PSR2", extensions: "php", target: "./").freeze
+    OPTIONS_DEFAULT = DefaultOptions.new(standard: DEFAULT_CONFIG_FILE, extensions: "php", target: "./").freeze
 
     def self.config_example
       <<~'YAML'
@@ -116,7 +118,7 @@ module Runners
         when :Symfony
           OPTIONS_SYMFONY
         else
-          OPTIONS_PSR2
+          OPTIONS_DEFAULT
         end
     end
 

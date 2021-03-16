@@ -49,7 +49,7 @@ module Runners
         writer = JSONSEQ::Writer.new(io: io)
         trace_writer = TraceWriter.new(writer: writer, filter: SensitiveFilter.new(options: options))
         started_at = Time.now
-        trace_writer.header "Analysis started", recorded_at: started_at
+        trace_writer.header "Start analysis", recorded_at: started_at
         trace_writer.message "Started at #{started_at.utc}"
         trace_writer.message "Runners version #{VERSION}"
         trace_writer.message "Build GUID #{guid}"
@@ -74,12 +74,8 @@ module Runners
 
         result.tap do
           finished_at = Time.now
-          trace_writer.header "Analysis finished"
-
-          if result.is_a? Results::Success
-            trace_writer.message "#{result.issues.size} issue(s) found."
-          end
-
+          trace_writer.header "Finish analysis"
+          trace_writer.message finish_message(result)
           trace_writer.message "Finished at #{finished_at.utc}"
           trace_writer.message "Elapsed time: #{format_duration(finished_at - started_at)}"
           trace_writer.finish started_at: started_at, finished_at: finished_at
@@ -132,6 +128,24 @@ module Runners
 
     def io
       @io ||= options.io
+    end
+
+    def finish_message(result)
+      analyzer_name = result.analyzer&.name
+
+      case result
+      when Results::Success
+        issues_message = if result.issues.empty?
+                           "No issues found."
+                         else
+                           issue_count = result.issues.size
+                           issues_text = issue_count == 1 ? "issue" : "issues"
+                           "#{issue_count} #{issues_text} found."
+                         end
+        "#{analyzer_name} analysis succeeded. #{issues_message}"
+      else
+        analyzer_name ? "#{analyzer_name} analysis failed." : "Analysis failed."
+      end
     end
 
     def format_duration(duration_in_sec)
