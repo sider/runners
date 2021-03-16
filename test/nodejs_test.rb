@@ -71,6 +71,10 @@ class NodejsTest < Minitest::Test
     end
   end
 
+  def copy(src, dest)
+    FileUtils.copy_file src, dest
+  end
+
   public
 
   def test_nodejs_analyzer_local_command
@@ -242,7 +246,7 @@ class NodejsTest < Minitest::Test
       new_processor(workspace: workspace)
 
       processor.package_json_path.write({ dependencies: { "eslint" => "6.0.1" } }.to_json)
-      FileUtils.cp data("yarn.lock"), processor.yarn_lock_path
+      copy data("yarn.lock"), processor.yarn_lock_path
 
       constraints = { "eslint" => Gem::Requirement.new(">= 5.0.0", "< 7.0.0") }
 
@@ -263,8 +267,8 @@ class NodejsTest < Minitest::Test
       new_processor(workspace: workspace)
 
       processor.package_json_path.write({ dependencies: { "eslint" => "6.0.1" } }.to_json)
-      FileUtils.cp data("yarn.lock"), processor.yarn_lock_path
-      FileUtils.cp data("package-lock.json"), processor.package_lock_json_path
+      copy data("yarn.lock"), processor.yarn_lock_path
+      copy data("package-lock.json"), processor.package_lock_json_path
 
       constraints = { "eslint" => Gem::Requirement.new(">= 5.0.0", "< 7.0.0") }
 
@@ -346,117 +350,150 @@ class NodejsTest < Minitest::Test
     end
   end
 
-  def test_npm_install
+  def test_install_nodejs_deps_with_hook_script
     with_workspace do |workspace|
       new_processor(workspace: workspace)
 
-      node_modules = workspace.working_dir / "node_modules"
-      typescript = node_modules / "typescript"
+      processor.package_json_path.write({ scripts: { postinstall: "exit 1" }, dependencies: { classcat: "5.0.3" } }.to_json)
+      processor.stub :nodejs_analyzer_global_version, "1.0.0" do
+        processor.install_nodejs_deps(constraints: {}, install_option: INSTALL_OPTION_ALL)
+      end
 
-      package_json = {
-        dependencies: { "typescript" => "3.5.3" },
-        scripts: { "postinstall" => "exit 1" },
-        engines: { "node" => "8.0.0" },
-      }.to_json
-      processor.package_json_path.write(package_json)
-      (workspace.working_dir / ".npmrc").write("engine-strict = true")
-
-      processor.send(:npm_install, INSTALL_OPTION_NONE)
-      refute_path_exists node_modules
-
-      processor.send(:npm_install, INSTALL_OPTION_ALL)
-      assert_path_exists typescript
-
-      node_modules.rmtree
-      processor.send(:npm_install, INSTALL_OPTION_PRODUCTION)
-      assert_path_exists typescript
-
-      node_modules.rmtree
-      processor.send(:npm_install, INSTALL_OPTION_DEVELOPMENT)
-      refute_path_exists node_modules
-
-      processor.package_json_path.write({ devDependencies: { "typescript" => "3.5.3" } }.to_json)
-      processor.send(:npm_install, INSTALL_OPTION_DEVELOPMENT)
-      assert_path_exists typescript
-
-      expected_commands = [
-        %w[npm install --ignore-scripts --progress=false --engine-strict=false --package-lock=false],
-        %w[npm install --ignore-scripts --progress=false --engine-strict=false --package-lock=false --only=production],
-        %w[npm install --ignore-scripts --progress=false --engine-strict=false --package-lock=false --only=development],
-        %w[npm install --ignore-scripts --progress=false --engine-strict=false --package-lock=false --only=development],
-      ]
-      assert_equal expected_commands, actual_commands
+      assert_path_exists processor.working_dir / "node_modules" / "classcat"
+      assert_empty processor.warnings
+      refute_empty actual_commands
+      assert_empty actual_errors
     end
   end
 
-  def test_npm_install_using_ci
+  def test_install_nodejs_deps_with_engine_strict
     with_workspace do |workspace|
       new_processor(workspace: workspace)
 
-      node_modules = processor.node_modules_path
-      typescript = node_modules / "typescript"
+      processor.package_json_path.write({ engines: { node: "8" }, dependencies: { classcat: "5.0.3" } }.to_json)
+      processor.working_dir.join(".npmrc").write("engine-strict = true")
+      processor.stub :nodejs_analyzer_global_version, "1.0.0" do
+        processor.install_nodejs_deps(constraints: {}, install_option: INSTALL_OPTION_ALL)
+      end
 
-      processor.package_json_path.write({ dependencies: { "typescript" => "3.5.3" } }.to_json)
-      FileUtils.cp data("package-lock.json"), processor.package_lock_json_path
+      assert_path_exists processor.working_dir / "node_modules" / "classcat"
+      assert_empty processor.warnings
+      refute_empty actual_commands
+      assert_empty actual_errors
+    end
+  end
 
-      processor.send(:npm_install, INSTALL_OPTION_ALL)
-      assert_path_exists typescript
+  def test_install_nodejs_deps_with_production
+    with_workspace do |workspace|
+      new_processor(workspace: workspace)
 
-      node_modules.rmtree
-      processor.send(:npm_install, INSTALL_OPTION_PRODUCTION)
-      assert_path_exists typescript
+      processor.package_json_path.write({ dependencies: { classcat: "5.0.3" }, devDependencies: { "is-string": "1.0.5" } }.to_json)
+      processor.stub :nodejs_analyzer_global_version, "1.0.0" do
+        processor.install_nodejs_deps(constraints: {}, install_option: INSTALL_OPTION_PRODUCTION)
+      end
 
-      node_modules.rmtree
-      processor.send(:npm_install, INSTALL_OPTION_DEVELOPMENT)
-      refute_path_exists typescript
+      assert_path_exists processor.working_dir / "node_modules" / "classcat"
+      refute_path_exists processor.working_dir / "node_modules" / "is-string"
+      assert_empty processor.warnings
+      refute_empty actual_commands
+      assert_empty actual_errors
+    end
+  end
 
-      processor.package_json_path.write({ devDependencies: { "typescript" => "3.5.3" } }.to_json)
-      FileUtils.cp data("package-lock.dev.json"), processor.package_lock_json_path
+  def test_install_nodejs_deps_with_development
+    with_workspace do |workspace|
+      new_processor(workspace: workspace)
 
-      processor.send(:npm_install, INSTALL_OPTION_ALL)
-      assert_path_exists typescript
+      processor.package_json_path.write({ dependencies: { classcat: "5.0.3" }, devDependencies: { "is-string": "1.0.5" } }.to_json)
+      processor.stub :nodejs_analyzer_global_version, "1.0.0" do
+        processor.install_nodejs_deps(constraints: {}, install_option: INSTALL_OPTION_DEVELOPMENT)
+      end
 
-      node_modules.rmtree
-      processor.send(:npm_install, INSTALL_OPTION_PRODUCTION)
-      refute_path_exists typescript
+      refute_path_exists processor.working_dir / "node_modules" / "classcat"
+      assert_path_exists processor.working_dir / "node_modules" / "is-string"
+      assert_empty processor.warnings
+      refute_empty actual_commands
+      assert_empty actual_errors
+    end
+  end
 
-      processor.send(:npm_install, INSTALL_OPTION_DEVELOPMENT)
-      assert_path_exists typescript
+  def test_install_nodejs_deps_with_package_lock_json
+    with_workspace do |workspace|
+      new_processor(workspace: workspace)
 
-      expected_commands = [
-        %w[npm ci --ignore-scripts --progress=false --engine-strict=false],
-        %w[npm ci --ignore-scripts --progress=false --engine-strict=false --only=production],
-        %w[npm install --ignore-scripts --progress=false --engine-strict=false --only=development --package-lock=false],
-        %w[npm ci --ignore-scripts --progress=false --engine-strict=false],
-        %w[npm ci --ignore-scripts --progress=false --engine-strict=false --only=production],
-        %w[npm install --ignore-scripts --progress=false --engine-strict=false --only=development --package-lock=false],
-      ]
-      assert_equal expected_commands, actual_commands
+      processor.package_json_path.write({ dependencies: { typescript: "^3.5.0" } }.to_json)
+      copy data("package-lock.json"), processor.package_lock_json_path
+      processor.stub :nodejs_analyzer_global_version, "1.0.0" do
+        processor.install_nodejs_deps(constraints: {}, install_option: INSTALL_OPTION_ALL)
+      end
 
-      expected_warning = { message: <<~MSG.strip, file: "package.json" }
+      assert_path_exists processor.working_dir / "node_modules" / "typescript"
+      assert_equal "3.5.3", JSON.parse((processor.working_dir / "node_modules" / "typescript" / "package.json").read)["version"]
+      assert_empty processor.warnings
+      refute_empty actual_commands
+      assert_empty actual_errors
+    end
+  end
+
+  def test_install_nodejs_deps_with_package_lock_json_production
+    with_workspace do |workspace|
+      new_processor(workspace: workspace)
+
+      processor.package_json_path.write({ dependencies: { typescript: "^3.5.0" } }.to_json)
+      copy data("package-lock.json"), processor.package_lock_json_path
+      processor.stub :nodejs_analyzer_global_version, "1.0.0" do
+        processor.install_nodejs_deps(constraints: {}, install_option: INSTALL_OPTION_PRODUCTION)
+      end
+
+      assert_path_exists processor.working_dir / "node_modules" / "typescript"
+      assert_equal "3.5.3", JSON.parse((processor.working_dir / "node_modules" / "typescript" / "package.json").read)["version"]
+      assert_empty processor.warnings
+      refute_empty actual_commands
+      assert_empty actual_errors
+    end
+  end
+
+  def test_install_nodejs_deps_with_package_lock_json_development
+    with_workspace do |workspace|
+      new_processor(workspace: workspace)
+
+      processor.package_json_path.write({ devDependencies: { typescript: "^3.5.0" } }.to_json)
+      copy data("package-lock.dev.json"), processor.package_lock_json_path
+      processor.stub :nodejs_analyzer_global_version, "1.0.0" do
+        processor.install_nodejs_deps(constraints: {}, install_option: INSTALL_OPTION_DEVELOPMENT)
+      end
+
+      assert_path_exists processor.working_dir / "node_modules" / "typescript"
+      assert_match %r{^3\.\d+\.\d+$}, JSON.parse((processor.working_dir / "node_modules" / "typescript" / "package.json").read)["version"]
+      assert_warnings [{ message: <<~MSG.strip, file: "package.json" }]
         The `npm ci --only=development` command does not install anything, so `npm install --only=development` will be used instead.
         If you want to use `npm ci`, please change your install option from `development` to `true`.
         For details about the npm behavior, see https://npm.community/t/npm-ci-only-dev-does-not-install-anything/3068
       MSG
-      assert_warnings [expected_warning, expected_warning]
+      refute_empty actual_commands
+      assert_empty actual_errors
     end
   end
 
-  def test_npm_install_failed
+  def test_install_nodejs_deps_with_missing_deps
     with_workspace do |workspace|
       new_processor(workspace: workspace)
 
-      processor.package_json_path.write({ dependencies: { "foo" => "github:sider/foo" } }.to_json)
+      processor.package_json_path.write({ dependencies: { foo: "github:sider/foo" } }.to_json)
 
       error = assert_raises NpmInstallFailed do
-        processor.send(:npm_install, INSTALL_OPTION_ALL)
+        processor.stub :nodejs_analyzer_global_version, "1.0.0" do
+          processor.install_nodejs_deps(constraints: {}, install_option: INSTALL_OPTION_ALL)
+        end
       end
+
       expected_error_message = <<~MSG.strip
         `npm install` failed. Please check the log for details.
         If you want to explicitly disable the installation, please set `npm_install: false` on your `sider.yml`.
       MSG
-      assert_equal expected_error_message, error.message
       assert_equal [expected_error_message], actual_errors
+      assert_equal expected_error_message, error.message
+      refute_path_exists processor.working_dir / "node_modules"
     end
   end
 
@@ -472,7 +509,7 @@ class NodejsTest < Minitest::Test
       yarnrc_yaml = (workspace.working_dir / ".yarnrc.yaml").tap { _1.write 'yarnPath: "foo"' }
 
       processor.package_json_path.write({ dependencies: { "eslint" => "6.0.1" } }.to_json)
-      FileUtils.cp data("yarn.lock"), processor.yarn_lock_path
+      copy data("yarn.lock"), processor.yarn_lock_path
 
       processor.send(:yarn_install, INSTALL_OPTION_NONE)
       refute_path_exists eslint
@@ -521,8 +558,8 @@ class NodejsTest < Minitest::Test
       new_processor(workspace: workspace)
 
       # 'yarn install' fails because of incorrect package settings between yarn.lock and package.json
-      FileUtils.cp incorrect_yarn_data("yarn.lock"), processor.yarn_lock_path
-      FileUtils.cp incorrect_yarn_data("package.json"), processor.package_json_path
+      copy incorrect_yarn_data("yarn.lock"), processor.yarn_lock_path
+      copy incorrect_yarn_data("package.json"), processor.package_json_path
 
       error = assert_raises YarnInstallFailed do
         processor.send(:yarn_install, INSTALL_OPTION_ALL)
