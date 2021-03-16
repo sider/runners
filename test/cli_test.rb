@@ -114,7 +114,7 @@ class CLITest < Minitest::Test
 
     assert traces.any? { _1.dig(:result, :type) == 'failure' }
     assert traces.any? { _1[:warnings] == [] }
-    assert traces.any? { _1[:ci_config] == nil }
+    assert traces.any? { _1[:ci_config].nil? }
   end
 
   def test_format_duration
