@@ -181,7 +181,7 @@ class CLITest < Minitest::Test
   def traces
     @traces ||= JSONSEQ::Reader.new(
       io: StringIO.new(stdout.string),
-      decoder: -> (string) { JSON.parse(string, symbolize_names: true) },
+      decoder: ->(string) { JSON.parse(string, symbolize_names: true) },
     ).each_object.to_a
   end
 end
