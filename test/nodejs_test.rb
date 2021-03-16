@@ -475,7 +475,7 @@ class NodejsTest < Minitest::Test
     end
   end
 
-  def test_install_nodejs_deps_with_missing_deps
+  def test_install_nodejs_deps_with_non_existent_deps
     with_workspace do |workspace|
       new_processor(workspace: workspace)
 
