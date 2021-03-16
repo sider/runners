@@ -9,6 +9,8 @@ module Runners
       )
     end
 
+    ARGS_SUPPRESS_TRACE = {} # { trace_stdout: false, trace_command_line: false }.freeze
+
     def analyzer_version
       Runners::VERSION
     end
@@ -103,12 +105,22 @@ module Runners
 
     def analyze_code_churn
       trace_writer.message "Analyzing code churn..." do
-        stdout, _ = capture3!("git", "rev-list", "--reverse", "HEAD", "-n", "100", trace_stdout: false, trace_command_line: false)
-        stdout, _ = capture3!("git", "rev-list", "--reverse", "HEAD", "--since", "90 days ago", trace_stdout: false, trace_command_line: false)
-        lines = stdout.lines(chomp: true)
-        end_commit = lines[0]
-        stdout, _ = capture3!("git", "log", "--reverse", "--format=format:%aI", "--numstat", "#{end_commit}..HEAD", trace_stdout: false, trace_command_line: false)
+        count_num, latest_commit, end_commit_num = commits_within("-n", "100")
+        days_ago = (DateTime.parse(latest_commit[:datetime]) - 90).iso8601
+        count_time, _, end_commit_time = commits_within("--since", days_ago)
+        end_commit = count_num > count_time ? end_commit_num : end_commit_time
+        stdout, _ = capture3!("git", "log", "--reverse", "--format=format:%aI", "--numstat", "#{end_commit[:sha]}..HEAD", **ARGS_SUPPRESS_TRACE)
       end
+    end
+
+    def commits_within(*args_range)
+      stdout, _ = capture3!("git", "log", "--format=format:%H|%aI", *args_range, **ARGS_SUPPRESS_TRACE)
+      lines = stdout.lines(chomp: true)
+      commits = [lines.first, lines.last].map do |x|
+        commit_sha, commit_datetime = x.split('|')
+        { sha: commit_sha, datetime: commit_datetime }
+      end
+      [lines.length, *commits]
     end
 
     # There may not be a perfect method to discriminate file type.
