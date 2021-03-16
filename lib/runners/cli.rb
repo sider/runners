@@ -136,12 +136,12 @@ module Runners
       case result
       when Results::Success
         issues_message = if result.issues.empty?
-                            "No issues found."
-                          else
-                            issue_count = result.issues.size
-                            issues_text = issue_count == 1 ? "issue" : "issues"
-                            "#{issue_count} #{issues_text} found."
-                          end
+                           "No issues found."
+                         else
+                           issue_count = result.issues.size
+                           issues_text = issue_count == 1 ? "issue" : "issues"
+                           "#{issue_count} #{issues_text} found."
+                         end
         "#{analyzer_name} analysis succeeded. #{issues_message}"
       else
         analyzer_name ? "#{analyzer_name} analysis failed." : "Analysis failed."
