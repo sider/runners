@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - Improve analysis finish message [#2187](https://github.com/sider/runners/pull/2187)
 - Support npm 7 [#2189](https://github.com/sider/runners/pull/2189)
 - Remove deprecated `linter.{id}.options` [#2190](https://github.com/sider/runners/pull/2190)
+- Introduce common option `target` [#2191](https://github.com/sider/runners/pull/2191)
 
 ## 0.45.0
 
