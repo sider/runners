@@ -1,5 +1,6 @@
 linter:
   swiftlint:
-    path: 'test.swift'
+    target: ["test.swift", "src"]
+    path: []
     lenient: true
     enable-all-rules: true

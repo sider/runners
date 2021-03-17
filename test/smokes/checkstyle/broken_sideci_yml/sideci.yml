@@ -1,6 +1,6 @@
 linter:
   checkstyle:
     config: sun
-    dir: vendor
+    target: vendor
     exclude:
       - pattern: 111

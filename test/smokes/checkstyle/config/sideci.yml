@@ -1,9 +1,10 @@
 linter:
   checkstyle:
     config: sun
-    dir:
+    target:
       - src
       - vendor
+    dir: []
     exclude:
       - vendor/foo
       - { string: src/Ignore.java }

@@ -1,3 +1,4 @@
 linter:
   pmd_cpd:
-    files: [src/app.java, lib]
+    target: [src/app.java, lib]
+    files: []

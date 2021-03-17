@@ -3,6 +3,7 @@ module Runners
     include PHP
 
     class SchemaClass < StrongJSON
+      def target: () -> StrongJSON::Type::Optional[untyped]
       def runner_config: () -> StrongJSON::Type::Object[untyped]
       def issue: () -> StrongJSON::Type::Object[untyped]
     end

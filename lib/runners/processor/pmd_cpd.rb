@@ -32,22 +32,25 @@ module Runners
         literal("xml")
       )
 
+      let :target, enum?(string, array(string))
+
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
-                    'minimum-tokens': numeric?,
-                    files: enum?(string, array(string)),
-                    language: enum?(available_languages, array(available_languages)),
-                    encoding: string?,
-                    'skip-duplicate-files': boolean?,
-                    'non-recursive': boolean?,
-                    'skip-lexical-errors': boolean?,
-                    'ignore-annotations': boolean?,
-                    'ignore-identifiers': boolean?,
-                    'ignore-literals': boolean?,
-                    'ignore-usings': boolean?,
-                    'no-skip-blocks': boolean?,
-                    'skip-blocks-pattern': string?,
-                  })
+          'minimum-tokens': numeric?,
+          target: target,
+          files: target, # alias for `target`
+          language: enum?(available_languages, array(available_languages)),
+          encoding: string?,
+          'skip-duplicate-files': boolean?,
+          'non-recursive': boolean?,
+          'skip-lexical-errors': boolean?,
+          'ignore-annotations': boolean?,
+          'ignore-identifiers': boolean?,
+          'ignore-literals': boolean?,
+          'ignore-usings': boolean?,
+          'no-skip-blocks': boolean?,
+          'skip-blocks-pattern': string?,
+        })
       }
 
       let :issue, object(
@@ -66,7 +69,7 @@ module Runners
     end
 
     DEFAULT_MINIMUM_TOKENS = 100
-    DEFAULT_FILES = ".".freeze
+    DEFAULT_TARGET = ".".freeze
     DEFAULT_LANGUAGE = ["cpp", "cs", "ecmascript", "go", "java", "kotlin", "php", "python", "ruby", "swift"].freeze
 
     register_config_schema(name: :pmd_cpd, schema: Schema.runner_config)
@@ -75,7 +78,7 @@ module Runners
       <<~'YAML'
         root_dir: project/
         minimum-tokens: 70
-        files: src/
+        target: src/
         language: [ecmascript, ruby]
         encoding: ISO-8859-1
         skip-duplicate-files: true
@@ -184,7 +187,7 @@ module Runners
     end
 
     def option_files
-      Array(config_linter[:files] || DEFAULT_FILES).map { |v| ["--files", v] }.flatten
+      Array(config_linter[:target] || config_linter[:files] || DEFAULT_TARGET).map { |v| ["--files", v] }.flatten
     end
 
     def option_encoding

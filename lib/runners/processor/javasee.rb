@@ -4,10 +4,12 @@ module Runners
 
     Schema = _ = StrongJSON.new do
       # @type self: SchemaClass
+      let :target, enum?(string, array(string))
 
       let :runner_config, Schema::BaseConfig.base.update_fields { |hash|
         hash.merge!({
-          dir: enum?(string, array(string)),
+          target: target,
+          dir: target, # alias for `target`
           config: string?,
         })
       }
@@ -26,7 +28,7 @@ module Runners
     def self.config_example
       <<~'YAML'
         root_dir: project/
-        dir:
+        target:
           - src/
           - test/
         config: config/javasee.yml
@@ -53,7 +55,7 @@ module Runners
         "check",
         "-format", "json",
         *(config_linter[:config]&.then { |config| ["-config", config] }),
-        *Array(config_linter[:dir]),
+        *Array(config_linter[:target] || config_linter[:dir]),
       )
 
       if [0, 2].include?(status.exitstatus)

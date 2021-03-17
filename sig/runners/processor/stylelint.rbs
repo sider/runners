@@ -3,6 +3,7 @@ module Runners
     include Nodejs
 
     class SchemaClass < StrongJSON
+      def target: () -> StrongJSON::Type::Optional[untyped]
       def runner_config: () -> StrongJSON::Type::Object[untyped]
       def issue: () -> StrongJSON::Type::Object[untyped]
     end
@@ -10,14 +11,14 @@ module Runners
 
     CONSTRAINTS: Nodejs::constraints
     DEFAULT_TARGET_FILES: String
-    DEFAULT_GLOB: String
+    DEFAULT_TARGET: String
     DEFAULT_CONFIG_FILE: String
     DEFAULT_CONFIG_FILE_OLD: String
     DEFAULT_IGNORE_FILE: String
 
     private
 
-    def glob: () -> String
+    def glob: () -> Array[String]
 
     def stylelint_config: () -> Array[String]
 

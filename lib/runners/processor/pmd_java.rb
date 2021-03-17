@@ -4,10 +4,12 @@ module Runners
 
     Schema = _ = StrongJSON.new do
       # @type self: SchemaClass
+      let :target, string?
 
       let :runner_config, Schema::BaseConfig.java.update_fields { |fields|
         fields.merge!({
-          dir: string?,
+          target: target,
+          dir: target, # alias for `target`
           rulesets: enum?(string, array(string)),
           encoding: string?,
           min_priority: numeric?,
@@ -23,14 +25,14 @@ module Runners
     register_config_schema(name: :pmd_java, schema: Schema.runner_config)
 
     DEFAULT_RULESET = (Pathname(Dir.home) / "default-ruleset.xml").to_path.freeze
-    DEFAULT_DIR = ".".freeze
+    DEFAULT_TARGET = ".".freeze
 
     def self.config_example
       <<~'YAML'
         root_dir: project/
         jvm_deps:
           - [my.company.com, pmd-ruleset, 1.2.3]
-        dir: src/
+        target: src/
         rulesets:
           - category/java/errorprone.xml
           - your_pmd_custom_rules.xml
@@ -90,7 +92,7 @@ module Runners
         "-no-cache",
         "-format", "xml",
         "-reportfile", report_file,
-        "-dir", (config_linter[:dir] || DEFAULT_DIR),
+        "-dir", (config_linter[:target] || config_linter[:dir] || DEFAULT_TARGET),
         "-rulesets", comma_separated_list(config_linter[:rulesets] || DEFAULT_RULESET),
         *(config_linter[:min_priority].then { |num| num ? ["-minimumpriority", num.to_s] : [] }),
         *(config_linter[:encoding].then { |enc| enc ? ["-encoding", enc] : [] }),

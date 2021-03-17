@@ -4,10 +4,12 @@ module Runners
 
     Schema = _ = StrongJSON.new do
       # @type self: SchemaClass
+      let :target, enum?(string, array(string))
 
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
-          dir: string?,
+          target: target,
+          dir: target, # alias for `target`
           config: string?,
         })
       }
@@ -15,13 +17,14 @@ module Runners
 
     register_config_schema(name: :jshint, schema: Schema.runner_config)
 
+    DEFAULT_TARGET = ".".freeze
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / 'sider_jshintrc').to_path.freeze
     DEFAULT_IGNORE_FILE = (Pathname(Dir.home) / 'sider_jshintignore').to_path.freeze
 
     def self.config_example
       <<~'YAML'
         root_dir: project/
-        dir: src/
+        target: src/
         config: config/.jshintrc.json
       YAML
     end
@@ -32,7 +35,7 @@ module Runners
       args = []
       args << "--reporter=checkstyle"
       args << "--config=#{config_path}" if config_path
-      args << (config_linter[:dir] || "./")
+      args += Array(config_linter[:target] || config_linter[:dir] || DEFAULT_TARGET)
       stdout, _stderr, status = capture3(analyzer_bin, *args)
 
       case status.exitstatus
