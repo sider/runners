@@ -6,13 +6,8 @@ module Runners
       # @type self: SchemaClass
       let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
         fields.merge!({
-                        file: string?,
-                        # DO NOT ADD ANY OPTIONS in `options` option.
-                        options: optional(object(
-                                            file: string?,
-                                            config: string?
-                                          ))
-                      })
+          file: string?,
+        })
       }
     end
 
@@ -32,8 +27,6 @@ module Runners
     end
 
     def setup
-      add_warning_if_deprecated_options
-
       begin
         install_nodejs_deps constraints: CONSTRAINTS
       rescue UserError => exn
@@ -73,7 +66,7 @@ module Runners
     private
 
     def config_file
-      file = config_linter[:file] || config_linter.dig(:options, :file) || config_linter.dig(:options, :config)
+      file = config_linter[:file]
       file ? ['--file', file] : []
     end
   end

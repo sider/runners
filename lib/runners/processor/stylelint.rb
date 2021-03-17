@@ -7,24 +7,14 @@ module Runners
 
       let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
         fields.merge!({
-                        config: string?,
-                        syntax: string?,
-                        'ignore-path': string?,
-                        'ignore-disables': boolean?,
-                        'report-needless-disables': boolean?,
-                        quiet: boolean?,
-                        glob: string?,
-                        # NOTE: DO NOT ADD ANY OPTIONS to under `options` option.
-                        options: optional(object(
-                                            config: string?,
-                                            'ignore-path': string?,
-                                            syntax: string?,
-                                            'ignore-disables': boolean?,
-                                            'report-needless-disables': boolean?,
-                                            quiet: boolean?,
-                                            glob: string?
-                                          ))
-                      })
+          config: string?,
+          syntax: string?,
+          'ignore-path': string?,
+          'ignore-disables': boolean?,
+          'report-needless-disables': boolean?,
+          quiet: boolean?,
+          glob: string?,
+        })
       }
 
       let :issue, object(
@@ -59,8 +49,6 @@ module Runners
     end
 
     def setup
-      add_warning_if_deprecated_options
-
       prepare_ignore_file
 
       begin
@@ -123,35 +111,35 @@ module Runners
     private
 
     def glob
-      config_linter[:glob] || config_linter.dig(:options, :glob) || DEFAULT_GLOB
+      config_linter[:glob] || DEFAULT_GLOB
     end
 
     def stylelint_config
-      config = config_linter[:config] || config_linter.dig(:options, :config)
+      config = config_linter[:config]
       config ? ["--config=#{config}"] : []
     end
 
     def syntax
-      syntax = config_linter[:syntax] || config_linter.dig(:options, :syntax)
+      syntax = config_linter[:syntax]
       syntax ? ["--syntax=#{syntax}"] : []
     end
 
     def ignore_path
-      path = config_linter[:'ignore-path'] || config_linter.dig(:options, :'ignore-path')
+      path = config_linter[:'ignore-path']
       path ? ["--ignore-path=#{path}"] : []
     end
 
     def ignore_disables
-      (config_linter[:'ignore-disables'] || config_linter.dig(:options, :'ignore-disables')) ? ["--ignore-disables"] : []
+      config_linter[:'ignore-disables'] ? ["--ignore-disables"] : []
     end
 
     def report_needless_disables
-      rd = config_linter[:'report-needless-disables'] || config_linter.dig(:options, :'report-needless-disables')
+      rd = config_linter[:'report-needless-disables']
       rd ? ["--report-needless-disables"] : []
     end
 
     def quiet
-      (config_linter[:quiet] || config_linter.dig(:options, :quiet)) ? ["--quiet"] : []
+      config_linter[:quiet] ? ["--quiet"] : []
     end
 
     def parse_result(stdout)
@@ -224,7 +212,7 @@ module Runners
 
     # returns available config file path. If the file doesn't exist, it returns nil.
     def config_file_path
-      config_path = config_linter[:config] || config_linter.dig(:options, :config)
+      config_path = config_linter[:config]
       if config_path
         current_dir / config_path
       elsif package_json_path.exist? && package_json.key?(:stylelint)

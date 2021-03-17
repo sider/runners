@@ -7,21 +7,13 @@ module Runners
 
       let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
         fields.merge!({
-                        glob: string?,
-                        config: string?,
-                        exclude: enum?(string, array(string)),
-                        project: string?,
-                        'rules-dir': enum?(string, array(string)),
-                        'type-check': boolean?,
-                        # DO NOT ADD ANY OPTIONS in `options` option.
-                        options: optional(object(
-                                            config: string?,
-                                            exclude: enum?(string, array(string)),
-                                            project: string?,
-                                            'rules-dir': string?,
-                                            'type-check': boolean?
-                                          ))
-                      })
+          glob: string?,
+          config: string?,
+          exclude: enum?(string, array(string)),
+          project: string?,
+          'rules-dir': enum?(string, array(string)),
+          'type-check': boolean?,
+        })
       }
     end
 
@@ -93,12 +85,12 @@ module Runners
     end
 
     def tslint_config
-      config = config_linter[:config] || config_linter.dig(:options, :config)
+      config = config_linter[:config]
       config ? ["--config", config] : []
     end
 
     def exclude
-      exclude = config_linter[:exclude] || config_linter.dig(:options, :exclude)
+      exclude = config_linter[:exclude]
       if exclude
         Array(exclude).map { |v| ["--exclude", v] }.flatten
       else
@@ -107,17 +99,17 @@ module Runners
     end
 
     def project
-      project = config_linter[:project] || config_linter.dig(:options, :project)
+      project = config_linter[:project]
       project ? ["--project", project] : []
     end
 
     def rules_dir
-      rules_dir = config_linter[:'rules-dir'] || config_linter.dig(:options, :'rules-dir')
+      rules_dir = config_linter[:'rules-dir']
       Array(rules_dir).map { |dir| ["--rules-dir", dir] }.flatten
     end
 
     def type_check
-      (config_linter[:'type-check'] || config_linter.dig(:options, :'type-check')) ? ["--type-check"] : []
+      config_linter[:'type-check'] ? ["--type-check"] : []
     end
   end
 end

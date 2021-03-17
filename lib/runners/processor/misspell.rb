@@ -5,17 +5,12 @@ module Runners
 
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
-                        exclude: array?(string),
-                        targets: array?(string),
-                        target: enum?(string, array(string)),
-                        locale: enum?(literal('US'), literal('UK')),
-                        ignore: enum?(string, array(string)),
-                        # DO NOT ADD ANY OPTIONS under `options`.
-                        options: optional(object(
-                                            locale: enum?(literal('US'), literal('UK')),
-                                            ignore: string?
-                                          ))
-                      })
+          exclude: array?(string),
+          targets: array?(string),
+          target: enum?(string, array(string)),
+          locale: enum?(literal('US'), literal('UK')),
+          ignore: enum?(string, array(string)),
+        })
       }
 
       let :issue, object(
@@ -43,7 +38,6 @@ module Runners
     end
 
     def setup
-      add_warning_if_deprecated_options
       add_warning_for_deprecated_option :targets, to: :target
       yield
     end
@@ -86,13 +80,13 @@ module Runners
     end
 
     def locale
-      locale = config_linter[:locale] || config_linter.dig(:options, :locale)
+      locale = config_linter[:locale]
       locale ? ["-locale", "#{locale}"] : []
     end
 
     def ignore
       # The option requires comma separated with string when user would like to set ignore multiple targets.
-      ignore = comma_separated_list(config_linter[:ignore] || config_linter.dig(:options, :ignore))
+      ignore = comma_separated_list(config_linter[:ignore])
       ignore ? ["-i", ignore] : []
     end
 

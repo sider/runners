@@ -52,15 +52,9 @@ s.add_test(
 
 s.add_test(
   "with_config_deprecated",
-  type: "success",
-  issues: [],
-  analyzer: { name: "CoffeeLint", version: default_version },
-  warnings: [
-    {
-      message: /The `linter.coffeelint.options` option is deprecated/,
-      file: "sideci.yml"
-    }
-  ]
+  type: "failure",
+  message: "`linter.coffeelint.options` in `sideci.yml` is unsupported",
+  analyzer: :_
 )
 
 s.add_test(

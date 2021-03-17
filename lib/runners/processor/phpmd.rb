@@ -7,22 +7,14 @@ module Runners
 
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
-                        target: enum?(string, array(string)),
-                        rule: enum?(string, array(string)),
-                        minimumpriority: numeric?,
-                        suffixes: enum?(string, array(string)),
-                        exclude: enum?(string, array(string)),
-                        strict: boolean?,
-                        custom_rule_path: array?(string),
-                        # DO NOT ADD ANY OPTIONS in `options` option.
-                        options: optional(object(
-                                            rule: string?,
-                                            minimumpriority: numeric?,
-                                            suffixes: string?,
-                                            exclude: string?,
-                                            strict: boolean?
-                                          ))
-                      })
+          target: enum?(string, array(string)),
+          rule: enum?(string, array(string)),
+          minimumpriority: numeric?,
+          suffixes: enum?(string, array(string)),
+          exclude: enum?(string, array(string)),
+          strict: boolean?,
+          custom_rule_path: array?(string),
+        })
       }
     end
 
@@ -46,11 +38,6 @@ module Runners
       YAML
     end
 
-    def setup
-      add_warning_if_deprecated_options
-      yield
-    end
-
     def analyze(changes)
       delete_unchanged_files(changes, only: target_files, except: config_linter[:custom_rule_path] || [])
       run_analyzer(changes)
@@ -64,8 +51,7 @@ module Runners
     end
 
     def rule
-      rules = config_linter[:rule] || config_linter.dig(:options, :rule)
-      comma_separated_list(rules) || DEFAULT_CONFIG_FILE
+      comma_separated_list(config_linter[:rule]) || DEFAULT_CONFIG_FILE
     end
 
     def target_dirs
@@ -73,22 +59,22 @@ module Runners
     end
 
     def minimumpriority
-      priority = config_linter[:minimumpriority] || config_linter.dig(:options, :minimumpriority)
+      priority = config_linter[:minimumpriority]
       priority ? ["--minimumpriority", priority.to_s] : []
     end
 
     def suffixes
-      suffixes = comma_separated_list(config_linter[:suffixes] || config_linter.dig(:options, :suffixes))
+      suffixes = comma_separated_list(config_linter[:suffixes])
       suffixes ? ["--suffixes", suffixes] : []
     end
 
     def exclude
-      exclude = comma_separated_list(config_linter[:exclude] || config_linter.dig(:options, :exclude))
+      exclude = comma_separated_list(config_linter[:exclude])
       exclude ? ["--exclude", exclude] : []
     end
 
     def strict
-      strict = config_linter[:strict] || config_linter.dig(:options, :strict)
+      strict = config_linter[:strict]
       strict ? ["--strict"] : []
     end
 

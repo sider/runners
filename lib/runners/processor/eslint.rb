@@ -7,28 +7,16 @@ module Runners
 
       let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
         fields.merge!({
-                        target: enum?(string, array(string)),
-                        dir: enum?(string, array(string)),
-                        ext: string?,
-                        config: string?,
-                        'ignore-path': string?,
-                        'ignore-pattern': enum?(string, array(string)),
-                        'no-ignore': boolean?,
-                        global: string?,
-                        quiet: boolean?,
-                        # NOTE: DO NOT ADD ANY OPTIONS to internal `options` option because the option has been deprecated.
-                        options: optional(object(
-                                            npm_install: enum?(boolean, literal('development'), literal('production')),
-                                            dir: enum?(string, array(string)),
-                                            ext: string?,
-                                            config: string?,
-                                            'ignore-path': string?,
-                                            'no-ignore': boolean?,
-                                            'ignore-pattern': enum?(string, array(string)),
-                                            global: string?,
-                                            quiet: boolean?
-                                          ))
-                      })
+          target: enum?(string, array(string)),
+          dir: enum?(string, array(string)),
+          ext: string?,
+          config: string?,
+          'ignore-path': string?,
+          'ignore-pattern': enum?(string, array(string)),
+          'no-ignore': boolean?,
+          global: string?,
+          quiet: boolean?,
+        })
       }
 
       let :issue, object(
@@ -66,7 +54,6 @@ module Runners
     end
 
     def setup
-      add_warning_if_deprecated_options
       add_warning_for_deprecated_option :dir, to: :target
 
       begin
@@ -85,12 +72,11 @@ module Runners
     private
 
     def target
-      Array(config_linter[:target] || config_linter[:dir] ||
-            config_linter.dig(:options, :dir) || DEFAULT_TARGET)
+      Array(config_linter[:target] || config_linter[:dir] || DEFAULT_TARGET)
     end
 
     def eslint_config
-      path = config_linter[:config] || config_linter.dig(:options, :config)
+      path = config_linter[:config]
       if path && directory_traversal_attack?(path)
         path = nil
       end
@@ -98,32 +84,32 @@ module Runners
     end
 
     def ext
-      ext = config_linter[:ext] || config_linter.dig(:options, :ext)
+      ext = config_linter[:ext]
       ext ? ["--ext", ext] : []
     end
 
     def ignore_path
-      ignore_path = config_linter[:'ignore-path'] || config_linter.dig(:options, :'ignore-path')
+      ignore_path = config_linter[:'ignore-path']
       ignore_path ? ["--ignore-path", ignore_path] : []
     end
 
     def ignore_pattern
-      ignore_pattern = config_linter[:'ignore-pattern'] || config_linter.dig(:options, :'ignore-pattern')
+      ignore_pattern = config_linter[:'ignore-pattern']
       Array(ignore_pattern).flat_map { |value| ["--ignore-pattern", value] }
     end
 
     def no_ignore
-      no_ignore = config_linter[:'no-ignore'] || config_linter.dig(:options, :'no-ignore')
+      no_ignore = config_linter[:'no-ignore']
       no_ignore ? ["--no-ignore"] : []
     end
 
     def global
-      global = config_linter[:global] || config_linter.dig(:options, :global)
+      global = config_linter[:global]
       global ? ["--global", global] : []
     end
 
     def quiet
-      quiet = config_linter[:quiet] || config_linter.dig(:options, :quiet)
+      quiet = config_linter[:quiet]
       quiet ? ["--quiet"] : []
     end
 
