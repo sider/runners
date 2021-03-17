@@ -3,9 +3,9 @@ module Runners
     Schema = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
+      # @type self: SchemaClass
       target_element = enum(string, object(shebang: boolean))
 
-      # @type self: SchemaClass
       let :config, base(
         # Original options
         target: enum?(target_element, array(target_element)),
