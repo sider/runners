@@ -312,9 +312,9 @@ s.add_test(
 
 s.add_test(
   "mismatched_package_version",
-  type: "failure",
-  message: "`yarn install` failed. Please confirm `yarn.lock` is consistent with `package.json`.",
-  analyzer: :_,
+  type: "success",
+  issues: [],
+  analyzer: { name: "TSLint", version: default_version },
   warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }]
 )
 

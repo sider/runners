@@ -32,11 +32,6 @@ ENV PATH ${RUNNER_USER_HOME}/tslint/node_modules/.bin:${PATH}
 # See https://nodejs.org/api/cli.html#cli_node_path_path
 ENV NODE_PATH ${RUNNER_USER_HOME}/tslint/node_modules:${NODE_PATH}
 
-# TODO: Wait for npm 7. See #1963
-USER root
-RUN npm install --global npm@6
-USER $RUNNER_USER
-
 # By default, TSLint looks for a configuration file named tslint.json in the directory of the file being linted and, if not found, searches ancestor directories.
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/tslint/default_tslint.json ${RUNNER_USER_HOME}/tslint.json
 

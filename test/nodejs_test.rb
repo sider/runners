@@ -3,9 +3,6 @@ require 'test_helper'
 class NodejsTest < Minitest::Test
   include TestHelper
 
-  NpmInstallFailed = Runners::Nodejs::NpmInstallFailed
-  YarnInstallFailed = Runners::Nodejs::YarnInstallFailed
-
   INSTALL_OPTION_NONE = Runners::Nodejs::INSTALL_OPTION_NONE
   INSTALL_OPTION_ALL = Runners::Nodejs::INSTALL_OPTION_ALL
   INSTALL_OPTION_PRODUCTION = Runners::Nodejs::INSTALL_OPTION_PRODUCTION
@@ -144,6 +141,7 @@ class NodejsTest < Minitest::Test
       ], actual_messages
       assert_empty actual_errors
       assert_equal "5.0.0", processor.analyzer_version
+      assert_equal({ devDependencies: { "eslint" => "5.0.0", "is-string" => "1.0.5" } }.to_json, processor.package_json_path.read)
     end
   end
 
@@ -158,7 +156,7 @@ class NodejsTest < Minitest::Test
       end
 
       assert_warnings [{ message: <<~MSG.strip, file: "package.json" }]
-        The `npm_install` option is specified in your `sider.yml`, but a `package.json` file is not found in the repository.
+        The `npm_install` option is specified in your `sider.yml`, but a `package.json` file is not found in your repository.
         In this case, any npm packages are not installed.
       MSG
       assert_empty actual_commands
@@ -238,51 +236,6 @@ class NodejsTest < Minitest::Test
       assert_empty actual_commands
       assert_empty actual_messages
       assert_empty actual_errors
-    end
-  end
-
-  def test_install_nodejs_deps_using_yarn
-    with_workspace do |workspace|
-      new_processor(workspace: workspace)
-
-      processor.package_json_path.write({ dependencies: { "eslint" => "6.0.1" } }.to_json)
-      copy data("yarn.lock"), processor.yarn_lock_path
-
-      constraints = { "eslint" => Gem::Requirement.new(">= 5.0.0", "< 7.0.0") }
-
-      processor.stub :nodejs_analyzer_global_version, "5.15.0" do
-        processor.install_nodejs_deps(constraints: constraints, install_option: INSTALL_OPTION_ALL)
-      end
-
-      refute_path_exists processor.package_lock_json_path
-      assert_empty processor.warnings
-      assert_empty actual_errors
-      refute_empty actual_commands
-      assert_equal "6.0.1", processor.analyzer_version
-    end
-  end
-
-  def test_install_nodejs_deps_with_duplicate_lockfiles
-    with_workspace do |workspace|
-      new_processor(workspace: workspace)
-
-      processor.package_json_path.write({ dependencies: { "eslint" => "6.0.1" } }.to_json)
-      copy data("yarn.lock"), processor.yarn_lock_path
-      copy data("package-lock.json"), processor.package_lock_json_path
-
-      constraints = { "eslint" => Gem::Requirement.new(">= 5.0.0", "< 7.0.0") }
-
-      processor.stub :nodejs_analyzer_global_version, "5.15.0" do
-        processor.install_nodejs_deps(constraints: constraints, install_option: INSTALL_OPTION_ALL)
-      end
-
-      assert_warnings [{ message: <<~MSG.strip, file: "yarn.lock" }]
-        Two lock files `package-lock.json` and `yarn.lock` are found. Sider uses `yarn.lock` in this case, but please consider deleting either file for more accurate analysis.
-      MSG
-      refute_empty actual_commands
-      refute_empty actual_messages
-      assert_empty actual_errors
-      assert_equal "6.0.1", processor.analyzer_version
     end
   end
 
@@ -409,9 +362,9 @@ class NodejsTest < Minitest::Test
         processor.install_nodejs_deps(constraints: {}, install_option: INSTALL_OPTION_DEVELOPMENT)
       end
 
-      refute_path_exists processor.working_dir / "node_modules" / "classcat"
+      assert_path_exists processor.working_dir / "node_modules" / "classcat"
       assert_path_exists processor.working_dir / "node_modules" / "is-string"
-      assert_empty processor.warnings
+      assert_warnings [{ message: "`npm_install: development` has been deprecated and falls back to `npm_install: true`.", file: "package.json" }]
       refute_empty actual_commands
       assert_empty actual_errors
     end
@@ -432,6 +385,7 @@ class NodejsTest < Minitest::Test
       assert_empty processor.warnings
       refute_empty actual_commands
       assert_empty actual_errors
+      assert_equal data("package-lock.json").read, processor.package_lock_json_path.read
     end
   end
 
@@ -465,13 +419,46 @@ class NodejsTest < Minitest::Test
 
       assert_path_exists processor.working_dir / "node_modules" / "typescript"
       assert_match %r{^3\.\d+\.\d+$}, JSON.parse((processor.working_dir / "node_modules" / "typescript" / "package.json").read)["version"]
-      assert_warnings [{ message: <<~MSG.strip, file: "package.json" }]
-        The `npm ci --only=development` command does not install anything, so `npm install --only=development` will be used instead.
-        If you want to use `npm ci`, please change your install option from `development` to `true`.
-        For details about the npm behavior, see https://npm.community/t/npm-ci-only-dev-does-not-install-anything/3068
-      MSG
+      assert_warnings [{ message: "`npm_install: development` has been deprecated and falls back to `npm_install: true`.", file: "package.json" }]
       refute_empty actual_commands
       assert_empty actual_errors
+    end
+  end
+
+  def test_install_nodejs_deps_with_package_lock_json_v2
+    with_workspace do |workspace|
+      new_processor(workspace: workspace)
+
+      processor.package_json_path.write({ dependencies: { typescript: "^3.5.0" } }.to_json)
+      copy data("package-lock.v2.json"), processor.package_lock_json_path
+      processor.stub :nodejs_analyzer_global_version, "1.0.0" do
+        processor.install_nodejs_deps(constraints: {}, install_option: INSTALL_OPTION_ALL)
+      end
+
+      assert_path_exists processor.working_dir / "node_modules" / "typescript"
+      assert_equal "3.9.9", JSON.parse((processor.working_dir / "node_modules" / "typescript" / "package.json").read)["version"]
+      assert_empty processor.warnings
+      refute_empty actual_commands
+      assert_empty actual_errors
+    end
+  end
+
+  def test_install_nodejs_deps_with_yarn_lock
+    with_workspace do |workspace|
+      new_processor(workspace: workspace)
+
+      processor.package_json_path.write({ dependencies: { classcat: "^5.0.0" } }.to_json)
+      copy data("yarn.lock"), processor.working_dir.join("yarn.lock")
+      processor.stub :nodejs_analyzer_global_version, "1.0.0" do
+        processor.install_nodejs_deps(constraints: {}, install_option: INSTALL_OPTION_ALL)
+      end
+
+      assert_path_exists processor.working_dir / "node_modules" / "classcat"
+      assert_equal "5.0.0", JSON.parse((processor.working_dir / "node_modules" / "classcat" / "package.json").read)["version"]
+      assert_empty processor.warnings
+      refute_empty actual_commands
+      assert_empty actual_errors
+      assert_equal data("yarn.lock").read, processor.working_dir.join("yarn.lock").read
     end
   end
 
@@ -481,7 +468,7 @@ class NodejsTest < Minitest::Test
 
       processor.package_json_path.write({ dependencies: { foo: "github:sider/foo" } }.to_json)
 
-      error = assert_raises NpmInstallFailed do
+      error = assert_raises Runners::Nodejs::NpmInstallFailed do
         processor.stub :nodejs_analyzer_global_version, "1.0.0" do
           processor.install_nodejs_deps(constraints: {}, install_option: INSTALL_OPTION_ALL)
         end
@@ -489,86 +476,11 @@ class NodejsTest < Minitest::Test
 
       expected_error_message = <<~MSG.strip
         `npm install` failed. Please check the log for details.
-        If you want to explicitly disable the installation, please set `npm_install: false` on your `sider.yml`.
+        If you want to explicitly disable the installation, please set `npm_install: false` in your `sider.yml`.
       MSG
       assert_equal [expected_error_message], actual_errors
       assert_equal expected_error_message, error.message
       refute_path_exists processor.working_dir / "node_modules"
-    end
-  end
-
-  def test_yarn_install
-    with_workspace do |workspace|
-      new_processor(workspace: workspace)
-
-      node_modules = processor.node_modules_path
-      eslint = node_modules / "eslint"
-
-      yarnrc = (workspace.working_dir / ".yarnrc").tap { _1.write 'yarn-path "foo"' }
-      yarnrc_yml = (workspace.working_dir / ".yarnrc.yml").tap { _1.write 'yarnPath: "foo"' }
-      yarnrc_yaml = (workspace.working_dir / ".yarnrc.yaml").tap { _1.write 'yarnPath: "foo"' }
-
-      processor.package_json_path.write({ dependencies: { "eslint" => "6.0.1" } }.to_json)
-      copy data("yarn.lock"), processor.yarn_lock_path
-
-      processor.send(:yarn_install, INSTALL_OPTION_NONE)
-      refute_path_exists eslint
-      assert_path_exists yarnrc
-      assert_path_exists yarnrc_yml
-      assert_path_exists yarnrc_yaml
-
-      processor.send(:yarn_install, INSTALL_OPTION_ALL)
-      assert_path_exists eslint
-      assert_path_exists yarnrc
-      assert_path_exists yarnrc_yml
-      assert_path_exists yarnrc_yaml
-
-      eslint.rmtree
-      yarnrc_yml.rmtree
-      yarnrc_yaml.rmtree
-      processor.send(:yarn_install, INSTALL_OPTION_PRODUCTION)
-      assert_path_exists eslint
-      assert_path_exists yarnrc
-      refute_path_exists yarnrc_yml
-      refute_path_exists yarnrc_yaml
-
-      node_modules.rmtree
-      processor.send(:yarn_install, INSTALL_OPTION_DEVELOPMENT)
-      assert_path_exists eslint
-
-      expected_commands = [
-        %w[yarn install --ignore-engines --ignore-scripts --no-progress --non-interactive --frozen-lockfile],
-        %w[yarn install --ignore-engines --ignore-scripts --no-progress --non-interactive --frozen-lockfile --production],
-        %w[yarn install --ignore-engines --ignore-scripts --no-progress --non-interactive --frozen-lockfile],
-      ]
-      assert_equal expected_commands, actual_commands
-
-      expected_warning = <<~MSG.strip
-        Yarn does not have a same feature as `npm install --only=development`, so the option `development` will be ignored.
-        See https://github.com/yarnpkg/yarn/issues/3254 for details.
-      MSG
-      actual_warnings = trace_writer.writer.select { |e| e[:trace] == :warning }.map { |e| e[:message] }
-      assert_equal [expected_warning], actual_warnings
-      assert_equal [{ message: expected_warning, file: "yarn.lock" }], processor.warnings
-    end
-  end
-
-  def test_yarn_install_failed
-    with_workspace do |workspace|
-      new_processor(workspace: workspace)
-
-      # 'yarn install' fails because of incorrect package settings between yarn.lock and package.json
-      copy incorrect_yarn_data("yarn.lock"), processor.yarn_lock_path
-      copy incorrect_yarn_data("package.json"), processor.package_json_path
-
-      error = assert_raises YarnInstallFailed do
-        processor.send(:yarn_install, INSTALL_OPTION_ALL)
-      end
-      expected_error_message = <<~MSG.strip
-        `yarn install` failed. Please confirm `yarn.lock` is consistent with `package.json`.
-      MSG
-      assert_equal expected_error_message, error.message
-      assert_equal [expected_error_message], actual_errors
     end
   end
 end

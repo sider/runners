@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "stylelint": "^10.1.0",
+    "stylelint": "10.1.0",
     "stylelint-config-standard": "^18.3.0"
   }
 }
