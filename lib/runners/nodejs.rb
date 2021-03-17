@@ -188,6 +188,8 @@ module Runners
       constraint.to_s.delete(" ").sub(",", " ")
     end
 
+    # HACK: This code prevents `yarn.lock` from being overwritten via `npm install` unexpectedly.
+    #       This behavior seems a bug of npm but I'm not sure and cannot find related issues...
     def ensure_same_yarn_lock
       yarn_lock = current_dir / "yarn.lock"
       return yield unless yarn_lock.exist?
