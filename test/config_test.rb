@@ -30,8 +30,7 @@ class ConfigTest < Minitest::Test
       linter:
         eslint:
           config: abc
-          options:
-            npm_install: true
+          npm_install: true
     YAML
     assert_equal(
       { linter: {
@@ -45,7 +44,7 @@ class ConfigTest < Minitest::Test
         detekt: nil,
         eslint: {
           root_dir: nil,
-          npm_install: nil,
+          npm_install: true,
           target: nil,
           dir: nil,
           ext: nil,
@@ -55,16 +54,6 @@ class ConfigTest < Minitest::Test
           "no-ignore": nil,
           global: nil,
           quiet: nil,
-          options: { npm_install: true,
-                     dir: nil,
-                     ext: nil,
-                     config: nil,
-                     "ignore-path": nil,
-                     "no-ignore": nil,
-                     "ignore-pattern": nil,
-                     global: nil,
-                     quiet: nil,
-          },
         },
         flake8: nil,
         fxcop: nil,
@@ -205,7 +194,6 @@ class ConfigTest < Minitest::Test
       "no-ignore": nil,
       global: nil,
       quiet: nil,
-      options: nil,
     }, Runners::Config.new(path: Pathname(FILE_NAME), raw_content: yaml).linter("eslint"))
   end
 
