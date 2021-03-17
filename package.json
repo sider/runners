@@ -4,6 +4,6 @@
   "repository": "github:sider/runners",
   "engines": {
     "node": "14",
-    "npm": "6"
+    "npm": "7"
   }
 }

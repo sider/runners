@@ -14,9 +14,6 @@ module Runners
     class NpmInstallFailed < UserError
     end
 
-    class YarnInstallFailed < UserError
-    end
-
     INSTALL_OPTION_NONE: bool
     INSTALL_OPTION_ALL: bool
     INSTALL_OPTION_PRODUCTION: String
@@ -36,8 +33,6 @@ module Runners
 
     def package_lock_json_path: () -> Pathname
 
-    def yarn_lock_path: () -> Pathname
-
     def node_modules_path: () -> Pathname
 
     def install_nodejs_deps: (constraints: constraints, ?install_option: install_option) -> void
@@ -54,14 +49,12 @@ module Runners
 
     def npm_install: (install_option) -> void
 
-    def run_yarn: (String, *String) -> [String, String]
-
-    def yarn_install: (install_option) -> void
-
     def list_installed_npm_deps_with: (names: Array[String]) -> Hash[String, { name: String, version: String }]
 
     def all_npm_deps_statisfied_constraint?: (Hash[String, { name: String, version: String }], constraints) -> bool
 
     def npm_constraint_format: (Gem::Requirement) -> String
+
+    def ensure_same_yarn_lock: [X] () { () -> X } -> X
   end
 end
