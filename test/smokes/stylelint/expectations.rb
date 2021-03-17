@@ -501,14 +501,15 @@ s.add_test(
   ]
 )
 
+# Install peer dependencies
 s.add_test(
   "npm_install_without_stylelint",
-  analyzer: { name: "stylelint", version: default_version },
+  analyzer: { name: "stylelint", version: "10.1.0" },
   type: "success",
   issues: [
     {
       message: "Expected a trailing semicolon",
-      links: %W[https://github.com/stylelint/stylelint/tree/#{default_version}/lib/rules/declaration-block-trailing-semicolon],
+      links: %w[https://github.com/stylelint/stylelint/tree/10.1.0/lib/rules/declaration-block-trailing-semicolon],
       id: "declaration-block-trailing-semicolon",
       path: "test.less",
       location: { start_line: 8, start_column: 15 },
@@ -519,7 +520,7 @@ s.add_test(
     },
     {
       message: "Expected indentation of 2 spaces",
-      links: %W[https://github.com/stylelint/stylelint/tree/#{default_version}/lib/rules/indentation],
+      links: %w[https://github.com/stylelint/stylelint/tree/10.1.0/lib/rules/indentation],
       id: "indentation",
       path: "test.scss",
       location: { start_line: 2, start_column: 5 },
@@ -530,7 +531,7 @@ s.add_test(
     },
     {
       message: "Expected no more than 1 empty line",
-      links: %W[https://github.com/stylelint/stylelint/tree/#{default_version}/lib/rules/max-empty-lines],
+      links: %w[https://github.com/stylelint/stylelint/tree/10.1.0/lib/rules/max-empty-lines],
       id: "max-empty-lines",
       path: "test.less",
       location: { start_line: 11, start_column: 1 },
@@ -541,7 +542,7 @@ s.add_test(
     },
     {
       message: "Expected no more than 1 empty line",
-      links: %W[https://github.com/stylelint/stylelint/tree/#{default_version}/lib/rules/max-empty-lines],
+      links: %w[https://github.com/stylelint/stylelint/tree/10.1.0/lib/rules/max-empty-lines],
       id: "max-empty-lines",
       path: "test.less",
       location: { start_line: 12, start_column: 1 },
@@ -552,7 +553,7 @@ s.add_test(
     },
     {
       message: 'Unexpected unknown property "font-color"',
-      links: %W[https://github.com/stylelint/stylelint/tree/#{default_version}/lib/rules/property-no-unknown],
+      links: %w[https://github.com/stylelint/stylelint/tree/10.1.0/lib/rules/property-no-unknown],
       id: "property-no-unknown",
       path: "test.scss",
       location: { start_line: 6, start_column: 7 },
@@ -563,7 +564,7 @@ s.add_test(
     },
     {
       message: "Expected empty line before rule",
-      links: %W[https://github.com/stylelint/stylelint/tree/#{default_version}/lib/rules/rule-empty-line-before],
+      links: %w[https://github.com/stylelint/stylelint/tree/10.1.0/lib/rules/rule-empty-line-before],
       id: "rule-empty-line-before",
       path: "test.scss",
       location: { start_line: 3, start_column: 3 },
@@ -574,7 +575,7 @@ s.add_test(
     },
     {
       message: "Expected empty line before rule",
-      links: %W[https://github.com/stylelint/stylelint/tree/#{default_version}/lib/rules/rule-empty-line-before],
+      links: %w[https://github.com/stylelint/stylelint/tree/10.1.0/lib/rules/rule-empty-line-before],
       id: "rule-empty-line-before",
       path: "test.scss",
       location: { start_line: 5, start_column: 5 },
@@ -585,7 +586,7 @@ s.add_test(
     },
     {
       message: 'Unexpected unknown type selector "hoge"',
-      links: %W[https://github.com/stylelint/stylelint/tree/#{default_version}/lib/rules/selector-type-no-unknown],
+      links: %w[https://github.com/stylelint/stylelint/tree/10.1.0/lib/rules/selector-type-no-unknown],
       id: "selector-type-no-unknown",
       path: "test.less",
       location: { start_line: 13, start_column: 1 },
@@ -669,14 +670,16 @@ s.add_test(
 
 s.add_test(
   "allow_empty_input_option_with_v10.0.0",
-  analyzer: { name: "stylelint", version: "10.0.0" }, type: "success", issues: []
+  analyzer: { name: "stylelint", version: "10.0.0" },
+  type: "success",
+  issues: []
 )
 
 s.add_test(
   "mismatched_yarnlock_and_package_json",
-  analyzer: :_,
-  type: "failure",
-  message: "`yarn install` failed. Please confirm `yarn.lock` is consistent with `package.json`."
+  analyzer: { name: "stylelint", version: "10.1.0" },
+  type: "success",
+  issues: []
 )
 
 s.add_test(
