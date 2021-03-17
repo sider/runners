@@ -56,7 +56,7 @@ module Runners
     private
 
     def scss_lint_config
-      config = config_linter[:config] || config_linter.dig(:options, :config)
+      config = config_linter[:config]
       config ? ["--config=#{config}"] : []
     end
 
