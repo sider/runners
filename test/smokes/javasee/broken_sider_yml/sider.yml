@@ -1,6 +1,6 @@
 linter:
   javasee:
-    target:
+    dir:
       - src
       - vendor
       - 123
