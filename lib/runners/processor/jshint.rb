@@ -7,13 +7,9 @@ module Runners
 
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
-                        dir: string?,
-                        config: string?,
-                        # DO NOT ADD ANY OPTIONS in `options` option.
-                        options: optional(object(
-                                            config: string?
-                                          ))
-                      })
+          dir: string?,
+          config: string?,
+        })
       }
     end
 
@@ -28,11 +24,6 @@ module Runners
         dir: src/
         config: config/.jshintrc.json
       YAML
-    end
-
-    def setup
-      add_warning_if_deprecated_options
-      yield
     end
 
     def analyze(changes)
@@ -81,7 +72,7 @@ module Runners
     end
 
     def config_path
-      config_linter[:config] || config_linter.dig(:options, :config)
+      config_linter[:config]
     end
 
     def parse_result(output)

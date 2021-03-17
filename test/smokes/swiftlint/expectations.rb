@@ -164,13 +164,7 @@ s.add_test(
   "no_config_file",
   type: "failure",
   message: "SwiftLint Configuration Error: Could not read file at path: not_found.yml",
-  analyzer: { name: "SwiftLint", version: default_version },
-  warnings: [
-    {
-      message: /The `linter.swiftlint.options` option is deprecated/,
-      file: "sideci.yml"
-    }
-  ]
+  analyzer: { name: "SwiftLint", version: default_version }
 )
 
 s.add_test(

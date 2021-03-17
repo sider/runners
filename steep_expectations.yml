@@ -61,10 +61,10 @@
   diagnostics:
   - range:
       start:
-        line: 145
+        line: 135
         character: 47
       end:
-        line: 145
+        line: 135
         character: 49
     severity: ERROR
     message: Type `(::Gem::Version | nil)` does not have method `>=`
@@ -73,10 +73,10 @@
   diagnostics:
   - range:
       start:
-        line: 71
+        line: 65
         character: 51
       end:
-        line: 71
+        line: 65
         character: 55
     severity: ERROR
     message: Type `bot` does not have method `size`
@@ -107,20 +107,20 @@
   diagnostics:
   - range:
       start:
-        line: 209
+        line: 201
         character: 44
       end:
-        line: 209
+        line: 201
         character: 46
     severity: ERROR
     message: Type `(::Gem::Version | nil)` does not have method `>=`
     code: Ruby::NoMethod
   - range:
       start:
-        line: 214
+        line: 206
         character: 47
       end:
-        line: 214
+        line: 206
         character: 49
     severity: ERROR
     message: Type `(::Gem::Version | nil)` does not have method `>=`
@@ -148,20 +148,20 @@
   diagnostics:
   - range:
       start:
-        line: 92
+        line: 80
         character: 47
       end:
-        line: 92
+        line: 80
         character: 49
     severity: ERROR
     message: Type `(::Gem::Version | nil)` does not have method `>=`
     code: Ruby::NoMethod
   - range:
       start:
-        line: 209
+        line: 197
         character: 53
       end:
-        line: 209
+        line: 197
         character: 55
     severity: ERROR
     message: Type `(::Gem::Version | nil)` does not have method `>=`
@@ -213,10 +213,10 @@
     code: Ruby::NoMethod
   - range:
       start:
-        line: 302
+        line: 282
         character: 45
       end:
-        line: 302
+        line: 282
         character: 50
     severity: ERROR
     message: Type `(::String | ::Array[::String] | nil)` does not have method `split`

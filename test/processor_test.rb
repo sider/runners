@@ -226,42 +226,6 @@ class ProcessorTest < Minitest::Test
     end
   end
 
-  def test_add_warning_if_deprecated_options
-    with_workspace do |workspace|
-      processor = new_processor(workspace: workspace, config_yaml: <<~YAML)
-        linter:
-          eslint:
-            options:
-              ext: .ts
-      YAML
-
-      processor.add_warning_if_deprecated_options
-
-      expected_message = <<~MSG.strip
-        DEPRECATION WARNING!!!
-        The `linter.eslint.options` option is deprecated. Fix your `sider.yml` as follows:
-        See https://help.sider.review/tools/javascript/eslint for details.
-
-        ```diff
-         linter:
-           eslint:
-        -    options:
-        -      foo: "bar"
-        +    foo: "bar"
-        ```
-      MSG
-
-      assert_equal(
-        [{ trace: :warning, message: expected_message, file: "sider.yml" }],
-        trace_writer.writer.map { |hash| hash.slice(:trace, :message, :file) }.select { |hash| hash[:trace] == :warning },
-      )
-      assert_equal(
-        [{ message: expected_message, file: "sider.yml" }],
-        processor.warnings,
-      )
-    end
-  end
-
   def test_add_warning_for_deprecated_option
     with_workspace do |workspace|
       processor = new_processor(workspace: workspace, config_yaml: <<~YAML)

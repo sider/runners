@@ -8,22 +8,14 @@ module Runners
 
       let :runner_config, Schema::BaseConfig.ruby.update_fields { |fields|
         fields.merge!({
-                        target: enum?(string, array(string)),
-                        file: string?,
-                        include_linter: enum?(string, array(string)),
-                        exclude_linter: enum?(string, array(string)),
-                        exclude: enum?(string, array(string)),
-                        config: string?,
-                        parallel: boolean?,
-                        # DO NOT ADD ANY OPTION in `options` option.
-                        options: object?(
-                          file: string?,
-                          include_linter: enum?(string, array(string)),
-                          exclude_linter: enum?(string, array(string)),
-                          exclude: enum?(string, array(string)),
-                          config: string?
-                        )
-                      })
+          target: enum?(string, array(string)),
+          file: string?,
+          include_linter: enum?(string, array(string)),
+          exclude_linter: enum?(string, array(string)),
+          exclude: enum?(string, array(string)),
+          config: string?,
+          parallel: boolean?,
+        })
       }
 
       let :issue, object(
@@ -62,7 +54,6 @@ module Runners
     end
 
     def setup
-      add_warning_if_deprecated_options
       add_warning_for_deprecated_option :file, to: :target
 
       setup_haml_lint_config
@@ -116,27 +107,26 @@ module Runners
     end
 
     def target
-      Array(config_linter[:target] || config_linter[:file] ||
-            config_linter.dig(:options, :file) || DEFAULT_TARGET)
+      Array(config_linter[:target] || config_linter[:file] || DEFAULT_TARGET)
     end
 
     def include_linter
-      value = comma_separated_list(config_linter[:include_linter] || config_linter.dig(:options, :include_linter))
+      value = comma_separated_list(config_linter[:include_linter])
       value ? ["--include-linter", value] : []
     end
 
     def exclude_linter
-      value = comma_separated_list(config_linter[:exclude_linter] || config_linter.dig(:options, :exclude_linter))
+      value = comma_separated_list(config_linter[:exclude_linter])
       value ? ["--exclude-linter", value] : []
     end
 
     def exclude
-      value = comma_separated_list(config_linter[:exclude] || config_linter.dig(:options, :exclude))
+      value = comma_separated_list(config_linter[:exclude])
       value ? ["--exclude", value] : []
     end
 
     def haml_lint_config
-      config = config_linter[:config] || config_linter.dig(:options, :config)
+      config = config_linter[:config]
       config ? ["--config", config] : []
     end
 

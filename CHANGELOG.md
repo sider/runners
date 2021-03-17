@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - Improve analysis finish message [#2187](https://github.com/sider/runners/pull/2187)
 - Support npm 7 [#2189](https://github.com/sider/runners/pull/2189)
 - **ESLint** Provide new recommended configuration [#2165](https://github.com/sider/runners/pull/2165)
+- Remove deprecated `linter.{id}.options` [#2190](https://github.com/sider/runners/pull/2190)
 
 ## 0.45.0
 

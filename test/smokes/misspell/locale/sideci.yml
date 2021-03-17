@@ -1,4 +1,3 @@
 linter:
   misspell:
-    options:
-      locale: UK
+    locale: UK

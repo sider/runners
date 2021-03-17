@@ -48,13 +48,7 @@ s.add_offline_test(
       }
     }
   ],
-  analyzer: { name: "Misspell", version: default_version },
-  warnings: [
-    {
-      message: /The `linter.misspell.options` option is deprecated/,
-      file: "sideci.yml"
-    }
-  ]
+  analyzer: { name: "Misspell", version: default_version }
 )
 
 s.add_offline_test(

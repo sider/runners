@@ -67,13 +67,7 @@ s.add_test(
       }
     }
   ],
-  analyzer: { name: "PHPMD", version: default_version },
-  warnings: [
-    {
-      message: /The `linter.phpmd.options` option is deprecated/,
-      file: "sideci.yml"
-    }
-  ]
+  analyzer: { name: "PHPMD", version: default_version }
 )
 
 s.add_test(

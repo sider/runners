@@ -251,10 +251,6 @@ s.add_test(
   analyzer: { name: "RuboCop", version: default_version },
   warnings: [
     {
-      message: /The `linter.rubocop.options` option is deprecated/,
-      file: "sideci.yml"
-    },
-    {
       message: "my.rubocop.yml: Metrics/LineLength has the wrong namespace - should be Layout",
       file: "my.rubocop.yml"
     }

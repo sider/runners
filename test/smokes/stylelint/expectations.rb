@@ -611,20 +611,14 @@ s.add_test(
   "broken_sideci_yml",
   analyzer: :_,
   type: "failure",
-  message: "`linter.stylelint.options.ignore-path` value in `sideci.yml` is invalid"
+  message: "`linter.stylelint.ignore-path` value in `sideci.yml` is invalid"
 )
 
 s.add_test(
   "options_is_deprecated",
-  analyzer: { name: "stylelint", version: default_version },
-  type: "success",
-  issues: [],
-  warnings: [
-    {
-      message: /The `linter.stylelint.options` option is deprecated/,
-      file: "sider.yml"
-    }
-  ]
+  analyzer: :_,
+  type: "failure",
+  message: "`linter.stylelint.options` in `sider.yml` is unsupported"
 )
 
 s.add_test(

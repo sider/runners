@@ -1,5 +1,4 @@
 linter:
   rubocop:
     safe: true
-    options:
-      config: my.rubocop.yml
+    config: my.rubocop.yml

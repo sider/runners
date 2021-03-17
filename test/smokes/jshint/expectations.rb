@@ -104,13 +104,7 @@ s.add_test(
       }
     }
   ],
-  analyzer: { name: "JSHint", version: default_version },
-  warnings: [
-    {
-      message: /The `linter.jshint.options` option is deprecated/,
-      file: "sideci.yml"
-    }
-  ]
+  analyzer: { name: "JSHint", version: default_version }
 )
 
 s.add_test(
