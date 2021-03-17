@@ -3,16 +3,17 @@ module Runners
     include Ruby
 
     Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.ruby
+      # @type self: SchemaClass
+      let :config, ruby
 
       let :issue, object(
         severity: string,
       )
     end
 
-    register_config_schema(name: :brakeman, schema: Schema.runner_config)
+    register_config_schema(name: :brakeman, schema: Schema.config)
 
     GEM_NAME = "brakeman".freeze
     CONSTRAINTS = {

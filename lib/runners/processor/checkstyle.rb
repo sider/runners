@@ -3,26 +3,26 @@ module Runners
     include Java
 
     Schema = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
+
       # @type self: SchemaClass
-      let :runner_config, Schema::BaseConfig.java.update_fields { |fields|
-        fields.merge!({
-          config: string?,
-          dir: enum?(string, array(string)),
-          exclude: enum?(
-            string,
-            array(enum(string, object(pattern: string), object(string: string))),
-          ),
-          ignore: array?(string),
-          properties: string?,
-        })
-      }
+      let :config, java(
+        config: string?,
+        dir: target,
+        exclude: enum?(
+          string,
+          array(enum(string, object(pattern: string), object(string: string))),
+        ),
+        ignore: one_or_more_strings?,
+        properties: string?,
+      )
 
       let :issue, object(
         severity: string?,
       )
     end
 
-    register_config_schema(name: :checkstyle, schema: Schema.runner_config)
+    register_config_schema(name: :checkstyle, schema: Schema.config)
 
     DEFAULT_TARGET = ".".freeze
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_recommended_checkstyle.xml").to_path.freeze

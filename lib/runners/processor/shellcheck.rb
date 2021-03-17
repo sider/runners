@@ -1,23 +1,23 @@
 module Runners
   class Processor::ShellCheck < Processor
     Schema = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
+
+      target_element = enum(string, object(shebang: boolean))
+
       # @type self: SchemaClass
+      let :config, base(
+        # Original options
+        target: enum?(target_element, array(target_element)),
 
-      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
-        target_element = enum(string, object(shebang: boolean))
-        fields.merge!(
-          # Original options
-          target: enum?(target_element, array(target_element)),
-
-          # Native options
-          include: enum?(string, array(string)),
-          exclude: enum?(string, array(string)),
-          enable: enum?(string, array(string)),
-          shell: string?,
-          severity: string?,
-          norc: boolean?,
-        )
-      }
+        # Native options
+        include: one_or_more_strings?,
+        exclude: one_or_more_strings?,
+        enable: one_or_more_strings?,
+        shell: string?,
+        severity: string?,
+        norc: boolean?,
+      )
 
       let :issue, object(
         code: integer,
@@ -34,7 +34,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :shellcheck, schema: Schema.runner_config)
+    register_config_schema(name: :shellcheck, schema: Schema.config)
 
     DEFAULT_TARGET = [
       "**/*.{bash,bats,dash,ksh,sh}",

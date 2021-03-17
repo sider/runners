@@ -3,17 +3,17 @@ module Runners
     include Nodejs
 
     Schema = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
+
       # @type self: SchemaClass
 
-      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
-        fields.merge!({
-          dir: string?,
-          config: string?,
-        })
-      }
+      let :config, base(
+        dir: string?,
+        config: string?,
+      )
     end
 
-    register_config_schema(name: :jshint, schema: Schema.runner_config)
+    register_config_schema(name: :jshint, schema: Schema.config)
 
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / 'sider_jshintrc').to_path.freeze
     DEFAULT_IGNORE_FILE = (Pathname(Dir.home) / 'sider_jshintignore').to_path.freeze

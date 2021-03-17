@@ -3,16 +3,17 @@ module Runners
     include CPlusPlus
 
     Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.cplusplus
+      # @type self: SchemaClass
+      let :config, cplusplus
 
       let :issue, object(
         severity: string,
       )
     end
 
-    register_config_schema(name: :clang_tidy, schema: Schema.runner_config)
+    register_config_schema(name: :clang_tidy, schema: Schema.config)
 
     def self.config_example
       <<~'YAML'

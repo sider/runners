@@ -3,22 +3,19 @@ module Runners
     include PHP
 
     Schema = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
+
       # @type self: SchemaClass
-
-      let :target, enum?(string, array(string))
-
-      let :runner_config, Runners::Schema::BaseConfig.base.update_fields { |fields|
-        fields.merge!({
-          version: enum?(string, numeric),
-          target: target,
-          dir: target, # alias for `target`
-          standard: enum?(string, array(string)),
-          extensions: enum?(string, array(string)),
-          encoding: string?,
-          ignore: enum?(string, array(string)),
-          parallel: boolean?,
-        })
-      }
+      let :config, base(
+        version: enum?(string, numeric),
+        target: target,
+        dir: target, # alias for `target`
+        standard: one_or_more_strings?,
+        extensions: one_or_more_strings?,
+        encoding: string?,
+        ignore: one_or_more_strings?,
+        parallel: boolean?,
+      )
 
       let :issue, object(
         type: string,
@@ -27,7 +24,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :code_sniffer, schema: Schema.runner_config)
+    register_config_schema(name: :code_sniffer, schema: Schema.config)
 
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_recommended_code_sniffer.xml").to_path.freeze
 

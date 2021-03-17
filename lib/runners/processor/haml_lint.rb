@@ -4,26 +4,25 @@ module Runners
     include RuboCopUtils
 
     Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.ruby.update_fields { |fields|
-        fields.merge!({
-          target: enum?(string, array(string)),
-          file: string?,
-          include_linter: enum?(string, array(string)),
-          exclude_linter: enum?(string, array(string)),
-          exclude: enum?(string, array(string)),
-          config: string?,
-          parallel: boolean?,
-        })
-      }
+      # @type self: SchemaClass
+      let :config, ruby(
+        target: target,
+        file: target, # deprecated
+        include_linter: one_or_more_strings?,
+        exclude_linter: one_or_more_strings?,
+        exclude: one_or_more_strings?,
+        config: string?,
+        parallel: boolean?,
+      )
 
       let :issue, object(
         severity: string?,
       )
     end
 
-    register_config_schema(name: :haml_lint, schema: Schema.runner_config)
+    register_config_schema(name: :haml_lint, schema: Schema.config)
 
     GEM_NAME = "haml_lint".freeze
     REQUIRED_GEM_NAMES = ["rubocop"].freeze

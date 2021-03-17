@@ -3,15 +3,14 @@ module Runners
     include Nodejs
 
     Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
-        fields.merge!({
-                        config: string?,
-                        tsconfig: string?,
-                        paths: array?(string),
-                      })
-      }
+      # @type self: SchemaClass
+      let :config, npm(
+        config: string?,
+        tsconfig: string?,
+        paths: array?(string),
+      )
 
       let :issue, object(
         id: string,
@@ -19,7 +18,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :tyscan, schema: Schema.runner_config)
+    register_config_schema(name: :tyscan, schema: Schema.config)
 
     CONSTRAINTS = {
       "tyscan" => Gem::Requirement.new(">= 0.2.1", "< 1.0.0").freeze,

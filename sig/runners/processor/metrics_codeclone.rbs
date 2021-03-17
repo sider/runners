@@ -2,6 +2,8 @@ module Runners
   class Processor::MetricsCodeClone < Processor
 
     class SchemaClass < StrongJSON
+      include Schema::ConfigTypes
+
       def issue: () -> StrongJSON::Type::Object[untyped]
     end
     Schema: SchemaClass

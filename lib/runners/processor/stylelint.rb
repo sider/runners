@@ -3,26 +3,25 @@ module Runners
     include Nodejs
 
     Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
-        fields.merge!({
-          config: string?,
-          syntax: string?,
-          'ignore-path': string?,
-          'ignore-disables': boolean?,
-          'report-needless-disables': boolean?,
-          quiet: boolean?,
-          glob: string?,
-        })
-      }
+      # @type self: SchemaClass
+      let :config, npm(
+        config: string?,
+        syntax: string?,
+        'ignore-path': string?,
+        'ignore-disables': boolean?,
+        'report-needless-disables': boolean?,
+        quiet: boolean?,
+        glob: string?,
+      )
 
       let :issue, object(
         severity: string?,
       )
     end
 
-    register_config_schema(name: :stylelint, schema: Schema.runner_config)
+    register_config_schema(name: :stylelint, schema: Schema.config)
 
     CONSTRAINTS = {
       "stylelint" => Gem::Requirement.new(">= 8.3.0", "< 14.0.0").freeze,

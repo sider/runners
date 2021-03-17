@@ -3,13 +3,12 @@ module Runners
     include Ruby
 
     Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.ruby.update_fields { |fields|
-        fields.merge!({
-          config: string?,
-        })
-      }
+      # @type self: SchemaClass
+      let :config, ruby(
+        config: string?,
+      )
 
       let :rule, object(
         id: string,
@@ -19,7 +18,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :querly, schema: Schema.runner_config)
+    register_config_schema(name: :querly, schema: Schema.config)
 
     OPTIONAL_GEMS = [
       GemInstaller::Spec.new("slim"),

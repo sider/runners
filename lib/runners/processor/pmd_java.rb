@@ -3,16 +3,15 @@ module Runners
     include Java
 
     Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.java.update_fields { |fields|
-        fields.merge!({
-          dir: string?,
-          rulesets: enum?(string, array(string)),
-          encoding: string?,
-          min_priority: numeric?,
-        })
-      }
+      # @type self: SchemaClass
+      let :config, java(
+        dir: string?,
+        rulesets: one_or_more_strings?,
+        encoding: string?,
+        min_priority: numeric?,
+      )
 
       let :issue, object(
         ruleset: string,
@@ -20,7 +19,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :pmd_java, schema: Schema.runner_config)
+    register_config_schema(name: :pmd_java, schema: Schema.config)
 
     DEFAULT_RULESET = (Pathname(Dir.home) / "default-ruleset.xml").to_path.freeze
     DEFAULT_DIR = ".".freeze

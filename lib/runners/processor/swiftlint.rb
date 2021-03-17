@@ -3,24 +3,23 @@ module Runners
     include Swift
 
     Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
-        fields.merge!({
-          ignore_warnings: boolean?,
-          path: string?,
-          config: string?,
-          lenient: boolean?,
-          'enable-all-rules': boolean?,
-        })
-      }
+      # @type self: SchemaClass
+      let :config, base(
+        ignore_warnings: boolean?,
+        path: string?,
+        config: string?,
+        lenient: boolean?,
+        'enable-all-rules': boolean?,
+      )
 
       let :issue, object(
         severity: string,
       )
     end
 
-    register_config_schema(name: :swiftlint, schema: Schema.runner_config)
+    register_config_schema(name: :swiftlint, schema: Schema.config)
 
     def self.config_example
       <<~'YAML'

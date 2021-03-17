@@ -1,9 +1,10 @@
 module Runners
   class Processor::FxCop < Processor
     Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.base
+      # @type self: SchemaClass
+      let :config, base
 
       let :issue, object(
         category: string,
@@ -12,7 +13,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :fxcop, schema: Schema.runner_config)
+    register_config_schema(name: :fxcop, schema: Schema.config)
 
     def self.config_example
       <<~'YAML'

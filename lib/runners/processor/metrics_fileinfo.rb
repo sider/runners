@@ -1,8 +1,9 @@
 module Runners
   class Processor::MetricsFileInfo < Processor
     Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+      extend Schema::ConfigTypes
 
+      # @type self: SchemaClass
       let :issue, object(
         lines_of_code: integer?,
         last_committed_at: string

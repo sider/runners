@@ -3,8 +3,9 @@ module Runners
     extend Forwardable
 
     Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+      extend Schema::ConfigTypes
 
+      # @type self: SchemaClass
       let :issue, object(
         clones: integer,
         total_clone_lines: integer,

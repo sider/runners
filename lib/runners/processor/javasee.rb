@@ -3,14 +3,13 @@ module Runners
     include Java
 
     Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.base.update_fields { |hash|
-        hash.merge!({
-          dir: enum?(string, array(string)),
-          config: string?,
-        })
-      }
+      # @type self: SchemaClass
+      let :config, base(
+        dir: target,
+        config: string?,
+      )
 
       let :rule, object(
         id: string,
@@ -19,7 +18,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :javasee, schema: Schema.runner_config)
+    register_config_schema(name: :javasee, schema: Schema.config)
 
     DEFAULT_CONFIG_FILE = "javasee.yml".freeze
 

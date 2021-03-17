@@ -3,8 +3,9 @@ module Runners
     include Python
 
     Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+      extend Schema::ConfigTypes
 
+      # @type self: SchemaClass
       let :issue, object(
         CCN: integer,
       )

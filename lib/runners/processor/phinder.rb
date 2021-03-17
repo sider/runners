@@ -3,14 +3,13 @@ module Runners
     include PHP
 
     Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
-        fields.merge!({
-                        rule: string?,
-                        php: string?,
-                      })
-      }
+      # @type self: SchemaClass
+      let :config, base(
+        rule: string?,
+        php: string?,
+      )
 
       let :issue, object(
         id: string,
@@ -19,7 +18,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :phinder, schema: Schema.runner_config)
+    register_config_schema(name: :phinder, schema: Schema.config)
 
     DEFAULT_RULE_FILE = "phinder.yml".freeze
 

@@ -61,22 +61,34 @@
   diagnostics:
   - range:
       start:
-        line: 135
+        line: 134
         character: 47
       end:
-        line: 135
+        line: 134
         character: 49
     severity: ERROR
     message: Type `(::Gem::Version | nil)` does not have method `>=`
+    code: Ruby::NoMethod
+- file: lib/runners/processor/languagetool.rb
+  diagnostics:
+  - range:
+      start:
+        line: 93
+        character: 64
+      end:
+        line: 93
+        character: 77
+    severity: ERROR
+    message: Type `bot` does not have method `delete_prefix`
     code: Ruby::NoMethod
 - file: lib/runners/processor/misspell.rb
   diagnostics:
   - range:
       start:
-        line: 65
+        line: 64
         character: 51
       end:
-        line: 65
+        line: 64
         character: 55
     severity: ERROR
     message: Type `bot` does not have method `size`
@@ -85,20 +97,20 @@
   diagnostics:
   - range:
       start:
-        line: 102
+        line: 101
         character: 10
       end:
-        line: 102
+        line: 101
         character: 12
     severity: ERROR
     message: Type `(::Gem::Version | nil)` does not have method `>=`
     code: Ruby::NoMethod
   - range:
       start:
-        line: 102
+        line: 101
         character: 47
       end:
-        line: 102
+        line: 101
         character: 48
     severity: ERROR
     message: Type `(::Gem::Version | nil)` does not have method `<`
@@ -107,20 +119,20 @@
   diagnostics:
   - range:
       start:
-        line: 201
+        line: 200
         character: 44
       end:
-        line: 201
+        line: 200
         character: 46
     severity: ERROR
     message: Type `(::Gem::Version | nil)` does not have method `>=`
     code: Ruby::NoMethod
   - range:
       start:
-        line: 206
+        line: 205
         character: 47
       end:
-        line: 206
+        line: 205
         character: 49
     severity: ERROR
     message: Type `(::Gem::Version | nil)` does not have method `>=`
@@ -148,20 +160,20 @@
   diagnostics:
   - range:
       start:
-        line: 80
+        line: 79
         character: 47
       end:
-        line: 80
+        line: 79
         character: 49
     severity: ERROR
     message: Type `(::Gem::Version | nil)` does not have method `>=`
     code: Ruby::NoMethod
   - range:
       start:
-        line: 197
+        line: 196
         character: 53
       end:
-        line: 197
+        line: 196
         character: 55
     severity: ERROR
     message: Type `(::Gem::Version | nil)` does not have method `>=`
