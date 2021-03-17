@@ -77,12 +77,6 @@ s.add_test(
         commit: :_, line_hash: "447fdabd4b419ac0393028c89e4f596d888c3600", original_line: 5, final_line: 5
       }
     }
-  ],
-  warnings: [
-    {
-      message: /The `linter.rails_best_practices.options` option is deprecated/,
-      file: "sideci.yml"
-    }
   ]
 )
 

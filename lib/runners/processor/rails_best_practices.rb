@@ -7,24 +7,14 @@ module Runners
 
       let :runner_config, Schema::BaseConfig.ruby.update_fields { |fields|
         fields.merge!({
-                        vendor: boolean?,
-                        spec: boolean?,
-                        test: boolean?,
-                        features: boolean?,
-                        exclude: string?,
-                        only: string?,
-                        config: string?,
-                        # DO NOT ADD ANY OPTION under `options`.
-                        options: optional(object(
-                                            vendor: boolean?,
-                                            spec: boolean?,
-                                            test: boolean?,
-                                            features: boolean?,
-                                            exclude: string?,
-                                            only: string?,
-                                            config: string?,
-                                          ))
-                      })
+          vendor: boolean?,
+          spec: boolean?,
+          test: boolean?,
+          features: boolean?,
+          exclude: string?,
+          only: string?,
+          config: string?,
+        })
       }
     end
 
@@ -61,8 +51,6 @@ module Runners
     end
 
     def setup
-      add_warning_if_deprecated_options
-
       prepare_config
       install_gems(default_gem_specs(GEM_NAME), optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS) { yield }
     rescue InstallGemsFailure => exn
@@ -78,7 +66,6 @@ module Runners
 
     def option_vendor
       vendor = config_linter[:vendor]
-      vendor = config_linter.dig(:options, :vendor) if vendor.nil?
       if vendor == false
         []
       else
@@ -87,7 +74,7 @@ module Runners
     end
 
     def option_spec
-      spec = config_linter[:spec] || config_linter.dig(:options, :spec)
+      spec = config_linter[:spec]
       spec ? ["--spec"] : []
     end
 

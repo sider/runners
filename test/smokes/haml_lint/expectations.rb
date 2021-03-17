@@ -51,10 +51,6 @@ s.add_test(
   analyzer: { name: "HAML-Lint", version: default_version },
   warnings: [
     {
-      message: /The `linter.haml_lint.options` option is deprecated/,
-      file: "sideci.yml"
-    },
-    {
       message: <<~MSG.strip,
         DEPRECATION WARNING!!!
         The `linter.haml_lint.file` option is deprecated. Use the `linter.haml_lint.target` option instead in your `sideci.yml`.

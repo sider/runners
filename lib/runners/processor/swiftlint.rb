@@ -7,18 +7,12 @@ module Runners
 
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!({
-                        ignore_warnings: boolean?,
-                        path: string?,
-                        config: string?,
-                        lenient: boolean?,
-                        'enable-all-rules': boolean?,
-                        options: object?(
-                          path: string?,
-                          config: string?,
-                          lenient: boolean?,
-                          'enable-all-rules': boolean?
-                        )
-                      })
+          ignore_warnings: boolean?,
+          path: string?,
+          config: string?,
+          lenient: boolean?,
+          'enable-all-rules': boolean?,
+        })
       }
 
       let :issue, object(
@@ -37,11 +31,6 @@ module Runners
         lenient: true
         enable-all-rules: true
       YAML
-    end
-
-    def setup
-      add_warning_if_deprecated_options
-      yield
     end
 
     def analyze(changes)
@@ -88,22 +77,22 @@ module Runners
     end
 
     def cli_path
-      path = config_linter[:path] || config_linter.dig(:options, :path)
+      path = config_linter[:path]
       path ? ["--path", "#{path}"] : []
     end
 
     def cli_config
-      config = config_linter[:config] || config_linter.dig(:options, :config)
+      config = config_linter[:config]
       config ? ["--config", "#{config}"] : []
     end
 
     def cli_lenient
-      lenient = config_linter[:lenient] || config_linter.dig(:options, :lenient)
+      lenient = config_linter[:lenient]
       lenient ? ["--lenient"] : []
     end
 
     def cli_enable_all_rules
-      enable_all_rules = config_linter[:'enable-all-rules'] || config_linter.dig(:options, :'enable-all-rules')
+      enable_all_rules = config_linter[:'enable-all-rules']
       enable_all_rules ? ["--enable-all-rules"] : []
     end
 

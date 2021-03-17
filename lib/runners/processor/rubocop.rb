@@ -8,15 +8,10 @@ module Runners
 
       let :runner_config, Schema::BaseConfig.ruby.update_fields { |fields|
         fields.merge!({
-                        config: string?,
-                        rails: boolean?,
-                        safe: boolean?,
-                        # DO NOT ADD OPTIONS ANY MORE in `options`.
-                        options: optional(object(
-                                            config: string?,
-                                            rails: boolean?
-                                          ))
-                      })
+          config: string?,
+          rails: boolean?,
+          safe: boolean?,
+        })
       }
 
       let :issue, object(
@@ -44,8 +39,6 @@ module Runners
     end
 
     def setup
-      add_warning_if_deprecated_options
-
       default_gems = default_gem_specs(GEM_NAME)
       if !rubocop_config_file && setup_default_rubocop_config
         # NOTE: The latest MeowCop requires usually the latest RuboCop.
@@ -134,7 +127,6 @@ module Runners
 
     def rails_option
       rails = config_linter[:rails]
-      rails = config_linter.dig(:options, :rails) if rails.nil?
       case
       when rails && !rails_cops_removed?
         ['--rails']
@@ -156,7 +148,7 @@ module Runners
     end
 
     def rubocop_config_file
-      config_linter[:config] || config_linter.dig(:options, :config)
+      config_linter[:config]
     end
 
     def rubocop_config_file_option
