@@ -531,3 +531,24 @@ s.add_test(
   issues: [],
   analyzer: { name: "ESLint", version: default_version }
 )
+
+s.add_test(
+  "package_lock_v2",
+  type: "success",
+  issues: [],
+  analyzer: { name: "ESLint", version: "7.22.0" }
+)
+
+s.add_test(
+  "package_lock_v2_mismatch",
+  type: "success",
+  issues: [],
+  analyzer: { name: "ESLint", version: "6.8.0" }
+)
+
+s.add_test(
+  "package_lock_without_package_json",
+  type: "success",
+  issues: [],
+  analyzer: { name: "ESLint", version: "7.22.0" }
+)
