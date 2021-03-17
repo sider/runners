@@ -10,11 +10,11 @@ rules:
   # Sider's recommended ruleset is based on eslint:recommended,
   # and following rules are additionally enabled/disabled.
 
-  # Disabled Variables
+  # Disabled Variables (These rules relate to variable declarations)
   no-undef: off
   no-unused-vars: off
 
-  # Enabled Possible Errors
+  # Enabled Possible Errors (These rules relate to possible syntax or logic errors in JavaScript code)
   no-await-in-loop: error
   no-loss-of-precision: error
   no-promise-executor-return: error
@@ -24,7 +24,7 @@ rules:
   no-useless-backreference: error
   require-atomic-updates: error
 
-  # Enabled Best Practices
+  # Enabled Best Practices (These rules relate to better ways of doing things to help you avoid problems)
   accessor-pairs: error
   array-callback-return: error
   block-scoped-var: error
@@ -77,12 +77,12 @@ rules:
   require-await: error
   vars-on-top: error
 
-  # Enabled Variables
+  # Enabled Variables (These rules relate to variable declarations)
   no-label-var: error
   no-restricted-globals: error
   no-undef-init: error
 
-  # Enabled Stylistic Issues
+  # Enabled Stylistic Issues (These rules relate to style guidelines, and are therefore quite subjective)
   func-name-matching: error
   id-denylist: error
   id-match: error
@@ -96,7 +96,7 @@ rules:
   prefer-exponentiation-operator: error
   prefer-object-spread: error
 
-  # Enabled ECMAScript 6
+  # Enabled ECMAScript 6 (These rules relate to ES6, also known as ES2015)
   arrow-parens: error
   arrow-spacing: error
   generator-star-spacing: error
