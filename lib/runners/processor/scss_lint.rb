@@ -8,10 +8,6 @@ module Runners
       # @type self: SchemaClass
       let :config, base(
         config: string?,
-        # DO NOT ADD OPTIONS ANY MORE in `options`.
-        options: object?(
-          config: string?,
-        )
       )
     end
 
