@@ -54,5 +54,7 @@ module Runners
     def all_npm_deps_statisfied_constraint?: (Hash[String, { name: String, version: String }], constraints) -> bool
 
     def npm_constraint_format: (Gem::Requirement) -> String
+
+    def ensure_same_yarn_lock: [X] () { () -> X } -> X
   end
 end

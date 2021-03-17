@@ -141,6 +141,7 @@ class NodejsTest < Minitest::Test
       ], actual_messages
       assert_empty actual_errors
       assert_equal "5.0.0", processor.analyzer_version
+      assert_equal({ devDependencies: { "eslint" => "5.0.0", "is-string" => "1.0.5" } }.to_json, processor.package_json_path.read)
     end
   end
 
@@ -384,6 +385,7 @@ class NodejsTest < Minitest::Test
       assert_empty processor.warnings
       refute_empty actual_commands
       assert_empty actual_errors
+      assert_equal data("package-lock.json").read, processor.package_lock_json_path.read
     end
   end
 
@@ -438,6 +440,25 @@ class NodejsTest < Minitest::Test
       assert_empty processor.warnings
       refute_empty actual_commands
       assert_empty actual_errors
+    end
+  end
+
+  def test_install_nodejs_deps_with_yarn_lock
+    with_workspace do |workspace|
+      new_processor(workspace: workspace)
+
+      processor.package_json_path.write({ dependencies: { classcat: "^5.0.0" } }.to_json)
+      copy data("yarn.lock"), processor.working_dir.join("yarn.lock")
+      processor.stub :nodejs_analyzer_global_version, "1.0.0" do
+        processor.install_nodejs_deps(constraints: {}, install_option: INSTALL_OPTION_ALL)
+      end
+
+      assert_path_exists processor.working_dir / "node_modules" / "classcat"
+      assert_equal "5.0.0", JSON.parse((processor.working_dir / "node_modules" / "classcat" / "package.json").read)["version"]
+      assert_empty processor.warnings
+      refute_empty actual_commands
+      assert_empty actual_errors
+      assert_equal data("yarn.lock").read, processor.working_dir.join("yarn.lock").read
     end
   end
 

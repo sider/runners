@@ -129,7 +129,9 @@ module Runners
 
       subcommand = package_lock_json_path.exist? ? "ci" : "install"
       begin
-        capture3_with_retry! "npm", subcommand, *cli_options
+        ensure_same_yarn_lock do
+          capture3_with_retry! "npm", subcommand, *cli_options
+        end
       rescue Shell::ExecError
         message = <<~MSG.strip
           `npm #{subcommand}` failed. Please check the log for details.
@@ -184,6 +186,18 @@ module Runners
     def npm_constraint_format(constraint)
       # @see https://docs.npmjs.com/cli/v7/configuring-npm/package-json#dependencies
       constraint.to_s.delete(" ").sub(",", " ")
+    end
+
+    def ensure_same_yarn_lock
+      yarn_lock = current_dir / "yarn.lock"
+      return yield unless yarn_lock.exist?
+
+      backup_content = yarn_lock.read
+      begin
+        yield
+      ensure
+        yarn_lock.write backup_content
+      end
     end
   end
 end
