@@ -8,10 +8,6 @@ module Runners
       let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
         fields.merge!(
           config: string?,
-          # DO NOT ADD OPTIONS ANY MORE in `options`.
-          options: object?(
-            config: string?,
-          )
         )
       }
     end
@@ -57,7 +53,7 @@ module Runners
     private
 
     def scss_lint_config
-      config = config_linter[:config] || config_linter.dig(:options, :config)
+      config = config_linter[:config]
       config ? ["--config=#{config}"] : []
     end
 
