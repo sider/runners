@@ -16,6 +16,7 @@ Misc:
 - Loosen unsatisfied constraints for npm packages [#2171](https://github.com/sider/runners/pull/2171)
 - Improve analysis finish message [#2187](https://github.com/sider/runners/pull/2187)
 - **ESLint** Provide new recommended configuration [#2165](https://github.com/sider/runners/pull/2165)
+- **ESLint** Use `--no-error-on-unmatched-pattern` if possible [#2199](https://github.com/sider/runners/pull/2199)
 - Simplify `sider.yml` schema [#2192](https://github.com/sider/runners/pull/2192)
 - Secure `pip install` [#2194](https://github.com/sider/runners/pull/2194)
 - Introduce common option `target` [#2191](https://github.com/sider/runners/pull/2191)
