@@ -2,17 +2,16 @@ module Runners
   class Processor::Pylint < Processor
     include Python
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
-        fields.merge!({
-          target: enum?(string, array(string)),
-          rcfile: string?,
-          ignore: enum?(string, array(string)),
-          'errors-only': boolean?,
-        })
-      }
+      # @type self: SchemaClass
+      let :config, base(
+        target: target,
+        rcfile: string?,
+        ignore: one_or_more_strings?,
+        'errors-only': boolean?,
+      )
 
       let :issue, object(
         severity: string,
@@ -22,7 +21,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :pylint, schema: Schema.runner_config)
+    register_config_schema(name: :pylint, schema: SCHEMA.config)
 
     DEFAULT_TARGET = ["**/*.{py}"].freeze
 
@@ -108,7 +107,7 @@ module Runners
             module: issue[:module],
             obj: issue[:obj],
           },
-          schema: Schema.issue,
+          schema: SCHEMA.issue,
         )
       end
     end

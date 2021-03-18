@@ -2,18 +2,17 @@ module Runners
   class Processor::Reek < Processor
     include Ruby
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.ruby.update_fields { |f|
-        f.merge!(
-          target: enum?(string, array(string)),
-          config: string?,
-        )
-      }
+      # @type self: SchemaClass
+      let :config, ruby(
+        target: target,
+        config: string?,
+      )
     end
 
-    register_config_schema(name: :reek, schema: Schema.runner_config)
+    register_config_schema(name: :reek, schema: SCHEMA.config)
 
     GEM_NAME = "reek".freeze
     CONSTRAINTS = {

@@ -2,17 +2,17 @@ module Runners
   class Processor::PmdJava < Processor
     include Java
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.java.update_fields { |fields|
-        fields.merge!({
-          dir: string?,
-          rulesets: enum?(string, array(string)),
-          encoding: string?,
-          min_priority: numeric?,
-        })
-      }
+      # @type self: SchemaClass
+      let :config, java(
+        target: string?,
+        dir: string?, # alias for `target`
+        rulesets: one_or_more_strings?,
+        encoding: string?,
+        min_priority: numeric?,
+      )
 
       let :issue, object(
         ruleset: string,
@@ -20,17 +20,17 @@ module Runners
       )
     end
 
-    register_config_schema(name: :pmd_java, schema: Schema.runner_config)
+    register_config_schema(name: :pmd_java, schema: SCHEMA.config)
 
     DEFAULT_RULESET = (Pathname(Dir.home) / "default-ruleset.xml").to_path.freeze
-    DEFAULT_DIR = ".".freeze
+    DEFAULT_TARGET = ".".freeze
 
     def self.config_example
       <<~'YAML'
         root_dir: project/
         jvm_deps:
           - [my.company.com, pmd-ruleset, 1.2.3]
-        dir: src/
+        target: src/
         rulesets:
           - category/java/errorprone.xml
           - your_pmd_custom_rules.xml
@@ -90,7 +90,7 @@ module Runners
         "-no-cache",
         "-format", "xml",
         "-reportfile", report_file,
-        "-dir", (config_linter[:dir] || DEFAULT_DIR),
+        "-dir", (config_linter[:target] || config_linter[:dir] || DEFAULT_TARGET),
         "-rulesets", comma_separated_list(config_linter[:rulesets] || DEFAULT_RULESET),
         *(config_linter[:min_priority].then { |num| num ? ["-minimumpriority", num.to_s] : [] }),
         *(config_linter[:encoding].then { |enc| enc ? ["-encoding", enc] : [] }),
@@ -124,7 +124,7 @@ module Runners
                 ruleset: violation[:ruleset],
                 priority: violation[:priority],
               },
-              schema: Schema.issue,
+              schema: SCHEMA.issue,
             )
           end
         when "error"

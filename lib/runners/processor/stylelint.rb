@@ -2,34 +2,34 @@ module Runners
   class Processor::Stylelint < Processor
     include Nodejs
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
-        fields.merge!({
-          config: string?,
-          syntax: string?,
-          'ignore-path': string?,
-          'ignore-disables': boolean?,
-          'report-needless-disables': boolean?,
-          quiet: boolean?,
-          glob: string?,
-        })
-      }
+      # @type self: SchemaClass
+      let :config, npm(
+        config: string?,
+        syntax: string?,
+        'ignore-path': string?,
+        'ignore-disables': boolean?,
+        'report-needless-disables': boolean?,
+        quiet: boolean?,
+        target: target,
+        glob: target, # alias for `target`
+      )
 
       let :issue, object(
         severity: string?,
       )
     end
 
-    register_config_schema(name: :stylelint, schema: Schema.runner_config)
+    register_config_schema(name: :stylelint, schema: SCHEMA.config)
 
     CONSTRAINTS = {
       "stylelint" => Gem::Requirement.new(">= 8.3.0", "< 14.0.0").freeze,
     }.freeze
 
     DEFAULT_TARGET_FILES = "*.{css,less,sass,scss,sss}".freeze
-    DEFAULT_GLOB = "**/#{DEFAULT_TARGET_FILES}".freeze
+    DEFAULT_TARGET = "**/#{DEFAULT_TARGET_FILES}".freeze
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / 'sider_recommended_config.yaml').to_path.freeze
     DEFAULT_CONFIG_FILE_OLD = (Pathname(Dir.home) / 'sider_recommended_config.old.yaml').to_path.freeze
     DEFAULT_IGNORE_FILE = (Pathname(Dir.home) / 'sider_recommended_stylelintignore').to_path.freeze
@@ -44,7 +44,7 @@ module Runners
         ignore-disables: true
         report-needless-disables: true
         quiet: true
-        glob: app/**/*.scss
+        target: ["app/**/*.scss"]
       YAML
     end
 
@@ -90,7 +90,7 @@ module Runners
         *ignore_disables,
         *report_needless_disables,
         *quiet,
-        glob
+        *glob,
       )
 
       # https://github.com/stylelint/stylelint/blob/master/docs/user-guide/cli.md#exit-codes
@@ -111,7 +111,7 @@ module Runners
     private
 
     def glob
-      config_linter[:glob] || DEFAULT_GLOB
+      Array(config_linter[:target] || config_linter[:glob] || DEFAULT_TARGET)
     end
 
     def stylelint_config
@@ -160,7 +160,7 @@ module Runners
             object: {
               severity: warning[:severity],
             },
-            schema: Schema.issue,
+            schema: SCHEMA.issue,
           )
         end
       end

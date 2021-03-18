@@ -2,16 +2,16 @@ module Runners
   class Processor::Coffeelint < Processor
     include Nodejs
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
+
       # @type self: SchemaClass
-      let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
-        fields.merge!({
-          file: string?,
-        })
-      }
+      let :config, npm(
+        file: string?,
+      )
     end
 
-    register_config_schema(name: :coffeelint, schema: Schema.runner_config)
+    register_config_schema(name: :coffeelint, schema: SCHEMA.config)
 
     CONSTRAINTS = {
       "coffeelint" => Gem::Requirement.new(">= 1.16.0", "< 3.0.0").freeze,

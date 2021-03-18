@@ -2,17 +2,18 @@ module Runners
   class Processor::Brakeman < Processor
     include Ruby
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.ruby
+      # @type self: SchemaClass
+      let :config, ruby
 
       let :issue, object(
         severity: string,
       )
     end
 
-    register_config_schema(name: :brakeman, schema: Schema.runner_config)
+    register_config_schema(name: :brakeman, schema: SCHEMA.config)
 
     GEM_NAME = "brakeman".freeze
     CONSTRAINTS = {
@@ -77,7 +78,7 @@ module Runners
             object: {
               severity: warning[:confidence],
             },
-            schema: Schema.issue,
+            schema: SCHEMA.issue,
           )
         end
 

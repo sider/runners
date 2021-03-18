@@ -6,11 +6,19 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.45.0...HEAD)
 
+Breaking:
+
+- Support npm 7 [#2189](https://github.com/sider/runners/pull/2189)
+- Remove deprecated `linter.{id}.options` [#2190](https://github.com/sider/runners/pull/2190) [#2193](https://github.com/sider/runners/pull/2193)
+
+Misc:
+
 - Loosen unsatisfied constraints for npm packages [#2171](https://github.com/sider/runners/pull/2171)
 - Improve analysis finish message [#2187](https://github.com/sider/runners/pull/2187)
-- Support npm 7 [#2189](https://github.com/sider/runners/pull/2189)
 - **ESLint** Provide new recommended configuration [#2165](https://github.com/sider/runners/pull/2165)
-- Remove deprecated `linter.{id}.options` [#2190](https://github.com/sider/runners/pull/2190)
+- Simplify `sider.yml` schema [#2192](https://github.com/sider/runners/pull/2192)
+- Secure `pip install` [#2194](https://github.com/sider/runners/pull/2194)
+- Introduce common option `target` [#2191](https://github.com/sider/runners/pull/2191)
 
 ## 0.45.0
 

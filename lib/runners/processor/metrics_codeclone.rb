@@ -2,9 +2,10 @@ module Runners
   class Processor::MetricsCodeClone < Processor
     extend Forwardable
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
+      # @type self: SchemaClass
       let :issue, object(
         clones: integer,
         total_clone_lines: integer,
@@ -60,7 +61,7 @@ module Runners
           clones: clones,
           total_clone_lines: sum_of_lines,
         },
-        schema: Schema.issue,
+        schema: SCHEMA.issue,
       )
     end
   end

@@ -2,23 +2,22 @@ module Runners
   class Processor::RailsBestPractices < Processor
     include Ruby
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.ruby.update_fields { |fields|
-        fields.merge!({
-          vendor: boolean?,
-          spec: boolean?,
-          test: boolean?,
-          features: boolean?,
-          exclude: string?,
-          only: string?,
-          config: string?,
-        })
-      }
+      # @type self: SchemaClass
+      let :config, ruby(
+        vendor: boolean?,
+        spec: boolean?,
+        test: boolean?,
+        features: boolean?,
+        exclude: string?,
+        only: string?,
+        config: string?,
+      )
     end
 
-    register_config_schema(name: :rails_best_practices, schema: Schema.runner_config)
+    register_config_schema(name: :rails_best_practices, schema: SCHEMA.config)
 
     OPTIONAL_GEMS = [
       GemInstaller::Spec.new("slim"),

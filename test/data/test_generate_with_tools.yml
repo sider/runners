@@ -18,7 +18,7 @@ linter:
 #     jvm_deps:
 #       - [com.github.sevntu-checkstyle, sevntu-checks, 1.37.1]
 #     config: custom-checkstyle.xml
-#     dir: src/
+#     target: src/
 #     exclude: vendor/
 #     ignore: [warning, info]
 #     properties: custom-checkstyle.properties
@@ -191,7 +191,7 @@ linter:
 #   # JavaSee example. See https://help.sider.review/tools/java/javasee
 #   javasee:
 #     root_dir: project/
-#     dir:
+#     target:
 #       - src/
 #       - test/
 #     config: config/javasee.yml
@@ -199,7 +199,7 @@ linter:
 #   # JSHint example. See https://help.sider.review/tools/javascript/jshint
 #   jshint:
 #     root_dir: project/
-#     dir: src/
+#     target: src/
 #     config: config/.jshintrc.json
 
 #   # ktlint example. See https://help.sider.review/tools/kotlin/ktlint
@@ -250,7 +250,7 @@ linter:
 #   phinder:
 #     root_dir: project/
 #     rule: rules/
-#     php: src/
+#     target: src/
 
 #   # PHPMD example. See https://help.sider.review/tools/php/phpmd
 #   phpmd:
@@ -269,7 +269,7 @@ linter:
 #   pmd_cpd:
 #     root_dir: project/
 #     minimum-tokens: 70
-#     files: src/
+#     target: src/
 #     language: [ecmascript, ruby]
 #     encoding: ISO-8859-1
 #     skip-duplicate-files: true
@@ -287,7 +287,7 @@ linter:
 #     root_dir: project/
 #     jvm_deps:
 #       - [my.company.com, pmd-ruleset, 1.2.3]
-#     dir: src/
+#     target: src/
 #     rulesets:
 #       - category/java/errorprone.xml
 #       - your_pmd_custom_rules.xml
@@ -386,13 +386,13 @@ linter:
 #     ignore-disables: true
 #     report-needless-disables: true
 #     quiet: true
-#     glob: app/**/*.scss
+#     target: ["app/**/*.scss"]
 
 #   # SwiftLint example. See https://help.sider.review/tools/swift/swiftlint
 #   swiftlint:
 #     root_dir: project/
 #     ignore_warnings: true
-#     path: src/
+#     target: [src/]
 #     config: config/.swiftlint.yml
 #     lenient: true
 #     enable-all-rules: true
@@ -403,7 +403,7 @@ linter:
 #     npm_install: false
 #     config: config/tyscan.yml
 #     tsconfig: src/tsconfig.json
-#     paths: [src/]
+#     target: [src/]
 
 # Ignore specific files. Example:
 # ignore:

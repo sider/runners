@@ -1,17 +1,16 @@
 module Runners
   class Processor::Misspell < Processor
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
-        fields.merge!({
-          exclude: array?(string),
-          targets: array?(string),
-          target: enum?(string, array(string)),
-          locale: enum?(literal('US'), literal('UK')),
-          ignore: enum?(string, array(string)),
-        })
-      }
+      # @type self: SchemaClass
+      let :config, base(
+        exclude: one_or_more_strings?,
+        target: target,
+        targets: target, # deprecated
+        locale: enum?(literal('US'), literal('UK')),
+        ignore: one_or_more_strings?,
+      )
 
       let :issue, object(
         correct: string,
@@ -19,7 +18,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :misspell, schema: Schema.runner_config)
+    register_config_schema(name: :misspell, schema: SCHEMA.config)
 
     DEFAULT_TARGET = ".".freeze
 
@@ -67,7 +66,7 @@ module Runners
             id: correct,
             message: message,
             object: { correct: correct, incorrect: incorrect },
-            schema: Schema.issue,
+            schema: SCHEMA.issue,
           )
         end
       end

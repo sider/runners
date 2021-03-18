@@ -3,20 +3,19 @@ module Runners
     include Java
     include Kotlin
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.java.update_fields { |fields|
-        fields.merge!({
-          target: enum?(string, array(string)),
-          ruleset: enum?(string, array(string)),
-          disabled_rules: enum?(string, array(string)),
-          experimental: boolean?,
-        })
-      }
+      # @type self: SchemaClass
+      let :config, java(
+        target: target,
+        ruleset: one_or_more_strings?,
+        disabled_rules: one_or_more_strings?,
+        experimental: boolean?,
+      )
     end
 
-    register_config_schema(name: :ktlint, schema: Schema.runner_config)
+    register_config_schema(name: :ktlint, schema: SCHEMA.config)
 
     def self.config_example
       <<~'YAML'

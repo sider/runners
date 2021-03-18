@@ -2,27 +2,28 @@ module Runners
   class Processor::Checkstyle < Processor
     include Java
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
+
       # @type self: SchemaClass
-      let :runner_config, Schema::BaseConfig.java.update_fields { |fields|
-        fields.merge!({
-          config: string?,
-          dir: enum?(string, array(string)),
-          exclude: enum?(
-            string,
-            array(enum(string, object(pattern: string), object(string: string))),
-          ),
-          ignore: array?(string),
-          properties: string?,
-        })
-      }
+      let :config, java(
+        config: string?,
+        target: target,
+        dir: target, # alias for `target`
+        exclude: enum?(
+          string,
+          array(enum(string, object(pattern: string), object(string: string))),
+        ),
+        ignore: one_or_more_strings?,
+        properties: string?,
+      )
 
       let :issue, object(
         severity: string?,
       )
     end
 
-    register_config_schema(name: :checkstyle, schema: Schema.runner_config)
+    register_config_schema(name: :checkstyle, schema: SCHEMA.config)
 
     DEFAULT_TARGET = ".".freeze
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_recommended_checkstyle.xml").to_path.freeze
@@ -33,7 +34,7 @@ module Runners
         jvm_deps:
           - [com.github.sevntu-checkstyle, sevntu-checks, 1.37.1]
         config: custom-checkstyle.xml
-        dir: src/
+        target: src/
         exclude: vendor/
         ignore: [warning, info]
         properties: custom-checkstyle.properties
@@ -53,7 +54,7 @@ module Runners
     def analyze(changes)
       delete_unchanged_files(changes, only: ["*.java"])
 
-      target = Array(config_linter[:dir] || DEFAULT_TARGET)
+      target = Array(config_linter[:target] || config_linter[:dir] || DEFAULT_TARGET)
       capture3(analyzer_bin, *checkstyle_args, *target)
 
       xml_root =
@@ -121,7 +122,7 @@ module Runners
               message: msg,
               links: build_links(id),
               object: { severity: severity },
-              schema: Schema.issue,
+              schema: SCHEMA.issue,
             )
           when "exception"
             exception = error.text or raise "Required exception: #{error.inspect}"

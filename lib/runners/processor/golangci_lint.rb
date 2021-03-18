@@ -2,44 +2,42 @@ module Runners
   class Processor::GolangCiLint < Processor
     include Go
 
-    Schema = _ =
-      StrongJSON.new do
-        # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-        let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
-          fields.merge!({
-            target: enum?(string, array(string)),
-            config: string?,
-            disable: enum?(string, array(string)),
-            'disable-all': boolean?,
-            enable: enum?(string, array(string)),
-            fast: boolean?,
-            'no-config': boolean?,
-            presets: enum?(string, array(string)),
-            'skip-dirs': enum?(string, array(string)),
-            'skip-dirs-use-default': boolean?,
-            'skip-files': enum?(string, array(string)),
-            tests: boolean?,
-            'uniq-by-line': boolean?
-          })
-        }
+      # @type self: SchemaClass
+      let :config, base(
+        target: target,
+        config: string?,
+        disable: one_or_more_strings?,
+        'disable-all': boolean?,
+        enable: one_or_more_strings?,
+        fast: boolean?,
+        'no-config': boolean?,
+        presets: one_or_more_strings?,
+        'skip-dirs': one_or_more_strings?,
+        'skip-dirs-use-default': boolean?,
+        'skip-files': one_or_more_strings?,
+        tests: boolean?,
+        'uniq-by-line': boolean?
+      )
 
-        # @see https://github.com/golangci/golangci-lint/blob/v1.36.0/pkg/result/issue.go#L27
-        let :issue, object(
-          severity: string,
-          replacement: object?(
-            NeedOnlyDelete: boolean,
-            NewLines: array?(string),
-            Inline: object?(
-              StartCol: integer,
-              Length: integer,
-              NewString: string,
-            ),
+      # @see https://github.com/golangci/golangci-lint/blob/v1.36.0/pkg/result/issue.go#L27
+      let :issue, object(
+        severity: string,
+        replacement: object?(
+          NeedOnlyDelete: boolean,
+          NewLines: array?(string),
+          Inline: object?(
+            StartCol: integer,
+            Length: integer,
+            NewString: string,
           ),
-        )
-      end
+        ),
+      )
+    end
 
-    register_config_schema(name: :golangci_lint, schema: Schema.runner_config)
+    register_config_schema(name: :golangci_lint, schema: SCHEMA.config)
 
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_golangci.yml").to_path.freeze
 
@@ -177,7 +175,7 @@ module Runners
             severity: issue[:Severity],
             replacement: issue[:Replacement],
           },
-          schema: Schema.issue,
+          schema: SCHEMA.issue,
         )
       end
     end

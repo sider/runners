@@ -2,31 +2,31 @@ module Runners
   class Processor::Swiftlint < Processor
     include Swift
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
-        fields.merge!({
-          ignore_warnings: boolean?,
-          path: string?,
-          config: string?,
-          lenient: boolean?,
-          'enable-all-rules': boolean?,
-        })
-      }
+      # @type self: SchemaClass
+      let :config, base(
+        ignore_warnings: boolean?,
+        target: target,
+        path: target, # alias for `target`
+        config: string?,
+        lenient: boolean?,
+        'enable-all-rules': boolean?,
+      )
 
       let :issue, object(
         severity: string,
       )
     end
 
-    register_config_schema(name: :swiftlint, schema: Schema.runner_config)
+    register_config_schema(name: :swiftlint, schema: SCHEMA.config)
 
     def self.config_example
       <<~'YAML'
         root_dir: project/
         ignore_warnings: true
-        path: src/
+        target: [src/]
         config: config/.swiftlint.yml
         lenient: true
         enable-all-rules: true
@@ -46,10 +46,10 @@ module Runners
         'lint',
         '--reporter', 'json',
         '--no-cache',
-        *cli_path,
         *cli_config,
         *cli_lenient,
         *cli_enable_all_rules,
+        *cli_path,
       )
 
       # HACK: SwiftLint sometimes exits with no output, so we need to check also the existence of `*.swift` files.
@@ -77,8 +77,7 @@ module Runners
     end
 
     def cli_path
-      path = config_linter[:path]
-      path ? ["--path", "#{path}"] : []
+      Array(config_linter[:target] || config_linter[:path])
     end
 
     def cli_config
@@ -110,7 +109,7 @@ module Runners
             object: {
               severity: error[:severity],
             },
-            schema: Schema.issue,
+            schema: SCHEMA.issue,
           )
         end
       end

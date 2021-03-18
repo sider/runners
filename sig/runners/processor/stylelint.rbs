@@ -3,21 +3,23 @@ module Runners
     include Nodejs
 
     class SchemaClass < StrongJSON
-      def runner_config: () -> StrongJSON::Type::Object[untyped]
+      include Schema::ConfigTypes
+
+      def config: () -> StrongJSON::Type::Object[untyped]
       def issue: () -> StrongJSON::Type::Object[untyped]
     end
-    Schema: SchemaClass
+    SCHEMA: SchemaClass
 
     CONSTRAINTS: Nodejs::constraints
     DEFAULT_TARGET_FILES: String
-    DEFAULT_GLOB: String
+    DEFAULT_TARGET: String
     DEFAULT_CONFIG_FILE: String
     DEFAULT_CONFIG_FILE_OLD: String
     DEFAULT_IGNORE_FILE: String
 
     private
 
-    def glob: () -> String
+    def glob: () -> Array[String]
 
     def stylelint_config: () -> Array[String]
 

@@ -1,3 +1,4 @@
 linter:
   stylelint:
-    glob: '**/*.css'
+    target: ["**/*.css", "**/*.sass"]
+    glob: '**/*.sass'

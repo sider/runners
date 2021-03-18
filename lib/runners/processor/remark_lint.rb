@@ -2,25 +2,24 @@ module Runners
   class Processor::RemarkLint < Processor
     include Nodejs
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
-        fields.merge!(
-          target: enum?(string, array(string)),
-          ext: string?,
-          "rc-path": string?,
-          "ignore-path": string?,
-          use: enum?(string, array(string)),
-        )
-      }
+      # @type self: SchemaClass
+      let :config, npm(
+        target: target,
+        ext: string?,
+        "rc-path": string?,
+        "ignore-path": string?,
+        use: one_or_more_strings?,
+      )
 
       let :issue, object(
         severity: string,
       )
     end
 
-    register_config_schema(name: :remark_lint, schema: Schema.runner_config)
+    register_config_schema(name: :remark_lint, schema: SCHEMA.config)
 
     CONSTRAINTS = {
       "remark-cli" => Gem::Requirement.new(">= 7.0.0", "< 10.0.0").freeze,
@@ -165,7 +164,7 @@ module Runners
               object: {
                 severity: severity,
               },
-              schema: Schema.issue,
+              schema: SCHEMA.issue,
             )
           end
         end
