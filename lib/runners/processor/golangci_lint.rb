@@ -7,7 +7,6 @@ module Runners
 
       # @type self: SchemaClass
       let :config, base(
-        target: target,
         config: string?,
         disable: one_or_more_strings?,
         'disable-all': boolean?,

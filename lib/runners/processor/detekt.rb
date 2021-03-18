@@ -14,7 +14,6 @@ module Runners
         "disable-default-rulesets": boolean?,
         excludes: one_or_more_strings?,
         includes: one_or_more_strings?,
-        target: target,
         input: target, # alias for `target`
         parallel: boolean?,
       )
@@ -29,6 +28,9 @@ module Runners
     def self.config_example
       <<~'YAML'
         root_dir: project/
+        target:
+          - src/
+          - test/
         jvm_deps:
           - [com.example, detekt-rules, 1.0.0]
         baseline: config/detekt-baseline.xml
@@ -41,9 +43,6 @@ module Runners
           - "**/vendor/**"
         includes:
           - "**/important/**"
-        target:
-          - src/
-          - test/
         parallel: true
       YAML
     end

@@ -7,7 +7,6 @@ module Runners
 
       # @type self: SchemaClass
       let :config, base(
-        target: target,
         extensions: string?,
         headers: string?,
         filter: string?,

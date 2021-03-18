@@ -14,7 +14,6 @@ module Runners
 
       let :config, ruby(
         config: string?,
-        target: target,
       )
     end
 
@@ -31,10 +30,10 @@ module Runners
     def self.config_example
       <<~'YAML'
         root_dir: project/
-        config: config/goodcheck.yml
         target:
           - src/
           - test/
+        config: config/goodcheck.yml
       YAML
     end
 

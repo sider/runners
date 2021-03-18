@@ -11,7 +11,6 @@ module Runners
 
       # @type self: SchemaClass
       let :config, cplusplus(
-        target: one_or_more_strings?,
         ignore: one_or_more_strings?,
         addon: one_or_more_strings?,
         enable: string?,
@@ -39,9 +38,9 @@ module Runners
     def self.config_example
       <<~'YAML'
         root_dir: project/
+        target: src/
         include-path:
           - include/
-        target: src/
         ignore: vendor/
         enable: all
         std: c99

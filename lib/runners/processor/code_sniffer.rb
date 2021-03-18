@@ -8,7 +8,6 @@ module Runners
       # @type self: SchemaClass
       let :config, base(
         version: enum?(string, numeric),
-        target: target,
         dir: target, # alias for `target`
         standard: one_or_more_strings?,
         extensions: one_or_more_strings?,

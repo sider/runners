@@ -7,6 +7,7 @@ module Runners
 
       # @type self: SchemaClass
       let :config, npm(
+        target: false,
         file: string?,
       )
     end

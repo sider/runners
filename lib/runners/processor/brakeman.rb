@@ -6,7 +6,7 @@ module Runners
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
-      let :config, ruby
+      let :config, ruby(target: false)
 
       let :issue, object(
         severity: string,

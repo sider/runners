@@ -8,7 +8,6 @@ module Runners
       # @type self: SchemaClass
       let :config, java(
         config: string?,
-        target: target,
         dir: target, # alias for `target`
         exclude: enum?(
           string,
@@ -31,10 +30,10 @@ module Runners
     def self.config_example
       <<~'YAML'
         root_dir: project/
+        target: src/
         jvm_deps:
           - [com.github.sevntu-checkstyle, sevntu-checks, 1.37.1]
         config: custom-checkstyle.xml
-        target: src/
         exclude: vendor/
         ignore: [warning, info]
         properties: custom-checkstyle.properties

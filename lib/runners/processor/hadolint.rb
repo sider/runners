@@ -5,7 +5,6 @@ module Runners
 
       # @type self: SchemaClass
       let :config, base(
-        target: target,
         ignore: one_or_more_strings?,
         'trusted-registry': one_or_more_strings?,
         config: string?,

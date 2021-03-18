@@ -7,7 +7,6 @@ module Runners
 
       # @type self: SchemaClass
       let :config, npm(
-        target: target,
         dir: target, # deprecated
         ext: string?,
         config: string?,
@@ -38,10 +37,10 @@ module Runners
     def self.config_example
       <<~'YAML'
         root_dir: project/
-        npm_install: false
         target:
           - src/
           - lib/
+        npm_install: false
         ext: ".js,.jsx"
         config: config/.eslintrc.js
         ignore-path: config/.eslintignore

@@ -12,7 +12,17 @@ module Runners
       end
 
       def base(**fields)
-        object(root_dir: string?, **fields)
+        f = { root_dir: string? }
+
+        target_value = fields[:target]
+        case target_value
+        when nil
+          fields[:target] = target # default
+        when false
+          fields.delete(:target)
+        end
+
+        object(f.merge!(fields))
       end
 
       def ruby(**fields)
