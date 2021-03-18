@@ -46,34 +46,43 @@ module Runners
     end
 
     # Install Node.js dependencies by using given parameters.
-    def install_nodejs_deps(constraints:, install_option: config_linter[:npm_install])
-      return if install_option == INSTALL_OPTION_NONE
+    def install_nodejs_deps(constraints:, dependencies: config_linter[:dependencies], install_option: config_linter[:npm_install])
+      # @type var dependencies: Array[String | Hash[Symbol, String]]
+      dependencies = Array(dependencies)
 
-      unless package_json_path.exist?
+      if !dependencies.empty?
         if install_option
+          trace_writer.message "`#{config_field_path(:npm_install)}` in your `#{config.path_name}` is ignored."
+        end
+
+        deps = dependencies.map { |dep| dep.is_a?(Hash) ? dep.values.join("@") : dep }
+        npm_install(*deps)
+      else
+        flags = []
+        case install_option
+        when INSTALL_OPTION_NONE
+          return # noop
+        when INSTALL_OPTION_PRODUCTION
+          flags << "--only=production"
+        when INSTALL_OPTION_DEVELOPMENT
           add_warning <<~MSG, file: PACKAGE_JSON
-            The `npm_install` option is specified in your `#{config.path_name}`, but a `#{PACKAGE_JSON}` file is not found in your repository.
-            In this case, any npm packages are not installed.
+            `#{INSTALL_OPTION_DEVELOPMENT}` of `#{config_field_path(:npm_install)}` is deprecated. It falls back to `#{INSTALL_OPTION_ALL}` instead.
           MSG
         end
 
-        return # not install
+        if package_json_path.exist?
+          npm_install subcommand: (package_lock_json_path.exist? ? "ci" : "install"), flags: flags
+        elsif install_option
+          add_warning <<~MSG, file: PACKAGE_JSON
+            Although `#{config_field_path(:npm_install)}` is enabled in your `#{config.path_name}`, `#{PACKAGE_JSON}` is missing in your repository.
+          MSG
+          return # noop
+        else
+          return # noop
+        end
       end
 
-      trace_writer.message "Installing npm packages..."
-
-      cli_flags = []
-      case install_option
-      when INSTALL_OPTION_PRODUCTION
-        cli_flags << "--only=production"
-      when INSTALL_OPTION_DEVELOPMENT
-        add_warning <<~MSG, file: PACKAGE_JSON
-          `npm_install: #{INSTALL_OPTION_DEVELOPMENT}` has been deprecated and falls back to `npm_install: #{INSTALL_OPTION_ALL}`.
-        MSG
-      end
-      npm_install subcommand: (package_lock_json_path.exist? ? "ci" : "install"), flags: cli_flags
-
-      installed_deps = list_installed_npm_deps_with(names: constraints.keys)
+      installed_deps = list_installed_npm_deps_with names: constraints.keys
 
       case
       when !all_npm_deps_statisfied_constraint?(installed_deps, constraints)
@@ -111,7 +120,7 @@ module Runners
 
     # @see https://docs.npmjs.com/cli/v7/commands/npm-install
     # @see https://docs.npmjs.com/cli/v7/commands/npm-ci
-    def npm_install(subcommand: "install", flags: [])
+    def npm_install(*packages, subcommand: "install", flags: [])
       flags = %w[
         --ignore-scripts
         --no-engine-strict
@@ -119,14 +128,20 @@ module Runners
         --no-save
       ] + flags
 
+      trace_writer.message "Installing npm dependencies..."
+
       begin
         ensure_same_yarn_lock do
-          capture3_with_retry! "npm", subcommand, *flags
+          capture3_with_retry! "npm", subcommand, *flags, *packages
         end
       rescue Shell::ExecError
         message = <<~MSG.strip
-          `npm #{subcommand}` failed. Please check the log for details.
-          If you want to explicitly disable the installation, please set `npm_install: #{INSTALL_OPTION_NONE}` in your `#{config.path_name}`.
+          `npm #{subcommand}` failed. If you want to avoid this installation, try one of the following in your `#{config.path_name}`:
+
+          - Set `#{INSTALL_OPTION_NONE}` to `#{config_field_path(:npm_install)}`
+          - Set necessary packages to `#{config_field_path(:dependencies)}`
+
+          See also <https://help.sider.review/getting-started/custom-configuration>
         MSG
         trace_writer.error message
         raise NpmInstallFailed, message

@@ -1,0 +1,4 @@
+linter:
+  eslint:
+    dependencies:
+      - eslint-foo-bar-baz

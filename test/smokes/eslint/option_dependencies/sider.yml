@@ -1,0 +1,7 @@
+linter:
+  eslint:
+    dependencies:
+      - eslint@6
+      - eslint-config-babel
+      - { name: "eslint-plugin-ban", version: "^1.4.0" }
+    npm_install: true

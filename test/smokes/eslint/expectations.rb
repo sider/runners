@@ -548,3 +548,25 @@ s.add_test(
   issues: [],
   analyzer: { name: "ESLint", version: "7.22.0" }
 )
+
+s.add_test(
+  "option_dependencies",
+  type: "success",
+  issues: [],
+  analyzer: { name: "ESLint", version: "6.8.0" }
+)
+
+s.add_test(
+  "option_dependencies_missing",
+  type: "failure",
+  message: /`npm install` failed. If you want to avoid this installation, try one of the following in your `sider.yml`/,
+  analyzer: :_
+)
+
+s.add_test(
+  "option_dependencies_outdated",
+  type: "success",
+  issues: [],
+  analyzer: { name: "ESLint", version: default_version },
+  warnings: [{ message: "Installed `eslint@4.19.1` does not satisfy our constraint `>=5.0.0 <8.0.0`. Please update it as possible.", file: "package.json" }]
+)

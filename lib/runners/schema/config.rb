@@ -41,8 +41,14 @@ module Runners
       end
 
       def npm(**fields)
-        npm_install = enum(boolean, literal('development'), literal('production'))
-        base(npm_install: optional(npm_install), **fields)
+        base(
+          npm_install: enum?(boolean, literal('development'), literal('production')),
+          dependencies: array?(enum(
+            string,
+            object(name: string, version: string),
+          )),
+          **fields,
+        )
       end
 
       def java(**fields)

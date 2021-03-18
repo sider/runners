@@ -14,13 +14,9 @@ class NodejsTest < Minitest::Test
     @processor_class ||= Class.new(Runners::Processor) do
       include Runners::Nodejs
 
-      def analyzer_bin
-        "eslint"
-      end
-
-      def analyzer_name
-        "ESLint"
-      end
+      def analyzer_id; "eslint"; end
+      def analyzer_bin; "eslint"; end
+      def analyzer_name; "ESLint"; end
     end
   end
 
@@ -136,7 +132,7 @@ class NodejsTest < Minitest::Test
       assert_empty processor.warnings
       refute_empty actual_commands
       assert_equal [
-        "Installing npm packages...",
+        "Installing npm dependencies...",
         "`node_modules/.bin/eslint` was successfully installed with the version `5.0.0`.",
       ], actual_messages
       assert_empty actual_errors
@@ -156,8 +152,7 @@ class NodejsTest < Minitest::Test
       end
 
       assert_warnings [{ message: <<~MSG.strip, file: "package.json" }]
-        The `npm_install` option is specified in your `sider.yml`, but a `package.json` file is not found in your repository.
-        In this case, any npm packages are not installed.
+        Although `linter.eslint.npm_install` is enabled in your `sider.yml`, `package.json` is missing in your repository.
       MSG
       assert_empty actual_commands
       assert_empty actual_messages
@@ -364,7 +359,7 @@ class NodejsTest < Minitest::Test
 
       assert_path_exists processor.working_dir / "node_modules" / "classcat"
       assert_path_exists processor.working_dir / "node_modules" / "is-string"
-      assert_warnings [{ message: "`npm_install: development` has been deprecated and falls back to `npm_install: true`.", file: "package.json" }]
+      assert_warnings [{ message: "`development` of `linter.eslint.npm_install` is deprecated. It falls back to `true` instead.", file: "package.json" }]
       refute_empty actual_commands
       assert_empty actual_errors
     end
@@ -419,7 +414,7 @@ class NodejsTest < Minitest::Test
 
       assert_path_exists processor.working_dir / "node_modules" / "typescript"
       assert_match %r{^3\.\d+\.\d+$}, JSON.parse((processor.working_dir / "node_modules" / "typescript" / "package.json").read)["version"]
-      assert_warnings [{ message: "`npm_install: development` has been deprecated and falls back to `npm_install: true`.", file: "package.json" }]
+      assert_warnings [{ message: "`development` of `linter.eslint.npm_install` is deprecated. It falls back to `true` instead.", file: "package.json" }]
       refute_empty actual_commands
       assert_empty actual_errors
     end
@@ -475,12 +470,40 @@ class NodejsTest < Minitest::Test
       end
 
       expected_error_message = <<~MSG.strip
-        `npm install` failed. Please check the log for details.
-        If you want to explicitly disable the installation, please set `npm_install: false` in your `sider.yml`.
+        `npm install` failed. If you want to avoid this installation, try one of the following in your `sider.yml`:
+
+        - Set `false` to `linter.eslint.npm_install`
+        - Set necessary packages to `linter.eslint.dependencies`
+
+        See also <https://help.sider.review/getting-started/custom-configuration>
       MSG
       assert_equal [expected_error_message], actual_errors
       assert_equal expected_error_message, error.message
       refute_path_exists processor.working_dir / "node_modules"
+    end
+  end
+
+  def test_install_nodejs_deps_with_dependencies
+    with_workspace do |workspace|
+      new_processor(workspace: workspace)
+
+      processor.package_json_path.write({ dependencies: { "is-string" => "1.0.0" } }.to_json)
+      processor.stub :nodejs_analyzer_global_version, "1.0.0" do
+        processor.install_nodejs_deps(constraints: {}, dependencies: ["classcat", "is-string@1.0.5", { name: "is-nan-x", version: "2.1.0" }],
+                                      install_option: INSTALL_OPTION_ALL)
+      end
+
+      assert_path_exists processor.working_dir / "node_modules" / "classcat"
+      assert_match %r{^\d+\.\d+\.\d+$}, JSON.parse((processor.working_dir / "node_modules" / "classcat" / "package.json").read)["version"]
+      assert_path_exists processor.working_dir / "node_modules" / "is-string"
+      assert_equal "1.0.5", JSON.parse((processor.working_dir / "node_modules" / "is-string" / "package.json").read)["version"]
+      assert_path_exists processor.working_dir / "node_modules" / "is-nan-x"
+      assert_equal "2.1.0", JSON.parse((processor.working_dir / "node_modules" / "is-nan-x" / "package.json").read)["version"]
+      assert_empty processor.warnings
+      refute_empty actual_commands
+      assert_empty actual_errors
+      assert_equal({ dependencies: { "is-string" => "1.0.0" } }.to_json, processor.package_json_path.read)
+      refute_path_exists processor.package_lock_json_path
     end
   end
 end

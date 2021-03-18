@@ -1,0 +1,5 @@
+extends:
+  - babel
+
+plugins:
+  - ban
