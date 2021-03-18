@@ -1,4 +1,4 @@
 linter:
   jshint:
-    target: src
+    target: [src, test]
     dir: foo
