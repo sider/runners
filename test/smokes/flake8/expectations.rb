@@ -158,7 +158,7 @@ s.add_test(
       path: "foo.py",
       location: { start_line: 2, start_column: 1 },
       id: "W191",
-      message: 'indentation contains tabs',
+      message: "indentation contains tabs",
       links: [],
       object: nil,
       git_blame_info: {
@@ -197,6 +197,13 @@ s.add_test(
     }
   ],
   analyzer: { name: "Flake8", version: default_version }
+)
+
+s.add_test(
+  "with_plugins_failed",
+  type: "failure",
+  message: "Install failed: mysqlclient==2.0.0, flake8-builtins==1.4.1",
+  analyzer: :_
 )
 
 s.add_test(
