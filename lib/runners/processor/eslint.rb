@@ -155,7 +155,7 @@ module Runners
     def run_analyzer(config: nil)
       # NOTE: eslint exit with status code 1 when some issues are found.
       #       We use `capture3` instead of `capture3!`
-      #
+
       # NOTE: ESLint v5 returns 2 as exit status when fatal error is occurred.
       #       However, this runner doesn't depends on this behavior because it also supports ESLint v4
       #
@@ -165,11 +165,18 @@ module Runners
       #
       # @see https://github.com/typescript-eslint/typescript-eslint/blob/v2.6.0/packages/typescript-estree/src/parser.ts#L237-L247
 
+      # NOTE: The `--no-error-on-unpatched-pattern` option has been available since v6.8.0
+      #
+      # @see https://github.com/eslint/eslint/blob/v6.8.0/CHANGELOG.md
+      # @see https://eslint.org/blog/2019/12/eslint-v6.8.0-released
+      no_error_unmatched = Gem::Version.new(analyzer_version) >= Gem::Version.create("6.8.0") ? ["--no-error-on-unmatched-pattern"] : []
+
       _stdout, stderr, status = capture3(
         nodejs_analyzer_bin,
         "--format", CUSTOM_FORMATTER,
         "--output-file", report_file,
         "--no-color",
+        *no_error_unmatched,
         *(config ? ["--config", config] : []),
         *ext,
         *ignore_path,

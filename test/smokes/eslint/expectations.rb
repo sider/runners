@@ -100,6 +100,8 @@ s.add_test(
 
 s.add_test("no_files", type: "success", issues: [], analyzer: { name: "ESLint", version: default_version })
 
+s.add_test("no_files_with_option_target", type: "success", issues: [], analyzer: { name: "ESLint", version: default_version })
+
 s.add_test(
   "pinned_eslint5",
   type: "success",

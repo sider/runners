@@ -1,0 +1,3 @@
+linter:
+  eslint:
+    target: "**/*.js"
