@@ -11,7 +11,7 @@ rules:
   # and following rules are additionally enabled/disabled.
   # See https://eslint.org/docs/rules/ for more details.
 
-  # Disabled [Variables]
+  # Disabled [Variables] (Overriding rules included in `eslint:recommended`)
   no-undef: off
   no-unused-vars: off
 
