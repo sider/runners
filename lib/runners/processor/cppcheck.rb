@@ -11,7 +11,7 @@ module Runners
 
       # @type self: SchemaClass
       let :config, cplusplus(
-        target: one_or_more_strings?,
+        target: target,
         ignore: one_or_more_strings?,
         addon: one_or_more_strings?,
         enable: string?,
