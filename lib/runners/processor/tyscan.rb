@@ -2,7 +2,7 @@ module Runners
   class Processor::Tyscan < Processor
     include Nodejs
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -18,7 +18,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :tyscan, schema: Schema.config)
+    register_config_schema(name: :tyscan, schema: SCHEMA.config)
 
     CONSTRAINTS = {
       "tyscan" => Gem::Requirement.new(">= 0.2.1", "< 1.0.0").freeze,
@@ -101,7 +101,7 @@ module Runners
               id: match[:rule][:id],
               message: match[:rule][:message],
             },
-            schema: Schema.issue,
+            schema: SCHEMA.issue,
           )
         end
       end

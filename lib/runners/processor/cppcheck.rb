@@ -6,7 +6,7 @@ module Runners
 
     class NoTargetFiles < SystemError; end
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -31,7 +31,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :cppcheck, schema: Schema.config)
+    register_config_schema(name: :cppcheck, schema: SCHEMA.config)
 
     DEFAULT_TARGET = ".".freeze
     DEFAULT_IGNORE = [].freeze
@@ -186,7 +186,7 @@ module Runners
               cwe: err[:cwe],
               location_info: loc[:info] != msg ? loc[:info] : nil,
             },
-            schema: Schema.issue,
+            schema: SCHEMA.issue,
           )
         end
       end

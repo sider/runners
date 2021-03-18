@@ -2,7 +2,7 @@ module Runners
   class Processor::Flake8 < Processor
     include Python
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -14,7 +14,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :flake8, schema: Schema.config)
+    register_config_schema(name: :flake8, schema: SCHEMA.config)
 
     DEFAULT_TARGET = ".".freeze
     DEFAULT_CONFIG_PATH = (Pathname(Dir.home) / '.config' / 'flake8').to_path.freeze

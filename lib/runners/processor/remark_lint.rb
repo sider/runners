@@ -2,7 +2,7 @@ module Runners
   class Processor::RemarkLint < Processor
     include Nodejs
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -19,7 +19,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :remark_lint, schema: Schema.config)
+    register_config_schema(name: :remark_lint, schema: SCHEMA.config)
 
     CONSTRAINTS = {
       "remark-cli" => Gem::Requirement.new(">= 7.0.0", "< 10.0.0").freeze,
@@ -164,7 +164,7 @@ module Runners
               object: {
                 severity: severity,
               },
-              schema: Schema.issue,
+              schema: SCHEMA.issue,
             )
           end
         end

@@ -2,7 +2,7 @@ module Runners
   class Processor::GolangCiLint < Processor
     include Go
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -37,7 +37,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :golangci_lint, schema: Schema.config)
+    register_config_schema(name: :golangci_lint, schema: SCHEMA.config)
 
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_golangci.yml").to_path.freeze
 
@@ -175,7 +175,7 @@ module Runners
             severity: issue[:Severity],
             replacement: issue[:Replacement],
           },
-          schema: Schema.issue,
+          schema: SCHEMA.issue,
         )
       end
     end

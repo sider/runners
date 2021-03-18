@@ -2,7 +2,7 @@ module Runners
   class Processor::PmdCpd < Processor
     include Java
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -68,7 +68,7 @@ module Runners
     DEFAULT_FILES = ".".freeze
     DEFAULT_LANGUAGE = ["cpp", "cs", "ecmascript", "go", "java", "kotlin", "php", "python", "ruby", "swift"].freeze
 
-    register_config_schema(name: :pmd_cpd, schema: Schema.config)
+    register_config_schema(name: :pmd_cpd, schema: SCHEMA.config)
 
     def self.config_example
       <<~'YAML'
@@ -132,7 +132,7 @@ module Runners
             location: file[:location],
             message: "Code duplications found (#{files.length} occurrences).",
             object: create_issue_object(elem_dupli, files),
-            schema: Schema.issue,
+            schema: SCHEMA.issue,
           )
         end
       end

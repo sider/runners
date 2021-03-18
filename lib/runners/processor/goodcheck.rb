@@ -2,7 +2,7 @@ module Runners
   class Processor::Goodcheck < Processor
     include Ruby
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -18,7 +18,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :goodcheck, schema: Schema.config)
+    register_config_schema(name: :goodcheck, schema: SCHEMA.config)
 
     GEM_NAME = "goodcheck".freeze
     CONSTRAINTS = {
@@ -106,7 +106,7 @@ module Runners
             id: id,
             message: hash[:message],
             object: object,
-            schema: Schema.rule
+            schema: SCHEMA.rule
           )
 
           result.add_issue issue

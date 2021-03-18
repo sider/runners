@@ -2,7 +2,7 @@ module Runners
   class Processor::Stylelint < Processor
     include Nodejs
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -21,7 +21,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :stylelint, schema: Schema.config)
+    register_config_schema(name: :stylelint, schema: SCHEMA.config)
 
     CONSTRAINTS = {
       "stylelint" => Gem::Requirement.new(">= 8.3.0", "< 14.0.0").freeze,
@@ -159,7 +159,7 @@ module Runners
             object: {
               severity: warning[:severity],
             },
-            schema: Schema.issue,
+            schema: SCHEMA.issue,
           )
         end
       end

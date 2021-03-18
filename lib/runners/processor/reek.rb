@@ -2,7 +2,7 @@ module Runners
   class Processor::Reek < Processor
     include Ruby
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -12,7 +12,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :reek, schema: Schema.config)
+    register_config_schema(name: :reek, schema: SCHEMA.config)
 
     GEM_NAME = "reek".freeze
     CONSTRAINTS = {

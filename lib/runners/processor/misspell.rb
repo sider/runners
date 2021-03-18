@@ -1,6 +1,6 @@
 module Runners
   class Processor::Misspell < Processor
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -18,7 +18,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :misspell, schema: Schema.config)
+    register_config_schema(name: :misspell, schema: SCHEMA.config)
 
     DEFAULT_TARGET = ".".freeze
 
@@ -66,7 +66,7 @@ module Runners
             id: correct,
             message: message,
             object: { correct: correct, incorrect: incorrect },
-            schema: Schema.issue,
+            schema: SCHEMA.issue,
           )
         end
       end

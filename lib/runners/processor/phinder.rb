@@ -2,7 +2,7 @@ module Runners
   class Processor::Phinder < Processor
     include PHP
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -18,7 +18,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :phinder, schema: Schema.config)
+    register_config_schema(name: :phinder, schema: SCHEMA.config)
 
     DEFAULT_RULE_FILE = "phinder.yml".freeze
 
@@ -95,7 +95,7 @@ module Runners
                 message: issue[:rule][:message],
                 justifications: Array(issue[:justifications]),
               },
-              schema: Schema.issue,
+              schema: SCHEMA.issue,
             )
           end
         end

@@ -2,7 +2,7 @@ module Runners
   class Processor::Checkstyle < Processor
     include Java
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -22,7 +22,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :checkstyle, schema: Schema.config)
+    register_config_schema(name: :checkstyle, schema: SCHEMA.config)
 
     DEFAULT_TARGET = ".".freeze
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_recommended_checkstyle.xml").to_path.freeze
@@ -121,7 +121,7 @@ module Runners
               message: msg,
               links: build_links(id),
               object: { severity: severity },
-              schema: Schema.issue,
+              schema: SCHEMA.issue,
             )
           when "exception"
             exception = error.text or raise "Required exception: #{error.inspect}"

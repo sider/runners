@@ -3,7 +3,7 @@ module Runners
     include Ruby
     include RuboCopUtils
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -17,7 +17,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :slim_lint, schema: Schema.config)
+    register_config_schema(name: :slim_lint, schema: SCHEMA.config)
 
     GEM_NAME = "slim_lint".freeze
     REQUIRED_GEM_NAMES = ["rubocop"].freeze
@@ -119,7 +119,7 @@ module Runners
           object: {
             severity: severities.fetch(severity),
           },
-          schema: Schema.issue,
+          schema: SCHEMA.issue,
         )
       end
     end

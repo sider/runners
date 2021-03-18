@@ -1,6 +1,6 @@
 module Runners
   class Processor::Hadolint < Processor
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -16,7 +16,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :hadolint, schema: Schema.config)
+    register_config_schema(name: :hadolint, schema: SCHEMA.config)
 
     DEFAULT_TARGET = "**/Dockerfile{,.*}".freeze
     DEFAULT_TARGET_EXCLUDED = "*.{erb,txt}".freeze # Exclude templates
@@ -101,7 +101,7 @@ module Runners
           object: {
             severity: file[:level],
           },
-          schema: Schema.issue,
+          schema: SCHEMA.issue,
           links: link_to_wiki(id),
         )
       end

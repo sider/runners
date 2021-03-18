@@ -2,7 +2,7 @@ module Runners
   class Processor::LanguageTool < Processor
     include Java
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -27,7 +27,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :languagetool, schema: Schema.config)
+    register_config_schema(name: :languagetool, schema: SCHEMA.config)
 
     DEFAULT_TARGET = ".".freeze
     DEFAULT_EXT = ".txt".freeze
@@ -185,7 +185,7 @@ module Runners
                 category: match.dig(:rule, :category, :id),
                 replacements: match[:replacements]&.map { |r| r[:value] },
               },
-              schema: Schema.issue,
+              schema: SCHEMA.issue,
             )
           end
         end

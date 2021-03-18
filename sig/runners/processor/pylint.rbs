@@ -8,7 +8,7 @@ module Runners
       def config: () -> StrongJSON::Type::Object[untyped]
       def issue: () -> StrongJSON::Type::Object[untyped]
     end
-    Schema: SchemaClass
+    SCHEMA: SchemaClass
 
     DEFAULT_TARGET: Array[String]
 

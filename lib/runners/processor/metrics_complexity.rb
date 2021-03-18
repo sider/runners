@@ -2,7 +2,7 @@ module Runners
   class Processor::MetricsComplexity < Processor
     include Python
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -51,7 +51,7 @@ module Runners
           object: {
             CCN: sum_of_CCN,
             },
-          schema: Schema.issue,
+          schema: SCHEMA.issue,
           )
       end
 

@@ -3,7 +3,7 @@ module Runners
     include Java
     include Kotlin
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -24,7 +24,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :detekt, schema: Schema.config)
+    register_config_schema(name: :detekt, schema: SCHEMA.config)
 
     def self.config_example
       <<~'YAML'
@@ -107,7 +107,7 @@ module Runners
               id: id,
               message: message,
               object: { severity: error[:severity] },
-              schema: Schema.issue
+              schema: SCHEMA.issue
             )
           else
             warning = error.text or raise "Required text: #{error.inspect}"

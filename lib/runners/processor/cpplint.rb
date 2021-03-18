@@ -2,7 +2,7 @@ module Runners
   class Processor::Cpplint < Processor
     include RecommendedConfig
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -20,7 +20,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :cpplint, schema: Schema.config)
+    register_config_schema(name: :cpplint, schema: SCHEMA.config)
 
     DEFAULT_TARGET = ".".freeze
     CONFIG_FILE_NAME = "CPPLINT.cfg".freeze
@@ -110,7 +110,7 @@ module Runners
               object: {
                 confidence: confidence,
               },
-              schema: Schema.issue,
+              schema: SCHEMA.issue,
             )
           end
         end

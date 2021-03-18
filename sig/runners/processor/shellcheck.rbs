@@ -6,7 +6,7 @@ module Runners
       def config: () -> StrongJSON::Type::Object[untyped]
       def issue: () -> StrongJSON::Type::Object[untyped]
     end
-    Schema: SchemaClass
+    SCHEMA: SchemaClass
 
     type target = String | Hash[Symbol, bool]
 

@@ -2,7 +2,7 @@ module Runners
   class Processor::Jshint < Processor
     include Nodejs
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -13,7 +13,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :jshint, schema: Schema.config)
+    register_config_schema(name: :jshint, schema: SCHEMA.config)
 
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / 'sider_jshintrc').to_path.freeze
     DEFAULT_IGNORE_FILE = (Pathname(Dir.home) / 'sider_jshintignore').to_path.freeze

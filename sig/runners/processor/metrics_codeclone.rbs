@@ -6,7 +6,7 @@ module Runners
 
       def issue: () -> StrongJSON::Type::Object[untyped]
     end
-    Schema: SchemaClass
+    SCHEMA: SchemaClass
 
     def initialize: (**untyped) -> void
 

@@ -2,7 +2,7 @@ module Runners
   class Processor::Eslint < Processor
     include Nodejs
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -25,7 +25,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :eslint, schema: Schema.config)
+    register_config_schema(name: :eslint, schema: SCHEMA.config)
 
     CONSTRAINTS = {
       "eslint" => Gem::Requirement.new(">= 5.0.0", "< 8.0.0").freeze,
@@ -146,7 +146,7 @@ module Runners
               category: details.dig(:docs, :category),
               recommended: details.dig(:docs, :recommended),
             },
-            schema: Schema.issue,
+            schema: SCHEMA.issue,
           )
         end
       end

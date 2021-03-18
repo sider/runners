@@ -2,7 +2,7 @@ module Runners
   class Processor::PmdJava < Processor
     include Java
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -19,7 +19,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :pmd_java, schema: Schema.config)
+    register_config_schema(name: :pmd_java, schema: SCHEMA.config)
 
     DEFAULT_RULESET = (Pathname(Dir.home) / "default-ruleset.xml").to_path.freeze
     DEFAULT_DIR = ".".freeze
@@ -123,7 +123,7 @@ module Runners
                 ruleset: violation[:ruleset],
                 priority: violation[:priority],
               },
-              schema: Schema.issue,
+              schema: SCHEMA.issue,
             )
           end
         when "error"

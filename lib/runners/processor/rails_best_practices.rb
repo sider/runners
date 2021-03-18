@@ -2,7 +2,7 @@ module Runners
   class Processor::RailsBestPractices < Processor
     include Ruby
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -17,7 +17,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :rails_best_practices, schema: Schema.config)
+    register_config_schema(name: :rails_best_practices, schema: SCHEMA.config)
 
     OPTIONAL_GEMS = [
       GemInstaller::Spec.new("slim"),

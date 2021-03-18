@@ -3,7 +3,7 @@ module Runners
     include Java
     include Kotlin
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -15,7 +15,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :ktlint, schema: Schema.config)
+    register_config_schema(name: :ktlint, schema: SCHEMA.config)
 
     def self.config_example
       <<~'YAML'

@@ -2,7 +2,7 @@ module Runners
   class Processor::Pylint < Processor
     include Python
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -21,7 +21,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :pylint, schema: Schema.config)
+    register_config_schema(name: :pylint, schema: SCHEMA.config)
 
     DEFAULT_TARGET = ["**/*.{py}"].freeze
 
@@ -107,7 +107,7 @@ module Runners
             module: issue[:module],
             obj: issue[:obj],
           },
-          schema: Schema.issue,
+          schema: SCHEMA.issue,
         )
       end
     end

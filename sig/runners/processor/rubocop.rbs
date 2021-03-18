@@ -9,7 +9,7 @@ module Runners
       def config: () -> StrongJSON::Type::Object[untyped]
       def issue: () -> StrongJSON::Type::Object[untyped]
     end
-    Schema: SchemaClass
+    SCHEMA: SchemaClass
 
     GEM_NAME: String
     CONSTRAINTS: Ruby::constraints

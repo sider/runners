@@ -2,7 +2,7 @@ module Runners
   class Processor::Tslint < Processor
     include Nodejs
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -16,7 +16,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :tslint, schema: Schema.config)
+    register_config_schema(name: :tslint, schema: SCHEMA.config)
 
     CONSTRAINTS = {
       "tslint" => Gem::Requirement.new(">= 5.0.0", "< 7.0.0").freeze,

@@ -7,7 +7,7 @@ module Runners
 
       def config: () -> StrongJSON::Type::Object[untyped]
     end
-    Schema: SchemaClass
+    SCHEMA: SchemaClass
 
     OPTIONAL_GEMS: Array[Ruby::GemInstaller::Spec]
     GEM_NAME: String

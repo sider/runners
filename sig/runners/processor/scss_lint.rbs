@@ -7,7 +7,7 @@ module Runners
 
       def config: () -> StrongJSON::Type::Object[untyped]
     end
-    Schema: SchemaClass
+    SCHEMA: SchemaClass
 
     EXIT_CODE_FILES_NOT_EXIST: Integer
 

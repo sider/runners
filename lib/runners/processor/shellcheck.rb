@@ -1,6 +1,6 @@
 module Runners
   class Processor::ShellCheck < Processor
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -34,7 +34,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :shellcheck, schema: Schema.config)
+    register_config_schema(name: :shellcheck, schema: SCHEMA.config)
 
     DEFAULT_TARGET = [
       "**/*.{bash,bats,dash,ksh,sh}",
@@ -162,7 +162,7 @@ module Runners
             severity: comment[:level],
             fix: comment[:fix],
           },
-          schema: Schema.issue,
+          schema: SCHEMA.issue,
         )
       end
     end

@@ -7,7 +7,7 @@ module Runners
 
       def config: () -> StrongJSON::Type::Object[untyped]
     end
-    Schema: SchemaClass
+    SCHEMA: SchemaClass
 
     DEFAULT_TARGET: String
     DEFAULT_CONFIG_FILE: String

@@ -2,7 +2,7 @@ module Runners
   class Processor::CodeSniffer < Processor
     include PHP
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -24,7 +24,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :code_sniffer, schema: Schema.config)
+    register_config_schema(name: :code_sniffer, schema: SCHEMA.config)
 
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_recommended_code_sniffer.xml").to_path.freeze
 
@@ -78,7 +78,7 @@ module Runners
               severity: suggest[:severity],
               fixable: suggest[:fixable],
             },
-            schema: Schema.issue,
+            schema: SCHEMA.issue,
           )
         end
       end

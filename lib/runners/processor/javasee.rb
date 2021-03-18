@@ -2,7 +2,7 @@ module Runners
   class Processor::Javasee < Processor
     include Java
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
@@ -18,7 +18,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :javasee, schema: Schema.config)
+    register_config_schema(name: :javasee, schema: SCHEMA.config)
 
     DEFAULT_CONFIG_FILE = "javasee.yml".freeze
 
@@ -84,7 +84,7 @@ module Runners
           id: hash[:rule][:id],
           message: hash[:rule][:message],
           object: hash[:rule],
-          schema: Schema.rule
+          schema: SCHEMA.rule
         )
       end
     end
