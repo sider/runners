@@ -184,7 +184,7 @@ module Runners
     end
 
     def option_files
-      Array(config_linter[:target] || config_linter[:files] || DEFAULT_TARGET).map { |v| ["--files", v] }.flatten
+      Array(config_linter[:target] || config_linter[:files] || DEFAULT_TARGET).flat_map { |v| ["--files", v] }
     end
 
     def option_encoding
