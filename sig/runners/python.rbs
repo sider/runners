@@ -1,5 +1,8 @@
 module Runners
   module Python : Processor
+    class PipInstallFailed < UserError
+    end
+
     def pip_install: (*String) -> void
   end
 end
