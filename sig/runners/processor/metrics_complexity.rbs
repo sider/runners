@@ -3,9 +3,11 @@ module Runners
     include Python
 
     class SchemaClass < StrongJSON
+      include Schema::ConfigTypes
+
       def issue: () -> StrongJSON::Type::Object[untyped]
     end
-    Schema: SchemaClass
+    SCHEMA: SchemaClass
 
     private
 

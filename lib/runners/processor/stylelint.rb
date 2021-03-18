@@ -2,29 +2,27 @@ module Runners
   class Processor::Stylelint < Processor
     include Nodejs
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
-      let :target, enum?(string, array(string))
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
-        fields.merge!({
-          config: string?,
-          syntax: string?,
-          'ignore-path': string?,
-          'ignore-disables': boolean?,
-          'report-needless-disables': boolean?,
-          quiet: boolean?,
-          target: target,
-          glob: target, # alias for `target`
-        })
-      }
+      # @type self: SchemaClass
+      let :config, npm(
+        config: string?,
+        syntax: string?,
+        'ignore-path': string?,
+        'ignore-disables': boolean?,
+        'report-needless-disables': boolean?,
+        quiet: boolean?,
+        target: target,
+        glob: target, # alias for `target`
+      )
 
       let :issue, object(
         severity: string?,
       )
     end
 
-    register_config_schema(name: :stylelint, schema: Schema.runner_config)
+    register_config_schema(name: :stylelint, schema: SCHEMA.config)
 
     CONSTRAINTS = {
       "stylelint" => Gem::Requirement.new(">= 8.3.0", "< 14.0.0").freeze,
@@ -162,7 +160,7 @@ module Runners
             object: {
               severity: warning[:severity],
             },
-            schema: Schema.issue,
+            schema: SCHEMA.issue,
           )
         end
       end

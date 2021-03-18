@@ -2,20 +2,19 @@ module Runners
   class Processor::Flake8 < Processor
     include Python
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
-        fields.merge!({
-          target: enum?(string, array(string)),
-          config: string?,
-          plugins: enum?(string, array(string)),
-          parallel: boolean?,
-        })
-      }
+      # @type self: SchemaClass
+      let :config, base(
+        target: target,
+        config: string?,
+        plugins: one_or_more_strings?,
+        parallel: boolean?,
+      )
     end
 
-    register_config_schema(name: :flake8, schema: Schema.runner_config)
+    register_config_schema(name: :flake8, schema: SCHEMA.config)
 
     DEFAULT_TARGET = ".".freeze
     DEFAULT_CONFIG_PATH = (Pathname(Dir.home) / '.config' / 'flake8').to_path.freeze

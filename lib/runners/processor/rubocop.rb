@@ -3,16 +3,15 @@ module Runners
     include Ruby
     include RuboCopUtils
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.ruby.update_fields { |fields|
-        fields.merge!({
-          config: string?,
-          rails: boolean?,
-          safe: boolean?,
-        })
-      }
+      # @type self: SchemaClass
+      let :config, ruby(
+        config: string?,
+        rails: boolean?,
+        safe: boolean?,
+      )
 
       let :issue, object(
         severity: string?,
@@ -20,7 +19,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :rubocop, schema: Schema.runner_config)
+    register_config_schema(name: :rubocop, schema: SCHEMA.config)
 
     GEM_NAME = "rubocop".freeze
     CONSTRAINTS = {
@@ -116,7 +115,7 @@ module Runners
                 severity: offense[:severity],
                 corrected: offense[:corrected],
               },
-              schema: Schema.issue,
+              schema: SCHEMA.issue,
             )
           end
         end

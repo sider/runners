@@ -2,22 +2,21 @@ module Runners
   class Processor::Eslint < Processor
     include Nodejs
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
-        fields.merge!({
-          target: enum?(string, array(string)),
-          dir: enum?(string, array(string)),
-          ext: string?,
-          config: string?,
-          'ignore-path': string?,
-          'ignore-pattern': enum?(string, array(string)),
-          'no-ignore': boolean?,
-          global: string?,
-          quiet: boolean?,
-        })
-      }
+      # @type self: SchemaClass
+      let :config, npm(
+        target: target,
+        dir: target, # deprecated
+        ext: string?,
+        config: string?,
+        'ignore-path': string?,
+        'ignore-pattern': one_or_more_strings?,
+        'no-ignore': boolean?,
+        global: string?,
+        quiet: boolean?,
+      )
 
       let :issue, object(
         severity: string,
@@ -26,7 +25,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :eslint, schema: Schema.runner_config)
+    register_config_schema(name: :eslint, schema: SCHEMA.config)
 
     CONSTRAINTS = {
       "eslint" => Gem::Requirement.new(">= 5.0.0", "< 8.0.0").freeze,
@@ -147,7 +146,7 @@ module Runners
               category: details.dig(:docs, :category),
               recommended: details.dig(:docs, :recommended),
             },
-            schema: Schema.issue,
+            schema: SCHEMA.issue,
           )
         end
       end

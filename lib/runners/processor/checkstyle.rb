@@ -2,30 +2,28 @@ module Runners
   class Processor::Checkstyle < Processor
     include Java
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
-      let :target, enum?(string, array(string))
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.java.update_fields { |fields|
-        fields.merge!({
-          config: string?,
-          target: target,
-          dir: target, # alias for `target`
-          exclude: enum?(
-            string,
-            array(enum(string, object(pattern: string), object(string: string))),
-          ),
-          ignore: array?(string),
-          properties: string?,
-        })
-      }
+      # @type self: SchemaClass
+      let :config, java(
+        config: string?,
+        target: target,
+        dir: target, # alias for `target`
+        exclude: enum?(
+          string,
+          array(enum(string, object(pattern: string), object(string: string))),
+        ),
+        ignore: one_or_more_strings?,
+        properties: string?,
+      )
 
       let :issue, object(
         severity: string?,
       )
     end
 
-    register_config_schema(name: :checkstyle, schema: Schema.runner_config)
+    register_config_schema(name: :checkstyle, schema: SCHEMA.config)
 
     DEFAULT_TARGET = ".".freeze
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_recommended_checkstyle.xml").to_path.freeze
@@ -124,7 +122,7 @@ module Runners
               message: msg,
               links: build_links(id),
               object: { severity: severity },
-              schema: Schema.issue,
+              schema: SCHEMA.issue,
             )
           when "exception"
             exception = error.text or raise "Required exception: #{error.inspect}"

@@ -2,18 +2,16 @@ module Runners
   class Processor::Tyscan < Processor
     include Nodejs
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
-      let :target, enum?(string, array(string))
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
-        fields.merge!({
-          config: string?,
-          tsconfig: string?,
-          target: target,
-          paths: target, # alias for `target`
-        })
-      }
+      # @type self: SchemaClass
+      let :config, npm(
+        config: string?,
+        tsconfig: string?,
+        target: target,
+        paths: target, # alias for `target`
+      )
 
       let :issue, object(
         id: string,
@@ -21,7 +19,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :tyscan, schema: Schema.runner_config)
+    register_config_schema(name: :tyscan, schema: SCHEMA.config)
 
     CONSTRAINTS = {
       "tyscan" => Gem::Requirement.new(">= 0.2.1", "< 1.0.0").freeze,
@@ -104,7 +102,7 @@ module Runners
               id: match[:rule][:id],
               message: match[:rule][:message],
             },
-            schema: Schema.issue,
+            schema: SCHEMA.issue,
           )
         end
       end

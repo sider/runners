@@ -2,20 +2,18 @@ module Runners
   class Processor::Jshint < Processor
     include Nodejs
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
-      let :target, enum?(string, array(string))
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
-        fields.merge!({
-          target: target,
-          dir: target, # alias for `target`
-          config: string?,
-        })
-      }
+      # @type self: SchemaClass
+      let :config, base(
+        target: target,
+        dir: target, # alias for `target`
+        config: string?,
+      )
     end
 
-    register_config_schema(name: :jshint, schema: Schema.runner_config)
+    register_config_schema(name: :jshint, schema: SCHEMA.config)
 
     DEFAULT_TARGET = ".".freeze
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / 'sider_jshintrc').to_path.freeze

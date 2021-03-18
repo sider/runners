@@ -6,21 +6,21 @@ module Runners
 
     class NoTargetFiles < SystemError; end
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
+
       # @type self: SchemaClass
-      let :runner_config, Schema::BaseConfig.cplusplus.update_fields { |fields|
-        fields.merge!(
-          target: enum?(string, array(string)),
-          ignore: enum?(string, array(string)),
-          addon: enum?(string, array(string)),
-          enable: string?,
-          std: string?,
-          project: string?,
-          language: string?,
-          'bug-hunting': boolean?,
-          parallel: boolean?,
-        )
-      }
+      let :config, cplusplus(
+        target: one_or_more_strings?,
+        ignore: one_or_more_strings?,
+        addon: one_or_more_strings?,
+        enable: string?,
+        std: string?,
+        project: string?,
+        language: string?,
+        'bug-hunting': boolean?,
+        parallel: boolean?,
+      )
 
       let :issue, object(
         severity: string,
@@ -31,7 +31,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :cppcheck, schema: Schema.runner_config)
+    register_config_schema(name: :cppcheck, schema: SCHEMA.config)
 
     DEFAULT_TARGET = ".".freeze
     DEFAULT_IGNORE = [].freeze
@@ -186,7 +186,7 @@ module Runners
               cwe: err[:cwe],
               location_info: loc[:info] != msg ? loc[:info] : nil,
             },
-            schema: Schema.issue,
+            schema: SCHEMA.issue,
           )
         end
       end

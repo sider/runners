@@ -2,9 +2,10 @@ module Runners
   class Processor::PmdCpd < Processor
     include Java
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
+      # @type self: SchemaClass
       let :available_languages, enum(
         literal("apex"),
         literal("cpp"),
@@ -32,26 +33,22 @@ module Runners
         literal("xml")
       )
 
-      let :target, enum?(string, array(string))
-
-      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
-        fields.merge!({
-          'minimum-tokens': numeric?,
-          target: target,
-          files: target, # alias for `target`
-          language: enum?(available_languages, array(available_languages)),
-          encoding: string?,
-          'skip-duplicate-files': boolean?,
-          'non-recursive': boolean?,
-          'skip-lexical-errors': boolean?,
-          'ignore-annotations': boolean?,
-          'ignore-identifiers': boolean?,
-          'ignore-literals': boolean?,
-          'ignore-usings': boolean?,
-          'no-skip-blocks': boolean?,
-          'skip-blocks-pattern': string?,
-        })
-      }
+      let :config, base(
+        'minimum-tokens': numeric?,
+        target: target,
+        files: target, # alias for `target`
+        language: enum?(available_languages, array(available_languages)),
+        encoding: string?,
+        'skip-duplicate-files': boolean?,
+        'non-recursive': boolean?,
+        'skip-lexical-errors': boolean?,
+        'ignore-annotations': boolean?,
+        'ignore-identifiers': boolean?,
+        'ignore-literals': boolean?,
+        'ignore-usings': boolean?,
+        'no-skip-blocks': boolean?,
+        'skip-blocks-pattern': string?,
+      )
 
       let :issue, object(
         lines: integer,
@@ -72,7 +69,7 @@ module Runners
     DEFAULT_TARGET = ".".freeze
     DEFAULT_LANGUAGE = ["cpp", "cs", "ecmascript", "go", "java", "kotlin", "php", "python", "ruby", "swift"].freeze
 
-    register_config_schema(name: :pmd_cpd, schema: Schema.runner_config)
+    register_config_schema(name: :pmd_cpd, schema: SCHEMA.config)
 
     def self.config_example
       <<~'YAML'
@@ -136,7 +133,7 @@ module Runners
             location: file[:location],
             message: "Code duplications found (#{files.length} occurrences).",
             object: create_issue_object(elem_dupli, files),
-            schema: Schema.issue,
+            schema: SCHEMA.issue,
           )
         end
       end

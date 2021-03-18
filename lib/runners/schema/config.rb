@@ -1,46 +1,53 @@
 module Runners
   module Schema
-    BaseConfig = _ = StrongJSON.new do
-      # @type self: BaseConfigClass
+    module ConfigTypes
+      include StrongJSON::Types
 
-      let :base, object(
-        root_dir: string?,
-      )
+      def one_or_more_strings?
+        enum?(string, array(string))
+      end
 
-      let :git, enum(
-        object(repo: string, branch: string),
-        object(repo: string, tag: string),
-        object(repo: string, ref: string),
-      )
+      def target
+        one_or_more_strings?
+      end
 
-      let :ruby, (base.update_fields { |fields|
-        fields.merge!(
-          gems: array?(
-            enum(
-              string,
-              object(name: string, version: string, source: string?),
-              object(name: string, git: git),
-            )
-          )
+      def base(**fields)
+        object(root_dir: string?, **fields)
+      end
+
+      def ruby(**fields)
+        git = enum(
+          object(repo: string, branch: string),
+          object(repo: string, tag: string),
+          object(repo: string, ref: string),
         )
-      })
 
-      let :cplusplus, (base.update_fields { |fields|
-        fields.merge!(
-          apt: enum?(string, array(string)),
-          'include-path': enum?(string, array(string))
+        base(
+          gems: array?(enum(
+            string,
+            object(name: string, version: string, source: string?),
+            object(name: string, git: git),
+          )),
+          **fields,
         )
-      })
+      end
 
-      let :npm_install, enum(boolean, literal('development'), literal('production'))
+      def cplusplus(**fields)
+        base(
+          apt: one_or_more_strings?,
+          'include-path': one_or_more_strings?,
+          **fields,
+        )
+      end
 
-      let :npm, (base.update_fields { |fields|
-        fields.merge!(npm_install: optional(npm_install))
-      })
+      def npm(**fields)
+        npm_install = enum(boolean, literal('development'), literal('production'))
+        base(npm_install: optional(npm_install), **fields)
+      end
 
-      let :java, (base.update_fields { |fields|
-        fields.merge!(jvm_deps: array?(array(enum(string, number))))
-      })
+      def java(**fields)
+        base(jvm_deps: array?(array(enum(string, number))), **fields)
+      end
     end
 
     Config = _ = StrongJSON.new do

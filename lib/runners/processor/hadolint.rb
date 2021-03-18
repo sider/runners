@@ -1,23 +1,22 @@
 module Runners
   class Processor::Hadolint < Processor
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
-        fields.merge!({
-          target: enum?(string, array(string)),
-          ignore: enum?(string, array(string)),
-          'trusted-registry': enum?(string, array(string)),
-          config: string?,
-        })
-      }
+      # @type self: SchemaClass
+      let :config, base(
+        target: target,
+        ignore: one_or_more_strings?,
+        'trusted-registry': one_or_more_strings?,
+        config: string?,
+      )
 
       let :issue, object(
         severity: string?,
       )
     end
 
-    register_config_schema(name: :hadolint, schema: Schema.runner_config)
+    register_config_schema(name: :hadolint, schema: SCHEMA.config)
 
     DEFAULT_TARGET = "**/Dockerfile{,.*}".freeze
     DEFAULT_TARGET_EXCLUDED = "*.{erb,txt}".freeze # Exclude templates
@@ -102,7 +101,7 @@ module Runners
           object: {
             severity: file[:level],
           },
-          schema: Schema.issue,
+          schema: SCHEMA.issue,
           links: link_to_wiki(id),
         )
       end

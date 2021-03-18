@@ -3,10 +3,12 @@ module Runners
     include Ruby
 
     class SchemaClass < StrongJSON
+      include Schema::ConfigTypes
+
       def rule: () -> StrongJSON::Type::Object[untyped]
-      def runner_config: () -> StrongJSON::Type::Object[untyped]
+      def config: () -> StrongJSON::Type::Object[untyped]
     end
-    Schema: SchemaClass
+    SCHEMA: SchemaClass
 
     GEM_NAME: String
     CONSTRAINTS: Ruby::constraints

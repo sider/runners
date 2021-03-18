@@ -2,23 +2,22 @@ module Runners
   class Processor::Phpmd < Processor
     include PHP
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
-        fields.merge!({
-          target: enum?(string, array(string)),
-          rule: enum?(string, array(string)),
-          minimumpriority: numeric?,
-          suffixes: enum?(string, array(string)),
-          exclude: enum?(string, array(string)),
-          strict: boolean?,
-          custom_rule_path: array?(string),
-        })
-      }
+      # @type self: SchemaClass
+      let :config, base(
+        target: target,
+        rule: one_or_more_strings?,
+        minimumpriority: numeric?,
+        suffixes: one_or_more_strings?,
+        exclude: one_or_more_strings?,
+        strict: boolean?,
+        custom_rule_path: one_or_more_strings?,
+      )
     end
 
-    register_config_schema(name: :phpmd, schema: Schema.runner_config)
+    register_config_schema(name: :phpmd, schema: SCHEMA.config)
 
     DEFAULT_TARGET = ".".freeze
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_config.xml").to_path.freeze
@@ -39,7 +38,7 @@ module Runners
     end
 
     def analyze(changes)
-      delete_unchanged_files(changes, only: target_files, except: config_linter[:custom_rule_path] || [])
+      delete_unchanged_files(changes, only: target_files, except: Array(config_linter[:custom_rule_path]))
       run_analyzer(changes)
     end
 

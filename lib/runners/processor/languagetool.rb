@@ -2,23 +2,22 @@ module Runners
   class Processor::LanguageTool < Processor
     include Java
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
-        fields.merge!(
-          target: string?,
-          ext: array?(string),
-          exclude: array?(string),
-          language: string?,
-          encoding: string?,
-          disable: array?(string),
-          enable: array?(string),
-          enabledonly: boolean?,
-          disablecategories: array?(string),
-          enablecategories: array?(string),
-        )
-      }
+      # @type self: SchemaClass
+      let :config, base(
+        target: string?,
+        ext: one_or_more_strings?,
+        exclude: one_or_more_strings?,
+        language: string?,
+        encoding: string?,
+        disable: one_or_more_strings?,
+        enable: one_or_more_strings?,
+        enabledonly: boolean?,
+        disablecategories: one_or_more_strings?,
+        enablecategories: one_or_more_strings?
+      )
 
       let :issue, object(
         sentence: string,
@@ -28,17 +27,13 @@ module Runners
       )
     end
 
-    register_config_schema(name: :languagetool, schema: Schema.runner_config)
+    register_config_schema(name: :languagetool, schema: SCHEMA.config)
 
     DEFAULT_TARGET = ".".freeze
-    DEFAULT_EXT = [".txt"].freeze
-    DEFAULT_EXCLUDE = ["**/{requirements,robots}.txt"].freeze
+    DEFAULT_EXT = ".txt".freeze
+    DEFAULT_EXCLUDE = "**/{requirements,robots}.txt".freeze
     DEFAULT_LANGUAGE = "en-US".freeze # NOTE: Need a variant for spell checking
     DEFAULT_ENCODING = "UTF-8".freeze
-    DEFAULT_DISABLE = [].freeze
-    DEFAULT_ENABLE = [].freeze
-    DEFAULT_DISABLECATEGORIES = [].freeze
-    DEFAULT_ENABLECATEGORIES = [].freeze
 
     def self.config_example
       <<~'YAML'
@@ -95,11 +90,11 @@ module Runners
     end
 
     def config_ext
-      (config_linter[:ext] || DEFAULT_EXT).map { |ext| ext.delete_prefix(".") }
+      Array(config_linter[:ext] || DEFAULT_EXT).map { |ext| ext.delete_prefix(".") }
     end
 
     def config_exclude
-      config_linter[:exclude] || DEFAULT_EXCLUDE
+      Array(config_linter[:exclude] || DEFAULT_EXCLUDE)
     end
 
     def config_language
@@ -110,17 +105,17 @@ module Runners
       @config_encoding ||= Encoding.find(config_linter[:encoding] || DEFAULT_ENCODING).name
     end
 
-    def cli_comma_separated_list(config_option, default_value, cli_option)
-      value = comma_separated_list(config_linter[config_option] || default_value)
+    def cli_comma_separated_list(config_option, cli_option)
+      value = comma_separated_list(config_linter[config_option])
       value ? [cli_option, value] : []
     end
 
     def cli_disable
-      cli_comma_separated_list :disable, DEFAULT_DISABLE, "--disable"
+      cli_comma_separated_list :disable, "--disable"
     end
 
     def cli_enable
-      cli_comma_separated_list :enable, DEFAULT_ENABLE, "--enable"
+      cli_comma_separated_list :enable, "--enable"
     end
 
     def cli_enabledonly
@@ -128,11 +123,11 @@ module Runners
     end
 
     def cli_disablecategories
-      cli_comma_separated_list :disablecategories, DEFAULT_DISABLECATEGORIES, "--disablecategories"
+      cli_comma_separated_list :disablecategories, "--disablecategories"
     end
 
     def cli_enablecategories
-      cli_comma_separated_list :enablecategories, DEFAULT_ENABLECATEGORIES, "--enablecategories"
+      cli_comma_separated_list :enablecategories, "--enablecategories"
     end
 
     def cli_args
@@ -190,7 +185,7 @@ module Runners
                 category: match.dig(:rule, :category, :id),
                 replacements: match[:replacements]&.map { |r| r[:value] },
               },
-              schema: Schema.issue,
+              schema: SCHEMA.issue,
             )
           end
         end

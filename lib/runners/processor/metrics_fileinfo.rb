@@ -1,8 +1,9 @@
 module Runners
   class Processor::MetricsFileInfo < Processor
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
+      # @type self: SchemaClass
       let :issue, object(
         lines_of_code: integer?,
         last_committed_at: string
@@ -55,7 +56,7 @@ module Runners
           lines_of_code: loc,
           last_committed_at: commit
         },
-        schema: Schema.issue
+        schema: SCHEMA.issue
       )
     end
 

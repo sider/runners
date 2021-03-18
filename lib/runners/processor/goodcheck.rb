@@ -2,24 +2,23 @@ module Runners
   class Processor::Goodcheck < Processor
     include Ruby
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
+      # @type self: SchemaClass
       let :rule, object(
         id: string,
         message: string,
         justifications: array(string),
       )
 
-      let :runner_config, Schema::BaseConfig.ruby.update_fields { |fields|
-        fields.merge!({
-                        config: string?,
-                        target: optional(enum(string, array(string)))
-                      })
-      }.freeze
+      let :config, ruby(
+        config: string?,
+        target: target,
+      )
     end
 
-    register_config_schema(name: :goodcheck, schema: Schema.runner_config)
+    register_config_schema(name: :goodcheck, schema: SCHEMA.config)
 
     GEM_NAME = "goodcheck".freeze
     CONSTRAINTS = {
@@ -107,7 +106,7 @@ module Runners
             id: id,
             message: hash[:message],
             object: object,
-            schema: Schema.rule
+            schema: SCHEMA.rule
           )
 
           result.add_issue issue
