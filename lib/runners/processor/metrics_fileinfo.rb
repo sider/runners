@@ -109,8 +109,28 @@ module Runners
         days_ago = (DateTime.parse(latest_commit[:datetime]) - 90).iso8601
         count_time, _, end_commit_time = commits_within("--since", days_ago)
         end_commit = count_num > count_time ? end_commit_num : end_commit_time
+
         stdout, _ = capture3!("git", "log", "--reverse", "--format=format:%aI", "--numstat", "#{end_commit[:sha]}..HEAD", **ARGS_SUPPRESS_TRACE)
+        lines = stdout.lines(chomp: true)
+        number_of_commits = 0
+        lines.reject(&:empty?).each do |line|
+          if line.include?("\t") then
+            parse_numstat_line(line)
+          else
+            number_of_commits += 1
+          end
+        end
       end
+    end
+
+    def parse_numstat_line(line)
+      adds, dels, fname = line.split("\t")
+      adds, dels = [adds, dels].map { |x| x == '-' ? 0 : Integer(x) }
+
+      churn = code_churn[fname] || { additions: 0, deletions: 0 }
+      churn[:additions] += adds
+      churn[:deletions] += dels
+      code_churn[fname] = churn
     end
 
     def commits_within(*args_range)
