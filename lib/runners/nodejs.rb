@@ -120,7 +120,7 @@ module Runners
 
     # @see https://docs.npmjs.com/cli/v7/commands/npm-install
     # @see https://docs.npmjs.com/cli/v7/commands/npm-ci
-    def npm_install(*packages, subcommand: "install", flags: [])
+    def npm_install(*deps, subcommand: "install", flags: [])
       flags = %w[
         --ignore-scripts
         --no-engine-strict
@@ -132,7 +132,7 @@ module Runners
 
       begin
         ensure_same_yarn_lock do
-          capture3_with_retry! "npm", subcommand, *flags, *packages
+          capture3_with_retry! "npm", subcommand, *flags, *deps
         end
       rescue Shell::ExecError
         message = <<~MSG.strip
