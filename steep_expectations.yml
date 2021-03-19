@@ -160,20 +160,20 @@
   diagnostics:
   - range:
       start:
-        line: 80
+        line: 82
         character: 47
       end:
-        line: 80
+        line: 82
         character: 49
     severity: ERROR
     message: Type `(::Gem::Version | nil)` does not have method `>=`
     code: Ruby::NoMethod
   - range:
       start:
-        line: 197
+        line: 199
         character: 53
       end:
-        line: 197
+        line: 199
         character: 55
     severity: ERROR
     message: Type `(::Gem::Version | nil)` does not have method `>=`
