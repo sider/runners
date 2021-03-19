@@ -112,24 +112,17 @@ module Runners
 
       raise "XML must not be empty" unless xml_root
 
-      change_paths = changes.changed_paths
-      errors = []
-      xml_root.each_element('error') do |error|
-        filename = error[:filename] or raise "Filename must not be empty: #{error.inspect}"
-        errors << error[:msg] if change_paths.include?(relative_path(filename))
-      end
-      unless errors.empty?
-        errors.each { |message| trace_writer.error message }
-        return Results::Failure.new(guid: guid, message: errors.join("\n"), analyzer: analyzer)
-      end
-
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+        # Note: See below to view the XML schema:
+        #
+        # @see https://github.com/phpmd/phpmd/blob/2.9.1/src/main/php/PHPMD/Renderer/XMLRenderer.php
+
         xml_root.each_element('file') do |file|
-          filename = file[:name] or raise "Filename must not be empty: #{file.inspect}"
+          filename = file[:name] or raise "Filename must be present: #{file.inspect}"
           path = relative_path(filename)
 
           file.each_element('violation') do |violation|
-            message = violation.text or raise "required message: #{violation.inspect}"
+            message = violation.text or raise "Message must be present: #{violation.inspect}"
 
             result.add_issue Issue.new(
               path: path,
@@ -139,6 +132,21 @@ module Runners
               links: violation[:externalInfoUrl].then { |url| url ? [url] : [] },
             )
           end
+        end
+
+        xml_root.each_element('error') do |error|
+          filename = error[:filename] or raise "Filename must be present: #{error.inspect}"
+          path = relative_path(filename)
+
+          message = error[:msg] or raise "Message must be present: #{error.inspect}"
+          message.gsub!(filename, path.to_path) # NOTE: Convert an absolute path to a relative one.
+
+          result.add_issue Issue.new(
+            path: path,
+            location: nil,
+            id: "UnknownError", # NOTE: This ID is unique to Sider (probably not used elsewhere).
+            message: message,
+          )
         end
       end
     end

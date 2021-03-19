@@ -72,7 +72,19 @@ s.add_test(
 
 s.add_test(
   "syntax_error",
-  type: "failure", message: /Unexpected end of token stream in file:/, analyzer: { name: "PHPMD", version: default_version }
+  type: "success",
+  issues: [
+    {
+      path: "app.php",
+      location: nil,
+      id: "UnknownError",
+      message: "Unexpected end of token stream in file: app.php.",
+      links: [],
+      object: nil,
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "PHPMD", version: default_version }
 )
 
 s.add_test(
