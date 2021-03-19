@@ -105,19 +105,19 @@ module Runners
 
     def analyze_code_churn
       trace_writer.message "Analyzing code churn..." do
-        count_num, latest_commit, end_commit_num = commits_within("-n", "100")
-        days_ago = (DateTime.parse(latest_commit[:datetime]) - 90).iso8601
-        count_time, _, end_commit_time = commits_within("--since", days_ago)
-        end_commit = count_num > count_time ? end_commit_num : end_commit_time
+        count_by_num, commits_by_num = commits_within("-n", "100")
+        days_ago = (DateTime.parse(commits_by_num[:latest][:datetime]) - 90).iso8601
+        count_by_time, commits_by_time = commits_within("--since", days_ago)
+        end_commit = count_by_num > count_by_time ? commits_by_num[:oldest] : commits_by_time[:oldest]
 
         stdout, _ = capture3!("git", "log", "--reverse", "--format=format:%aI", "--numstat", "#{end_commit[:sha]}..HEAD", **ARGS_SUPPRESS_TRACE)
         lines = stdout.lines(chomp: true)
-        number_of_commits = 0
+        @number_of_commits = 0
         lines.reject(&:empty?).each do |line|
           if line.include?("\t") then
             parse_numstat_line(line)
           else
-            number_of_commits += 1
+            @number_of_commits += 1
           end
         end
       end
@@ -125,9 +125,10 @@ module Runners
 
     def parse_numstat_line(line)
       adds, dels, fname = line.split("\t")
-      adds, dels = [adds, dels].map { |x| x == '-' ? 0 : Integer(x) }
+      adds, dels = [adds, dels].map { |x| x == "-" ? 0 : Integer(x) }
 
-      churn = code_churn[fname] || { additions: 0, deletions: 0 }
+      churn = code_churn[fname] || { occurrence: 0, additions: 0, deletions: 0 }
+      churn[:occurrence] += 1
       churn[:additions] += adds
       churn[:deletions] += dels
       code_churn[fname] = churn
@@ -136,11 +137,11 @@ module Runners
     def commits_within(*args_range)
       stdout, _ = capture3!("git", "log", "--format=format:%H|%aI", *args_range, **ARGS_SUPPRESS_TRACE)
       lines = stdout.lines(chomp: true)
-      commits = [lines.first, lines.last].map do |x|
-        commit_sha, commit_datetime = x.split('|')
-        { sha: commit_sha, datetime: commit_datetime }
+      commits = { latest: lines.first, oldest: lines.last }.map do |k, v|
+        sha, datetime = v.split("|")
+        [k, { sha: sha, datetime: datetime }]
       end
-      [lines.length, *commits]
+      [lines.length, commits.to_h]
     end
 
     # There may not be a perfect method to discriminate file type.
