@@ -44,6 +44,7 @@ class ConfigTest < Minitest::Test
         detekt: nil,
         eslint: {
           root_dir: nil,
+          dependencies: nil,
           npm_install: true,
           target: nil,
           dir: nil,
@@ -185,6 +186,7 @@ class ConfigTest < Minitest::Test
     assert_equal({
       ext: ".js",
       root_dir: nil,
+      dependencies: nil,
       npm_install: nil,
       target: nil,
       dir: nil,
