@@ -318,6 +318,61 @@ s.add_test_with_git_metadata(
 s.add_test_with_git_metadata(
   "churn",
   { type: "success",
-    issues: [],
+    issues: [
+      {
+        id: "metrics_fileinfo",
+        path: "foo/test.txt",
+        location: nil,
+        message: "foo/test.txt: loc = 5, last commit datetime = 2021-03-04T04:23:45+00:00",
+        links: [],
+        object: {
+          lines_of_code: 5,
+          last_committed_at: "2021-03-04T04:23:45+00:00",
+          number_of_churn_commits: 4,
+          churn: {
+            occurrence: 2,
+            additions: 5,
+            deletions: 0
+          }
+        },
+        git_blame_info: nil
+      },
+      {
+        id: "metrics_fileinfo",
+        path: "image.png",
+        location: nil,
+        message: "image.png: loc = (no info), last commit datetime = 2021-03-04T04:23:45+00:00",
+        links: [],
+        object: {
+          lines_of_code: nil,
+          last_committed_at: "2021-03-04T04:23:45+00:00",
+          number_of_churn_commits: 4,
+          churn: {
+            occurrence: 1,
+            additions: 0,
+            deletions: 0
+          }
+        },
+        git_blame_info: nil
+      },
+      {
+        id: "metrics_fileinfo",
+        path: "sample.c",
+        location: nil,
+        message: "sample.c: loc = 2, last commit datetime = 2021-03-05T05:23:45+00:00",
+        links: [],
+        object: {
+          lines_of_code: 2,
+          last_committed_at: "2021-03-05T05:23:45+00:00",
+          number_of_churn_commits: 4,
+          churn: {
+            occurrence: 3,
+            additions: 5,
+            deletions: 3
+          }
+        },
+        git_blame_info: nil
+      }
+    ],
     analyzer: { name: "Metrics File Info", version: default_version } }
 )
