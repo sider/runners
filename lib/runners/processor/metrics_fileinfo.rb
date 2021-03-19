@@ -5,7 +5,13 @@ module Runners
 
       let :issue, object(
         lines_of_code: integer?,
-        last_committed_at: string
+        last_committed_at: string,
+        number_of_churn_commits: integer,
+        churn: object?(
+          occurrence: integer,
+          additions: integer,
+          deletions: integer
+        )
       )
     end
 
@@ -48,6 +54,7 @@ module Runners
     def generate_issue(path)
       loc = lines_of_code[path]
       commit = last_committed_at.fetch(path)
+      churn = code_churn[path.to_s]
 
       Issue.new(
         path: path,
@@ -56,7 +63,9 @@ module Runners
         message: "#{path}: loc = #{loc || "(no info)"}, last commit datetime = #{commit}",
         object: {
           lines_of_code: loc,
-          last_committed_at: commit
+          last_committed_at: commit,
+          number_of_churn_commits: @number_of_commits,
+          churn: churn
         },
         schema: Schema.issue
       )
@@ -108,9 +117,9 @@ module Runners
         count_by_num, commits_by_num = commits_within("-n", "100")
         days_ago = (DateTime.parse(commits_by_num[:latest][:datetime]) - 90).iso8601
         count_by_time, commits_by_time = commits_within("--since", days_ago)
-        end_commit = count_by_num > count_by_time ? commits_by_num[:oldest] : commits_by_time[:oldest]
+        outlive_commits = count_by_num > count_by_time ? commits_by_num : commits_by_time
 
-        stdout, _ = capture3!("git", "log", "--reverse", "--format=format:%aI", "--numstat", "#{end_commit[:sha]}..HEAD", **ARGS_SUPPRESS_TRACE)
+        stdout, _ = capture3!("git", "log", "--reverse", "--format=format:%aI", "--numstat", "#{outlive_commits[:oldest][:sha]}..HEAD", **ARGS_SUPPRESS_TRACE)
         lines = stdout.lines(chomp: true)
         @number_of_commits = 0
         lines.reject(&:empty?).each do |line|
