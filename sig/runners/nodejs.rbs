@@ -21,8 +21,6 @@ module Runners
 
     PACKAGE_JSON: String
 
-    type install_option = bool | String
-
     def nodejs_analyzer_local_command: () -> String
 
     def nodejs_analyzer_bin: () -> String
@@ -35,7 +33,7 @@ module Runners
 
     def node_modules_path: () -> Pathname
 
-    def install_nodejs_deps: (constraints: constraints, ?install_option: install_option) -> void
+    def install_nodejs_deps: (constraints: constraints, ?install_option: bool | String) -> void
 
     private
 
@@ -47,7 +45,7 @@ module Runners
 
     def nodejs_analyzer_local_version: () -> String
 
-    def npm_install: (install_option) -> void
+    def npm_install: (?subcommand: String, ?flags: Array[String]) -> void
 
     def list_installed_npm_deps_with: (names: Array[String]) -> Hash[String, { name: String, version: String }]
 

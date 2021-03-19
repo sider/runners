@@ -62,9 +62,16 @@ module Runners
 
       trace_writer.message "Installing npm packages..."
 
-      install_option = INSTALL_OPTION_ALL if install_option.nil?
-
-      npm_install(install_option)
+      cli_flags = []
+      case install_option
+      when INSTALL_OPTION_PRODUCTION
+        cli_flags << "--only=production"
+      when INSTALL_OPTION_DEVELOPMENT
+        add_warning <<~MSG, file: PACKAGE_JSON
+          `npm_install: #{INSTALL_OPTION_DEVELOPMENT}` has been deprecated and falls back to `npm_install: #{INSTALL_OPTION_ALL}`.
+        MSG
+      end
+      npm_install subcommand: (package_lock_json_path.exist? ? "ci" : "install"), flags: cli_flags
 
       installed_deps = list_installed_npm_deps_with(names: constraints.keys)
 
@@ -104,33 +111,17 @@ module Runners
 
     # @see https://docs.npmjs.com/cli/v7/commands/npm-install
     # @see https://docs.npmjs.com/cli/v7/commands/npm-ci
-    def npm_install(option)
-      cli_options = %w[
+    def npm_install(subcommand: "install", flags: [])
+      flags = %w[
         --ignore-scripts
         --no-engine-strict
         --no-progress
         --no-save
-      ]
+      ] + flags
 
-      case option
-      when INSTALL_OPTION_NONE
-        return
-      when INSTALL_OPTION_ALL
-        # noop
-      when INSTALL_OPTION_PRODUCTION
-        cli_options << "--only=production"
-      when INSTALL_OPTION_DEVELOPMENT
-        add_warning <<~MSG, file: PACKAGE_JSON
-          `npm_install: #{INSTALL_OPTION_DEVELOPMENT}` has been deprecated and falls back to `npm_install: #{INSTALL_OPTION_ALL}`.
-        MSG
-      else
-        raise "Unknown install option: #{option}"
-      end
-
-      subcommand = package_lock_json_path.exist? ? "ci" : "install"
       begin
         ensure_same_yarn_lock do
-          capture3_with_retry! "npm", subcommand, *cli_options
+          capture3_with_retry! "npm", subcommand, *flags
         end
       rescue Shell::ExecError
         message = <<~MSG.strip
