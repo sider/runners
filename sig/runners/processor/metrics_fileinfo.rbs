@@ -5,6 +5,8 @@ module Runners
     end
     Schema: SchemaClass
 
+    CAP3ARGS_SUPPRESS_TRACE: Hash[Symbol, bool]
+
     private
 
     def generate_issue: (Pathname)-> Issue
@@ -16,6 +18,14 @@ module Runners
     def last_committed_at: () -> Hash[Pathname, String]
 
     def analyze_last_committed_at: (Array[Pathname]) -> void
+
+    def code_churn: () -> Hash[String, Hash[Symbol, Integer]]
+
+    def analyze_code_churn: () -> void
+
+    def parse_numstat_line: (String) -> void
+
+    def commits_within: (*String) -> Array[untyped]
 
     def text_files: () -> Set[Pathname]
 

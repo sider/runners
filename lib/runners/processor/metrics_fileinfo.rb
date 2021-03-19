@@ -15,7 +15,7 @@ module Runners
       )
     end
 
-    ARGS_SUPPRESS_TRACE = {} # { trace_stdout: false, trace_command_line: false }.freeze
+    CAP3ARGS_SUPPRESS_TRACE = { trace_stdout: false, trace_command_line: false }.freeze
 
     def analyzer_version
       Runners::VERSION
@@ -119,7 +119,7 @@ module Runners
         count_by_time, commits_by_time = commits_within("--since", days_ago)
         outlive_commits = count_by_num > count_by_time ? commits_by_num : commits_by_time
 
-        stdout, _ = capture3!("git", "log", "--reverse", "--format=format:%aI", "--numstat", "#{outlive_commits[:oldest][:sha]}..HEAD", **ARGS_SUPPRESS_TRACE)
+        stdout, _ = capture3!("git", "log", "--reverse", "--format=format:%aI", "--numstat", "#{outlive_commits[:oldest][:sha]}..HEAD", **CAP3ARGS_SUPPRESS_TRACE)
         lines = stdout.lines(chomp: true)
         @number_of_commits = 0
         lines.reject(&:empty?).each do |line|
@@ -144,7 +144,7 @@ module Runners
     end
 
     def commits_within(*args_range)
-      stdout, _ = capture3!("git", "log", "--format=format:%H|%aI", *args_range, **ARGS_SUPPRESS_TRACE)
+      stdout, _ = capture3!("git", "log", "--format=format:%H|%aI", *args_range, **CAP3ARGS_SUPPRESS_TRACE)
       lines = stdout.lines(chomp: true)
       commits = { latest: lines.first, oldest: lines.last }.map do |k, v|
         sha, datetime = v.split("|")
