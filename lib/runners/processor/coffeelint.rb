@@ -21,6 +21,8 @@ module Runners
     def self.config_example
       <<~'YAML'
         root_dir: project/
+        dependencies:
+          - my-coffeelint-plugin@2
         npm_install: false
         file: config/coffeelint.json
       YAML

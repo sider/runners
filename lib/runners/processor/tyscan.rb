@@ -30,6 +30,8 @@ module Runners
     def self.config_example
       <<~'YAML'
         root_dir: project/
+        dependencies:
+          - my-tyscan-plugin@2
         npm_install: false
         config: config/tyscan.yml
         tsconfig: src/tsconfig.json

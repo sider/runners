@@ -42,11 +42,11 @@ module Runners
 
       def npm(**fields)
         base(
-          npm_install: enum?(boolean, literal('development'), literal('production')),
           dependencies: array?(enum(
             string,
             object(name: string, version: string),
           )),
+          npm_install: enum?(boolean, literal('development'), literal('production')),
           **fields,
         )
       end

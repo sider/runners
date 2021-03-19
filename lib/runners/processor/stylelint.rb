@@ -37,6 +37,8 @@ module Runners
     def self.config_example
       <<~'YAML'
         root_dir: project/
+        dependencies:
+          - my-stylelint-plugin@2
         npm_install: false
         config: config/.stylelintrc.yml
         syntax: scss

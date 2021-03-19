@@ -31,6 +31,8 @@ module Runners
     def self.config_example
       <<~'YAML'
         root_dir: project/
+        dependencies:
+          - my-remark-plugin@2
         npm_install: false
         target: [docs/]
         ext: "md,markdown"
