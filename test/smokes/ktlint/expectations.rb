@@ -61,7 +61,7 @@ s.add_test(
   issues: [
     {
       id: "experimental:package-name",
-      path: "src/App.kt",
+      path: "src/foo/App.kt",
       location: { start_line: 1, start_column: 1 },
       message: "Package name must not contain underscore (cannot be auto-corrected)",
       links: [],
@@ -72,7 +72,7 @@ s.add_test(
     },
     {
       id: "experimental:spacing-around-angle-brackets",
-      path: "src/App.kt",
+      path: "src/foo/App.kt",
       location: { start_line: 5, start_column: 22 },
       message: "Unexpected spacing after \"<\"",
       links: [],
@@ -83,7 +83,7 @@ s.add_test(
     },
     {
       id: "no-semi",
-      path: "src/App.kt",
+      path: "src/foo/App.kt",
       location: { start_line: 6, start_column: 19 },
       message: "Unnecessary semicolon",
       links: [],
