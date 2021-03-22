@@ -65,11 +65,20 @@ module Runners
     def parse_json_output(output)
       JSON.parse(output, symbolize_names: true).flat_map do |hash|
         hash.fetch(:errors).map do |error|
+          rule = error.fetch(:rule)
+          message = error.fetch(:message)
+
+          # @see https://github.com/pinterest/ktlint/blob/0.41.0/ktlint/src/main/kotlin/com/pinterest/ktlint/Main.kt#L478-L483
+          if rule == "" && message.include?("Not a valid Kotlin file")
+            # NOTE: This rule ID is unique to Sider. It should not be duplicated with the existing rule IDs.
+            rule = "SyntaxError"
+          end
+
           Issue.new(
             path: relative_path(hash.fetch(:file)),
             location: Location.new(start_line: error[:line], start_column: error[:column]),
-            id: error[:rule],
-            message: error[:message],
+            id: rule,
+            message: message,
           )
         end
       end

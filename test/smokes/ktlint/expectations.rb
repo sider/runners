@@ -8,7 +8,7 @@ s.add_test(
   analyzer: { name: "ktlint", version: default_version },
   issues: [
     {
-      id: "18748d47ed6c20995492c1190b0fb829b794f8c1",
+      id: "SyntaxError",
       path: "src/Foo.kt",
       location: { start_line: 1, start_column: 1 },
       message: "Not a valid Kotlin file (1:1 expecting a top level declaration) (cannot be auto-corrected)",
