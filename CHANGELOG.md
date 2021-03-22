@@ -11,6 +11,10 @@ Breaking:
 - Support npm 7 [#2189](https://github.com/sider/runners/pull/2189)
 - Remove deprecated `linter.{id}.options` [#2190](https://github.com/sider/runners/pull/2190) [#2193](https://github.com/sider/runners/pull/2193)
 
+Updated environments:
+
+- **devon_rex** 2.41.0 -> 2.42.0 [#2208](https://github.com/sider/runners/pull/2208) ([diff](https://github.com/sider/devon_rex/compare/2.41.0...2.42.0))
+
 Updated tools:
 
 - **ktlint** 0.39.0 -> 0.41.0 [#2205](https://github.com/sider/runners/pull/2205)
