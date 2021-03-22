@@ -41,7 +41,7 @@ module Runners
 
               If you want to use a different version of `#{spec.name}`, please do either:
               - Update your `Gemfile.lock` to satisfy the constraint
-              - Set the `#{config_field_path(:gems)}` option in your `#{config.path_name}`
+              - Set the `#{config_field_path(:dependencies)}` option in your `#{config.path_name}`
             MESSAGE
             spec
           end
@@ -108,7 +108,7 @@ module Runners
     private
 
     def config_gems
-      (config_linter[:gems] || []).map do |item|
+      (config_linter[:dependencies] || config_linter[:gems] || []).map do |item|
         gem = case item
               when Hash
                 item

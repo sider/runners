@@ -1,4 +1,4 @@
 linter:
   clang_tidy:
-    apt:
+    dependencies:
       - libfoo-dev

@@ -17,15 +17,26 @@ module Runners
     end
 
     def install_apt_packages
+      add_warning_for_deprecated_option :apt, to: :dependencies
+
       trace_writer.message "Installing apt packages..."
 
       # select development packages and report others as warning for security concerns
-      packages = Array(config_linter[:apt]).select do |pkg|
-        # @type var pkg: String
-        if pkg.match?(/-dev(=.+)?$/)
-          true
+      packages = Array(config_linter[:dependencies] || config_linter[:apt]).filter_map do |pkg|
+        # @type var name: String
+        # @type var version: String?
+        name, version =
+          case pkg
+          when Hash
+            [pkg.fetch(:name), pkg.fetch(:version)]
+          else
+            pkg.split("=")
+          end
+
+        if name.end_with? "-dev"
+          [name, version].compact.join("=")
         else
-          add_warning "Installing the package `#{pkg}` is blocked.", file: config.path_name
+          add_warning "Installing the package `#{name}` is blocked.", file: config.path_name
           false
         end
       end

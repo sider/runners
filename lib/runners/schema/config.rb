@@ -11,6 +11,10 @@ module Runners
         one_or_more_strings?
       end
 
+      def dependency(**fields)
+        object(name: string, version: string, **fields)
+      end
+
       def base(**fields)
         object(root_dir: string?, **fields)
       end
@@ -21,20 +25,23 @@ module Runners
           object(repo: string, tag: string),
           object(repo: string, ref: string),
         )
+        dependencies = array?(enum(
+          string,
+          dependency(source: string?),
+          object(name: string, git: git),
+        ))
 
         base(
-          gems: array?(enum(
-            string,
-            object(name: string, version: string, source: string?),
-            object(name: string, git: git),
-          )),
+          dependencies: dependencies,
+          gems: dependencies, # alias
           **fields,
         )
       end
 
       def cplusplus(**fields)
         base(
-          apt: one_or_more_strings?,
+          dependencies: array?(enum(string, dependency)),
+          apt: one_or_more_strings?, # deprecated
           'include-path': one_or_more_strings?,
           **fields,
         )
@@ -42,17 +49,18 @@ module Runners
 
       def npm(**fields)
         base(
-          dependencies: array?(enum(
-            string,
-            object(name: string, version: string),
-          )),
+          dependencies: array?(enum(string, dependency)),
           npm_install: enum?(boolean, literal('development'), literal('production')),
           **fields,
         )
       end
 
       def java(**fields)
-        base(jvm_deps: array?(array(enum(string, number))), **fields)
+        base(
+          dependencies: array?(enum(string, dependency)),
+          jvm_deps: array?(array(enum(string, number))), # deprecated
+          **fields,
+        )
       end
     end
 

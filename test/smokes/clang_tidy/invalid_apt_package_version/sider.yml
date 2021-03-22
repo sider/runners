@@ -1,4 +1,4 @@
 linter:
   clang_tidy:
-    apt:
+    dependencies:
       - libfastjson-dev=0.1
