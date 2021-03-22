@@ -180,7 +180,7 @@ module Runners
     end
 
     def add_warning_if_deprecated_version(minimum:, file: nil, deadline: nil)
-      unless Gem::Version.create(minimum) <= Gem::Version.create(analyzer_version)
+      unless Gem::Version.new(minimum) <= Gem::Version.new(analyzer_version)
         deadline_str = deadline ? deadline.strftime('on %B %-d, %Y') : 'in the near future'
         add_warning <<~MSG, file: file
           DEPRECATION WARNING!!!

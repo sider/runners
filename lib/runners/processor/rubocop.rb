@@ -197,12 +197,12 @@ module Runners
 
     # @see https://github.com/rubocop/rubocop/blob/v0.72.0/CHANGELOG.md
     def rails_cops_removed?
-      Gem::Version.create(analyzer_version) >= Gem::Version.create("0.72.0")
+      Gem::Version.new(analyzer_version) >= Gem::Version.new("0.72.0")
     end
 
     def cache_root
       # @see https://github.com/rubocop/rubocop/blob/v0.91.0/CHANGELOG.md
-      if Gem::Version.create(analyzer_version) >= Gem::Version.create("0.91.0")
+      if Gem::Version.new(analyzer_version) >= Gem::Version.new("0.91.0")
         ["--cache-root=#{File.join(Dir.tmpdir, 'rubocop-cache')}"]
       else
         []

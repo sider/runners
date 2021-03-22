@@ -57,18 +57,6 @@
     severity: ERROR
     message: The branch is unreachable because the condition is exhaustive
     code: Ruby::ElseOnExhaustiveCase
-- file: lib/runners/processor/haml_lint.rb
-  diagnostics:
-  - range:
-      start:
-        line: 134
-        character: 47
-      end:
-        line: 134
-        character: 49
-    severity: ERROR
-    message: Type `(::Gem::Version | nil)` does not have method `>=`
-    code: Ruby::NoMethod
 - file: lib/runners/processor/languagetool.rb
   diagnostics:
   - range:
@@ -93,50 +81,6 @@
     severity: ERROR
     message: Type `bot` does not have method `size`
     code: Ruby::NoMethod
-- file: lib/runners/processor/reek.rb
-  diagnostics:
-  - range:
-      start:
-        line: 101
-        character: 10
-      end:
-        line: 101
-        character: 12
-    severity: ERROR
-    message: Type `(::Gem::Version | nil)` does not have method `>=`
-    code: Ruby::NoMethod
-  - range:
-      start:
-        line: 101
-        character: 47
-      end:
-        line: 101
-        character: 48
-    severity: ERROR
-    message: Type `(::Gem::Version | nil)` does not have method `<`
-    code: Ruby::NoMethod
-- file: lib/runners/processor/rubocop.rb
-  diagnostics:
-  - range:
-      start:
-        line: 200
-        character: 44
-      end:
-        line: 200
-        character: 46
-    severity: ERROR
-    message: Type `(::Gem::Version | nil)` does not have method `>=`
-    code: Ruby::NoMethod
-  - range:
-      start:
-        line: 205
-        character: 47
-      end:
-        line: 205
-        character: 49
-    severity: ERROR
-    message: Type `(::Gem::Version | nil)` does not have method `>=`
-    code: Ruby::NoMethod
 - file: lib/runners/processor/shellcheck.rb
   diagnostics:
   - range:
@@ -156,28 +100,6 @@
                 ::Object <: ::String
                   ::BasicObject <: ::String
     code: Ruby::IncompatibleAssignment
-- file: lib/runners/processor/stylelint.rb
-  diagnostics:
-  - range:
-      start:
-        line: 82
-        character: 47
-      end:
-        line: 82
-        character: 49
-    severity: ERROR
-    message: Type `(::Gem::Version | nil)` does not have method `>=`
-    code: Ruby::NoMethod
-  - range:
-      start:
-        line: 199
-        character: 53
-      end:
-        line: 199
-        character: 55
-    severity: ERROR
-    message: Type `(::Gem::Version | nil)` does not have method `>=`
-    code: Ruby::NoMethod
 - file: lib/runners/processor.rb
   diagnostics:
   - range:
@@ -213,16 +135,6 @@
                   ::Object <: ::String
                     ::BasicObject <: ::String
     code: Ruby::ArgumentTypeMismatch
-  - range:
-      start:
-        line: 183
-        character: 42
-      end:
-        line: 183
-        character: 44
-    severity: ERROR
-    message: Type `(::Gem::Version | nil)` does not have method `<=`
-    code: Ruby::NoMethod
   - range:
       start:
         line: 282

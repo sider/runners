@@ -79,7 +79,7 @@ module Runners
       # The `--allow-empty-input` option breaks with v10.0.0. Fixed with v10.0.1.
       # @see https://github.com/stylelint/stylelint/releases/tag/10.0.1
       # @see https://github.com/stylelint/stylelint/pull/4029
-      if Gem::Version.create(analyzer_version) >= Gem::Version.create("10.0.1")
+      if Gem::Version.new(analyzer_version) >= Gem::Version.new("10.0.1")
         default_options << '--allow-empty-input'
       end
 
@@ -196,7 +196,7 @@ module Runners
       return if config_file_path
 
       # NOTE: `stylelint-config-recommended@2` does not work with `stylelint@11`.
-      src = if Gem::Version.create(analyzer_version) >= Gem::Version.create("11.0.0")
+      src = if Gem::Version.new(analyzer_version) >= Gem::Version.new("11.0.0")
               DEFAULT_CONFIG_FILE
             else
               DEFAULT_CONFIG_FILE_OLD

@@ -131,7 +131,7 @@ module Runners
 
     def config_parallel
       minimum_version = "0.36.0"
-      if Gem::Version.create(analyzer_version) >= Gem::Version.create(minimum_version)
+      if Gem::Version.new(analyzer_version) >= Gem::Version.new(minimum_version)
         parallel = config_linter[:parallel]
         if parallel == true || parallel.nil?
           return ["--parallel"]

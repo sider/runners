@@ -97,8 +97,8 @@ module Runners
     def v4?
       return @v4 if defined? @v4
 
-      @v4 ||= Gem::Version.create(analyzer.version).then do |v|
-        v >= Gem::Version.create("4.0.0") && v < Gem::Version.create("5.0.0")
+      @v4 ||= Gem::Version.new(analyzer.version).then do |v|
+        v >= Gem::Version.new("4.0.0") && v < Gem::Version.new("5.0.0")
       end
     end
 
