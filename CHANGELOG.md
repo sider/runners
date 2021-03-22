@@ -11,6 +11,10 @@ Breaking:
 - Support npm 7 [#2189](https://github.com/sider/runners/pull/2189)
 - Remove deprecated `linter.{id}.options` [#2190](https://github.com/sider/runners/pull/2190) [#2193](https://github.com/sider/runners/pull/2193)
 
+Updated tools:
+
+- **ktlint** 0.39.0 -> 0.41.0 [#2205](https://github.com/sider/runners/pull/2205)
+
 Misc:
 
 - Loosen unsatisfied constraints for npm packages [#2171](https://github.com/sider/runners/pull/2171)
