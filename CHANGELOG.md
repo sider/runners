@@ -26,6 +26,7 @@ Misc:
 - Introduce common option `target` [#2191](https://github.com/sider/runners/pull/2191)
 - **PHPMD** Handle syntax error as issue [#2201](https://github.com/sider/runners/pull/2201)
 - Add `linter.<id>.dependencies` option for npm tools [#2202](https://github.com/sider/runners/pull/2202)
+- **ktlint** Add issue ID for syntax error [#2206](https://github.com/sider/runners/pull/2206)
 
 ## 0.45.0
 
