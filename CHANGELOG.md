@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 
 Breaking:
 
-- Support npm 7 [#2189](https://github.com/sider/runners/pull/2189)
+- Support npm 7 [#2189](https://github.com/sider/runners/pull/2189) [#2218](https://github.com/sider/runners/pull/2218)
 - Remove deprecated `linter.{id}.options` [#2190](https://github.com/sider/runners/pull/2190) [#2193](https://github.com/sider/runners/pull/2193)
 
 Updated environments:
