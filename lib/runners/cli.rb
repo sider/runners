@@ -2,7 +2,7 @@ require "optparse"
 
 module Runners
   class CLI
-    DEFAULT_WORKING_DIR = Pathname(Dir.home).join("project").freeze
+    DEFAULT_WORKING_DIR = (Pathname(Dir.home) / "project").freeze
     private_constant :DEFAULT_WORKING_DIR
 
     attr_reader :stdout
