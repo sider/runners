@@ -32,6 +32,7 @@ Misc:
 - Add `linter.<id>.dependencies` option for npm tools [#2202](https://github.com/sider/runners/pull/2202)
 - **ktlint** Add issue ID for syntax error [#2206](https://github.com/sider/runners/pull/2206)
 - **Clang-Tidy** Better `apt-get install` failure [#2210](https://github.com/sider/runners/pull/2210)
+- **CoffeeLint** Set deadline for older versions [#2212](https://github.com/sider/runners/pull/2212)
 
 ## 0.45.0
 
