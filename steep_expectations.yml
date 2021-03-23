@@ -3,10 +3,10 @@
   diagnostics:
   - range:
       start:
-        line: 103
+        line: 111
         character: 28
       end:
-        line: 106
+        line: 114
         character: 11
     severity: ERROR
     message: |-
@@ -15,20 +15,20 @@
     code: Ruby::ArgumentTypeMismatch
   - range:
       start:
-        line: 104
+        line: 112
         character: 17
       end:
-        line: 104
+        line: 112
         character: 24
     severity: ERROR
     message: Type `nil` does not have method `add_tab`
     code: Ruby::NoMethod
   - range:
       start:
-        line: 105
+        line: 113
         character: 17
       end:
-        line: 105
+        line: 113
         character: 24
     severity: ERROR
     message: Type `nil` does not have method `add_tab`

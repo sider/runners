@@ -2,15 +2,17 @@ require "optparse"
 
 module Runners
   class CLI
-    include Tmpdir
+    DEFAULT_WORKING_DIR = Pathname(Dir.home).join("project").freeze
+    private_constant :DEFAULT_WORKING_DIR
 
     attr_reader :stdout
     attr_reader :stderr
     attr_reader :guid
     attr_reader :analyzer
     attr_reader :options
+    attr_reader :working_dir
 
-    def initialize(argv:, stdout:, stderr:, options_json:)
+    def initialize(argv:, stdout:, stderr:, options_json:, working_dir: DEFAULT_WORKING_DIR)
       @stdout = stdout
       @stderr = stderr
 
@@ -41,45 +43,51 @@ module Runners
       end
 
       @options = Options.new(options_json, stdout, stderr)
+
+      if working_dir.exist?
+        raise ArgumentError, "`#{working_dir}` must not exist"
+      else
+        working_dir.mkdir
+        @working_dir = working_dir
+      end
     end
 
     def run
       io.flush! # Write or upload empty content to let the caller of Runners notice the beginning of the analysis.
-      with_working_dir do |working_dir|
-        writer = JSONSEQ::Writer.new(io: io)
-        trace_writer = TraceWriter.new(writer: writer, filter: SensitiveFilter.new(options: options))
-        started_at = Time.now
-        trace_writer.header "Start analysis", recorded_at: started_at
-        trace_writer.message "Started at #{started_at.utc}"
-        trace_writer.message "Runners version #{VERSION}"
-        trace_writer.message "Build GUID #{guid}"
 
-        harness = Harness.new(guid: guid, processor_class: processor_class, options: options,
-                              working_dir: working_dir, trace_writer: trace_writer)
+      writer = JSONSEQ::Writer.new(io: io)
+      trace_writer = TraceWriter.new(writer: writer, filter: SensitiveFilter.new(options: options))
+      started_at = Time.now
+      trace_writer.header "Start analysis", recorded_at: started_at
+      trace_writer.message "Started at #{started_at.utc}"
+      trace_writer.message "Runners version #{VERSION}"
+      trace_writer.message "Build GUID #{guid}"
 
-        result = harness.run
-        warnings = harness.warnings
-        config = harness.config
-        json = {
-          result: result.as_json,
-          warnings: warnings.as_json,
-          ci_config: config&.content,
-          config_file: config&.path_name,
-          version: VERSION,
-        }
+      harness = Harness.new(guid: guid, processor_class: processor_class, options: options,
+                            working_dir: working_dir, trace_writer: trace_writer)
 
-        trace_writer.message "Writing result..." do
-          writer << Schema::Result.envelope.coerce(json)
-        end
+      result = harness.run
+      warnings = harness.warnings
+      config = harness.config
+      json = {
+        result: result.as_json,
+        warnings: warnings.as_json,
+        ci_config: config&.content,
+        config_file: config&.path_name,
+        version: VERSION,
+      }
 
-        result.tap do
-          finished_at = Time.now
-          trace_writer.header "Finish analysis"
-          trace_writer.message finish_message(result)
-          trace_writer.message "Finished at #{finished_at.utc}"
-          trace_writer.message "Elapsed time: #{format_duration(finished_at - started_at)}"
-          trace_writer.finish started_at: started_at, finished_at: finished_at
-        end
+      trace_writer.message "Writing result..." do
+        writer << Schema::Result.envelope.coerce(json)
+      end
+
+      result.tap do
+        finished_at = Time.now
+        trace_writer.header "Finish analysis"
+        trace_writer.message finish_message(result)
+        trace_writer.message "Finished at #{finished_at.utc}"
+        trace_writer.message "Elapsed time: #{format_duration(finished_at - started_at)}"
+        trace_writer.finish started_at: started_at, finished_at: finished_at
       end
     ensure
       io.flush! if defined?(:@io)
@@ -116,10 +124,6 @@ module Runners
       # @see https://docs.aws.amazon.com/sdk-for-ruby/v3/developer-guide/setup-config.html
       Aws.config[:credentials] = Aws::Credentials.new(id, secret) if id && secret
       Aws.config[:region] = region if region
-    end
-
-    def with_working_dir(&block)
-      mktmpdir(&block)
     end
 
     def processor_class
