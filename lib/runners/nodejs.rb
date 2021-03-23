@@ -121,7 +121,7 @@ module Runners
     # @see https://docs.npmjs.com/cli/v7/commands/npm-install
     # @see https://docs.npmjs.com/cli/v7/commands/npm-ci
     def npm_install(*deps, subcommand: "install", flags: [])
-      # NOTE: `--force` is to install *unmet* dependencies like Yarn.
+      # NOTE: `--force` is to install *unmet* dependencies like npm 6 or Yarn.
       flags = %w[
         --force
         --ignore-scripts
