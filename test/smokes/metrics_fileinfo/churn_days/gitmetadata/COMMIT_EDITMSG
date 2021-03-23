@@ -1,0 +1,13 @@
+edit file
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Date:      Sun Aug 23 12:34:56 2020 +0900
+#
+# On branch master
+# Changes to be committed:
+#	modified:   sample.c
+#
+# Untracked files:
+#	gitmetadata/
+#

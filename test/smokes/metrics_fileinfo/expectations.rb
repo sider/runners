@@ -376,3 +376,61 @@ s.add_test_with_git_metadata(
     ],
     analyzer: { name: "Metrics File Info", version: default_version } }
 )
+
+s.add_test_with_git_metadata(
+  "churn_days",
+  { type: "success",
+    issues: [
+      {
+        id: "metrics_fileinfo",
+        path: "bar/hello.java",
+        location: nil,
+        message: "bar/hello.java: loc = 2, last commit datetime = 2020-05-22T12:00:00+09:00",
+        links: [],
+        object: {
+          lines_of_code: 2,
+          last_committed_at: "2020-05-22T12:00:00+09:00",
+          number_of_churn_commits: 112,
+          churn: nil
+        },
+        git_blame_info: nil
+      },
+      {
+        id: "metrics_fileinfo",
+        path: "foo/test.txt",
+        location: nil,
+        message: "foo/test.txt: loc = 3, last commit datetime = 2020-06-20T12:00:00+09:00",
+        links: [],
+        object: {
+          lines_of_code: 3,
+          last_committed_at: "2020-06-20T12:00:00+09:00",
+          number_of_churn_commits: 112,
+          churn: {
+            occurrence: 111,
+            additions: 113,
+            deletions: 113
+          }
+        },
+        git_blame_info: nil
+      },
+      {
+        id: "metrics_fileinfo",
+        path: "sample.c",
+        location: nil,
+        message: "sample.c: loc = 1, last commit datetime = 2020-08-23T12:34:56+09:00",
+        links: [],
+        object: {
+          lines_of_code: 1,
+          last_committed_at: "2020-08-23T12:34:56+09:00",
+          number_of_churn_commits: 112,
+          churn: {
+            occurrence: 2,
+            additions: 1,
+            deletions: 3
+          }
+        },
+        git_blame_info: nil
+      }
+    ],
+    analyzer: { name: "Metrics File Info", version: default_version } }
+)
