@@ -33,6 +33,7 @@ Misc:
 - **ktlint** Add issue ID for syntax error [#2206](https://github.com/sider/runners/pull/2206)
 - **Clang-Tidy** Better `apt-get install` failure [#2210](https://github.com/sider/runners/pull/2210)
 - **CoffeeLint** Set deadline for older versions [#2212](https://github.com/sider/runners/pull/2212)
+- **TSLint** Extend deadline and add helpful link [#2215](https://github.com/sider/runners/pull/2215)
 
 ## 0.45.0
 
