@@ -155,7 +155,7 @@ s.add_test(
     {
       message: <<~MSG.strip,
         DEPRECATION WARNING!!!
-        The support for TSLint is deprecated and will be removed on May 10, 2021.
+        The support for TSLint is deprecated and will be removed on July 5, 2021.
         Please migrate to ESLint as an alternative. See https://github.com/palantir/tslint/issues/4534 and https://www.npmjs.com/package/tslint-to-eslint-config
       MSG
       file: "sideci.yml"
