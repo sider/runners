@@ -134,8 +134,12 @@ module Runners
     end
 
     def parse_numstat_line(line)
-      adds, dels, fname = line.split("\t")
-      adds, dels = [adds, dels].map { |x| x == "-" ? 0 : Integer(x) }
+      fields = line.split("\t")
+      adds = fields[0] or raise "Required additions: #{line}"
+      dels = fields[1] or raise "Required deletions: #{line}"
+      fname = fields[2] or raise "Required filepath: #{line}"
+      adds = adds == "-" ? 0 : Integer(adds)
+      dels = dels == "-" ? 0 : Integer(dels)
 
       churn = code_churn[fname] || { occurrence: 0, additions: 0, deletions: 0 }
       churn[:occurrence] += 1
@@ -148,7 +152,8 @@ module Runners
       stdout, _ = capture3!("git", "log", "--format=format:%H|%aI", *args_range, **CAP3ARGS_SUPPRESS_TRACE)
       lines = stdout.lines(chomp: true)
       commits = { latest: lines.first, oldest: lines.last }.map do |k, v|
-        sha, datetime = v.split("|")
+        logline = v or raise "Required log line: #{lines.length} lines"
+        sha, datetime = logline.split("|")
         [k, { sha: sha, datetime: datetime }]
       end
       [lines.length, commits.to_h]
