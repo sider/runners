@@ -154,7 +154,7 @@ s.add_test(
   analyzer: { name: "CoffeeLint", version: "2.0.6" },
   warnings: [{ message: <<~MSG.strip, file: nil }]
     DEPRECATION WARNING!!!
-    The `2.0.6` and older versions are deprecated, and these versions will be dropped in the near future.
+    The `2.0.6` and older versions are deprecated, and these versions will be dropped on May 10, 2021.
     Please consider upgrading to `4.0.0` or a newer version.
   MSG
 )
