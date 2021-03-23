@@ -30,7 +30,7 @@ s.add_test(
     }
   ],
   analyzer: { name: "TSLint", version: default_version },
-  warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }]
+  warnings: [{ message: /The support for TSLint is deprecated/, file: nil }]
 )
 
 s.add_test(
@@ -50,7 +50,7 @@ s.add_test(
     }
   ],
   analyzer: { name: "TSLint", version: default_version },
-  warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }]
+  warnings: [{ message: /The support for TSLint is deprecated/, file: nil }]
 )
 
 s.add_test(
@@ -92,7 +92,7 @@ s.add_test(
     }
   ],
   analyzer: { name: "TSLint", version: "5.2.0" },
-  warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }]
+  warnings: [{ message: /The support for TSLint is deprecated/, file: nil }]
 )
 
 s.add_test(
@@ -112,7 +112,7 @@ s.add_test(
     }
   ],
   analyzer: { name: "TSLint", version: "5.4.3" },
-  warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }]
+  warnings: [{ message: /The support for TSLint is deprecated/, file: nil }]
 )
 
 s.add_test(
@@ -143,7 +143,7 @@ s.add_test(
     }
   ],
   analyzer: { name: "TSLint", version: default_version },
-  warnings: [{ message: /The support for TSLint is deprecated/, file: "sideci.yml" }]
+  warnings: [{ message: /The support for TSLint is deprecated/, file: nil }]
 )
 
 s.add_test(
@@ -154,11 +154,11 @@ s.add_test(
   warnings: [
     {
       message: <<~MSG.strip,
-        DEPRECATION WARNING!!!
-        The support for TSLint is deprecated and will be removed on July 5, 2021.
-        Please migrate to ESLint as an alternative. See https://github.com/palantir/tslint/issues/4534 and https://www.npmjs.com/package/tslint-to-eslint-config
+        The support for TSLint is deprecated and will be removed on July 5, 2021. Please migrate to ESLint. See below:
+        - https://github.com/palantir/tslint/issues/4534
+        - https://www.npmjs.com/package/tslint-to-eslint-config
       MSG
-      file: "sideci.yml"
+      file: nil
     }
   ]
 )
@@ -202,7 +202,7 @@ s.add_test(
     }
   ],
   analyzer: { name: "TSLint", version: "5.11.0" },
-  warnings: [{ message: /The support for TSLint is deprecated/, file: "sideci.yml" }]
+  warnings: [{ message: /The support for TSLint is deprecated/, file: nil }]
 )
 
 s.add_test(
@@ -229,7 +229,7 @@ s.add_test(
     }
   ],
   analyzer: { name: "TSLint", version: "5.15.0" },
-  warnings: [{ message: /The support for TSLint is deprecated/, file: "sideci.yml" }]
+  warnings: [{ message: /The support for TSLint is deprecated/, file: nil }]
 )
 
 s.add_test(
@@ -249,7 +249,7 @@ s.add_test(
     }
   ],
   analyzer: { name: "TSLint", version: "5.15.0" },
-  warnings: [{ message: /The support for TSLint is deprecated/, file: "sideci.yml" }]
+  warnings: [{ message: /The support for TSLint is deprecated/, file: nil }]
 )
 
 s.add_test(
@@ -280,7 +280,7 @@ s.add_test(
     }
   ],
   analyzer: { name: "TSLint", version: "5.15.0" },
-  warnings: [{ message: /The support for TSLint is deprecated/, file: "sideci.yml" }]
+  warnings: [{ message: /The support for TSLint is deprecated/, file: nil }]
 )
 
 s.add_test(
@@ -289,7 +289,7 @@ s.add_test(
   issues: [],
   analyzer: { name: "TSLint", version: default_version },
   warnings: [
-    { message: /The support for TSLint is deprecated/, file: "sider.yml" },
+    { message: /The support for TSLint is deprecated/, file: nil },
     { message: "Installed `tslint@4.0.0` does not satisfy our constraint `>=5.0.0 <7.0.0`. Please update it as possible.", file: "package.json" }
   ]
 )
@@ -299,7 +299,7 @@ s.add_test(
   type: "success",
   issues: [],
   analyzer: { name: "TSLint", version: default_version },
-  warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }]
+  warnings: [{ message: /The support for TSLint is deprecated/, file: nil }]
 )
 
 s.add_test(
@@ -307,7 +307,7 @@ s.add_test(
   type: "success",
   issues: [],
   analyzer: { name: "TSLint", version: default_version },
-  warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }]
+  warnings: [{ message: /The support for TSLint is deprecated/, file: nil }]
 )
 
 s.add_test(
@@ -315,7 +315,7 @@ s.add_test(
   type: "success",
   issues: [],
   analyzer: { name: "TSLint", version: default_version },
-  warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }]
+  warnings: [{ message: /The support for TSLint is deprecated/, file: nil }]
 )
 
 s.add_test(
@@ -335,5 +335,5 @@ s.add_test(
     }
   ],
   analyzer: { name: "TSLint", version: "6.0.0" },
-  warnings: [{ message: /The support for TSLint is deprecated/, file: "sider.yml" }]
+  warnings: [{ message: /The support for TSLint is deprecated/, file: nil }]
 )

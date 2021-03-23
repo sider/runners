@@ -51,16 +51,10 @@ s.add_test(
     }
   ],
   analyzer: { name: "SCSS-Lint", version: "0.59.0" },
-  warnings: [
-    {
-      message: <<~MSG.strip,
-        DEPRECATION WARNING!!!
-        The support for SCSS-Lint is deprecated and will be removed in the near future.
-        Please migrate to stylelint as an alternative. See https://github.com/sds/scss-lint#readme
-      MSG
-      file: "sider.yml"
-    }
-  ]
+  warnings: [{ message: <<~MSG.strip, file: nil }]
+    The support for SCSS-Lint is deprecated and will be removed soon. Please migrate to stylelint. See below:
+    - https://github.com/sds/scss-lint#readme
+  MSG
 )
 
 s.add_test(
@@ -69,7 +63,7 @@ s.add_test(
   issues: [],
   analyzer: { name: "SCSS-Lint", version: "0.59.0" },
   warnings: [
-    { message: /SCSS-Lint is deprecated/, file: "sider.yml" },
+    { message: /SCSS-Lint is deprecated/, file: nil },
     { message: "No files, paths, or patterns were specified", file: nil }
   ]
 )
@@ -114,7 +108,7 @@ s.add_test(
     }
   ],
   analyzer: { name: "SCSS-Lint", version: "0.59.0" },
-  warnings: [{ message: /SCSS-Lint is deprecated/, file: "sideci.yml" }]
+  warnings: [{ message: /SCSS-Lint is deprecated/, file: nil }]
 )
 
 s.add_test(
@@ -134,7 +128,7 @@ s.add_test(
     }
   ],
   analyzer: { name: "SCSS-Lint", version: "0.59.0" },
-  warnings: [{ message: /SCSS-Lint is deprecated/, file: "sider.yml" }]
+  warnings: [{ message: /SCSS-Lint is deprecated/, file: nil }]
 )
 
 s.add_test(

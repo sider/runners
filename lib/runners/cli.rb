@@ -62,7 +62,7 @@ module Runners
         config = harness.config
         json = {
           result: result.as_json,
-          warnings: warnings,
+          warnings: warnings.as_json,
           ci_config: config&.content,
           config_file: config&.path_name,
           version: VERSION,

@@ -20,7 +20,6 @@ module Runners
     attr_reader config: Config
     attr_reader shell: Shell
     attr_reader trace_writer: TraceWriter
-    attr_reader warnings: Array[{ message: String, file: String? }]
 
     def initialize: (guid: String, working_dir: Pathname, config: Config, shell: Shell, trace_writer: TraceWriter) -> void
 
@@ -77,13 +76,9 @@ module Runners
 
     def delete_unchanged_files: (Changes, ?except: Array[String], ?only: Array[String]) -> void
 
+    def warnings: () -> Warnings
+
     def add_warning: (String, ?file: String?) -> void
-
-    def add_warning_if_deprecated_version: (minimum: String, ?file: String?, ?deadline: Time?) -> void
-
-    def add_warning_for_deprecated_option: (Symbol, to: Symbol) -> void
-
-    def add_warning_for_deprecated_linter: (alternative: String, ref: String, ?deadline: Time?) -> void
 
     def directory_traversal_attack?: (Pathname) -> bool
 

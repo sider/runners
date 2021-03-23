@@ -25,9 +25,10 @@ module Runners
     end
 
     def setup
-      add_warning_for_deprecated_linter(
-        alternative: analyzers.name(:stylelint),
-        ref: "#{analyzer_github}#readme",
+      warnings.add_warning_for_deprecated_linter(
+        old: analyzer_name,
+        new: analyzers.name(:stylelint),
+        links: ["#{analyzer_github}#readme"],
       )
 
       yield

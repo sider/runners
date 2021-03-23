@@ -290,13 +290,7 @@ s.add_test(
     }
   ],
   analyzer: { name: "ESLint", version: "5.16.0" },
-  warnings: [
-    { message: <<~MSG.strip, file: "sideci.yml" }
-      DEPRECATION WARNING!!!
-      The `linter.eslint.dir` option is deprecated. Use the `linter.eslint.target` option instead in your `sideci.yml`.
-      See https://help.sider.review/tools/javascript/eslint for details.
-    MSG
-  ]
+  warnings: [{ message: "The `linter.eslint.dir` option is deprecated. Please use the `linter.eslint.target` option instead in your `sideci.yml`.", file: "sideci.yml" }]
 )
 
 s.add_test(

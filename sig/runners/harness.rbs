@@ -13,7 +13,6 @@ module Runners
     attr_reader options: Options
     attr_reader working_dir: Pathname
     attr_reader trace_writer: TraceWriter
-    attr_reader warnings: Array[String]
     attr_reader config: Config?
     attr_reader analyzer: Analyzer?
 
@@ -24,6 +23,8 @@ module Runners
                      trace_writer: TraceWriter) -> void
 
     def run: () -> result
+
+    def warnings: () -> Warnings
 
     private
 

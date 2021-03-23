@@ -55,7 +55,7 @@ module Runners
     end
 
     def setup
-      add_warning_for_deprecated_option :dir, to: :target
+      warnings.add_warning_for_deprecated_option(config: config, analyzer: analyzer_id, old: :dir, new: :target)
 
       begin
         install_nodejs_deps constraints: CONSTRAINTS

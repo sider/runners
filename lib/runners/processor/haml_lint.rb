@@ -53,7 +53,7 @@ module Runners
     end
 
     def setup
-      add_warning_for_deprecated_option :file, to: :target
+      warnings.add_warning_for_deprecated_option(config: config, analyzer: analyzer_id, old: :file, new: :target)
 
       setup_haml_lint_config
 

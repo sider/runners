@@ -25,9 +25,12 @@ module Runners
     DEFAULT_TARGET = "**/*.ts{,x}".freeze
 
     def setup
-      add_warning_for_deprecated_linter(alternative: "ESLint",
-                                        ref: "#{analyzer_github}/issues/4534 and https://www.npmjs.com/package/tslint-to-eslint-config",
-                                        deadline: Time.new(2021, 7, 5))
+      warnings.add_warning_for_deprecated_linter(
+        old: analyzer_name,
+        new: "ESLint",
+        links: ["#{analyzer_github}/issues/4534", "https://www.npmjs.com/package/tslint-to-eslint-config"],
+        deadline: Time.new(2021, 7, 5),
+      )
 
       begin
         install_nodejs_deps constraints: CONSTRAINTS

@@ -36,7 +36,7 @@ module Runners
         return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
       end
 
-      add_warning_if_deprecated_version minimum: "4.0.0", deadline: Time.new(2021, 5, 10)
+      warnings.add_warning_if_deprecated_version(analyzer_name, current: analyzer_version, minimum: "4.0.0", deadline: Time.new(2021, 5, 10))
 
       yield
     end
