@@ -27,7 +27,7 @@ class CLITest < Minitest::Test
   end
 
   def teardown
-    FileUtils.remove_entry_secure @tmpdir, true
+    FileUtils.remove_entry_secure @tmpdir
   end
 
   def test_parsing_options
