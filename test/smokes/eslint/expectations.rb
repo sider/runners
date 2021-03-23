@@ -564,3 +564,10 @@ s.add_test(
   analyzer: { name: "ESLint", version: default_version },
   warnings: [{ message: "Installed `eslint@4.19.1` does not satisfy our constraint `>=5.0.0 <8.0.0`. Please update it as possible.", file: "package.json" }]
 )
+
+s.add_test(
+  "unmet_peer_deps",
+  type: "success",
+  issues: [],
+  analyzer: { name: "ESLint", version: "7.21.0" }
+)

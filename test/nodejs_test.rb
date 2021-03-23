@@ -14,7 +14,7 @@ class NodejsTest < Minitest::Test
     @processor_class ||= Class.new(Runners::Processor) do
       include Runners::Nodejs
 
-      def analyzer_id; "eslint"; end
+      def analyzer_id; :eslint; end
       def analyzer_bin; "eslint"; end
       def analyzer_name; "ESLint"; end
     end
@@ -68,6 +68,10 @@ class NodejsTest < Minitest::Test
     FileUtils.copy_file src, dest
   end
 
+  def package_version(package_name)
+    JSON.parse((processor.working_dir / "node_modules" / package_name / "package.json").read)["version"]
+  end
+
   public
 
   def test_nodejs_analyzer_local_command
@@ -118,7 +122,7 @@ class NodejsTest < Minitest::Test
     with_workspace do |workspace|
       new_processor(workspace: workspace)
 
-      processor.package_json_path.write({ devDependencies: { "eslint" => "5.0.0", "is-string" => "1.0.5" } }.to_json)
+      processor.package_json_path.write({ devDependencies: { eslint: "5.0.0", "is-string": "1.0.5" } }.to_json)
       constraints = {
         "eslint" => Gem::Requirement.new(">= 5.0.0", "< 7.0.0"),
         "is-string" => Gem::Requirement.new(">= 1.0.0", "< 2.0.0"),
@@ -137,7 +141,7 @@ class NodejsTest < Minitest::Test
       ], actual_messages
       assert_empty actual_errors
       assert_equal "5.0.0", processor.analyzer_version
-      assert_equal({ devDependencies: { "eslint" => "5.0.0", "is-string" => "1.0.5" } }.to_json, processor.package_json_path.read)
+      assert_equal({ devDependencies: { eslint: "5.0.0", "is-string": "1.0.5" } }.to_json, processor.package_json_path.read)
     end
   end
 
@@ -181,7 +185,7 @@ class NodejsTest < Minitest::Test
     with_workspace do |workspace|
       new_processor(workspace: workspace)
 
-      processor.package_json_path.write({ dependencies: { "is-string" => "1.0.5" } }.to_json)
+      processor.package_json_path.write({ dependencies: { "is-string": "1.0.5" } }.to_json)
       constraints = { "is-string" => Gem::Requirement.new(">= 1.0.0", "< 2.0.0") }
 
       processor.stub :nodejs_analyzer_global_version, "1.0.0" do
@@ -219,7 +223,7 @@ class NodejsTest < Minitest::Test
     with_workspace do |workspace|
       new_processor(workspace: workspace)
 
-      processor.package_json_path.write({ dependencies: { "eslint" => "6.0.0" } }.to_json)
+      processor.package_json_path.write({ dependencies: { eslint: "6.0.0" } }.to_json)
       constraints = { "eslint" => Gem::Requirement.new(">= 5.0.0", "< 7.0.0") }
 
       processor.stub :nodejs_analyzer_global_version, "5.15.0" do
@@ -258,7 +262,7 @@ class NodejsTest < Minitest::Test
     with_workspace do |workspace|
       new_processor(workspace: workspace)
 
-      processor.package_json_path.write({ dependencies: { "classcat" => "5.0.3" }}.to_json)
+      processor.package_json_path.write({ dependencies: { classcat: "5.0.3" }}.to_json)
       constraints = { "is-string" => Gem::Requirement.new(">= 1.0.0") }
 
       processor.stub :nodejs_analyzer_global_version, "1.0.1" do
@@ -278,7 +282,7 @@ class NodejsTest < Minitest::Test
     with_workspace do |workspace|
       new_processor(workspace: workspace)
 
-      processor.package_json_path.write({ dependencies: { "classcat" => "5.0.3", "is-string" => "1.0.5" }}.to_json)
+      processor.package_json_path.write({ dependencies: { classcat: "5.0.3", "is-string": "1.0.5" }}.to_json)
       constraints = {
         "classcat" => Gem::Requirement.new(">= 6.0.0"),
         "is-string" => Gem::Requirement.new(">= 1.0.0"),
@@ -307,7 +311,7 @@ class NodejsTest < Minitest::Test
         processor.install_nodejs_deps(constraints: {}, install_option: INSTALL_OPTION_ALL)
       end
 
-      assert_path_exists processor.working_dir / "node_modules" / "classcat"
+      assert_equal "5.0.3", package_version("classcat")
       assert_empty processor.warnings
       refute_empty actual_commands
       assert_empty actual_errors
@@ -324,7 +328,7 @@ class NodejsTest < Minitest::Test
         processor.install_nodejs_deps(constraints: {}, install_option: INSTALL_OPTION_ALL)
       end
 
-      assert_path_exists processor.working_dir / "node_modules" / "classcat"
+      assert_equal "5.0.3", package_version("classcat")
       assert_empty processor.warnings
       refute_empty actual_commands
       assert_empty actual_errors
@@ -340,7 +344,7 @@ class NodejsTest < Minitest::Test
         processor.install_nodejs_deps(constraints: {}, install_option: INSTALL_OPTION_PRODUCTION)
       end
 
-      assert_path_exists processor.working_dir / "node_modules" / "classcat"
+      assert_equal "5.0.3", package_version("classcat")
       refute_path_exists processor.working_dir / "node_modules" / "is-string"
       assert_empty processor.warnings
       refute_empty actual_commands
@@ -357,8 +361,8 @@ class NodejsTest < Minitest::Test
         processor.install_nodejs_deps(constraints: {}, install_option: INSTALL_OPTION_DEVELOPMENT)
       end
 
-      assert_path_exists processor.working_dir / "node_modules" / "classcat"
-      assert_path_exists processor.working_dir / "node_modules" / "is-string"
+      assert_equal "5.0.3", package_version("classcat")
+      assert_equal "1.0.5", package_version("is-string")
       assert_warnings [{ message: "`development` of `linter.eslint.npm_install` is deprecated. It falls back to `true` instead.", file: "package.json" }]
       refute_empty actual_commands
       assert_empty actual_errors
@@ -375,8 +379,7 @@ class NodejsTest < Minitest::Test
         processor.install_nodejs_deps(constraints: {}, install_option: INSTALL_OPTION_ALL)
       end
 
-      assert_path_exists processor.working_dir / "node_modules" / "typescript"
-      assert_equal "3.5.3", JSON.parse((processor.working_dir / "node_modules" / "typescript" / "package.json").read)["version"]
+      assert_equal "3.5.3", package_version("typescript")
       assert_empty processor.warnings
       refute_empty actual_commands
       assert_empty actual_errors
@@ -394,8 +397,7 @@ class NodejsTest < Minitest::Test
         processor.install_nodejs_deps(constraints: {}, install_option: INSTALL_OPTION_PRODUCTION)
       end
 
-      assert_path_exists processor.working_dir / "node_modules" / "typescript"
-      assert_equal "3.5.3", JSON.parse((processor.working_dir / "node_modules" / "typescript" / "package.json").read)["version"]
+      assert_equal "3.5.3", package_version("typescript")
       assert_empty processor.warnings
       refute_empty actual_commands
       assert_empty actual_errors
@@ -412,8 +414,7 @@ class NodejsTest < Minitest::Test
         processor.install_nodejs_deps(constraints: {}, install_option: INSTALL_OPTION_DEVELOPMENT)
       end
 
-      assert_path_exists processor.working_dir / "node_modules" / "typescript"
-      assert_match %r{^3\.\d+\.\d+$}, JSON.parse((processor.working_dir / "node_modules" / "typescript" / "package.json").read)["version"]
+      assert_match %r{^3\.\d+\.\d+$}, package_version("typescript")
       assert_warnings [{ message: "`development` of `linter.eslint.npm_install` is deprecated. It falls back to `true` instead.", file: "package.json" }]
       refute_empty actual_commands
       assert_empty actual_errors
@@ -430,8 +431,7 @@ class NodejsTest < Minitest::Test
         processor.install_nodejs_deps(constraints: {}, install_option: INSTALL_OPTION_ALL)
       end
 
-      assert_path_exists processor.working_dir / "node_modules" / "typescript"
-      assert_equal "3.9.9", JSON.parse((processor.working_dir / "node_modules" / "typescript" / "package.json").read)["version"]
+      assert_equal "3.9.9", package_version("typescript")
       assert_empty processor.warnings
       refute_empty actual_commands
       assert_empty actual_errors
@@ -448,8 +448,7 @@ class NodejsTest < Minitest::Test
         processor.install_nodejs_deps(constraints: {}, install_option: INSTALL_OPTION_ALL)
       end
 
-      assert_path_exists processor.working_dir / "node_modules" / "classcat"
-      assert_equal "5.0.0", JSON.parse((processor.working_dir / "node_modules" / "classcat" / "package.json").read)["version"]
+      assert_equal "5.0.0", package_version("classcat")
       assert_empty processor.warnings
       refute_empty actual_commands
       assert_empty actual_errors
@@ -487,23 +486,35 @@ class NodejsTest < Minitest::Test
     with_workspace do |workspace|
       new_processor(workspace: workspace)
 
-      processor.package_json_path.write({ dependencies: { "is-string" => "1.0.0" } }.to_json)
+      processor.package_json_path.write({ dependencies: { "is-string": "1.0.0" } }.to_json)
       processor.stub :nodejs_analyzer_global_version, "1.0.0" do
         processor.install_nodejs_deps(constraints: {}, dependencies: ["classcat", "is-string@1.0.5", { name: "is-nan-x", version: "2.1.0" }],
                                       install_option: INSTALL_OPTION_ALL)
       end
 
-      assert_path_exists processor.working_dir / "node_modules" / "classcat"
-      assert_match %r{^\d+\.\d+\.\d+$}, JSON.parse((processor.working_dir / "node_modules" / "classcat" / "package.json").read)["version"]
-      assert_path_exists processor.working_dir / "node_modules" / "is-string"
-      assert_equal "1.0.5", JSON.parse((processor.working_dir / "node_modules" / "is-string" / "package.json").read)["version"]
-      assert_path_exists processor.working_dir / "node_modules" / "is-nan-x"
-      assert_equal "2.1.0", JSON.parse((processor.working_dir / "node_modules" / "is-nan-x" / "package.json").read)["version"]
+      assert_match %r{^\d+\.\d+\.\d+$}, package_version("classcat")
+      assert_equal "1.0.5", package_version("is-string")
+      assert_equal "2.1.0", package_version("is-nan-x")
       assert_empty processor.warnings
       refute_empty actual_commands
       assert_empty actual_errors
-      assert_equal({ dependencies: { "is-string" => "1.0.0" } }.to_json, processor.package_json_path.read)
+      assert_equal({ dependencies: { "is-string": "1.0.0" } }.to_json, processor.package_json_path.read)
       refute_path_exists processor.package_lock_json_path
+    end
+  end
+
+  def test_install_nodejs_deps_with_unmet_deps
+    with_workspace do |workspace|
+      new_processor(workspace: workspace)
+
+      processor.package_json_path.write({ dependencies: { eslint: "7.21.0", "eslint-config-airbnb": "18.1.0" } }.to_json)
+      processor.stub :nodejs_analyzer_global_version, "1.0.0" do
+        processor.install_nodejs_deps(constraints: {}, install_option: INSTALL_OPTION_ALL)
+      end
+
+      assert_equal "7.21.0", package_version("eslint")
+      assert_equal "18.1.0", package_version("eslint-config-airbnb")
+      assert_empty processor.warnings
     end
   end
 end
