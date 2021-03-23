@@ -12,7 +12,13 @@ module Runners
 
     def add_warning_for_deprecated_linter: (old: String, new: String, ?links: Array[String], ?deadline: Time?) -> void
 
+    def size: () -> Integer
+
+    def empty?: () -> bool
+
     def as_json: () -> Array[Hash[Symbol, String?]]
+
+    alias to_a as_json
 
     private
 

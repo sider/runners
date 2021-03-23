@@ -38,9 +38,19 @@ module Runners
       add message
     end
 
+    def size
+      @list.size
+    end
+
+    def empty?
+      @list.empty?
+    end
+
     def as_json
       @list
     end
+
+    alias to_a as_json
 
     private
 
