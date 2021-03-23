@@ -37,7 +37,7 @@ class NodejsTest < Minitest::Test
   end
 
   def assert_warnings(expected)
-    assert_equal expected, processor.warnings
+    assert_equal expected, processor.warnings.as_json
   end
 
   def processor
