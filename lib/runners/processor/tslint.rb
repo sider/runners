@@ -26,8 +26,8 @@ module Runners
 
     def setup
       add_warning_for_deprecated_linter(alternative: "ESLint",
-                                        ref: "#{analyzer_github}/issues/4534",
-                                        deadline: Time.new(2020, 12, 1))
+                                        ref: "#{analyzer_github}/issues/4534 and https://www.npmjs.com/package/tslint-to-eslint-config",
+                                        deadline: Time.new(2021, 5, 10))
 
       begin
         install_nodejs_deps constraints: CONSTRAINTS
