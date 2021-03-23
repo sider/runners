@@ -1,3 +1,2 @@
 rules:
   declaration-block-no-ignored-properties: true
-  function-url-data-uris: 'always'

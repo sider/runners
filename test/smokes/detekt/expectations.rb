@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "1.15.0"
+default_version = "1.16.0"
 
 s.add_test(
   "with_broken_sider_yml",
@@ -36,7 +36,7 @@ s.add_test(
       location: { start_line: 2, start_column: 21 },
       message: "The class or object FilteredClass is empty.",
       links: [],
-      object: { severity: "info" },
+      object: { severity: "warning" },
       git_blame_info: {
         commit: :_, line_hash: "7494b1780aef71f48580c650d038aaac5f785284", original_line: 2, final_line: 2
       }
@@ -88,7 +88,7 @@ s.add_test(
       location: { start_line: 2, start_column: 21 },
       message: "The class or object FilteredClass is empty.",
       links: [],
-      object: { severity: "info" },
+      object: { severity: "warning" },
       git_blame_info: {
         commit: :_, line_hash: "7494b1780aef71f48580c650d038aaac5f785284", original_line: 2, final_line: 2
       }
@@ -149,13 +149,35 @@ s.add_test(
       }
     },
     {
+      id: "detekt.SwallowedException",
+      path: "src/ComplexClass.kt",
+      location: { start_line: 19, start_column: 15 },
+      message: "The caught exception is swallowed. The original exception could be lost.",
+      links: [],
+      object: { severity: "warning" },
+      git_blame_info: {
+        commit: :_, line_hash: "403615509fbd2f0a1f09f74d9340fc82687c40ee", original_line: 19, final_line: 19
+      }
+    },
+    {
+      id: "detekt.SwallowedException",
+      path: "src/ComplexClass.kt",
+      location: { start_line: 34, start_column: 19 },
+      message: "The caught exception is swallowed. The original exception could be lost.",
+      links: [],
+      object: { severity: "warning" },
+      git_blame_info: {
+        commit: :_, line_hash: "3e7fe77bad13349be1e389420c32c32f522bb0ee", original_line: 34, final_line: 34
+      }
+    },
+    {
       id: "detekt.TooGenericExceptionCaught",
       path: "src/ComplexClass.kt",
       location: { start_line: 19, start_column: 22 },
       message:
         "Caught exception is too generic. Prefer catching specific exceptions to the case that is currently handled.",
       links: [],
-      object: { severity: "error" },
+      object: { severity: "warning" },
       git_blame_info: {
         commit: :_, line_hash: "403615509fbd2f0a1f09f74d9340fc82687c40ee", original_line: 19, final_line: 19
       }
@@ -167,7 +189,7 @@ s.add_test(
       message:
         "Caught exception is too generic. Prefer catching specific exceptions to the case that is currently handled.",
       links: [],
-      object: { severity: "error" },
+      object: { severity: "warning" },
       git_blame_info: {
         commit: :_, line_hash: "3e7fe77bad13349be1e389420c32c32f522bb0ee", original_line: 22, final_line: 22
       }
@@ -179,7 +201,7 @@ s.add_test(
       message:
         "Caught exception is too generic. Prefer catching specific exceptions to the case that is currently handled.",
       links: [],
-      object: { severity: "error" },
+      object: { severity: "warning" },
       git_blame_info: {
         commit: :_, line_hash: "3e7fe77bad13349be1e389420c32c32f522bb0ee", original_line: 34, final_line: 34
       }
@@ -198,7 +220,7 @@ s.add_test(
       location: { start_line: 1, start_column: 11 },
       message: "The class or object App is empty.",
       links: [],
-      object: { severity: "info" },
+      object: { severity: "warning" },
       git_blame_info: {
         commit: :_, line_hash: "4df53f8376184b33e336e5c2d1c675ab922efef8", original_line: 1, final_line: 1
       }
@@ -249,7 +271,7 @@ s.add_test(
       location: { start_line: 1, start_column: 11 },
       message: "The class or object Foo is empty.",
       links: [],
-      object: { severity: "info" },
+      object: { severity: "warning" },
       git_blame_info: {
         commit: :_, line_hash: "313d20acfe186ea3594870fc6d56c119f658fef2", original_line: 1, final_line: 1
       }

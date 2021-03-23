@@ -2,21 +2,16 @@ module Runners
   class Processor::Coffeelint < Processor
     include Nodejs
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
+
       # @type self: SchemaClass
-      let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
-        fields.merge!({
-                        file: string?,
-                        # DO NOT ADD ANY OPTIONS in `options` option.
-                        options: optional(object(
-                                            file: string?,
-                                            config: string?
-                                          ))
-                      })
-      }
+      let :config, npm(
+        file: string?,
+      )
     end
 
-    register_config_schema(name: :coffeelint, schema: Schema.runner_config)
+    register_config_schema(name: :coffeelint, schema: SCHEMA.config)
 
     CONSTRAINTS = {
       "coffeelint" => Gem::Requirement.new(">= 1.16.0", "< 3.0.0").freeze,
@@ -26,14 +21,14 @@ module Runners
     def self.config_example
       <<~'YAML'
         root_dir: project/
+        dependencies:
+          - my-coffeelint-plugin@2
         npm_install: false
         file: config/coffeelint.json
       YAML
     end
 
     def setup
-      add_warning_if_deprecated_options
-
       begin
         install_nodejs_deps constraints: CONSTRAINTS
       rescue UserError => exn
@@ -73,7 +68,7 @@ module Runners
     private
 
     def config_file
-      file = config_linter[:file] || config_linter.dig(:options, :file) || config_linter.dig(:options, :config)
+      file = config_linter[:file]
       file ? ['--file', file] : []
     end
   end

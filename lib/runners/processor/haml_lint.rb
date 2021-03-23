@@ -3,35 +3,26 @@ module Runners
     include Ruby
     include RuboCopUtils
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.ruby.update_fields { |fields|
-        fields.merge!({
-                        target: enum?(string, array(string)),
-                        file: string?,
-                        include_linter: enum?(string, array(string)),
-                        exclude_linter: enum?(string, array(string)),
-                        exclude: enum?(string, array(string)),
-                        config: string?,
-                        parallel: boolean?,
-                        # DO NOT ADD ANY OPTION in `options` option.
-                        options: object?(
-                          file: string?,
-                          include_linter: enum?(string, array(string)),
-                          exclude_linter: enum?(string, array(string)),
-                          exclude: enum?(string, array(string)),
-                          config: string?
-                        )
-                      })
-      }
+      # @type self: SchemaClass
+      let :config, ruby(
+        target: target,
+        file: target, # deprecated
+        include_linter: one_or_more_strings?,
+        exclude_linter: one_or_more_strings?,
+        exclude: one_or_more_strings?,
+        config: string?,
+        parallel: boolean?,
+      )
 
       let :issue, object(
         severity: string?,
       )
     end
 
-    register_config_schema(name: :haml_lint, schema: Schema.runner_config)
+    register_config_schema(name: :haml_lint, schema: SCHEMA.config)
 
     GEM_NAME = "haml_lint".freeze
     REQUIRED_GEM_NAMES = ["rubocop"].freeze
@@ -62,7 +53,6 @@ module Runners
     end
 
     def setup
-      add_warning_if_deprecated_options
       add_warning_for_deprecated_option :file, to: :target
 
       setup_haml_lint_config
@@ -116,33 +106,32 @@ module Runners
     end
 
     def target
-      Array(config_linter[:target] || config_linter[:file] ||
-            config_linter.dig(:options, :file) || DEFAULT_TARGET)
+      Array(config_linter[:target] || config_linter[:file] || DEFAULT_TARGET)
     end
 
     def include_linter
-      value = comma_separated_list(config_linter[:include_linter] || config_linter.dig(:options, :include_linter))
+      value = comma_separated_list(config_linter[:include_linter])
       value ? ["--include-linter", value] : []
     end
 
     def exclude_linter
-      value = comma_separated_list(config_linter[:exclude_linter] || config_linter.dig(:options, :exclude_linter))
+      value = comma_separated_list(config_linter[:exclude_linter])
       value ? ["--exclude-linter", value] : []
     end
 
     def exclude
-      value = comma_separated_list(config_linter[:exclude] || config_linter.dig(:options, :exclude))
+      value = comma_separated_list(config_linter[:exclude])
       value ? ["--exclude", value] : []
     end
 
     def haml_lint_config
-      config = config_linter[:config] || config_linter.dig(:options, :config)
+      config = config_linter[:config]
       config ? ["--config", config] : []
     end
 
     def config_parallel
       minimum_version = "0.36.0"
-      if Gem::Version.create(analyzer_version) >= Gem::Version.create(minimum_version)
+      if Gem::Version.new(analyzer_version) >= Gem::Version.new(minimum_version)
         parallel = config_linter[:parallel]
         if parallel == true || parallel.nil?
           return ["--parallel"]
@@ -173,7 +162,7 @@ module Runners
             object: {
               severity: offense[:severity],
             },
-            schema: Schema.issue,
+            schema: SCHEMA.issue,
           )
         end
       end

@@ -80,14 +80,27 @@ s.add_test(
 
 s.add_test(
   "pinned_old_eslint",
-  type: "failure",
-  message: <<~MSG.strip,
-    Your ESLint dependencies do not satisfy our constraints `eslint@>=5.0.0 <8.0.0`. Please update them.
-  MSG
-  analyzer: :_
+  type: "success",
+  issues: [
+    {
+      message: "'x' is assigned a value but never used.",
+      links: %w[https://eslint.org/docs/rules/no-unused-vars],
+      id: "no-unused-vars",
+      path: "src/index.js",
+      location: { start_line: 1, start_column: 5, end_line: 1, end_column: 6 },
+      object: { severity: "error", category: "Variables", recommended: true },
+      git_blame_info: {
+        commit: :_, line_hash: "41477d1b34124a7763e6dae5cb7067201fed41e4", original_line: 1, final_line: 1
+      }
+    }
+  ],
+  analyzer: { name: "ESLint", version: default_version },
+  warnings: [{ message: "Installed `eslint@4.0.0` does not satisfy our constraint `>=5.0.0 <8.0.0`. Please update it as possible.", file: "package.json" }]
 )
 
 s.add_test("no_files", type: "success", issues: [], analyzer: { name: "ESLint", version: default_version })
+
+s.add_test("no_files_with_option_target", type: "success", issues: [], analyzer: { name: "ESLint", version: default_version })
 
 s.add_test(
   "pinned_eslint5",
@@ -183,12 +196,6 @@ s.add_test(
     }
   ],
   analyzer: { name: "ESLint", version: default_version },
-  warnings: [
-    {
-      message: /The `linter.eslint.options` option is deprecated/,
-      file: "sideci.yml"
-    }
-  ],
   config_file: "sideci.yml"
 )
 
@@ -382,11 +389,24 @@ s.add_test(
 
 s.add_test("default_version_is_used", type: "success", issues: [], analyzer: { name: "ESLint", version: default_version })
 
+# NOTE: `yarn.lock` is ignored.
 s.add_test(
   "mismatched_package_version",
-  type: "failure",
-  message: "`yarn install` failed. Please confirm `yarn.lock` is consistent with `package.json`.",
-  analyzer: :_
+  type: "success",
+  issues: [
+    {
+      id: "no-unused-vars",
+      message: "'x' is assigned a value but never used.",
+      links: %w[https://eslint.org/docs/rules/no-unused-vars],
+      path: "src/index.js",
+      location: { start_line: 1, start_column: 5, end_line: 1, end_column: 6 },
+      object: { severity: "error", category: "Variables", recommended: true },
+      git_blame_info: {
+        commit: :_, line_hash: "1344e9df550a53b40d135830a9289d34f4246299", original_line: 1, final_line: 1
+      }
+    }
+  ],
+  analyzer: { name: "ESLint", version: "6.8.0" }
 )
 
 s.add_test(
@@ -416,7 +436,7 @@ s.add_test(
       id: "@typescript-eslint/no-unused-vars",
       message: "'x' is assigned a value but never used.",
       links: %w[
-        https://github.com/typescript-eslint/typescript-eslint/blob/v4.17.0/packages/eslint-plugin/docs/rules/no-unused-vars.md
+        https://github.com/typescript-eslint/typescript-eslint/blob/v4.18.0/packages/eslint-plugin/docs/rules/no-unused-vars.md
       ],
       path: "index.ts",
       location: { start_line: 1, start_column: 7, end_line: 1, end_column: 8 },
@@ -429,12 +449,12 @@ s.add_test(
   analyzer: { name: "ESLint", version: default_version }
 )
 
+# NOTE: `package-lock.json` is preferred over `yarn.lock`.
 s.add_test(
   "duplicate_lock_files",
   type: "success",
   issues: [],
-  analyzer: { name: "ESLint", version: "5.16.0" },
-  warnings: [{ message: /Two lock files `package-lock.json` and `yarn.lock` are found/, file: "yarn.lock" }]
+  analyzer: { name: "ESLint", version: "5.1.0" }
 )
 
 s.add_test(
@@ -506,4 +526,47 @@ s.add_test(
   type: "success",
   issues: [],
   analyzer: { name: "ESLint", version: default_version }
+)
+
+s.add_test(
+  "package_lock_v2",
+  type: "success",
+  issues: [],
+  analyzer: { name: "ESLint", version: "7.22.0" }
+)
+
+s.add_test(
+  "package_lock_v2_mismatch",
+  type: "success",
+  issues: [],
+  analyzer: { name: "ESLint", version: "6.8.0" }
+)
+
+s.add_test(
+  "package_lock_without_package_json",
+  type: "success",
+  issues: [],
+  analyzer: { name: "ESLint", version: "7.22.0" }
+)
+
+s.add_test(
+  "option_dependencies",
+  type: "success",
+  issues: [],
+  analyzer: { name: "ESLint", version: "6.8.0" }
+)
+
+s.add_test(
+  "option_dependencies_missing",
+  type: "failure",
+  message: /`npm install` failed. If you want to avoid this installation, try one of the following in your `sider.yml`/,
+  analyzer: :_
+)
+
+s.add_test(
+  "option_dependencies_outdated",
+  type: "success",
+  issues: [],
+  analyzer: { name: "ESLint", version: default_version },
+  warnings: [{ message: "Installed `eslint@4.19.1` does not satisfy our constraint `>=5.0.0 <8.0.0`. Please update it as possible.", file: "package.json" }]
 )

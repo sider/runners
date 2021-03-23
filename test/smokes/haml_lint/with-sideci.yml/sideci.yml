@@ -1,6 +1,5 @@
 linter:
   haml_lint:
     file: 'test.haml'
-    options:
-      exclude_linter:
-        - TagName
+    exclude_linter:
+      - TagName

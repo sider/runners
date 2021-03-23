@@ -3,10 +3,12 @@ module Runners
     include Nodejs
 
     class SchemaClass < StrongJSON
-      def runner_config: () -> StrongJSON::Type::Object[untyped]
+      include Schema::ConfigTypes
+
+      def config: () -> StrongJSON::Type::Object[untyped]
       def issue: () -> StrongJSON::Type::Object[untyped]
     end
-    Schema: SchemaClass
+    SCHEMA: SchemaClass
 
     CONSTRAINTS: Nodejs::constraints
     DEFAULT_TARGET: String

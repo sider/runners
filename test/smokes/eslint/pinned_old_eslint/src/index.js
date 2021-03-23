@@ -1,7 +1,1 @@
-var x = foo;
-function bar() {
-x:
-  for (;;) {
-    break x;
-  }
-}
+var x = 1;

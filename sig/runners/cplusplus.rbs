@@ -1,5 +1,8 @@
 module Runners
   module CPlusPlus : Processor
+    class AptInstallFailed < UserError
+    end
+
     CPP_SOURCES_GLOB: String
     CPP_HEADERS_GLOB: String
 

@@ -3,21 +3,15 @@ module Runners
     include Ruby
     include RuboCopUtils
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.ruby.update_fields { |fields|
-        fields.merge!({
-                        config: string?,
-                        rails: boolean?,
-                        safe: boolean?,
-                        # DO NOT ADD OPTIONS ANY MORE in `options`.
-                        options: optional(object(
-                                            config: string?,
-                                            rails: boolean?
-                                          ))
-                      })
-      }
+      # @type self: SchemaClass
+      let :config, ruby(
+        config: string?,
+        rails: boolean?,
+        safe: boolean?,
+      )
 
       let :issue, object(
         severity: string?,
@@ -25,7 +19,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :rubocop, schema: Schema.runner_config)
+    register_config_schema(name: :rubocop, schema: SCHEMA.config)
 
     GEM_NAME = "rubocop".freeze
     CONSTRAINTS = {
@@ -44,8 +38,6 @@ module Runners
     end
 
     def setup
-      add_warning_if_deprecated_options
-
       default_gems = default_gem_specs(GEM_NAME)
       if !rubocop_config_file && setup_default_rubocop_config
         # NOTE: The latest MeowCop requires usually the latest RuboCop.
@@ -123,7 +115,7 @@ module Runners
                 severity: offense[:severity],
                 corrected: offense[:corrected],
               },
-              schema: Schema.issue,
+              schema: SCHEMA.issue,
             )
           end
         end
@@ -134,7 +126,6 @@ module Runners
 
     def rails_option
       rails = config_linter[:rails]
-      rails = config_linter.dig(:options, :rails) if rails.nil?
       case
       when rails && !rails_cops_removed?
         ['--rails']
@@ -156,7 +147,7 @@ module Runners
     end
 
     def rubocop_config_file
-      config_linter[:config] || config_linter.dig(:options, :config)
+      config_linter[:config]
     end
 
     def rubocop_config_file_option
@@ -206,12 +197,12 @@ module Runners
 
     # @see https://github.com/rubocop/rubocop/blob/v0.72.0/CHANGELOG.md
     def rails_cops_removed?
-      Gem::Version.create(analyzer_version) >= Gem::Version.create("0.72.0")
+      Gem::Version.new(analyzer_version) >= Gem::Version.new("0.72.0")
     end
 
     def cache_root
       # @see https://github.com/rubocop/rubocop/blob/v0.91.0/CHANGELOG.md
-      if Gem::Version.create(analyzer_version) >= Gem::Version.create("0.91.0")
+      if Gem::Version.new(analyzer_version) >= Gem::Version.new("0.91.0")
         ["--cache-root=#{File.join(Dir.tmpdir, 'rubocop-cache')}"]
       else
         []

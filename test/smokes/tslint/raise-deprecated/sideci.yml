@@ -1,5 +1,4 @@
 linter:
   tslint:
-    options:
-      project: 'tsconfig.json'
-      type-check: true
+    project: 'tsconfig.json'
+    type-check: true

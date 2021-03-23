@@ -9,6 +9,11 @@ in_array(
     true,
 );
 
+class Hoge
+{
+    const HOGE = 'hoge';
+} $hoge = new Hoge();
+
 echo <<<END
       a
      b

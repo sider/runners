@@ -4,15 +4,47 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.44.1...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.45.0...HEAD)
+
+Breaking:
+
+- Support npm 7 [#2189](https://github.com/sider/runners/pull/2189)
+- Remove deprecated `linter.{id}.options` [#2190](https://github.com/sider/runners/pull/2190) [#2193](https://github.com/sider/runners/pull/2193)
 
 Updated environments:
 
-- **devon_rex** 2.40.6 -> master [#2128](https://github.com/sider/runners/pull/2128)
+- **devon_rex** 2.41.0 -> 2.42.0 [#2208](https://github.com/sider/runners/pull/2208) ([diff](https://github.com/sider/devon_rex/compare/2.41.0...2.42.0))
+
+Updated tools:
+
+- **ktlint** 0.39.0 -> 0.41.0 [#2205](https://github.com/sider/runners/pull/2205)
+
+Misc:
+
+- Loosen unsatisfied constraints for npm packages [#2171](https://github.com/sider/runners/pull/2171)
+- Improve analysis finish message [#2187](https://github.com/sider/runners/pull/2187)
+- **ESLint** Provide new recommended configuration [#2165](https://github.com/sider/runners/pull/2165)
+- **ESLint** Use `--no-error-on-unmatched-pattern` if possible [#2199](https://github.com/sider/runners/pull/2199)
+- Simplify `sider.yml` schema [#2192](https://github.com/sider/runners/pull/2192)
+- Secure `pip install` [#2194](https://github.com/sider/runners/pull/2194)
+- Introduce common option `target` [#2191](https://github.com/sider/runners/pull/2191)
+- **PHPMD** Handle syntax error as issue [#2201](https://github.com/sider/runners/pull/2201)
+- Add `linter.<id>.dependencies` option for npm tools [#2202](https://github.com/sider/runners/pull/2202)
+- **ktlint** Add issue ID for syntax error [#2206](https://github.com/sider/runners/pull/2206)
+- **Clang-Tidy** Better `apt-get install` failure [#2210](https://github.com/sider/runners/pull/2210)
+
+## 0.45.0
+
+[Full diff](https://github.com/sider/runners/compare/0.44.1...0.45.0)
+
+Updated environments:
+
+- **devon_rex** 2.40.6 -> 2.41.0 [#2128](https://github.com/sider/runners/pull/2128) [#2183](https://github.com/sider/runners/pull/2183) ([diff](https://github.com/sider/devon_rex/compare/2.40.6...2.41.0))
 
 Updated tools:
 
 - **Clang-Tidy** 10 -> 11 [#2154](https://github.com/sider/runners/pull/2154)
+- **detekt** 1.15.0 -> 1.16.0 [#2176](https://github.com/sider/runners/pull/2176)
 - **ESLint** 7.21.0 -> 7.22.0 [#2178](https://github.com/sider/runners/pull/2178)
 - **Flake8** 3.8.4 -> 3.9.0 [#2174](https://github.com/sider/runners/pull/2174)
 - **GolangCI-Lint** 1.37.1 -> 1.38.0 [#2138](https://github.com/sider/runners/pull/2138)
@@ -35,6 +67,7 @@ Misc:
 - **ESLint** Update pre-installed packages [#2155](https://github.com/sider/runners/pull/2155)
 - **Flake8** Enable new recommended configuration [#2157](https://github.com/sider/runners/pull/2157)
 - Simplify generated `Gemfile` [#2168](https://github.com/sider/runners/pull/2168)
+- **PHP_CodeSniffer** Enable new recommended configuration [#2182](https://github.com/sider/runners/pull/2182)
 - **Flake8** Use default formatter [#2181](https://github.com/sider/runners/pull/2181)
 
 ## 0.44.1

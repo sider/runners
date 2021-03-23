@@ -2,25 +2,25 @@ module Runners
   class Processor::Cpplint < Processor
     include RecommendedConfig
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
+
       # @type self: SchemaClass
-      let :runner_config, Runners::Schema::BaseConfig.base.update_fields { |fields|
-        fields.merge!({
-          target: enum?(string, array(string)),
-          extensions: string?,
-          headers: string?,
-          filter: string?,
-          linelength: integer?,
-          exclude: enum?(string, array(string)),
-        })
-      }
+      let :config, base(
+        target: target,
+        extensions: string?,
+        headers: string?,
+        filter: string?,
+        linelength: integer?,
+        exclude: one_or_more_strings?,
+      )
 
       let :issue, object(
         confidence: string?,
       )
     end
 
-    register_config_schema(name: :cpplint, schema: Schema.runner_config)
+    register_config_schema(name: :cpplint, schema: SCHEMA.config)
 
     DEFAULT_TARGET = ".".freeze
     CONFIG_FILE_NAME = "CPPLINT.cfg".freeze
@@ -110,7 +110,7 @@ module Runners
               object: {
                 confidence: confidence,
               },
-              schema: Schema.issue,
+              schema: SCHEMA.issue,
             )
           end
         end

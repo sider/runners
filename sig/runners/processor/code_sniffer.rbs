@@ -3,11 +3,12 @@ module Runners
     include PHP
 
     class SchemaClass < StrongJSON
-      def target: () -> StrongJSON::Type::Optional[untyped]
-      def runner_config: () -> StrongJSON::Type::Object[untyped]
+      include Schema::ConfigTypes
+
+      def config: () -> StrongJSON::Type::Object[untyped]
       def issue: () -> StrongJSON::Type::Object[untyped]
     end
-    Schema: SchemaClass
+    SCHEMA: SchemaClass
 
     class DefaultOptions
       attr_reader standard: String
@@ -17,9 +18,11 @@ module Runners
       def initialize: (standard: String, extensions: String, target: String) -> void
     end
 
+    DEFAULT_CONFIG_FILE: String
+
     OPTIONS_CAKE_PHP: DefaultOptions
     OPTIONS_SYMFONY: DefaultOptions
-    OPTIONS_PSR2: DefaultOptions
+    OPTIONS_DEFAULT: DefaultOptions
 
     private
 

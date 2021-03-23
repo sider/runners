@@ -2,44 +2,34 @@ module Runners
   class Processor::Stylelint < Processor
     include Nodejs
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
-        fields.merge!({
-                        config: string?,
-                        syntax: string?,
-                        'ignore-path': string?,
-                        'ignore-disables': boolean?,
-                        'report-needless-disables': boolean?,
-                        quiet: boolean?,
-                        glob: string?,
-                        # NOTE: DO NOT ADD ANY OPTIONS to under `options` option.
-                        options: optional(object(
-                                            config: string?,
-                                            'ignore-path': string?,
-                                            syntax: string?,
-                                            'ignore-disables': boolean?,
-                                            'report-needless-disables': boolean?,
-                                            quiet: boolean?,
-                                            glob: string?
-                                          ))
-                      })
-      }
+      # @type self: SchemaClass
+      let :config, npm(
+        config: string?,
+        syntax: string?,
+        'ignore-path': string?,
+        'ignore-disables': boolean?,
+        'report-needless-disables': boolean?,
+        quiet: boolean?,
+        target: target,
+        glob: target, # alias for `target`
+      )
 
       let :issue, object(
         severity: string?,
       )
     end
 
-    register_config_schema(name: :stylelint, schema: Schema.runner_config)
+    register_config_schema(name: :stylelint, schema: SCHEMA.config)
 
     CONSTRAINTS = {
       "stylelint" => Gem::Requirement.new(">= 8.3.0", "< 14.0.0").freeze,
     }.freeze
 
     DEFAULT_TARGET_FILES = "*.{css,less,sass,scss,sss}".freeze
-    DEFAULT_GLOB = "**/#{DEFAULT_TARGET_FILES}".freeze
+    DEFAULT_TARGET = "**/#{DEFAULT_TARGET_FILES}".freeze
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / 'sider_recommended_config.yaml').to_path.freeze
     DEFAULT_CONFIG_FILE_OLD = (Pathname(Dir.home) / 'sider_recommended_config.old.yaml').to_path.freeze
     DEFAULT_IGNORE_FILE = (Pathname(Dir.home) / 'sider_recommended_stylelintignore').to_path.freeze
@@ -47,6 +37,8 @@ module Runners
     def self.config_example
       <<~'YAML'
         root_dir: project/
+        dependencies:
+          - my-stylelint-plugin@2
         npm_install: false
         config: config/.stylelintrc.yml
         syntax: scss
@@ -54,13 +46,11 @@ module Runners
         ignore-disables: true
         report-needless-disables: true
         quiet: true
-        glob: app/**/*.scss
+        target: ["app/**/*.scss"]
       YAML
     end
 
     def setup
-      add_warning_if_deprecated_options
-
       prepare_ignore_file
 
       begin
@@ -89,7 +79,7 @@ module Runners
       # The `--allow-empty-input` option breaks with v10.0.0. Fixed with v10.0.1.
       # @see https://github.com/stylelint/stylelint/releases/tag/10.0.1
       # @see https://github.com/stylelint/stylelint/pull/4029
-      if Gem::Version.create(analyzer_version) >= Gem::Version.create("10.0.1")
+      if Gem::Version.new(analyzer_version) >= Gem::Version.new("10.0.1")
         default_options << '--allow-empty-input'
       end
 
@@ -102,7 +92,7 @@ module Runners
         *ignore_disables,
         *report_needless_disables,
         *quiet,
-        glob
+        *glob,
       )
 
       # https://github.com/stylelint/stylelint/blob/master/docs/user-guide/cli.md#exit-codes
@@ -123,35 +113,35 @@ module Runners
     private
 
     def glob
-      config_linter[:glob] || config_linter.dig(:options, :glob) || DEFAULT_GLOB
+      Array(config_linter[:target] || config_linter[:glob] || DEFAULT_TARGET)
     end
 
     def stylelint_config
-      config = config_linter[:config] || config_linter.dig(:options, :config)
+      config = config_linter[:config]
       config ? ["--config=#{config}"] : []
     end
 
     def syntax
-      syntax = config_linter[:syntax] || config_linter.dig(:options, :syntax)
+      syntax = config_linter[:syntax]
       syntax ? ["--syntax=#{syntax}"] : []
     end
 
     def ignore_path
-      path = config_linter[:'ignore-path'] || config_linter.dig(:options, :'ignore-path')
+      path = config_linter[:'ignore-path']
       path ? ["--ignore-path=#{path}"] : []
     end
 
     def ignore_disables
-      (config_linter[:'ignore-disables'] || config_linter.dig(:options, :'ignore-disables')) ? ["--ignore-disables"] : []
+      config_linter[:'ignore-disables'] ? ["--ignore-disables"] : []
     end
 
     def report_needless_disables
-      rd = config_linter[:'report-needless-disables'] || config_linter.dig(:options, :'report-needless-disables')
+      rd = config_linter[:'report-needless-disables']
       rd ? ["--report-needless-disables"] : []
     end
 
     def quiet
-      (config_linter[:quiet] || config_linter.dig(:options, :quiet)) ? ["--quiet"] : []
+      config_linter[:quiet] ? ["--quiet"] : []
     end
 
     def parse_result(stdout)
@@ -172,7 +162,7 @@ module Runners
             object: {
               severity: warning[:severity],
             },
-            schema: Schema.issue,
+            schema: SCHEMA.issue,
           )
         end
       end
@@ -206,7 +196,7 @@ module Runners
       return if config_file_path
 
       # NOTE: `stylelint-config-recommended@2` does not work with `stylelint@11`.
-      src = if Gem::Version.create(analyzer_version) >= Gem::Version.create("11.0.0")
+      src = if Gem::Version.new(analyzer_version) >= Gem::Version.new("11.0.0")
               DEFAULT_CONFIG_FILE
             else
               DEFAULT_CONFIG_FILE_OLD
@@ -224,7 +214,7 @@ module Runners
 
     # returns available config file path. If the file doesn't exist, it returns nil.
     def config_file_path
-      config_path = config_linter[:config] || config_linter.dig(:options, :config)
+      config_path = config_linter[:config]
       if config_path
         current_dir / config_path
       elsif package_json_path.exist? && package_json.key?(:stylelint)

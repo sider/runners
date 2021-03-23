@@ -2,17 +2,18 @@ module Runners
   class Processor::ClangTidy < Processor
     include CPlusPlus
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.cplusplus
+      # @type self: SchemaClass
+      let :config, cplusplus
 
       let :issue, object(
         severity: string,
       )
     end
 
-    register_config_schema(name: :clang_tidy, schema: Schema.runner_config)
+    register_config_schema(name: :clang_tidy, schema: SCHEMA.config)
 
     def self.config_example
       <<~'YAML'
@@ -76,7 +77,7 @@ module Runners
           object: {
             severity: severity,
           },
-          schema: Schema.issue,
+          schema: SCHEMA.issue,
         )
       end
     end

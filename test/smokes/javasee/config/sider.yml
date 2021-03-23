@@ -1,4 +1,5 @@
 linter:
   javasee:
-    dir: src
+    target: src
+    dir: []
     config: java_see.yml

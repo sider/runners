@@ -1,5 +1,7 @@
 module Runners
   module CPlusPlus
+    class AptInstallFailed < UserError; end
+
     # @see https://github.com/github/linguist/blob/775b07d40c04ef6e0051a541886a8f1e30a892f4/lib/linguist/languages.yml#L532-L535
     # @see https://github.com/github/linguist/blob/775b07d40c04ef6e0051a541886a8f1e30a892f4/lib/linguist/languages.yml#L568-L584
     CPP_SOURCES_GLOB = "*.{c,cpp,c++,cc,cp,cxx}".freeze
@@ -30,8 +32,15 @@ module Runners
 
       if packages.empty?
         trace_writer.message "No apt packages to install."
-      else
-        capture3!("sudo", "apt-get", "install", "-qq", "-y", "--no-install-recommends", *packages)
+        return
+      end
+
+      begin
+        capture3! "sudo", "apt-get", "install", "-qq", "--yes", "--no-install-recommends", *packages
+      rescue Shell::ExecError
+        message = "`apt-get install` failed. Please check that the package names or versions are correct in your `#{config.path_name}`."
+        trace_writer.error message
+        raise AptInstallFailed, message
       end
     end
 

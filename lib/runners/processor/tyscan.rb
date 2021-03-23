@@ -2,16 +2,16 @@ module Runners
   class Processor::Tyscan < Processor
     include Nodejs
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.npm.update_fields { |fields|
-        fields.merge!({
-                        config: string?,
-                        tsconfig: string?,
-                        paths: array?(string),
-                      })
-      }
+      # @type self: SchemaClass
+      let :config, npm(
+        config: string?,
+        tsconfig: string?,
+        target: target,
+        paths: target, # alias for `target`
+      )
 
       let :issue, object(
         id: string,
@@ -19,7 +19,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :tyscan, schema: Schema.runner_config)
+    register_config_schema(name: :tyscan, schema: SCHEMA.config)
 
     CONSTRAINTS = {
       "tyscan" => Gem::Requirement.new(">= 0.2.1", "< 1.0.0").freeze,
@@ -30,10 +30,12 @@ module Runners
     def self.config_example
       <<~'YAML'
         root_dir: project/
+        dependencies:
+          - my-tyscan-plugin@2
         npm_install: false
         config: config/tyscan.yml
         tsconfig: src/tsconfig.json
-        paths: [src/]
+        target: [src/]
       YAML
     end
 
@@ -60,22 +62,22 @@ module Runners
 
     def tyscan_test
       args = []
-      args.unshift("-t", config_linter[:tsconfig]) if config_linter[:tsconfig]
-      args.unshift("-c", config_linter[:config]) if config_linter[:config]
+      args << "-t" << config_linter[:tsconfig] if config_linter[:tsconfig]
+      args << "-c" << config_linter[:config] if config_linter[:config]
 
       _, _, status = capture3(nodejs_analyzer_bin, "test", *args)
 
       if status.nil? || !status.success?
         msg = "`tyscan test` failed. It may cause an unintended match."
-        add_warning(msg, file: config_linter[:config] || "tyscan.yml")
+        add_warning(msg, file: config_linter[:config] || DEFAULT_CONFIG_FILE)
       end
     end
 
     def tyscan_scan
       args = []
-      args.unshift(*config_linter[:paths]) if config_linter[:paths]
-      args.unshift("-t", config_linter[:tsconfig]) if config_linter[:tsconfig]
-      args.unshift("-c", config_linter[:config]) if config_linter[:config]
+      args << "-t" << config_linter[:tsconfig] if config_linter[:tsconfig]
+      args << "-c" << config_linter[:config] if config_linter[:config]
+      args += Array(config_linter[:target] || config_linter[:paths])
 
       stdout, _stderr, status = capture3(nodejs_analyzer_bin, "scan", "--json", *args)
 
@@ -102,7 +104,7 @@ module Runners
               id: match[:rule][:id],
               message: match[:rule][:message],
             },
-            schema: Schema.issue,
+            schema: SCHEMA.issue,
           )
         end
       end

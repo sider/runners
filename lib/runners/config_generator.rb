@@ -8,7 +8,7 @@ module Runners
     private
 
     def load_template(tools)
-      filename = __FILE__.sub(".rb", ".yml.erb")
+      filename = __FILE__.gsub(/\.rb\Z/, ".yml.erb")
       erb = ERB.new(File.read(filename), trim_mode: "-")
       erb.filename = filename
       erb.result_with_hash({

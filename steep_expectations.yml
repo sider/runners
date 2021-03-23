@@ -3,10 +3,10 @@
   diagnostics:
   - range:
       start:
-        line: 107
+        line: 103
         character: 28
       end:
-        line: 110
+        line: 106
         character: 11
     severity: ERROR
     message: |-
@@ -15,20 +15,20 @@
     code: Ruby::ArgumentTypeMismatch
   - range:
       start:
-        line: 108
+        line: 104
         character: 17
       end:
-        line: 108
+        line: 104
         character: 24
     severity: ERROR
     message: Type `nil` does not have method `add_tab`
     code: Ruby::NoMethod
   - range:
       start:
-        line: 109
+        line: 105
         character: 17
       end:
-        line: 109
+        line: 105
         character: 24
     severity: ERROR
     message: Type `nil` does not have method `add_tab`
@@ -49,81 +49,37 @@
   diagnostics:
   - range:
       start:
-        line: 183
+        line: 184
         character: 10
       end:
-        line: 183
+        line: 184
         character: 13
     severity: ERROR
     message: The branch is unreachable because the condition is exhaustive
     code: Ruby::ElseOnExhaustiveCase
-- file: lib/runners/processor/haml_lint.rb
+- file: lib/runners/processor/languagetool.rb
   diagnostics:
   - range:
       start:
-        line: 145
-        character: 47
+        line: 93
+        character: 64
       end:
-        line: 145
-        character: 49
+        line: 93
+        character: 77
     severity: ERROR
-    message: Type `(::Gem::Version | nil)` does not have method `>=`
+    message: Type `bot` does not have method `delete_prefix`
     code: Ruby::NoMethod
 - file: lib/runners/processor/misspell.rb
   diagnostics:
   - range:
       start:
-        line: 71
+        line: 64
         character: 51
       end:
-        line: 71
+        line: 64
         character: 55
     severity: ERROR
     message: Type `bot` does not have method `size`
-    code: Ruby::NoMethod
-- file: lib/runners/processor/reek.rb
-  diagnostics:
-  - range:
-      start:
-        line: 102
-        character: 10
-      end:
-        line: 102
-        character: 12
-    severity: ERROR
-    message: Type `(::Gem::Version | nil)` does not have method `>=`
-    code: Ruby::NoMethod
-  - range:
-      start:
-        line: 102
-        character: 47
-      end:
-        line: 102
-        character: 48
-    severity: ERROR
-    message: Type `(::Gem::Version | nil)` does not have method `<`
-    code: Ruby::NoMethod
-- file: lib/runners/processor/rubocop.rb
-  diagnostics:
-  - range:
-      start:
-        line: 209
-        character: 44
-      end:
-        line: 209
-        character: 46
-    severity: ERROR
-    message: Type `(::Gem::Version | nil)` does not have method `>=`
-    code: Ruby::NoMethod
-  - range:
-      start:
-        line: 214
-        character: 47
-      end:
-        line: 214
-        character: 49
-    severity: ERROR
-    message: Type `(::Gem::Version | nil)` does not have method `>=`
     code: Ruby::NoMethod
 - file: lib/runners/processor/shellcheck.rb
   diagnostics:
@@ -144,28 +100,6 @@
                 ::Object <: ::String
                   ::BasicObject <: ::String
     code: Ruby::IncompatibleAssignment
-- file: lib/runners/processor/stylelint.rb
-  diagnostics:
-  - range:
-      start:
-        line: 92
-        character: 47
-      end:
-        line: 92
-        character: 49
-    severity: ERROR
-    message: Type `(::Gem::Version | nil)` does not have method `>=`
-    code: Ruby::NoMethod
-  - range:
-      start:
-        line: 209
-        character: 53
-      end:
-        line: 209
-        character: 55
-    severity: ERROR
-    message: Type `(::Gem::Version | nil)` does not have method `>=`
-    code: Ruby::NoMethod
 - file: lib/runners/processor.rb
   diagnostics:
   - range:
@@ -203,20 +137,10 @@
     code: Ruby::ArgumentTypeMismatch
   - range:
       start:
-        line: 183
-        character: 42
-      end:
-        line: 183
-        character: 44
-    severity: ERROR
-    message: Type `(::Gem::Version | nil)` does not have method `<=`
-    code: Ruby::NoMethod
-  - range:
-      start:
-        line: 302
+        line: 282
         character: 45
       end:
-        line: 302
+        line: 282
         character: 50
     severity: ERROR
     message: Type `(::String | ::Array[::String] | nil)` does not have method `split`

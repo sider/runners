@@ -1,4 +1,5 @@
 linter:
   phinder:
     rule: rules
-    php: src
+    target: src
+    php: foo

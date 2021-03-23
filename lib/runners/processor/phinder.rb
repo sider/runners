@@ -2,15 +2,15 @@ module Runners
   class Processor::Phinder < Processor
     include PHP
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
-        fields.merge!({
-                        rule: string?,
-                        php: string?,
-                      })
-      }
+      # @type self: SchemaClass
+      let :config, base(
+        rule: string?,
+        target: string?,
+        php: string?, # alias for `target`
+      )
 
       let :issue, object(
         id: string,
@@ -19,7 +19,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :phinder, schema: Schema.runner_config)
+    register_config_schema(name: :phinder, schema: SCHEMA.config)
 
     DEFAULT_RULE_FILE = "phinder.yml".freeze
 
@@ -27,13 +27,13 @@ module Runners
       <<~'YAML'
         root_dir: project/
         rule: rules/
-        php: src/
+        target: src/
       YAML
     end
 
     private def test_phinder_config
       args = []
-      args.push("--config", config_linter[:rule]) if config_linter[:rule]
+      args << "--config" << config_linter[:rule] if config_linter[:rule]
 
       _, stderr, status = capture3(analyzer_bin, "test", *args)
 
@@ -64,8 +64,10 @@ module Runners
 
     private def run_phinder
       args = []
-      args.push("--config", config_linter[:rule]) if config_linter[:rule]
-      args << config_linter[:php] if config_linter[:php]
+      args << "--config" << config_linter[:rule] if config_linter[:rule]
+
+      target = config_linter[:target] || config_linter[:php]
+      args << target if target
 
       stdout, stderr, status = capture3(analyzer_bin, "find", "-f", "json", *args)
 
@@ -96,7 +98,7 @@ module Runners
                 message: issue[:rule][:message],
                 justifications: Array(issue[:justifications]),
               },
-              schema: Schema.issue,
+              schema: SCHEMA.issue,
             )
           end
         end

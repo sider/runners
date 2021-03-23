@@ -3,14 +3,16 @@ module Runners
     include Java
 
     class SchemaClass < StrongJSON
+      include Schema::ConfigTypes
+
       def available_languages: () -> StrongJSON::Type::Enum[untyped]
-      def runner_config: () -> StrongJSON::Type::Object[untyped]
+      def config: () -> StrongJSON::Type::Object[untyped]
       def issue: () -> StrongJSON::Type::Object[untyped]
     end
-    Schema: SchemaClass
+    SCHEMA: SchemaClass
 
     DEFAULT_MINIMUM_TOKENS: Integer
-    DEFAULT_FILES: String
+    DEFAULT_TARGET: String
     DEFAULT_LANGUAGE: Array[String]
 
     attr_accessor force_option_skip_lexical_errors: bool

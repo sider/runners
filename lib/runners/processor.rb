@@ -180,7 +180,7 @@ module Runners
     end
 
     def add_warning_if_deprecated_version(minimum:, file: nil, deadline: nil)
-      unless Gem::Version.create(minimum) <= Gem::Version.create(analyzer_version)
+      unless Gem::Version.new(minimum) <= Gem::Version.new(analyzer_version)
         deadline_str = deadline ? deadline.strftime('on %B %-d, %Y') : 'in the near future'
         add_warning <<~MSG, file: file
           DEPRECATION WARNING!!!
@@ -188,26 +188,6 @@ module Runners
           Please consider upgrading to `#{minimum}` or a newer version.
         MSG
       end
-    end
-
-    def add_warning_if_deprecated_options
-      name = :options
-      return unless config_linter[name]
-
-      file = config.path_name
-      add_warning <<~MSG, file: file
-        DEPRECATION WARNING!!!
-        The `#{config_field_path(name)}` option is deprecated. Fix your `#{file}` as follows:
-        See #{analyzer_doc} for details.
-
-        ```diff
-         linter:
-           #{analyzer_id}:
-        -    options:
-        -      foo: "bar"
-        +    foo: "bar"
-        ```
-      MSG
     end
 
     def add_warning_for_deprecated_option(name, to:)

@@ -3,20 +3,19 @@ module Runners
     include Java
     include Kotlin
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.java.update_fields { |fields|
-        fields.merge!({
-          target: enum?(string, array(string)),
-          ruleset: enum?(string, array(string)),
-          disabled_rules: enum?(string, array(string)),
-          experimental: boolean?,
-        })
-      }
+      # @type self: SchemaClass
+      let :config, java(
+        target: target,
+        ruleset: one_or_more_strings?,
+        disabled_rules: one_or_more_strings?,
+        experimental: boolean?,
+      )
     end
 
-    register_config_schema(name: :ktlint, schema: Schema.runner_config)
+    register_config_schema(name: :ktlint, schema: SCHEMA.config)
 
     def self.config_example
       <<~'YAML'
@@ -66,11 +65,20 @@ module Runners
     def parse_json_output(output)
       JSON.parse(output, symbolize_names: true).flat_map do |hash|
         hash.fetch(:errors).map do |error|
+          rule = error.fetch(:rule)
+          message = error.fetch(:message)
+
+          # @see https://github.com/pinterest/ktlint/blob/0.41.0/ktlint/src/main/kotlin/com/pinterest/ktlint/Main.kt#L478-L483
+          if rule == "" && message.include?("Not a valid Kotlin file")
+            # NOTE: This rule ID is unique to Sider. It should not be duplicated with the existing rule IDs.
+            rule = "SyntaxError"
+          end
+
           Issue.new(
             path: relative_path(hash.fetch(:file)),
             location: Location.new(start_line: error[:line], start_column: error[:column]),
-            id: error[:rule],
-            message: error[:message],
+            id: rule,
+            message: message,
           )
         end
       end

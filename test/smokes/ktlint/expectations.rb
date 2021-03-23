@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "0.39.0"
+default_version = "0.41.0"
 
 s.add_test(
   "success",
@@ -8,7 +8,7 @@ s.add_test(
   analyzer: { name: "ktlint", version: default_version },
   issues: [
     {
-      id: "18748d47ed6c20995492c1190b0fb829b794f8c1",
+      id: "SyntaxError",
       path: "src/Foo.kt",
       location: { start_line: 1, start_column: 1 },
       message: "Not a valid Kotlin file (1:1 expecting a top level declaration) (cannot be auto-corrected)",
@@ -61,7 +61,7 @@ s.add_test(
   issues: [
     {
       id: "experimental:package-name",
-      path: "src/App.kt",
+      path: "src/foo/App.kt",
       location: { start_line: 1, start_column: 1 },
       message: "Package name must not contain underscore (cannot be auto-corrected)",
       links: [],
@@ -72,7 +72,7 @@ s.add_test(
     },
     {
       id: "experimental:spacing-around-angle-brackets",
-      path: "src/App.kt",
+      path: "src/foo/App.kt",
       location: { start_line: 5, start_column: 22 },
       message: "Unexpected spacing after \"<\"",
       links: [],
@@ -83,7 +83,7 @@ s.add_test(
     },
     {
       id: "no-semi",
-      path: "src/App.kt",
+      path: "src/foo/App.kt",
       location: { start_line: 6, start_column: 19 },
       message: "Unnecessary semicolon",
       links: [],

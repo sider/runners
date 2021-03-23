@@ -3,20 +3,18 @@ module Runners
     include Java
 
     class SchemaClass < StrongJSON
-      def runner_config: () -> StrongJSON::Type::Object[untyped]
+      include Schema::ConfigTypes
+
+      def config: () -> StrongJSON::Type::Object[untyped]
       def issue: () -> StrongJSON::Type::Object[untyped]
     end
-    Schema: SchemaClass
+    SCHEMA: SchemaClass
 
     DEFAULT_TARGET: String
-    DEFAULT_EXT: Array[String]
-    DEFAULT_EXCLUDE: Array[String]
+    DEFAULT_EXT: String
+    DEFAULT_EXCLUDE: String
     DEFAULT_LANGUAGE: String
     DEFAULT_ENCODING: String
-    DEFAULT_DISABLE: Array[String]
-    DEFAULT_ENABLE: Array[String]
-    DEFAULT_DISABLECATEGORIES: Array[String]
-    DEFAULT_ENABLECATEGORIES: Array[String]
 
     private
 
@@ -32,7 +30,7 @@ module Runners
 
     def config_encoding: () -> String
 
-    def cli_comma_separated_list: (Symbol, Array[String], String) -> Array[String]
+    def cli_comma_separated_list: (Symbol, String) -> Array[String]
 
     def cli_disable: () -> Array[String]
 

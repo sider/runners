@@ -3,31 +3,28 @@ module Runners
     include Java
     include Kotlin
 
-    Schema = _ = StrongJSON.new do
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
+
       # @type self: SchemaClass
-
-      let :target, enum?(string, array(string))
-
-      let :runner_config, Runners::Schema::BaseConfig.java.update_fields { |fields|
-        fields.merge!({
-          baseline: string?,
-          config: enum?(string, array(string)),
-          "config-resource": enum?(string, array(string)),
-          "disable-default-rulesets": boolean?,
-          excludes: enum?(string, array(string)),
-          includes: enum?(string, array(string)),
-          target: target,
-          input: target, # alias for `target`
-          parallel: boolean?,
-        })
-      }
+      let :config, java(
+        baseline: string?,
+        config: one_or_more_strings?,
+        "config-resource": one_or_more_strings?,
+        "disable-default-rulesets": boolean?,
+        excludes: one_or_more_strings?,
+        includes: one_or_more_strings?,
+        target: target,
+        input: target, # alias for `target`
+        parallel: boolean?,
+      )
 
       let :issue, object(
         severity: string
       )
     end
 
-    register_config_schema(name: :detekt, schema: Schema.runner_config)
+    register_config_schema(name: :detekt, schema: SCHEMA.config)
 
     def self.config_example
       <<~'YAML'
@@ -110,7 +107,7 @@ module Runners
               id: id,
               message: message,
               object: { severity: error[:severity] },
-              schema: Schema.issue
+              schema: SCHEMA.issue
             )
           else
             warning = error.text or raise "Required text: #{error.inspect}"

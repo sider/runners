@@ -3,22 +3,21 @@ module Runners
     include Ruby
     include RuboCopUtils
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.ruby.update_fields { |fields|
-        fields.merge!({
-          target: enum?(string, array(string)),
-          config: string?,
-        })
-      }
+      # @type self: SchemaClass
+      let :config, ruby(
+        target: target,
+        config: string?,
+      )
 
       let :issue, object(
         severity: string,
       )
     end
 
-    register_config_schema(name: :slim_lint, schema: Schema.runner_config)
+    register_config_schema(name: :slim_lint, schema: SCHEMA.config)
 
     GEM_NAME = "slim_lint".freeze
     REQUIRED_GEM_NAMES = ["rubocop"].freeze
@@ -120,7 +119,7 @@ module Runners
           object: {
             severity: severities.fetch(severity),
           },
-          schema: Schema.issue,
+          schema: SCHEMA.issue,
         )
       end
     end

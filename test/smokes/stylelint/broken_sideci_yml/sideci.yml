@@ -1,8 +1,7 @@
 linter:
   stylelint:
     npm_install: true
-    options:
-      config: mystylelintrc.yaml
-      ignore-path:
-        - .stylelintignore
-      syntax: sugarss
+    config: mystylelintrc.yaml
+    ignore-path:
+      - .stylelintignore
+    syntax: sugarss

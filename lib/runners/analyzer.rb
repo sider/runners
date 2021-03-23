@@ -17,7 +17,12 @@ module Runners
     end
 
     def ==(other)
-      other.instance_of?(self.class) && name == other.name && version == other.version
+      self.class == other.class && name == other.name && version == other.version
+    end
+    alias eql? ==
+
+    def hash
+      name.hash ^ version.hash
     end
   end
 end

@@ -438,8 +438,24 @@ s.add_test(
 
 s.add_test(
   "pinned_stylelint_version",
-  analyzer: :_, type: "failure",
-  message: "Your stylelint dependencies do not satisfy our constraints `stylelint@>=8.3.0 <14.0.0`. Please update them."
+  analyzer: { name: "stylelint", version: default_version },
+  type: "success",
+  issues: [
+    {
+      message: "Unknown rule declaration-block-no-ignored-properties.",
+      links: %w[
+        https://github.com/stylelint/stylelint/tree/13.12.0/lib/rules/declaration-block-no-ignored-properties
+      ],
+      id: "declaration-block-no-ignored-properties",
+      path: "test.css",
+      location: { start_line: 1, start_column: 1 },
+      object: { severity: "error" },
+      git_blame_info: {
+        commit: :_, line_hash: "6cb82c7c1bab86194932ba32abd0fe35f7cd6109", original_line: 1, final_line: 1
+      }
+    }
+  ],
+  warnings: [{ message: "Installed `stylelint@7.13.0` does not satisfy our constraint `>=8.3.0 <14.0.0`. Please update it as possible.", file: "package.json" }]
 )
 
 s.add_test(
@@ -485,14 +501,15 @@ s.add_test(
   ]
 )
 
+# Install peer dependencies
 s.add_test(
   "npm_install_without_stylelint",
-  analyzer: { name: "stylelint", version: default_version },
+  analyzer: { name: "stylelint", version: "10.1.0" },
   type: "success",
   issues: [
     {
       message: "Expected a trailing semicolon",
-      links: %W[https://github.com/stylelint/stylelint/tree/#{default_version}/lib/rules/declaration-block-trailing-semicolon],
+      links: %w[https://github.com/stylelint/stylelint/tree/10.1.0/lib/rules/declaration-block-trailing-semicolon],
       id: "declaration-block-trailing-semicolon",
       path: "test.less",
       location: { start_line: 8, start_column: 15 },
@@ -503,7 +520,7 @@ s.add_test(
     },
     {
       message: "Expected indentation of 2 spaces",
-      links: %W[https://github.com/stylelint/stylelint/tree/#{default_version}/lib/rules/indentation],
+      links: %w[https://github.com/stylelint/stylelint/tree/10.1.0/lib/rules/indentation],
       id: "indentation",
       path: "test.scss",
       location: { start_line: 2, start_column: 5 },
@@ -514,7 +531,7 @@ s.add_test(
     },
     {
       message: "Expected no more than 1 empty line",
-      links: %W[https://github.com/stylelint/stylelint/tree/#{default_version}/lib/rules/max-empty-lines],
+      links: %w[https://github.com/stylelint/stylelint/tree/10.1.0/lib/rules/max-empty-lines],
       id: "max-empty-lines",
       path: "test.less",
       location: { start_line: 11, start_column: 1 },
@@ -525,7 +542,7 @@ s.add_test(
     },
     {
       message: "Expected no more than 1 empty line",
-      links: %W[https://github.com/stylelint/stylelint/tree/#{default_version}/lib/rules/max-empty-lines],
+      links: %w[https://github.com/stylelint/stylelint/tree/10.1.0/lib/rules/max-empty-lines],
       id: "max-empty-lines",
       path: "test.less",
       location: { start_line: 12, start_column: 1 },
@@ -536,7 +553,7 @@ s.add_test(
     },
     {
       message: 'Unexpected unknown property "font-color"',
-      links: %W[https://github.com/stylelint/stylelint/tree/#{default_version}/lib/rules/property-no-unknown],
+      links: %w[https://github.com/stylelint/stylelint/tree/10.1.0/lib/rules/property-no-unknown],
       id: "property-no-unknown",
       path: "test.scss",
       location: { start_line: 6, start_column: 7 },
@@ -547,7 +564,7 @@ s.add_test(
     },
     {
       message: "Expected empty line before rule",
-      links: %W[https://github.com/stylelint/stylelint/tree/#{default_version}/lib/rules/rule-empty-line-before],
+      links: %w[https://github.com/stylelint/stylelint/tree/10.1.0/lib/rules/rule-empty-line-before],
       id: "rule-empty-line-before",
       path: "test.scss",
       location: { start_line: 3, start_column: 3 },
@@ -558,7 +575,7 @@ s.add_test(
     },
     {
       message: "Expected empty line before rule",
-      links: %W[https://github.com/stylelint/stylelint/tree/#{default_version}/lib/rules/rule-empty-line-before],
+      links: %w[https://github.com/stylelint/stylelint/tree/10.1.0/lib/rules/rule-empty-line-before],
       id: "rule-empty-line-before",
       path: "test.scss",
       location: { start_line: 5, start_column: 5 },
@@ -569,7 +586,7 @@ s.add_test(
     },
     {
       message: 'Unexpected unknown type selector "hoge"',
-      links: %W[https://github.com/stylelint/stylelint/tree/#{default_version}/lib/rules/selector-type-no-unknown],
+      links: %w[https://github.com/stylelint/stylelint/tree/10.1.0/lib/rules/selector-type-no-unknown],
       id: "selector-type-no-unknown",
       path: "test.less",
       location: { start_line: 13, start_column: 1 },
@@ -578,9 +595,6 @@ s.add_test(
         commit: :_, line_hash: "b73282b5b554ad849a657f6278d9a8601d48da8b", original_line: 13, final_line: 13
       }
     }
-  ],
-  warnings: [
-    { message: "The required dependency `stylelint` may not be installed and be a missing peer dependency.", file: "package.json" }
   ]
 )
 
@@ -597,20 +611,14 @@ s.add_test(
   "broken_sideci_yml",
   analyzer: :_,
   type: "failure",
-  message: "`linter.stylelint.options.ignore-path` value in `sideci.yml` is invalid"
+  message: "`linter.stylelint.ignore-path` value in `sideci.yml` is invalid"
 )
 
 s.add_test(
   "options_is_deprecated",
-  analyzer: { name: "stylelint", version: default_version },
-  type: "success",
-  issues: [],
-  warnings: [
-    {
-      message: /The `linter.stylelint.options` option is deprecated/,
-      file: "sider.yml"
-    }
-  ]
+  analyzer: :_,
+  type: "failure",
+  message: "`linter.stylelint.options` in `sider.yml` is unsupported"
 )
 
 s.add_test(
@@ -656,14 +664,16 @@ s.add_test(
 
 s.add_test(
   "allow_empty_input_option_with_v10.0.0",
-  analyzer: { name: "stylelint", version: "10.0.0" }, type: "success", issues: []
+  analyzer: { name: "stylelint", version: "10.0.0" },
+  type: "success",
+  issues: []
 )
 
 s.add_test(
   "mismatched_yarnlock_and_package_json",
-  analyzer: :_,
-  type: "failure",
-  message: "`yarn install` failed. Please confirm `yarn.lock` is consistent with `package.json`."
+  analyzer: { name: "stylelint", version: "10.1.0" },
+  type: "success",
+  issues: []
 )
 
 s.add_test(

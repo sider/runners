@@ -2,31 +2,22 @@ module Runners
   class Processor::Phpmd < Processor
     include PHP
 
-    Schema = _ = StrongJSON.new do
-      # @type self: SchemaClass
+    SCHEMA = _ = StrongJSON.new do
+      extend Schema::ConfigTypes
 
-      let :runner_config, Schema::BaseConfig.base.update_fields { |fields|
-        fields.merge!({
-                        target: enum?(string, array(string)),
-                        rule: enum?(string, array(string)),
-                        minimumpriority: numeric?,
-                        suffixes: enum?(string, array(string)),
-                        exclude: enum?(string, array(string)),
-                        strict: boolean?,
-                        custom_rule_path: array?(string),
-                        # DO NOT ADD ANY OPTIONS in `options` option.
-                        options: optional(object(
-                                            rule: string?,
-                                            minimumpriority: numeric?,
-                                            suffixes: string?,
-                                            exclude: string?,
-                                            strict: boolean?
-                                          ))
-                      })
-      }
+      # @type self: SchemaClass
+      let :config, base(
+        target: target,
+        rule: one_or_more_strings?,
+        minimumpriority: numeric?,
+        suffixes: one_or_more_strings?,
+        exclude: one_or_more_strings?,
+        strict: boolean?,
+        custom_rule_path: one_or_more_strings?,
+      )
     end
 
-    register_config_schema(name: :phpmd, schema: Schema.runner_config)
+    register_config_schema(name: :phpmd, schema: SCHEMA.config)
 
     DEFAULT_TARGET = ".".freeze
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_config.xml").to_path.freeze
@@ -46,13 +37,8 @@ module Runners
       YAML
     end
 
-    def setup
-      add_warning_if_deprecated_options
-      yield
-    end
-
     def analyze(changes)
-      delete_unchanged_files(changes, only: target_files, except: config_linter[:custom_rule_path] || [])
+      delete_unchanged_files(changes, only: target_files, except: Array(config_linter[:custom_rule_path]))
       run_analyzer(changes)
     end
 
@@ -64,8 +50,7 @@ module Runners
     end
 
     def rule
-      rules = config_linter[:rule] || config_linter.dig(:options, :rule)
-      comma_separated_list(rules) || DEFAULT_CONFIG_FILE
+      comma_separated_list(config_linter[:rule]) || DEFAULT_CONFIG_FILE
     end
 
     def target_dirs
@@ -73,22 +58,22 @@ module Runners
     end
 
     def minimumpriority
-      priority = config_linter[:minimumpriority] || config_linter.dig(:options, :minimumpriority)
+      priority = config_linter[:minimumpriority]
       priority ? ["--minimumpriority", priority.to_s] : []
     end
 
     def suffixes
-      suffixes = comma_separated_list(config_linter[:suffixes] || config_linter.dig(:options, :suffixes))
+      suffixes = comma_separated_list(config_linter[:suffixes])
       suffixes ? ["--suffixes", suffixes] : []
     end
 
     def exclude
-      exclude = comma_separated_list(config_linter[:exclude] || config_linter.dig(:options, :exclude))
+      exclude = comma_separated_list(config_linter[:exclude])
       exclude ? ["--exclude", exclude] : []
     end
 
     def strict
-      strict = config_linter[:strict] || config_linter.dig(:options, :strict)
+      strict = config_linter[:strict]
       strict ? ["--strict"] : []
     end
 
@@ -127,24 +112,17 @@ module Runners
 
       raise "XML must not be empty" unless xml_root
 
-      change_paths = changes.changed_paths
-      errors = []
-      xml_root.each_element('error') do |error|
-        filename = error[:filename] or raise "Filename must not be empty: #{error.inspect}"
-        errors << error[:msg] if change_paths.include?(relative_path(filename))
-      end
-      unless errors.empty?
-        errors.each { |message| trace_writer.error message }
-        return Results::Failure.new(guid: guid, message: errors.join("\n"), analyzer: analyzer)
-      end
-
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
+        # Note: See below to view the XML schema:
+        #
+        # @see https://github.com/phpmd/phpmd/blob/2.9.1/src/main/php/PHPMD/Renderer/XMLRenderer.php
+
         xml_root.each_element('file') do |file|
-          filename = file[:name] or raise "Filename must not be empty: #{file.inspect}"
+          filename = file[:name] or raise "Filename must be present: #{file.inspect}"
           path = relative_path(filename)
 
           file.each_element('violation') do |violation|
-            message = violation.text or raise "required message: #{violation.inspect}"
+            message = violation.text or raise "Message must be present: #{violation.inspect}"
 
             result.add_issue Issue.new(
               path: path,
@@ -154,6 +132,21 @@ module Runners
               links: violation[:externalInfoUrl].then { |url| url ? [url] : [] },
             )
           end
+        end
+
+        xml_root.each_element('error') do |error|
+          filename = error[:filename] or raise "Filename must be present: #{error.inspect}"
+          path = relative_path(filename)
+
+          message = error[:msg] or raise "Message must be present: #{error.inspect}"
+          message.gsub!(filename, path.to_path) # NOTE: Convert an absolute path to a relative one.
+
+          result.add_issue Issue.new(
+            path: path,
+            location: nil,
+            id: "UnknownError", # NOTE: This ID is unique to Sider (probably not used elsewhere).
+            message: message,
+          )
         end
       end
     end

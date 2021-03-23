@@ -2,7 +2,7 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM sider/devon_rex_npm:master
+FROM sider/devon_rex_npm:2.42.0
 
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
@@ -31,11 +31,6 @@ RUN cd "${RUNNER_USER_HOME}" && \
 ENV PATH ${RUNNER_USER_HOME}/coffeelint/node_modules/.bin:${PATH}
 # See https://nodejs.org/api/cli.html#cli_node_path_path
 ENV NODE_PATH ${RUNNER_USER_HOME}/coffeelint/node_modules:${NODE_PATH}
-
-# TODO: Wait for npm 7. See #1963
-USER root
-RUN npm install --global npm@6
-USER $RUNNER_USER
 
 # Copy the main source code
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} exe ${RUNNERS_DIR}/exe

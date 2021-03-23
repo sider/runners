@@ -272,3 +272,17 @@ s.add_test(
   issues: [],
   analyzer: { name: "Clang-Tidy", version: default_version }
 )
+
+s.add_test(
+  "invalid_apt_package_name",
+  type: "failure",
+  message: "`apt-get install` failed. Please check that the package names or versions are correct in your `sider.yml`.",
+  analyzer: :_
+)
+
+s.add_test(
+  "invalid_apt_package_version",
+  type: "failure",
+  message: "`apt-get install` failed. Please check that the package names or versions are correct in your `sider.yml`.",
+  analyzer: :_
+)
