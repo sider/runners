@@ -13,10 +13,10 @@ class JavaTest < Minitest::Test
               - [org.foo, baz, 4.9]
       YAML
 
-      dest = (processor.working_dir / "deps").tap(&:mkpath)
-      processor.install_jvm_deps to: dest
+      deps_dir = (processor.working_dir / "deps").tap(&:mkpath)
+      processor.install_jvm_deps to: deps_dir
 
-      assert_equal <<~GRADLE, (dest / "build.gradle").read
+      assert_equal <<~GRADLE, (deps_dir / "build.gradle").read
         plugins {
           id 'java'
         }
@@ -40,37 +40,6 @@ class JavaTest < Minitest::Test
         * com.foo:bar:1.2.3
         * org.foo:baz:4.9
       MSG
-      assert_equal 1, processor.warnings.size
-      assert_match "The `linter.checkstyle.jvm_deps` option is deprecated. Please use the `linter.checkstyle.dependencies` option",
-                   processor.warnings.to_a.first[:message]
-    end
-  end
-
-  def test_install_jvm_deps_with_dependencies
-    with_workspace do |workspace|
-      processor = new_processor workspace, config_yaml: <<~YAML
-        linter:
-          checkstyle:
-            dependencies:
-              - com.foo:bar:1.2.3
-              - { name: "org.foo:baz", version: "3.0" }
-      YAML
-
-      dest = (processor.working_dir / "deps").tap(&:mkpath)
-      processor.install_jvm_deps to: dest
-
-      assert_match <<~GRADLE, (dest / "build.gradle").read
-        dependencies {
-          implementation 'com.foo:bar:1.2.3'
-          implementation 'org.foo:baz:3.0'
-        }
-      GRADLE
-      assert_includes trace_messages, <<~MSG.strip
-        Successfully installed 2 dependencies:
-        * com.foo:bar:1.2.3
-        * org.foo:baz:3.0
-      MSG
-      assert_empty processor.warnings
     end
   end
 

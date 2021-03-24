@@ -10,7 +10,8 @@ module Runners
     def add(message, file: nil)
       message = message.strip
       trace_writer&.warning(message, file: file)
-      @list << { message: message, file: file }
+      new_warning = { message: message, file: file }
+      @list << new_warning unless @list.include? new_warning
     end
 
     def add_warning_if_deprecated_version(analyzer_name, current:, minimum:, deadline: nil)
@@ -43,7 +44,6 @@ module Runners
     def to_a
       @list.to_a
     end
-
     alias as_json to_a
 
     private

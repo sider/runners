@@ -18,9 +18,8 @@ module Runners
 
     def each: () { (warning) -> void } -> void
 
-    def as_json: () -> Array[warning]
-
-    alias to_a as_json
+    def to_a: () -> Array[warning]
+    alias as_json to_a
 
     private
 
