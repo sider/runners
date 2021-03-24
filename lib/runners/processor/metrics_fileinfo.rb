@@ -53,7 +53,7 @@ module Runners
     def generate_issue(path, number_of_commits)
       loc = lines_of_code[path]
       commit = last_committed_at.fetch(path)
-      churn = code_churn[path.to_s]
+      churn = code_churn[path]
 
       Issue.new(
         path: path,
@@ -140,6 +140,7 @@ module Runners
       fname = fields[2] or raise "Required filepath: #{line}"
       adds = adds == "-" ? 0 : Integer(adds)
       dels = dels == "-" ? 0 : Integer(dels)
+      fname = Pathname(fname)
 
       churn = code_churn[fname] || { occurrence: 0, additions: 0, deletions: 0 }
       churn[:occurrence] += 1
