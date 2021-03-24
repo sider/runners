@@ -48,6 +48,10 @@ module Runners
       "remark"
     end
 
+    def use_git_metadata_dir?
+      true
+    end
+
     def extract_version!(command, version_option = "--version", pattern: /remark-cli: (\d+\.\d+\.\d+)/)
       super
     end
