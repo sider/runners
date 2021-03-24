@@ -23,7 +23,7 @@ module Runners
 
     def analyze_code_churn: () -> Integer
 
-    def parse_numstat_line: (String) -> void
+    def calc_churn: (Hash[Symbol, Integer], String, String) -> Hash[Symbol, Integer]
 
     def commits_within: (*String) -> Array[untyped]
 

@@ -122,8 +122,10 @@ module Runners
         lines = stdout.lines(chomp: true)
         number_of_commits = 0
         lines.reject(&:empty?).each do |line|
-          if line.include?("\t") then
-            parse_numstat_line(line)
+          adds, dels, fname = line.split("\t")
+          if adds && dels && fname
+            fname = Pathname(fname)
+            code_churn[fname] = calc_churn(code_churn[fname], adds, dels)
           else
             number_of_commits += 1
           end
@@ -133,20 +135,12 @@ module Runners
       end
     end
 
-    def parse_numstat_line(line)
-      fields = line.split("\t")
-      adds = fields[0] or raise "Required additions: #{line}"
-      dels = fields[1] or raise "Required deletions: #{line}"
-      fname = fields[2] or raise "Required filepath: #{line}"
-      adds = adds == "-" ? 0 : Integer(adds)
-      dels = dels == "-" ? 0 : Integer(dels)
-      fname = Pathname(fname)
-
-      churn = code_churn[fname] || { occurrence: 0, additions: 0, deletions: 0 }
+    def calc_churn(churn, adds, dels)
+      churn ||= { occurrence: 0, additions: 0, deletions: 0 }
       churn[:occurrence] += 1
-      churn[:additions] += adds
-      churn[:deletions] += dels
-      code_churn[fname] = churn
+      churn[:additions] += adds == "-" ? 0 : Integer(adds)
+      churn[:deletions] += dels == "-" ? 0 : Integer(dels)
+      churn
     end
 
     def commits_within(*args_range)
