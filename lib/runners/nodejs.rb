@@ -12,6 +12,9 @@ module Runners
 
     PACKAGE_JSON = "package.json".freeze
 
+    # This is actually private. Do not use it out of this class.
+    attr_accessor :nodejs_force_default_version
+
     # Return the locally installed analyzer command.
     def nodejs_analyzer_local_command
       File.join("node_modules", ".bin", analyzer_bin)
@@ -86,7 +89,7 @@ module Runners
 
       case
       when !all_npm_deps_statisfied_constraint?(installed_deps, constraints)
-        @nodejs_force_default_version = true
+        self.nodejs_force_default_version = true
         trace_writer.message "All constraints are not satisfied. The default version `#{analyzer_version}` will be used instead."
       when nodejs_analyzer_locally_installed?
         trace_writer.message "`#{nodejs_analyzer_local_command}` was successfully installed with the version `#{analyzer_version}`."
@@ -103,7 +106,7 @@ module Runners
     private
 
     def nodejs_use_local_version?
-      !@nodejs_force_default_version && nodejs_analyzer_locally_installed?
+      !nodejs_force_default_version && nodejs_analyzer_locally_installed?
     end
 
     def nodejs_analyzer_locally_installed?

@@ -21,6 +21,8 @@ module Runners
 
     PACKAGE_JSON: String
 
+    attr_accessor nodejs_force_default_version: bool
+
     def nodejs_analyzer_local_command: () -> String
 
     def nodejs_analyzer_bin: () -> String
