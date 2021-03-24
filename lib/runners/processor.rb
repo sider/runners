@@ -1,19 +1,29 @@
 module Runners
   class Processor
     extend Forwardable
-    include Tmpdir
 
-    class CIConfigBroken < UserError; end
+    def self.analyzer_id
+      # Naming convention
+      source_file, _ = Module.const_source_location(name.to_s)
+      File.basename(source_file, ".rb").to_sym
+    end
 
-    def self.register_config_schema(name:, schema:)
-      Schema::Config.register(name: name, schema: schema)
+    def self.children
+      @children ||= ObjectSpace.each_object(Class)
+        .filter { |cls| cls.name && cls < self }
+        .to_h { |cls| [cls.analyzer_id, cls] }
+        .freeze
+    end
+
+    def self.register_config_schema(schema)
+      Schema::Config.register(name: analyzer_id, schema: schema)
     end
 
     def self.config_example
       raise NotImplementedError, name
     end
 
-    attr_reader :guid, :working_dir, :config, :shell, :trace_writer, :warnings
+    attr_reader :guid, :working_dir, :config, :shell, :trace_writer
 
     def_delegators :@shell,
       :chdir, :current_dir,
@@ -26,7 +36,6 @@ module Runners
       @config = config
       @shell = shell
       @trace_writer = trace_writer
-      @warnings = []
 
       if config.path_exist?
         trace_writer.ci_config(config.content, raw_content: config.raw_content!, file: config.path_name)
@@ -61,19 +70,6 @@ module Runners
 
     def analyzers
       @analyzers ||= Analyzers.new
-    end
-
-    def self.children
-      @children ||= ObjectSpace.each_object(Class)
-        .filter { |cls| cls.name && cls < self }
-        .to_h { |cls| [cls.analyzer_id, cls] }
-        .freeze
-    end
-
-    def self.analyzer_id
-      # Naming convention
-      source_file, _ = Module.const_source_location(self.name.to_s)
-      File.basename(source_file, ".rb").to_sym
     end
 
     def analyzer_id
@@ -173,41 +169,12 @@ module Runners
       end
     end
 
+    def warnings
+      @warnings ||= Warnings.new(trace_writer: trace_writer)
+    end
+
     def add_warning(message, file: nil)
-      message = message.strip
-      trace_writer.warning(message, file: file)
-      @warnings << {message: message, file: file}
-    end
-
-    def add_warning_if_deprecated_version(minimum:, file: nil, deadline: nil)
-      unless Gem::Version.new(minimum) <= Gem::Version.new(analyzer_version)
-        deadline_str = deadline ? deadline.strftime('on %B %-d, %Y') : 'in the near future'
-        add_warning <<~MSG, file: file
-          DEPRECATION WARNING!!!
-          The `#{analyzer_version}` and older versions are deprecated, and these versions will be dropped #{deadline_str}.
-          Please consider upgrading to `#{minimum}` or a newer version.
-        MSG
-      end
-    end
-
-    def add_warning_for_deprecated_option(name, to:)
-      return unless config_linter[name]
-
-      file = config.path_name
-      add_warning <<~MSG, file: file
-        DEPRECATION WARNING!!!
-        The `#{config_field_path(name)}` option is deprecated. Use the `#{config_field_path(to)}` option instead in your `#{file}`.
-        See #{analyzer_doc} for details.
-      MSG
-    end
-
-    def add_warning_for_deprecated_linter(alternative:, ref:, deadline: nil)
-      deadline_str = deadline ? deadline.strftime("on %B %-d, %Y") : "in the near future"
-      add_warning <<~MSG, file: config.path_name
-        DEPRECATION WARNING!!!
-        The support for #{analyzer_name} is deprecated and will be removed #{deadline_str}.
-        Please migrate to #{alternative} as an alternative. See #{ref}
-      MSG
+      warnings.add(message, file: file)
     end
 
     # Prohibit directory traversal attack, e.g.

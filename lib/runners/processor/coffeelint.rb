@@ -11,9 +11,10 @@ module Runners
       )
     end
 
-    register_config_schema(name: :coffeelint, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     CONSTRAINTS = {
+      # TODO: Remove the old package after the deadline.
       "coffeelint" => Gem::Requirement.new(">= 1.16.0", "< 3.0.0").freeze,
       "@coffeelint/cli" => Gem::Requirement.new(">= 4.0.0", "< 5.0.0").freeze,
     }.freeze
@@ -35,7 +36,7 @@ module Runners
         return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
       end
 
-      add_warning_if_deprecated_version minimum: "4.0.0"
+      warnings.add_warning_if_deprecated_version(analyzer_name, current: analyzer_version, minimum: "4.0.0", deadline: Time.new(2021, 5, 10))
 
       yield
     end

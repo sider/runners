@@ -19,7 +19,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :rubocop, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     GEM_NAME = "rubocop".freeze
     CONSTRAINTS = {

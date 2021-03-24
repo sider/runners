@@ -61,6 +61,8 @@ module Runners
 
     def linter_field_path: (*(Symbol | String)) -> String
 
+    def warnings: () -> Warnings
+
     private
 
     def check_schema: (untyped) -> Hash[Symbol, untyped]

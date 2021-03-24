@@ -20,7 +20,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :pmd_java, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     DEFAULT_RULESET = (Pathname(Dir.home) / "default-ruleset.xml").to_path.freeze
     DEFAULT_TARGET = ".".freeze

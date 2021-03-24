@@ -27,7 +27,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :languagetool, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     DEFAULT_TARGET = ".".freeze
     DEFAULT_EXT = ".txt".freeze

@@ -22,7 +22,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :stylelint, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     CONSTRAINTS = {
       "stylelint" => Gem::Requirement.new(">= 8.3.0", "< 14.0.0").freeze,

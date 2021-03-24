@@ -21,7 +21,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :pylint, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     DEFAULT_TARGET = ["**/*.{py}"].freeze
 

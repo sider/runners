@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 
 Breaking:
 
-- Support npm 7 [#2189](https://github.com/sider/runners/pull/2189)
+- Support npm 7 [#2189](https://github.com/sider/runners/pull/2189) [#2218](https://github.com/sider/runners/pull/2218)
 - Remove deprecated `linter.{id}.options` [#2190](https://github.com/sider/runners/pull/2190) [#2193](https://github.com/sider/runners/pull/2193)
 
 Updated environments:
@@ -32,6 +32,9 @@ Misc:
 - Add `linter.<id>.dependencies` option for npm tools [#2202](https://github.com/sider/runners/pull/2202)
 - **ktlint** Add issue ID for syntax error [#2206](https://github.com/sider/runners/pull/2206)
 - **Clang-Tidy** Better `apt-get install` failure [#2210](https://github.com/sider/runners/pull/2210)
+- **CoffeeLint** Set deadline for older versions [#2212](https://github.com/sider/runners/pull/2212)
+- **TSLint** Extend deadline and add helpful link [#2215](https://github.com/sider/runners/pull/2215)
+- Do not use tmpdir for working directory [#2217](https://github.com/sider/runners/pull/2217)
 
 ## 0.45.0
 

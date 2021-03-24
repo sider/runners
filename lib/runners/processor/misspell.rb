@@ -18,7 +18,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :misspell, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     DEFAULT_TARGET = ".".freeze
 
@@ -37,7 +37,7 @@ module Runners
     end
 
     def setup
-      add_warning_for_deprecated_option :targets, to: :target
+      warnings.add_warning_for_deprecated_option(config: config, analyzer: analyzer_id, old: :targets, new: :target)
       yield
     end
 

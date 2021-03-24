@@ -69,7 +69,7 @@ module Runners
     DEFAULT_TARGET = ".".freeze
     DEFAULT_LANGUAGE = ["cpp", "cs", "ecmascript", "go", "java", "kotlin", "php", "python", "ruby", "swift"].freeze
 
-    register_config_schema(name: :pmd_cpd, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     def self.config_example
       <<~'YAML'

@@ -290,13 +290,7 @@ s.add_test(
     }
   ],
   analyzer: { name: "ESLint", version: "5.16.0" },
-  warnings: [
-    { message: <<~MSG.strip, file: "sideci.yml" }
-      DEPRECATION WARNING!!!
-      The `linter.eslint.dir` option is deprecated. Use the `linter.eslint.target` option instead in your `sideci.yml`.
-      See https://help.sider.review/tools/javascript/eslint for details.
-    MSG
-  ]
+  warnings: [{ message: "The `linter.eslint.dir` option is deprecated. Please use the `linter.eslint.target` option instead in your `sideci.yml`.", file: "sideci.yml" }]
 )
 
 s.add_test(
@@ -569,4 +563,11 @@ s.add_test(
   issues: [],
   analyzer: { name: "ESLint", version: default_version },
   warnings: [{ message: "Installed `eslint@4.19.1` does not satisfy our constraint `>=5.0.0 <8.0.0`. Please update it as possible.", file: "package.json" }]
+)
+
+s.add_test(
+  "unmet_peer_deps",
+  type: "success",
+  issues: [],
+  analyzer: { name: "ESLint", version: "7.21.0" }
 )

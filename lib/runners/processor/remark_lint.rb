@@ -19,7 +19,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :remark_lint, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     CONSTRAINTS = {
       "remark-cli" => Gem::Requirement.new(">= 7.0.0", "< 10.0.0").freeze,

@@ -16,7 +16,6 @@ module Runners
     attr_reader :options
     attr_reader :working_dir
     attr_reader :trace_writer
-    attr_reader :warnings
     attr_reader :config
     attr_reader :analyzer
 
@@ -26,7 +25,6 @@ module Runners
       @options = options
       @working_dir = working_dir
       @trace_writer = trace_writer
-      @warnings = []
       @analyzer = nil
     end
 
@@ -81,10 +79,14 @@ module Runners
               end
             end
           ensure
-            @warnings = processor&.warnings || []
+            @warnings = processor&.warnings
           end
         end
       end
+    end
+
+    def warnings
+      @warnings ||= Warnings.new
     end
 
     private

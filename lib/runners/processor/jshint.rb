@@ -13,7 +13,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :jshint, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     DEFAULT_TARGET = ".".freeze
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / 'sider_jshintrc').to_path.freeze

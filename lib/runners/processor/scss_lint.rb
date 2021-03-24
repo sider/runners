@@ -11,7 +11,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :scss_lint, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     # https://github.com/brigade/scss-lint#exit-status-codes
     EXIT_CODE_FILES_NOT_EXIST = 80
@@ -25,9 +25,10 @@ module Runners
     end
 
     def setup
-      add_warning_for_deprecated_linter(
-        alternative: analyzers.name(:stylelint),
-        ref: "#{analyzer_github}#readme",
+      warnings.add_warning_for_deprecated_linter(
+        old: analyzer_name,
+        new: analyzers.name(:stylelint),
+        links: ["#{analyzer_github}#readme"],
       )
 
       yield
