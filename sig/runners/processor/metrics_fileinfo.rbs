@@ -11,7 +11,7 @@ module Runners
 
     private
 
-    def generate_issue: (Pathname)-> Issue
+    def generate_issue: (Pathname, Integer)-> Issue
 
     def lines_of_code: () -> Hash[Pathname, Integer]
 
@@ -23,7 +23,7 @@ module Runners
 
     def code_churn: () -> Hash[String, Hash[Symbol, Integer]]
 
-    def analyze_code_churn: () -> void
+    def analyze_code_churn: () -> Integer
 
     def parse_numstat_line: (String) -> void
 
