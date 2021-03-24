@@ -98,17 +98,19 @@ class JavaTest < Minitest::Test
 
   private
 
-  TestProcessor = Class.new(Runners::Processor) do
-    include Runners::Java
-    def self.analyzer_id; :checkstyle; end
-    def analyzer_name; "Checkstyle"; end
-    def fetch_deps_via_gradle!
-      # noop
+  def processor_class
+    @processor_class ||= Class.new(Runners::Processor) do
+      include Runners::Java
+      def self.analyzer_id; :checkstyle; end
+      def analyzer_name; "Checkstyle"; end
+      def fetch_deps_via_gradle!
+        # noop
+      end
     end
   end
 
   def new_processor(workspace, config_yaml:)
-    TestProcessor.new(
+    processor_class.new(
       guid: "test-guid",
       working_dir: workspace.working_dir,
       config: config(config_yaml),
