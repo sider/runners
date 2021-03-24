@@ -41,18 +41,18 @@ module Runners
 
       analyze_last_committed_at(target_files)
       analyze_lines_of_code(target_files)
-      analyze_code_churn()
+      number_of_commits = analyze_code_churn
 
       Results::Success.new(
         guid: guid,
         analyzer: analyzer,
-        issues: target_files.map { |path| generate_issue(path) }
+        issues: target_files.map { |path| generate_issue(path, number_of_commits) }
       )
     end
 
     private
 
-    def generate_issue(path)
+    def generate_issue(path, number_of_commits)
       loc = lines_of_code[path]
       commit = last_committed_at.fetch(path)
       churn = code_churn[path.to_s]
@@ -65,7 +65,7 @@ module Runners
         object: {
           lines_of_code: loc,
           last_committed_at: commit,
-          number_of_churn_commits: @number_of_commits,
+          number_of_churn_commits: number_of_commits,
           churn: churn
         },
         schema: SCHEMA.issue
@@ -122,14 +122,16 @@ module Runners
 
         stdout, _ = capture3!("git", "log", "--reverse", "--format=format:%cI", "--numstat", "#{outlive_commits[:oldest][:sha]}..HEAD", **CAP3ARGS_SUPPRESS_TRACE)
         lines = stdout.lines(chomp: true)
-        @number_of_commits = 0
+        number_of_commits = 0
         lines.reject(&:empty?).each do |line|
           if line.include?("\t") then
             parse_numstat_line(line)
           else
-            @number_of_commits += 1
+            number_of_commits += 1
           end
         end
+
+        number_of_commits
       end
     end
 
