@@ -28,15 +28,15 @@ module Runners
 
       # select development packages and report others as warning for security concerns
       packages = Array(config_linter[:dependencies] || config_linter[:apt]).filter_map do |pkg|
-        # @type var name: String
-        # @type var version: String?
-        name, version =
-          case pkg
-          when Hash
-            [pkg.fetch(:name), pkg.fetch(:version)]
-          else
-            pkg.split("=")
-          end
+        # @type var pkg: Hash[Symbol, String?] | String
+        case pkg
+        when Hash
+          name = pkg.fetch(:name) or raise pkg.inspect
+          version = pkg.fetch(:version)
+        else
+          name, version = pkg.split("=")
+          name or raise pkg.inspect
+        end
 
         if name.end_with? "-dev"
           [name, version].compact.join("=")
