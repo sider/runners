@@ -2,8 +2,6 @@ module Runners
   class Processor
     extend Forwardable
 
-    include Tmpdir
-
     def self.analyzer_id: () -> Symbol
 
     def self.children: () -> Hash[Symbol, singleton(Processor)]

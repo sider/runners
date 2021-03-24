@@ -16,7 +16,7 @@ module Runners
 
       specs = merge_specs(default_specs, user_specs.empty? ? optionals : user_specs)
 
-      mktmpdir do |path|
+      Tmpdir.mktmpdir do |path|
         installer = GemInstaller.new(shell: shell,
                                      home: path,
                                      config_path_name: config.path_name,

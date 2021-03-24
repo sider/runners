@@ -1,6 +1,6 @@
 module Runners
   module Tmpdir
-    def mktmpdir: [X] () { (Pathname) -> X } -> X
-                | () -> Pathname
+    def self?.mktmpdir: [X] () { (Pathname) -> X } -> X
+                      | () -> Pathname
   end
 end

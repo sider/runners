@@ -1,11 +1,10 @@
 module Runners
   class Processor
     extend Forwardable
-    include Tmpdir
 
     def self.analyzer_id
       # Naming convention
-      source_file, _ = Module.const_source_location(self.name.to_s)
+      source_file, _ = Module.const_source_location(name.to_s)
       File.basename(source_file, ".rb").to_sym
     end
 
@@ -17,7 +16,7 @@ module Runners
     end
 
     def self.register_config_schema(schema)
-      Schema::Config.register(name: self.analyzer_id, schema: schema)
+      Schema::Config.register(name: analyzer_id, schema: schema)
     end
 
     def self.config_example
