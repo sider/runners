@@ -26,6 +26,10 @@ module Runners
 
     def self.load_from_dir: (Pathname) -> instance
 
+    def self.register_warnings: () { (instance) -> void } -> void
+
+    def self.check_warnings: (instance) -> void
+
     attr_reader path: Pathname?
     attr_reader raw_content: String?
 
@@ -35,7 +39,7 @@ module Runners
 
     def content: () -> Hash[Symbol, untyped]
 
-    alias validate content
+    def validate: () -> void
 
     def valid?: () -> bool
 
@@ -62,6 +66,8 @@ module Runners
     def linter_field_path: (*(Symbol | String)) -> String
 
     def warnings: () -> Warnings
+
+    def add_warning_for_deprecated_option: (analyzer: Symbol, old: Symbol, new: Symbol) -> void
 
     private
 

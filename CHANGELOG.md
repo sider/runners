@@ -35,6 +35,7 @@ Misc:
 - **CoffeeLint** Set deadline for older versions [#2212](https://github.com/sider/runners/pull/2212)
 - **TSLint** Extend deadline and add helpful link [#2215](https://github.com/sider/runners/pull/2215)
 - Do not use tmpdir for working directory [#2217](https://github.com/sider/runners/pull/2217)
+- `Runners::Config` check warnings [#2221](https://github.com/sider/runners/pull/2221)
 - **Metrics File Info** Report the number of commits, additions, deletions used to measure code churn [#2184](https://github.com/sider/runners/pull/2184)
 
 ## 0.45.0

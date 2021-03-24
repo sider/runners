@@ -1,5 +1,7 @@
 module Runners
   class Warnings
+    type warning = { message: String, file: String? }
+
     attr_reader trace_writer: TraceWriter?
 
     def initialize: (?trace_writer: TraceWriter?) -> void
@@ -8,15 +10,15 @@ module Runners
 
     def add_warning_if_deprecated_version: (String, current: String, minimum: String, ?deadline: Time?) -> void
 
-    def add_warning_for_deprecated_option: (config: Config, analyzer: Symbol, old: Symbol, new: Symbol) -> void
-
     def add_warning_for_deprecated_linter: (old: String, new: String, ?links: Array[String], ?deadline: Time?) -> void
 
     def size: () -> Integer
 
     def empty?: () -> bool
 
-    def as_json: () -> Array[Hash[Symbol, String?]]
+    def each: () { (warning) -> void } -> void
+
+    def as_json: () -> Array[warning]
 
     alias to_a as_json
 
