@@ -19,7 +19,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :phinder, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     DEFAULT_RULE_FILE = "phinder.yml".freeze
 

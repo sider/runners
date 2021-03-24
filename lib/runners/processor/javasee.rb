@@ -19,7 +19,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :javasee, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     DEFAULT_CONFIG_FILE = "javasee.yml".freeze
 

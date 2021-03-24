@@ -1,14 +1,15 @@
 module Runners
   class CLI
-    include Tmpdir
+    DEFAULT_WORKING_DIR: Pathname
 
     attr_reader stdout: ::IO
     attr_reader stderr: ::IO
     attr_reader guid: String
     attr_reader analyzer: Symbol
     attr_reader options: Options
+    attr_reader working_dir: Pathname
 
-    def initialize: (argv: Array[String], stdout: ::IO, stderr: ::IO, options_json: String) -> void
+    def initialize: (argv: Array[String], stdout: ::IO, stderr: ::IO, options_json: String, ?working_dir: Pathname) -> void
 
     def run: () -> void
 
@@ -17,8 +18,6 @@ module Runners
     def setup_bugsnag!: (Array[String]) -> void
 
     def setup_aws!: () -> void
-
-    def with_working_dir: [X] () { (Pathname) -> X } -> X
 
     def processor_class: () -> singleton(Processor)
 

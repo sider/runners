@@ -22,7 +22,11 @@ module Runners
       )
     end
 
-    register_config_schema(name: :haml_lint, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
+
+    Config.register_warnings do |config|
+      config.add_warning_for_deprecated_option(analyzer: analyzer_id, old: :file, new: :target)
+    end
 
     GEM_NAME = "haml_lint".freeze
     REQUIRED_GEM_NAMES = ["rubocop"].freeze
@@ -53,8 +57,6 @@ module Runners
     end
 
     def setup
-      add_warning_for_deprecated_option :file, to: :target
-
       setup_haml_lint_config
 
       default_gems = default_gem_specs(GEM_NAME, *REQUIRED_GEM_NAMES)

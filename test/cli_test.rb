@@ -4,17 +4,9 @@ require "runners/cli"
 class CLITest < Minitest::Test
   include TestHelper
 
-  CLI = Runners::CLI
-  TraceWriter = Runners::TraceWriter
-
   class TestProcessor < Runners::Processor
-    def analyzer_id
-      :rubocop
-    end
-
-    def analyzer_version
-      "1.2.3"
-    end
+    def analyzer_id; :rubocop; end
+    def analyzer_version; "1.2.3"; end
 
     def setup
       yield
@@ -30,15 +22,23 @@ class CLITest < Minitest::Test
     end
   end
 
+  def setup
+    @tmpdir = mktmpdir.tap { FileUtils.remove_entry_secure(_1) }
+  end
+
+  def teardown
+    FileUtils.remove_entry_secure @tmpdir
+  end
+
   def test_parsing_options
-    cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: options_json)
+    cli = new_cli
     assert_equal "test-guid", cli.guid
     assert_equal :rubocop, cli.analyzer
     assert_instance_of Runners::Options, cli.options
   end
 
   def test_run
-    cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: options_json)
+    cli = new_cli
     cli.stub(:processor_class, TestProcessor) { cli.run }
 
     assert traces.any? { _1[:trace] == 'command_line' && _1[:command_line] == ["test", "command"] }
@@ -60,7 +60,7 @@ class CLITest < Minitest::Test
         Runners::Results::Success.new(guid: guid, analyzer: analyzer, issues: issues)
       end
     end
-    cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: options_json)
+    cli = new_cli
     cli.stub(:processor_class, klass) { cli.run }
 
     assert_includes traces.filter_map { _1[:message] if _1[:trace] == 'message' },
@@ -74,7 +74,7 @@ class CLITest < Minitest::Test
         Runners::Results::Success.new(guid: guid, analyzer: analyzer, issues: issues)
       end
     end
-    cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: options_json)
+    cli = new_cli
     cli.stub(:processor_class, klass) { cli.run }
 
     assert_includes traces.filter_map { _1[:message] if _1[:trace] == 'message' },
@@ -87,7 +87,7 @@ class CLITest < Minitest::Test
         Runners::Results::Failure.new(guid: guid, analyzer: analyzer)
       end
     end
-    cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: options_json)
+    cli = new_cli
     cli.stub(:processor_class, klass) { cli.run }
 
     assert_includes traces.filter_map { _1[:message] if _1[:trace] == 'message' },
@@ -100,7 +100,7 @@ class CLITest < Minitest::Test
         Runners::Results::Failure.new(guid: guid, analyzer: nil)
       end
     end
-    cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: options_json)
+    cli = new_cli
     cli.stub(:processor_class, klass) { cli.run }
 
     assert_includes traces.filter_map { _1[:message] if _1[:trace] == 'message' },
@@ -108,8 +108,7 @@ class CLITest < Minitest::Test
   end
 
   def test_run_with_broken_config
-    json = options_json({ source: new_source(head: "07aeaa0b17fb34063cbc3ed24d6d65f986c37884") })
-    cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: json)
+    cli = new_cli(options_json: options_json({ source: new_source(head: "07aeaa0b17fb34063cbc3ed24d6d65f986c37884") }))
     cli.run
 
     assert traces.any? { _1.dig(:result, :type) == 'failure' }
@@ -118,7 +117,7 @@ class CLITest < Minitest::Test
   end
 
   def test_format_duration
-    cli = CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: options_json)
+    cli = new_cli
     target = ->(value) { cli.send(:format_duration, value) }
 
     assert_equal "0.0s", target.(0.0)
@@ -137,7 +136,7 @@ class CLITest < Minitest::Test
     ENV["RUNNERS_VERSION"] = "version"
     ENV["BUGSNAG_RELEASE_STAGE"] = nil
 
-    CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: options_json)
+    new_cli
 
     assert_equal "key", Bugsnag.configuration.api_key
     assert_equal "version", Bugsnag.configuration.app_version
@@ -153,7 +152,7 @@ class CLITest < Minitest::Test
     ENV["AWS_SECRET_ACCESS_KEY"] = "secret"
     ENV["AWS_REGION"] = nil
 
-    CLI.new(argv: ["--analyzer=rubocop", "test-guid"], stdout: stdout, stderr: stderr, options_json: options_json)
+    new_cli
 
     assert_equal "id", Aws.config[:credentials].access_key_id
     assert_equal "secret", Aws.config[:credentials].secret_access_key
@@ -165,6 +164,17 @@ class CLITest < Minitest::Test
   end
 
   private
+
+  def new_cli(**params)
+    Runners::CLI.new(
+      argv: ["--analyzer=rubocop", "test-guid"],
+      stdout: stdout,
+      stderr: stderr,
+      options_json: options_json,
+      working_dir: @tmpdir,
+      **params,
+    )
+  end
 
   def stdout
     @stdout ||= StringIO.new

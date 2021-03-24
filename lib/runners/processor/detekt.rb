@@ -24,7 +24,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :detekt, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     def self.config_example
       <<~'YAML'

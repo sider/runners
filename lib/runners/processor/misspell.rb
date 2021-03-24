@@ -18,7 +18,11 @@ module Runners
       )
     end
 
-    register_config_schema(name: :misspell, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
+
+    Config.register_warnings do |config|
+      config.add_warning_for_deprecated_option(analyzer: analyzer_id, old: :targets, new: :target)
+    end
 
     DEFAULT_TARGET = ".".freeze
 
@@ -34,11 +38,6 @@ module Runners
 
     def extract_version_option
       "-v"
-    end
-
-    def setup
-      add_warning_for_deprecated_option :targets, to: :target
-      yield
     end
 
     def analyze(_changes)

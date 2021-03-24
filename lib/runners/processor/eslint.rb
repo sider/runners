@@ -25,7 +25,11 @@ module Runners
       )
     end
 
-    register_config_schema(name: :eslint, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
+
+    Config.register_warnings do |config|
+      config.add_warning_for_deprecated_option(analyzer: analyzer_id, old: :dir, new: :target)
+    end
 
     CONSTRAINTS = {
       "eslint" => Gem::Requirement.new(">= 5.0.0", "< 8.0.0").freeze,
@@ -55,8 +59,6 @@ module Runners
     end
 
     def setup
-      add_warning_for_deprecated_option :dir, to: :target
-
       begin
         install_nodejs_deps constraints: CONSTRAINTS
       rescue UserError => exn

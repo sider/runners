@@ -121,11 +121,16 @@ module Runners
     # @see https://docs.npmjs.com/cli/v7/commands/npm-install
     # @see https://docs.npmjs.com/cli/v7/commands/npm-ci
     def npm_install(*deps, subcommand: "install", flags: [])
+      # NOTE: `--force` is to install *unmet* dependencies like npm 6 or Yarn.
       flags = %w[
+        --force
         --ignore-scripts
+        --no-audit
         --no-engine-strict
+        --no-fund
         --no-progress
         --no-save
+        --no-update-notifier
       ] + flags
 
       trace_writer.message "Installing npm dependencies..."

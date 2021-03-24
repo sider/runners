@@ -642,9 +642,9 @@ EOF
 
       processor.install_gems([Spec.new("multi_json", requirement: ["1.14.0"])],
                              constraints: { "multi_json" => Gem::Requirement.new("> 1.13.0", "< 2.0.0") }) do
-        assert_equal 1, processor.warnings.count
+        assert_equal 1, processor.warnings.size
         assert trace_writer.writer.find { |m| m[:trace] == :command_line && m[:command_line] == %w[bundle install] }
-        assert_equal <<~MESSAGE.strip, processor.warnings.first[:message]
+        assert_equal <<~MESSAGE.strip, processor.warnings.as_json.first[:message]
           `multi_json = 1.14.0` will be installed instead of `1.12.0` in your `Gemfile.lock`.
           Because `1.12.0` does not satisfy our constraints `> 1.13.0, < 2.0.0`.
 

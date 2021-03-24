@@ -47,6 +47,17 @@ module Runners
       end
     end
 
+    def self.register_warnings(&block)
+      @warning_checkers ||= []
+      @warning_checkers << block
+    end
+
+    def self.check_warnings(config)
+      @warning_checkers.each do |checker|
+        checker.call(config)
+      end
+    end
+
     attr_reader :path, :raw_content
 
     def initialize(path:, raw_content:)
@@ -61,7 +72,11 @@ module Runners
     def content
       @content ||= check_schema(parse).freeze
     end
-    alias validate content
+
+    def validate
+      content # load
+      self.class.check_warnings(self)
+    end
 
     def valid?
       validate
@@ -144,6 +159,19 @@ module Runners
 
     def linter_field_path(*fields)
       field_path(:linter, *fields)
+    end
+
+    def warnings
+      @warnings ||= Warnings.new
+    end
+
+    def add_warning_for_deprecated_option(analyzer:, old:, new:)
+      linter = linter(analyzer)
+      return unless linter[old]
+
+      old_path = linter_field_path(analyzer, old)
+      new_path = linter_field_path(analyzer, new)
+      warnings.add "The `#{old_path}` option is deprecated. Please use the `#{new_path}` option instead in your `#{path_name}`.", file: path_name
     end
 
     private

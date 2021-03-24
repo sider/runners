@@ -17,7 +17,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :rails_best_practices, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     OPTIONAL_GEMS = [
       GemInstaller::Spec.new("slim"),

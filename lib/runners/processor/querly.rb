@@ -18,7 +18,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :querly, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     OPTIONAL_GEMS = [
       GemInstaller::Spec.new("slim"),
