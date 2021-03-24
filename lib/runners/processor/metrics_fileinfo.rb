@@ -16,8 +16,6 @@ module Runners
       )
     end
 
-    CAP3ARGS_SUPPRESS_TRACE = { trace_stdout: false, trace_command_line: false }.freeze
-
     def analyzer_version
       Runners::VERSION
     end
@@ -32,7 +30,7 @@ module Runners
       # This improves the performance of access to Git metadata for a large repository.
       # You can see the efficacy here: https://github.com/sider/runners/issues/2028#issuecomment-776534408
       trace_writer.message "Generating pre-computed Git metadata cache..." do
-        capture3!("git", "commit-graph", "write", "--reachable", "--changed-paths", trace_stdout: false, trace_command_line: false)
+        git("commit-graph", "write", "--reachable", "--changed-paths")
       end
 
       target_files = Pathname.glob("**/*", File::FNM_DOTMATCH).filter do |path|
@@ -103,7 +101,7 @@ module Runners
     def analyze_last_committed_at(targets)
       trace_writer.message "Analyzing last commit time..." do
         Parallel.each(targets, in_threads: 8) do |target|
-          stdout, _ = capture3!("git", "log", "-1", "--format=format:%aI", "--", target, trace_stdout: false, trace_command_line: false)
+          stdout, _ = git("log", "-1", "--format=format:%aI", "--", target)
           last_committed_at[target] = stdout
         end
       end
@@ -120,7 +118,7 @@ module Runners
         count_by_time, commits_by_time = commits_within("--since", days_ago)
         outlive_commits = count_by_num > count_by_time ? commits_by_num : commits_by_time
 
-        stdout, _ = capture3!("git", "log", "--reverse", "--format=format:%cI", "--numstat", "#{outlive_commits[:oldest][:sha]}..HEAD", **CAP3ARGS_SUPPRESS_TRACE)
+        stdout, _ = git("log", "--reverse", "--format=format:%cI", "--numstat", "#{outlive_commits[:oldest][:sha]}..HEAD")
         lines = stdout.lines(chomp: true)
         number_of_commits = 0
         lines.reject(&:empty?).each do |line|
@@ -151,7 +149,7 @@ module Runners
     end
 
     def commits_within(*args_range)
-      stdout, _ = capture3!("git", "log", "--format=format:%H|%cI", *args_range, **CAP3ARGS_SUPPRESS_TRACE)
+      stdout, _ = git("log", "--format=format:%H|%cI", *args_range)
       lines = stdout.lines(chomp: true)
       commits = { latest: lines.first, oldest: lines.last }.map do |k, v|
         logline = v or raise "Required log line: #{lines.length} lines"
@@ -197,7 +195,7 @@ module Runners
     #  * A text file having a non-well-known extension. (e.g. foo.my_original_extension )
     def text_files
       @text_files ||= Set[].tap do |result|
-        stdout, _ = capture3!("git", "ls-files", "--eol", "--error-unmatch", trace_stdout: false, trace_command_line:false)
+        stdout, _ = git("ls-files", "--eol", "--error-unmatch")
         stdout.each_line(chomp: true) do |line|
           fields = line.split(" ")
           type = (fields[1] or raise)
@@ -211,6 +209,10 @@ module Runners
 
     def text_file?(target)
       text_files.include?(target)
+    end
+
+    def git(*args)
+      capture3!("git", *args, trace_stdout: false, trace_command_line: false)
     end
   end
 end

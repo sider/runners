@@ -7,8 +7,6 @@ module Runners
     end
     SCHEMA: SchemaClass
 
-    CAP3ARGS_SUPPRESS_TRACE: Hash[Symbol, bool]
-
     private
 
     def generate_issue: (Pathname, Integer)-> Issue
@@ -32,5 +30,7 @@ module Runners
     def text_files: () -> Set[Pathname]
 
     def text_file?: (Pathname) -> bool
+
+    def git: (*Shell::command_argument) -> [String, String]
   end
 end
