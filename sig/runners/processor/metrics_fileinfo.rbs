@@ -19,7 +19,7 @@ module Runners
 
     def analyze_last_committed_at: (Array[Pathname]) -> void
 
-    def code_churn: () -> Hash[String, Hash[Symbol, Integer]]
+    def code_churn: () -> Hash[Pathname, Hash[Symbol, Integer]]
 
     def analyze_code_churn: () -> Integer
 
