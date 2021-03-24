@@ -125,9 +125,12 @@ module Runners
       flags = %w[
         --force
         --ignore-scripts
+        --no-audit
         --no-engine-strict
+        --no-fund
         --no-progress
         --no-save
+        --no-update-notifier
       ] + flags
 
       trace_writer.message "Installing npm dependencies..."
