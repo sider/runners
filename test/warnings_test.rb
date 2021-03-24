@@ -5,7 +5,10 @@ class WarningsTest < Minitest::Test
 
   def test_add
     warnings.add "foo"
+    warnings.add "foo"
     warnings.add " bar "
+    warnings.add " bar "
+    warnings.add "\n baz \n", file: "a.yml"
     warnings.add "\n baz \n", file: "a.yml"
 
     assert_warnings [{ message: "foo", file: nil },
