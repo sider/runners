@@ -8,12 +8,12 @@ All notable changes to this project will be documented in this file.
 
 Breaking:
 
-- Support npm 7 [#2189](https://github.com/sider/runners/pull/2189) [#2218](https://github.com/sider/runners/pull/2218)
+- Support npm 7 [#2189](https://github.com/sider/runners/pull/2189) [#2218](https://github.com/sider/runners/pull/2218) [#2222](https://github.com/sider/runners/pull/2222)
 - Remove deprecated `linter.{id}.options` [#2190](https://github.com/sider/runners/pull/2190) [#2193](https://github.com/sider/runners/pull/2193)
 
 Updated environments:
 
-- **devon_rex** 2.41.0 -> 2.42.0 [#2208](https://github.com/sider/runners/pull/2208) ([diff](https://github.com/sider/devon_rex/compare/2.41.0...2.42.0))
+- **devon_rex** 2.41.0 -> 2.42.1 [#2208](https://github.com/sider/runners/pull/2208) [#2223](https://github.com/sider/runners/pull/2223) ([diff](https://github.com/sider/devon_rex/compare/2.41.0...2.42.1))
 
 Updated tools:
 

@@ -7,10 +7,10 @@ module Runners
       capture3! "gradle", "--version"
     end
 
-    def install_jvm_deps
+    def install_jvm_deps(to: Pathname(Dir.home).join("dependencies"))
       return if config_jvm_deps.empty?
 
-      chdir jvm_deps_dir do
+      chdir to do
         generate_jvm_deps_file
 
         trace_writer.message "Install dependencies..." do
@@ -25,10 +25,6 @@ module Runners
     end
 
     private
-
-    def jvm_deps_dir
-      Pathname(Dir.home) / "dependencies"
-    end
 
     def fetch_deps_via_gradle!
       capture3! "gradle", "--no-build-cache", "--parallel", "--quiet", "deps"
