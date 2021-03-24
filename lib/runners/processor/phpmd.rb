@@ -17,7 +17,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :phpmd, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     DEFAULT_TARGET = ".".freeze
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_config.xml").to_path.freeze

@@ -4,14 +4,11 @@ module Runners
 
     include Tmpdir
 
-    class CIConfigBroken < UserError
-    end
-
-    def self.register_config_schema: (name: Symbol, schema: StrongJSON::_Schema[untyped]) -> void
+    def self.analyzer_id: () -> Symbol
 
     def self.children: () -> Hash[Symbol, singleton(Processor)]
 
-    def self.analyzer_id: () -> Symbol
+    def self.register_config_schema: (StrongJSON::_Schema[untyped]) -> void
 
     def self.config_example: () -> String
 

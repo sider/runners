@@ -12,7 +12,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :reek, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     GEM_NAME = "reek".freeze
     CONSTRAINTS = {

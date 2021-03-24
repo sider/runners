@@ -19,7 +19,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :tyscan, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     CONSTRAINTS = {
       "tyscan" => Gem::Requirement.new(">= 0.2.1", "< 1.0.0").freeze,

@@ -11,7 +11,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :scss_lint, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     # https://github.com/brigade/scss-lint#exit-status-codes
     EXIT_CODE_FILES_NOT_EXIST = 80

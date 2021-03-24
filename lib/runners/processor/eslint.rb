@@ -25,7 +25,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :eslint, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     CONSTRAINTS = {
       "eslint" => Gem::Requirement.new(">= 5.0.0", "< 8.0.0").freeze,

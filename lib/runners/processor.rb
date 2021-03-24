@@ -3,10 +3,21 @@ module Runners
     extend Forwardable
     include Tmpdir
 
-    class CIConfigBroken < UserError; end
+    def self.analyzer_id
+      # Naming convention
+      source_file, _ = Module.const_source_location(self.name.to_s)
+      File.basename(source_file, ".rb").to_sym
+    end
 
-    def self.register_config_schema(name:, schema:)
-      Schema::Config.register(name: name, schema: schema)
+    def self.children
+      @children ||= ObjectSpace.each_object(Class)
+        .filter { |cls| cls.name && cls < self }
+        .to_h { |cls| [cls.analyzer_id, cls] }
+        .freeze
+    end
+
+    def self.register_config_schema(schema)
+      Schema::Config.register(name: self.analyzer_id, schema: schema)
     end
 
     def self.config_example
@@ -60,19 +71,6 @@ module Runners
 
     def analyzers
       @analyzers ||= Analyzers.new
-    end
-
-    def self.children
-      @children ||= ObjectSpace.each_object(Class)
-        .filter { |cls| cls.name && cls < self }
-        .to_h { |cls| [cls.analyzer_id, cls] }
-        .freeze
-    end
-
-    def self.analyzer_id
-      # Naming convention
-      source_file, _ = Module.const_source_location(self.name.to_s)
-      File.basename(source_file, ".rb").to_sym
     end
 
     def analyzer_id

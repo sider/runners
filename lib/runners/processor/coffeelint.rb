@@ -11,7 +11,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :coffeelint, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     CONSTRAINTS = {
       # TODO: Remove the old package after the deadline.

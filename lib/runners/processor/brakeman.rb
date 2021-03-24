@@ -13,7 +13,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :brakeman, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     GEM_NAME = "brakeman".freeze
     CONSTRAINTS = {

@@ -37,7 +37,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :golangci_lint, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_golangci.yml").to_path.freeze
 

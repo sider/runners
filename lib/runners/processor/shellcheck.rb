@@ -34,7 +34,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :shellcheck, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     DEFAULT_TARGET = [
       "**/*.{bash,bats,dash,ksh,sh}",

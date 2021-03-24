@@ -17,7 +17,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :slim_lint, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     GEM_NAME = "slim_lint".freeze
     REQUIRED_GEM_NAMES = ["rubocop"].freeze

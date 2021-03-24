@@ -20,7 +20,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :cpplint, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     DEFAULT_TARGET = ".".freeze
     CONFIG_FILE_NAME = "CPPLINT.cfg".freeze

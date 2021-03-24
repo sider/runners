@@ -14,7 +14,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :flake8, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     DEFAULT_TARGET = ".".freeze
     DEFAULT_CONFIG_PATH = (Pathname(Dir.home) / '.config' / 'flake8').to_path.freeze

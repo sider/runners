@@ -16,7 +16,7 @@ module Runners
       )
     end
 
-    register_config_schema(name: :tslint, schema: SCHEMA.config)
+    register_config_schema SCHEMA.config
 
     CONSTRAINTS = {
       "tslint" => Gem::Requirement.new(">= 5.0.0", "< 7.0.0").freeze,
