@@ -1,0 +1,3 @@
+@XXX
+class Foo {
+}
