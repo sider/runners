@@ -259,3 +259,22 @@ s.add_test(
   ],
   analyzer: { name: "remark-lint", version: default_version }
 )
+
+s.add_test(
+  "use_git_root_dir",
+  type: "success",
+  issues: [
+    {
+      path: "src/foo.md",
+      location: { start_line: 1, start_column: 1 },
+      id: "missing-file",
+      message: "Link to unknown file: `readme.md`",
+      links: [],
+      object: { severity: "warn" },
+      git_blame_info: {
+        commit: :_, line_hash: "a6f65463dbaa25c99a03f499f0e675d62db5e1e7", original_line: 1, final_line: 1
+      }
+    }
+  ],
+  analyzer: { name: "remark-lint", version: default_version }
+)
