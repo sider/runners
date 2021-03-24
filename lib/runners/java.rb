@@ -41,6 +41,7 @@ module Runners
       return config_jvm_deps_old unless config_linter[:dependencies]
 
       @config_jvm_deps ||= Array(config_linter[:dependencies]).map do |dep|
+        # @type var dep: Hash[Symbol, String] | String
         case dep
         when Hash
           dep.values.join(":")
