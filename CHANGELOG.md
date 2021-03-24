@@ -36,6 +36,7 @@ Misc:
 - **TSLint** Extend deadline and add helpful link [#2215](https://github.com/sider/runners/pull/2215)
 - Do not use tmpdir for working directory [#2217](https://github.com/sider/runners/pull/2217)
 - `Runners::Config` check warnings [#2221](https://github.com/sider/runners/pull/2221)
+- **remark-lint** Use `.git` directory [#2224](https://github.com/sider/runners/pull/2224)
 
 ## 0.45.0
 
