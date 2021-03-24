@@ -3,11 +3,9 @@ module Runners
     class InvalidDependency < UserError
     end
 
-    def install_jvm_deps: () -> void
+    def install_jvm_deps: (?to: Pathname) -> void
 
     private
-
-    def jvm_deps_dir: () -> Pathname
 
     def fetch_deps_via_gradle!: () -> void
 

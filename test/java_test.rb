@@ -13,9 +13,10 @@ class JavaTest < Minitest::Test
               - [org.foo, baz, 4.9]
       YAML
 
-      processor.install_jvm_deps
+      dest = (processor.working_dir / "deps").tap(&:mkpath)
+      processor.install_jvm_deps to: dest
 
-      assert_equal <<~GRADLE, (processor.jvm_deps_dir / "build.gradle").read
+      assert_equal <<~GRADLE, (dest / "build.gradle").read
         plugins {
           id 'java'
         }
@@ -40,8 +41,8 @@ class JavaTest < Minitest::Test
         * org.foo:baz:4.9
       MSG
       assert_equal 1, processor.warnings.size
-      assert_match "The `linter.checkstyle.jvm_deps` option is deprecated. Use the `linter.checkstyle.dependencies` option",
-                   processor.warnings.first[:message]
+      assert_match "The `linter.checkstyle.jvm_deps` option is deprecated. Please use the `linter.checkstyle.dependencies` option",
+                   processor.warnings.to_a.first[:message]
     end
   end
 
@@ -55,9 +56,10 @@ class JavaTest < Minitest::Test
               - { name: "org.foo:baz", version: "3.0" }
       YAML
 
-      processor.install_jvm_deps
+      dest = (processor.working_dir / "deps").tap(&:mkpath)
+      processor.install_jvm_deps to: dest
 
-      assert_match <<~GRADLE, (processor.jvm_deps_dir / "build.gradle").read
+      assert_match <<~GRADLE, (dest / "build.gradle").read
         dependencies {
           implementation 'com.foo:bar:1.2.3'
           implementation 'org.foo:baz:3.0'
@@ -127,20 +129,17 @@ class JavaTest < Minitest::Test
 
   private
 
-  def new_processor(workspace, config_yaml:)
-    klass = Class.new(Runners::Processor) do
-      include Runners::Java
-      def analyzer_id; :checkstyle; end
-      def analyzer_name; "Checkstyle"; end
-      def jvm_deps_dir
-        (working_dir / "deps").tap { _1.mkpath }
-      end
-      def fetch_deps_via_gradle!
-        # noop
-      end
+  TestProcessor = Class.new(Runners::Processor) do
+    include Runners::Java
+    def self.analyzer_id; :checkstyle; end
+    def analyzer_name; "Checkstyle"; end
+    def fetch_deps_via_gradle!
+      # noop
     end
+  end
 
-    klass.new(
+  def new_processor(workspace, config_yaml:)
+    TestProcessor.new(
       guid: "test-guid",
       working_dir: workspace.working_dir,
       config: config(config_yaml),

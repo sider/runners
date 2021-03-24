@@ -3,7 +3,7 @@ module Runners
     attr_reader :trace_writer
 
     def initialize(trace_writer: nil)
-      @list = []
+      @list = Set[]
       @trace_writer = trace_writer
     end
 
@@ -40,11 +40,11 @@ module Runners
       @list.each(&block)
     end
 
-    def as_json
-      @list
+    def to_a
+      @list.to_a
     end
 
-    alias to_a as_json
+    alias as_json to_a
 
     private
 

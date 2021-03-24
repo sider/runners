@@ -2,17 +2,22 @@ module Runners
   module Java
     class InvalidDependency < UserError; end
 
+    def self.included(klass)
+      # @type var klass: singleton(Processor)
+      Config.register_warnings do |config|
+        config.add_warning_for_deprecated_option(analyzer: klass.analyzer_id, old: :jvm_deps, new: :dependencies)
+      end
+    end
+
     def show_runtime_versions
       capture3! "java", "-version"
       capture3! "gradle", "--version"
     end
 
-    def install_jvm_deps
-      add_warning_for_deprecated_option :jvm_deps, to: :dependencies
-
+    def install_jvm_deps(to: Pathname(Dir.home).join("dependencies"))
       return if config_jvm_deps.empty?
 
-      chdir jvm_deps_dir do
+      chdir to do
         generate_jvm_deps_file
 
         trace_writer.message "Install dependencies..." do
@@ -27,10 +32,6 @@ module Runners
     end
 
     private
-
-    def jvm_deps_dir
-      Pathname(Dir.home) / "dependencies"
-    end
 
     def fetch_deps_via_gradle!
       capture3! "gradle", "--no-build-cache", "--parallel", "--quiet", "deps"

@@ -8,6 +8,13 @@ module Runners
     CPP_HEADERS_GLOB = "**/*.{h,h++,hh,hpp,hxx,inc,inl,ipp,tcc,tpp}".freeze
     private_constant :CPP_SOURCES_GLOB, :CPP_HEADERS_GLOB
 
+    def self.included(klass)
+      # @type var klass: singleton(Processor)
+      Config.register_warnings do |config|
+        config.add_warning_for_deprecated_option(analyzer: klass.analyzer_id, old: :apt, new: :dependencies)
+      end
+    end
+
     def config_include_path
       Array(config_linter[:'include-path'] || find_paths_containing_headers).map { |v| "-I#{v}" }
     end
@@ -17,8 +24,6 @@ module Runners
     end
 
     def install_apt_packages
-      add_warning_for_deprecated_option :apt, to: :dependencies
-
       trace_writer.message "Installing apt packages..."
 
       # select development packages and report others as warning for security concerns
