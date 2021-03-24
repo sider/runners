@@ -650,7 +650,7 @@ EOF
 
           If you want to use a different version of `multi_json`, please do either:
           - Update your `Gemfile.lock` to satisfy the constraint
-          - Set the `linter.rubocop.gems` option in your `sider.yml`
+          - Set the `linter.rubocop.dependencies` option in your `sider.yml`
         MESSAGE
 
         stdout, _ = processor.shell.capture3!("bundle", "list")
