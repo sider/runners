@@ -23,7 +23,7 @@ module Runners
       raise NotImplementedError, name
     end
 
-    attr_reader :guid, :working_dir, :config, :shell, :trace_writer
+    attr_reader :guid, :working_dir, :config, :shell, :trace_writer, :warnings
 
     def_delegators :@shell,
       :chdir, :current_dir,
@@ -36,9 +36,13 @@ module Runners
       @config = config
       @shell = shell
       @trace_writer = trace_writer
+      @warnings = Warnings.new(trace_writer: trace_writer)
 
       if config.path_exist?
         trace_writer.ci_config(config.content, raw_content: config.raw_content!, file: config.path_name)
+
+        config.validate
+        config.warnings.each { |w| add_warning(w.fetch(:message).to_s, file: w.fetch(:file)) }
       end
     end
 
@@ -167,10 +171,6 @@ module Runners
         files = changes.delete_unchanged(dir: working_dir, except: except, only: only)
         trace_writer.message files.join("\n")
       end
-    end
-
-    def warnings
-      @warnings ||= Warnings.new(trace_writer: trace_writer)
     end
 
     def add_warning(message, file: nil)

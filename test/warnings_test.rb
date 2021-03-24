@@ -36,18 +36,6 @@ class WarningsTest < Minitest::Test
                      { message: "Foo 1.0.0 is deprecated and will be dropped on January 9, 2020. Please update to 1.0.1 or higher.", file: nil },]
   end
 
-  def test_add_warning_for_deprecated_option
-    config = Runners::Config.new(path: "foo.yml", raw_content: <<~YAML)
-      ---
-      linter:
-        eslint:
-          dir: "src/"
-    YAML
-    warnings.add_warning_for_deprecated_option(config: config, analyzer: :eslint, old: :dir, new: :target)
-
-    assert_warnings [{ message: "The `linter.eslint.dir` option is deprecated. Please use the `linter.eslint.target` option instead in your `foo.yml`.", file: "foo.yml" }]
-  end
-
   def test_add_warning_for_deprecated_linter
     warnings.add_warning_for_deprecated_linter(old: "Foo", new: "Bar")
     warnings.add_warning_for_deprecated_linter(old: "Foo", new: "Bar", links: ["https://foo", "https://bar"], deadline: Time.new(2020, 12, 31))

@@ -19,16 +19,6 @@ module Runners
       end
     end
 
-    def add_warning_for_deprecated_option(config:, analyzer:, old:, new:)
-      linter = config.linter(analyzer)
-      return unless linter[old]
-
-      file = config.path_name
-      old_path = config.linter_field_path(analyzer, old)
-      new_path = config.linter_field_path(analyzer, new)
-      add "The `#{old_path}` option is deprecated. Please use the `#{new_path}` option instead in your `#{file}`.", file: file
-    end
-
     def add_warning_for_deprecated_linter(old:, new:, links: [], deadline: nil)
       message = "The support for #{old} is deprecated and will be removed #{deadline_text(deadline)}. Please migrate to #{new}."
       unless links.empty?
@@ -44,6 +34,10 @@ module Runners
 
     def empty?
       @list.empty?
+    end
+
+    def each(&block)
+      @list.each(&block)
     end
 
     def as_json

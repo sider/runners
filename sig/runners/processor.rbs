@@ -15,6 +15,7 @@ module Runners
     attr_reader config: Config
     attr_reader shell: Shell
     attr_reader trace_writer: TraceWriter
+    attr_reader warnings: Warnings
 
     def initialize: (guid: String, working_dir: Pathname, config: Config, shell: Shell, trace_writer: TraceWriter) -> void
 
@@ -70,8 +71,6 @@ module Runners
     def config_field_path: (*(Symbol | String)) -> String
 
     def delete_unchanged_files: (Changes, ?except: Array[String], ?only: Array[String]) -> void
-
-    def warnings: () -> Warnings
 
     def add_warning: (String, ?file: String?) -> void
 

@@ -73,10 +73,10 @@
   diagnostics:
   - range:
       start:
-        line: 64
+        line: 63
         character: 51
       end:
-        line: 64
+        line: 63
         character: 55
     severity: ERROR
     message: Type `bot` does not have method `size`
@@ -104,10 +104,10 @@
   diagnostics:
   - range:
       start:
-        line: 113
+        line: 117
         character: 26
       end:
-        line: 113
+        line: 117
         character: 29
     severity: ERROR
     message: |-
@@ -119,10 +119,10 @@
     code: Ruby::ArgumentTypeMismatch
   - range:
       start:
-        line: 113
+        line: 117
         character: 31
       end:
-        line: 113
+        line: 117
         character: 40
     severity: ERROR
     message: |-

@@ -291,4 +291,42 @@ class ConfigTest < Minitest::Test
     assert_equal "linter", config.linter_field_path
     assert_equal "linter.foo.bar", config.linter_field_path(:foo, "bar")
   end
+
+  def test_validate
+    yaml = <<~YAML
+      linter:
+        eslint:
+          dir: "src/"
+    YAML
+    config = Runners::Config.new(path: Pathname(FILE_NAME), raw_content: yaml)
+    config.validate
+
+    assert_equal 1, config.warnings.size
+    assert_match "The `linter.eslint.dir` option is deprecated", config.warnings.to_a.first[:message]
+  end
+
+  def test_validate_without_warnings
+    yaml = <<~YAML
+      linter:
+        eslint:
+          target: "src/"
+    YAML
+    config = Runners::Config.new(path: Pathname(FILE_NAME), raw_content: yaml)
+    config.validate
+
+    assert_empty config.warnings
+  end
+
+  def test_add_warning_for_deprecated_option
+    yaml = <<~YAML
+      linter:
+        eslint:
+          dir: "src/"
+    YAML
+    config = Runners::Config.new(path: Pathname(FILE_NAME), raw_content: yaml)
+    config.add_warning_for_deprecated_option(analyzer: :eslint, old: :dir, new: :target)
+
+    assert_equal [{ message: "The `linter.eslint.dir` option is deprecated. Please use the `linter.eslint.target` option instead in your `sider.yml`.", file: "sider.yml" }],
+                 config.warnings.to_a
+  end
 end
