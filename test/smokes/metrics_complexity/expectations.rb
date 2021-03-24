@@ -193,3 +193,20 @@ s.add_test(
   ],
   analyzer: { name: "Metrics Complexity", version: default_version }
 )
+
+s.add_test(
+  "illegal_char_in_rspec_condition",
+  type: "success",
+  issues: [
+    {
+      id: "metrics_file-complexity",
+      path: "myclass_test.rb",
+      location: nil,
+      message: :_,
+      object: :_,
+      links: [],
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "Metrics Complexity", version: default_version}
+)
