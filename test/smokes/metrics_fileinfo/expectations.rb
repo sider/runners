@@ -15,7 +15,7 @@ s.add_test_with_git_metadata(
         object: {
           lines_of_code: 7,
           last_committed_at: "2021-01-01T10:00:00+09:00",
-          number_of_churn_commits: 0,
+          number_of_commits: 0,
           churn: nil
         },
         git_blame_info: nil
@@ -37,7 +37,7 @@ s.add_test_with_git_metadata(
         object: {
           lines_of_code: nil,
           last_committed_at: "2021-01-01T13:00:00+09:00",
-          number_of_churn_commits: 1,
+          number_of_commits: 1,
           churn: nil
         },
         git_blame_info: nil
@@ -50,7 +50,7 @@ s.add_test_with_git_metadata(
         object: {
           lines_of_code: nil,
           last_committed_at: "2021-01-01T14:00:00+09:00",
-          number_of_churn_commits: 1,
+          number_of_commits: 1,
           churn: {
             occurrence: 1,
             additions: 0,
@@ -76,7 +76,7 @@ s.add_test_with_git_metadata(
         object: {
           lines_of_code: 2,
           last_committed_at: "2021-01-01T11:00:00+09:00",
-          number_of_churn_commits: 0,
+          number_of_commits: 0,
           churn: nil
         },
         git_blame_info: nil
@@ -98,7 +98,7 @@ s.add_test_with_git_metadata(
         object: {
           lines_of_code: 1,
           last_committed_at: "2021-01-01T12:00:00+09:00",
-          number_of_churn_commits: 3,
+          number_of_commits: 3,
           churn: {
             occurrence: 1,
             additions: 1,
@@ -116,7 +116,7 @@ s.add_test_with_git_metadata(
         object: {
           lines_of_code: 1,
           last_committed_at: "2021-01-01T13:00:00+09:00",
-          number_of_churn_commits: 3,
+          number_of_commits: 3,
           churn: {
             occurrence: 1,
             additions: 1,
@@ -134,7 +134,7 @@ s.add_test_with_git_metadata(
         object: {
           lines_of_code: 1,
           last_committed_at: "2021-01-01T11:00:00+09:00",
-          number_of_churn_commits: 3,
+          number_of_commits: 3,
           churn: {
             occurrence: 1,
             additions: 1,
@@ -152,7 +152,7 @@ s.add_test_with_git_metadata(
         object: {
           lines_of_code: 7,
           last_committed_at: "2021-01-01T10:00:00+09:00",
-          number_of_churn_commits: 3,
+          number_of_commits: 3,
           churn: nil
         },
         git_blame_info: nil
@@ -174,7 +174,7 @@ s.add_test_with_git_metadata(
         object: {
           lines_of_code: 9,
           last_committed_at: "2021-01-01T12:00:00+09:00",
-          number_of_churn_commits: 2,
+          number_of_commits: 2,
           churn: {
             occurrence: 2,
             additions: 2,
@@ -200,7 +200,7 @@ s.add_test_with_git_metadata(
         object: {
           lines_of_code: 2,
           last_committed_at: "2021-01-01T14:00:00+09:00",
-          number_of_churn_commits: 0,
+          number_of_commits: 0,
           churn: nil
         },
         git_blame_info: nil
@@ -214,7 +214,7 @@ s.add_test_with_git_metadata(
         object: {
           lines_of_code: 1,
           last_committed_at: "2021-01-01T14:00:00+09:00",
-          number_of_churn_commits: 0,
+          number_of_commits: 0,
           churn: nil
         },
         git_blame_info: nil
@@ -228,7 +228,7 @@ s.add_test_with_git_metadata(
         object: {
           lines_of_code: 5,
           last_committed_at: "2021-01-01T14:00:00+09:00",
-          number_of_churn_commits: 0,
+          number_of_commits: 0,
           churn: nil
         },
         git_blame_info: nil
@@ -242,7 +242,7 @@ s.add_test_with_git_metadata(
         object: {
           lines_of_code: 5,
           last_committed_at: "2021-01-01T14:00:00+09:00",
-          number_of_churn_commits: 0,
+          number_of_commits: 0,
           churn: nil
         },
         git_blame_info: nil
@@ -256,7 +256,7 @@ s.add_test_with_git_metadata(
         object: {
           lines_of_code: 5,
           last_committed_at: "2021-01-01T14:00:00+09:00",
-          number_of_churn_commits: 0,
+          number_of_commits: 0,
           churn: nil
         },
         git_blame_info: nil
@@ -270,7 +270,7 @@ s.add_test_with_git_metadata(
         object: {
           lines_of_code: 6,
           last_committed_at: "2021-01-01T14:00:00+09:00",
-          number_of_churn_commits: 0,
+          number_of_commits: 0,
           churn: nil
         },
         git_blame_info: nil
@@ -292,7 +292,7 @@ s.add_test_with_git_metadata(
         object: {
           lines_of_code: 7,
           last_committed_at: "2021-01-01T10:00:00+09:00",
-          number_of_churn_commits: 0,
+          number_of_commits: 0,
           churn: nil
         },
         git_blame_info: nil
@@ -306,7 +306,7 @@ s.add_test_with_git_metadata(
         object: {
           lines_of_code: 2,
           last_committed_at: "2021-01-01T10:00:00+09:00",
-          number_of_churn_commits: 0,
+          number_of_commits: 0,
           churn: nil
         },
         git_blame_info: nil
@@ -328,7 +328,7 @@ s.add_test_with_git_metadata(
         object: {
           lines_of_code: 5,
           last_committed_at: "2021-03-04T04:23:45+00:00",
-          number_of_churn_commits: 4,
+          number_of_commits: 4,
           churn: {
             occurrence: 2,
             additions: 5,
@@ -346,7 +346,7 @@ s.add_test_with_git_metadata(
         object: {
           lines_of_code: nil,
           last_committed_at: "2021-03-04T04:23:45+00:00",
-          number_of_churn_commits: 4,
+          number_of_commits: 4,
           churn: {
             occurrence: 1,
             additions: 0,
@@ -364,7 +364,7 @@ s.add_test_with_git_metadata(
         object: {
           lines_of_code: 2,
           last_committed_at: "2021-03-05T05:23:45+00:00",
-          number_of_churn_commits: 4,
+          number_of_commits: 4,
           churn: {
             occurrence: 3,
             additions: 5,
@@ -390,7 +390,7 @@ s.add_test_with_git_metadata(
         object: {
           lines_of_code: 2,
           last_committed_at: "2020-05-22T12:00:00+09:00",
-          number_of_churn_commits: 112,
+          number_of_commits: 112,
           churn: nil
         },
         git_blame_info: nil
@@ -404,7 +404,7 @@ s.add_test_with_git_metadata(
         object: {
           lines_of_code: 3,
           last_committed_at: "2020-06-20T12:00:00+09:00",
-          number_of_churn_commits: 112,
+          number_of_commits: 112,
           churn: {
             occurrence: 111,
             additions: 113,
@@ -422,7 +422,7 @@ s.add_test_with_git_metadata(
         object: {
           lines_of_code: 1,
           last_committed_at: "2020-08-23T12:34:56+09:00",
-          number_of_churn_commits: 112,
+          number_of_commits: 112,
           churn: {
             occurrence: 2,
             additions: 1,

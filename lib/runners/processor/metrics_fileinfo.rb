@@ -7,7 +7,7 @@ module Runners
       let :issue, object(
         lines_of_code: integer?,
         last_committed_at: string,
-        number_of_churn_commits: integer,
+        number_of_commits: integer,
         churn: object?(
           occurrence: integer,
           additions: integer,
@@ -63,7 +63,7 @@ module Runners
         object: {
           lines_of_code: loc,
           last_committed_at: commit,
-          number_of_churn_commits: number_of_commits,
+          number_of_commits: number_of_commits,
           churn: churn
         },
         schema: SCHEMA.issue
