@@ -39,6 +39,7 @@ Misc:
 - Do not use tmpdir for working directory [#2217](https://github.com/sider/runners/pull/2217)
 - `Runners::Config` check warnings [#2221](https://github.com/sider/runners/pull/2221)
 - **remark-lint** Use `.git` directory and add `remark-validate-links` to default ruleset [#2224](https://github.com/sider/runners/pull/2224)
+- Introduce common option `linter.<id>.dependencies` [#2211](https://github.com/sider/runners/pull/2211)
 
 ## 0.45.0
 
