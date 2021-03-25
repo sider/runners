@@ -1,0 +1,3 @@
+linter:
+  remark_lint:
+    root_dir: src/
