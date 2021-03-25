@@ -8,6 +8,17 @@ s.add_test(
   issues: [
     {
       path: "readme.md",
+      location: { start_line: 7, start_column: 12 },
+      id: "missing-heading",
+      message: "Link to unknown heading: `foo`",
+      links: [],
+      object: { severity: "warn" },
+      git_blame_info: {
+        commit: :_, line_hash: "46f054a009c80f7f5c6cd602038c951d186c2276", original_line: 7, final_line: 7
+      }
+    },
+    {
+      path: "readme.md",
       location: { start_line: 3, start_column: 1 },
       id: "no-undefined-references",
       message: "Found reference to undefined definition",

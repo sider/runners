@@ -32,6 +32,9 @@ ENV PATH ${RUNNER_USER_HOME}/remark_lint/node_modules/.bin:${PATH}
 # See https://nodejs.org/api/cli.html#cli_node_path_path
 ENV NODE_PATH ${RUNNER_USER_HOME}/remark_lint/node_modules:${NODE_PATH}
 
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/remark_lint/sider_recommended_remark_lint.yml ${RUNNER_USER_HOME}/
+
+
 # Copy the main source code
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} exe ${RUNNERS_DIR}/exe
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} lib ${RUNNERS_DIR}/lib

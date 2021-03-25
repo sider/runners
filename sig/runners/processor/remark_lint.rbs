@@ -12,7 +12,7 @@ module Runners
 
     CONSTRAINTS: Nodejs::constraints
     DEFAULT_TARGET: String
-    DEFAULT_PRESET: String
+    DEFAULT_RULESET: Pathname
 
     private
 
@@ -30,9 +30,7 @@ module Runners
 
     def no_config_in_package_json?: () -> bool
 
-    def use_default_preset?: () -> bool
-
-    def default_preset: () -> Array[String]
+    def use_default_ruleset?: () -> bool
 
     def cli_options: () -> Array[String]
 
