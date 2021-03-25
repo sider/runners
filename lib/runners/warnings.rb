@@ -3,7 +3,7 @@ module Runners
     attr_reader :trace_writer
 
     def initialize(trace_writer: nil)
-      @list = Set[]
+      @list = []
       @trace_writer = trace_writer
     end
 
