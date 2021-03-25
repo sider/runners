@@ -1,6 +1,6 @@
 linter:
   rubocop:
-    gems:
+    dependencies:
       - name: rubocop
         version: "1.6.1"
       - name: meowcop
