@@ -8,11 +8,9 @@ module Runners
         lines_of_code: integer?,
         last_committed_at: string,
         number_of_commits: integer,
-        churn: object?(
-          occurrence: integer,
-          additions: integer,
-          deletions: integer
-        )
+        occurrence: integer,
+        additions: integer,
+        deletions: integer
       )
     end
 
@@ -53,7 +51,7 @@ module Runners
     def generate_issue(path, number_of_commits)
       loc = lines_of_code[path]
       commit = last_committed_at.fetch(path)
-      churn = code_churn[path]
+      churn = code_churn.fetch(path, { occurrence: 0, additions: 0, deletions: 0 })
 
       Issue.new(
         path: path,
@@ -64,7 +62,9 @@ module Runners
           lines_of_code: loc,
           last_committed_at: commit,
           number_of_commits: number_of_commits,
-          churn: churn
+          occurrence: churn[:occurrence],
+          additions: churn[:additions],
+          deletions: churn[:deletions]
         },
         schema: SCHEMA.issue
       )
