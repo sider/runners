@@ -92,7 +92,8 @@ s.add_test(
         commit: :_, line_hash: "dc20f32a34163054351b7e66b73309435842aad6", original_line: 6, final_line: 6
       }
     }
-  ]
+  ],
+  warnings: [{ message: "The `linter.ktlint.jvm_deps` option is deprecated. Please use the `linter.ktlint.dependencies` option instead in your `sider.yml`.", file: "sider.yml" }]
 )
 
 s.add_test(
