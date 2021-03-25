@@ -8,7 +8,7 @@ FROM sider/devon_rex_python:2.42.2
 #
 # See https://github.com/danmar/cppcheck#gnu-make
 
-ARG CPPCHECK_VERSION=2.3
+ARG CPPCHECK_VERSION=2.4.1
 
 # NOTE: A segmentation fault occurs with the latest version of libz3.
 ARG LIBZ3_VERSION=4.4.1-1~deb10u1
