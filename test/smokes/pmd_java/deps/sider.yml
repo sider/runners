@@ -1,6 +1,6 @@
 linter:
   pmd_java:
-    jvm_deps:
-      - [com.alibaba.p3c, p3c-pmd, 2.0.1]
+    dependencies:
+      - "com.alibaba.p3c:p3c-pmd:2.0.1"
     rulesets:
       - ruleset.xml
