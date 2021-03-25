@@ -26,7 +26,7 @@ module Runners
     }.freeze
 
     DEFAULT_TARGET = ".".freeze
-    DEFAULT_PRESET = "remark-preset-lint-sider".freeze
+    DEFAULT_RULESET = (Pathname(Dir.home) / "sider_recommended_remark_lint.yml").freeze
 
     def self.config_example
       <<~'YAML'
@@ -48,6 +48,10 @@ module Runners
       "remark"
     end
 
+    def use_git_metadata_dir?
+      true
+    end
+
     def extract_version!(command, version_option = "--version", pattern: /remark-cli: (\d+\.\d+\.\d+)/)
       super
     end
@@ -57,6 +61,11 @@ module Runners
         install_nodejs_deps constraints: CONSTRAINTS
       rescue UserError => exn
         return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
+      end
+
+      if use_default_ruleset?
+        trace_writer.message "Use our default ruleset."
+        FileUtils.copy_file(DEFAULT_RULESET, ".remarkrc.yml")
       end
 
       yield
@@ -111,7 +120,7 @@ module Runners
       !(package_json_path.exist? && package_json.key?(:remarkConfig))
     end
 
-    def use_default_preset?
+    def use_default_ruleset?
       !config_linter[:"rc-path"] &&
         !config_linter[:setting] &&
         !config_linter[:use] &&
@@ -120,17 +129,12 @@ module Runners
         no_config_in_package_json?
     end
 
-    def default_preset
-      use_default_preset? ? ["--use", DEFAULT_PRESET] : []
-    end
-
     def cli_options
       [
         *option_ext,
         *option_rc_path,
         *option_ignore_path,
         *option_use,
-        *default_preset,
         "--report", "vfile-reporter-json",
         "--no-color",
         "--no-stdout",

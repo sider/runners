@@ -13,7 +13,7 @@ Breaking:
 
 Updated environments:
 
-- **devon_rex** 2.41.0 -> 2.42.1 [#2208](https://github.com/sider/runners/pull/2208) [#2223](https://github.com/sider/runners/pull/2223) ([diff](https://github.com/sider/devon_rex/compare/2.41.0...2.42.1))
+- **devon_rex** 2.41.0 -> 2.42.2 [#2208](https://github.com/sider/runners/pull/2208) [#2223](https://github.com/sider/runners/pull/2223) [#2231](https://github.com/sider/runners/pull/2231) ([diff](https://github.com/sider/devon_rex/compare/2.41.0...2.42.2))
 
 Updated tools:
 
@@ -36,6 +36,7 @@ Misc:
 - **TSLint** Extend deadline and add helpful link [#2215](https://github.com/sider/runners/pull/2215)
 - Do not use tmpdir for working directory [#2217](https://github.com/sider/runners/pull/2217)
 - `Runners::Config` check warnings [#2221](https://github.com/sider/runners/pull/2221)
+- **remark-lint** Use `.git` directory and add `remark-validate-links` to default ruleset [#2224](https://github.com/sider/runners/pull/2224)
 - **Metrics File Info** Report the number of commits, additions, deletions used to measure code churn [#2184](https://github.com/sider/runners/pull/2184)
 
 ## 0.45.0
