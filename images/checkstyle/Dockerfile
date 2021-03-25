@@ -2,7 +2,7 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM sider/devon_rex_java:2.42.1
+FROM sider/devon_rex_java:2.42.2
 
 # Install dependencies via Gradle
 ARG DEPS_DIR=${RUNNER_USER_HOME}/dependencies
