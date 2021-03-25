@@ -113,7 +113,7 @@ module Runners
 
     def analyze_code_churn
       trace_writer.message "Analyzing code churn..." do
-        count_by_num, commits_by_num = commits_within("-n", "100")
+        count_by_num, commits_by_num = commits_within("--max-count", "100")
         days_ago = (Time.parse(commits_by_num[:latest][:datetime]) - 90 * 60 * 60 * 24).iso8601
         count_by_time, commits_by_time = commits_within("--since", days_ago)
         outlive_commits = count_by_num > count_by_time ? commits_by_num : commits_by_time
