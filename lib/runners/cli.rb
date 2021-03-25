@@ -84,7 +84,7 @@ module Runners
       result.tap do
         finished_at = Time.now
         trace_writer.header "Finish analysis"
-        trace_writer.message finish_message(result)
+        trace_writer.message finish_message(result, warnings)
         trace_writer.message "Finished at #{finished_at.utc}"
         trace_writer.message "Elapsed time: #{format_duration(finished_at - started_at)}"
         trace_writer.finish started_at: started_at, finished_at: finished_at
@@ -134,19 +134,12 @@ module Runners
       @io ||= options.io
     end
 
-    def finish_message(result)
+    def finish_message(result, warnings)
       analyzer_name = result.analyzer&.name
 
       case result
       when Results::Success
-        issues_message = if result.issues.empty?
-                           "No issues found."
-                         else
-                           issue_count = result.issues.size
-                           issues_text = issue_count == 1 ? "issue" : "issues"
-                           "#{issue_count} #{issues_text} found."
-                         end
-        "#{analyzer_name} analysis succeeded. #{issues_message}"
+        "#{analyzer_name} analysis succeeded: #{result.issues.size} issues, #{warnings.size} warnings"
       else
         analyzer_name ? "#{analyzer_name} analysis failed." : "Analysis failed."
       end
