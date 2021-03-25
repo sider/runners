@@ -23,7 +23,7 @@ module Runners
 
     def io: () -> Runners::IO
 
-    def finish_message: (result) -> String
+    def finish_message: (result, Warnings) -> String
 
     def format_duration: (Float) -> String
   end

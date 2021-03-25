@@ -50,7 +50,7 @@ class CLITest < Minitest::Test
     assert_equal ["Start analysis", "Set up source code", "Set up RuboCop", "Run RuboCop", "Finish analysis"],
                  traces.filter_map { _1[:message] if _1[:trace] == "header" }
     assert_includes traces.filter_map { _1[:message] if _1[:trace] == 'message' },
-                    "RuboCop analysis succeeded. No issues found."
+                    "RuboCop analysis succeeded: 0 issues, 1 warnings"
   end
 
   def test_run_with_one_issue
@@ -64,7 +64,7 @@ class CLITest < Minitest::Test
     cli.stub(:processor_class, klass) { cli.run }
 
     assert_includes traces.filter_map { _1[:message] if _1[:trace] == 'message' },
-                    "RuboCop analysis succeeded. 1 issue found."
+                    "RuboCop analysis succeeded: 1 issues, 0 warnings"
   end
 
   def test_run_with_multiple_issues
@@ -78,7 +78,7 @@ class CLITest < Minitest::Test
     cli.stub(:processor_class, klass) { cli.run }
 
     assert_includes traces.filter_map { _1[:message] if _1[:trace] == 'message' },
-                    "RuboCop analysis succeeded. 2 issues found."
+                    "RuboCop analysis succeeded: 2 issues, 0 warnings"
   end
 
   def test_run_with_error

@@ -17,12 +17,14 @@ Updated environments:
 
 Updated tools:
 
+- **Cppcheck** 2.3 -> 2.4.1 [#2229](https://github.com/sider/runners/pull/2229)
 - **ktlint** 0.39.0 -> 0.41.0 [#2205](https://github.com/sider/runners/pull/2205)
+- **SwiftLint** 0.43.0 -> 0.43.1 [#2230](https://github.com/sider/runners/pull/2230)
 
 Misc:
 
 - Loosen unsatisfied constraints for npm packages [#2171](https://github.com/sider/runners/pull/2171)
-- Improve analysis finish message [#2187](https://github.com/sider/runners/pull/2187)
+- Improve analysis finish message [#2187](https://github.com/sider/runners/pull/2187) [#2232](https://github.com/sider/runners/pull/2232)
 - **ESLint** Provide new recommended configuration [#2165](https://github.com/sider/runners/pull/2165)
 - **ESLint** Use `--no-error-on-unmatched-pattern` if possible [#2199](https://github.com/sider/runners/pull/2199)
 - Simplify `sider.yml` schema [#2192](https://github.com/sider/runners/pull/2192)
