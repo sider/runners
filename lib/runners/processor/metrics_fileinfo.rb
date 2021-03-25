@@ -118,16 +118,15 @@ module Runners
         count_by_time, commits_by_time = commits_within("--since", days_ago)
         outlive_commits = count_by_num > count_by_time ? commits_by_num : commits_by_time
 
-        stdout, _ = git("log", "--reverse", "--format=format:%cI", "--numstat", "#{outlive_commits[:oldest][:sha]}..HEAD")
+        stdout, _ = git("log", "--reverse", "--format=format:#", "--numstat", "#{outlive_commits[:oldest][:sha]}..HEAD")
         lines = stdout.lines(chomp: true)
-        number_of_commits = 0
-        lines.reject(&:empty?).each do |line|
+        number_of_commits = lines.count("#")
+
+        lines.each do |line|
           adds, dels, fname = line.split("\t")
           if adds && dels && fname
             fname = Pathname(fname)
             code_churn[fname] = calc_churn(code_churn[fname], adds, dels)
-          else
-            number_of_commits += 1
           end
         end
 
