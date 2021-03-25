@@ -25,7 +25,15 @@ module Runners
 
     def calc_churn: (Hash[Symbol, Integer], String, String) -> Hash[Symbol, Integer]
 
-    def commits_within: (*String) -> Array[untyped]
+    type commit_summary = {
+      count: Integer,
+      latest_sha: String,
+      latest_time: Time,
+      oldest_sha: String,
+      oldest_time: Time,
+    }
+
+    def commit_summary_within: (*String) -> commit_summary
 
     def text_files: () -> Set[Pathname]
 

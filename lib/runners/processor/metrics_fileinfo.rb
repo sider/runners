@@ -113,12 +113,12 @@ module Runners
 
     def analyze_code_churn
       trace_writer.message "Analyzing code churn..." do
-        count_by_num, commits_by_num = commits_within("--max-count", "100")
-        days_ago = (Time.parse(commits_by_num[:latest][:datetime]) - 90 * 60 * 60 * 24).iso8601
-        count_by_time, commits_by_time = commits_within("--since", days_ago)
-        outlive_commits = count_by_num > count_by_time ? commits_by_num : commits_by_time
+        commits_by_num = commit_summary_within("--max-count", "100")
+        days_ago = (commits_by_num[:latest_time] - 90 * 60 * 60 * 24).iso8601
+        commits_by_time = commit_summary_within("--since", days_ago)
+        outlive_commits = commits_by_num[:count] > commits_by_time[:count] ? commits_by_num : commits_by_time
 
-        stdout, _ = git("log", "--reverse", "--format=format:#", "--numstat", "#{outlive_commits[:oldest][:sha]}..HEAD")
+        stdout, _ = git("log", "--reverse", "--format=format:#", "--numstat", "#{outlive_commits[:oldest_sha]}..HEAD")
         lines = stdout.lines(chomp: true)
         number_of_commits = lines.count("#")
 
@@ -142,15 +142,24 @@ module Runners
       churn
     end
 
-    def commits_within(*args_range)
+    def commit_summary_within(*args_range)
       stdout, _ = git("log", "--format=format:%H|%cI", *args_range)
       lines = stdout.lines(chomp: true)
-      commits = { latest: lines.first, oldest: lines.last }.map do |k, v|
-        logline = v or raise "Required log line: #{lines.length} lines"
-        sha, datetime = logline.split("|")
-        [k, { sha: sha, datetime: datetime }]
-      end
-      [lines.length, commits.to_h]
+      latest_line = lines.first or raise "Required log line: #{lines.size} lines"
+      oldest_line = lines.last or raise "Required log line: #{lines.size} lines"
+      latest_sha, latest_time = latest_line.split("|")
+      oldest_sha, oldest_time = oldest_line.split("|")
+      raise "Required sha in the latest line: #{latest_line}" unless latest_sha
+      raise "Required time in the latest line: #{latest_line}" unless latest_time
+      raise "Required sha in the oldest line: #{oldest_line}" unless oldest_sha
+      raise "Required time in the oldest line: #{oldest_line}" unless oldest_time
+      {
+        count: lines.size,
+        latest_sha: latest_sha,
+        latest_time: Time.parse(latest_time),
+        oldest_sha: oldest_sha,
+        oldest_time: Time.parse(oldest_time),
+      }
     end
 
     # There may not be a perfect method to discriminate file type.
