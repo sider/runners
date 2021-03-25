@@ -214,7 +214,7 @@ s.add_test(
 
         If you want to use a different version of `rails_best_practices`, please do either:
         - Update your `Gemfile.lock` to satisfy the constraint
-        - Set the `linter.rails_best_practices.gems` option in your `sider.yml`
+        - Set the `linter.rails_best_practices.dependencies` option in your `sider.yml`
       MESSAGE
       file: nil
     }

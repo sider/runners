@@ -193,7 +193,7 @@ s.add_test(
 
         If you want to use a different version of `reek`, please do either:
         - Update your `Gemfile.lock` to satisfy the constraint
-        - Set the `linter.reek.gems` option in your `sider.yml`
+        - Set the `linter.reek.dependencies` option in your `sider.yml`
       MESSAGE
       file: nil
     }
