@@ -7,6 +7,10 @@ module Runners
     end
     SCHEMA: SchemaClass
 
+    CHURN_PERIOD_IN_DAYS: Integer
+
+    CHURN_COMMIT_COUNT: Integer
+
     private
 
     def generate_issue: (Pathname, Integer)-> Issue

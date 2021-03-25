@@ -14,6 +14,14 @@ module Runners
       )
     end
 
+    # Basically, the code churn is the number of times or the sum of added/deleted lines a file has changed within a specified period of time.
+    # Like other products, we adopt the last 90 days before the latest commit date. However, if a project is not so active and has only
+    # a few commits in a month, the churn values fluctuate on the scatter plot (churn v.s quality metrics) due to ambiguity of the small number of commits.
+    # A relative value of churn becomes stable as comparing the values across a certain number of files. So we also take 100 commits into account
+    # when there are not enough commits in 90 days.
+    CHURN_PERIOD_IN_DAYS = 90
+    CHURN_COMMIT_COUNT = 100
+
     def analyzer_version
       Runners::VERSION
     end
@@ -113,8 +121,8 @@ module Runners
 
     def analyze_code_churn
       trace_writer.message "Analyzing code churn..." do
-        commits_by_num = commit_summary_within("--max-count", "100")
-        days_ago = (commits_by_num[:latest_time] - 90 * 60 * 60 * 24).iso8601
+        commits_by_num = commit_summary_within("--max-count", CHURN_COMMIT_COUNT.to_s)
+        days_ago = (commits_by_num[:latest_time] - CHURN_PERIOD_IN_DAYS * 60 * 60 * 24).iso8601
         commits_by_time = commit_summary_within("--since", days_ago)
         outlive_commits = commits_by_num[:count] > commits_by_time[:count] ? commits_by_num : commits_by_time
 
