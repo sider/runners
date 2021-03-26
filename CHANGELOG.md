@@ -41,6 +41,7 @@ Misc:
 - **remark-lint** Use `.git` directory and add `remark-validate-links` to default ruleset [#2224](https://github.com/sider/runners/pull/2224)
 - Introduce common option `linter.<id>.dependencies` [#2211](https://github.com/sider/runners/pull/2211)
 - **Metrics File Info** Report the number of commits, additions, deletions used to measure code churn [#2184](https://github.com/sider/runners/pull/2184)
+- **ESLint** Allow strings for ext and global options [#2236](https://github.com/sider/runners/pull/2236)
 
 ## 0.45.0
 
