@@ -88,7 +88,7 @@ module Runners
       installed_deps = list_installed_npm_deps_with names: constraints.keys
 
       case
-      when !all_npm_deps_statisfied_constraint?(installed_deps, constraints)
+      when !all_npm_deps_satisfied_constraint?(installed_deps, constraints)
         self.nodejs_force_default_version = true
         trace_writer.message "All constraints are not satisfied. The default version `#{analyzer_version}` will be used instead."
       when nodejs_analyzer_locally_installed?
@@ -174,7 +174,7 @@ module Runners
       end
     end
 
-    def all_npm_deps_statisfied_constraint?(installed_deps, constraints)
+    def all_npm_deps_satisfied_constraint?(installed_deps, constraints)
       all_satisfied = true
 
       constraints.each do |name, constraint|

@@ -51,7 +51,7 @@ module Runners
 
     def list_installed_npm_deps_with: (names: Array[String]) -> Hash[String, { name: String, version: String }]
 
-    def all_npm_deps_statisfied_constraint?: (Hash[String, { name: String, version: String }], constraints) -> bool
+    def all_npm_deps_satisfied_constraint?: (Hash[String, { name: String, version: String }], constraints) -> bool
 
     def npm_constraint_format: (Gem::Requirement) -> String
 
