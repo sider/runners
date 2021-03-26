@@ -1,0 +1,5 @@
+linter:
+  eslint:
+    global:
+      - hi
+      - "exports:true"

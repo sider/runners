@@ -109,12 +109,12 @@ linter:
 #     target:
 #       - src/
 #       - lib/
-#     ext: ".js,.jsx"
+#     ext: [.js, .jsx]
 #     config: config/.eslintrc.js
 #     ignore-path: config/.eslintignore
 #     ignore-pattern: "vendor/**"
 #     no-ignore: true
-#     global: "require,exports:true"
+#     global: ["require", "exports:true"]
 #     quiet: true
 
 #   # Flake8 example. See https://help.sider.review/tools/python/flake8

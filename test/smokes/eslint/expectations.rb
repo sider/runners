@@ -571,3 +571,22 @@ s.add_test(
   issues: [],
   analyzer: { name: "ESLint", version: "7.21.0" }
 )
+
+s.add_test(
+  "option_global",
+  type: "success",
+  issues: [
+    {
+      id: "no-undef",
+      message: "'unknown' is not defined.",
+      links: %w[https://eslint.org/docs/rules/no-undef],
+      path: "foo.js",
+      location: { start_line: 3, start_column: 1, end_line: 3, end_column: 8 },
+      object: { severity: "error", category: "Variables", recommended: true },
+      git_blame_info: {
+        commit: :_, line_hash: "ad0c28a04d30c0f5a968852042a892ccc53b4984", original_line: 3, final_line: 3
+      }
+    }
+  ],
+  analyzer: { name: "ESLint", version: default_version }
+)

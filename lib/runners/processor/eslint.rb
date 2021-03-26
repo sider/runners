@@ -9,12 +9,12 @@ module Runners
       let :config, npm(
         target: target,
         dir: target, # deprecated
-        ext: string?,
+        ext: one_or_more_strings?,
         config: string?,
         'ignore-path': string?,
         'ignore-pattern': one_or_more_strings?,
         'no-ignore': boolean?,
-        global: string?,
+        global: one_or_more_strings?,
         quiet: boolean?,
       )
 
@@ -48,12 +48,12 @@ module Runners
         target:
           - src/
           - lib/
-        ext: ".js,.jsx"
+        ext: [.js, .jsx]
         config: config/.eslintrc.js
         ignore-path: config/.eslintignore
         ignore-pattern: "vendor/**"
         no-ignore: true
-        global: "require,exports:true"
+        global: ["require", "exports:true"]
         quiet: true
       YAML
     end
@@ -87,7 +87,7 @@ module Runners
     end
 
     def ext
-      ext = config_linter[:ext]
+      ext = comma_separated_list(config_linter[:ext])
       ext ? ["--ext", ext] : []
     end
 
@@ -107,7 +107,7 @@ module Runners
     end
 
     def global
-      global = config_linter[:global]
+      global = comma_separated_list(config_linter[:global])
       global ? ["--global", global] : []
     end
 

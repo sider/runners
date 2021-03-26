@@ -3,7 +3,7 @@ linter:
     npm_install: true
     dir: src/
     config: .myeslintrc.yml
-    ext: 'js,jsx'
+    ext: [.js, .jsx]
     ignore-pattern: /src/*
     ignore-path: .gitignore
     no-ignore: true
