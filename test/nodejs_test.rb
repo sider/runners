@@ -517,4 +517,28 @@ class NodejsTest < Minitest::Test
       assert_empty processor.warnings
     end
   end
+
+  def test_install_nodejs_deps_with_workspaces
+    with_workspace do |workspace|
+      new_processor(workspace: workspace)
+
+      (processor.working_dir / "packages" / "a").tap do |dir|
+        dir.mkpath
+        (dir / "package.json").write({ dependencies: { classcat: "5.0.3" } }.to_json)
+      end
+      (processor.working_dir / "packages" / "b").tap do |dir|
+        dir.mkpath
+        (dir / "package.json").write({ dependencies: { "is-string": "1.0.5" } }.to_json)
+      end
+      processor.package_json_path.write({ workspaces: ["packages/a", "packages/b"] }.to_json)
+
+      processor.stub :nodejs_analyzer_global_version, "1.0.0" do
+        processor.install_nodejs_deps(constraints: {}, install_option: INSTALL_OPTION_ALL)
+      end
+
+      assert_equal "5.0.3", package_version("classcat")
+      assert_equal "1.0.5", package_version("is-string")
+      assert_empty processor.warnings
+    end
+  end
 end
