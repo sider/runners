@@ -9,7 +9,9 @@ module Runners
 
     def fetch_deps_via_gradle!: () -> void
 
-    def config_jvm_deps: () -> Array[Array[String]]
+    def config_jvm_deps: () -> Array[String]
+
+    def config_jvm_deps_old: () -> Array[String]
 
     def generate_jvm_deps_file: () -> void
   end

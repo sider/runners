@@ -111,6 +111,7 @@ s.add_test(
       }
     }
   ],
+  warnings: [{ message: /The `linter.clang_tidy.apt` option is deprecated./, file: "sider.yml" }],
   analyzer: { name: "Clang-Tidy", version: default_version }
 )
 
@@ -141,6 +142,7 @@ s.add_test(
       }
     }
   ],
+  warnings: [{ message: /The `linter.clang_tidy.apt` option is deprecated./, file: "sider.yml" }],
   analyzer: { name: "Clang-Tidy", version: default_version }
 )
 
@@ -161,14 +163,9 @@ s.add_test(
     }
   ],
   warnings: [
-    {
-      message: "Installing the package `foobar` is blocked.",
-      file: "sider.yml"
-    },
-    {
-      message: "Installing the package `bazqux-dev-bin=1.2.3-4` is blocked.",
-      file: "sider.yml"
-    }
+    { message: /The `linter.clang_tidy.apt` option is deprecated./, file: "sider.yml" },
+    { message: "Installing the package `foobar` is blocked.", file: "sider.yml" },
+    { message: "Installing the package `bazqux-dev-bin` is blocked.", file: "sider.yml" }
   ],
   analyzer: { name: "Clang-Tidy", version: default_version }
 )
@@ -285,4 +282,15 @@ s.add_test(
   type: "failure",
   message: "`apt-get install` failed. Please check that the package names or versions are correct in your `sider.yml`.",
   analyzer: :_
+)
+
+s.add_test(
+  "option_dependencies",
+  type: "success",
+  issues: [],
+  warnings: [
+    { message: "Installing the package `foobar` is blocked.", file: "sider.yml" },
+    { message: "Installing the package `bazqux-dev-bin` is blocked.", file: "sider.yml" }
+  ],
+  analyzer: { name: "Clang-Tidy", version: default_version }
 )

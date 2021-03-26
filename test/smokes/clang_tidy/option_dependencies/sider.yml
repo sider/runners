@@ -1,0 +1,8 @@
+linter:
+  clang_tidy:
+    dependencies:
+      - libgdbm-dev
+      - libfastjson-dev=0.99.8-2
+      - { name: "libapr1-dev", version: "1.6.5-1+b1" }
+      - foobar
+      - bazqux-dev-bin=1.2.3-4

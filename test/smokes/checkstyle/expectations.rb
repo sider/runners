@@ -232,6 +232,25 @@ s.add_test(
 )
 
 s.add_test(
+  "dependencies",
+  type: "success",
+  issues: [
+    {
+      message: "Incorrect target: 'CLASS_DEF' for annotation: 'XXX'.",
+      links: [],
+      id: "com.github.sevntu.checkstyle.checks.annotation.ForbidAnnotationCheck",
+      path: "Foo.java",
+      location: { start_line: 1, start_column: 1 },
+      object: { severity: "error" },
+      git_blame_info: {
+        commit: :_, line_hash: "1dc0736e1e427ace652a896ca5c096be7acd8133", original_line: 1, final_line: 1
+      }
+    }
+  ],
+  analyzer: { name: "Checkstyle", version: default_version }
+)
+
+s.add_test(
   "deps",
   type: "success",
   issues: [
@@ -247,6 +266,7 @@ s.add_test(
       }
     }
   ],
+  warnings: [{ message: /`linter.checkstyle.jvm_deps` option is deprecated/, file: "sider.yml" }],
   analyzer: { name: "Checkstyle", version: default_version }
 )
 
@@ -277,6 +297,7 @@ s.add_test(
       }
     }
   ],
+  warnings: [{ message: /`linter.checkstyle.jvm_deps` option is deprecated/, file: "sider.yml" }],
   analyzer: { name: "Checkstyle", version: "8.32" }
 )
 
@@ -287,6 +308,7 @@ s.add_test(
     An invalid dependency is found in your `sider.yml`: `["com.github.sevntu-checkstyle", "sevntu-checks"]`
     Dependencies should be of the form: `[group, name, version]`
   MSG
+  warnings: [{ message: /`linter.checkstyle.jvm_deps` option is deprecated/, file: "sider.yml" }],
   analyzer: :_
 )
 
@@ -296,6 +318,7 @@ s.add_test(
   class: "Runners::Shell::ExecError",
   backtrace: :_,
   inspect: /#<Runners::Shell::ExecError: type=capture3, args=\["gradle", "--no-build-cache",/,
+  warnings: [{ message: /`linter.checkstyle.jvm_deps` option is deprecated/, file: "sider.yml" }],
   analyzer: :_
 )
 

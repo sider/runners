@@ -8,6 +8,13 @@ module Runners
     CPP_HEADERS_GLOB = "**/*.{h,h++,hh,hpp,hxx,inc,inl,ipp,tcc,tpp}".freeze
     private_constant :CPP_SOURCES_GLOB, :CPP_HEADERS_GLOB
 
+    def self.included(klass)
+      # @type var klass: singleton(Processor)
+      Config.register_warnings do |config|
+        config.add_warning_for_deprecated_option(analyzer: klass.analyzer_id, old: :apt, new: :dependencies)
+      end
+    end
+
     def config_include_path
       Array(config_linter[:'include-path'] || find_paths_containing_headers).map { |v| "-I#{v}" }
     end
@@ -20,12 +27,21 @@ module Runners
       trace_writer.message "Installing apt packages..."
 
       # select development packages and report others as warning for security concerns
-      packages = Array(config_linter[:apt]).select do |pkg|
-        # @type var pkg: String
-        if pkg.match?(/-dev(=.+)?$/)
-          true
+      packages = Array(config_linter[:dependencies] || config_linter[:apt]).filter_map do |pkg|
+        # @type var pkg: Hash[Symbol, String?] | String
+        case pkg
+        when Hash
+          name = pkg.fetch(:name) or raise pkg.inspect
+          version = pkg.fetch(:version)
         else
-          add_warning "Installing the package `#{pkg}` is blocked.", file: config.path_name
+          name, version = pkg.split("=")
+          name or raise pkg.inspect
+        end
+
+        if name.end_with? "-dev"
+          [name, version].compact.join("=")
+        else
+          add_warning "Installing the package `#{name}` is blocked.", file: config.path_name
           false
         end
       end

@@ -1,4 +1,4 @@
 linter:
   clang_tidy:
     root_dir: source
-    apt: [libgdbm-dev, "libfastjson-dev"]
+    dependencies: [libgdbm-dev, "libfastjson-dev"]

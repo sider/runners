@@ -444,7 +444,7 @@ s.add_test(
 
         If you want to use a different version of `rubocop`, please do either:
         - Update your `Gemfile.lock` to satisfy the constraint
-        - Set the `linter.rubocop.gems` option in your `sider.yml`
+        - Set the `linter.rubocop.dependencies` option in your `sider.yml`
       MSG
       file: nil
     }
