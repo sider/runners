@@ -12,10 +12,6 @@ module TestHelper
     Pathname(__dir__).join("data", file)
   end
 
-  def incorrect_yarn_data(file)
-    Pathname(__dir__).join("incorrect_yarn_data", file)
-  end
-
   def with_stubbed_env(name, value)
     backup = ENV[name]
     ENV[name] = value
