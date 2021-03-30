@@ -36,7 +36,7 @@ module Runners
     }.freeze
 
     CUSTOM_FORMATTER = (Pathname(Dir.home) / "eslint" / "custom-eslint-json-formatter.js").to_path.freeze
-    DEFAULT_ESLINT_CONFIG = (Pathname(Dir.home) / "eslint" / "sider_eslintrc.yml").to_path.freeze
+    DEFAULT_ESLINT_CONFIG = (Pathname(Dir.home) / "eslint" / "sider_recommended_eslint.yml").to_path.freeze
     DEFAULT_TARGET = ".".freeze
 
     def self.config_example

@@ -17,28 +17,28 @@ rules:
 
   # Enabled [Possible Errors]
   no-await-in-loop: error
-  no-loss-of-precision: error
-  no-promise-executor-return: error
+  # no-loss-of-precision: error
+  # no-promise-executor-return: error
   no-template-curly-in-string: error
-  no-unreachable-loop: error
-  no-unsafe-optional-chaining: error
-  no-useless-backreference: error
-  require-atomic-updates: error
+  # no-unreachable-loop: error
+  # no-unsafe-optional-chaining: error
+  # no-useless-backreference: error
+  # require-atomic-updates: error
 
   # Enabled [Best Practices]
   accessor-pairs: error
   array-callback-return: error
   block-scoped-var: error
   class-methods-use-this: error
-  default-case-last: error
-  default-param-last: error
+  # default-case-last: error
+  # default-param-last: error
   eqeqeq: [error, smart]
-  grouped-accessor-pairs: error
+  # grouped-accessor-pairs: error
   guard-for-in: error
   max-classes-per-file: error
   no-alert: error
   no-caller: error
-  no-constructor-return: error
+  # no-constructor-return: error
   no-div-regex: error
   no-empty-function: error
   no-eval: error
@@ -55,7 +55,7 @@ rules:
   no-new: error
   no-new-func: error
   no-new-wrappers: error
-  no-nonoctal-decimal-escape: error
+  # no-nonoctal-decimal-escape: error
   no-octal-escape: error
   no-param-reassign: error
   no-proto: error
@@ -73,7 +73,7 @@ rules:
   no-useless-return: error
   no-warning-comments: error
   prefer-promise-reject-errors: error
-  prefer-regex-literals: error
+  # prefer-regex-literals: error
   radix: error
   require-await: error
   vars-on-top: error
@@ -85,7 +85,7 @@ rules:
 
   # Enabled [Stylistic Issues]
   func-name-matching: error
-  id-denylist: error
+  # id-denylist: error
   id-match: error
   no-array-constructor: error
   no-lonely-if: error
@@ -94,7 +94,7 @@ rules:
   no-restricted-syntax: error
   no-unneeded-ternary: error
   no-whitespace-before-property: error
-  prefer-exponentiation-operator: error
+  # prefer-exponentiation-operator: error
   prefer-object-spread: error
 
   # Enabled [ECMAScript 6]
@@ -103,7 +103,7 @@ rules:
   generator-star-spacing: error
   no-confusing-arrow: error
   no-duplicate-imports: error
-  no-restricted-exports: error
+  # no-restricted-exports: error
   no-restricted-imports: error
   no-useless-computed-key: error
   no-useless-constructor: error

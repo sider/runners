@@ -32,7 +32,7 @@ ENV PATH ${RUNNER_USER_HOME}/eslint/node_modules/.bin:${PATH}
 # See https://nodejs.org/api/cli.html#cli_node_path_path
 ENV NODE_PATH ${RUNNER_USER_HOME}/eslint/node_modules:${NODE_PATH}
 
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/eslint/sider_eslintrc.yml ${RUNNER_USER_HOME}/eslint/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/eslint/sider_recommended_eslint.yml ${RUNNER_USER_HOME}/eslint/
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/eslint/custom-eslint-json-formatter.js ${RUNNER_USER_HOME}/eslint/
 
 

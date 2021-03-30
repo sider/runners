@@ -27,6 +27,28 @@ s.add_test(
       git_blame_info: {
         commit: :_, line_hash: "f3ad79b5672cb93aaade2944995ccc7766faaac4", original_line: 1, final_line: 1
       }
+    },
+    {
+      path: "index.js",
+      location: { start_line: 4, start_column: 5, end_line: 4, end_column: 6 },
+      id: "prefer-const",
+      message: "'a' is never reassigned. Use 'const' instead.",
+      links: %w[https://eslint.org/docs/rules/prefer-const],
+      object: { severity: "error", category: "ECMAScript 6", recommended: false },
+      git_blame_info: {
+        commit: :_, line_hash: "e151e70048f592122d03aeceab9fcf5ab50765e2", original_line: 4, final_line: 4
+      }
+    },
+    {
+      path: "index.js",
+      location: { start_line: 1, start_column: 6, end_line: 1, end_column: 15 },
+      id: "vars-on-top",
+      message: "All 'var' declarations must be at the top of the function scope.",
+      links: %w[https://eslint.org/docs/rules/vars-on-top],
+      object: { severity: "error", category: "Best Practices", recommended: false },
+      git_blame_info: {
+        commit: :_, line_hash: "f3ad79b5672cb93aaade2944995ccc7766faaac4", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "ESLint", version: default_version }
@@ -62,6 +84,17 @@ s.add_test(
       message: "Unexpected constant condition.",
       links: %w[https://eslint.org/docs/rules/no-constant-condition],
       object: { severity: "error", category: "Possible Errors", recommended: true },
+      git_blame_info: {
+        commit: :_, line_hash: "19f7c599ce45fd313bdab7d41271e27f978a1f27", original_line: 1, final_line: 1
+      }
+    },
+    {
+      path: "index.js",
+      location: { start_line: 1, start_column: 5, end_line: 1, end_column: 11 },
+      id: "no-self-compare",
+      message: "Comparing to itself is potentially pointless.",
+      links: %w[https://eslint.org/docs/rules/no-self-compare],
+      object: { severity: "error", category: "Best Practices", recommended: false },
       git_blame_info: {
         commit: :_, line_hash: "19f7c599ce45fd313bdab7d41271e27f978a1f27", original_line: 1, final_line: 1
       }
@@ -388,17 +421,6 @@ s.add_test(
   "mismatched_package_version",
   type: "success",
   issues: [
-    {
-      id: "no-unused-vars",
-      message: "'x' is assigned a value but never used.",
-      links: %w[https://eslint.org/docs/rules/no-unused-vars],
-      path: "src/index.js",
-      location: { start_line: 1, start_column: 5, end_line: 1, end_column: 6 },
-      object: { severity: "error", category: "Variables", recommended: true },
-      git_blame_info: {
-        commit: :_, line_hash: "1344e9df550a53b40d135830a9289d34f4246299", original_line: 1, final_line: 1
-      }
-    }
   ],
   analyzer: { name: "ESLint", version: "6.8.0" }
 )
@@ -492,6 +514,28 @@ s.add_test(
       path: "src/bar.js",
       location: { start_line: 1, start_column: 5, end_line: 1, end_column: 6 },
       object: { severity: "error", category: "Possible Errors", recommended: true },
+      git_blame_info: {
+        commit: :_, line_hash: "5f94a2b6c745ba6538ff265a8d1f1f98b8538623", original_line: 1, final_line: 1
+      }
+    },
+    {
+      id: "no-unused-expressions",
+      message: "Expected an assignment or function call and instead saw an expression.",
+      links: %w[https://eslint.org/docs/rules/no-unused-expressions],
+      path: "foo.js",
+      location: { start_line: 1, start_column: 1, end_line: 1, end_column: 5 },
+      object: { severity: "error", category: "Best Practices", recommended: false },
+      git_blame_info: {
+        commit: :_, line_hash: "5786438d311af019d0e3d06977c4ab84a25d591b", original_line: 1, final_line: 1
+      }
+    },
+    {
+      id: "no-unused-expressions",
+      message: "Expected an assignment or function call and instead saw an expression.",
+      links: %w[https://eslint.org/docs/rules/no-unused-expressions],
+      path: "src/bar.js",
+      location: { start_line: 1, start_column: 1, end_line: 1, end_column: 5 },
+      object: { severity: "error", category: "Best Practices", recommended: false },
       git_blame_info: {
         commit: :_, line_hash: "5f94a2b6c745ba6538ff265a8d1f1f98b8538623", original_line: 1, final_line: 1
       }
