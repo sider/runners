@@ -1,4 +1,20 @@
 ---
+- file: lib/runners/changes.rb
+  diagnostics:
+  - range:
+      start:
+        line: 77
+        character: 4
+      end:
+        line: 83
+        character: 7
+    severity: ERROR
+    message: |-
+      Cannot allow method body have type `::Array[(::Pathname | nil)]` because declared as type `::Array[::Pathname]`
+        ::Array[(::Pathname | nil)] <: ::Array[::Pathname]
+          (::Pathname | nil) <: ::Pathname
+            nil <: ::Pathname
+    code: Ruby::MethodBodyTypeMismatch
 - file: lib/runners/cli.rb
   diagnostics:
   - range:
@@ -33,6 +49,36 @@
     severity: ERROR
     message: Type `nil` does not have method `add_tab`
     code: Ruby::NoMethod
+- file: lib/runners/cplusplus.rb
+  diagnostics:
+  - range:
+      start:
+        line: 30
+        character: 17
+      end:
+        line: 47
+        character: 9
+    severity: ERROR
+    message: |-
+      Cannot find compatible overloading of method `filter_map` of type `[]`
+      Method types:
+        def filter_map: [U] () { (bot) -> (nil | false | U) } -> ::Array[U]
+                      | () -> ::Enumerator[bot, ::Array[untyped]]
+    code: Ruby::UnresolvedOverloading
+  - range:
+      start:
+        line: 65
+        character: 4
+      end:
+        line: 69
+        character: 7
+    severity: ERROR
+    message: |-
+      Cannot allow method body have type `::Array[(::String | nil)]` because declared as type `::Array[::String]`
+        ::Array[(::String | nil)] <: ::Array[::String]
+          (::String | nil) <: ::String
+            nil <: ::String
+    code: Ruby::MethodBodyTypeMismatch
 - file: lib/runners/issue.rb
   diagnostics:
   - range:
@@ -145,33 +191,3 @@
     severity: ERROR
     message: Type `(::String | ::Array[::String] | nil)` does not have method `split`
     code: Ruby::NoMethod
-- file: lib/runners/ruby.rb
-  diagnostics:
-  - range:
-      start:
-        line: 130
-        character: 22
-      end:
-        line: 130
-        character: 64
-    severity: ERROR
-    message: |-
-      Cannot find compatible overloading of method `to_h` of type `::Array[::Runners::Ruby::GemInstaller::Spec]`
-      Method types:
-        def to_h: () -> ::Hash[untyped, untyped]
-                | [T, S] () { (::Runners::Ruby::GemInstaller::Spec) -> [T, S] } -> ::Hash[T, S]
-    code: Ruby::UnresolvedOverloading
-  - range:
-      start:
-        line: 131
-        character: 19
-      end:
-        line: 131
-        character: 58
-    severity: ERROR
-    message: |-
-      Cannot find compatible overloading of method `to_h` of type `::Array[::Runners::Ruby::GemInstaller::Spec]`
-      Method types:
-        def to_h: () -> ::Hash[untyped, untyped]
-                | [T, S] () { (::Runners::Ruby::GemInstaller::Spec) -> [T, S] } -> ::Hash[T, S]
-    code: Ruby::UnresolvedOverloading

@@ -107,7 +107,7 @@ module Runners
     end
 
     def option_use
-      Array(config_linter[:use]).flat_map { |v| ["--use", v] }
+      Array(config_linter[:use]).each_with_object([]) { |v, flags| flags << "--use" << v }
     end
 
     # @see https://github.com/unifiedjs/unified-engine/blob/8.0.0/doc/configure.md

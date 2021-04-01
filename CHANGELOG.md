@@ -13,12 +13,17 @@ Breaking:
 
 Updated environments:
 
-- **devon_rex** 2.41.0 -> 2.42.3 [#2208](https://github.com/sider/runners/pull/2208) [#2223](https://github.com/sider/runners/pull/2223) [#2231](https://github.com/sider/runners/pull/2231) [#2233](https://github.com/sider/runners/pull/2233) ([diff](https://github.com/sider/devon_rex/compare/2.41.0...2.42.3))
+- **devon_rex** 2.41.0 -> 2.42.4 [#2208](https://github.com/sider/runners/pull/2208) [#2223](https://github.com/sider/runners/pull/2223) [#2231](https://github.com/sider/runners/pull/2231) [#2233](https://github.com/sider/runners/pull/2233) [#2252](https://github.com/sider/runners/pull/2252) ([diff](https://github.com/sider/devon_rex/compare/2.41.0...2.42.4))
 
 Updated tools:
 
+- **Checkstyle** 8.41 -> 8.41.1 [#2247](https://github.com/sider/runners/pull/2247)
+- **CoffeeLint** 4.1.3 -> 4.1.4 [#2248](https://github.com/sider/runners/pull/2248)
 - **Cppcheck** 2.3 -> 2.4.1 [#2229](https://github.com/sider/runners/pull/2229)
+- **ESLint** 7.22.0 -> 7.23.0 [#2241](https://github.com/sider/runners/pull/2241)
+- **GolangCI-Lint** 1.38.0 -> 1.39.0 [#2239](https://github.com/sider/runners/pull/2239)
 - **ktlint** 0.39.0 -> 0.41.0 [#2205](https://github.com/sider/runners/pull/2205)
+- **RuboCop** 1.11.0 -> 1.12.0 [#2240](https://github.com/sider/runners/pull/2240)
 - **SwiftLint** 0.43.0 -> 0.43.1 [#2230](https://github.com/sider/runners/pull/2230)
 
 Misc:

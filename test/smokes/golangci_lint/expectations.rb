@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "1.38.0"
+default_version = "1.39.0"
 
 s.add_test(
   "target",
@@ -51,16 +51,38 @@ s.add_test(
   analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
-s.add_test("no_error", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: default_version })
-
 s.add_test(
-  "failure",
-  type: "failure",
-  message: "The analysis failed due to an unexpected error. See the analysis log for details.",
+  "no_error",
+  type: "success",
+  issues: [],
   analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 
-s.add_test("no_go_file", type: "success", issues: [], analyzer: { name: "GolangCI-Lint", version: default_version })
+s.add_test(
+  "failure",
+  type: "success",
+  issues: [
+    {
+      path: "sample.go",
+      location: { start_line: 4, start_column: 3 },
+      id: "typecheck:undeclared name",
+      message: "undeclared name: `fmt`",
+      links: [],
+      object: { severity: "", replacement: nil },
+      git_blame_info: {
+        commit: :_, line_hash: "8bdc947f3ad6f7d9a0e5376b9c550341a24b0465", original_line: 4, final_line: 4
+      }
+    }
+  ],
+  analyzer: { name: "GolangCI-Lint", version: default_version }
+)
+
+s.add_test(
+  "no_go_file",
+  type: "success",
+  issues: [],
+  analyzer: { name: "GolangCI-Lint", version: default_version }
+)
 
 s.add_test(
   "config_sample",
@@ -90,7 +112,10 @@ s.add_test(
     }
   ],
   analyzer: { name: "GolangCI-Lint", version: default_version },
-  warnings: [{ message: "The linter 'interfacer' is deprecated due to: The repository of the linter has been archived by the owner.", file: nil }]
+  warnings: [
+    { message: "The linter 'interfacer' is deprecated (since v1.38.0) due to: The repository of the linter has been archived by the owner.", file: nil },
+    { message: "The linter 'scopelint' is deprecated (since v1.39.0) due to: The repository of the linter has been deprecated by the owner.  Replaced by exportloopref.", file: nil }
+  ]
 )
 
 s.add_test(
@@ -298,6 +323,24 @@ s.add_test(
     {
       path: "sample.go",
       location: { start_line: 4, start_column: 0 },
+      id: "gci",
+      message: "File is not `gci`-ed",
+      links: [],
+      object: {
+        severity: "",
+        replacement: {
+          NeedOnlyDelete: false,
+          NewLines: ["\t\"errors\"", "\t\"fmt\""],
+          Inline: nil
+        }
+      },
+      git_blame_info: {
+        commit: :_, line_hash: "36402d95a34f3cba6826c498785c8b2e82b66437", original_line: 4, final_line: 4
+      }
+    },
+    {
+      path: "sample.go",
+      location: { start_line: 17, start_column: 0 },
       id: "gofmt",
       message: "File is not `gofmt`-ed with `-s`",
       links: [],
@@ -305,12 +348,12 @@ s.add_test(
         severity: "",
         replacement: {
           NeedOnlyDelete: false,
-          NewLines: [%(\t"errors"), %(\t"fmt")],
+          NewLines: ["\tif num < 0 {", "\t\treturn errors.New(\"error\")", "\t}", "\tfmt.Println(\"ok\")", "\treturn nil"],
           Inline: nil
         }
       },
       git_blame_info: {
-        commit: :_, line_hash: "36402d95a34f3cba6826c498785c8b2e82b66437", original_line: 4, final_line: 4
+        commit: :_, line_hash: "405ad45b134d4d5eed87fa3e920239cdd543c1fc", original_line: 17, final_line: 17
       }
     }
   ],
