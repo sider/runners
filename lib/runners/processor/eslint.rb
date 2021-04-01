@@ -97,8 +97,7 @@ module Runners
     end
 
     def ignore_pattern
-      ignore_pattern = config_linter[:'ignore-pattern']
-      Array(ignore_pattern).flat_map { |value| ["--ignore-pattern", value] }
+      Array(config_linter[:'ignore-pattern']).each_with_object([]) { |pat, flags| flags << "--ignore-pattern" << pat }
     end
 
     def no_ignore

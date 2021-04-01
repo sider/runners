@@ -88,7 +88,7 @@ module Runners
     end
 
     def ignore
-      Array(config_linter[:ignore] || DEFAULT_IGNORE).flat_map { |i| ["-i", i] }
+      Array(config_linter[:ignore] || DEFAULT_IGNORE).each_with_object([]) { |i, flags| flags << "-i" << i }
     end
 
     def addon
