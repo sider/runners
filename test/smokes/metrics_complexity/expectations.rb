@@ -211,7 +211,6 @@ s.add_test(
   analyzer: { name: "Metrics Complexity", version: default_version}
 )
 
-#TODO: This is a test case to ensure avoiding lizard's bug. Remove after the bug fixed.
 s.add_test(
   "complex_file",
   type: "success",
