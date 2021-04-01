@@ -59,7 +59,7 @@ GEM
       concurrent-ruby (~> 1.0)
     cgi (0.2.0)
     concurrent-ruby (1.1.8)
-    erb (2.2.2)
+    erb (2.2.3)
       cgi
     ffi (1.15.0)
     fileutils (1.5.0)
