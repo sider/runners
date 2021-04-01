@@ -154,9 +154,10 @@ module Runners
     def parse_result(output)
       json = JSON.parse(output, symbolize_names: true)
 
-      (json.dig(:Report, :Warnings) || []).each do |warning|
-        add_warning warning.fetch(:Text)
-      end
+      (json.dig(:Report, :Warnings) || [])
+        .map { |w| w.fetch(:Text) }
+        .sort # NOTE: The order is not consistent.
+        .each { |msg| add_warning(msg) }
 
       (json[:Issues] || []).each do |issue|
         linter = issue[:FromLinter]
