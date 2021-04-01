@@ -2,7 +2,7 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM golangci/golangci-lint:v1.38.0 as golangci-lint
+FROM golangci/golangci-lint:v1.39.0 as golangci-lint
 
 FROM sider/devon_rex_go:2.42.4
 
