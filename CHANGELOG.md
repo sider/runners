@@ -19,6 +19,7 @@ Updated tools:
 
 - **Cppcheck** 2.3 -> 2.4.1 [#2229](https://github.com/sider/runners/pull/2229)
 - **ktlint** 0.39.0 -> 0.41.0 [#2205](https://github.com/sider/runners/pull/2205)
+- **RuboCop** 1.11.0 -> 1.12.0 [#2240](https://github.com/sider/runners/pull/2240)
 - **SwiftLint** 0.43.0 -> 0.43.1 [#2230](https://github.com/sider/runners/pull/2230)
 
 Misc:
