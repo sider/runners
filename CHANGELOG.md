@@ -24,6 +24,7 @@ Updated tools:
 - **GolangCI-Lint** 1.38.0 -> 1.39.0 [#2239](https://github.com/sider/runners/pull/2239)
 - **ktlint** 0.39.0 -> 0.41.0 [#2205](https://github.com/sider/runners/pull/2205)
 - **LanguageTool** 5.2 -> 5.3 [#2251](https://github.com/sider/runners/pull/2251)
+- **PMD Java** 6.32.0 -> 6.33.0 [#2244](https://github.com/sider/runners/pull/2244)
 - **RuboCop** 1.11.0 -> 1.12.0 [#2240](https://github.com/sider/runners/pull/2240)
 - **SwiftLint** 0.43.0 -> 0.43.1 [#2230](https://github.com/sider/runners/pull/2230)
 
