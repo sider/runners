@@ -5,4 +5,4 @@ verify_ssl = true
 
 [packages]
 #TODO: We use a custom version to avoid some lizard's bugs. Use non-custom version after merging our patch with mainline.
-lizard = {git = "https://github.com/sider/lizard.git", editable = true, ref = "3c699a26bbf91af7564de570027672859eefa41b"}
+lizard = {git = "https://github.com/sider/lizard.git", editable = true, ref = "6c4ebfad43abe6247e22fb59574dcb8af6e62aaf"}
