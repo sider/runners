@@ -9,8 +9,8 @@ linter:
 #   # Brakeman example. See https://help.sider.review/tools/ruby/brakeman
 #   brakeman:
 #     root_dir: project/
-#     gems:
-#       - { name: "brakeman", version: "< 6" }
+#     dependencies:
+#       - { name: "brakeman", version: "5.0.0" }
 
 #   # Checkstyle example. See https://help.sider.review/tools/java/checkstyle
 #   checkstyle:
@@ -181,8 +181,8 @@ linter:
 #   # HAML-Lint example. See https://help.sider.review/tools/ruby/haml-lint
 #   haml_lint:
 #     root_dir: project/
-#     gems:
-#       - { name: rubocop, version: 1.0.0 }
+#     dependencies:
+#       - { name: "rubocop", version: "1.0.0" }
 #     target: [app/, lib/]
 #     include_linter:
 #       - EmptyScript
@@ -313,15 +313,15 @@ linter:
 #   # Querly example. See https://help.sider.review/tools/ruby/querly
 #   querly:
 #     root_dir: project/
-#     gems:
-#       - { name: "querly", version: "< 2" }
+#     dependencies:
+#       - { name: "querly", version: "1.2.0" }
 #     config: config/querly.yml
 
 #   # Rails Best Practices example. See https://help.sider.review/tools/ruby/rails-best-practices
 #   rails_best_practices:
 #     root_dir: project/
-#     gems:
-#       - { name: "rails_best_practices", version: "< 2" }
+#     dependencies:
+#       - { name: "rails_best_practices", version: "1.20.0" }
 #     vendor: false
 #     spec: true
 #     test: true
@@ -333,8 +333,8 @@ linter:
 #   # Reek example. See https://help.sider.review/tools/ruby/reek
 #   reek:
 #     root_dir: project/
-#     gems:
-#       - { name: "reek", version: "< 6" }
+#     dependencies:
+#       - { name: "reek", version: "6.0.0" }
 #     target: [lib/, test/]
 #     config: config/reek.yml
 
@@ -355,9 +355,9 @@ linter:
 #   # RuboCop example. See https://help.sider.review/tools/ruby/rubocop
 #   rubocop:
 #     root_dir: project/
-#     gems:
+#     dependencies:
 #       - rubocop-rails
-#       - { name: rubocop-rspec, version: 2.1.0 }
+#       - { name: "rubocop-rspec", version: "2.1.0" }
 #     config: config/.rubocop.yml
 #     safe: true
 
@@ -377,8 +377,8 @@ linter:
 #   # Slim-Lint example. See https://help.sider.review/tools/ruby/slim-lint
 #   slim_lint:
 #     root_dir: project/
-#     gems:
-#       - { name: rubocop, version: 1.0.0 }
+#     dependencies:
+#       - { name: "rubocop", version: "1.0.0" }
 #     target: [app/views/]
 #     config: config/.slim-lint.yml
 

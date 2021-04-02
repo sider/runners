@@ -23,8 +23,8 @@ module Runners
     def self.config_example
       <<~'YAML'
         root_dir: project/
-        gems:
-          - { name: "brakeman", version: "< 6" }
+        dependencies:
+          - { name: "brakeman", version: "5.0.0" }
       YAML
     end
 

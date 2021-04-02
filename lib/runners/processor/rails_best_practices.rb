@@ -37,8 +37,8 @@ module Runners
     def self.config_example
       <<~'YAML'
         root_dir: project/
-        gems:
-          - { name: "rails_best_practices", version: "< 2" }
+        dependencies:
+          - { name: "rails_best_practices", version: "1.20.0" }
         vendor: false
         spec: true
         test: true
