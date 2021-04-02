@@ -15,8 +15,8 @@ linter:
 #   # Checkstyle example. See https://help.sider.review/tools/java/checkstyle
 #   checkstyle:
 #     root_dir: project/
-#     jvm_deps:
-#       - [com.github.sevntu-checkstyle, sevntu-checks, 1.37.1]
+#     dependencies:
+#       - "my.company.com:checkstyle-rules:1.0.0"
 #     config: custom-checkstyle.xml
 #     target: src/
 #     exclude: vendor/
@@ -26,7 +26,7 @@ linter:
 #   # Clang-Tidy example. See https://help.sider.review/tools/cplusplus/clang-tidy
 #   clang_tidy:
 #     root_dir: project/
-#     apt:
+#     dependencies:
 #       - libgdbm-dev
 #       - libfastjson-dev=0.99.8-2
 #     include-path:
@@ -83,8 +83,8 @@ linter:
 #   # detekt example. See https://help.sider.review/tools/kotlin/detekt
 #   detekt:
 #     root_dir: project/
-#     jvm_deps:
-#       - [com.example, detekt-rules, 1.0.0]
+#     dependencies:
+#       - "com.example:detekt-rules:1.0.0"
 #     baseline: config/detekt-baseline.xml
 #     config:
 #       - config/detekt-config.yml
@@ -209,8 +209,8 @@ linter:
 #   # ktlint example. See https://help.sider.review/tools/kotlin/ktlint
 #   ktlint:
 #     root_dir: project/
-#     jvm_deps:
-#       - [my.company.com, ktlint-rules, 1.0.0]
+#     dependencies:
+#       - "my.company.com:ktlint-rules:1.0.0"
 #     target:
 #       - "src/**/*.kt"
 #       - "!src/**/*Test.kt"
@@ -289,8 +289,8 @@ linter:
 #   # PMD Java example. See https://help.sider.review/tools/java/pmd
 #   pmd_java:
 #     root_dir: project/
-#     jvm_deps:
-#       - [my.company.com, pmd-ruleset, 1.2.3]
+#     dependencies:
+#       - "my.company.com:pmd-ruleset:1.2.3"
 #     target: src/
 #     rulesets:
 #       - category/java/errorprone.xml

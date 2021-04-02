@@ -18,7 +18,7 @@ module Runners
     def self.config_example
       <<~'YAML'
         root_dir: project/
-        apt:
+        dependencies:
           - libgdbm-dev
           - libfastjson-dev=0.99.8-2
         include-path:
