@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "7.22.0"
+default_version = "7.23.0"
 
 s.add_test(
   "no_config",
@@ -24,28 +24,6 @@ s.add_test(
       message: "Empty block statement.",
       links: %w[https://eslint.org/docs/rules/no-empty],
       object: { severity: "error", category: "Possible Errors", recommended: true },
-      git_blame_info: {
-        commit: :_, line_hash: "f3ad79b5672cb93aaade2944995ccc7766faaac4", original_line: 1, final_line: 1
-      }
-    },
-    {
-      path: "index.js",
-      location: { start_line: 4, start_column: 5, end_line: 4, end_column: 6 },
-      id: "prefer-const",
-      message: "'a' is never reassigned. Use 'const' instead.",
-      links: %w[https://eslint.org/docs/rules/prefer-const],
-      object: { severity: "error", category: "ECMAScript 6", recommended: false },
-      git_blame_info: {
-        commit: :_, line_hash: "e151e70048f592122d03aeceab9fcf5ab50765e2", original_line: 4, final_line: 4
-      }
-    },
-    {
-      path: "index.js",
-      location: { start_line: 1, start_column: 6, end_line: 1, end_column: 15 },
-      id: "vars-on-top",
-      message: "All 'var' declarations must be at the top of the function scope.",
-      links: %w[https://eslint.org/docs/rules/vars-on-top],
-      object: { severity: "error", category: "Best Practices", recommended: false },
       git_blame_info: {
         commit: :_, line_hash: "f3ad79b5672cb93aaade2944995ccc7766faaac4", original_line: 1, final_line: 1
       }
@@ -84,17 +62,6 @@ s.add_test(
       message: "Unexpected constant condition.",
       links: %w[https://eslint.org/docs/rules/no-constant-condition],
       object: { severity: "error", category: "Possible Errors", recommended: true },
-      git_blame_info: {
-        commit: :_, line_hash: "19f7c599ce45fd313bdab7d41271e27f978a1f27", original_line: 1, final_line: 1
-      }
-    },
-    {
-      path: "index.js",
-      location: { start_line: 1, start_column: 5, end_line: 1, end_column: 11 },
-      id: "no-self-compare",
-      message: "Comparing to itself is potentially pointless.",
-      links: %w[https://eslint.org/docs/rules/no-self-compare],
-      object: { severity: "error", category: "Best Practices", recommended: false },
       git_blame_info: {
         commit: :_, line_hash: "19f7c599ce45fd313bdab7d41271e27f978a1f27", original_line: 1, final_line: 1
       }
@@ -421,6 +388,17 @@ s.add_test(
   "mismatched_package_version",
   type: "success",
   issues: [
+    {
+      id: "no-unused-vars",
+      message: "'x' is assigned a value but never used.",
+      links: %w[https://eslint.org/docs/rules/no-unused-vars],
+      path: "src/index.js",
+      location: { start_line: 1, start_column: 5, end_line: 1, end_column: 6 },
+      object: { severity: "error", category: "Variables", recommended: true },
+      git_blame_info: {
+        commit: :_, line_hash: "1344e9df550a53b40d135830a9289d34f4246299", original_line: 1, final_line: 1
+      }
+    }
   ],
   analyzer: { name: "ESLint", version: "6.8.0" }
 )
@@ -452,7 +430,7 @@ s.add_test(
       id: "@typescript-eslint/no-unused-vars",
       message: "'x' is assigned a value but never used.",
       links: %w[
-        https://github.com/typescript-eslint/typescript-eslint/blob/v4.18.0/packages/eslint-plugin/docs/rules/no-unused-vars.md
+        https://github.com/typescript-eslint/typescript-eslint/blob/v4.20.0/packages/eslint-plugin/docs/rules/no-unused-vars.md
       ],
       path: "index.ts",
       location: { start_line: 1, start_column: 7, end_line: 1, end_column: 8 },
@@ -517,28 +495,6 @@ s.add_test(
       git_blame_info: {
         commit: :_, line_hash: "5f94a2b6c745ba6538ff265a8d1f1f98b8538623", original_line: 1, final_line: 1
       }
-    },
-    {
-      id: "no-unused-expressions",
-      message: "Expected an assignment or function call and instead saw an expression.",
-      links: %w[https://eslint.org/docs/rules/no-unused-expressions],
-      path: "foo.js",
-      location: { start_line: 1, start_column: 1, end_line: 1, end_column: 5 },
-      object: { severity: "error", category: "Best Practices", recommended: false },
-      git_blame_info: {
-        commit: :_, line_hash: "5786438d311af019d0e3d06977c4ab84a25d591b", original_line: 1, final_line: 1
-      }
-    },
-    {
-      id: "no-unused-expressions",
-      message: "Expected an assignment or function call and instead saw an expression.",
-      links: %w[https://eslint.org/docs/rules/no-unused-expressions],
-      path: "src/bar.js",
-      location: { start_line: 1, start_column: 1, end_line: 1, end_column: 5 },
-      object: { severity: "error", category: "Best Practices", recommended: false },
-      git_blame_info: {
-        commit: :_, line_hash: "5f94a2b6c745ba6538ff265a8d1f1f98b8538623", original_line: 1, final_line: 1
-      }
     }
   ],
   analyzer: { name: "ESLint", version: default_version },
@@ -584,7 +540,7 @@ s.add_test(
   "package_lock_without_package_json",
   type: "success",
   issues: [],
-  analyzer: { name: "ESLint", version: "7.22.0" }
+  analyzer: { name: "ESLint", version: default_version }
 )
 
 s.add_test(
@@ -633,4 +589,45 @@ s.add_test(
     }
   ],
   analyzer: { name: "ESLint", version: default_version }
+)
+
+s.add_test(
+  "deprecated_and_removed_rules",
+  type: "success",
+  issues: [
+    {
+      id: "global-strict",
+      message: "Rule 'global-strict' was removed and replaced by: strict",
+      links: [],
+      path: "foo.js",
+      location: { start_line: 1, start_column: 1, end_line: 1, end_column: 2 },
+      object: { severity: "error", category: nil, recommended: nil },
+      git_blame_info: {
+        commit: :_, line_hash: "8f75a48ad4f7cad21e6a885a1aff81ced8b4d74b", original_line: 1, final_line: 1
+      }
+    },
+    {
+      id: "no-buffer-constructor",
+      message: "new Buffer() is deprecated. Use Buffer.from(), Buffer.alloc(), or Buffer.allocUnsafe() instead.",
+      links: %w[https://eslint.org/docs/rules/no-buffer-constructor],
+      path: "foo.js",
+      location: { start_line: 3, start_column: 1, end_line: 3, end_column: 14 },
+      object: { severity: "error", category: "Node.js and CommonJS", recommended: false },
+      git_blame_info: {
+        commit: :_, line_hash: "03398b00165efab2c130dd72de73fbb43235f6f0", original_line: 3, final_line: 3
+      }
+    },
+    {
+      id: "no-catch-shadow",
+      message: "Value of 'err' may be overwritten in IE 8 and earlier.",
+      links: %w[https://eslint.org/docs/rules/no-catch-shadow],
+      path: "foo.js",
+      location: { start_line: 7, start_column: 1, end_line: 7, end_column: 15 },
+      object: { severity: "error", category: "Variables", recommended: false },
+      git_blame_info: {
+        commit: :_, line_hash: "fae77ce2f3e491ee39bbdb0487df99f715c4e6d0", original_line: 7, final_line: 7
+      }
+    }
+  ],
+  analyzer: { name: "ESLint", version: "7.21.0" }
 )
