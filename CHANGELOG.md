@@ -13,7 +13,7 @@ Breaking:
 
 Updated environments:
 
-- **devon_rex** 2.41.0 -> 2.42.5 [#2208](https://github.com/sider/runners/pull/2208) [#2223](https://github.com/sider/runners/pull/2223) [#2231](https://github.com/sider/runners/pull/2231) [#2233](https://github.com/sider/runners/pull/2233) [#2252](https://github.com/sider/runners/pull/2252) [#2265](https://github.com/sider/runners/pull/2265) ([diff](https://github.com/sider/devon_rex/compare/2.41.0...2.42.5))
+- **devon_rex** 2.41.0 -> 2.42.6 [#2208](https://github.com/sider/runners/pull/2208) [#2223](https://github.com/sider/runners/pull/2223) [#2231](https://github.com/sider/runners/pull/2231) [#2233](https://github.com/sider/runners/pull/2233) [#2252](https://github.com/sider/runners/pull/2252) [#2265](https://github.com/sider/runners/pull/2265) [#2271](https://github.com/sider/runners/pull/2271) ([diff](https://github.com/sider/devon_rex/compare/2.41.0...2.42.6))
 
 Updated tools:
 
