@@ -27,7 +27,7 @@ Updated tools:
 - **LanguageTool** 5.2 -> 5.3 [#2251](https://github.com/sider/runners/pull/2251)
 - **PMD CPD** 6.32.0 -> 6.33.0 [#2246](https://github.com/sider/runners/pull/2246)
 - **PMD Java** 6.32.0 -> 6.33.0 [#2244](https://github.com/sider/runners/pull/2244)
-- **RuboCop** 1.11.0 -> 1.12.0 [#2240](https://github.com/sider/runners/pull/2240)
+- **RuboCop** 1.11.0 -> 1.12.1 [#2240](https://github.com/sider/runners/pull/2240) [#2267](https://github.com/sider/runners/pull/2267)
 - **SwiftLint** 0.43.0 -> 0.43.1 [#2230](https://github.com/sider/runners/pull/2230)
 
 Misc:
