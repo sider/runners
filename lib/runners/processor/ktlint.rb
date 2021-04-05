@@ -20,8 +20,8 @@ module Runners
     def self.config_example
       <<~'YAML'
         root_dir: project/
-        jvm_deps:
-          - [my.company.com, ktlint-rules, 1.0.0]
+        dependencies:
+          - "my.company.com:ktlint-rules:1.0.0"
         target:
           - "src/**/*.kt"
           - "!src/**/*Test.kt"

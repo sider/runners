@@ -65,7 +65,7 @@ class RuboCopUtilsTest < Minitest::Test
       assert_links.call %w[
         https://www.rubydoc.info/gems/rubocop-graphql/RuboCop/Cop/GraphQL/ArgumentName
         https://github.com/DmitryTsepelev/rubocop-graphql
-      ], "GraphQL/ArgumentName"
+      ], "GraphQL/ArgumentName", skip: true
       assert_links.call %w[
         https://www.rubydoc.info/gems/rubocop-i18n/RuboCop/Cop/I18n/RailsI18n/DecorateString
         https://github.com/puppetlabs/rubocop-i18n

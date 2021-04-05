@@ -29,9 +29,9 @@ module Runners
     def self.config_example
       <<~'YAML'
         root_dir: project/
-        gems:
+        dependencies:
           - rubocop-rails
-          - { name: rubocop-rspec, version: 2.1.0 }
+          - { name: "rubocop-rspec", version: "2.1.0" }
         config: config/.rubocop.yml
         safe: true
       YAML

@@ -24,8 +24,8 @@ module Runners
     def self.config_example
       <<~'YAML'
         root_dir: project/
-        gems:
-          - { name: "reek", version: "< 6" }
+        dependencies:
+          - { name: "reek", version: "6.0.0" }
         target: [lib/, test/]
         config: config/reek.yml
       YAML

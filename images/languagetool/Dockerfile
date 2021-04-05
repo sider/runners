@@ -2,9 +2,9 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM sider/devon_rex_java:2.42.3
+FROM sider/devon_rex_java:2.42.6
 
-ARG LANGUAGETOOL_VERSION=5.2
+ARG LANGUAGETOOL_VERSION=5.3
 
 RUN cd "${RUNNER_USER_HOME}" && \
     curl -sSLO --compressed https://languagetool.org/download/LanguageTool-${LANGUAGETOOL_VERSION}.zip && \

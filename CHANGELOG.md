@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.45.0...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.46.0...HEAD)
+
+## 0.46.0
+
+[Full diff](https://github.com/sider/runners/compare/0.45.0...0.46.0)
 
 Breaking:
 
@@ -13,12 +17,22 @@ Breaking:
 
 Updated environments:
 
-- **devon_rex** 2.41.0 -> 2.42.3 [#2208](https://github.com/sider/runners/pull/2208) [#2223](https://github.com/sider/runners/pull/2223) [#2231](https://github.com/sider/runners/pull/2231) [#2233](https://github.com/sider/runners/pull/2233) ([diff](https://github.com/sider/devon_rex/compare/2.41.0...2.42.3))
+- **devon_rex** 2.41.0 -> 2.42.6 [#2208](https://github.com/sider/runners/pull/2208) [#2223](https://github.com/sider/runners/pull/2223) [#2231](https://github.com/sider/runners/pull/2231) [#2233](https://github.com/sider/runners/pull/2233) [#2252](https://github.com/sider/runners/pull/2252) [#2265](https://github.com/sider/runners/pull/2265) [#2271](https://github.com/sider/runners/pull/2271) ([diff](https://github.com/sider/devon_rex/compare/2.41.0...2.42.6))
 
 Updated tools:
 
+- **Checkstyle** 8.41 -> 8.41.1 [#2247](https://github.com/sider/runners/pull/2247)
+- **CoffeeLint** 4.1.3 -> 4.1.4 [#2248](https://github.com/sider/runners/pull/2248)
 - **Cppcheck** 2.3 -> 2.4.1 [#2229](https://github.com/sider/runners/pull/2229)
+- **ESLint** 7.22.0 -> 7.23.0 [#2241](https://github.com/sider/runners/pull/2241)
+- **GolangCI-Lint** 1.38.0 -> 1.39.0 [#2239](https://github.com/sider/runners/pull/2239)
+- **hadolint** 1.23.0 -> 2.1.0 [#2261](https://github.com/sider/runners/pull/2261)
 - **ktlint** 0.39.0 -> 0.41.0 [#2205](https://github.com/sider/runners/pull/2205)
+- **LanguageTool** 5.2 -> 5.3 [#2251](https://github.com/sider/runners/pull/2251)
+- **PMD CPD** 6.32.0 -> 6.33.0 [#2246](https://github.com/sider/runners/pull/2246)
+- **PMD Java** 6.32.0 -> 6.33.0 [#2244](https://github.com/sider/runners/pull/2244)
+- **Pylint** 2.7.2 -> 2.7.4 [#2268](https://github.com/sider/runners/pull/2268)
+- **RuboCop** 1.11.0 -> 1.12.1 [#2240](https://github.com/sider/runners/pull/2240) [#2267](https://github.com/sider/runners/pull/2267)
 - **SwiftLint** 0.43.0 -> 0.43.1 [#2230](https://github.com/sider/runners/pull/2230)
 
 Misc:
@@ -39,9 +53,9 @@ Misc:
 - Do not use tmpdir for working directory [#2217](https://github.com/sider/runners/pull/2217)
 - `Runners::Config` check warnings [#2221](https://github.com/sider/runners/pull/2221)
 - **remark-lint** Use `.git` directory and add `remark-validate-links` to default ruleset [#2224](https://github.com/sider/runners/pull/2224)
-- Introduce common option `linter.<id>.dependencies` [#2211](https://github.com/sider/runners/pull/2211)
+- Introduce common option `linter.<id>.dependencies` [#2211](https://github.com/sider/runners/pull/2211) [#2263](https://github.com/sider/runners/pull/2263) [#2264](https://github.com/sider/runners/pull/2264)
 - **Metrics File Info** Report the number of commits, additions, deletions used to measure code churn [#2184](https://github.com/sider/runners/pull/2184)
-- **ESLint** Allow strings for ext and global options [#2236](https://github.com/sider/runners/pull/2236)
+- **ESLint** Allow strings for `ext` and `global` options [#2236](https://github.com/sider/runners/pull/2236)
 
 ## 0.45.0
 

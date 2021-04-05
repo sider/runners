@@ -29,8 +29,8 @@ module Runners
     def self.config_example
       <<~'YAML'
         root_dir: project/
-        jvm_deps:
-          - [com.example, detekt-rules, 1.0.0]
+        dependencies:
+          - "com.example:detekt-rules:1.0.0"
         baseline: config/detekt-baseline.xml
         config:
           - config/detekt-config.yml

@@ -31,8 +31,8 @@ module Runners
     def self.config_example
       <<~'YAML'
         root_dir: project/
-        jvm_deps:
-          - [com.github.sevntu-checkstyle, sevntu-checks, 1.37.1]
+        dependencies:
+          - "my.company.com:checkstyle-rules:1.0.0"
         config: custom-checkstyle.xml
         target: src/
         exclude: vendor/

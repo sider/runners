@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "5.2"
+default_version = "5.3"
 
 s.add_test(
   "success",
@@ -43,7 +43,7 @@ s.add_test(
       id: "THE_SENT_END",
       path: "dir/foo.txt",
       location: { start_line: 1 },
-      message: "Did you forget something after 'a'?",
+      message: "A word may be missing after 'a'.",
       links: [],
       object: { sentence: "This is a.", type: "grammar", category: "GRAMMAR", replacements: [] },
       git_blame_info: {
@@ -252,7 +252,7 @@ s.add_test(
       id: "THE_SENT_END",
       path: "sample.txt",
       location: { start_line: 1 },
-      message: "Did you forget something after 'a'?",
+      message: "A word may be missing after 'a'.",
       links: [],
       object: { sentence: "this is a.", type: "grammar", category: "GRAMMAR", replacements: [] },
       git_blame_info: {

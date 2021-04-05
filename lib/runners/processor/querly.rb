@@ -36,8 +36,8 @@ module Runners
     def self.config_example
       <<~'YAML'
         root_dir: project/
-        gems:
-          - { name: "querly", version: "< 2" }
+        dependencies:
+          - { name: "querly", version: "1.2.0" }
         config: config/querly.yml
       YAML
     end

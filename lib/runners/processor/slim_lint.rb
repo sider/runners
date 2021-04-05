@@ -31,8 +31,8 @@ module Runners
     def self.config_example
       <<~'YAML'
         root_dir: project/
-        gems:
-          - { name: rubocop, version: 1.0.0 }
+        dependencies:
+          - { name: "rubocop", version: "1.0.0" }
         target: [app/views/]
         config: config/.slim-lint.yml
       YAML

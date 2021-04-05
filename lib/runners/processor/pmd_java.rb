@@ -28,8 +28,8 @@ module Runners
     def self.config_example
       <<~'YAML'
         root_dir: project/
-        jvm_deps:
-          - [my.company.com, pmd-ruleset, 1.2.3]
+        dependencies:
+          - "my.company.com:pmd-ruleset:1.2.3"
         target: src/
         rulesets:
           - category/java/errorprone.xml
