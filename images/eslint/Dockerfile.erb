@@ -3,7 +3,7 @@ FROM sider/devon_rex_npm:2.42.3
 <%= render_erb 'images/Dockerfile.base.erb' %>
 <%= render_erb 'images/Dockerfile.npm.erb' %>
 
-COPY --chown=<%= chown %> images/<%= analyzer %>/sider_recommended_eslint.yml ${RUNNER_USER_HOME}/<%= analyzer %>/
+COPY --chown=<%= chown %> images/<%= analyzer %>/sider_eslintrc.yml ${RUNNER_USER_HOME}/<%= analyzer %>/
 COPY --chown=<%= chown %> images/<%= analyzer %>/custom-eslint-json-formatter.js ${RUNNER_USER_HOME}/<%= analyzer %>/
 
 <%= render_erb 'images/Dockerfile.end.erb' %>
