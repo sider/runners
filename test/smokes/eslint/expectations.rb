@@ -590,3 +590,44 @@ s.add_test(
   ],
   analyzer: { name: "ESLint", version: default_version }
 )
+
+s.add_test(
+  "deprecated_and_removed_rules",
+  type: "success",
+  issues: [
+    {
+      id: "global-strict",
+      message: "Rule 'global-strict' was removed and replaced by: strict",
+      links: [],
+      path: "foo.js",
+      location: { start_line: 1, start_column: 1, end_line: 1, end_column: 2 },
+      object: { severity: "error", category: nil, recommended: nil },
+      git_blame_info: {
+        commit: :_, line_hash: "8f75a48ad4f7cad21e6a885a1aff81ced8b4d74b", original_line: 1, final_line: 1
+      }
+    },
+    {
+      id: "no-buffer-constructor",
+      message: "new Buffer() is deprecated. Use Buffer.from(), Buffer.alloc(), or Buffer.allocUnsafe() instead.",
+      links: %w[https://eslint.org/docs/rules/no-buffer-constructor],
+      path: "foo.js",
+      location: { start_line: 3, start_column: 1, end_line: 3, end_column: 14 },
+      object: { severity: "error", category: "Node.js and CommonJS", recommended: false },
+      git_blame_info: {
+        commit: :_, line_hash: "03398b00165efab2c130dd72de73fbb43235f6f0", original_line: 3, final_line: 3
+      }
+    },
+    {
+      id: "no-catch-shadow",
+      message: "Value of 'err' may be overwritten in IE 8 and earlier.",
+      links: %w[https://eslint.org/docs/rules/no-catch-shadow],
+      path: "foo.js",
+      location: { start_line: 7, start_column: 1, end_line: 7, end_column: 15 },
+      object: { severity: "error", category: "Variables", recommended: false },
+      git_blame_info: {
+        commit: :_, line_hash: "fae77ce2f3e491ee39bbdb0487df99f715c4e6d0", original_line: 7, final_line: 7
+      }
+    }
+  ],
+  analyzer: { name: "ESLint", version: "7.21.0" }
+)

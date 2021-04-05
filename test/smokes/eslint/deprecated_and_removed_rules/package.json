@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "eslint": "7.21.0"
+  },
+  "eslintConfig": {
+    "rules": {
+      "global-strict": "error",
+      "no-buffer-constructor": "error",
+      "no-catch-shadow": "error"
+    }
+  }
+}
