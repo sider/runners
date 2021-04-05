@@ -11,6 +11,17 @@ module Runners
       )
     end
 
+    # Set maximum recursion depth for python runtime
+    # Python runtime has a stack depth limitation. The default value is 1000.  Lizard violates the limitation when it analyze complex source code files.
+    # You can ease the limitation with this parameter.
+    #
+    # NOTE: The actual limitation is bound to RLIMIT_STACK value. You will face a segmentation fault if you set too large value.
+    # See: https://man7.org/linux/man-pages/man3/vlimit.3.html
+    #
+    # According to a simple experiment, we can expand almost `18000` in a typical x64 linux environment.
+    # Result: https://gist.github.com/gnakagaw/4c8336aeab6a6206165627cf4fe0eb96
+    MAX_RECURSION_DEPTH = 10000
+
     def analyzer_bin
       "lizard"
     end
@@ -18,6 +29,7 @@ module Runners
     def analyze(changes)
       capture3!(analyzer_bin,
         '--xml',
+        '--max-recursion-depth', MAX_RECURSION_DEPTH.to_s,
         '--output_file', report_file,
         '.')
 
