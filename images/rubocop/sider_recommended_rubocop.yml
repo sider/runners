@@ -1,6 +1,5 @@
-# Base ruleset
-inherit_from:
-  - https://github.com/rubocop/rubocop/blob/HEAD/config/default.yml
+# This ruleset has only difference of Rubocop's default ruleset.
+# If you use this ruleset, you inherit the default ruleset.
 
 # Layout
 Layout/ArgumentAlignment:
