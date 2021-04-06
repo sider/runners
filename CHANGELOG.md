@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 Updated environments:
 
 - **devon_rex** 2.42.6 -> 2.42.8 [#2276](https://github.com/sider/runners/pull/2276) ([diff](https://github.com/sider/devon_rex/compare/2.42.6...2.42.8))
+- **Ruby** 2.7.2 -> 2.7.3 [#2276](https://github.com/sider/runners/pull/2276)
 
 ## 0.46.0
 
