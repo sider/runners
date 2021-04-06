@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.46.1...HEAD)
 
+- **Rubocop** Provide new recommended configuration [#2266](https://github.com/sider/runners/pull/2266)
+
 ## 0.46.1
 
 [Full diff](https://github.com/sider/runners/compare/0.46.0...0.46.1)

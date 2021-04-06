@@ -1,4 +1,4 @@
-# This ruleset has only difference of Rubocop's default ruleset.
+# This ruleset has only difference of RuboCop's default ruleset.
 # If you use this ruleset, you inherit the default ruleset.
 
 # Layout
