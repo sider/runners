@@ -76,7 +76,7 @@ GEM
     minitest (5.14.4)
     open3 (0.1.1)
     parallel (1.20.1)
-    parser (3.0.0.0)
+    parser (3.0.1.0)
       ast (~> 2.4.1)
     psych (3.3.1)
     rainbow (3.0.0)
