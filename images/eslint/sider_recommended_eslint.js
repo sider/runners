@@ -1,13 +1,12 @@
-{
-  // Sider's recommended ruleset is based on eslint:recommended,
-  // and following rules are additionally enabled/disabled.
-  // See https://eslint.org/docs/rules/ for more details.
-  // And, we generated the ruleset using ESLint 7.17, on 2021-04-05.
+// Sider's recommended ruleset is based on eslint:recommended,
+// and following rules are additionally enabled/disabled.
+// See https://eslint.org/docs/rules/ for more details.
+// And, we generated the ruleset using ESLint 7.17, on 2021-04-05.
+module.exports = {
   "root": true,
   "parserOptions": {"ecmaVersion": 2015},
   "extends": ["eslint:recommended"],
-  "rules":
-  {
+  "rules": {
     // Disabled [Variables] (Overriding rules included in `eslint:recommended`)
     "no-undef": "off",
     "no-unused-vars": "off",
