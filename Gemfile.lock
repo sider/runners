@@ -87,7 +87,7 @@ GEM
     rbs (1.1.1)
     regexp_parser (2.1.1)
     retryable (3.0.5)
-    rexml (3.2.4)
+    rexml (3.2.5)
     rubocop (1.12.1)
       parallel (~> 1.10)
       parser (>= 3.0.0.0)
