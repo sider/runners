@@ -10,6 +10,7 @@ task default: ["steep:check", :test]
 ENV["DOCKER_BUILDKIT"] = "1"
 
 Aufgaben::Release.new(:release, depends: ["dockerfile:verify_devon_rex"]) do |t|
+  t.default_branch = "master"
   t.files = ["lib/runners/version.rb", "Gemfile.lock"]
 end
 

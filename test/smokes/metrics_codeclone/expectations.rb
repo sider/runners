@@ -678,3 +678,11 @@ s.add_test(
   message: "`src` directory is not found! Please check `linter.pmd_cpd.root_dir` in your `sider.yml`",
   analyzer: :_
 )
+
+s.add_test(
+  "config_warnings",
+  type: "success",
+  issues: [],
+  warnings: [{ message: /`linter.eslint.dir`/, file: "sider.yml" }],
+  analyzer: { name: "Metrics Code Clone", version: default_version }
+)

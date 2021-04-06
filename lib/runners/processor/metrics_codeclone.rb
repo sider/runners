@@ -13,6 +13,7 @@ module Runners
     end
 
     def_delegators :@pmd_cpd,
+      :add_warning,
       :warnings,
       :config_linter,
       :analyzer_bin,

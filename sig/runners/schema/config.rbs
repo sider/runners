@@ -6,6 +6,7 @@ module Runners
       def one_or_more_strings?: () -> StrongJSON::Type::Optional[untyped]
       def target: () -> StrongJSON::Type::Optional[untyped]
       def dependency: (**untyped) -> StrongJSON::Type::Object[untyped]
+      def dependencies: () -> StrongJSON::Type::Optional[untyped]
       def base: (**untyped) -> StrongJSON::Type::Object[untyped]
       def ruby: (**untyped) -> StrongJSON::Type::Object[untyped]
       def cplusplus: (**untyped) -> StrongJSON::Type::Object[untyped]
