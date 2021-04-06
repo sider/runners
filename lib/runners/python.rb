@@ -13,6 +13,7 @@ module Runners
     def pip_install(dependencies = Array(config_linter[:dependencies]))
       return if dependencies.empty?
 
+      # @type var dependencies: Array[String | { name: String, version: String }]
       deps = dependencies.map do |dep|
         case dep
         when Hash
