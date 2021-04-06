@@ -15,6 +15,10 @@ module Runners
         object(name: string, version: string, **fields)
       end
 
+      def dependencies
+        array?(enum(string, dependency))
+      end
+
       def base(**fields)
         object(root_dir: string?, **fields)
       end
@@ -25,22 +29,22 @@ module Runners
           object(repo: string, tag: string),
           object(repo: string, ref: string),
         )
-        dependencies = array?(enum(
+        ruby_deps = array?(enum(
           string,
           dependency(source: string?),
           object(name: string, git: git),
         ))
 
         base(
-          dependencies: dependencies,
-          gems: dependencies, # alias
+          dependencies: ruby_deps,
+          gems: ruby_deps, # alias
           **fields,
         )
       end
 
       def cplusplus(**fields)
         base(
-          dependencies: array?(enum(string, dependency)),
+          dependencies: dependencies,
           apt: one_or_more_strings?, # deprecated
           'include-path': one_or_more_strings?,
           **fields,
@@ -49,7 +53,7 @@ module Runners
 
       def npm(**fields)
         base(
-          dependencies: array?(enum(string, dependency)),
+          dependencies: dependencies,
           npm_install: enum?(boolean, literal('development'), literal('production')),
           **fields,
         )
@@ -57,7 +61,7 @@ module Runners
 
       def java(**fields)
         base(
-          dependencies: array?(enum(string, dependency)),
+          dependencies: dependencies,
           jvm_deps: array?(array(enum(string, number))), # deprecated
           **fields,
         )
