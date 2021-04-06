@@ -66,6 +66,13 @@ module Runners
           **fields,
         )
       end
+
+      def python(**fields)
+        base(
+          dependencies: dependencies,
+          **fields,
+        )
+      end
     end
 
     Config = _ = StrongJSON.new do

@@ -12,6 +12,7 @@ module Runners
       def cplusplus: (**untyped) -> StrongJSON::Type::Object[untyped]
       def npm: (**untyped) -> StrongJSON::Type::Object[untyped]
       def java: (**untyped) -> StrongJSON::Type::Object[untyped]
+      def python: (**untyped) -> StrongJSON::Type::Object[untyped]
     end
 
     class ConfigClass < StrongJSON

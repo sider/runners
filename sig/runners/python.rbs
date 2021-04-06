@@ -3,6 +3,6 @@ module Runners
     class PipInstallFailed < UserError
     end
 
-    def pip_install: (*String) -> void
+    def pip_install: (?Array[String]) -> void
   end
 end

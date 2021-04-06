@@ -202,7 +202,7 @@ s.add_test(
 s.add_test(
   "with_plugins_failed",
   type: "failure",
-  message: "Install failed: mysqlclient==2.0.0, flake8-builtins==1.4.1",
+  message: "`pip install` failed: `mysqlclient==2.0.0`, `flake8-builtins==1.4.1`",
   analyzer: :_
 )
 
@@ -261,7 +261,7 @@ s.add_test(
 s.add_test(
   "broken_sideci_yml",
   type: "failure",
-  message: "`linter.flake8.plugins` value in `sideci.yml` is invalid",
+  message: "`linter.flake8.plugins[0]` value in `sideci.yml` is invalid",
   analyzer: :_
 )
 
@@ -366,6 +366,58 @@ s.add_test(
       object: nil,
       git_blame_info: {
         commit: :_, line_hash: "2195b5c8fadfde3b82ab9aecaf510b7dc1112d91", original_line: 2, final_line: 2
+      }
+    }
+  ],
+  analyzer: { name: "Flake8", version: default_version }
+)
+
+s.add_test(
+  "option_dependencies",
+  type: "success",
+  issues: [
+    {
+      message: '"list" is used as an argument and thus shadows a python builtin, consider renaming the argument',
+      links: [],
+      id: "A002",
+      path: "foo.py",
+      location: { start_line: 5, start_column: 12 },
+      object: nil,
+      git_blame_info: {
+        commit: :_, line_hash: "4be917d92efca2fc5335e7d1d2434ffb3166ebef", original_line: 5, final_line: 5
+      }
+    },
+    {
+      message: "Do not use mutable data structures for argument defaults.  They are created during function definition time. All calls to the function reuse this one instance of that data structure, persisting changes between them.",
+      links: [],
+      id: "B006",
+      path: "foo.py",
+      location: { start_line: 5, start_column: 17 },
+      object: nil,
+      git_blame_info: {
+        commit: :_, line_hash: "4be917d92efca2fc5335e7d1d2434ffb3166ebef", original_line: 5, final_line: 5
+      }
+    },
+    {
+      message: "Missing docstring in public module",
+      links: [],
+      id: "D100",
+      path: "foo.py",
+      location: { start_line: 1, start_column: 1 },
+      object: nil,
+      git_blame_info: {
+        commit: :_, line_hash: "83d8e9e427df3deb280a3b972592bbf4c6fc0816", original_line: 1, final_line: 1
+      }
+    },
+    {
+      message: "Import statements are in the wrong order. 'import math' should be before 'import sys'",
+      links: [],
+      id: "I100",
+      path: "foo.py",
+      location: { start_line: 2, start_column: 1 },
+      object: nil,
+      git_blame_info: {
+        commit: :_, line_hash: "8bd3f84ddc47cd773045286339aceffb22dce4cd", original_line: 2, final_line: 2
       }
     }
   ],
