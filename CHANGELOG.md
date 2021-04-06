@@ -4,7 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.45.0...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.46.1...HEAD)
+
+## 0.46.1
+
+[Full diff](https://github.com/sider/runners/compare/0.46.0...0.46.1)
+
+- **Metrics Code Clone** Fix NoMethodError in `Runners::Processor::MetricsCodeClone#initialize` [#2277](https://github.com/sider/runners/pull/2277)
+
+## 0.46.0
+
+[Full diff](https://github.com/sider/runners/compare/0.45.0...0.46.0)
 
 Breaking:
 
@@ -13,7 +23,7 @@ Breaking:
 
 Updated environments:
 
-- **devon_rex** 2.41.0 -> 2.42.5 [#2208](https://github.com/sider/runners/pull/2208) [#2223](https://github.com/sider/runners/pull/2223) [#2231](https://github.com/sider/runners/pull/2231) [#2233](https://github.com/sider/runners/pull/2233) [#2252](https://github.com/sider/runners/pull/2252) [#2265](https://github.com/sider/runners/pull/2265) ([diff](https://github.com/sider/devon_rex/compare/2.41.0...2.42.5))
+- **devon_rex** 2.41.0 -> 2.42.6 [#2208](https://github.com/sider/runners/pull/2208) [#2223](https://github.com/sider/runners/pull/2223) [#2231](https://github.com/sider/runners/pull/2231) [#2233](https://github.com/sider/runners/pull/2233) [#2252](https://github.com/sider/runners/pull/2252) [#2265](https://github.com/sider/runners/pull/2265) [#2271](https://github.com/sider/runners/pull/2271) ([diff](https://github.com/sider/devon_rex/compare/2.41.0...2.42.6))
 
 Updated tools:
 
@@ -27,7 +37,8 @@ Updated tools:
 - **LanguageTool** 5.2 -> 5.3 [#2251](https://github.com/sider/runners/pull/2251)
 - **PMD CPD** 6.32.0 -> 6.33.0 [#2246](https://github.com/sider/runners/pull/2246)
 - **PMD Java** 6.32.0 -> 6.33.0 [#2244](https://github.com/sider/runners/pull/2244)
-- **RuboCop** 1.11.0 -> 1.12.0 [#2240](https://github.com/sider/runners/pull/2240)
+- **Pylint** 2.7.2 -> 2.7.4 [#2268](https://github.com/sider/runners/pull/2268)
+- **RuboCop** 1.11.0 -> 1.12.1 [#2240](https://github.com/sider/runners/pull/2240) [#2267](https://github.com/sider/runners/pull/2267)
 - **SwiftLint** 0.43.0 -> 0.43.1 [#2230](https://github.com/sider/runners/pull/2230)
 
 Misc:

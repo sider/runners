@@ -85,7 +85,7 @@ class JavaTest < Minitest::Test
   def test_invalid_config
     with_workspace do |workspace|
       error = assert_raises Runners::Config::InvalidConfiguration do
-        new_processor workspace, config_yaml: <<~YAML
+        new_processor(workspace, config_yaml: <<~YAML).validate_config
           linter:
             checkstyle:
               jvm_deps:

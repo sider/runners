@@ -51,6 +51,7 @@ module Runners
             processor.in_root_dir do
               trace_writer.header "Set up #{processor.analyzer_name}"
 
+              processor.validate_config
               processor.check_unsupported_linters
               processor.show_runtime_versions
 

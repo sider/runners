@@ -37,7 +37,9 @@ module Runners
       @shell = shell
       @trace_writer = trace_writer
       @warnings = Warnings.new(trace_writer: trace_writer)
+    end
 
+    def validate_config
       if config.path_exist?
         trace_writer.ci_config(config.content, raw_content: config.raw_content!, file: config.path_name)
 
