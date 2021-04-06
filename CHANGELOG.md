@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.46.1...HEAD)
 
+- Support `linter.<id>.dependencies` for Python tools [#2280](https://github.com/sider/runners/pull/2280)
+
 ## 0.46.1
 
 [Full diff](https://github.com/sider/runners/compare/0.46.0...0.46.1)
