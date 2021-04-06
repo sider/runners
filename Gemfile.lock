@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/ybiquitous/aufgaben.git
-  revision: 3cf246133367ee7e33319ba7c77814a6e9428f93
-  tag: 0.6.2
+  revision: da96337a89168a878ea85e0e8eed795af1deb982
+  tag: 0.7.1
   specs:
-    aufgaben (0.6.2)
+    aufgaben (0.7.1)
 
 PATH
   remote: .
