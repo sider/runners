@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.46.0...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.46.1...HEAD)
+
+## 0.46.1
+
+[Full diff](https://github.com/sider/runners/compare/0.46.0...0.46.1)
+
+- **Metrics Code Clone** Fix NoMethodError in `Runners::Processor::MetricsCodeClone#initialize` [#2277](https://github.com/sider/runners/pull/2277)
 
 Updated environments:
 
