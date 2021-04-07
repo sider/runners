@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 
 - Support `linter.<id>.dependencies` for Python tools [#2280](https://github.com/sider/runners/pull/2280)
 - **Flake8** Fix `Errno::ENOENT` on multiple configurations [#2281](https://github.com/sider/runners/pull/2281)
+- **Metrics Complexity** Add workarounds for lizard's bug [#2249](https://github.com/sider/runners/pull/2249)
 
 ## 0.46.1
 
