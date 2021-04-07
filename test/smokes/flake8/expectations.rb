@@ -423,3 +423,10 @@ s.add_test(
   ],
   analyzer: { name: "Flake8", version: default_version }
 )
+
+s.add_test(
+  "multiple_config_files",
+  type: "success",
+  issues: [],
+  analyzer: { name: "Flake8", version: default_version }
+)

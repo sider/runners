@@ -66,14 +66,11 @@ module Runners
 
     def prepare_config
       # @see https://flake8.pycqa.org/en/latest/user/configuration.html
-      if (current_dir / '.flake8').exist?
+      case
+      when (current_dir / '.flake8').exist?
         File.delete DEFAULT_CONFIG_PATH
-      end
-
-      current_dir.glob('{setup.cfg,tox.ini}').each do |config_file|
-        if config_file.exist? && config_file.read.match?(/^\[flake8\]$/m)
-          File.delete DEFAULT_CONFIG_PATH
-        end
+      when current_dir.glob('{setup.cfg,tox.ini}').any? { |f| f.read.match?(/^\[flake8\]$/m) }
+        File.delete DEFAULT_CONFIG_PATH
       end
     end
 
