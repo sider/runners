@@ -3,7 +3,6 @@
 // See https://eslint.org/docs/rules/ for more details.
 // And, we generated the ruleset using ESLint 7.17, on 2021-04-05.
 module.exports = {
-  "root": true,
   "parserOptions": {"ecmaVersion": 2015},
   "extends": ["eslint:recommended"],
   "rules": {
