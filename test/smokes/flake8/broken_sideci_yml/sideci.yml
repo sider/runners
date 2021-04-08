@@ -2,4 +2,4 @@ linter:
   flake8:
     plugins:
       - name: 'flake8-builtins'
-        version: '1.4.1'
+        ver: '1.4.1'

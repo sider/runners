@@ -10,19 +10,29 @@ module Runners
 
     # @see https://pip.pypa.io/en/stable/reference/pip_install
     # @see https://pip.pypa.io/en/stable/reference/pip_list
-    def pip_install(*packages)
-      unless packages.empty?
-        options = %w[--disable-pip-version-check]
+    def pip_install(dependencies = Array(config_linter[:dependencies]))
+      return if dependencies.empty?
 
-        begin
-          # NOTE: Use `--only-binary` to prevent malicious dependency's code execution.
-          capture3! "pip", "install", "--quiet", "--only-binary", ":all:", *options, *packages
-        rescue Runners::Shell::ExecError
-          raise PipInstallFailed, "Install failed: #{packages.join(', ')}"
+      # @type var dependencies: Array[String | { name: String, version: String }]
+      deps = dependencies.map do |dep|
+        case dep
+        when Hash
+          dep.fetch(:name) + dep.fetch(:version)
+        else
+          dep
         end
-
-        capture3! "pip", "list", "--verbose", *options
       end
+
+      options = %w[--disable-pip-version-check]
+      begin
+        # NOTE: Use `--only-binary` to prevent malicious dependency's code execution.
+        capture3! "pip", "install", "--quiet", "--only-binary", ":all:", *options, *deps
+      rescue Runners::Shell::ExecError
+        msg = deps.map { |dep| "`#{dep}`" }.join(", ")
+        raise PipInstallFailed, "`pip install` failed: #{msg}"
+      end
+
+      capture3! "pip", "list", "--verbose", *options
     end
   end
 end

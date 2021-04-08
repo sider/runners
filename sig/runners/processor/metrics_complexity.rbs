@@ -9,6 +9,8 @@ module Runners
     end
     SCHEMA: SchemaClass
 
+    MAX_RECURSION_DEPTH: Integer
+
     private
 
     def construct_file_issues: (REXML::Element) -> Array[Issue]
