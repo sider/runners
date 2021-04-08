@@ -6,10 +6,10 @@ module Runners
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
-      let :config, base(
+      let :config, python(
         target: target,
         config: string?,
-        plugins: one_or_more_strings?,
+        plugins: dependencies, # alias
         parallel: boolean?,
       )
     end
@@ -23,20 +23,25 @@ module Runners
     def self.config_example
       <<~'YAML'
         root_dir: project/
+        dependencies:
+          - flake8-bugbear
+          - flake8-builtins==1.4.1
+          - git+https://github.com/PyCQA/flake8-import-order.git@51e16f33065512afa1a85a20b2c2d3be768f78ea
+          - { name: "flake8-docstrings", version: "==1.6.0" }
         target: src/
         config: config/.flake8
-        plugins:
-          - flake8-bandit
-          - flake8-builtins==1.4.1
-          - flake8-docstrings>=1.4.0
-          - git+https://github.com/PyCQA/flake8-import-order.git@51e16f33065512afa1a85a20b2c2d3be768f78ea
         parallel: false
       YAML
     end
 
     def setup
+      begin
+        pip_install Array(config_linter[:dependencies] || config_linter[:plugins])
+      rescue UserError => exn
+        return Results::Failure.new(guid: guid, message: exn.message)
+      end
+
       prepare_config
-      prepare_plugins
       yield
     end
 
@@ -61,19 +66,12 @@ module Runners
 
     def prepare_config
       # @see https://flake8.pycqa.org/en/latest/user/configuration.html
-      if (current_dir / '.flake8').exist?
+      case
+      when (current_dir / '.flake8').exist?
+        File.delete DEFAULT_CONFIG_PATH
+      when current_dir.glob('{setup.cfg,tox.ini}').any? { |f| f.read.match?(/^\[flake8\]$/m) }
         File.delete DEFAULT_CONFIG_PATH
       end
-
-      current_dir.glob('{setup.cfg,tox.ini}').each do |config_file|
-        if config_file.exist? && config_file.read.match?(/^\[flake8\]$/m)
-          File.delete DEFAULT_CONFIG_PATH
-        end
-      end
-    end
-
-    def prepare_plugins
-      pip_install(*Array(config_linter[:plugins]))
     end
 
     def parse_result(output)

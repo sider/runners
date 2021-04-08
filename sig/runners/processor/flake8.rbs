@@ -17,8 +17,6 @@ module Runners
 
     def prepare_config: () -> void
 
-    def prepare_plugins: () -> void
-
     def parse_result: (String) -> Array[Issue]
   end
 end
