@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.47.0...HEAD)
 
+- **ESLint** Re-provide new recommended configuration [#2157](https://github.com/sider/runners/pull/2150)
+
 ## 0.47.0
 
 [Full diff](https://github.com/sider/runners/compare/0.46.1...0.47.0)
@@ -19,8 +21,6 @@ All notable changes to this project will be documented in this file.
 [Full diff](https://github.com/sider/runners/compare/0.46.0...0.46.1)
 
 - **Metrics Code Clone** Fix NoMethodError in `Runners::Processor::MetricsCodeClone#initialize` [#2277](https://github.com/sider/runners/pull/2277)
-
-- **ESLint** Re-provide new recommended configuration [#2157](https://github.com/sider/runners/pull/2150)
 
 ## 0.46.0
 
