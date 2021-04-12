@@ -6,6 +6,12 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.47.0...HEAD)
 
+Updated environments:
+
+- **devon_rex** 2.42.6 -> master [#2295](https://github.com/sider/runners/pull/2295) ([diff](https://github.com/sider/devon_rex/compare/2.42.6...0eaf3024ce8b6932e3cbc2d320437a2deb312045))
+
+Misc:
+
 - **ESLint** Re-provide new recommended configuration [#2157](https://github.com/sider/runners/pull/2150)
 
 ## 0.47.0
