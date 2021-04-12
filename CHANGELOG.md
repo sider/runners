@@ -15,6 +15,7 @@ Updated environments:
 Misc:
 
 - **ESLint** Re-provide new recommended configuration [#2157](https://github.com/sider/runners/pull/2150)
+- **PMD Java** Provide new recommended configuration [#2165](https://github.com/sider/runners/pull/2196)
 
 ## 0.47.0
 
