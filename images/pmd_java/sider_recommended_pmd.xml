@@ -112,6 +112,7 @@
     <exclude name="GodClass" />
     <exclude name="ImmutableField" />
     <exclude name="LawOfDemeter" />
+    <!-- NOTE: Prevent the warning "No packages or classes specified" -->
     <exclude name="LoosePackageCoupling" />
     <exclude name="NcssCount" />
     <exclude name="NPathComplexity" />
