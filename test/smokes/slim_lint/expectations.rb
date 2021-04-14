@@ -145,3 +145,22 @@ s.add_test(
   ],
   analyzer: { name: "Slim-Lint", version: default_version }
 )
+
+s.add_test(
+  "optional_gems",
+  type: "success",
+  issues: [
+    {
+      path: "foo.slim",
+      location: { start_line: 1 },
+      id: "ControlStatementSpacing",
+      message: "Please add a space before and after the `=`",
+      links: %W[https://github.com/sds/slim-lint/blob/v#{default_version}/lib/slim_lint/linter/README.md#controlstatementspacing],
+      object: { severity: "warning" },
+      git_blame_info: {
+        commit: :_, line_hash: "a745aa127a65767383c35e96e2ea3e5dde882cef", original_line: 1, final_line: 1
+      }
+    }
+  ],
+  analyzer: { name: "Slim-Lint", version: default_version }
+)
