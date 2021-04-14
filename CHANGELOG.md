@@ -16,6 +16,7 @@ Misc:
 
 - **ESLint** Re-provide new recommended configuration [#2157](https://github.com/sider/runners/pull/2150)
 - **PMD Java** Provide new recommended configuration [#2296](https://github.com/sider/runners/pull/2296)
+- **Slim-Lint** Support Sass by default [#2297](https://github.com/sider/runners/pull/2297)
 
 ## 0.47.0
 
