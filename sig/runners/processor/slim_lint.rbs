@@ -17,6 +17,7 @@ module Runners
     DEFAULT_TARGET: String
     DEFAULT_CONFIG_FILE: String
     MISSING_ID: String
+    OPTIONAL_GEMS: Array[Ruby::GemInstaller::Spec]
 
     private
 

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ruleset name="Sider Default Ruleset"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+
+  <description>
+    Sider's recommended ruleset. We generated the ruleset using PMD 6.32.0 at 2021-04-12.
+  </description>
+
+  <rule ref="category/java/codestyle.xml">
+    <exclude name="AtLeastOneConstructor" />
+    <exclude name="CallSuperInConstructor" />
+    <exclude name="ClassNamingConventions" />
+    <exclude name="CommentDefaultAccessModifier" />
+    <exclude name="ConfusingTernary" />
+    <exclude name="ControlStatementBraces" />
+    <exclude name="DefaultPackage" />
+    <exclude name="FieldDeclarationsShouldBeAtStartOfClass" />
+    <exclude name="FieldNamingConventions" />
+    <exclude name="FormalParameterNamingConventions" />
+    <exclude name="LinguisticNaming" />
+    <exclude name="LocalVariableCouldBeFinal" />
+    <exclude name="LocalVariableNamingConventions" />
+    <exclude name="LongVariable" />
+    <exclude name="MethodArgumentCouldBeFinal" />
+    <exclude name="MethodNamingConventions" />
+    <exclude name="UseUnderscoresInNumericLiterals" />
+    <exclude name="OnlyOneReturn" />
+    <exclude name="PrematureDeclaration" />
+    <exclude name="ShortClassName" />
+    <exclude name="ShortMethodName" />
+    <exclude name="ShortVariable" />
+    <exclude name="TooManyStaticImports" />
+    <exclude name="UnnecessaryAnnotationValueElement" />
+    <exclude name="UnnecessaryConstructor" />
+    <exclude name="UnnecessaryFullyQualifiedName" />
+    <exclude name="UnnecessaryLocalBeforeReturn" />
+    <exclude name="UnnecessaryModifier" />
+    <exclude name="UseDiamondOperator" />
+    <exclude name="UselessParentheses" />
+    <exclude name="UseShortArrayInitializer" />
+  </rule>
+
+  <rule ref="category/java/errorprone.xml">
+    <exclude name="AvoidCatchingThrowable" />
+    <exclude name="AvoidDuplicateLiterals" />
+    <exclude name="AvoidLiteralsInIfCondition" />
+    <exclude name="BeanMembersShouldSerialize" />
+    <exclude name="CloseResource" />
+    <exclude name="MissingSerialVersionUID" />
+    <exclude name="NullAssignment" />
+    <exclude name="UseLocaleWithCaseConversions" />
+    <exclude name="UseProperClassLoader" />
+  </rule>
+
+  <rule ref="category/java/performance.xml">
+    <exclude name="AddEmptyString" />
+    <exclude name="AppendCharacterWithChar" />
+    <exclude name="AvoidFileStream" />
+    <exclude name="AvoidInstantiatingObjectsInLoops" />
+    <exclude name="InsufficientStringBufferDeclaration" />
+    <exclude name="RedundantFieldInitializer" />
+    <exclude name="TooFewBranchesForASwitchStatement" />
+  </rule>
+
+  <rule ref="category/java/multithreading.xml">
+    <exclude name="AvoidSynchronizedAtMethodLevel" />
+    <exclude name="AvoidUsingVolatile" />
+    <exclude name="DoNotUseThreads" />
+    <exclude name="UseConcurrentHashMap" />
+  </rule>
+
+  <rule ref="category/java/bestpractices.xml">
+    <exclude name="ArrayIsStoredDirectly" />
+    <exclude name="AvoidPrintStackTrace" />
+    <exclude name="AvoidReassigningParameters" />
+    <exclude name="JUnitAssertionsShouldIncludeMessage" />
+    <exclude name="JUnitTestContainsTooManyAsserts" />
+    <exclude name="JUnitTestsShouldIncludeAssert" />
+    <exclude name="LiteralsFirstInComparisons" />
+    <exclude name="LooseCoupling" />
+    <exclude name="MethodReturnsInternalArray" />
+    <exclude name="OneDeclarationPerLine" />
+    <exclude name="PreserveStackTrace" />
+    <exclude name="SwitchStmtsShouldHaveDefault" />
+    <exclude name="SystemPrintln" />
+    <exclude name="UnusedAssignment" />
+    <exclude name="UseCollectionIsEmpty" />
+    <exclude name="UseVarargs" />
+  </rule>
+
+  <rule ref="category/java/security.xml">
+  </rule>
+
+  <rule ref="category/java/documentation.xml">
+    <exclude name="CommentRequired" />
+    <exclude name="CommentSize" />
+    <exclude name="UncommentedEmptyConstructor" />
+    <exclude name="UncommentedEmptyMethodBody" />
+  </rule>
+
+  <rule ref="category/java/design.xml">
+    <exclude name="AvoidCatchingGenericException" />
+    <exclude name="AvoidThrowingRawExceptionTypes" />
+    <exclude name="ClassWithOnlyPrivateConstructorsShouldBeFinal" />
+    <exclude name="CollapsibleIfStatements" />
+    <exclude name="CyclomaticComplexity" />
+    <exclude name="DataClass" />
+    <exclude name="ExcessiveImports" />
+    <exclude name="ExcessiveMethodLength" />
+    <exclude name="GodClass" />
+    <exclude name="ImmutableField" />
+    <exclude name="LawOfDemeter" />
+    <!-- NOTE: Prevent the warning "No packages or classes specified" -->
+    <exclude name="LoosePackageCoupling" />
+    <exclude name="NcssCount" />
+    <exclude name="NPathComplexity" />
+    <exclude name="SignatureDeclareThrowsException" />
+    <exclude name="TooManyMethods" />
+    <exclude name="UseUtilityClass" />
+  </rule>
+
+</ruleset>
