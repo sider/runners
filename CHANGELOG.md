@@ -17,6 +17,7 @@ Misc:
 - **ESLint** Re-provide new recommended configuration [#2157](https://github.com/sider/runners/pull/2150)
 - **PMD Java** Provide new recommended configuration [#2296](https://github.com/sider/runners/pull/2296)
 - **Slim-Lint** Support Sass by default [#2297](https://github.com/sider/runners/pull/2297)
+- **RuboCop** Provide new recommended configuration [#2266](https://github.com/sider/runners/pull/2266)
 
 ## 0.47.0
 
@@ -25,8 +26,6 @@ Misc:
 - Support `linter.<id>.dependencies` for Python tools [#2280](https://github.com/sider/runners/pull/2280)
 - **Flake8** Fix `Errno::ENOENT` on multiple configurations [#2281](https://github.com/sider/runners/pull/2281)
 - **Metrics Complexity** Add workarounds for lizard's bug [#2249](https://github.com/sider/runners/pull/2249)
-
-- **RuboCop** Provide new recommended configuration [#2266](https://github.com/sider/runners/pull/2266)
 
 ## 0.46.1
 
