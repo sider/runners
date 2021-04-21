@@ -2,11 +2,11 @@ FROM golangci/golangci-lint:v1.39.0 as golangci-lint
 
 FROM sider/devon_rex_go:master
 
-COPY --chown=<%= chown %> --from=golangci-lint /usr/bin/golangci-lint ${RUNNER_USER_HOME}/bin/
+COPY --chown=<%= chown %> --from=golangci-lint /usr/bin/golangci-lint ${RUNNER_USER_BIN}/
 
 <%= render_erb 'images/Dockerfile.base.erb' %>
 
-COPY --chown=<%= chown %> images/golangci_lint/sider_golangci.yml ${RUNNER_USER_HOME}/
+COPY --chown=<%= chown %> images/<%= analyzer %>/sider_golangci.yml ${RUNNER_USER_HOME}/
 
 <%= render_erb 'images/Dockerfile.end.erb' %>
 

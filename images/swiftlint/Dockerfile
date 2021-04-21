@@ -10,7 +10,7 @@ ARG SWIFTLINT_VERSION=0.43.1
 RUN cd /tmp && \
     curl -sSL --compressed "https://github.com/realm/SwiftLint/archive/${SWIFTLINT_VERSION}.tar.gz" | tar -xz && \
     cd "SwiftLint-${SWIFTLINT_VERSION}" && \
-    make install "BINARIES_FOLDER=${RUNNER_USER_HOME}/bin" && \
+    make install "BINARIES_FOLDER=${RUNNER_USER_BIN}" && \
     cd .. && \
     rm -rf "SwiftLint-${SWIFTLINT_VERSION}" && \
     swiftlint version | grep "${SWIFTLINT_VERSION}"

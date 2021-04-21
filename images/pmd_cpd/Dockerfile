@@ -32,12 +32,12 @@ RUN cd "${RUNNERS_DIR}" && \
     lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler.locked_gems.bundler_version') && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_cpd/pmd_cpd ${RUNNER_USER_HOME}/bin/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_cpd/pmd_cpd ${RUNNER_USER_BIN}/
 
 # NOTE: PMD does not have a CLI option to show its version.
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/ShowPMDVersion.java ${RUNNER_USER_HOME}/bin/
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/show_pmd_version ${RUNNER_USER_HOME}/bin/
-RUN cd "${RUNNER_USER_HOME}/bin" && \
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/ShowPMDVersion.java ${RUNNER_USER_BIN}/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/show_pmd_version ${RUNNER_USER_BIN}/
+RUN cd "${RUNNER_USER_BIN}" && \
     javac ShowPMDVersion.java && \
     rm ShowPMDVersion.java
 

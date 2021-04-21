@@ -6,7 +6,7 @@ FROM golangci/golangci-lint:v1.39.0 as golangci-lint
 
 FROM sider/devon_rex_go:master
 
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=golangci-lint /usr/bin/golangci-lint ${RUNNER_USER_HOME}/bin/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=golangci-lint /usr/bin/golangci-lint ${RUNNER_USER_BIN}/
 
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners

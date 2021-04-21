@@ -9,7 +9,7 @@ RUN mkdir /tmp/work && \
     mkdir "${RUNNER_USER_HOME}/JavaSee" && \
     cp -rv "JavaSee-bin-${JAVASEE_VERSION}/bin" "${RUNNER_USER_HOME}/JavaSee/bin" && \
     cp -rv "JavaSee-bin-${JAVASEE_VERSION}/lib" "${RUNNER_USER_HOME}/JavaSee/lib" && \
-    ln -sv "${RUNNER_USER_HOME}/JavaSee/bin/javasee" "${RUNNER_USER_HOME}/bin/javasee" && \
+    ln -sv "${RUNNER_USER_HOME}/JavaSee/bin/javasee" "${RUNNER_USER_BIN}/javasee" && \
     cd .. && \
     rm -rf /tmp/work && \
     javasee version | grep "${JAVASEE_VERSION}"

@@ -6,7 +6,7 @@ FROM sider/devon_rex_base:master
 
 ARG MISSPELL_VERSION=0.3.4
 
-RUN curl -fsSL https://git.io/misspell | bash -s -- -b "${RUNNER_USER_HOME}/bin" "v${MISSPELL_VERSION}" && \
+RUN curl -fsSL https://git.io/misspell | bash -s -- -b "${RUNNER_USER_BIN}" "v${MISSPELL_VERSION}" && \
     misspell -v
 
 
