@@ -31,7 +31,7 @@ ENV PATH ${RUNNERS_DEPS_DIR}/node_modules/.bin:${PATH}
 ENV NODE_PATH ${RUNNERS_DEPS_DIR}/node_modules:${NODE_PATH}
 
 # By default, TSLint looks for a configuration file named tslint.json in the directory of the file being linted and, if not found, searches ancestor directories.
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/tslint/tslint.json ${RUNNER_USER_HOME}/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/tslint/default_tslint.json ${RUNNER_USER_HOME}/tslint.json
 
 
 # Copy the main source code
