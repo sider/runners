@@ -23,10 +23,7 @@ RUN cd "${RUNNERS_DIR}" && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
 # Install PHP packages via Composer
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} \
-     images/code_sniffer/composer.json \
-     images/code_sniffer/composer.lock \
-     ${COMPOSER_HOME}/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/code_sniffer/composer.* ${COMPOSER_HOME}/
 RUN composer global install
 
 # Set install paths

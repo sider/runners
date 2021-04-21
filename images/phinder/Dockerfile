@@ -23,10 +23,7 @@ RUN cd "${RUNNERS_DIR}" && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
 # Install PHP packages via Composer
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} \
-     images/phinder/composer.json \
-     images/phinder/composer.lock \
-     ${COMPOSER_HOME}/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/phinder/composer.* ${COMPOSER_HOME}/
 RUN composer global install
 
 # Copy the main source code

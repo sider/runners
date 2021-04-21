@@ -23,10 +23,7 @@ RUN cd "${RUNNERS_DIR}" && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
 # Install PHP packages via Composer
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} \
-     images/phpmd/composer.json \
-     images/phpmd/composer.lock \
-     ${COMPOSER_HOME}/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/phpmd/composer.* ${COMPOSER_HOME}/
 RUN composer global install
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/phpmd/sider_config.xml ${RUNNER_USER_HOME}/
