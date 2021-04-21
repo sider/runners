@@ -6,14 +6,7 @@ FROM koalaman/shellcheck:v0.7.1 as shellcheck
 
 FROM sider/devon_rex_base:master
 
-USER root
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends file && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-USER $RUNNER_USER
-
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=shellcheck /bin/shellcheck ${RUNNER_USER_HOME}/bin/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=shellcheck /bin/shellcheck ${RUNNER_USER_BIN}/
 
 
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
