@@ -29,10 +29,8 @@ RUN cd "${RUNNERS_DEPS_DIR}" && \
     bundle install && \
     rm -r Gemfile Gemfile.lock .bundle/
 
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} \
-     images/reek/.reek.yml \
-     images/reek/config.reek \
-     ${RUNNER_USER_HOME}/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/reek/v5.reek.yml ${RUNNER_USER_HOME}/.reek.yml
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/reek/v4.reek.yml ${RUNNER_USER_HOME}/config.reek
 
 
 # Copy the main source code
