@@ -93,7 +93,7 @@ module Runners
     attr_accessor :force_option_skip_lexical_errors
 
     def analyzer_version
-      @analyzer_version ||= capture3!("show_pmd_version").yield_self { |stdout,| stdout.strip }
+      pmd_version
     end
 
     def analyze(_changes)

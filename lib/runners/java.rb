@@ -31,6 +31,13 @@ module Runners
       end
     end
 
+    # NOTE: PMD does not provide a CLI option to show its version.
+    def pmd_version
+      @pmd_version ||= capture3(analyzer_bin, "-help", trace_stdout: false).then do |stdout, _, _|
+        stdout.match(%r{pmd-bin-([\d.]+)/bin/}) { |m| m.captures.first } or raise "No version in:\n#{stdout}"
+      end
+    end
+
     private
 
     def fetch_deps_via_gradle!

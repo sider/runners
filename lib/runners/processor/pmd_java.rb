@@ -40,7 +40,7 @@ module Runners
     end
 
     def analyzer_version
-      @analyzer_version ||= capture3!("show_pmd_version").yield_self { |stdout,| stdout.strip }
+      pmd_version
     end
 
     def analyzer_bin
