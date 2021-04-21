@@ -20,7 +20,7 @@ module Runners
     def initialize: (guid: String, working_dir: Pathname, config: Config, shell: Shell, trace_writer: TraceWriter) -> void
 
     def current_dir: () -> Pathname
-    def chdir: [X] (Pathname) { (Pathname) -> X } -> X
+    def chdir: [X] (Pathname | String) { (Pathname) -> X } -> X
     def push_env_hash: [X] (Hash[String, String?]) { () -> X } -> X
     def env_hash: () -> Hash[String, String?]
     def capture3: (String, *Shell::command_argument, **untyped) -> [String, String, Process::Status]

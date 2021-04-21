@@ -95,28 +95,6 @@ class NodejsTest < Minitest::Test
     end
   end
 
-  def test_analyzer_version_with_global
-    with_workspace do |workspace|
-      new_processor(workspace: workspace)
-
-      processor.stub :nodejs_analyzer_locally_installed?, false do
-        assert_equal "7.0.0", processor.analyzer_version
-      end
-    end
-  end
-
-  def test_analyzer_version_with_local
-    with_workspace do |workspace|
-      new_processor(workspace: workspace)
-
-      processor.stub :nodejs_analyzer_locally_installed?, true do
-        processor.stub :nodejs_analyzer_local_version, "2.0.0" do
-          assert_equal "2.0.0", processor.analyzer_version
-        end
-      end
-    end
-  end
-
   def test_install_nodejs_deps
     with_workspace do |workspace|
       new_processor(workspace: workspace)
@@ -456,22 +434,28 @@ class NodejsTest < Minitest::Test
     with_workspace do |workspace|
       new_processor(workspace: workspace)
 
-      processor.package_json_path.write({ dependencies: { "is-string": "1.0.0" } }.to_json)
+      processor.package_json_path.write({ dependencies: { "is-string": "1.0.0", "eslint": "7.0.0" } }.to_json)
 
-      processor.install_nodejs_deps(
-        constraints: {},
-        dependencies: ["classcat", "is-string@1.0.5", { name: "is-nan-x", version: "2.1.0" }],
-        install_option: INSTALL_OPTION_ALL,
-      )
+      deps_dir = mktmpdir.to_path
 
-      assert_match %r{^\d+\.\d+\.\d+$}, package_version("classcat")
-      assert_equal "1.0.5", package_version("is-string")
-      assert_equal "2.1.0", package_version("is-nan-x")
+      with_stubbed_env({ "RUNNERS_USER_DEPS_DIR" => deps_dir }) do
+        processor.install_nodejs_deps(
+          constraints: {},
+          dependencies: ["classcat", "is-string@1.0.5", { name: "is-nan-x", version: "2.1.0" }],
+          install_option: INSTALL_OPTION_ALL,
+        )
+      end
+
+      installed_versions_output = trace_writer.writer.find { |e| e[:trace] == :stdout && e[:string].include?(deps_dir) }.fetch(:string)
+      assert_match %r{classcat@\d+\.\d+\.\d+}, installed_versions_output
+      assert_match "is-string@1.0.5", installed_versions_output
+      assert_match "is-nan-x@2.1.0", installed_versions_output
       assert_empty processor.warnings
       refute_empty actual_commands
       assert_empty actual_errors
-      assert_equal({ dependencies: { "is-string": "1.0.0" } }.to_json, processor.package_json_path.read)
+      assert_equal({ dependencies: { "is-string": "1.0.0", "eslint": "7.0.0" } }.to_json, processor.package_json_path.read)
       refute_path_exists processor.package_lock_json_path
+      refute_path_exists processor.node_modules_path
     end
   end
 

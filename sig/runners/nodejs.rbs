@@ -43,9 +43,9 @@ module Runners
 
     def nodejs_analyzer_locally_installed?: () -> bool
 
-    def nodejs_analyzer_local_version: () -> String
+    def npm_install: (Array[String], ?subcommand: String, ?flags: Array[String]) -> void
 
-    def npm_install: (*String, ?subcommand: String, ?flags: Array[String]) -> void
+    def check_installed_npm_deps: (constraints) -> bool
 
     def list_installed_npm_deps_with: (names: Array[String]) -> Hash[String, { name: String, version: String }]
 
