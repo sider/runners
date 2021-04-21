@@ -29,7 +29,7 @@ RUN cd "${RUNNERS_DEPS_DIR}" && \
     bundle install && \
     rm -r Gemfile Gemfile.lock .bundle/
 
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/scss_lint/.scss-lint.yml ${RUNNER_USER_HOME}/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/scss_lint/scss-lint.default.yml ${RUNNER_USER_HOME}/.scss-lint.yml
 
 
 # Copy the main source code

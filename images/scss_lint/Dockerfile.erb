@@ -1,5 +1,5 @@
 <%= render_erb 'images/Dockerfile.ruby.erb' %>
 
-COPY --chown=<%= chown %> images/<%= analyzer %>/.scss-lint.yml ${RUNNER_USER_HOME}/
+COPY --chown=<%= chown %> images/<%= analyzer %>/scss-lint.default.yml ${RUNNER_USER_HOME}/.scss-lint.yml
 
 <%= render_erb 'images/Dockerfile.end.erb' %>
