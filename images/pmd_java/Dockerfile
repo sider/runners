@@ -33,7 +33,7 @@ RUN cd "${RUNNERS_DIR}" && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/pmd ${RUNNER_USER_BIN}/
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/default-ruleset.xml ${RUNNER_USER_BIN}/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/default-ruleset.xml ${RUNNER_USER_HOME}/
 
 # NOTE: PMD does not have a CLI option to show its version.
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/ShowPMDVersion.java ${RUNNER_USER_BIN}/
