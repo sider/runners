@@ -27,6 +27,9 @@ COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/clang_tidy/packages.list /tmp
 ARG LLVM_VERSION=11
 
 USER root
+
+# NOTE: Do not remove apt caches. If doing so, runtime apt installation would not work.
+# hadolint ignore=DL3009
 RUN curl -fsSL https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
     add-apt-repository "deb http://apt.llvm.org/buster/ llvm-toolchain-buster-${LLVM_VERSION} main" && \
     apt-get update && \
@@ -34,6 +37,7 @@ RUN curl -fsSL https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
     rm /tmp/packages.list && \
     update-alternatives --install /usr/local/bin/clang-tidy clang-tidy "/usr/lib/llvm-${LLVM_VERSION}/bin/clang-tidy" 20 && \
     clang-tidy --version | grep "LLVM version ${LLVM_VERSION}"
+
 USER $RUNNER_USER
 
 
