@@ -9,6 +9,7 @@ FROM sider/devon_rex_base:master
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=hadolint /bin/hadolint ${RUNNER_USER_BIN}/
 
 
+ENV RUNNERS_DEPS_DIR ${RUNNER_USER_HOME}/dependencies
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)

@@ -1,5 +1,7 @@
 FROM sider/devon_rex_java:master
 
+<%= render_erb 'images/Dockerfile.base.erb' %>
+
 ARG JAVASEE_VERSION=0.2.0
 
 RUN mkdir /tmp/work && \
@@ -14,5 +16,4 @@ RUN mkdir /tmp/work && \
     rm -rf /tmp/work && \
     javasee version | grep "${JAVASEE_VERSION}"
 
-<%= render_erb 'images/Dockerfile.base.erb' %>
 <%= render_erb 'images/Dockerfile.end.erb' %>

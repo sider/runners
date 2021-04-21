@@ -1,9 +1,6 @@
-FROM sider/devon_rex_python:master
-
-<%= render_erb 'images/Dockerfile.base.erb' %>
 <%= render_erb 'images/Dockerfile.python.erb' %>
 
-COPY --chown=<%= chown %> images/flake8/sider_recommended_flake8.ini ${RUNNER_USER_HOME}/.config/flake8
-COPY --chown=<%= chown %> images/flake8/ignored-config.ini ${RUNNER_USER_HOME}/.config/ignored-config.ini
+COPY --chown=<%= chown %> images/<%= analyzer %>/sider_recommended_flake8.ini ${RUNNER_USER_HOME}/.config/flake8
+COPY --chown=<%= chown %> images/<%= analyzer %>/ignored-config.ini ${RUNNER_USER_HOME}/.config/
 
 <%= render_erb 'images/Dockerfile.end.erb' %>

@@ -5,6 +5,7 @@
 FROM sider/devon_rex_npm:master
 
 
+ENV RUNNERS_DEPS_DIR ${RUNNER_USER_HOME}/dependencies
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
@@ -22,15 +23,12 @@ RUN cd "${RUNNERS_DIR}" && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
 # Install the default version
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/tyscan/package.json ${RUNNER_USER_HOME}/tyscan_package.json
-RUN cd "${RUNNER_USER_HOME}" && \
-    mkdir tyscan && \
-    mv tyscan_package.json tyscan/package.json && \
-    cd tyscan && \
-    npm install --strict-peer-deps --ignore-scripts --engine-strict --no-progress --no-save
-ENV PATH ${RUNNER_USER_HOME}/tyscan/node_modules/.bin:${PATH}
-# See https://nodejs.org/api/cli.html#cli_node_path_path
-ENV NODE_PATH ${RUNNER_USER_HOME}/tyscan/node_modules:${NODE_PATH}
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/tyscan/package.json ${RUNNERS_DEPS_DIR}/
+RUN cd "${RUNNERS_DEPS_DIR}" && \
+    npm install --strict-peer-deps --ignore-scripts --engine-strict --no-progress --no-save && \
+    rm package*.json
+ENV PATH ${RUNNERS_DEPS_DIR}/node_modules/.bin:${PATH}
+ENV NODE_PATH ${RUNNERS_DEPS_DIR}/node_modules:${NODE_PATH}
 
 # Copy the main source code
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} exe ${RUNNERS_DIR}/exe

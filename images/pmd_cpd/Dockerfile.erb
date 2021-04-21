@@ -1,5 +1,4 @@
 <%= render_erb 'images/Dockerfile.java.erb' %>
-<%= render_erb 'images/Dockerfile.base.erb' %>
 
 COPY --chown=<%= chown %> images/pmd_cpd/pmd_cpd ${RUNNER_USER_BIN}/
 

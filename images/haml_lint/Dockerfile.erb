@@ -1,8 +1,5 @@
-FROM sider/devon_rex_ruby:master
-
-<%= render_erb 'images/Dockerfile.base.erb' %>
 <%= render_erb 'images/Dockerfile.ruby.erb' %>
 
-COPY --chown=<%= chown %> images/haml_lint/*.yml ${RUNNER_USER_HOME}/
+COPY --chown=<%= chown %> images/<%= analyzer %>/*.yml ${RUNNER_USER_HOME}/
 
 <%= render_erb 'images/Dockerfile.end.erb' %>

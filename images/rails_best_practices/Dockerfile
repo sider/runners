@@ -5,6 +5,7 @@
 FROM sider/devon_rex_ruby:master
 
 
+ENV RUNNERS_DEPS_DIR ${RUNNER_USER_HOME}/dependencies
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
@@ -22,17 +23,11 @@ RUN cd "${RUNNERS_DIR}" && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
 # Install the default version
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/rails_best_practices/Gemfile ${RUNNER_USER_HOME}/rails_best_practices_Gemfile
-RUN cd "${RUNNER_USER_HOME}" && \
-    mkdir rails_best_practices && \
-    mv rails_best_practices_Gemfile rails_best_practices/Gemfile && \
-    cd rails_best_practices && \
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/rails_best_practices/Gemfile ${RUNNERS_DEPS_DIR}/
+RUN cd "${RUNNERS_DEPS_DIR}" && \
     bundle config set --local system 'true' && \
-    bundle install --gemfile=Gemfile && \
-    bundle config unset --local system && \
-    cd .. && \
-    rm -rf rails_best_practices && \
-    gem info --local --exact --quiet rails_best_practices | grep rails_best_practices
+    bundle install && \
+    rm -r Gemfile Gemfile.lock .bundle/
 
 # For backward compatibility
 RUN gem install require_all:1.5.0

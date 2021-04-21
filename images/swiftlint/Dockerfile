@@ -4,18 +4,8 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM sider/devon_rex_swift:master
 
-ARG SWIFTLINT_VERSION=0.43.1
 
-# Build SwiftLint
-RUN cd /tmp && \
-    curl -sSL --compressed "https://github.com/realm/SwiftLint/archive/${SWIFTLINT_VERSION}.tar.gz" | tar -xz && \
-    cd "SwiftLint-${SWIFTLINT_VERSION}" && \
-    make install "BINARIES_FOLDER=${RUNNER_USER_BIN}" && \
-    cd .. && \
-    rm -rf "SwiftLint-${SWIFTLINT_VERSION}" && \
-    swiftlint version | grep "${SWIFTLINT_VERSION}"
-
-
+ENV RUNNERS_DEPS_DIR ${RUNNER_USER_HOME}/dependencies
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
@@ -31,6 +21,18 @@ RUN cd "${RUNNERS_DIR}" && \
     echo 'Checking if the Bundler version is expected...' && \
     lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler.locked_gems.bundler_version') && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
+
+ARG SWIFTLINT_VERSION=0.43.1
+
+# Build SwiftLint
+RUN cd /tmp && \
+    curl -sSL --compressed "https://github.com/realm/SwiftLint/archive/${SWIFTLINT_VERSION}.tar.gz" | tar -xz && \
+    cd "SwiftLint-${SWIFTLINT_VERSION}" && \
+    make install "BINARIES_FOLDER=${RUNNER_USER_BIN}" && \
+    cd .. && \
+    rm -rf "SwiftLint-${SWIFTLINT_VERSION}" && \
+    swiftlint version | grep "${SWIFTLINT_VERSION}"
+
 
 # Copy the main source code
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} exe ${RUNNERS_DIR}/exe

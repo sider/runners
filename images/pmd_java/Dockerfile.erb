@@ -1,5 +1,4 @@
 <%= render_erb 'images/Dockerfile.java.erb' %>
-<%= render_erb 'images/Dockerfile.base.erb' %>
 
 COPY --chown=<%= chown %> images/<%= analyzer %>/pmd ${RUNNER_USER_BIN}/
 COPY --chown=<%= chown %> images/<%= analyzer %>/default-ruleset.xml ${RUNNER_USER_HOME}/

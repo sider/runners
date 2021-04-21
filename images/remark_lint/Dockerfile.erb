@@ -1,6 +1,3 @@
-FROM sider/devon_rex_npm:master
-
-<%= render_erb 'images/Dockerfile.base.erb' %>
 <%= render_erb 'images/Dockerfile.npm.erb' %>
 
 COPY --chown=<%= chown %> images/<%= analyzer %>/sider_recommended_remark_lint.yml ${RUNNER_USER_HOME}/

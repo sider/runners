@@ -5,6 +5,7 @@
 FROM sider/devon_rex_python:master
 
 
+ENV RUNNERS_DEPS_DIR ${RUNNER_USER_HOME}/dependencies
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
@@ -22,15 +23,13 @@ RUN cd "${RUNNERS_DIR}" && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
 # Install the default version
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/flake8/Pipfile ${RUNNER_USER_HOME}/flake8_Pipfile
-RUN cd "${RUNNER_USER_HOME}" && \
-    mkdir flake8 && \
-    mv flake8_Pipfile flake8/Pipfile && \
-    cd flake8 && \
-    pipenv install --system --skip-lock
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/flake8/Pipfile ${RUNNERS_DEPS_DIR}/
+RUN cd "${RUNNERS_DEPS_DIR}" && \
+    pipenv install --system --skip-lock && \
+    rm Pipfile
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/flake8/sider_recommended_flake8.ini ${RUNNER_USER_HOME}/.config/flake8
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/flake8/ignored-config.ini ${RUNNER_USER_HOME}/.config/ignored-config.ini
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/flake8/ignored-config.ini ${RUNNER_USER_HOME}/.config/
 
 
 # Copy the main source code

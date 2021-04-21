@@ -5,6 +5,7 @@
 FROM sider/devon_rex_ruby:master
 
 
+ENV RUNNERS_DEPS_DIR ${RUNNER_USER_HOME}/dependencies
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
@@ -22,17 +23,11 @@ RUN cd "${RUNNERS_DIR}" && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
 # Install the default version
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/slim_lint/Gemfile ${RUNNER_USER_HOME}/slim_lint_Gemfile
-RUN cd "${RUNNER_USER_HOME}" && \
-    mkdir slim_lint && \
-    mv slim_lint_Gemfile slim_lint/Gemfile && \
-    cd slim_lint && \
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/slim_lint/Gemfile ${RUNNERS_DEPS_DIR}/
+RUN cd "${RUNNERS_DEPS_DIR}" && \
     bundle config set --local system 'true' && \
-    bundle install --gemfile=Gemfile && \
-    bundle config unset --local system && \
-    cd .. && \
-    rm -rf slim_lint && \
-    gem info --local --exact --quiet slim_lint | grep slim_lint
+    bundle install && \
+    rm -r Gemfile Gemfile.lock .bundle/
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/slim_lint/*.yml ${RUNNER_USER_HOME}/
 

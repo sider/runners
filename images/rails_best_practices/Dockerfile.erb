@@ -1,11 +1,8 @@
-FROM sider/devon_rex_ruby:master
-
-<%= render_erb 'images/Dockerfile.base.erb' %>
 <%= render_erb 'images/Dockerfile.ruby.erb' %>
 
 # For backward compatibility
 RUN gem install require_all:1.5.0
 
-COPY --chown=<%= chown %> images/rails_best_practices/sider_rails_best_practices.yml ${RUNNER_USER_HOME}/
+COPY --chown=<%= chown %> images/<%= analyzer %>/sider_rails_best_practices.yml ${RUNNER_USER_HOME}/
 
 <%= render_erb 'images/Dockerfile.end.erb' %>

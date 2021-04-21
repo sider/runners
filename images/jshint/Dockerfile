@@ -5,6 +5,7 @@
 FROM sider/devon_rex_npm:master
 
 
+ENV RUNNERS_DEPS_DIR ${RUNNER_USER_HOME}/dependencies
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
@@ -22,17 +23,17 @@ RUN cd "${RUNNERS_DIR}" && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
 # Install the default version
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/jshint/package.json ${RUNNER_USER_HOME}/jshint_package.json
-RUN cd "${RUNNER_USER_HOME}" && \
-    mkdir jshint && \
-    mv jshint_package.json jshint/package.json && \
-    cd jshint && \
-    npm install --strict-peer-deps --ignore-scripts --engine-strict --no-progress --no-save
-ENV PATH ${RUNNER_USER_HOME}/jshint/node_modules/.bin:${PATH}
-# See https://nodejs.org/api/cli.html#cli_node_path_path
-ENV NODE_PATH ${RUNNER_USER_HOME}/jshint/node_modules:${NODE_PATH}
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/jshint/package.json ${RUNNERS_DEPS_DIR}/
+RUN cd "${RUNNERS_DEPS_DIR}" && \
+    npm install --strict-peer-deps --ignore-scripts --engine-strict --no-progress --no-save && \
+    rm package*.json
+ENV PATH ${RUNNERS_DEPS_DIR}/node_modules/.bin:${PATH}
+ENV NODE_PATH ${RUNNERS_DEPS_DIR}/node_modules:${NODE_PATH}
 
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/jshint/sider_jshintignore images/jshint/sider_jshintrc $RUNNER_USER_HOME/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} \
+     images/jshint/sider_jshintignore \
+     images/jshint/sider_jshintrc \
+     ${RUNNER_USER_HOME}/
 
 
 # Copy the main source code

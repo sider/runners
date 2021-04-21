@@ -5,6 +5,7 @@
 FROM sider/devon_rex_ruby:master
 
 
+ENV RUNNERS_DEPS_DIR ${RUNNER_USER_HOME}/dependencies
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
@@ -22,17 +23,11 @@ RUN cd "${RUNNERS_DIR}" && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
 # Install the default version
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/brakeman/Gemfile ${RUNNER_USER_HOME}/brakeman_Gemfile
-RUN cd "${RUNNER_USER_HOME}" && \
-    mkdir brakeman && \
-    mv brakeman_Gemfile brakeman/Gemfile && \
-    cd brakeman && \
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/brakeman/Gemfile ${RUNNERS_DEPS_DIR}/
+RUN cd "${RUNNERS_DEPS_DIR}" && \
     bundle config set --local system 'true' && \
-    bundle install --gemfile=Gemfile && \
-    bundle config unset --local system && \
-    cd .. && \
-    rm -rf brakeman && \
-    gem info --local --exact --quiet brakeman | grep brakeman
+    bundle install && \
+    rm -r Gemfile Gemfile.lock .bundle/
 
 # Copy the main source code
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} exe ${RUNNERS_DIR}/exe

@@ -6,9 +6,8 @@ FROM koalaman/shellcheck:v0.7.1 as shellcheck
 
 FROM sider/devon_rex_base:master
 
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=shellcheck /bin/shellcheck ${RUNNER_USER_BIN}/
 
-
+ENV RUNNERS_DEPS_DIR ${RUNNER_USER_HOME}/dependencies
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
@@ -24,6 +23,9 @@ RUN cd "${RUNNERS_DIR}" && \
     echo 'Checking if the Bundler version is expected...' && \
     lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler.locked_gems.bundler_version') && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
+
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=shellcheck /bin/shellcheck ${RUNNER_USER_BIN}/
+
 
 # Copy the main source code
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} exe ${RUNNERS_DIR}/exe

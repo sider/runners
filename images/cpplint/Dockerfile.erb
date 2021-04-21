@@ -1,8 +1,5 @@
-FROM sider/devon_rex_python:master
-
-<%= render_erb 'images/Dockerfile.base.erb' %>
 <%= render_erb 'images/Dockerfile.python.erb' %>
 
-COPY --chown=<%= chown %> images/cpplint/sider_recommended_CPPLINT.cfg ${RUNNER_USER_HOME}/
+COPY --chown=<%= chown %> images/<%= analyzer %>/sider_recommended_CPPLINT.cfg ${RUNNER_USER_HOME}/
 
 <%= render_erb 'images/Dockerfile.end.erb' %>

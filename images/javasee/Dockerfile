@@ -4,21 +4,8 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM sider/devon_rex_java:master
 
-ARG JAVASEE_VERSION=0.2.0
 
-RUN mkdir /tmp/work && \
-    cd /tmp/work && \
-    curl -fsSLO --compressed "https://github.com/sider/JavaSee/releases/download/${JAVASEE_VERSION}/JavaSee-bin-${JAVASEE_VERSION}.zip" && \
-    unzip "JavaSee-bin-${JAVASEE_VERSION}.zip" && \
-    mkdir "${RUNNER_USER_HOME}/JavaSee" && \
-    cp -rv "JavaSee-bin-${JAVASEE_VERSION}/bin" "${RUNNER_USER_HOME}/JavaSee/bin" && \
-    cp -rv "JavaSee-bin-${JAVASEE_VERSION}/lib" "${RUNNER_USER_HOME}/JavaSee/lib" && \
-    ln -sv "${RUNNER_USER_HOME}/JavaSee/bin/javasee" "${RUNNER_USER_BIN}/javasee" && \
-    cd .. && \
-    rm -rf /tmp/work && \
-    javasee version | grep "${JAVASEE_VERSION}"
-
-
+ENV RUNNERS_DEPS_DIR ${RUNNER_USER_HOME}/dependencies
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
@@ -34,6 +21,21 @@ RUN cd "${RUNNERS_DIR}" && \
     echo 'Checking if the Bundler version is expected...' && \
     lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler.locked_gems.bundler_version') && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
+
+ARG JAVASEE_VERSION=0.2.0
+
+RUN mkdir /tmp/work && \
+    cd /tmp/work && \
+    curl -fsSLO --compressed "https://github.com/sider/JavaSee/releases/download/${JAVASEE_VERSION}/JavaSee-bin-${JAVASEE_VERSION}.zip" && \
+    unzip "JavaSee-bin-${JAVASEE_VERSION}.zip" && \
+    mkdir "${RUNNER_USER_HOME}/JavaSee" && \
+    cp -rv "JavaSee-bin-${JAVASEE_VERSION}/bin" "${RUNNER_USER_HOME}/JavaSee/bin" && \
+    cp -rv "JavaSee-bin-${JAVASEE_VERSION}/lib" "${RUNNER_USER_HOME}/JavaSee/lib" && \
+    ln -sv "${RUNNER_USER_HOME}/JavaSee/bin/javasee" "${RUNNER_USER_BIN}/javasee" && \
+    cd .. && \
+    rm -rf /tmp/work && \
+    javasee version | grep "${JAVASEE_VERSION}"
+
 
 # Copy the main source code
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} exe ${RUNNERS_DIR}/exe

@@ -2,7 +2,8 @@ FROM koalaman/shellcheck:v0.7.1 as shellcheck
 
 FROM sider/devon_rex_base:master
 
+<%= render_erb 'images/Dockerfile.base.erb' %>
+
 COPY --chown=<%= chown %> --from=shellcheck /bin/shellcheck ${RUNNER_USER_BIN}/
 
-<%= render_erb 'images/Dockerfile.base.erb' %>
 <%= render_erb 'images/Dockerfile.end.erb' %>
