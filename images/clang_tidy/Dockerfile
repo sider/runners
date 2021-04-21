@@ -31,7 +31,7 @@ RUN curl -fsSL https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
     add-apt-repository "deb http://apt.llvm.org/buster/ llvm-toolchain-buster-${LLVM_VERSION} main" && \
     apt-get update && \
     grep -v "^\s*#" /tmp/packages.list | xargs apt-get install -qq -y --no-install-recommends "clang-tidy-${LLVM_VERSION}" && \
-    rm -rf /var/lib/apt/lists/* /tmp/packages.list && \
+    rm /tmp/packages.list && \
     update-alternatives --install /usr/local/bin/clang-tidy clang-tidy "/usr/lib/llvm-${LLVM_VERSION}/bin/clang-tidy" 20 && \
     clang-tidy --version | grep "LLVM version ${LLVM_VERSION}"
 USER $RUNNER_USER
