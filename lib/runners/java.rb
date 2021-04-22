@@ -40,8 +40,13 @@ module Runners
 
     # NOTE: PMD does not provide a CLI option to show its version.
     def pmd_version
-      @pmd_version ||= capture3(analyzer_bin, "-help", trace_stdout: false).then do |stdout, _, _|
-        stdout.match(%r{pmd-bin-([\d.]+)/bin/}) { |m| m.captures.first } or raise "No version in:\n#{stdout}"
+      stdout, _, _ = capture3(analyzer_bin, "-help", trace_stdout: false)
+      version = stdout.match(%r{pmd-bin-(?<version>[\d.]+)/bin/}) { |m| m[:version] }
+      if version
+        trace_writer.message "Version #{version}"
+        version
+      else
+        raise "No version in:\n#{stdout}"
       end
     end
 
