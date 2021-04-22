@@ -95,28 +95,6 @@ class NodejsTest < Minitest::Test
     end
   end
 
-  def test_analyzer_version_with_global
-    with_workspace do |workspace|
-      new_processor(workspace: workspace)
-
-      processor.stub :nodejs_analyzer_locally_installed?, false do
-        assert_equal "7.0.0", processor.analyzer_version
-      end
-    end
-  end
-
-  def test_analyzer_version_with_local
-    with_workspace do |workspace|
-      new_processor(workspace: workspace)
-
-      processor.stub :nodejs_analyzer_locally_installed?, true do
-        processor.stub :nodejs_analyzer_local_version, "2.0.0" do
-          assert_equal "2.0.0", processor.analyzer_version
-        end
-      end
-    end
-  end
-
   def test_install_nodejs_deps
     with_workspace do |workspace|
       new_processor(workspace: workspace)
