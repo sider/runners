@@ -31,7 +31,7 @@ ENV PATH ${RUNNERS_DEPS_DIR}/node_modules/.bin:${PATH}
 ENV NODE_PATH ${RUNNERS_DEPS_DIR}/node_modules:${NODE_PATH}
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} \
-     images/eslint/sider_eslintrc.yml \
+     images/eslint/sider_recommended_eslint.js \
      images/eslint/custom-eslint-json-formatter.js \
      ${RUNNER_USER_HOME}/
 

@@ -27,6 +27,28 @@ s.add_test(
       git_blame_info: {
         commit: :_, line_hash: "f3ad79b5672cb93aaade2944995ccc7766faaac4", original_line: 1, final_line: 1
       }
+    },
+    {
+      path: "index.js",
+      location: { start_line: 4, start_column: 5, end_line: 4, end_column: 6 },
+      id: "prefer-const",
+      message: "'a' is never reassigned. Use 'const' instead.",
+      links: %w[https://eslint.org/docs/rules/prefer-const],
+      object: { severity: "warn", category: "ECMAScript 6", recommended: false },
+      git_blame_info: {
+        commit: :_, line_hash: "e151e70048f592122d03aeceab9fcf5ab50765e2", original_line: 4, final_line: 4
+      }
+    },
+    {
+      path: "index.js",
+      location: { start_line: 1, start_column: 6, end_line: 1, end_column: 15 },
+      id: "vars-on-top",
+      message: "All 'var' declarations must be at the top of the function scope.",
+      links: %w[https://eslint.org/docs/rules/vars-on-top],
+      object: { severity: "warn", category: "Best Practices", recommended: false },
+      git_blame_info: {
+        commit: :_, line_hash: "f3ad79b5672cb93aaade2944995ccc7766faaac4", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "ESLint", version: default_version }
@@ -36,6 +58,10 @@ s.add_test(
   "no_config_v5",
   type: "success",
   issues: [
+    { id: "default-case-last", message: "Definition for rule 'default-case-last' was not found", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "default-param-last", message: "Definition for rule 'default-param-last' was not found", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "grouped-accessor-pairs", message: "Definition for rule 'grouped-accessor-pairs' was not found", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "id-denylist", message: "Definition for rule 'id-denylist' was not found", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
     {
       path: "index.js",
       location: { start_line: 1, start_column: 1, end_line: 1, end_column: 12 },
@@ -46,7 +72,18 @@ s.add_test(
       git_blame_info: {
         commit: :_, line_hash: "ad253ddf045d147f097d310d41c67964b27ee471", original_line: 1, final_line: 1
       }
-    }
+    },
+    { id: "no-constructor-return", message: "Definition for rule 'no-constructor-return' was not found", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "no-loss-of-precision", message: "Definition for rule 'no-loss-of-precision' was not found", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "no-nonoctal-decimal-escape", message: "Definition for rule 'no-nonoctal-decimal-escape' was not found", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "no-promise-executor-return", message: "Definition for rule 'no-promise-executor-return' was not found", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "no-restricted-exports", message: "Definition for rule 'no-restricted-exports' was not found", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "no-unreachable-loop", message: "Definition for rule 'no-unreachable-loop' was not found", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "no-unsafe-optional-chaining", message: "Definition for rule 'no-unsafe-optional-chaining' was not found", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "no-useless-backreference", message: "Definition for rule 'no-useless-backreference' was not found", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "prefer-exponentiation-operator", message: "Definition for rule 'prefer-exponentiation-operator' was not found", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "prefer-regex-literals", message: "Definition for rule 'prefer-regex-literals' was not found", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "require-atomic-updates", message: "Definition for rule 'require-atomic-updates' was not found", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ }
   ],
   analyzer: { name: "ESLint", version: "5.0.0" }
 )
@@ -55,6 +92,10 @@ s.add_test(
   "no_config_v6",
   type: "success",
   issues: [
+    { id: "default-case-last", message: "Definition for rule 'default-case-last' was not found.", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "default-param-last", message: "Definition for rule 'default-param-last' was not found.", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "grouped-accessor-pairs", message: "Definition for rule 'grouped-accessor-pairs' was not found.", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "id-denylist", message: "Definition for rule 'id-denylist' was not found.", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
     {
       path: "index.js",
       location: { start_line: 1, start_column: 5, end_line: 1, end_column: 11 },
@@ -65,7 +106,28 @@ s.add_test(
       git_blame_info: {
         commit: :_, line_hash: "19f7c599ce45fd313bdab7d41271e27f978a1f27", original_line: 1, final_line: 1
       }
-    }
+    },
+    { id: "no-constructor-return", message: "Definition for rule 'no-constructor-return' was not found.", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "no-loss-of-precision", message: "Definition for rule 'no-loss-of-precision' was not found.", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "no-nonoctal-decimal-escape", message: "Definition for rule 'no-nonoctal-decimal-escape' was not found.", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "no-promise-executor-return", message: "Definition for rule 'no-promise-executor-return' was not found.", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "no-restricted-exports", message: "Definition for rule 'no-restricted-exports' was not found.", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    {
+      path: "index.js",
+      location: { start_line: 1, start_column: 5, end_line: 1, end_column: 11 },
+      id: "no-self-compare",
+      message: "Comparing to itself is potentially pointless.",
+      links: %w[https://eslint.org/docs/rules/no-self-compare],
+      object: { severity: "warn", category: "Best Practices", recommended: false },
+      git_blame_info: {
+        commit: :_, line_hash: "19f7c599ce45fd313bdab7d41271e27f978a1f27", original_line: 1, final_line: 1
+      }
+    },
+    { id: "no-unreachable-loop", message: "Definition for rule 'no-unreachable-loop' was not found.", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "no-unsafe-optional-chaining", message: "Definition for rule 'no-unsafe-optional-chaining' was not found.", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "no-useless-backreference", message: "Definition for rule 'no-useless-backreference' was not found.", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "prefer-exponentiation-operator", message: "Definition for rule 'prefer-exponentiation-operator' was not found.", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "prefer-regex-literals", message: "Definition for rule 'prefer-regex-literals' was not found.", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ }
   ],
   analyzer: { name: "ESLint", version: "6.0.0" }
 )
@@ -388,17 +450,15 @@ s.add_test(
   "mismatched_package_version",
   type: "success",
   issues: [
-    {
-      id: "no-unused-vars",
-      message: "'x' is assigned a value but never used.",
-      links: %w[https://eslint.org/docs/rules/no-unused-vars],
-      path: "src/index.js",
-      location: { start_line: 1, start_column: 5, end_line: 1, end_column: 6 },
-      object: { severity: "error", category: "Variables", recommended: true },
-      git_blame_info: {
-        commit: :_, line_hash: "1344e9df550a53b40d135830a9289d34f4246299", original_line: 1, final_line: 1
-      }
-    }
+    { id: "default-case-last", message: "Definition for rule 'default-case-last' was not found.", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "id-denylist", message: "Definition for rule 'id-denylist' was not found.", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "no-loss-of-precision", message: "Definition for rule 'no-loss-of-precision' was not found.", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "no-nonoctal-decimal-escape", message: "Definition for rule 'no-nonoctal-decimal-escape' was not found.", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "no-promise-executor-return", message: "Definition for rule 'no-promise-executor-return' was not found.", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "no-restricted-exports", message: "Definition for rule 'no-restricted-exports' was not found.", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "no-unreachable-loop", message: "Definition for rule 'no-unreachable-loop' was not found.", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "no-unsafe-optional-chaining", message: "Definition for rule 'no-unsafe-optional-chaining' was not found.", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ },
+    { id: "no-useless-backreference", message: "Definition for rule 'no-useless-backreference' was not found.", path: :_, links: [], location: :_, object: :_, git_blame_info: :_ }
   ],
   analyzer: { name: "ESLint", version: "6.8.0" }
 )
@@ -456,12 +516,77 @@ s.add_test(
   type: "success",
   issues: [
     {
+      message: "Definition for rule 'id-denylist' was not found.",
+      links: [],
+      id: "id-denylist",
+      path: "test.js",
+      location: { start_line: 1, start_column: 1, end_line: 1, end_column: 2 },
+      object: { severity: "error", category: nil, recommended: nil },
+      git_blame_info: {
+        commit: :_, line_hash: "089c7565d54e338b719647421b55b3e644cf0a4b", original_line: 1, final_line: 1
+      }
+    },
+    {
       id: "no-constant-condition",
       message: "Unexpected constant condition.",
       links: %w[https://eslint.org/docs/rules/no-constant-condition],
       path: "test.js",
       location: { start_line: 1, start_column: 5, end_line: 1, end_column: 16 },
       object: { severity: "error", category: "Possible Errors", recommended: true },
+      git_blame_info: {
+        commit: :_, line_hash: "089c7565d54e338b719647421b55b3e644cf0a4b", original_line: 1, final_line: 1
+      }
+    },
+    {
+      message: "Definition for rule 'no-loss-of-precision' was not found.",
+      links: [],
+      id: "no-loss-of-precision",
+      path: "test.js",
+      location: { start_line: 1, start_column: 1, end_line: 1, end_column: 2 },
+      object: { severity: "error", category: nil, recommended: nil },
+      git_blame_info: {
+        commit: :_, line_hash: "089c7565d54e338b719647421b55b3e644cf0a4b", original_line: 1, final_line: 1
+      }
+    },
+    {
+      message: "Definition for rule 'no-nonoctal-decimal-escape' was not found.",
+      links: [],
+      id: "no-nonoctal-decimal-escape",
+      path: "test.js",
+      location: { start_line: 1, start_column: 1, end_line: 1, end_column: 2 },
+      object: { severity: "error", category: nil, recommended: nil },
+      git_blame_info: {
+        commit: :_, line_hash: "089c7565d54e338b719647421b55b3e644cf0a4b", original_line: 1, final_line: 1
+      }
+    },
+    {
+      message: "Definition for rule 'no-promise-executor-return' was not found.",
+      links: [],
+      id: "no-promise-executor-return",
+      path: "test.js",
+      location: { start_line: 1, start_column: 1, end_line: 1, end_column: 2 },
+      object: { severity: "error", category: nil, recommended: nil },
+      git_blame_info: {
+        commit: :_, line_hash: "089c7565d54e338b719647421b55b3e644cf0a4b", original_line: 1, final_line: 1
+      }
+    },
+    {
+      message: "Definition for rule 'no-unreachable-loop' was not found.",
+      links: [],
+      id: "no-unreachable-loop",
+      path: "test.js",
+      location: { start_line: 1, start_column: 1, end_line: 1, end_column: 2 },
+      object: { severity: "error", category: nil, recommended: nil },
+      git_blame_info: {
+        commit: :_, line_hash: "089c7565d54e338b719647421b55b3e644cf0a4b", original_line: 1, final_line: 1
+      }
+    },    {
+      message: "Definition for rule 'no-unsafe-optional-chaining' was not found.",
+      links: [],
+      id: "no-unsafe-optional-chaining",
+      path: "test.js",
+      location: { start_line: 1, start_column: 1, end_line: 1, end_column: 2 },
+      object: { severity: "error", category: nil, recommended: nil },
       git_blame_info: {
         commit: :_, line_hash: "089c7565d54e338b719647421b55b3e644cf0a4b", original_line: 1, final_line: 1
       }
@@ -495,6 +620,28 @@ s.add_test(
       git_blame_info: {
         commit: :_, line_hash: "5f94a2b6c745ba6538ff265a8d1f1f98b8538623", original_line: 1, final_line: 1
       }
+    },
+    {
+      id: "no-unused-expressions",
+      message: "Expected an assignment or function call and instead saw an expression.",
+      links: %w[https://eslint.org/docs/rules/no-unused-expressions],
+      path: "foo.js",
+      location: { start_line: 1, start_column: 1, end_line: 1, end_column: 5 },
+      object: { severity: "warn", category: "Best Practices", recommended: false },
+      git_blame_info: {
+        commit: :_, line_hash: "5786438d311af019d0e3d06977c4ab84a25d591b", original_line: 1, final_line: 1
+      }
+    },
+    {
+      id: "no-unused-expressions",
+      message: "Expected an assignment or function call and instead saw an expression.",
+      links: %w[https://eslint.org/docs/rules/no-unused-expressions],
+      path: "src/bar.js",
+      location: { start_line: 1, start_column: 1, end_line: 1, end_column: 5 },
+      object: { severity: "warn", category: "Best Practices", recommended: false },
+      git_blame_info: {
+        commit: :_, line_hash: "5f94a2b6c745ba6538ff265a8d1f1f98b8538623", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "ESLint", version: default_version },
@@ -505,14 +652,14 @@ s.add_test(
   "yarnrc",
   type: "success",
   issues: [],
-  analyzer: { name: "ESLint", version: "7.14.0" }
+  analyzer: { name: "ESLint", version: "7.17.0" }
 )
 
 s.add_test(
   "yarnrc_yml",
   type: "success",
   issues: [],
-  analyzer: { name: "ESLint", version: "7.13.0" }
+  analyzer: { name: "ESLint", version: "7.17.0" }
 )
 
 s.add_test(
