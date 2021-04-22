@@ -88,7 +88,7 @@ module Runners
       installed_deps = list_installed_npm_deps_with names: constraints.keys
 
       case
-      when !all_npm_deps_satisfied_constraint?(installed_deps, constraints)
+      when !npm_deps_satisfied_constraint?(installed_deps, constraints, :all)
         self.nodejs_force_default_version = true
         trace_writer.message "All constraints are not satisfied. The default version `#{default_analyzer_version}` will be used instead."
       when nodejs_analyzer_locally_installed?
@@ -171,27 +171,31 @@ module Runners
       end
     end
 
-    def all_npm_deps_satisfied_constraint?(installed_deps, constraints)
-      all_satisfied = true
+    def npm_deps_satisfied_constraint?(installed_deps, constraints, type)
+      raise ArgumentError, "Unknown type: #{type.inspect}" unless [:all, :any].include?(type)
+
+      satisfied = true
 
       constraints.each do |name, constraint|
         installed = installed_deps[name]
 
         if installed
           version = installed.fetch(:version)
-          unless constraint.satisfied_by? Gem::Version.new(version)
+          if constraint.satisfied_by? Gem::Version.new(version)
+            return true if type == :any
+          else
             add_warning <<~MSG, file: PACKAGE_JSON
               Installed `#{name}@#{version}` does not satisfy our constraint `#{npm_constraint_format(constraint)}`. Please update it as possible.
             MSG
-            all_satisfied = false
+            satisfied = false
           end
         else
           trace_writer.message "`#{name}` is required but not installed (not in your `#{PACKAGE_JSON}`)."
-          all_satisfied = false
+          satisfied = false
         end
       end
 
-      all_satisfied
+      satisfied
     end
 
     def npm_constraint_format(constraint)
