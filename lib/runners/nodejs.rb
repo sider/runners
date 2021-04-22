@@ -26,7 +26,7 @@ module Runners
     end
 
     def analyzer_version
-      @analyzer_version || default_analyzer_version
+      @analyzer_version ||= nodejs_use_local_version? ? nodejs_analyzer_local_version : default_analyzer_version
     end
 
     # Return the actual file path of `package.json`.
@@ -58,22 +58,10 @@ module Runners
           trace_writer.message "`#{config_field_path(:npm_install)}` in your `#{config.path_name}` is ignored."
         end
 
-        chdir ENV.fetch("RUNNERS_USER_DEPS_DIR") do |dir|
-          deps = dependencies.map { |dep| dep.is_a?(Hash) ? dep.values.join("@") : dep }
-          npm_install deps, flags: ["--save", "--no-package-lock"]
-
-          # Show installed versions for debug (ignore exit status to prevent some error)
-          capture3 "npm", "ls"
-
-          if check_installed_npm_deps(constraints)
-            ENV.update({
-              "PATH" => "#{dir}/node_modules/.bin:#{ENV['PATH']}",
-              "NODE_PATH" => "#{dir}/node_modules:#{ENV['NODE_PATH']}",
-            })
-          end
-        end
+        deps = dependencies.map { |dep| dep.is_a?(Hash) ? dep.values.join("@") : dep }
+        npm_install(*deps)
       else
-        flags = ["--no-save"]
+        flags = []
         case install_option
         when INSTALL_OPTION_NONE
           return # noop
@@ -86,8 +74,7 @@ module Runners
         end
 
         if package_json_path.exist?
-          npm_install [], subcommand: (package_lock_json_path.exist? ? "ci" : "install"), flags: flags
-          check_installed_npm_deps(constraints)
+          npm_install subcommand: (package_lock_json_path.exist? ? "ci" : "install"), flags: flags
         elsif install_option
           add_warning <<~MSG, file: PACKAGE_JSON
             Although `#{config_field_path(:npm_install)}` is enabled in your `#{config.path_name}`, `#{PACKAGE_JSON}` is missing in your repository.
@@ -96,6 +83,18 @@ module Runners
         else
           return # noop
         end
+      end
+
+      installed_deps = list_installed_npm_deps_with names: constraints.keys
+
+      case
+      when !npm_deps_satisfied_constraint?(installed_deps, constraints, :all)
+        self.nodejs_force_default_version = true
+        trace_writer.message "All constraints are not satisfied. The default version `#{default_analyzer_version}` will be used instead."
+      when nodejs_analyzer_locally_installed?
+        trace_writer.message "`#{analyzer_bin}@#{nodejs_analyzer_local_version}` was successfully installed."
+      else
+        trace_writer.message "`#{analyzer_bin}` was not installed. The default version `#{default_analyzer_version}` will be used instead."
       end
     end
 
@@ -115,9 +114,13 @@ module Runners
       (current_dir / nodejs_analyzer_local_command).exist?
     end
 
+    def nodejs_analyzer_local_version
+      @nodejs_analyzer_local_version ||= extract_version!(nodejs_analyzer_local_command)
+    end
+
     # @see https://docs.npmjs.com/cli/v7/commands/npm-install
     # @see https://docs.npmjs.com/cli/v7/commands/npm-ci
-    def npm_install(deps, subcommand: "install", flags: [])
+    def npm_install(*deps, subcommand: "install", flags: [])
       # NOTE: `--force` is to install *unmet* dependencies like npm 6 or Yarn.
       flags = %w[
         --force
@@ -126,6 +129,7 @@ module Runners
         --no-engine-strict
         --no-fund
         --no-progress
+        --no-save
         --no-update-notifier
       ] + flags
 
@@ -146,24 +150,6 @@ module Runners
         MSG
         trace_writer.error message
         raise NpmInstallFailed, message
-      end
-    end
-
-    def check_installed_npm_deps(constraints)
-      installed_deps = list_installed_npm_deps_with names: constraints.keys
-
-      case
-      when !npm_deps_satisfied_constraint?(installed_deps, constraints, :all)
-        self.nodejs_force_default_version = true
-        trace_writer.message "All constraints are not satisfied. The default version `#{default_analyzer_version}` will be used instead."
-        false
-      when nodejs_analyzer_locally_installed?
-        @analyzer_version = extract_version!(nodejs_analyzer_local_command)
-        trace_writer.message "`#{analyzer_bin}@#{analyzer_version}` was successfully installed."
-        true
-      else
-        trace_writer.message "`#{analyzer_bin}` was not installed. The default version `#{default_analyzer_version}` will be used instead."
-        false
       end
     end
 

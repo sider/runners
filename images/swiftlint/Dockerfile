@@ -6,15 +6,13 @@ FROM sider/devon_rex_swift:master
 
 
 ENV RUNNERS_DEPS_DIR ${RUNNER_USER_HOME}/dependencies
-ENV RUNNERS_USER_DEPS_DIR ${RUNNER_USER_HOME}/user_dependencies
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} Gemfile Gemfile.lock runners.gemspec analyzers.yml ${RUNNERS_DIR}/
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} lib/runners/version.rb ${RUNNERS_DIR}/lib/runners/
 
-RUN mkdir -p "${RUNNERS_DEPS_DIR}" "${RUNNERS_USER_DEPS_DIR}" && \
-    cd "${RUNNERS_DIR}" && \
+RUN cd "${RUNNERS_DIR}" && \
     bundle config set --global jobs 4 && \
     bundle config set --global retry 3 && \
     bundle config && \

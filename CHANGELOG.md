@@ -20,7 +20,6 @@ Misc:
 - **RuboCop** Provide new recommended configuration [#2266](https://github.com/sider/runners/pull/2266)
 - **Metrics Complexity** Add workarounds for lizard's bug [#2249](https://github.com/sider/runners/pull/2249)
 - Show the tool's default version on setup [#2313](https://github.com/sider/runners/pull/2313)
-- Improve installation of npm dependencies via `sider.yml` [#2316](https://github.com/sider/runners/pull/2316)
 
 ## 0.47.0
 
