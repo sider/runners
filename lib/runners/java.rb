@@ -15,6 +15,10 @@ module Runners
       super
     end
 
+    def analyzer_version
+      @analyzer_version || default_analyzer_version
+    end
+
     def install_jvm_deps(to: Pathname(Dir.home).join("dependencies"))
       return if config_jvm_deps.empty?
 
@@ -28,6 +32,8 @@ module Runners
             Successfully installed #{deps.size} #{deps.size == 1 ? 'dependency' : 'dependencies'}:
             #{deps.join("\n")}
           MSG
+
+          @analyzer_version = extract_version!(analyzer_bin)
         end
       end
     end
