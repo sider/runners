@@ -12,6 +12,7 @@ module Runners
     def show_runtime_versions
       capture3! "java", "-version"
       capture3! "gradle", "--version"
+      super
     end
 
     def install_jvm_deps(to: Pathname(Dir.home).join("dependencies"))

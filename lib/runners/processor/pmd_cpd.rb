@@ -92,7 +92,7 @@ module Runners
 
     attr_accessor :force_option_skip_lexical_errors
 
-    def analyzer_version
+    def default_analyzer_version
       pmd_version
     end
 

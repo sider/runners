@@ -43,8 +43,6 @@ module Runners
 
     def nodejs_analyzer_locally_installed?: () -> bool
 
-    def nodejs_analyzer_global_version: () -> String
-
     def nodejs_analyzer_local_version: () -> String
 
     def npm_install: (*String, ?subcommand: String, ?flags: Array[String]) -> void

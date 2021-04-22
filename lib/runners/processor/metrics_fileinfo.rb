@@ -22,7 +22,7 @@ module Runners
     CHURN_PERIOD_IN_DAYS = 90
     CHURN_COMMIT_COUNT = 100
 
-    def analyzer_version
+    def default_analyzer_version
       Runners::VERSION
     end
 

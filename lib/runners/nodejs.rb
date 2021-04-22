@@ -26,7 +26,7 @@ module Runners
     end
 
     def analyzer_version
-      @analyzer_version ||= nodejs_use_local_version? ? nodejs_analyzer_local_version : nodejs_analyzer_global_version
+      @analyzer_version ||= nodejs_use_local_version? ? nodejs_analyzer_local_version : default_analyzer_version
     end
 
     # Return the actual file path of `package.json`.
@@ -90,17 +90,18 @@ module Runners
       case
       when !all_npm_deps_satisfied_constraint?(installed_deps, constraints)
         self.nodejs_force_default_version = true
-        trace_writer.message "All constraints are not satisfied. The default version `#{analyzer_version}` will be used instead."
+        trace_writer.message "All constraints are not satisfied. The default version `#{default_analyzer_version}` will be used instead."
       when nodejs_analyzer_locally_installed?
-        trace_writer.message "`#{nodejs_analyzer_local_command}` was successfully installed with the version `#{analyzer_version}`."
+        trace_writer.message "`#{analyzer_bin}@#{nodejs_analyzer_local_version}` was successfully installed."
       else
-        trace_writer.message "`#{nodejs_analyzer_local_command}` was not installed. The default version `#{analyzer_version}` will be used instead."
+        trace_writer.message "`#{analyzer_bin}` was not installed. The default version `#{default_analyzer_version}` will be used instead."
       end
     end
 
     def show_runtime_versions
       capture3! "node", "-v"
       capture3! "npm", "-v"
+      super
     end
 
     private
@@ -111,10 +112,6 @@ module Runners
 
     def nodejs_analyzer_locally_installed?
       (current_dir / nodejs_analyzer_local_command).exist?
-    end
-
-    def nodejs_analyzer_global_version
-      @nodejs_analyzer_global_version ||= extract_version!(analyzer_bin)
     end
 
     def nodejs_analyzer_local_version
