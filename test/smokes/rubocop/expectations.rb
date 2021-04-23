@@ -6,7 +6,7 @@ s.add_test(
   "sandbox_rails",
   type: "success",
   issues: [
-    { # 0
+    {
       message: "Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `listen` should appear before `web-console`.",
       links: %w[https://docs.rubocop.org/rubocop/cops_bundler.html#bundlerorderedgems],
       id: "Bundler/OrderedGems",
@@ -17,7 +17,7 @@ s.add_test(
         commit: :_, line_hash: "d8161420157fd8efd8844ccad8e252ca61260ea9", original_line: 41, final_line: 41
       }
     },
-    { # 1
+    {
       message: "Extra blank line detected.",
       links: %w[https://rubystyle.guide#two-or-more-empty-lines https://docs.rubocop.org/rubocop/cops_layout.html#layoutemptylines],
       id: "Layout/EmptyLines",
@@ -28,7 +28,7 @@ s.add_test(
         commit: :_, line_hash: "da39a3ee5e6b4b0d3255bfef95601890afd80709", original_line: 3, final_line: 3
       }
     },
-    { # 2
+    {
       message: "Do not use space inside array brackets.",
       links: %w[
         https://docs.rubocop.org/rubocop/cops_layout.html#layoutspaceinsidearrayliteralbrackets
@@ -41,7 +41,7 @@ s.add_test(
         commit: :_, line_hash: "b613f3faa5fcac27b8334aae7d366f12641d07b2", original_line: 50, final_line: 50
       }
     },
-    { # 3
+    {
       message: "Do not use space inside array brackets.",
       links: %w[
         https://docs.rubocop.org/rubocop/cops_layout.html#layoutspaceinsidearrayliteralbrackets
@@ -54,7 +54,7 @@ s.add_test(
         commit: :_, line_hash: "b613f3faa5fcac27b8334aae7d366f12641d07b2", original_line: 50, final_line: 50
       }
     },
-    { # 4
+    {
       message: "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
       links: %w[
         https://rubystyle.guide#safe-assignment-in-condition
@@ -68,7 +68,7 @@ s.add_test(
         commit: :_, line_hash: "084f54bdec5c99fbfbdfa469bb734c9afcf8f98c", original_line: 11, final_line: 11
       }
     },
-    { # 5
+    {
       message: "Literal `true` appeared as a condition.",
       links: %w[
         https://docs.rubocop.org/rubocop/cops_lint.html#lintliteralascondition
@@ -81,7 +81,7 @@ s.add_test(
         commit: :_, line_hash: "57d3f05dcf6eda436e8767ebacf7058380da0c36", original_line: 23, final_line: 23
       }
     },
-    { # 6
+    {
       message: "Replace unsafe number conversion with number class parsing, instead of using ENV.fetch(\"RAILS_MAX_THREADS\") { 5 }.to_i, use stricter Integer(ENV.fetch(\"RAILS_MAX_THREADS\") { 5 }, 10).",
       links: %w[
         https://docs.rubocop.org/rubocop/cops_lint.html#lintnumberconversion
@@ -94,7 +94,7 @@ s.add_test(
         commit: :_, line_hash: "87a9e59b8f03dcdb86ec1b5f1e293d7f72e9a37b", original_line: 7, final_line: 7
       }
     },
-    { # 7
+    {
       message: "Shadowing outer local variable - `v`.",
       links: %w[
         https://docs.rubocop.org/rubocop/cops_lint.html#lintshadowingouterlocalvariable
@@ -107,7 +107,7 @@ s.add_test(
         commit: :_, line_hash: "e0d6961a0bfecb1bc1b2ceab229ceeb47b19e800", original_line: 27, final_line: 27
       }
     },
-    { # 8
+    {
       message: "Useless assignment to variable - `v`.",
       links: %w[
         https://rubystyle.guide#underscore-unused-vars
@@ -121,7 +121,7 @@ s.add_test(
         commit: :_, line_hash: "244264415175459d6469d72805cb5c39725b9b6c", original_line: 26, final_line: 26
       }
     },
-    { # 9
+    {
       message: "Use nested module/class definitions instead of compact style.",
       links: %w[
         https://rubystyle.guide#namespace-definition
@@ -135,7 +135,7 @@ s.add_test(
         commit: :_, line_hash: "b8b23c5209ea33cd4f8eef9c70d4202bcf923104", original_line: 5, final_line: 5
       }
     },
-    { # 10
+    {
       message: "Use `expand_path('../Gemfile', __dir__)` instead of `expand_path('../../Gemfile', __FILE__)`.",
       links: %w[
         https://docs.rubocop.org/rubocop/cops_style.html#styleexpandpatharguments
@@ -148,7 +148,7 @@ s.add_test(
         commit: :_, line_hash: "72878f05158918920f1a695082437f50b0caa002", original_line: 2, final_line: 2
       }
     },
-    { # 11
+    {
       message: "Use `expand_path('spring', __dir__)` instead of `expand_path('../spring', __FILE__)`.",
       links: %w[
         https://docs.rubocop.org/rubocop/cops_style.html#styleexpandpatharguments
@@ -161,7 +161,7 @@ s.add_test(
         commit: :_, line_hash: "5ed23790d51a052c9faf93ad79d686c3a117ef09", original_line: 3, final_line: 3
       }
     },
-    { # 12
+    {
       message: "Use `expand_path('spring', __dir__)` instead of `expand_path('../spring', __FILE__)`.",
       links: %w[
         https://docs.rubocop.org/rubocop/cops_style.html#styleexpandpatharguments
@@ -174,7 +174,7 @@ s.add_test(
         commit: :_, line_hash: "5ed23790d51a052c9faf93ad79d686c3a117ef09", original_line: 3, final_line: 3
       }
     },
-    { # 13
+    {
       message: "Use `expand_path('..', __dir__)` instead of `expand_path('../../', __FILE__)`.",
       links: %w[
         https://docs.rubocop.org/rubocop/cops_style.html#styleexpandpatharguments
@@ -187,7 +187,7 @@ s.add_test(
         commit: :_, line_hash: "9ed3d381ba6607c95bf22ad30e9abef985479a51", original_line: 7, final_line: 7
       }
     },
-    { # 14
+    {
       message: "Use `expand_path('..', __dir__)` instead of `expand_path('../../', __FILE__)`.",
       links: %w[
         https://docs.rubocop.org/rubocop/cops_style.html#styleexpandpatharguments
@@ -200,7 +200,7 @@ s.add_test(
         commit: :_, line_hash: "9ed3d381ba6607c95bf22ad30e9abef985479a51", original_line: 7, final_line: 7
       }
     },
-    { # 15
+    {
       message: "Use `expand_path('../config/environment', __dir__)` instead of `expand_path('../../config/environment', __FILE__)`.",
       links: %w[
         https://docs.rubocop.org/rubocop/cops_style.html#styleexpandpatharguments
@@ -213,7 +213,7 @@ s.add_test(
         commit: :_, line_hash: "c479c6b3607511740986bd7970a22aae25ca4f8e", original_line: 2, final_line: 2
       }
     },
-    { # 16
+    {
       message: "Use `$stdout` instead of `STDOUT`.",
       links: %w[
         https://rubystyle.guide#global-stdout
@@ -227,7 +227,7 @@ s.add_test(
         commit: :_, line_hash: "50ef936ee42ecbff46adfe6375d1c2cf6394e0e8", original_line: 79, final_line: 79
       }
     },
-    { # 17
+    {
       message: "Do not introduce global variables.",
       links: %w[
         https://rubystyle.guide#instance-vars
@@ -242,7 +242,7 @@ s.add_test(
         commit: :_, line_hash: "b73bba64a012e49a4a08d7340f5e847184cc8b1a", original_line: 33, final_line: 33
       }
     },
-    { # 18
+    {
       message: "`include` is used at the top level. Use inside `class` or `module`.",
       links: %w[
         https://docs.rubocop.org/rubocop/cops_style.html#stylemixinusage
@@ -255,7 +255,7 @@ s.add_test(
         commit: :_, line_hash: "226dfe7e35c7196ce90f9497622186c82bd9528c", original_line: 4, final_line: 4
       }
     },
-    { # 19
+    {
       message: "`include` is used at the top level. Use inside `class` or `module`.",
       links: %w[
         https://docs.rubocop.org/rubocop/cops_style.html#stylemixinusage
@@ -268,7 +268,7 @@ s.add_test(
         commit: :_, line_hash: "226dfe7e35c7196ce90f9497622186c82bd9528c", original_line: 4, final_line: 4
       }
     },
-    { # 20
+    {
       message: "Use underscores(_) as thousands separator and separate every 3 digits with them.",
       links: %w[
         https://rubystyle.guide#underscores-in-numerics
@@ -282,7 +282,7 @@ s.add_test(
         commit: :_, line_hash: "0de7edd11a9ee05f32094a96f1241c60c094cd91", original_line: 13, final_line: 13
       }
     },
-    { # 21
+    {
       message: "Use `fetch(\"RAILS_MAX_THREADS\", 5)` instead of `fetch(\"RAILS_MAX_THREADS\") { 5 }`.",
       links: %w[
         https://github.com/JuanitoFatas/fast-ruby#hashfetch-with-argument-vs-hashfetch--block-code
@@ -296,7 +296,7 @@ s.add_test(
         commit: :_, line_hash: "87a9e59b8f03dcdb86ec1b5f1e293d7f72e9a37b", original_line: 7, final_line: 7
       }
     },
-    { # 22
+    {
       message: "Use `fetch(\"PORT\", 3000)` instead of `fetch(\"PORT\") { 3000 }`.",
       links: %w[
         https://github.com/JuanitoFatas/fast-ruby#hashfetch-with-argument-vs-hashfetch--block-code
