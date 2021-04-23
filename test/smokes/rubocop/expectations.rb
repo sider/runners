@@ -6,9 +6,73 @@ s.add_test(
   "sandbox_rails",
   type: "success",
   issues: [
-    {
+    { # 0
+      message: "Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `listen` should appear before `web-console`.",
+      links: %w[https://docs.rubocop.org/rubocop/cops_bundler.html#bundlerorderedgems],
+      id: "Bundler/OrderedGems",
+      path: "Gemfile",
+      location: { start_line: 41, start_column: 3, end_line: 41, end_column: 26 },
+      object: { severity: "convention", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "d8161420157fd8efd8844ccad8e252ca61260ea9", original_line: 41, final_line: 41
+      }
+    },
+    { # 1
+      message: "Extra blank line detected.",
+      links: %w[https://rubystyle.guide#two-or-more-empty-lines https://docs.rubocop.org/rubocop/cops_layout.html#layoutemptylines],
+      id: "Layout/EmptyLines",
+      path: "Gemfile",
+      location: { start_line: 3, start_column: 1, end_line: 4, end_column: 0 },
+      object: { severity: "convention", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "da39a3ee5e6b4b0d3255bfef95601890afd80709", original_line: 3, final_line: 3
+      }
+    },
+    { # 2
+      message: "Do not use space inside array brackets.",
+      links: %w[
+        https://docs.rubocop.org/rubocop/cops_layout.html#layoutspaceinsidearrayliteralbrackets
+      ],
+      id: "Layout/SpaceInsideArrayLiteralBrackets",
+      path: "config/environments/production.rb",
+      location: { start_line: 50, start_column: 22, end_line: 50, end_column: 22 },
+      object: { severity: "convention", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "b613f3faa5fcac27b8334aae7d366f12641d07b2", original_line: 50, final_line: 50
+      }
+    },
+    { # 3
+      message: "Do not use space inside array brackets.",
+      links: %w[
+        https://docs.rubocop.org/rubocop/cops_layout.html#layoutspaceinsidearrayliteralbrackets
+      ],
+      id: "Layout/SpaceInsideArrayLiteralBrackets",
+      path: "config/environments/production.rb",
+      location: { start_line: 50, start_column: 34, end_line: 50, end_column: 34 },
+      object: { severity: "convention", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "b613f3faa5fcac27b8334aae7d366f12641d07b2", original_line: 50, final_line: 50
+      }
+    },
+    { # 4
+      message: "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+      links: %w[
+        https://rubystyle.guide#safe-assignment-in-condition
+        https://docs.rubocop.org/rubocop/cops_lint.html#lintassignmentincondition
+      ],
+      id: "Lint/AssignmentInCondition",
+      path: "bin/spring",
+      location: { start_line: 11, start_column: 13, end_line: 11, end_column: 13 },
+      object: { severity: "warning", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "084f54bdec5c99fbfbdfa469bb734c9afcf8f98c", original_line: 11, final_line: 11
+      }
+    },
+    { # 5
       message: "Literal `true` appeared as a condition.",
-      links: %w[https://docs.rubocop.org/rubocop/cops_lint.html#lintliteralascondition],
+      links: %w[
+        https://docs.rubocop.org/rubocop/cops_lint.html#lintliteralascondition
+      ],
       id: "Lint/LiteralAsCondition",
       path: "app/controllers/users_controller.rb",
       location: { start_line: 23, start_column: 8, end_line: 23, end_column: 11 },
@@ -17,9 +81,24 @@ s.add_test(
         commit: :_, line_hash: "57d3f05dcf6eda436e8767ebacf7058380da0c36", original_line: 23, final_line: 23
       }
     },
-    {
+    { # 6
+      message: "Replace unsafe number conversion with number class parsing, instead of using ENV.fetch(\"RAILS_MAX_THREADS\") { 5 }.to_i, use stricter Integer(ENV.fetch(\"RAILS_MAX_THREADS\") { 5 }, 10).",
+      links: %w[
+        https://docs.rubocop.org/rubocop/cops_lint.html#lintnumberconversion
+      ],
+      id: "Lint/NumberConversion",
+      path: "config/puma.rb",
+      location: { start_line: 7, start_column: 17, end_line: 7, end_column: 57 },
+      object: { severity: "warning", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "87a9e59b8f03dcdb86ec1b5f1e293d7f72e9a37b", original_line: 7, final_line: 7
+      }
+    },
+    { # 7
       message: "Shadowing outer local variable - `v`.",
-      links: %w[https://docs.rubocop.org/rubocop/cops_lint.html#lintshadowingouterlocalvariable],
+      links: %w[
+        https://docs.rubocop.org/rubocop/cops_lint.html#lintshadowingouterlocalvariable
+      ],
       id: "Lint/ShadowingOuterLocalVariable",
       path: "app/controllers/users_controller.rb",
       location: { start_line: 27, start_column: 30, end_line: 27, end_column: 30 },
@@ -28,7 +107,7 @@ s.add_test(
         commit: :_, line_hash: "e0d6961a0bfecb1bc1b2ceab229ceeb47b19e800", original_line: 27, final_line: 27
       }
     },
-    {
+    { # 8
       message: "Useless assignment to variable - `v`.",
       links: %w[
         https://rubystyle.guide#underscore-unused-vars
@@ -42,32 +121,193 @@ s.add_test(
         commit: :_, line_hash: "244264415175459d6469d72805cb5c39725b9b6c", original_line: 26, final_line: 26
       }
     },
-    {
-      message: "Prefer symbols instead of strings as hash keys.",
+    { # 9
+      message: "Use nested module/class definitions instead of compact style.",
       links: %w[
-        https://rubystyle.guide#symbols-as-keys
-        https://docs.rubocop.org/rubocop/cops_style.html#stylestringhashkeys
+        https://rubystyle.guide#namespace-definition
+        https://docs.rubocop.org/rubocop/cops_style.html#styleclassandmodulechildren
       ],
-      id: "Style/StringHashKeys",
-      path: "config/environments/development.rb",
-      location: { start_line: 21, start_column: 7, end_line: 21, end_column: 21 },
+      id: "Style/ClassAndModuleChildren",
+      path: "test/test_helper.rb",
+      location: { start_line: 5, start_column: 7, end_line: 5, end_column: 29 },
       object: { severity: "convention", corrected: false },
       git_blame_info: {
-        commit: :_, line_hash: "3073614325db4219b001e4ce703a8b10ba8cc0d2", original_line: 21, final_line: 21
+        commit: :_, line_hash: "b8b23c5209ea33cd4f8eef9c70d4202bcf923104", original_line: 5, final_line: 5
       }
     },
-    {
-      message: "Prefer symbols instead of strings as hash keys.",
+    { # 10
+      message: "Use `expand_path('../Gemfile', __dir__)` instead of `expand_path('../../Gemfile', __FILE__)`.",
       links: %w[
-        https://rubystyle.guide#symbols-as-keys
-        https://docs.rubocop.org/rubocop/cops_style.html#stylestringhashkeys
+        https://docs.rubocop.org/rubocop/cops_style.html#styleexpandpatharguments
       ],
-      id: "Style/StringHashKeys",
-      path: "config/environments/test.rb",
-      location: { start_line: 18, start_column: 5, end_line: 18, end_column: 19 },
+      id: "Style/ExpandPathArguments",
+      path: "bin/bundle",
+      location: { start_line: 2, start_column: 32, end_line: 2, end_column: 42 },
       object: { severity: "convention", corrected: false },
       git_blame_info: {
-        commit: :_, line_hash: "7ecd987ce8c7d9a7d7279b2b956b79644ee0083f", original_line: 18, final_line: 18
+        commit: :_, line_hash: "72878f05158918920f1a695082437f50b0caa002", original_line: 2, final_line: 2
+      }
+    },
+    { # 11
+      message: "Use `expand_path('spring', __dir__)` instead of `expand_path('../spring', __FILE__)`.",
+      links: %w[
+        https://docs.rubocop.org/rubocop/cops_style.html#styleexpandpatharguments
+      ],
+      id: "Style/ExpandPathArguments",
+      path: "bin/rails",
+      location: { start_line: 3, start_column: 13, end_line: 3, end_column: 23 },
+      object: { severity: "convention", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "5ed23790d51a052c9faf93ad79d686c3a117ef09", original_line: 3, final_line: 3
+      }
+    },
+    { # 12
+      message: "Use `expand_path('spring', __dir__)` instead of `expand_path('../spring', __FILE__)`.",
+      links: %w[
+        https://docs.rubocop.org/rubocop/cops_style.html#styleexpandpatharguments
+      ],
+      id: "Style/ExpandPathArguments",
+      path: "bin/rake",
+      location: { start_line: 3, start_column: 13, end_line: 3, end_column: 23 },
+      object: { severity: "convention", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "5ed23790d51a052c9faf93ad79d686c3a117ef09", original_line: 3, final_line: 3
+      }
+    },
+    { # 13
+      message: "Use `expand_path('..', __dir__)` instead of `expand_path('../../', __FILE__)`.",
+      links: %w[
+        https://docs.rubocop.org/rubocop/cops_style.html#styleexpandpatharguments
+      ],
+      id: "Style/ExpandPathArguments",
+      path: "bin/setup",
+      location: { start_line: 7, start_column: 30, end_line: 7, end_column: 40 },
+      object: { severity: "convention", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "9ed3d381ba6607c95bf22ad30e9abef985479a51", original_line: 7, final_line: 7
+      }
+    },
+    { # 14
+      message: "Use `expand_path('..', __dir__)` instead of `expand_path('../../', __FILE__)`.",
+      links: %w[
+        https://docs.rubocop.org/rubocop/cops_style.html#styleexpandpatharguments
+      ],
+      id: "Style/ExpandPathArguments",
+      path: "bin/update",
+      location: { start_line: 7, start_column: 30, end_line: 7, end_column: 40 },
+      object: { severity: "convention", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "9ed3d381ba6607c95bf22ad30e9abef985479a51", original_line: 7, final_line: 7
+      }
+    },
+    { # 15
+      message: "Use `expand_path('../config/environment', __dir__)` instead of `expand_path('../../config/environment', __FILE__)`.",
+      links: %w[
+        https://docs.rubocop.org/rubocop/cops_style.html#styleexpandpatharguments
+      ],
+      id: "Style/ExpandPathArguments",
+      path: "test/test_helper.rb",
+      location: { start_line: 2, start_column: 14, end_line: 2, end_column: 24 },
+      object: { severity: "convention", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "c479c6b3607511740986bd7970a22aae25ca4f8e", original_line: 2, final_line: 2
+      }
+    },
+    { # 16
+      message: "Use `$stdout` instead of `STDOUT`.",
+      links: %w[
+        https://rubystyle.guide#global-stdout
+        https://docs.rubocop.org/rubocop/cops_style.html#styleglobalstdstream
+      ],
+      id: "Style/GlobalStdStream",
+      path: "config/environments/production.rb",
+      location: { start_line: 79, start_column: 50, end_line: 79, end_column: 55 },
+      object: { severity: "convention", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "50ef936ee42ecbff46adfe6375d1c2cf6394e0e8", original_line: 79, final_line: 79
+      }
+    },
+    { # 17
+      message: "Do not introduce global variables.",
+      links: %w[
+        https://rubystyle.guide#instance-vars
+        https://www.zenspider.com/ruby/quickref.html
+        https://docs.rubocop.org/rubocop/cops_style.html#styleglobalvars
+      ],
+      id: "Style/GlobalVars",
+      path: "app/controllers/users_controller.rb",
+      location: { start_line: 33, start_column: 5, end_line: 33, end_column: 12 },
+      object: { severity: "convention", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "b73bba64a012e49a4a08d7340f5e847184cc8b1a", original_line: 33, final_line: 33
+      }
+    },
+    { # 18
+      message: "`include` is used at the top level. Use inside `class` or `module`.",
+      links: %w[
+        https://docs.rubocop.org/rubocop/cops_style.html#stylemixinusage
+      ],
+      id: "Style/MixinUsage",
+      path: "bin/setup",
+      location: { start_line: 4, start_column: 1, end_line: 4, end_column: 17 },
+      object: { severity: "convention", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "226dfe7e35c7196ce90f9497622186c82bd9528c", original_line: 4, final_line: 4
+      }
+    },
+    { # 19
+      message: "`include` is used at the top level. Use inside `class` or `module`.",
+      links: %w[
+        https://docs.rubocop.org/rubocop/cops_style.html#stylemixinusage
+      ],
+      id: "Style/MixinUsage",
+      path: "bin/update",
+      location: { start_line: 4, start_column: 1, end_line: 4, end_column: 17 },
+      object: { severity: "convention", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "226dfe7e35c7196ce90f9497622186c82bd9528c", original_line: 4, final_line: 4
+      }
+    },
+    { # 20
+      message: "Use underscores(_) as thousands separator and separate every 3 digits with them.",
+      links: %w[
+        https://rubystyle.guide#underscores-in-numerics
+        https://docs.rubocop.org/rubocop/cops_style.html#stylenumericliterals
+      ],
+      id: "Style/NumericLiterals",
+      path: "db/schema.rb",
+      location: { start_line: 13, start_column: 38, end_line: 13, end_column: 51 },
+      object: { severity: "convention", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "0de7edd11a9ee05f32094a96f1241c60c094cd91", original_line: 13, final_line: 13
+      }
+    },
+    { # 21
+      message: "Use `fetch(\"RAILS_MAX_THREADS\", 5)` instead of `fetch(\"RAILS_MAX_THREADS\") { 5 }`.",
+      links: %w[
+        https://github.com/JuanitoFatas/fast-ruby#hashfetch-with-argument-vs-hashfetch--block-code
+        https://docs.rubocop.org/rubocop/cops_style.html#styleredundantfetchblock
+      ],
+      id: "Style/RedundantFetchBlock",
+      path: "config/puma.rb",
+      location: { start_line: 7, start_column: 21, end_line: 7, end_column: 52 },
+      object: { severity: "convention", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "87a9e59b8f03dcdb86ec1b5f1e293d7f72e9a37b", original_line: 7, final_line: 7
+      }
+    },
+    { # 22
+      message: "Use `fetch(\"PORT\", 3000)` instead of `fetch(\"PORT\") { 3000 }`.",
+      links: %w[
+        https://github.com/JuanitoFatas/fast-ruby#hashfetch-with-argument-vs-hashfetch--block-code
+        https://docs.rubocop.org/rubocop/cops_style.html#styleredundantfetchblock
+      ],
+      id: "Style/RedundantFetchBlock",
+      path: "config/puma.rb",
+      location: { start_line: 12, start_column: 17, end_line: 12, end_column: 38 },
+      object: { severity: "convention", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "d531369faeacba9b1fa4c7db6543cfdd3882393d", original_line: 12, final_line: 12
       }
     }
   ],
@@ -202,6 +442,17 @@ s.add_test(
       git_blame_info: {
         commit: :_, line_hash: "c531a809c818b12596f956691930f7ec152d0a32", original_line: 2, final_line: 2
       }
+    },
+    {
+      message: "Reverse the order of the operands `10 < x`.",
+      links: %w[https://en.wikipedia.org/wiki/Yoda_conditions https://docs.rubocop.org/rubocop/cops_style.html#styleyodacondition],
+      id: "Style/YodaCondition",
+      path: "test.rb",
+      location: { start_line: 2, start_column: 4, end_line: 2, end_column: 9 },
+      object: { severity: "convention", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "c531a809c818b12596f956691930f7ec152d0a32", original_line: 2, final_line: 2
+      }
     }
   ],
   analyzer: { name: "RuboCop", version: default_version }
@@ -260,27 +511,16 @@ s.add_test(
 s.add_test(
   "v0.71_rails",
   type: "success",
-  issues: [
-    {
-      message: "Line is too long. [218/200]",
-      links: %w[
-        https://github.com/rubocop-hq/ruby-style-guide#80-character-limits
-        https://docs.rubocop.org/rubocop/cops_metrics.html#metricslinelength
-      ],
-      id: "Metrics/LineLength",
-      path: "cat.rb",
-      location: { start_line: 3, start_column: 201, end_line: 3, end_column: 218 },
-      object: { severity: "convention", corrected: false },
-      git_blame_info: {
-        commit: :_, line_hash: "511481791f8837a45b800975920a1b91e36a9824", original_line: 3, final_line: 3
-      }
-    }
-  ],
   analyzer: { name: "RuboCop", version: "0.71.0" },
+  issues: [],
   warnings: [
     {
       message: "`-R/--rails` option and Rails cops will be removed from RuboCop 0.72. Use the `rubocop-rails` gem instead.",
       file: nil
+    },
+    {
+      message: ".rubocop.yml: Layout/LineLength has the wrong namespace - should be Metrics",
+      file: ".rubocop.yml"
     }
   ]
 )
@@ -288,20 +528,11 @@ s.add_test(
 s.add_test(
   "v0.72_rails",
   type: "success",
-  issues: [
+  issues: [],
+  warnings: [
     {
-      message: "Line is too long. [218/200]",
-      links: %w[
-        https://rubystyle.guide#80-character-limits
-        https://docs.rubocop.org/rubocop/cops_metrics.html#metricslinelength
-      ],
-      id: "Metrics/LineLength",
-      path: "cat.rb",
-      location: { start_line: 3, start_column: 201, end_line: 3, end_column: 218 },
-      object: { severity: "convention", corrected: false },
-      git_blame_info: {
-        commit: :_, line_hash: "511481791f8837a45b800975920a1b91e36a9824", original_line: 3, final_line: 3
-      }
+      message: ".rubocop.yml: Layout/LineLength has the wrong namespace - should be Metrics",
+      file: ".rubocop.yml"
     }
   ],
   analyzer: { name: "RuboCop", version: "0.72.0" }
@@ -310,23 +541,8 @@ s.add_test(
 s.add_test(
   "v0.72_rails_option",
   type: "success",
-  issues: [
-    {
-      message: "Line is too long. [218/200]",
-      links: %w[
-        https://rubystyle.guide#80-character-limits
-        https://docs.rubocop.org/rubocop/cops_metrics.html#metricslinelength
-      ],
-      id: "Metrics/LineLength",
-      path: "cat.rb",
-      location: { start_line: 3, start_column: 201, end_line: 3, end_column: 218 },
-      object: { severity: "convention", corrected: false },
-      git_blame_info: {
-        commit: :_, line_hash: "511481791f8837a45b800975920a1b91e36a9824", original_line: 3, final_line: 3
-      }
-    }
-  ],
   analyzer: { name: "RuboCop", version: "0.72.0" },
+  issues: [],
   warnings: [
     {
       message: <<~WARNING.strip,
@@ -334,6 +550,10 @@ s.add_test(
         Because the `--rails` option was removed from RuboCop 0.72. Use the `rubocop-rails` gem instead.
       WARNING
       file: "sideci.yml"
+    },
+    {
+      message: ".rubocop.yml: Layout/LineLength has the wrong namespace - should be Metrics",
+      file: ".rubocop.yml"
     }
   ]
 )
