@@ -511,7 +511,6 @@ s.add_test(
 s.add_test(
   "v0.71_rails",
   type: "success",
-  analyzer: { name: "RuboCop", version: "0.71.0" },
   issues: [
     {
       message: "Replace unsafe number conversion with number class parsing, instead of using '10'.to_i, use stricter Integer('10', 10).",
@@ -525,6 +524,7 @@ s.add_test(
       }
     }
   ],
+  analyzer: { name: "RuboCop", version: "0.71.0" },
   warnings: [
     {
       message: "`-R/--rails` option and Rails cops will be removed from RuboCop 0.72. Use the `rubocop-rails` gem instead.",
@@ -565,7 +565,6 @@ s.add_test(
 s.add_test(
   "v0.72_rails_option",
   type: "success",
-  analyzer: { name: "RuboCop", version: "0.72.0" },
   issues: [
     {
       message: "Replace unsafe number conversion with number class parsing, instead of using '10'.to_i, use stricter Integer('10', 10).",
@@ -579,6 +578,7 @@ s.add_test(
       }
     }
   ],
+  analyzer: { name: "RuboCop", version: "0.72.0" },
   warnings: [
     {
       message: <<~WARNING.strip,
