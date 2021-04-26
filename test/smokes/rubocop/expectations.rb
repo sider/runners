@@ -512,7 +512,19 @@ s.add_test(
   "v0.71_rails",
   type: "success",
   analyzer: { name: "RuboCop", version: "0.71.0" },
-  issues: [],
+  issues: [
+    {
+      message: "Replace unsafe number conversion with number class parsing, instead of using '10'.to_i, use stricter Integer('10', 10).",
+      links: %w[https://docs.rubocop.org/rubocop/cops_lint.html#lintnumberconversion],
+      id: "Lint/NumberConversion",
+      path: "cat.rb",
+      location: { start_line: 4, start_column: 5, end_line: 4, end_column: 13 },
+      object: { severity: "warning", corrected: false },
+      git_blame_info: {
+        commit: :_, line_hash: "6f44d0bfb9b33bc338e189a4f2100afc76f476c3", original_line: 4, final_line: 4
+      }
+    }
+  ],
   warnings: [
     {
       message: "`-R/--rails` option and Rails cops will be removed from RuboCop 0.72. Use the `rubocop-rails` gem instead.",
