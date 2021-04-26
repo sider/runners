@@ -21,6 +21,8 @@ Misc:
 - **Metrics Complexity** Add workarounds for lizard's bug [#2249](https://github.com/sider/runners/pull/2249)
 - Show the tool's default version on setup [#2313](https://github.com/sider/runners/pull/2313)
 
+- **RuboCop** Enable new recommended configuration [#2323](https://github.com/sider/runners/pull/2323)
+
 ## 0.47.0
 
 [Full diff](https://github.com/sider/runners/compare/0.46.1...0.47.0)
