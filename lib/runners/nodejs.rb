@@ -26,7 +26,7 @@ module Runners
     end
 
     def analyzer_version
-      @analyzer_version ||= nodejs_use_local_version? ? nodejs_analyzer_local_version : default_analyzer_version
+      @analyzer_version ||= default_analyzer_version
     end
 
     # Return the actual file path of `package.json`.
@@ -92,7 +92,8 @@ module Runners
         self.nodejs_force_default_version = true
         trace_writer.message "All constraints are not satisfied. The default version `#{default_analyzer_version}` will be used instead."
       when nodejs_analyzer_locally_installed?
-        trace_writer.message "`#{analyzer_bin}@#{nodejs_analyzer_local_version}` was successfully installed."
+        @analyzer_version = extract_version!(nodejs_analyzer_local_command)
+        trace_writer.message "`#{analyzer_bin}@#{analyzer_version}` was successfully installed."
       else
         trace_writer.message "`#{analyzer_bin}` was not installed. The default version `#{default_analyzer_version}` will be used instead."
       end
@@ -112,10 +113,6 @@ module Runners
 
     def nodejs_analyzer_locally_installed?
       (current_dir / nodejs_analyzer_local_command).exist?
-    end
-
-    def nodejs_analyzer_local_version
-      @nodejs_analyzer_local_version ||= extract_version!(nodejs_analyzer_local_command)
     end
 
     # @see https://docs.npmjs.com/cli/v7/commands/npm-install
