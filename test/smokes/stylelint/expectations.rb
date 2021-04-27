@@ -443,8 +443,8 @@ s.add_test(
   issues: [
     {
       message: "Unknown rule declaration-block-no-ignored-properties.",
-      links: %w[
-        https://github.com/stylelint/stylelint/tree/13.12.0/lib/rules/declaration-block-no-ignored-properties
+      links: %W[
+        https://github.com/stylelint/stylelint/tree/#{default_version}/lib/rules/declaration-block-no-ignored-properties
       ],
       id: "declaration-block-no-ignored-properties",
       path: "test.css",
