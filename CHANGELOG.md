@@ -14,6 +14,7 @@ Updated environments:
 
 Updated tools:
 
+- **Checkstyle** 8.41.1 -> 8.42 [#2329](https://github.com/sider/runners/pull/2329)
 - **Flake8** 3.9.0 -> 3.9.1 [#2299](https://github.com/sider/runners/pull/2299)
 - **Pylint** 2.7.4 -> 2.8.1 [#2327](https://github.com/sider/runners/pull/2327)
 - **stylelint** 13.12.0 -> 13.13.0 [#2330](https://github.com/sider/runners/pull/2330)
