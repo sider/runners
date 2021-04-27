@@ -5,10 +5,7 @@
 FROM sider/devon_rex_php:master
 
 
-# Install PHP packages via Composer
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/phinder/composer.json images/phinder/composer.lock ${COMPOSER_HOME}/
-RUN composer global install
-
+ENV RUNNERS_DEPS_DIR ${RUNNER_USER_HOME}/dependencies
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
@@ -24,6 +21,10 @@ RUN cd "${RUNNERS_DIR}" && \
     echo 'Checking if the Bundler version is expected...' && \
     lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler.locked_gems.bundler_version') && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
+
+# Install PHP packages via Composer
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/phinder/composer.* ${COMPOSER_HOME}/
+RUN composer global install
 
 # Copy the main source code
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} exe ${RUNNERS_DIR}/exe

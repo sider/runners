@@ -12,12 +12,12 @@ module TestHelper
     Pathname(__dir__).join("data", file)
   end
 
-  def with_stubbed_env(name, value)
-    backup = ENV[name]
-    ENV[name] = value
+  def with_stubbed_env(new_env)
+    backup = ENV.slice(*new_env.keys)
+    ENV.update(new_env)
     yield
   ensure
-    ENV[name] = backup
+    ENV.update(backup)
   end
 
   def new_source(**source)

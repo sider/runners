@@ -19,6 +19,11 @@ module Runners
       "@coffeelint/cli" => Gem::Requirement.new(">= 4.0.0", "< 5.0.0").freeze,
     }.freeze
 
+    # TODO: Remove the old package after the deadline.
+    def npm_deps_satisfied_constraint?(installed_deps, constraints, _type)
+      super(installed_deps, constraints, :any)
+    end
+
     def self.config_example
       <<~'YAML'
         root_dir: project/

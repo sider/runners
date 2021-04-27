@@ -8,30 +8,8 @@ FROM sider/devon_rex_python:master
 #
 # See https://github.com/danmar/cppcheck#gnu-make
 
-ARG CPPCHECK_VERSION=2.4.1
 
-# NOTE: A segmentation fault occurs with the latest version of libz3.
-ARG LIBZ3_VERSION=4.4.1-1~deb10u1
-
-USER root
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends "libz3-dev=${LIBZ3_VERSION}" && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    cd /tmp && \
-    curl -sSL --compressed "https://github.com/danmar/cppcheck/archive/${CPPCHECK_VERSION}.tar.gz" | tar -xz && \
-    cd "cppcheck-${CPPCHECK_VERSION}" && \
-    # NOTE: We cannot use the latest version due to a potential segmentation fault.
-    cp -v externals/z3_version_old.h externals/z3_version.h && \
-    make install -s \
-      MATCHCOMPILER=yes \
-      FILESDIR=/usr/share/cppcheck \
-      HAVE_RULES=yes \
-      USE_Z3=yes \
-      CPPFLAGS="-DUSE_Z3 -Wno-deprecated-declarations -Wno-unused-function" && \
-    rm -rf "cppcheck-${CPPCHECK_VERSION}"
-
-
+ENV RUNNERS_DEPS_DIR ${RUNNER_USER_HOME}/dependencies
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
@@ -47,6 +25,29 @@ RUN cd "${RUNNERS_DIR}" && \
     echo 'Checking if the Bundler version is expected...' && \
     lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler.locked_gems.bundler_version') && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
+
+ARG CPPCHECK_VERSION=2.4.1
+
+# NOTE: A segmentation fault occurs with the latest version of libz3.
+ARG LIBZ3_VERSION=4.4.1-1~deb10u1
+
+USER root
+RUN apt-get update && \
+    apt-get install -qq -y --no-install-recommends "libz3-dev=${LIBZ3_VERSION}" && \
+    rm -rf /var/lib/apt/lists/* && \
+    cd /tmp && \
+    curl -sSL --compressed "https://github.com/danmar/cppcheck/archive/${CPPCHECK_VERSION}.tar.gz" | tar -xz && \
+    cd "cppcheck-${CPPCHECK_VERSION}" && \
+    # NOTE: We cannot use the latest version due to a potential segmentation fault.
+    cp -v externals/z3_version_old.h externals/z3_version.h && \
+    make install -s \
+      MATCHCOMPILER=yes \
+      FILESDIR=/usr/share/cppcheck \
+      HAVE_RULES=yes \
+      USE_Z3=yes \
+      CPPFLAGS="-DUSE_Z3 -Wno-deprecated-declarations -Wno-unused-function" && \
+    rm -rf "cppcheck-${CPPCHECK_VERSION}"
+
 
 # Copy the main source code
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} exe ${RUNNERS_DIR}/exe

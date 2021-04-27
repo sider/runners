@@ -5,6 +5,7 @@
 FROM sider/devon_rex_npm:master
 
 
+ENV RUNNERS_DEPS_DIR ${RUNNER_USER_HOME}/dependencies
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
@@ -22,18 +23,17 @@ RUN cd "${RUNNERS_DIR}" && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
 # Install the default version
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/eslint/package.json ${RUNNER_USER_HOME}/eslint_package.json
-RUN cd "${RUNNER_USER_HOME}" && \
-    mkdir eslint && \
-    mv eslint_package.json eslint/package.json && \
-    cd eslint && \
-    npm install --strict-peer-deps --ignore-scripts --engine-strict --no-progress --no-save
-ENV PATH ${RUNNER_USER_HOME}/eslint/node_modules/.bin:${PATH}
-# See https://nodejs.org/api/cli.html#cli_node_path_path
-ENV NODE_PATH ${RUNNER_USER_HOME}/eslint/node_modules:${NODE_PATH}
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/eslint/package.json ${RUNNERS_DEPS_DIR}/
+RUN cd "${RUNNERS_DEPS_DIR}" && \
+    npm install --strict-peer-deps --ignore-scripts --engine-strict --no-progress --no-save && \
+    rm package*.json
+ENV PATH ${RUNNERS_DEPS_DIR}/node_modules/.bin:${PATH}
+ENV NODE_PATH ${RUNNERS_DEPS_DIR}/node_modules:${NODE_PATH}
 
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/eslint/sider_eslintrc.yml ${RUNNER_USER_HOME}/eslint/
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/eslint/custom-eslint-json-formatter.js ${RUNNER_USER_HOME}/eslint/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} \
+     images/eslint/sider_eslintrc.yml \
+     images/eslint/custom-eslint-json-formatter.js \
+     ${RUNNER_USER_HOME}/
 
 
 # Copy the main source code

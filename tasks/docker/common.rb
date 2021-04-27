@@ -21,12 +21,4 @@ module DockerTaskCommon
   def tag
     ENV.fetch('TAG') { 'dev' }
   end
-
-  def docker_user
-    ENV.fetch('DOCKER_USER')
-  end
-
-  def docker_password
-    ENV.fetch('DOCKER_PASSWORD')
-  end
 end

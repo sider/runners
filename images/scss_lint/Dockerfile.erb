@@ -1,8 +1,5 @@
-FROM sider/devon_rex_ruby:master
-
-<%= render_erb 'images/Dockerfile.base.erb' %>
 <%= render_erb 'images/Dockerfile.ruby.erb' %>
 
-COPY --chown=<%= chown %> images/scss_lint/scss-lint.default.yml ${RUNNER_USER_HOME}/.scss-lint.yml
+COPY --chown=<%= chown %> images/<%= analyzer %>/scss-lint.default.yml ${RUNNER_USER_HOME}/.scss-lint.yml
 
 <%= render_erb 'images/Dockerfile.end.erb' %>

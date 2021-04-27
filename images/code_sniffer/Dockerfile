@@ -5,19 +5,7 @@
 FROM sider/devon_rex_php:master
 
 
-# Install PHP packages via Composer
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/code_sniffer/composer.json images/code_sniffer/composer.lock ${COMPOSER_HOME}/
-RUN composer global install
-
-# Set install paths
-RUN basepath="${COMPOSER_HOME}/vendor" && \
-    phpcs --config-set installed_paths \
-      "${basepath}/cakephp/cakephp-codesniffer,${basepath}/escapestudios/symfony2-coding-standard,${basepath}/wp-coding-standards/wpcs" && \
-    phpcs -i
-
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/code_sniffer/sider_recommended_code_sniffer.xml ${RUNNER_USER_HOME}/
-
-
+ENV RUNNERS_DEPS_DIR ${RUNNER_USER_HOME}/dependencies
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
@@ -33,6 +21,19 @@ RUN cd "${RUNNERS_DIR}" && \
     echo 'Checking if the Bundler version is expected...' && \
     lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler.locked_gems.bundler_version') && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
+
+# Install PHP packages via Composer
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/code_sniffer/composer.* ${COMPOSER_HOME}/
+RUN composer global install
+
+# Set install paths
+RUN basepath="${COMPOSER_HOME}/vendor" && \
+    phpcs --config-set installed_paths \
+      "${basepath}/cakephp/cakephp-codesniffer,${basepath}/escapestudios/symfony2-coding-standard,${basepath}/wp-coding-standards/wpcs" && \
+    phpcs -i
+
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/code_sniffer/sider_recommended_code_sniffer.xml ${RUNNER_USER_HOME}/
+
 
 # Copy the main source code
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} exe ${RUNNERS_DIR}/exe

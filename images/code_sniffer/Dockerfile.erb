@@ -1,5 +1,3 @@
-FROM sider/devon_rex_php:master
-
 <%= render_erb 'images/Dockerfile.php.erb' %>
 
 # Set install paths
@@ -8,7 +6,6 @@ RUN basepath="${COMPOSER_HOME}/vendor" && \
       "${basepath}/cakephp/cakephp-codesniffer,${basepath}/escapestudios/symfony2-coding-standard,${basepath}/wp-coding-standards/wpcs" && \
     phpcs -i
 
-COPY --chown=<%= chown %> images/code_sniffer/sider_recommended_code_sniffer.xml ${RUNNER_USER_HOME}/
+COPY --chown=<%= chown %> images/<%= analyzer %>/sider_recommended_code_sniffer.xml ${RUNNER_USER_HOME}/
 
-<%= render_erb 'images/Dockerfile.base.erb' %>
 <%= render_erb 'images/Dockerfile.end.erb' %>

@@ -1,9 +1,0 @@
-module Gem
-  class Requirement
-    def self.create: (*(String | Gem::Version | Gem::Requirement | nil)) -> instance
-    def initialize: (*String) -> instance
-    def satisfied_by?: (Gem::Version) -> bool
-    def none?: () -> bool
-    def concat: (Array[String]) -> void
-  end
-end

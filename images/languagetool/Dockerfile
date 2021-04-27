@@ -4,22 +4,8 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM sider/devon_rex_java:master
 
-ARG LANGUAGETOOL_VERSION=5.3
 
-RUN cd "${RUNNER_USER_HOME}" && \
-    curl -sSLO --compressed https://languagetool.org/download/LanguageTool-${LANGUAGETOOL_VERSION}.zip && \
-    unzip -q LanguageTool-${LANGUAGETOOL_VERSION}.zip && \
-    rm LanguageTool-${LANGUAGETOOL_VERSION}.zip && \
-    mv LanguageTool-${LANGUAGETOOL_VERSION} LanguageTool
-
-ARG LANGUAGETOOL_HOME=${RUNNER_USER_HOME}/LanguageTool
-
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/languagetool/languagetool ${LANGUAGETOOL_HOME}/
-
-ENV CLASSPATH ${LANGUAGETOOL_HOME}/*:${CLASSPATH}
-ENV PATH ${LANGUAGETOOL_HOME}:${PATH}
-
-
+ENV RUNNERS_DEPS_DIR ${RUNNER_USER_HOME}/dependencies
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
@@ -35,6 +21,22 @@ RUN cd "${RUNNERS_DIR}" && \
     echo 'Checking if the Bundler version is expected...' && \
     lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler.locked_gems.bundler_version') && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
+
+ARG LANGUAGETOOL_VERSION=5.3
+
+RUN cd "${RUNNER_USER_HOME}" && \
+    curl -sSLO --compressed https://languagetool.org/download/LanguageTool-${LANGUAGETOOL_VERSION}.zip && \
+    unzip -q LanguageTool-${LANGUAGETOOL_VERSION}.zip && \
+    rm LanguageTool-${LANGUAGETOOL_VERSION}.zip && \
+    mv LanguageTool-${LANGUAGETOOL_VERSION} LanguageTool
+
+ARG LANGUAGETOOL_HOME=${RUNNER_USER_HOME}/LanguageTool
+
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/languagetool/languagetool ${LANGUAGETOOL_HOME}/
+
+ENV CLASSPATH ${LANGUAGETOOL_HOME}/*:${CLASSPATH}
+ENV PATH ${LANGUAGETOOL_HOME}:${PATH}
+
 
 # Copy the main source code
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} exe ${RUNNERS_DIR}/exe

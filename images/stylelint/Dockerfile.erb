@@ -1,6 +1,3 @@
-FROM sider/devon_rex_npm:master
-
-<%= render_erb 'images/Dockerfile.base.erb' %>
 <%= render_erb 'images/Dockerfile.npm.erb' %>
 
 # NOTE: Install the older version to run `stylelint-config-recommended` with stylelint v8.
@@ -10,9 +7,9 @@ RUN cd "${RUNNER_USER_HOME}" && \
     npm install stylelint-config-recommended@2
 
 COPY --chown=<%= chown %> \
-     images/stylelint/sider_recommended_config.old.yaml \
-     images/stylelint/sider_recommended_config.yaml \
-     images/stylelint/sider_recommended_stylelintignore \
+     images/<%= analyzer %>/sider_recommended_config.old.yaml \
+     images/<%= analyzer %>/sider_recommended_config.yaml \
+     images/<%= analyzer %>/sider_recommended_stylelintignore \
      ${RUNNER_USER_HOME}/
 
 <%= render_erb 'images/Dockerfile.end.erb' %>

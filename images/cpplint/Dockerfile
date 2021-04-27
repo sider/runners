@@ -5,6 +5,7 @@
 FROM sider/devon_rex_python:master
 
 
+ENV RUNNERS_DEPS_DIR ${RUNNER_USER_HOME}/dependencies
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
@@ -22,12 +23,10 @@ RUN cd "${RUNNERS_DIR}" && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
 # Install the default version
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/cpplint/Pipfile ${RUNNER_USER_HOME}/cpplint_Pipfile
-RUN cd "${RUNNER_USER_HOME}" && \
-    mkdir cpplint && \
-    mv cpplint_Pipfile cpplint/Pipfile && \
-    cd cpplint && \
-    pipenv install --system --skip-lock
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/cpplint/Pipfile ${RUNNERS_DEPS_DIR}/
+RUN cd "${RUNNERS_DEPS_DIR}" && \
+    pipenv install --system --skip-lock && \
+    rm Pipfile
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/cpplint/sider_recommended_CPPLINT.cfg ${RUNNER_USER_HOME}/
 

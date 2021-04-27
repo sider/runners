@@ -21,7 +21,7 @@ module Runners
       YAML
     end
 
-    def analyzer_version
+    def default_analyzer_version
       ENV.fetch('FXCOP_VERSION')
     end
 

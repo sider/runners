@@ -5,6 +5,7 @@
 FROM sider/devon_rex_ruby:master
 
 
+ENV RUNNERS_DEPS_DIR ${RUNNER_USER_HOME}/dependencies
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
@@ -22,17 +23,11 @@ RUN cd "${RUNNERS_DIR}" && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
 # Install the default version
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/reek/Gemfile ${RUNNER_USER_HOME}/reek_Gemfile
-RUN cd "${RUNNER_USER_HOME}" && \
-    mkdir reek && \
-    mv reek_Gemfile reek/Gemfile && \
-    cd reek && \
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/reek/Gemfile ${RUNNERS_DEPS_DIR}/
+RUN cd "${RUNNERS_DEPS_DIR}" && \
     bundle config set --local system 'true' && \
-    bundle install --gemfile=Gemfile && \
-    bundle config unset --local system && \
-    cd .. && \
-    rm -rf reek && \
-    gem info --local --exact --quiet reek | grep reek
+    bundle install && \
+    rm -r Gemfile Gemfile.lock .bundle/
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/reek/v5.reek.yml ${RUNNER_USER_HOME}/.reek.yml
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/reek/v4.reek.yml ${RUNNER_USER_HOME}/config.reek

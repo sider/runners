@@ -4,6 +4,7 @@ module Runners
       capture3! "php", "-version"
       capture3! "composer", "--version"
       capture3! "composer", "global", "info"
+      super
     end
   end
 end

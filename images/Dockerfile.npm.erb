@@ -1,10 +1,11 @@
+FROM sider/devon_rex_npm:master
+
+<%= render_erb 'images/Dockerfile.base.erb' %>
+
 # Install the default version
-COPY --chown=<%= chown %> images/<%= analyzer %>/package.json ${RUNNER_USER_HOME}/<%= analyzer %>_package.json
-RUN cd "${RUNNER_USER_HOME}" && \
-    mkdir <%= analyzer %> && \
-    mv <%= analyzer %>_package.json <%= analyzer %>/package.json && \
-    cd <%= analyzer %> && \
-    npm install --strict-peer-deps --ignore-scripts --engine-strict --no-progress --no-save
-ENV PATH ${RUNNER_USER_HOME}/<%= analyzer %>/node_modules/.bin:${PATH}
-# See https://nodejs.org/api/cli.html#cli_node_path_path
-ENV NODE_PATH ${RUNNER_USER_HOME}/<%= analyzer %>/node_modules:${NODE_PATH}
+COPY --chown=<%= chown %> images/<%= analyzer %>/package.json ${RUNNERS_DEPS_DIR}/
+RUN cd "${RUNNERS_DEPS_DIR}" && \
+    npm install --strict-peer-deps --ignore-scripts --engine-strict --no-progress --no-save && \
+    rm package*.json
+ENV PATH ${RUNNERS_DEPS_DIR}/node_modules/.bin:${PATH}
+ENV NODE_PATH ${RUNNERS_DEPS_DIR}/node_modules:${NODE_PATH}

@@ -5,6 +5,7 @@
 FROM sider/devon_rex_ruby:master
 
 
+ENV RUNNERS_DEPS_DIR ${RUNNER_USER_HOME}/dependencies
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
@@ -22,17 +23,11 @@ RUN cd "${RUNNERS_DIR}" && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
 # Install the default version
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/rubocop/Gemfile ${RUNNER_USER_HOME}/rubocop_Gemfile
-RUN cd "${RUNNER_USER_HOME}" && \
-    mkdir rubocop && \
-    mv rubocop_Gemfile rubocop/Gemfile && \
-    cd rubocop && \
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/rubocop/Gemfile ${RUNNERS_DEPS_DIR}/
+RUN cd "${RUNNERS_DEPS_DIR}" && \
     bundle config set --local system 'true' && \
-    bundle install --gemfile=Gemfile && \
-    bundle config unset --local system && \
-    cd .. && \
-    rm -rf rubocop && \
-    gem info --local --exact --quiet rubocop | grep rubocop
+    bundle install && \
+    rm -r Gemfile Gemfile.lock .bundle/
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/rubocop/default_rubocop.yml ${RUNNER_USER_HOME}/
 

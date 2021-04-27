@@ -102,8 +102,12 @@ module Runners
       analyzer_id.to_s
     end
 
+    def default_analyzer_version
+      @default_analyzer_version ||= extract_version! analyzer_bin
+    end
+
     def analyzer_version
-      @analyzer_version ||= extract_version! analyzer_bin
+      default_analyzer_version
     end
 
     def extract_version_option
@@ -189,7 +193,7 @@ module Runners
     end
 
     def show_runtime_versions
-      # noop by default
+      default_analyzer_version
     end
 
     def report_file

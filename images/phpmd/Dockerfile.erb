@@ -1,8 +1,5 @@
-FROM sider/devon_rex_php:master
-
 <%= render_erb 'images/Dockerfile.php.erb' %>
-<%= render_erb 'images/Dockerfile.base.erb' %>
 
-COPY --chown=<%= chown %> images/phpmd/sider_config.xml ${RUNNER_USER_HOME}/
+COPY --chown=<%= chown %> images/<%= analyzer %>/sider_config.xml ${RUNNER_USER_HOME}/
 
 <%= render_erb 'images/Dockerfile.end.erb' %>

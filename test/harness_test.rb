@@ -30,17 +30,9 @@ class HarnessTest < Minitest::Test
   end
 
   class TestProcessor < Processor
-    def analyzer_id
-      :test
-    end
-
-    def analyzer_name
-      "Test"
-    end
-
-    def analyzer_version
-      "0.1.3"
-    end
+    def analyzer_id; :test; end
+    def analyzer_name; "Test"; end
+    def default_analyzer_version; "0.1.3"; end
 
     def analyze(changes)
       Results::Success.new(guid: guid, analyzer: analyzer)
@@ -73,17 +65,9 @@ class HarnessTest < Minitest::Test
 
   def test_run_filters_issues
     processor_class = Class.new(Processor) do
-      def analyzer_id
-        :test
-      end
-
-      def analyzer_name
-        "Test"
-      end
-
-      def analyzer_version
-        "0.1.3"
-      end
+      def analyzer_id; :test; end
+      def analyzer_name; "Test"; end
+      def default_analyzer_version; "0.1.3"; end
 
       def analyze(changes)
         issues = [

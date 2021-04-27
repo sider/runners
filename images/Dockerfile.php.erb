@@ -1,3 +1,7 @@
+FROM sider/devon_rex_php:master
+
+<%= render_erb 'images/Dockerfile.base.erb' %>
+
 # Install PHP packages via Composer
-COPY --chown=<%= chown %> images/<%= analyzer %>/composer.json images/<%= analyzer %>/composer.lock ${COMPOSER_HOME}/
+COPY --chown=<%= chown %> images/<%= analyzer %>/composer.* ${COMPOSER_HOME}/
 RUN composer global install

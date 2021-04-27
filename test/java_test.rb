@@ -106,6 +106,9 @@ class JavaTest < Minitest::Test
       def fetch_deps_via_gradle!
         # noop
       end
+      def extract_version!(_)
+        "8.40.0"
+      end
     end
   end
 

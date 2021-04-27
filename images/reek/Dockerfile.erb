@@ -1,9 +1,6 @@
-FROM sider/devon_rex_ruby:master
-
-<%= render_erb 'images/Dockerfile.base.erb' %>
 <%= render_erb 'images/Dockerfile.ruby.erb' %>
 
-COPY --chown=<%= chown %> images/reek/v5.reek.yml ${RUNNER_USER_HOME}/.reek.yml
-COPY --chown=<%= chown %> images/reek/v4.reek.yml ${RUNNER_USER_HOME}/config.reek
+COPY --chown=<%= chown %> images/<%= analyzer %>/v5.reek.yml ${RUNNER_USER_HOME}/.reek.yml
+COPY --chown=<%= chown %> images/<%= analyzer %>/v4.reek.yml ${RUNNER_USER_HOME}/config.reek
 
 <%= render_erb 'images/Dockerfile.end.erb' %>

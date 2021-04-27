@@ -87,10 +87,9 @@ jobs:
         if: |
           steps.define_vars.outputs.tag == 'master' || startsWith(github.ref, 'refs/tags/')
         run: |
+          echo '${{ secrets.DOCKER_PASSWORD }}' | docker login --username '${{ secrets.DOCKER_USER }}' --password-stdin
           bundle exec rake docker:push
         env:
           ANALYZER: ${{ matrix.analyzer }}
           TAG: ${{ steps.define_vars.outputs.tag }}
           TAG_LATEST: ${{ startsWith(github.ref, 'refs/tags/') }}
-          DOCKER_USER: ${{ secrets.DOCKER_USER }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}

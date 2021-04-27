@@ -4,21 +4,8 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM sider/devon_rex_base:master
 
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/clang_tidy/packages.list ${RUNNER_USER_HOME}/
 
-ARG LLVM_VERSION=11
-
-USER root
-RUN curl -fsSL https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
-    add-apt-repository "deb http://apt.llvm.org/buster/ llvm-toolchain-buster-${LLVM_VERSION} main" && \
-    apt-get update && \
-    grep -v "^\s*#" "${RUNNER_USER_HOME}/packages.list" | xargs apt-get install -qq -y --no-install-recommends "clang-tidy-${LLVM_VERSION}" && \
-    apt-get clean && \
-    update-alternatives --install /usr/local/bin/clang-tidy clang-tidy "/usr/lib/llvm-${LLVM_VERSION}/bin/clang-tidy" 20 && \
-    clang-tidy --version | grep "LLVM version ${LLVM_VERSION}"
-USER $RUNNER_USER
-
-
+ENV RUNNERS_DEPS_DIR ${RUNNER_USER_HOME}/dependencies
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
@@ -34,6 +21,25 @@ RUN cd "${RUNNERS_DIR}" && \
     echo 'Checking if the Bundler version is expected...' && \
     lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler.locked_gems.bundler_version') && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
+
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/clang_tidy/packages.list /tmp/
+
+ARG LLVM_VERSION=11
+
+USER root
+
+# NOTE: Do not remove apt caches. If doing so, runtime apt installation would not work.
+# hadolint ignore=DL3009
+RUN curl -fsSL https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
+    add-apt-repository "deb http://apt.llvm.org/buster/ llvm-toolchain-buster-${LLVM_VERSION} main" && \
+    apt-get update && \
+    grep -v "^\s*#" /tmp/packages.list | xargs apt-get install -qq -y --no-install-recommends "clang-tidy-${LLVM_VERSION}" && \
+    rm /tmp/packages.list && \
+    update-alternatives --install /usr/local/bin/clang-tidy clang-tidy "/usr/lib/llvm-${LLVM_VERSION}/bin/clang-tidy" 20 && \
+    clang-tidy --version | grep "LLVM version ${LLVM_VERSION}"
+
+USER $RUNNER_USER
+
 
 # Copy the main source code
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} exe ${RUNNERS_DIR}/exe
