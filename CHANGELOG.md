@@ -15,6 +15,7 @@ Updated environments:
 Updated tools:
 
 - **Flake8** 3.9.0 -> 3.9.1 [#2299](https://github.com/sider/runners/pull/2299)
+- **Pylint** 2.7.4 -> 2.8.1 [#2327](https://github.com/sider/runners/pull/2327)
 
 Misc:
 
