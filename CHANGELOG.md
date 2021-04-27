@@ -12,6 +12,11 @@ Updated environments:
 - **Bundler** 2.2.15 -> 2.2.16 [#2295](https://github.com/sider/runners/pull/2295)
 - **Ruby** 2.7.2 -> 2.7.3 [#2295](https://github.com/sider/runners/pull/2295)
 
+Updated tools:
+
+- **Flake8** 3.9.0 -> 3.9.1 [#2299](https://github.com/sider/runners/pull/2299)
+- **Pylint** 2.7.4 -> 2.8.1 [#2327](https://github.com/sider/runners/pull/2327)
+
 Misc:
 
 - **ESLint** Re-provide new recommended configuration [#2157](https://github.com/sider/runners/pull/2150)
