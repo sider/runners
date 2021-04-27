@@ -12,6 +12,11 @@ module Runners
     def show_runtime_versions
       capture3! "java", "-version"
       capture3! "gradle", "--version"
+      super
+    end
+
+    def analyzer_version
+      @analyzer_version || default_analyzer_version
     end
 
     def install_jvm_deps(to: Pathname(Dir.home).join("dependencies"))
@@ -27,7 +32,21 @@ module Runners
             Successfully installed #{deps.size} #{deps.size == 1 ? 'dependency' : 'dependencies'}:
             #{deps.join("\n")}
           MSG
+
+          @analyzer_version = extract_version!(analyzer_bin)
         end
+      end
+    end
+
+    # NOTE: PMD does not provide a CLI option to show its version.
+    def pmd_version
+      stdout, _, _ = capture3(analyzer_bin, "-help", trace_stdout: false)
+      version = stdout.match(%r{pmd-bin-(?<version>[\d.]+)/bin/}) { |m| m[:version] }
+      if version
+        trace_writer.message "Version #{version}"
+        version
+      else
+        raise "No version in:\n#{stdout}"
       end
     end
 

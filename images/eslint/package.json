@@ -1,25 +1,25 @@
 {
   "dependencies": {
     "@babel/eslint-parser": "7.13.14",
-    "@typescript-eslint/eslint-plugin": "4.20.0",
+    "@typescript-eslint/eslint-plugin": "4.22.0",
     "@vue/eslint-config-typescript": "7.0.0",
     "babel-eslint": "10.1.0",
     "eslint": "7.23.0",
     "eslint-config-airbnb": "18.2.1",
-    "eslint-config-prettier": "8.1.0",
+    "eslint-config-prettier": "8.3.0",
     "eslint-config-react-app": "6.0.0",
     "eslint-plugin-cypress": "2.11.2",
-    "eslint-plugin-flowtype": "5.4.0",
+    "eslint-plugin-flowtype": "5.7.2",
     "eslint-plugin-import": "2.22.1",
-    "eslint-plugin-jest": "24.3.3",
+    "eslint-plugin-jest": "24.3.5",
     "eslint-plugin-jsx-a11y": "6.4.1",
     "eslint-plugin-mocha": "8.1.0",
     "eslint-plugin-node": "11.1.0",
-    "eslint-plugin-prettier": "3.3.1",
-    "eslint-plugin-promise": "4.3.1",
-    "eslint-plugin-react": "7.23.1",
+    "eslint-plugin-prettier": "3.4.0",
+    "eslint-plugin-promise": "5.1.0",
+    "eslint-plugin-react": "7.23.2",
     "eslint-plugin-react-hooks": "4.2.0",
-    "eslint-plugin-unicorn": "29.0.0",
-    "eslint-plugin-vue": "7.8.0"
+    "eslint-plugin-unicorn": "31.0.0",
+    "eslint-plugin-vue": "7.9.0"
   }
 }

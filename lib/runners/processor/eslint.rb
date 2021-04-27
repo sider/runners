@@ -35,8 +35,8 @@ module Runners
       "eslint" => Gem::Requirement.new(">= 5.0.0", "< 8.0.0").freeze,
     }.freeze
 
-    CUSTOM_FORMATTER = (Pathname(Dir.home) / "eslint" / "custom-eslint-json-formatter.js").to_path.freeze
-    DEFAULT_ESLINT_CONFIG = (Pathname(Dir.home) / "eslint" / "sider_eslintrc.yml").to_path.freeze
+    CUSTOM_FORMATTER = (Pathname(Dir.home) / "custom-eslint-json-formatter.js").to_path.freeze
+    DEFAULT_ESLINT_CONFIG = (Pathname(Dir.home) / "sider_eslintrc.yml").to_path.freeze
     DEFAULT_TARGET = ".".freeze
 
     def self.config_example

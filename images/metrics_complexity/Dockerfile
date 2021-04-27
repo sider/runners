@@ -2,9 +2,10 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM sider/devon_rex_python:2.42.6
+FROM sider/devon_rex_python:master
 
 
+ENV RUNNERS_DEPS_DIR ${RUNNER_USER_HOME}/dependencies
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
@@ -22,13 +23,10 @@ RUN cd "${RUNNERS_DIR}" && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
 # Install the default version
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/metrics_complexity/Pipfile ${RUNNER_USER_HOME}/metrics_complexity_Pipfile
-RUN cd "${RUNNER_USER_HOME}" && \
-    mkdir metrics_complexity && \
-    mv metrics_complexity_Pipfile metrics_complexity/Pipfile && \
-    cd metrics_complexity && \
-    pipenv install --system --skip-lock
-
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/metrics_complexity/Pipfile ${RUNNERS_DEPS_DIR}/
+RUN cd "${RUNNERS_DEPS_DIR}" && \
+    pipenv install --system --skip-lock && \
+    rm Pipfile
 
 # Copy the main source code
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} exe ${RUNNERS_DIR}/exe

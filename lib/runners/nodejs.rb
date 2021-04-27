@@ -26,7 +26,7 @@ module Runners
     end
 
     def analyzer_version
-      @analyzer_version ||= nodejs_use_local_version? ? nodejs_analyzer_local_version : nodejs_analyzer_global_version
+      @analyzer_version ||= default_analyzer_version
     end
 
     # Return the actual file path of `package.json`.
@@ -88,19 +88,21 @@ module Runners
       installed_deps = list_installed_npm_deps_with names: constraints.keys
 
       case
-      when !all_npm_deps_satisfied_constraint?(installed_deps, constraints)
+      when !npm_deps_satisfied_constraint?(installed_deps, constraints, :all)
         self.nodejs_force_default_version = true
-        trace_writer.message "All constraints are not satisfied. The default version `#{analyzer_version}` will be used instead."
+        trace_writer.message "All constraints are not satisfied. The default version `#{default_analyzer_version}` will be used instead."
       when nodejs_analyzer_locally_installed?
-        trace_writer.message "`#{nodejs_analyzer_local_command}` was successfully installed with the version `#{analyzer_version}`."
+        @analyzer_version = extract_version!(nodejs_analyzer_local_command)
+        trace_writer.message "`#{analyzer_bin}@#{analyzer_version}` was successfully installed."
       else
-        trace_writer.message "`#{nodejs_analyzer_local_command}` was not installed. The default version `#{analyzer_version}` will be used instead."
+        trace_writer.message "`#{analyzer_bin}` was not installed. The default version `#{default_analyzer_version}` will be used instead."
       end
     end
 
     def show_runtime_versions
       capture3! "node", "-v"
       capture3! "npm", "-v"
+      super
     end
 
     private
@@ -111,14 +113,6 @@ module Runners
 
     def nodejs_analyzer_locally_installed?
       (current_dir / nodejs_analyzer_local_command).exist?
-    end
-
-    def nodejs_analyzer_global_version
-      @nodejs_analyzer_global_version ||= extract_version!(analyzer_bin)
-    end
-
-    def nodejs_analyzer_local_version
-      @nodejs_analyzer_local_version ||= extract_version!(nodejs_analyzer_local_command)
     end
 
     # @see https://docs.npmjs.com/cli/v7/commands/npm-install
@@ -174,27 +168,31 @@ module Runners
       end
     end
 
-    def all_npm_deps_satisfied_constraint?(installed_deps, constraints)
-      all_satisfied = true
+    def npm_deps_satisfied_constraint?(installed_deps, constraints, type)
+      raise ArgumentError, "Unknown type: #{type.inspect}" unless [:all, :any].include?(type)
+
+      satisfied = true
 
       constraints.each do |name, constraint|
         installed = installed_deps[name]
 
         if installed
           version = installed.fetch(:version)
-          unless constraint.satisfied_by? Gem::Version.new(version)
+          if constraint.satisfied_by? Gem::Version.new(version)
+            return true if type == :any
+          else
             add_warning <<~MSG, file: PACKAGE_JSON
               Installed `#{name}@#{version}` does not satisfy our constraint `#{npm_constraint_format(constraint)}`. Please update it as possible.
             MSG
-            all_satisfied = false
+            satisfied = false
           end
         else
           trace_writer.message "`#{name}` is required but not installed (not in your `#{PACKAGE_JSON}`)."
-          all_satisfied = false
+          satisfied = false
         end
       end
 
-      all_satisfied
+      satisfied
     end
 
     def npm_constraint_format(constraint)

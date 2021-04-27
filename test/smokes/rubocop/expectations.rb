@@ -210,12 +210,7 @@ s.add_test(
 s.add_test(
   "exit2",
   type: "failure",
-  message: <<~MSG.strip,
-    warning: parser/current is loading parser/ruby27, which recognizes
-    warning: 2.7.3-compliant syntax, but you are running 2.7.2.
-    warning: please see https://github.com/whitequark/parser#compatibility-with-ruby-mri.
-    Error: Cops cannot be both enabled by default and disabled by default
-  MSG
+  message: "Error: Cops cannot be both enabled by default and disabled by default",
   analyzer: { name: "RuboCop", version: default_version }
 )
 

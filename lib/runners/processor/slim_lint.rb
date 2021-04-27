@@ -28,6 +28,11 @@ module Runners
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_recommended_slim_lint.yml").to_path.freeze
     MISSING_ID = "missing-ID".freeze
 
+    # NOTE: Sass is often used with Slim.
+    OPTIONAL_GEMS = [
+      GemInstaller::Spec.new("sassc"),
+    ].freeze
+
     def self.config_example
       <<~'YAML'
         root_dir: project/
@@ -52,7 +57,7 @@ module Runners
         default_gems << GemInstaller::Spec.new("meowcop")
       end
 
-      optionals = official_rubocop_plugins + third_party_rubocop_plugins
+      optionals = official_rubocop_plugins + third_party_rubocop_plugins + OPTIONAL_GEMS
       install_gems(default_gems, optionals: optionals, constraints: CONSTRAINTS) { yield }
     rescue InstallGemsFailure => exn
       trace_writer.error exn.message

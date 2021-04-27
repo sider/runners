@@ -6,7 +6,27 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.47.0...HEAD)
 
+Updated environments:
+
+- **devon_rex** 2.42.6 -> master [#2295](https://github.com/sider/runners/pull/2295) ([diff](https://github.com/sider/devon_rex/compare/2.42.6...0eaf3024ce8b6932e3cbc2d320437a2deb312045))
+- **Bundler** 2.2.15 -> 2.2.16 [#2295](https://github.com/sider/runners/pull/2295)
+- **Ruby** 2.7.2 -> 2.7.3 [#2295](https://github.com/sider/runners/pull/2295)
+
+Updated tools:
+
+- **Checkstyle** 8.41.1 -> 8.42 [#2329](https://github.com/sider/runners/pull/2329)
+- **Flake8** 3.9.0 -> 3.9.1 [#2299](https://github.com/sider/runners/pull/2299)
+- **Pylint** 2.7.4 -> 2.8.1 [#2327](https://github.com/sider/runners/pull/2327)
+- **stylelint** 13.12.0 -> 13.13.0 [#2330](https://github.com/sider/runners/pull/2330)
+
+Misc:
+
 - **ESLint** Re-provide new recommended configuration [#2157](https://github.com/sider/runners/pull/2150)
+- **PMD Java** Provide new recommended configuration [#2296](https://github.com/sider/runners/pull/2296)
+- **Slim-Lint** Support Sass by default [#2297](https://github.com/sider/runners/pull/2297)
+- **RuboCop** Provide new recommended configuration [#2266](https://github.com/sider/runners/pull/2266)
+- **Metrics Complexity** Add workarounds for lizard's bug [#2249](https://github.com/sider/runners/pull/2249)
+- Show the tool's default version on setup [#2313](https://github.com/sider/runners/pull/2313)
 
 ## 0.47.0
 
@@ -14,7 +34,6 @@ All notable changes to this project will be documented in this file.
 
 - Support `linter.<id>.dependencies` for Python tools [#2280](https://github.com/sider/runners/pull/2280)
 - **Flake8** Fix `Errno::ENOENT` on multiple configurations [#2281](https://github.com/sider/runners/pull/2281)
-- **Metrics Complexity** Add workarounds for lizard's bug [#2249](https://github.com/sider/runners/pull/2249)
 
 ## 0.46.1
 

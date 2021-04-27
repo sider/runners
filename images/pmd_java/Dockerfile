@@ -2,20 +2,10 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM sider/devon_rex_java:2.42.6
+FROM sider/devon_rex_java:master
 
-# Install dependencies via Gradle
-ARG DEPS_DIR=${RUNNER_USER_HOME}/dependencies
-ENV CLASSPATH ${DEPS_DIR}/*:${CLASSPATH}
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/build.gradle ${DEPS_DIR}/
-RUN cd "${DEPS_DIR}" && \
-    echo 'task deps(type: Copy) {' >> build.gradle && \
-    echo '  from configurations.runtimeClasspath' >> build.gradle && \
-    echo '  into "."' >> build.gradle && \
-    echo '}' >> build.gradle && \
-    gradle --no-build-cache --parallel --quiet deps && \
-    rm build.gradle
 
+ENV RUNNERS_DEPS_DIR ${RUNNER_USER_HOME}/dependencies
 ARG RUNNERS_DIR=${RUNNER_USER_HOME}/runners
 
 # Install required gems first (due to slow download)
@@ -32,15 +22,19 @@ RUN cd "${RUNNERS_DIR}" && \
     lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler.locked_gems.bundler_version') && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/pmd ${RUNNER_USER_HOME}/bin/
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/default-ruleset.xml ${RUNNER_USER_HOME}/
+# Install dependencies via Gradle
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/build.gradle ${RUNNERS_DEPS_DIR}/
+RUN cd "${RUNNERS_DEPS_DIR}" && \
+    echo 'task installDeps(type: Copy) {' >> build.gradle && \
+    echo '  from configurations.runtimeClasspath' >> build.gradle && \
+    echo '  into "."' >> build.gradle && \
+    echo '}' >> build.gradle && \
+    gradle --no-build-cache --parallel --quiet installDeps && \
+    rm build.gradle
+ENV CLASSPATH ${RUNNERS_DEPS_DIR}/*:${CLASSPATH}
 
-# NOTE: PMD does not have a CLI option to show its version.
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/ShowPMDVersion.java ${RUNNER_USER_HOME}/bin/
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/show_pmd_version ${RUNNER_USER_HOME}/bin/
-RUN cd "${RUNNER_USER_HOME}/bin" && \
-    javac ShowPMDVersion.java && \
-    rm ShowPMDVersion.java
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/pmd ${RUNNER_USER_BIN}/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/default-ruleset.xml ${RUNNER_USER_HOME}/
 
 
 # Copy the main source code
