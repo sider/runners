@@ -14,6 +14,7 @@ Updated environments:
 
 Updated tools:
 
+- **Brakeman** 5.0.0 -> 5.0.1 [#2344](https://github.com/sider/runners/pull/2344)
 - **Checkstyle** 8.41.1 -> 8.42 [#2329](https://github.com/sider/runners/pull/2329)
 - **Flake8** 3.9.0 -> 3.9.1 [#2299](https://github.com/sider/runners/pull/2299)
 - **hadolint** 2.1.0 -> 2.3.0 [#2324](https://github.com/sider/runners/pull/2324)
