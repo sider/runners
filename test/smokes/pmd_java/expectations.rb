@@ -8,19 +8,8 @@ s.add_test(
   analyzer: { name: "PMD Java", version: default_version },
   issues: [
     {
-      message: "Do not add empty strings",
-      links: %W[https://pmd.github.io/pmd-#{default_version}/pmd_rules_java_performance.html#addemptystring],
-      id: "AddEmptyString",
-      path: "src/Hello.java",
-      location: { start_line: 17, start_column: 16, end_line: 17, end_column: 17 },
-      object: { ruleset: "Performance", priority: "3" },
-      git_blame_info: {
-        commit: :_, line_hash: "846dcdb29796bc0ef3e1c3b6c6ccd7ccd6c352f7", original_line: 17, final_line: 17
-      }
-    },
-    {
       message: "Avoid calling finalize() explicitly",
-      links: %W[https://pmd.github.io/pmd-#{default_version}/pmd_rules_java_errorprone.html#avoidcallingfinalize],
+      links: %W[https://pmd.github.io/pmd-6.33.0/pmd_rules_java_errorprone.html#avoidcallingfinalize],
       id: "AvoidCallingFinalize",
       path: "src/Hello.java",
       location: { start_line: 16, start_column: 9, end_line: 16, end_column: 18 },
@@ -30,19 +19,8 @@ s.add_test(
       }
     },
     {
-      message: "Use block level rather than method level synchronization",
-      links: %W[https://pmd.github.io/pmd-#{default_version}/pmd_rules_java_multithreading.html#avoidsynchronizedatmethodlevel],
-      id: "AvoidSynchronizedAtMethodLevel",
-      path: "src/Hello.java",
-      location: { start_line: 20, start_column: 18, end_line: 20, end_column: 29 },
-      object: { ruleset: "Multithreading", priority: "3" },
-      git_blame_info: {
-        commit: :_, line_hash: "928fb2851e5777de1b2700b5b9950bf745e62197", original_line: 20, final_line: 20
-      }
-    },
-    {
       message: "Exceptions should not extend java.lang.Error",
-      links: %W[https://pmd.github.io/pmd-#{default_version}/pmd_rules_java_design.html#donotextendjavalangerror],
+      links: %W[https://pmd.github.io/pmd-6.33.0/pmd_rules_java_design.html#donotextendjavalangerror],
       id: "DoNotExtendJavaLangError",
       path: "src/Hello.java",
       location: { start_line: 22, start_column: 23, end_line: 22, end_column: 37 },
@@ -53,24 +31,13 @@ s.add_test(
     },
     {
       message: "Do not use hard coded encryption keys",
-      links: %W[https://pmd.github.io/pmd-#{default_version}/pmd_rules_java_security.html#hardcodedcryptokey],
+      links: %W[https://pmd.github.io/pmd-6.33.0/pmd_rules_java_security.html#hardcodedcryptokey],
       id: "HardCodedCryptoKey",
       path: "src/Hello.java",
       location: { start_line: 12, start_column: 27, end_line: 12, end_column: 42 },
       object: { ruleset: "Security", priority: "3" },
       git_blame_info: {
         commit: :_, line_hash: "a7ec9e7adccc4fce30431f11e864f382c4d16e40", original_line: 12, final_line: 12
-      }
-    },
-    {
-      message: "System.out.println is used",
-      links: %W[https://pmd.github.io/pmd-#{default_version}/pmd_rules_java_bestpractices.html#systemprintln],
-      id: "SystemPrintln",
-      path: "src/Hello.java",
-      location: { start_line: 8, start_column: 9, end_line: 8, end_column: 26 },
-      object: { ruleset: "Best Practices", priority: "2" },
-      git_blame_info: {
-        commit: :_, line_hash: "addb4c033c4233fd7e9025796b0a22ff829782f9", original_line: 8, final_line: 8
       }
     }
   ],

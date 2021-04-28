@@ -22,7 +22,7 @@ module Runners
 
     register_config_schema SCHEMA.config
 
-    DEFAULT_RULESET = (Pathname(Dir.home) / "default-ruleset.xml").to_path.freeze
+    DEFAULT_RULESET = (Pathname(Dir.home) / "sider_recommended_pmd.xml").to_path.freeze
     DEFAULT_TARGET = ".".freeze
 
     def self.config_example
