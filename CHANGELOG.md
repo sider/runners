@@ -14,10 +14,18 @@ Updated environments:
 
 Updated tools:
 
+- **Brakeman** 5.0.0 -> 5.0.1 [#2344](https://github.com/sider/runners/pull/2344)
 - **Checkstyle** 8.41.1 -> 8.42 [#2329](https://github.com/sider/runners/pull/2329)
+- **ESLint** 7.23.0 -> 7.25.0 [#2336](https://github.com/sider/runners/pull/2336)
 - **Flake8** 3.9.0 -> 3.9.1 [#2299](https://github.com/sider/runners/pull/2299)
+- **hadolint** 2.1.0 -> 2.3.0 [#2324](https://github.com/sider/runners/pull/2324)
 - **PHP_CodeSniffer** 3.5.8 -> 3.6.0 [#2290](https://github.com/sider/runners/pull/2290)
+- **PMD CPD** 6.33.0 -> 6.34.0 [#2332](https://github.com/sider/runners/pull/2332)
+- **PMD Java** 6.33.0 -> 6.34.0 [#2331](https://github.com/sider/runners/pull/2331)
 - **Pylint** 2.7.4 -> 2.8.1 [#2327](https://github.com/sider/runners/pull/2327)
+- **Reek** 6.0.3 -> 6.0.4 [#2342](https://github.com/sider/runners/pull/2342)
+- **RuboCop** 1.12.1 -> 1.13.0 [#2326](https://github.com/sider/runners/pull/2326)
+- **ShellCheck** 0.7.1 -> 0.7.2 [#2325](https://github.com/sider/runners/pull/2325)
 - **stylelint** 13.12.0 -> 13.13.0 [#2330](https://github.com/sider/runners/pull/2330)
 
 Misc:

@@ -3,3 +3,4 @@ linter:
     ignore:
       - "DL3002"
       - "DL3003"
+      - "DL3059"
