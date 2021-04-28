@@ -208,22 +208,22 @@ s.add_test(
       git_blame_info: nil
     }
   ],
-  analyzer: { name: "Metrics Complexity", version: default_version}
+  analyzer: { name: "Metrics Complexity", version: default_version }
 )
 
 s.add_test(
   "complex_file",
   type: "success",
-    issues: [
-      {
-        id: "metrics_file-complexity",
-        path: "test.js",
-        location: nil,
-        message: :_,
-        object: :_,
-        links: [],
-        git_blame_info: nil
-      }
-    ],
-    analyzer: { name: "Metrics Complexity", version: default_version}
+  issues: [
+    {
+      id: "metrics_file-complexity",
+      path: "test.js",
+      location: nil,
+      message: :_,
+      object: :_,
+      links: [],
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "Metrics Complexity", version: default_version }
 )
