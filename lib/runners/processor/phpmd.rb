@@ -139,6 +139,7 @@ module Runners
 
           if filename.empty?
             add_warning message
+            next
           end
 
           path = relative_path(filename)
