@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "2.1.0"
+default_version = "2.3.0"
 
 s.add_test(
   "config_option",
@@ -15,6 +15,17 @@ s.add_test(
       object: { severity: "error" },
       git_blame_info: {
         commit: :_, line_hash: "278b3d6f700478d9b4f4aa83d7f28c41c3327af2", original_line: 7, final_line: 7
+      }
+    },
+    {
+      id: "DL3059",
+      links: %w[https://github.com/hadolint/hadolint/wiki/DL3059],
+      path: "Dockerfile",
+      location: { start_line: 5, start_column: 1 },
+      message: "Multiple consecutive `RUN` instructions. Consider consolidation.",
+      object: { severity: "info" },
+      git_blame_info: {
+        commit: :_, line_hash: "6a9955e17a758841230343baa83265ea85f714c6", original_line: 5, final_line: 5
       }
     },
     {
@@ -65,6 +76,39 @@ s.add_test(
       location: { start_line: 8, start_column: 1 },
       message: "Do not use yum update.",
       object: { severity: "error" },
+      git_blame_info: {
+        commit: :_, line_hash: "c6292a1322790770c4eed92927df26b55be75c67", original_line: 8, final_line: 8
+      }
+    },
+    {
+      id: "DL3059",
+      links: %w[https://github.com/hadolint/hadolint/wiki/DL3059],
+      path: "src/Dockerfile",
+      location: { start_line: 5, start_column: 1 },
+      message: "Multiple consecutive `RUN` instructions. Consider consolidation.",
+      object: { severity: "info" },
+      git_blame_info: {
+        commit: :_, line_hash: "6a9955e17a758841230343baa83265ea85f714c6", original_line: 5, final_line: 5
+      }
+    },
+    {
+      id: "DL3059",
+      links: %w[https://github.com/hadolint/hadolint/wiki/DL3059],
+      path: "src/Dockerfile",
+      location: { start_line: 6, start_column: 1 },
+      message: "Multiple consecutive `RUN` instructions. Consider consolidation.",
+      object: { severity: "info" },
+      git_blame_info: {
+        commit: :_, line_hash: "70c4be007ce1997b606c977d7c7848b2cde751d5", original_line: 6, final_line: 6
+      }
+    },
+    {
+      id: "DL3059",
+      links: %w[https://github.com/hadolint/hadolint/wiki/DL3059],
+      path: "src/Dockerfile",
+      location: { start_line: 8, start_column: 1 },
+      message: "Multiple consecutive `RUN` instructions. Consider consolidation.",
+      object: { severity: "info" },
       git_blame_info: {
         commit: :_, line_hash: "c6292a1322790770c4eed92927df26b55be75c67", original_line: 8, final_line: 8
       }
