@@ -178,9 +178,10 @@ s.add_test(
 
 s.add_test(
   "invalid_output_xml",
-  type: "failure",
-  message: %r{Illegal character "\\u0010" in raw string "Unexpected token: \\u0010, line: 3, col: 7, file: .+/test\.php\.},
-  analyzer: { name: "PHPMD", version: default_version }
+  type: "success",
+  issues: [],
+  analyzer: { name: "PHPMD", version: default_version },
+  warnings: [{ message: %r{Unexpected token: \u0010, line: 3, col: 7, file: /home/analyzer_runner/project/test.php}, file: nil }]
 )
 
 s.add_test(
