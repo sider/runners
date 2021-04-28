@@ -51,28 +51,6 @@ s.add_test(
       }
     },
     {
-      id: "SC2039",
-      path: "foo.sh/bar.sh",
-      location: { start_line: 3, start_column: 1, end_line: 3, end_column: 17 },
-      message: "In POSIX sh, [[ ]] is undefined.",
-      links: %w[https://github.com/koalaman/shellcheck/wiki/SC2039],
-      object: { code: 2_039, severity: "warning", fix: nil },
-      git_blame_info: {
-        commit: :_, line_hash: "b36d60537db197eefd58519460f7f928406e4355", original_line: 3, final_line: 3
-      }
-    },
-    {
-      id: "SC2039",
-      path: "test.sh",
-      location: { start_line: 3, start_column: 1, end_line: 3, end_column: 17 },
-      message: "In POSIX sh, [[ ]] is undefined.",
-      links: %w[https://github.com/koalaman/shellcheck/wiki/SC2039],
-      object: { code: 2_039, severity: "warning", fix: nil },
-      git_blame_info: {
-        commit: :_, line_hash: "b36d60537db197eefd58519460f7f928406e4355", original_line: 3, final_line: 3
-      }
-    },
-    {
       id: "SC2060",
       path: "test.dash",
       location: { start_line: 3, start_column: 8, end_line: 3, end_column: 17 },
@@ -128,6 +106,28 @@ s.add_test(
       object: { code: 2_162, severity: "info", fix: nil },
       git_blame_info: {
         commit: :_, line_hash: "36705e76c7c5c929aac77ce04526c31b338a6a46", original_line: 4, final_line: 4
+      }
+    },
+    {
+      id: "SC3010",
+      path: "foo.sh/bar.sh",
+      location: { start_line: 3, start_column: 1, end_line: 3, end_column: 17 },
+      message: "In POSIX sh, [[ ]] is undefined.",
+      links: %w[https://github.com/koalaman/shellcheck/wiki/SC3010],
+      object: { code: 3010, severity: "warning", fix: nil },
+      git_blame_info: {
+        commit: :_, line_hash: "b36d60537db197eefd58519460f7f928406e4355", original_line: 3, final_line: 3
+      }
+    },
+    {
+      id: "SC3010",
+      path: "test.sh",
+      location: { start_line: 3, start_column: 1, end_line: 3, end_column: 17 },
+      message: "In POSIX sh, [[ ]] is undefined.",
+      links: %w[https://github.com/koalaman/shellcheck/wiki/SC3010],
+      object: { code: 3010, severity: "warning", fix: nil },
+      git_blame_info: {
+        commit: :_, line_hash: "b36d60537db197eefd58519460f7f928406e4355", original_line: 3, final_line: 3
       }
     }
   ],
@@ -340,23 +340,23 @@ s.add_test(
   type: "success",
   issues: [
     {
-      id: "SC2039",
+      id: "SC3010",
       path: "test.bash",
       location: { start_line: 3, start_column: 1, end_line: 3, end_column: 12 },
       message: "In POSIX sh, [[ ]] is undefined.",
-      links: %w[https://github.com/koalaman/shellcheck/wiki/SC2039],
-      object: { code: 2_039, severity: "warning", fix: nil },
+      links: %w[https://github.com/koalaman/shellcheck/wiki/SC3010],
+      object: { code: 3010, severity: "warning", fix: nil },
       git_blame_info: {
         commit: :_, line_hash: "44d113a34cde5ecd8df6d9aaba8e37bb91eee2c2", original_line: 3, final_line: 3
       }
     },
     {
-      id: "SC2039",
+      id: "SC3010",
       path: "test.sh",
       location: { start_line: 1, start_column: 1, end_line: 1, end_column: 12 },
       message: "In POSIX sh, [[ ]] is undefined.",
-      links: %w[https://github.com/koalaman/shellcheck/wiki/SC2039],
-      object: { code: 2_039, severity: "warning", fix: nil },
+      links: %w[https://github.com/koalaman/shellcheck/wiki/SC3010],
+      object: { code: 3010, severity: "warning", fix: nil },
       git_blame_info: {
         commit: :_, line_hash: "44d113a34cde5ecd8df6d9aaba8e37bb91eee2c2", original_line: 1, final_line: 1
       }
