@@ -11,7 +11,7 @@ PATH
     runners (0.47.0)
       aws-sdk-s3 (>= 1.87)
       bugsnag (>= 6.18)
-      bundler (>= 2.2.16, < 2.3.0)
+      bundler (>= 2.2.17, < 2.3.0)
       erb (>= 2.2)
       fileutils (>= 1.5)
       forwardable (>= 1.3)
@@ -139,4 +139,4 @@ DEPENDENCIES
   unification_assertion
 
 BUNDLED WITH
-   2.2.16
+   2.2.17
