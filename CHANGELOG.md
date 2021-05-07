@@ -37,6 +37,7 @@ Misc:
 - **RuboCop** Provide new recommended configuration [#2266](https://github.com/sider/runners/pull/2266)
 - **Metrics Complexity** Add workarounds for lizard's bug [#2249](https://github.com/sider/runners/pull/2249)
 - Show the tool's default version on setup [#2313](https://github.com/sider/runners/pull/2313)
+- **PMD CPD** Suppress STDOUT logging [#2356](https://github.com/sider/runners/pull/2356)
 
 ## 0.47.0
 
