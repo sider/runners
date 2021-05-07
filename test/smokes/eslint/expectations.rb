@@ -359,7 +359,7 @@ s.add_test(
   issues: [
     {
       message: <<~MESSAGE.strip,
-        Parsing error: Missing semicolon
+        Parsing error: Missing semicolon.
 
           1 | function bar() {
         > 2 |   var x = foo:
@@ -369,7 +369,7 @@ s.add_test(
           5 |   }
       MESSAGE
       links: [],
-      id: "a146e219901ecca16bd2c00873406719d6b503d5",
+      id: "39c2f172685fdca9a95e89c8abf2305e91b4ec28",
       path: "index.js",
       location: { start_line: 2, start_column: 14 },
       object: { severity: "error", category: nil, recommended: nil },
