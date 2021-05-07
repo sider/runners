@@ -100,7 +100,7 @@ module Runners
       issues = []
 
       languages.each do |language|
-        stdout, stderr = capture3!(analyzer_bin, *cli_options(language))
+        stdout, stderr = capture3!(analyzer_bin, *cli_options(language), trace_stdout: false)
         raise_warnings(stderr)
         construct_result(stdout) { |issue| issues << issue }
       end
