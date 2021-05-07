@@ -34,6 +34,7 @@ Misc:
 - **ESLint** Re-provide new recommended configuration [#2157](https://github.com/sider/runners/pull/2150)
 - **PMD Java** Provide new recommended configuration [#2296](https://github.com/sider/runners/pull/2296)
 - **Slim-Lint** Support Sass by default [#2297](https://github.com/sider/runners/pull/2297)
+- **Rails Best Practices** Mark deprecated [#2357](https://github.com/sider/runners/pull/2357)
 - **RuboCop** Provide new recommended configuration [#2266](https://github.com/sider/runners/pull/2266)
 - **Metrics Complexity** Add workarounds for lizard's bug [#2249](https://github.com/sider/runners/pull/2249)
 - Show the tool's default version on setup [#2313](https://github.com/sider/runners/pull/2313)
