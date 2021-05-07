@@ -27,7 +27,7 @@ Updated tools:
 - **Reek** 6.0.3 -> 6.0.4 [#2342](https://github.com/sider/runners/pull/2342)
 - **RuboCop** 1.12.1 -> 1.13.0 [#2326](https://github.com/sider/runners/pull/2326)
 - **ShellCheck** 0.7.1 -> 0.7.2 [#2325](https://github.com/sider/runners/pull/2325)
-- **stylelint** 13.12.0 -> 13.13.0 [#2330](https://github.com/sider/runners/pull/2330)
+- **stylelint** 13.12.0 -> 13.13.1 [#2330](https://github.com/sider/runners/pull/2330) [#2347](https://github.com/sider/runners/pull/2347)
 
 Misc:
 
