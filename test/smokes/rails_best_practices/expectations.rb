@@ -2,6 +2,11 @@ s = Runners::Testing::Smoke
 
 default_version = "1.20.0"
 
+deprecated_warning = {
+  message: "The support for Rails Best Practices is deprecated and will be removed on September 30, 2021. Please migrate to RuboCop, HAML-Lint, or Slim-Lint.",
+  file: nil
+}
+
 s.add_test(
   "sandbox_rails",
   type: "success",
@@ -51,7 +56,8 @@ s.add_test(
       }
     }
   ],
-  analyzer: { name: "Rails Best Practices", version: default_version }
+  analyzer: { name: "Rails Best Practices", version: default_version },
+  warnings: [deprecated_warning]
 )
 
 s.add_test(
@@ -77,7 +83,8 @@ s.add_test(
         commit: :_, line_hash: "447fdabd4b419ac0393028c89e4f596d888c3600", original_line: 5, final_line: 5
       }
     }
-  ]
+  ],
+  warnings: [deprecated_warning]
 )
 
 s.add_test(
@@ -118,7 +125,8 @@ s.add_test(
         commit: :_, line_hash: "61c189f0538de4fecb11e837da23a468287153e4", original_line: 2, final_line: 2
       }
     }
-  ]
+  ],
+  warnings: [deprecated_warning]
 )
 
 s.add_test(
@@ -137,7 +145,8 @@ s.add_test(
         commit: :_, line_hash: "447fdabd4b419ac0393028c89e4f596d888c3600", original_line: 5, final_line: 5
       }
     }
-  ]
+  ],
+  warnings: [deprecated_warning]
 )
 
 s.add_test(
@@ -167,7 +176,8 @@ s.add_test(
         commit: :_, line_hash: "ad616b1216619ed7daec388fdd0c2f0d890f6ffb", original_line: 2, final_line: 2
       }
     }
-  ]
+  ],
+  warnings: [deprecated_warning]
 )
 
 s.add_test(
@@ -186,7 +196,8 @@ s.add_test(
         commit: :_, line_hash: "61c189f0538de4fecb11e837da23a468287153e4", original_line: 2, final_line: 2
       }
     }
-  ]
+  ],
+  warnings: [deprecated_warning]
 )
 
 s.add_test(
@@ -207,6 +218,7 @@ s.add_test(
     }
   ],
   warnings: [
+    deprecated_warning,
     {
       message: <<~MESSAGE.strip,
         `rails_best_practices = #{default_version}` will be installed instead of `1.16.0` in your `Gemfile.lock`.
@@ -237,7 +249,8 @@ s.add_test(
         commit: :_, line_hash: "e9e0a3f0be9cd433b81aaef2ab5775fedb5832cf", original_line: 3, final_line: 3
       }
     }
-  ]
+  ],
+  warnings: [deprecated_warning]
 )
 
 s.add_test(
@@ -278,7 +291,8 @@ s.add_test(
         commit: :_, line_hash: "e9e0a3f0be9cd433b81aaef2ab5775fedb5832cf", original_line: 3, final_line: 3
       }
     }
-  ]
+  ],
+  warnings: [deprecated_warning]
 )
 
 s.add_test(
@@ -297,7 +311,8 @@ s.add_test(
         commit: :_, line_hash: "e9e0a3f0be9cd433b81aaef2ab5775fedb5832cf", original_line: 3, final_line: 3
       }
     }
-  ]
+  ],
+  warnings: [deprecated_warning]
 )
 
 s.add_test(
@@ -349,12 +364,14 @@ s.add_test(
         commit: :_, line_hash: "599ff60112099528b8b997ccc1075dc439b789ec", original_line: 13, final_line: 13
       }
     }
-  ]
+  ],
+  warnings: [deprecated_warning]
 )
 
 s.add_test(
   "no_issues",
   type: "success",
   analyzer: { name: "Rails Best Practices", version: default_version },
-  issues: []
+  issues: [],
+  warnings: [deprecated_warning]
 )

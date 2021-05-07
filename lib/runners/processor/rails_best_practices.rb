@@ -50,6 +50,12 @@ module Runners
     end
 
     def setup
+      warnings.add_warning_for_deprecated_linter(
+        old: analyzer_name,
+        new: "#{analyzers.name(:rubocop)}, #{analyzers.name(:haml_lint)}, or #{analyzers.name(:slim_lint)}",
+        deadline: Time.new(2021, 9, 30),
+      )
+
       prepare_config
       install_gems(default_gem_specs(GEM_NAME), optionals: OPTIONAL_GEMS, constraints: CONSTRAINTS) { yield }
     rescue InstallGemsFailure => exn
