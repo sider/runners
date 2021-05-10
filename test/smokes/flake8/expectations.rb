@@ -347,7 +347,7 @@ s.add_test(
   type: "success",
   issues: [
     {
-      message: "indentation is not a multiple of     ",
+      message: "indentation is not a multiple of 4",
       links: [],
       id: "E111",
       path: "foo.py",
