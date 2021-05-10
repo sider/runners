@@ -24,6 +24,7 @@ Updated tools:
 - **PMD CPD** 6.33.0 -> 6.34.0 [#2332](https://github.com/sider/runners/pull/2332)
 - **PMD Java** 6.33.0 -> 6.34.0 [#2331](https://github.com/sider/runners/pull/2331)
 - **Pylint** 2.7.4 -> 2.8.2 [#2327](https://github.com/sider/runners/pull/2327) [#2348](https://github.com/sider/runners/pull/2348)
+- **Rails Best Practices** 1.20.0 -> 1.20.1 [#2361](https://github.com/sider/runners/pull/2361)
 - **Reek** 6.0.3 -> 6.0.4 [#2342](https://github.com/sider/runners/pull/2342)
 - **RuboCop** 1.12.1 -> 1.14.0 [#2326](https://github.com/sider/runners/pull/2326) [#2355](https://github.com/sider/runners/pull/2355)
 - **ShellCheck** 0.7.1 -> 0.7.2 [#2325](https://github.com/sider/runners/pull/2325)
