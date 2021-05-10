@@ -17,7 +17,7 @@ Updated tools:
 - **Brakeman** 5.0.0 -> 5.0.1 [#2344](https://github.com/sider/runners/pull/2344)
 - **Checkstyle** 8.41.1 -> 8.42 [#2329](https://github.com/sider/runners/pull/2329)
 - **ESLint** 7.23.0 -> 7.25.0 [#2336](https://github.com/sider/runners/pull/2336)
-- **Flake8** 3.9.0 -> 3.9.1 [#2299](https://github.com/sider/runners/pull/2299)
+- **Flake8** 3.9.0 -> 3.9.2 [#2299](https://github.com/sider/runners/pull/2299) [#2358](https://github.com/sider/runners/pull/2358)
 - **hadolint** 2.1.0 -> 2.4.0 [#2324](https://github.com/sider/runners/pull/2324) [#2351](https://github.com/sider/runners/pull/2351)
 - **PHP_CodeSniffer** 3.5.8 -> 3.6.0 [#2290](https://github.com/sider/runners/pull/2290)
 - **PHPMD** 2.9.1 -> 2.10.0 [#2341](https://github.com/sider/runners/pull/2341)
