@@ -32,6 +32,7 @@ RUN cd "${RUNNERS_DEPS_DIR}" && \
     gradle --no-build-cache --parallel --quiet installDeps && \
     rm build.gradle
 ENV CLASSPATH ${RUNNERS_DEPS_DIR}/*:${CLASSPATH}
+ENV JAVA_TOOL_OPTIONS "-XX:MaxRAMPercentage=50"
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/pmd ${RUNNER_USER_BIN}/
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/default-ruleset.xml ${RUNNER_USER_HOME}/
