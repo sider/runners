@@ -41,7 +41,7 @@ Misc:
 - **Metrics Complexity** Add workarounds for lizard's bug [#2249](https://github.com/sider/runners/pull/2249)
 - Show the tool's default version on setup [#2313](https://github.com/sider/runners/pull/2313)
 - **PMD CPD** Suppress STDOUT logging [#2356](https://github.com/sider/runners/pull/2356)
-- **PMD CPD** Increase max heap size [#2366](https://github.com/sider/runners/pull/2366)
+- Specify max heap size for Java tools [#2366](https://github.com/sider/runners/pull/2366)
 
 ## 0.47.0
 
