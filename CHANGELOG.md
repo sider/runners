@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 
 Updated environments:
 
-- **devon_rex** 2.42.6 -> 2.43.0 [#2295](https://github.com/sider/runners/pull/2295) [#2368](https://github.com/sider/runners/pull/2368) ([diff](https://github.com/sider/devon_rex/compare/2.42.6...2.43.0))
+- **devon_rex** 2.42.6 -> 2.43.0 [#2295](https://github.com/sider/runners/pull/2295) [#2368](https://github.com/sider/runners/pull/2368) [#2373](https://github.com/sider/runners/pull/2373) ([diff](https://github.com/sider/devon_rex/compare/2.42.6...2.43.1))
 - **Bundler** 2.2.15 -> 2.2.17 [#2295](https://github.com/sider/runners/pull/2295) [#2353](https://github.com/sider/runners/pull/2353)
 - **Ruby** 2.7.2 -> 2.7.3 [#2295](https://github.com/sider/runners/pull/2295)
 
