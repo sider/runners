@@ -22,7 +22,7 @@ module Runners
       @missing_id = id.to_s.empty?
       @id = missing_id? ? Digest::SHA1.hexdigest(message) : id
       @message = message
-      @links = links
+      @links = links.uniq
       @object = object
       @git_blame_info = nil
     end
