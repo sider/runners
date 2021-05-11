@@ -14,15 +14,8 @@ module Runners
     register_config_schema SCHEMA.config
 
     CONSTRAINTS = {
-      # TODO: Remove the old package after the deadline.
-      "coffeelint" => Gem::Requirement.new(">= 1.16.0", "< 3.0.0").freeze,
       "@coffeelint/cli" => Gem::Requirement.new(">= 4.0.0", "< 6.0.0").freeze,
     }.freeze
-
-    # TODO: Remove the old package after the deadline.
-    def npm_deps_satisfied_constraint?(installed_deps, constraints, _type)
-      super(installed_deps, constraints, :any)
-    end
 
     def self.config_example
       <<~'YAML'
@@ -40,8 +33,6 @@ module Runners
       rescue UserError => exn
         return Results::Failure.new(guid: guid, message: exn.message, analyzer: nil)
       end
-
-      warnings.add_warning_if_deprecated_version(analyzer_name, current: analyzer_version, minimum: "4.0.0", deadline: Time.new(2021, 5, 10))
 
       yield
     end

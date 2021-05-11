@@ -151,8 +151,7 @@ s.add_test(
       }
     }
   ],
-  analyzer: { name: "CoffeeLint", version: "2.0.6" },
-  warnings: [{ message: /CoffeeLint 2.0.6 is deprecated and will be dropped on May 10, 2021/, file: nil }]
+  analyzer: { name: "CoffeeLint", version: default_version }
 )
 
 s.add_test(
@@ -171,8 +170,7 @@ s.add_test(
       }
     }
   ],
-  analyzer: { name: "CoffeeLint", version: "2.0.3" },
-  warnings: [{ message: /CoffeeLint 2.0.3 is deprecated and will be dropped/, file: nil }]
+  analyzer: { name: "CoffeeLint", version: default_version }
 )
 
 s.add_test(
@@ -191,8 +189,7 @@ s.add_test(
       }
     }
   ],
-  analyzer: { name: "CoffeeLint", version: "1.16.2" },
-  warnings: [{ message: /CoffeeLint 1.16.2 is deprecated and will be dropped/, file: nil }]
+  analyzer: { name: "CoffeeLint", version: default_version }
 )
 
 s.add_test(
@@ -211,6 +208,5 @@ s.add_test(
       }
     }
   ],
-  analyzer: { name: "CoffeeLint", version: "2.0.5" },
-  warnings: [{ message: /CoffeeLint 2.0.5 is deprecated and will be dropped/, file: nil }]
+  analyzer: { name: "CoffeeLint", version: default_version }
 )
