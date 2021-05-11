@@ -43,6 +43,7 @@ Misc:
 - Show the tool's default version on setup [#2313](https://github.com/sider/runners/pull/2313)
 - **PMD CPD** Suppress STDOUT logging [#2356](https://github.com/sider/runners/pull/2356)
 - Specify max heap size for Java tools [#2366](https://github.com/sider/runners/pull/2366)
+- **RuboCop** Add 3rd-party plugins [#2370](https://github.com/sider/runners/pull/2370)
 
 ## 0.47.0
 
