@@ -154,6 +154,7 @@ analyzers:
     github: flyerhzm/rails_best_practices
     doc: tools/ruby/rails-best-practices
     website: https://rails-bestpractices.com
+    deprecated: true
   reek:
     name: Reek
     github: troessner/reek

@@ -53,7 +53,7 @@ class RuboCopUtilsTest < Minitest::Test
       assert_links.call %w[
         https://www.rubydoc.info/gems/chefstyle/RuboCop/Cop/Chef/Ruby/GemspecRequireRubygems
         https://github.com/chef/chefstyle
-      ], "Chef/Ruby/GemspecRequireRubygems", skip: true
+      ], "Chef/Ruby/GemspecRequireRubygems"
       assert_links.call %w[
         https://www.rubydoc.info/gems/rubocop-discourse/RuboCop/Cop/Discourse/NoChdir
         https://github.com/discourse/rubocop-discourse

@@ -179,7 +179,7 @@ module Runners
       return [] if issue_id.nil? || issue_id == "Syntax"
 
       links = ["#{analyzer_github}/blob/v#{analyzer_version}/lib/haml_lint/linter##{issue_id.downcase}"]
-      cop_name ? links + build_rubocop_links(cop_name) : links
+      cop_name ? build_rubocop_links(cop_name) + links : links
     end
 
     # NOTE: HAML-Lint exits successfully even if RuboCop fails.

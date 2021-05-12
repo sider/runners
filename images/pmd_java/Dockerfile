@@ -2,7 +2,7 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM sider/devon_rex_java:master
+FROM sider/devon_rex_java:2.43.1
 
 
 ENV RUNNERS_DEPS_DIR ${RUNNER_USER_HOME}/dependencies
@@ -32,6 +32,7 @@ RUN cd "${RUNNERS_DEPS_DIR}" && \
     gradle --no-build-cache --parallel --quiet installDeps && \
     rm build.gradle
 ENV CLASSPATH ${RUNNERS_DEPS_DIR}/*:${CLASSPATH}
+ENV JAVA_TOOL_OPTIONS "-XX:MaxRAMPercentage=50"
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/pmd ${RUNNER_USER_BIN}/
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/pmd_java/sider_recommended_pmd.xml ${RUNNER_USER_HOME}/

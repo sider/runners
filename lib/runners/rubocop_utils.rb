@@ -33,6 +33,8 @@ module Runners
         onkcop
         otacop
         pulis
+        relaxed-rubocop
+        rubocop-airbnb
         rubocop-betterment
         rubocop-cask
         rubocop-codetakt

@@ -42,7 +42,7 @@ All **40** analyzers are provided as a Docker image:
 | PMD Java | [docker](https://hub.docker.com/r/sider/runner_pmd_java), [source](https://github.com/pmd/pmd), [doc](https://help.sider.review/tools/java/pmd), [website](https://pmd.github.io) | ✅ |
 | Pylint | [docker](https://hub.docker.com/r/sider/runner_pylint), [source](https://github.com/PyCQA/pylint), [doc](https://help.sider.review/tools/python/pylint), [website](https://pylint.pycqa.org) | ✅ *beta* |
 | Querly | [docker](https://hub.docker.com/r/sider/runner_querly), [source](https://github.com/soutaro/querly), [doc](https://help.sider.review/tools/ruby/querly) | ✅ |
-| Rails Best Practices | [docker](https://hub.docker.com/r/sider/runner_rails_best_practices), [source](https://github.com/flyerhzm/rails_best_practices), [doc](https://help.sider.review/tools/ruby/rails-best-practices), [website](https://rails-bestpractices.com) | ✅ |
+| Rails Best Practices | [docker](https://hub.docker.com/r/sider/runner_rails_best_practices), [source](https://github.com/flyerhzm/rails_best_practices), [doc](https://help.sider.review/tools/ruby/rails-best-practices), [website](https://rails-bestpractices.com) | ⚠️ *deprecated* |
 | Reek | [docker](https://hub.docker.com/r/sider/runner_reek), [source](https://github.com/troessner/reek), [doc](https://help.sider.review/tools/ruby/reek) | ✅ |
 | remark-lint | [docker](https://hub.docker.com/r/sider/runner_remark_lint), [source](https://github.com/remarkjs/remark-lint), [doc](https://help.sider.review/tools/markdown/remark-lint) | ✅ |
 | RuboCop | [docker](https://hub.docker.com/r/sider/runner_rubocop), [source](https://github.com/rubocop/rubocop), [doc](https://help.sider.review/tools/ruby/rubocop), [website](https://rubocop.org) | ✅ |

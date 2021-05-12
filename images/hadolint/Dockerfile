@@ -2,9 +2,9 @@
 # NOTE: DO *NOT* EDIT THIS FILE. IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.erb INSTEAD OF THIS FILE.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM hadolint/hadolint:v2.3.0-debian as hadolint
+FROM hadolint/hadolint:v2.4.0-debian as hadolint
 
-FROM sider/devon_rex_base:master
+FROM sider/devon_rex_base:2.43.1
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} --from=hadolint /bin/hadolint ${RUNNER_USER_BIN}/
 
