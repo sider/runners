@@ -19,7 +19,7 @@ s.add_test(
     },
     {
       message: "Extra blank line detected.",
-      links: %w[https://rubystyle.guide#two-or-more-empty-lines https://docs.rubocop.org/rubocop/cops_layout.html#layoutemptylines],
+      links: %w[https://docs.rubocop.org/rubocop/cops_layout.html#layoutemptylines https://rubystyle.guide#two-or-more-empty-lines],
       id: "Layout/EmptyLines",
       path: "Gemfile",
       location: { start_line: 3, start_column: 1, end_line: 4, end_column: 0 },
@@ -57,8 +57,8 @@ s.add_test(
     {
       message: "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
       links: %w[
-        https://rubystyle.guide#safe-assignment-in-condition
         https://docs.rubocop.org/rubocop/cops_lint.html#lintassignmentincondition
+        https://rubystyle.guide#safe-assignment-in-condition
       ],
       id: "Lint/AssignmentInCondition",
       path: "bin/spring",
@@ -124,8 +124,8 @@ s.add_test(
     {
       message: "Use nested module/class definitions instead of compact style.",
       links: %w[
-        https://rubystyle.guide#namespace-definition
         https://docs.rubocop.org/rubocop/cops_style.html#styleclassandmodulechildren
+        https://rubystyle.guide#namespace-definition
       ],
       id: "Style/ClassAndModuleChildren",
       path: "test/test_helper.rb",
@@ -216,8 +216,8 @@ s.add_test(
     {
       message: "Use `$stdout` instead of `STDOUT`.",
       links: %w[
-        https://rubystyle.guide#global-stdout
         https://docs.rubocop.org/rubocop/cops_style.html#styleglobalstdstream
+        https://rubystyle.guide#global-stdout
       ],
       id: "Style/GlobalStdStream",
       path: "config/environments/production.rb",
@@ -230,9 +230,9 @@ s.add_test(
     {
       message: "Do not introduce global variables.",
       links: %w[
+        https://docs.rubocop.org/rubocop/cops_style.html#styleglobalvars
         https://rubystyle.guide#instance-vars
         https://www.zenspider.com/ruby/quickref.html
-        https://docs.rubocop.org/rubocop/cops_style.html#styleglobalvars
       ],
       id: "Style/GlobalVars",
       path: "app/controllers/users_controller.rb",
@@ -271,8 +271,8 @@ s.add_test(
     {
       message: "Use underscores(_) as thousands separator and separate every 3 digits with them.",
       links: %w[
-        https://rubystyle.guide#underscores-in-numerics
         https://docs.rubocop.org/rubocop/cops_style.html#stylenumericliterals
+        https://rubystyle.guide#underscores-in-numerics
       ],
       id: "Style/NumericLiterals",
       path: "db/schema.rb",
@@ -285,8 +285,8 @@ s.add_test(
     {
       message: "Use `fetch(\"RAILS_MAX_THREADS\", 5)` instead of `fetch(\"RAILS_MAX_THREADS\") { 5 }`.",
       links: %w[
-        https://github.com/JuanitoFatas/fast-ruby#hashfetch-with-argument-vs-hashfetch--block-code
         https://docs.rubocop.org/rubocop/cops_style.html#styleredundantfetchblock
+        https://github.com/JuanitoFatas/fast-ruby#hashfetch-with-argument-vs-hashfetch--block-code
       ],
       id: "Style/RedundantFetchBlock",
       path: "config/puma.rb",
@@ -299,8 +299,8 @@ s.add_test(
     {
       message: "Use `fetch(\"PORT\", 3000)` instead of `fetch(\"PORT\") { 3000 }`.",
       links: %w[
-        https://github.com/JuanitoFatas/fast-ruby#hashfetch-with-argument-vs-hashfetch--block-code
         https://docs.rubocop.org/rubocop/cops_style.html#styleredundantfetchblock
+        https://github.com/JuanitoFatas/fast-ruby#hashfetch-with-argument-vs-hashfetch--block-code
       ],
       id: "Style/RedundantFetchBlock",
       path: "config/puma.rb",
@@ -445,7 +445,7 @@ s.add_test(
     },
     {
       message: "Reverse the order of the operands `10 < x`.",
-      links: %w[https://en.wikipedia.org/wiki/Yoda_conditions https://docs.rubocop.org/rubocop/cops_style.html#styleyodacondition],
+      links: %w[https://docs.rubocop.org/rubocop/cops_style.html#styleyodacondition https://en.wikipedia.org/wiki/Yoda_conditions],
       id: "Style/YodaCondition",
       path: "test.rb",
       location: { start_line: 2, start_column: 4, end_line: 2, end_column: 9 },
