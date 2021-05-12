@@ -22,7 +22,7 @@ Updated tools:
 - **GolangCI-Lint** 1.39.0 -> 1.40.0 [#2369](https://github.com/sider/runners/pull/2369)
 - **hadolint** 2.1.0 -> 2.4.0 [#2324](https://github.com/sider/runners/pull/2324) [#2351](https://github.com/sider/runners/pull/2351)
 - **PHP_CodeSniffer** 3.5.8 -> 3.6.0 [#2290](https://github.com/sider/runners/pull/2290)
-- **PHPMD** 2.9.1 -> 2.10.0 [#2341](https://github.com/sider/runners/pull/2341)
+- **PHPMD** 2.9.1 -> 2.10.1 [#2341](https://github.com/sider/runners/pull/2341) [#2374](https://github.com/sider/runners/pull/2374)
 - **PMD CPD** 6.33.0 -> 6.34.0 [#2332](https://github.com/sider/runners/pull/2332)
 - **PMD Java** 6.33.0 -> 6.34.0 [#2331](https://github.com/sider/runners/pull/2331)
 - **Pylint** 2.7.4 -> 2.8.2 [#2327](https://github.com/sider/runners/pull/2327) [#2348](https://github.com/sider/runners/pull/2348)
