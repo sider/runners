@@ -11,7 +11,6 @@ Updated environments:
 - **devon_rex** 2.42.6 -> 2.43.0 [#2295](https://github.com/sider/runners/pull/2295) [#2368](https://github.com/sider/runners/pull/2368) [#2373](https://github.com/sider/runners/pull/2373) ([diff](https://github.com/sider/devon_rex/compare/2.42.6...2.43.1))
 - **Bundler** 2.2.15 -> 2.2.17 [#2295](https://github.com/sider/runners/pull/2295) [#2353](https://github.com/sider/runners/pull/2353)
 - **Ruby** 2.7.2 -> 2.7.3 [#2295](https://github.com/sider/runners/pull/2295)
-- **RuboCop** Enable new recommended configuration [#2323](https://github.com/sider/runners/pull/2323)
 
 Updated tools:
 
@@ -47,6 +46,7 @@ Misc:
 - **RuboCop** Add 3rd-party plugins [#2370](https://github.com/sider/runners/pull/2370)
 - **RuboCop** Fix links [#2371](https://github.com/sider/runners/pull/2371)
 - **CoffeeLint** Drop support for older versions [#2372](https://github.com/sider/runners/pull/2372)
+- **RuboCop** Enable new recommended configuration [#2323](https://github.com/sider/runners/pull/2323)
 
 ## 0.47.0
 
