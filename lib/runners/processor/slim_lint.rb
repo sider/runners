@@ -146,9 +146,9 @@ module Runners
         []
       when /\ARuboCop:/
         cop_name = id.delete_prefix("RuboCop:")
-        ["#{analyzer_github}/blob/v#{analyzer_version}/lib/slim_lint/linter/README.md#rubocop"] + build_rubocop_links(cop_name)
+        build_rubocop_links(cop_name) + ["#{analyzer_github}/blob/v#{analyzer_version}/lib/slim_lint/linter#rubocop"]
       else
-        ["#{analyzer_github}/blob/v#{analyzer_version}/lib/slim_lint/linter/README.md##{id.downcase}"]
+        ["#{analyzer_github}/blob/v#{analyzer_version}/lib/slim_lint/linter##{id.downcase}"]
       end
     end
   end

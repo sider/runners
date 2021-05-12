@@ -78,15 +78,14 @@ module Runners
     end
 
     def run_analyzer(changes)
-      # PHPMD exits 1 when some violations are found.
-      # The `--ignore-violation-on-exit` will exit with a zero code, even if any violations are found.
-      # See https://phpmd.org/documentation/index.html
+      # @see https://phpmd.org/documentation/index.html
       _stdout, stderr, status = capture3(
         analyzer_bin,
         target_dirs,
         "xml",
         rule,
         "--ignore-violations-on-exit",
+        "--ignore-errors-on-exit",
         "--report-file", report_file,
         *minimumpriority,
         *suffixes,
@@ -136,9 +135,14 @@ module Runners
 
         xml_root.each_element('error') do |error|
           filename = error[:filename] or raise "Filename must be present: #{error.inspect}"
-          path = relative_path(filename)
-
           message = error[:msg] or raise "Message must be present: #{error.inspect}"
+
+          if filename.empty?
+            add_warning message
+            next
+          end
+
+          path = relative_path(filename)
           message.gsub!(filename, path.to_path) # NOTE: Convert an absolute path to a relative one.
 
           result.add_issue Issue.new(

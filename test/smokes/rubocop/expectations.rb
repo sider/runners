@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "1.12.1"
+default_version = "1.14.0"
 
 s.add_test(
   "sandbox_rails",
@@ -110,8 +110,8 @@ s.add_test(
     {
       message: "Useless assignment to variable - `v`.",
       links: %w[
-        https://rubystyle.guide#underscore-unused-vars
         https://docs.rubocop.org/rubocop/cops_lint.html#lintuselessassignment
+        https://rubystyle.guide#underscore-unused-vars
       ],
       id: "Lint/UselessAssignment",
       path: "app/controllers/users_controller.rb",
@@ -332,8 +332,8 @@ s.add_test(
     {
       message: "Put empty method definitions on a single line.",
       links: %w[
-        https://rubystyle.guide#no-single-line-methods
         https://docs.rubocop.org/rubocop/cops_style.html#styleemptymethod
+        https://rubystyle.guide#no-single-line-methods
       ],
       id: "Style/EmptyMethod",
       path: "app.rb",
@@ -354,8 +354,8 @@ s.add_test(
     {
       message: "Use 2 (not 1) spaces for indentation.",
       links: %w[
-        https://rubystyle.guide#spaces-indentation
         https://docs.rubocop.org/rubocop/cops_layout.html#layoutindentationwidth
+        https://rubystyle.guide#spaces-indentation
       ],
       id: "Layout/IndentationWidth",
       path: "test.rb",
@@ -368,8 +368,8 @@ s.add_test(
     {
       message: "Tab detected.",
       links: %w[
-        https://rubystyle.guide#spaces-indentation
         https://docs.rubocop.org/rubocop/cops_layout.html#layouttab
+        https://rubystyle.guide#spaces-indentation
       ],
       id: "Layout/Tab",
       path: "test.rb",
@@ -413,8 +413,8 @@ s.add_test(
     {
       message: "Line is too long. [218/200]",
       links: %w[
-        https://rubystyle.guide#80-character-limits
         https://docs.rubocop.org/rubocop/cops_layout.html#layoutlinelength
+        https://rubystyle.guide#80-character-limits
       ],
       id: "Layout/LineLength",
       path: "cat.rb",

@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "1.39.0"
+default_version = "1.40.0"
 
 s.add_test(
   "target",
@@ -420,8 +420,9 @@ s.add_test(
 #       See https://github.com/golangci/golangci-lint/issues/828
 s.add_test(
   "monorepo",
-  type: "failure",
-  message: "The analysis failed due to an unexpected error. See the analysis log for details.",
+  type: "success",
+  issues: [],
+  warnings: [{ message: "Can't run linter goanalysis_metalinter: buildir: failed to load package : could not load export data: no export data for \"rsc.io/quote\"", file: nil }],
   analyzer: { name: "GolangCI-Lint", version: default_version }
 )
 

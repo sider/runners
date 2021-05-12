@@ -59,8 +59,8 @@ s.add_test(
     {
       message: "Lint/UselessAssignment: Useless assignment to variable - `unused_variable`.",
       links: %W[
-        https://github.com/sds/haml-lint/blob/v#{default_version}/lib/haml_lint/linter#rubocop
         https://docs.rubocop.org/rubocop/cops_lint.html#lintuselessassignment
+        https://github.com/sds/haml-lint/blob/v#{default_version}/lib/haml_lint/linter#rubocop
       ],
       id: "RuboCop:Lint/UselessAssignment",
       path: "test.haml",
@@ -114,8 +114,8 @@ s.add_test(
       id: "RuboCop:Performance/FlatMap",
       message: "Performance/FlatMap: Use `flat_map` instead of `map...flatten`.",
       links: %W[
-        https://github.com/sds/haml-lint/blob/v#{default_version}/lib/haml_lint/linter#rubocop
         https://docs.rubocop.org/rubocop-performance/cops_performance.html#performanceflatmap
+        https://github.com/sds/haml-lint/blob/v#{default_version}/lib/haml_lint/linter#rubocop
       ],
       object: { severity: "warning" },
       git_blame_info: {
