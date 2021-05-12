@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "7.23.0"
+default_version = "7.26.0"
 
 s.add_test(
   "no_config",
@@ -421,7 +421,7 @@ s.add_test(
   issues: [
     {
       message: <<~MESSAGE.strip,
-        Parsing error: Missing semicolon
+        Parsing error: Missing semicolon.
 
           1 | function bar() {
         > 2 |   var x = foo:
@@ -431,7 +431,7 @@ s.add_test(
           5 |   }
       MESSAGE
       links: [],
-      id: "a146e219901ecca16bd2c00873406719d6b503d5",
+      id: "39c2f172685fdca9a95e89c8abf2305e91b4ec28",
       path: "index.js",
       location: { start_line: 2, start_column: 14 },
       object: { severity: "error", category: nil, recommended: nil },
@@ -490,7 +490,7 @@ s.add_test(
       id: "@typescript-eslint/no-unused-vars",
       message: "'x' is assigned a value but never used.",
       links: %w[
-        https://github.com/typescript-eslint/typescript-eslint/blob/v4.22.0/packages/eslint-plugin/docs/rules/no-unused-vars.md
+        https://github.com/typescript-eslint/typescript-eslint/blob/v4.22.1/packages/eslint-plugin/docs/rules/no-unused-vars.md
       ],
       path: "index.ts",
       location: { start_line: 1, start_column: 7, end_line: 1, end_column: 8 },

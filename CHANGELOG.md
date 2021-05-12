@@ -8,18 +8,44 @@ All notable changes to this project will be documented in this file.
 
 Updated environments:
 
-- **devon_rex** 2.42.6 -> master [#2295](https://github.com/sider/runners/pull/2295) ([diff](https://github.com/sider/devon_rex/compare/2.42.6...0eaf3024ce8b6932e3cbc2d320437a2deb312045))
-- **Bundler** 2.2.15 -> 2.2.16 [#2295](https://github.com/sider/runners/pull/2295)
+- **devon_rex** 2.42.6 -> 2.43.0 [#2295](https://github.com/sider/runners/pull/2295) [#2368](https://github.com/sider/runners/pull/2368) [#2373](https://github.com/sider/runners/pull/2373) ([diff](https://github.com/sider/devon_rex/compare/2.42.6...2.43.1))
+- **Bundler** 2.2.15 -> 2.2.17 [#2295](https://github.com/sider/runners/pull/2295) [#2353](https://github.com/sider/runners/pull/2353)
 - **Ruby** 2.7.2 -> 2.7.3 [#2295](https://github.com/sider/runners/pull/2295)
+
+Updated tools:
+
+- **Brakeman** 5.0.0 -> 5.0.1 [#2344](https://github.com/sider/runners/pull/2344)
+- **Checkstyle** 8.41.1 -> 8.42 [#2329](https://github.com/sider/runners/pull/2329)
+- **CoffeeLint** 4.1.4 -> 5.0.1 [#2365](https://github.com/sider/runners/pull/2365)
+- **ESLint** 7.23.0 -> 7.26.0 [#2336](https://github.com/sider/runners/pull/2336) [#2363](https://github.com/sider/runners/pull/2363)
+- **Flake8** 3.9.0 -> 3.9.2 [#2299](https://github.com/sider/runners/pull/2299) [#2358](https://github.com/sider/runners/pull/2358)
+- **GolangCI-Lint** 1.39.0 -> 1.40.0 [#2369](https://github.com/sider/runners/pull/2369)
+- **hadolint** 2.1.0 -> 2.4.0 [#2324](https://github.com/sider/runners/pull/2324) [#2351](https://github.com/sider/runners/pull/2351)
+- **PHP_CodeSniffer** 3.5.8 -> 3.6.0 [#2290](https://github.com/sider/runners/pull/2290)
+- **PHPMD** 2.9.1 -> 2.10.1 [#2341](https://github.com/sider/runners/pull/2341) [#2374](https://github.com/sider/runners/pull/2374)
+- **PMD CPD** 6.33.0 -> 6.34.0 [#2332](https://github.com/sider/runners/pull/2332)
+- **PMD Java** 6.33.0 -> 6.34.0 [#2331](https://github.com/sider/runners/pull/2331)
+- **Pylint** 2.7.4 -> 2.8.2 [#2327](https://github.com/sider/runners/pull/2327) [#2348](https://github.com/sider/runners/pull/2348)
+- **Rails Best Practices** 1.20.0 -> 1.20.1 [#2361](https://github.com/sider/runners/pull/2361)
+- **Reek** 6.0.3 -> 6.0.4 [#2342](https://github.com/sider/runners/pull/2342)
+- **RuboCop** 1.12.1 -> 1.14.0 [#2326](https://github.com/sider/runners/pull/2326) [#2355](https://github.com/sider/runners/pull/2355)
+- **ShellCheck** 0.7.1 -> 0.7.2 [#2325](https://github.com/sider/runners/pull/2325)
+- **stylelint** 13.12.0 -> 13.13.1 [#2330](https://github.com/sider/runners/pull/2330) [#2347](https://github.com/sider/runners/pull/2347)
 
 Misc:
 
-- **ESLint** Re-provide new recommended configuration [#2157](https://github.com/sider/runners/pull/2150)
+- **ESLint** Re-provide new recommended configuration [#2250](https://github.com/sider/runners/pull/2250)
 - **PMD Java** Provide new recommended configuration [#2296](https://github.com/sider/runners/pull/2296)
 - **Slim-Lint** Support Sass by default [#2297](https://github.com/sider/runners/pull/2297)
+- **Rails Best Practices** Mark deprecated [#2357](https://github.com/sider/runners/pull/2357)
 - **RuboCop** Provide new recommended configuration [#2266](https://github.com/sider/runners/pull/2266)
 - **Metrics Complexity** Add workarounds for lizard's bug [#2249](https://github.com/sider/runners/pull/2249)
 - Show the tool's default version on setup [#2313](https://github.com/sider/runners/pull/2313)
+- **PMD CPD** Suppress STDOUT logging [#2356](https://github.com/sider/runners/pull/2356)
+- Specify max heap size for Java tools [#2366](https://github.com/sider/runners/pull/2366)
+- **RuboCop** Add 3rd-party plugins [#2370](https://github.com/sider/runners/pull/2370)
+- **RuboCop** Fix links [#2371](https://github.com/sider/runners/pull/2371)
+- **CoffeeLint** Drop support for older versions [#2372](https://github.com/sider/runners/pull/2372)
 - **ESLint** Enable new recommended configuration [#2321](https://github.com/sider/runners/pull/2321)
 
 ## 0.47.0

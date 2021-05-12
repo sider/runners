@@ -110,7 +110,7 @@ module Runners
               location: loc,
               id: offense[:cop_name],
               message: normalize_message(offense[:message], links, offense[:cop_name]),
-              links: links + build_rubocop_links(offense[:cop_name]),
+              links: build_rubocop_links(offense[:cop_name]) + links,
               object: {
                 severity: offense[:severity],
                 corrected: offense[:corrected],
