@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.48.0...HEAD)
 
+- **remark-lint** Fix empty output [#2376](https://github.com/sider/runners/pull/2376)
+
 ## 0.48.0
 
 [Full diff](https://github.com/sider/runners/compare/0.47.0...0.48.0)
