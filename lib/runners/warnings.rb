@@ -7,10 +7,10 @@ module Runners
       @trace_writer = trace_writer
     end
 
-    def add(message, file: nil)
+    def add(message, file: nil, limit: 1000)
       message = message.strip
       trace_writer&.warning(message, file: file)
-      new_warning = { message: message, file: file }
+      new_warning = { message: truncate_message(message, limit), file: file }
       @list << new_warning unless @list.include? new_warning
     end
 
@@ -50,6 +50,13 @@ module Runners
 
     def deadline_text(time)
       time&.strftime("on %B %-d, %Y") || "soon"
+    end
+
+    def truncate_message(message, limit)
+      if message.size > limit
+        message = message.slice(0, limit).to_s + "\n...(truncated)"
+      end
+      message
     end
   end
 end

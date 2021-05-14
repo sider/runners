@@ -6,7 +6,7 @@ module Runners
 
     def initialize: (?trace_writer: TraceWriter?) -> void
 
-    def add: (String, ?file: String?) -> void
+    def add: (String, ?file: String?, ?limit: Integer) -> void
 
     def add_warning_if_deprecated_version: (String, current: String, minimum: String, ?deadline: Time?) -> void
 
@@ -24,5 +24,7 @@ module Runners
     private
 
     def deadline_text: (Time?) -> String
+
+    def truncate_message: (String, Integer) -> String
   end
 end
