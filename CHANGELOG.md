@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.48.1...HEAD)
 
+- Address too long warning message [#2377](https://github.com/sider/runners/pull/2377)
+
 ## 0.48.1
 
 [Full diff](https://github.com/sider/runners/compare/0.48.0...0.48.1)
