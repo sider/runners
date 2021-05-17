@@ -70,7 +70,7 @@ module Runners
       return if path.exist?
 
       path.parent.mkpath
-      FileUtils.copy_file(Pathname(Dir.home) / "default_rubocop.yml", path)
+      FileUtils.copy_file(Pathname(Dir.home) / "sider_recommended_rubocop.yml", path)
       trace_writer.message "Set up the default RuboCop configuration file."
       path
     end

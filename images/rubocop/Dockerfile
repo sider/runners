@@ -29,7 +29,7 @@ RUN cd "${RUNNERS_DEPS_DIR}" && \
     bundle install && \
     rm -r Gemfile Gemfile.lock .bundle/
 
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/rubocop/default_rubocop.yml ${RUNNER_USER_HOME}/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/rubocop/sider_recommended_rubocop.yml ${RUNNER_USER_HOME}/
 
 
 # Copy the main source code

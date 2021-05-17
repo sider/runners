@@ -36,7 +36,7 @@ module Runners
     }.freeze
 
     CUSTOM_FORMATTER = (Pathname(Dir.home) / "custom-eslint-json-formatter.js").to_path.freeze
-    DEFAULT_ESLINT_CONFIG = (Pathname(Dir.home) / "sider_eslintrc.yml").to_path.freeze
+    DEFAULT_ESLINT_CONFIG = (Pathname(Dir.home) / "sider_recommended_eslint.js").to_path.freeze
     DEFAULT_TARGET = ".".freeze
 
     def self.config_example
@@ -200,7 +200,7 @@ module Runners
         Results::Success.new(guid: guid, analyzer: analyzer)
       elsif no_eslint_config?(stderr)
         trace_writer.message "Retrying with the default configuration file because no configuration files were found..."
-        FileUtils.copy_file(DEFAULT_ESLINT_CONFIG, ".eslintrc.yml")
+        FileUtils.copy_file(DEFAULT_ESLINT_CONFIG, ".eslintrc.js")
         run_analyzer
       else
         Results::Failure.new(guid: guid, analyzer: analyzer)
