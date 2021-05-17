@@ -4,7 +4,23 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.47.0...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.48.2...HEAD)
+
+## 0.48.2
+
+[Full diff](https://github.com/sider/runners/compare/0.48.1...0.48.2)
+
+- Address too long warning message [#2377](https://github.com/sider/runners/pull/2377)
+
+## 0.48.1
+
+[Full diff](https://github.com/sider/runners/compare/0.48.0...0.48.1)
+
+- **remark-lint** Fix empty output [#2376](https://github.com/sider/runners/pull/2376)
+
+## 0.48.0
+
+[Full diff](https://github.com/sider/runners/compare/0.47.0...0.48.0)
 
 Updated environments:
 
