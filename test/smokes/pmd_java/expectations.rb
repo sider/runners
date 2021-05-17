@@ -9,7 +9,7 @@ s.add_test(
   issues: [
     {
       message: "Avoid calling finalize() explicitly",
-      links: %W[https://pmd.github.io/pmd-6.34.0/pmd_rules_java_errorprone.html#avoidcallingfinalize],
+      links: %W[https://pmd.github.io/pmd-#{default_version}/pmd_rules_java_errorprone.html#avoidcallingfinalize],
       id: "AvoidCallingFinalize",
       path: "src/Hello.java",
       location: { start_line: 16, start_column: 9, end_line: 16, end_column: 18 },
@@ -20,7 +20,7 @@ s.add_test(
     },
     {
       message: "Exceptions should not extend java.lang.Error",
-      links: %W[https://pmd.github.io/pmd-6.34.0/pmd_rules_java_design.html#donotextendjavalangerror],
+      links: %W[https://pmd.github.io/pmd-#{default_version}/pmd_rules_java_design.html#donotextendjavalangerror],
       id: "DoNotExtendJavaLangError",
       path: "src/Hello.java",
       location: { start_line: 22, start_column: 23, end_line: 22, end_column: 37 },
@@ -31,7 +31,7 @@ s.add_test(
     },
     {
       message: "Do not use hard coded encryption keys",
-      links: %W[https://pmd.github.io/pmd-6.34.0/pmd_rules_java_security.html#hardcodedcryptokey],
+      links: %W[https://pmd.github.io/pmd-#{default_version}/pmd_rules_java_security.html#hardcodedcryptokey],
       id: "HardCodedCryptoKey",
       path: "src/Hello.java",
       location: { start_line: 12, start_column: 27, end_line: 12, end_column: 42 },
