@@ -10,7 +10,6 @@ Misc:
 
 - **ESLint** Enable new recommended configuration [#2321](https://github.com/sider/runners/pull/2321)
 - **RuboCop** Enable new recommended configuration [#2323](https://github.com/sider/runners/pull/2323)
->>>>>>> master
 
 ## 0.48.2
 
