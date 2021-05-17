@@ -19,7 +19,10 @@ s.add_test(
     },
     {
       message: "Extra blank line detected.",
-      links: %w[https://docs.rubocop.org/rubocop/cops_layout.html#layoutemptylines https://rubystyle.guide#two-or-more-empty-lines],
+      links: %w[
+        https://docs.rubocop.org/rubocop/cops_layout.html#layoutemptylines
+        https://rubystyle.guide#two-or-more-empty-lines
+      ],
       id: "Layout/EmptyLines",
       path: "Gemfile",
       location: { start_line: 3, start_column: 1, end_line: 4, end_column: 0 },
@@ -30,9 +33,7 @@ s.add_test(
     },
     {
       message: "Do not use space inside array brackets.",
-      links: %w[
-        https://docs.rubocop.org/rubocop/cops_layout.html#layoutspaceinsidearrayliteralbrackets
-      ],
+      links: %w[https://docs.rubocop.org/rubocop/cops_layout.html#layoutspaceinsidearrayliteralbrackets],
       id: "Layout/SpaceInsideArrayLiteralBrackets",
       path: "config/environments/production.rb",
       location: { start_line: 50, start_column: 22, end_line: 50, end_column: 22 },
@@ -43,9 +44,7 @@ s.add_test(
     },
     {
       message: "Do not use space inside array brackets.",
-      links: %w[
-        https://docs.rubocop.org/rubocop/cops_layout.html#layoutspaceinsidearrayliteralbrackets
-      ],
+      links: %w[https://docs.rubocop.org/rubocop/cops_layout.html#layoutspaceinsidearrayliteralbrackets],
       id: "Layout/SpaceInsideArrayLiteralBrackets",
       path: "config/environments/production.rb",
       location: { start_line: 50, start_column: 34, end_line: 50, end_column: 34 },
@@ -70,9 +69,7 @@ s.add_test(
     },
     {
       message: "Literal `true` appeared as a condition.",
-      links: %w[
-        https://docs.rubocop.org/rubocop/cops_lint.html#lintliteralascondition
-      ],
+      links: %w[https://docs.rubocop.org/rubocop/cops_lint.html#lintliteralascondition],
       id: "Lint/LiteralAsCondition",
       path: "app/controllers/users_controller.rb",
       location: { start_line: 23, start_column: 8, end_line: 23, end_column: 11 },
@@ -83,9 +80,7 @@ s.add_test(
     },
     {
       message: "Replace unsafe number conversion with number class parsing, instead of using ENV.fetch(\"RAILS_MAX_THREADS\") { 5 }.to_i, use stricter Integer(ENV.fetch(\"RAILS_MAX_THREADS\") { 5 }, 10).",
-      links: %w[
-        https://docs.rubocop.org/rubocop/cops_lint.html#lintnumberconversion
-      ],
+      links: %w[https://docs.rubocop.org/rubocop/cops_lint.html#lintnumberconversion],
       id: "Lint/NumberConversion",
       path: "config/puma.rb",
       location: { start_line: 7, start_column: 17, end_line: 7, end_column: 57 },
@@ -96,9 +91,7 @@ s.add_test(
     },
     {
       message: "Shadowing outer local variable - `v`.",
-      links: %w[
-        https://docs.rubocop.org/rubocop/cops_lint.html#lintshadowingouterlocalvariable
-      ],
+      links: %w[https://docs.rubocop.org/rubocop/cops_lint.html#lintshadowingouterlocalvariable],
       id: "Lint/ShadowingOuterLocalVariable",
       path: "app/controllers/users_controller.rb",
       location: { start_line: 27, start_column: 30, end_line: 27, end_column: 30 },
@@ -137,9 +130,7 @@ s.add_test(
     },
     {
       message: "Use `expand_path('../Gemfile', __dir__)` instead of `expand_path('../../Gemfile', __FILE__)`.",
-      links: %w[
-        https://docs.rubocop.org/rubocop/cops_style.html#styleexpandpatharguments
-      ],
+      links: %w[https://docs.rubocop.org/rubocop/cops_style.html#styleexpandpatharguments],
       id: "Style/ExpandPathArguments",
       path: "bin/bundle",
       location: { start_line: 2, start_column: 32, end_line: 2, end_column: 42 },
@@ -150,9 +141,7 @@ s.add_test(
     },
     {
       message: "Use `expand_path('spring', __dir__)` instead of `expand_path('../spring', __FILE__)`.",
-      links: %w[
-        https://docs.rubocop.org/rubocop/cops_style.html#styleexpandpatharguments
-      ],
+      links: %w[https://docs.rubocop.org/rubocop/cops_style.html#styleexpandpatharguments],
       id: "Style/ExpandPathArguments",
       path: "bin/rails",
       location: { start_line: 3, start_column: 13, end_line: 3, end_column: 23 },
@@ -163,9 +152,7 @@ s.add_test(
     },
     {
       message: "Use `expand_path('spring', __dir__)` instead of `expand_path('../spring', __FILE__)`.",
-      links: %w[
-        https://docs.rubocop.org/rubocop/cops_style.html#styleexpandpatharguments
-      ],
+      links: %w[https://docs.rubocop.org/rubocop/cops_style.html#styleexpandpatharguments],
       id: "Style/ExpandPathArguments",
       path: "bin/rake",
       location: { start_line: 3, start_column: 13, end_line: 3, end_column: 23 },
@@ -176,9 +163,7 @@ s.add_test(
     },
     {
       message: "Use `expand_path('..', __dir__)` instead of `expand_path('../../', __FILE__)`.",
-      links: %w[
-        https://docs.rubocop.org/rubocop/cops_style.html#styleexpandpatharguments
-      ],
+      links: %w[https://docs.rubocop.org/rubocop/cops_style.html#styleexpandpatharguments],
       id: "Style/ExpandPathArguments",
       path: "bin/setup",
       location: { start_line: 7, start_column: 30, end_line: 7, end_column: 40 },
@@ -189,9 +174,7 @@ s.add_test(
     },
     {
       message: "Use `expand_path('..', __dir__)` instead of `expand_path('../../', __FILE__)`.",
-      links: %w[
-        https://docs.rubocop.org/rubocop/cops_style.html#styleexpandpatharguments
-      ],
+      links: %w[https://docs.rubocop.org/rubocop/cops_style.html#styleexpandpatharguments],
       id: "Style/ExpandPathArguments",
       path: "bin/update",
       location: { start_line: 7, start_column: 30, end_line: 7, end_column: 40 },
@@ -202,9 +185,7 @@ s.add_test(
     },
     {
       message: "Use `expand_path('../config/environment', __dir__)` instead of `expand_path('../../config/environment', __FILE__)`.",
-      links: %w[
-        https://docs.rubocop.org/rubocop/cops_style.html#styleexpandpatharguments
-      ],
+      links: %w[https://docs.rubocop.org/rubocop/cops_style.html#styleexpandpatharguments],
       id: "Style/ExpandPathArguments",
       path: "test/test_helper.rb",
       location: { start_line: 2, start_column: 14, end_line: 2, end_column: 24 },
@@ -244,9 +225,7 @@ s.add_test(
     },
     {
       message: "`include` is used at the top level. Use inside `class` or `module`.",
-      links: %w[
-        https://docs.rubocop.org/rubocop/cops_style.html#stylemixinusage
-      ],
+      links: %w[https://docs.rubocop.org/rubocop/cops_style.html#stylemixinusage],
       id: "Style/MixinUsage",
       path: "bin/setup",
       location: { start_line: 4, start_column: 1, end_line: 4, end_column: 17 },
@@ -257,9 +236,7 @@ s.add_test(
     },
     {
       message: "`include` is used at the top level. Use inside `class` or `module`.",
-      links: %w[
-        https://docs.rubocop.org/rubocop/cops_style.html#stylemixinusage
-      ],
+      links: %w[https://docs.rubocop.org/rubocop/cops_style.html#stylemixinusage],
       id: "Style/MixinUsage",
       path: "bin/update",
       location: { start_line: 4, start_column: 1, end_line: 4, end_column: 17 },
@@ -445,7 +422,10 @@ s.add_test(
     },
     {
       message: "Reverse the order of the operands `10 < x`.",
-      links: %w[https://docs.rubocop.org/rubocop/cops_style.html#styleyodacondition https://en.wikipedia.org/wiki/Yoda_conditions],
+      links: %w[
+        https://docs.rubocop.org/rubocop/cops_style.html#styleyodacondition
+        https://en.wikipedia.org/wiki/Yoda_conditions
+      ],
       id: "Style/YodaCondition",
       path: "test.rb",
       location: { start_line: 2, start_column: 4, end_line: 2, end_column: 9 },
