@@ -77,9 +77,7 @@ module Runners
       issues, errors = parse_result(stderr)
 
       if errors.empty?
-        Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-          issues.each { |i| result.add_issue(i) }
-        end
+        Results::Success.new(guid: guid, analyzer: analyzer, issues: issues)
       else
         errors.each { |e| trace_writer.error(e) }
 
@@ -144,6 +142,8 @@ module Runners
     def parse_result(output)
       issues = []
       errors = []
+
+      output = "[]" if output.empty?
 
       JSON.parse(output, symbolize_names: true).each do |file|
         path = relative_path(file[:path])

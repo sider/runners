@@ -16,6 +16,12 @@ class WarningsTest < Minitest::Test
                      { message: "baz", file: "a.yml" }]
   end
 
+  def test_add_with_truncated_message
+    warnings.add "0123456789_", limit: 10
+
+    assert_warnings [{ message: "0123456789\n...(truncated)", file: nil }]
+  end
+
   def test_add_with_trace_writer
     trace_writer = new_trace_writer
     warnings = Runners::Warnings.new(trace_writer: trace_writer)
