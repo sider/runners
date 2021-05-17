@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.48.2...HEAD)
 
+Misc:
+
+- **PMD Java** Enable new recommended configuration [#2345](https://github.com/sider/runners/pull/2345)
+
 ## 0.48.2
 
 [Full diff](https://github.com/sider/runners/compare/0.48.1...0.48.2)
@@ -62,7 +66,6 @@ Misc:
 - **RuboCop** Add 3rd-party plugins [#2370](https://github.com/sider/runners/pull/2370)
 - **RuboCop** Fix links [#2371](https://github.com/sider/runners/pull/2371)
 - **CoffeeLint** Drop support for older versions [#2372](https://github.com/sider/runners/pull/2372)
-- **PMD Java** Enable new recommended configuration [#2345](https://github.com/sider/runners/pull/2345)
 
 ## 0.47.0
 
