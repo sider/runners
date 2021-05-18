@@ -580,7 +580,7 @@ s.add_test(
       git_blame_info: {
         commit: :_, line_hash: "089c7565d54e338b719647421b55b3e644cf0a4b", original_line: 1, final_line: 1
       }
-    },    {
+    }, {
       message: "Definition for rule 'no-unsafe-optional-chaining' was not found.",
       links: [],
       id: "no-unsafe-optional-chaining",
