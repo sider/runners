@@ -753,7 +753,7 @@ s.add_test(
       message: "assigned but unused variable - a",
       links: %w[
         https://www.rubydoc.info/gems/rubocop-rubycw/RuboCop/Cop/Rubycw/Rubycw
-        https://github.com/rubocop-hq/rubocop-rubycw
+        https://github.com/rubocop/rubocop-rubycw
       ],
       object: { severity: "convention", corrected: false },
       git_blame_info: {
