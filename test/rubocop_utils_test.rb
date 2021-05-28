@@ -80,8 +80,8 @@ class RuboCopUtilsTest < Minitest::Test
       ], "Rake/Desc", additional_statuses: [301] # TODO: Remove `additional_statuses`
       assert_links.call %w[
         https://www.rubydoc.info/gems/rubocop-rubycw/RuboCop/Cop/Rubycw/Rubycw
-        https://github.com/rubocop-hq/rubocop-rubycw
-      ], "Rubycw/Rubycw", additional_statuses: [301] # TODO: Remove `additional_statuses`
+        https://github.com/rubocop/rubocop-rubycw
+      ], "Rubycw/Rubycw"
       assert_links.call %w[
         https://www.rubydoc.info/gems/rubocop-sequel/RuboCop/Cop/Sequel/ColumnDefault
         https://github.com/rubocop-hq/rubocop-sequel
