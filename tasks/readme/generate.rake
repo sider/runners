@@ -6,11 +6,10 @@ namespace :readme do
     analyzers = Runners::Analyzers.new
 
     list = analyzers.map do |id, analyzer|
-      links = [
-        "[docker](#{analyzers.docker(id)})",
-        "[source](#{analyzers.github(id)})",
-        "[doc](#{analyzers.doc(id)})",
-      ]
+      links = ["[docker](#{analyzers.docker(id)})"]
+      links << "[source](#{analyzers.github(id)})" if analyzers.github(id)
+      links << "[doc](#{analyzers.doc(id)})"
+
       analyzers.website(id).tap do |url|
         links << "[website](#{url})" if url
       end

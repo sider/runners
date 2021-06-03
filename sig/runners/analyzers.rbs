@@ -18,7 +18,7 @@ module Runners
 
     def name: (analyzer_id) -> String
 
-    def github: (analyzer_id) -> String
+    def github: (analyzer_id) -> String?
 
     def doc: (analyzer_id) -> String
 

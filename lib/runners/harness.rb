@@ -43,7 +43,7 @@ module Runners
 
           begin
             processor = processor_class.new(guid: guid, working_dir: working_dir, config: conf,
-                                            shell: build_shell(git_ssh_path), trace_writer: trace_writer)
+                                            shell: build_shell(git_ssh_path), trace_writer: trace_writer, options: options)
 
             root_dir_not_found = processor.check_root_dir_exist
             return root_dir_not_found if root_dir_not_found

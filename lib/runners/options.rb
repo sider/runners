@@ -13,7 +13,7 @@ module Runners
     end
     private_constant :GitSource
 
-    attr_reader :stdout, :stderr, :source, :ssh_key, :io
+    attr_reader :stdout, :stderr, :source, :ssh_key, :io, :secret_scan_urls
 
     def initialize(json, stdout, stderr)
       @stdout = stdout
@@ -40,6 +40,8 @@ module Runners
               end
               Runners::IO.new(*ios)
             end
+
+      @secret_scan_urls = Array(options[:secret_scan_urls])
     end
 
     private

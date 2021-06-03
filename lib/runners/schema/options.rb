@@ -16,6 +16,7 @@ module Runners
         outputs: array?(string),
         ssh_key: string?,
         s3: object?(endpoint: string),
+        secret_scan_urls: array?(string),
       )
     end
   end

@@ -16,8 +16,9 @@ module Runners
     attr_reader shell: Shell
     attr_reader trace_writer: TraceWriter
     attr_reader warnings: Warnings
+    attr_reader options: Options?
 
-    def initialize: (guid: String, working_dir: Pathname, config: Config, shell: Shell, trace_writer: TraceWriter) -> void
+    def initialize: (guid: String, working_dir: Pathname, config: Config, shell: Shell, trace_writer: TraceWriter, ?options: Options) -> void
 
     def current_dir: () -> Pathname
     def chdir: [X] (Pathname) { (Pathname) -> X } -> X
@@ -46,7 +47,7 @@ module Runners
 
     def analyzer_doc: () -> String
 
-    def analyzer_github: () -> String
+    def analyzer_github: () -> String?
 
     def analyzer: () -> Analyzer
 

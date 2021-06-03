@@ -164,7 +164,12 @@ module Runners
           base: base,
           git_url: URI.join("file:///", project_dir).to_s,
         }
-        runners_options = JSON.dump({ source: source })
+        runners_options = JSON.dump({
+          source: source,
+          secret_scan_urls: [
+            "https://github.com/sider/goodcheck-rules/archive/refs/tags/v0.0.1.tar.gz",
+          ],
+        })
         runners_timeout = ENV['RUNNERS_TIMEOUT']
         commands = ["docker", "run"]
         commands << "--rm"

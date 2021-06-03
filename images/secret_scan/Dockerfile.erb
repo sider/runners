@@ -1,0 +1,11 @@
+<%= render_erb 'images/Dockerfile.ruby.erb' %>
+
+# TODO: Remove later.
+RUN git clone --depth=50 https://github.com/sider/goodcheck.git "${RUNNER_USER_HOME}/goodcheck" && \
+    cd "${RUNNER_USER_HOME}/goodcheck" && \
+    git checkout 5b5145a59afeca2d67198fcb940ceaf294310e27 && \
+    gem build && \
+    gem install *.gem && \
+    goodcheck --version
+
+<%= render_erb 'images/Dockerfile.end.erb' %>

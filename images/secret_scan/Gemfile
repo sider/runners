@@ -1,0 +1,4 @@
+source 'https://rubygems.org'
+
+# TODO:
+# gem 'goodcheck', '2.8.0'

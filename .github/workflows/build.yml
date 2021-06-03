@@ -48,6 +48,7 @@ jobs:
           - remark_lint
           - rubocop
           - scss_lint
+          - secret_scan
           - shellcheck
           - slim_lint
           - stylelint

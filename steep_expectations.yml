@@ -176,10 +176,10 @@
   diagnostics:
   - range:
       start:
-        line: 123
+        line: 124
         character: 26
       end:
-        line: 123
+        line: 124
         character: 29
     severity: ERROR
     message: |-
@@ -191,10 +191,10 @@
     code: Ruby::ArgumentTypeMismatch
   - range:
       start:
-        line: 123
+        line: 124
         character: 31
       end:
-        line: 123
+        line: 124
         character: 40
     severity: ERROR
     message: |-

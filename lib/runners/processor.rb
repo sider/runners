@@ -23,20 +23,21 @@ module Runners
       raise NotImplementedError, name
     end
 
-    attr_reader :guid, :working_dir, :config, :shell, :trace_writer, :warnings
+    attr_reader :guid, :working_dir, :config, :shell, :trace_writer, :warnings, :options
 
     def_delegators :@shell,
       :chdir, :current_dir,
       :capture3, :capture3!, :capture3_trace, :capture3_with_retry!,
       :env_hash, :push_env_hash
 
-    def initialize(guid:, working_dir:, config:, shell:, trace_writer:)
+    def initialize(guid:, working_dir:, config:, shell:, trace_writer:, options: nil)
       @guid = guid
       @working_dir = working_dir
       @config = config
       @shell = shell
       @trace_writer = trace_writer
       @warnings = Warnings.new(trace_writer: trace_writer)
+      @options = options
     end
 
     def validate_config
@@ -158,9 +159,8 @@ module Runners
     def missing_config_file_result(file)
       add_warning <<~MSG, file: file
         Sider could not find the required configuration file `#{file}`.
-        Please create the file according to the following documents:
-        - #{analyzer_github}
-        - #{analyzer_doc}
+        Please create the file according to the document:
+        #{analyzer_doc}
       MSG
 
       Results::Success.new(guid: guid, analyzer: analyzer)

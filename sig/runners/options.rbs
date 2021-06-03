@@ -15,10 +15,12 @@ module Runners
     attr_reader source: GitSource
     attr_reader ssh_key: String?
     attr_reader io: Runners::IO
+    attr_reader secret_scan_urls: Array[String]
 
     def initialize: (String json, ::IO stdout, ::IO stderr) -> void
 
     private
+
     def parse_options: (String json) -> Hash[Symbol, untyped]
   end
 end

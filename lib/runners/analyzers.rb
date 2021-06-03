@@ -22,7 +22,7 @@ module Runners
     end
 
     def github(id)
-      analyzer(id).fetch(:github).then { |repo| "https://github.com/#{repo}" }
+      analyzer(id)[:github]&.then { |repo| "https://github.com/#{repo}" }
     end
 
     def doc(id)

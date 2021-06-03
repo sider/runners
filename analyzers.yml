@@ -173,6 +173,9 @@ analyzers:
     github: sds/scss-lint
     doc: tools/css/scss-lint
     deprecated: true
+  secret_scan:
+    name: Secret Scan
+    doc: "" # TODO: Fix it later.
   shellcheck:
     name: ShellCheck
     github: koalaman/shellcheck
