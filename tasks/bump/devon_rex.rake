@@ -33,9 +33,9 @@ namespace :bump do
     sh "git", "commit", "--message", <<~MSG
       Bump devon_rex images from #{current_version} to #{next_version}
 
-      Via:
+      This change is created by:
       ```
-      $ bundle exec rake dockerfile:bump_devon_rex'[#{next_version}]'
+      $ bundle exec rake bump:devon_rex'[#{next_version}]'
       ```
 
       See also:
