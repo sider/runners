@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.49.1...HEAD)
 
+Features:
+
+- Introduce Secret Scanning [#2418](https://github.com/sider/runners/pull/2418)
+
 Updated environments:
 
 - **devon_rex** 2.43.2 -> 2.43.3 [#2417](https://github.com/sider/runners/pull/2417) ([diff](https://github.com/sider/devon_rex/compare/2.43.2...2.43.3))
