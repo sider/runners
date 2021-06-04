@@ -46,7 +46,9 @@ module Runners
 
     def analyzer_doc: () -> String
 
-    def analyzer_github: () -> String?
+    def analyzer_github: (?Symbol) -> String?
+
+    def analyzer_github!: (?Symbol) -> String
 
     def analyzer: () -> Analyzer
 

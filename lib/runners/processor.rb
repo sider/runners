@@ -90,8 +90,12 @@ module Runners
       analyzers.doc(analyzer_id)
     end
 
-    def analyzer_github
-      analyzers.github(analyzer_id)
+    def analyzer_github(id = analyzer_id)
+      analyzers.github(id)
+    end
+
+    def analyzer_github!(id = analyzer_id)
+      analyzer_github(id) or raise
     end
 
     def analyzer
