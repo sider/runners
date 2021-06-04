@@ -20,6 +20,10 @@ Updated environments:
 - **devon_rex** 2.43.1 -> 2.43.2 [#2399](https://github.com/sider/runners/pull/2399) ([diff](https://github.com/sider/devon_rex/compare/2.43.1...2.43.2))
 - **Bundler** 2.2.17 -> 2.2.18 [#2399](https://github.com/sider/runners/pull/2399)
 
+Misc:
+
+- `Runners::Analyzers#github` may return `nil` [#2420](https://github.com/sider/runners/pull/2420)
+
 ## 0.49.0
 
 [Full diff](https://github.com/sider/runners/compare/0.48.2...0.49.0)
