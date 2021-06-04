@@ -109,9 +109,9 @@ module Runners
 
     def link_to_wiki(id)
       if id.start_with? "DL"
-        ["#{analyzer_github!}/wiki/#{id}"]
+        ["#{analyzer_github}/wiki/#{id}"]
       else
-        ["#{analyzer_github!(:shellcheck)}/wiki/#{id}"]
+        ["#{analyzer_github(:shellcheck)}/wiki/#{id}"]
       end
     end
   end

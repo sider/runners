@@ -91,11 +91,7 @@ module Runners
     end
 
     def analyzer_github(id = analyzer_id)
-      analyzers.github(id)
-    end
-
-    def analyzer_github!(id = analyzer_id)
-      analyzer_github(id) or raise
+      analyzers.github(id) or raise "`#{id}` has no GitHub URL"
     end
 
     def analyzer
