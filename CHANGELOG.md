@@ -18,6 +18,7 @@ Updated environments:
 Misc:
 
 - `Runners::Analyzers#github` may return `nil` [#2420](https://github.com/sider/runners/pull/2420)
+- Fix metrics doc links on README [#2423](https://github.com/sider/runners/pull/2423)
 
 ## 0.49.1
 
