@@ -102,17 +102,17 @@ analyzers:
   metrics_codeclone:
     name: Metrics Code Clone
     github: pmd/pmd
-    doc: tools/metrics/codeclone
+    doc: ""
     beta: true
   metrics_complexity:
     name: Metrics Complexity
     github: terryyin/lizard
-    doc: tools/metrics/complexity
+    doc: ""
     beta: true
   metrics_fileinfo:
     name: Metrics File Info
     github: coreutils/coreutils
-    doc: tools/metrics/fileinfo
+    doc: ""
     beta: true
   misspell:
     name: Misspell
