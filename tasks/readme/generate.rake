@@ -1,9 +1,12 @@
 require "runners/analyzers"
+require "ostruct"
 
 namespace :readme do
   desc "Generate README file"
   task :generate do
     analyzers = Runners::Analyzers.new
+
+    emoji = OpenStruct.new(active: "✅", deprecated: "⚠️", beta: "🔨").freeze
 
     list = analyzers.map do |id, analyzer|
       links = ["[docker](#{analyzers.docker(id)})"]
@@ -20,11 +23,11 @@ namespace :readme do
       ]
       items << case
                when analyzers.deprecated?(id)
-                 "⚠️ *deprecated*"
+                 emoji.deprecated
                when analyzers.beta?(id)
-                 "✅ *beta*"
+                 emoji.beta
                else
-                 "✅"
+                 emoji.active
                end
 
       "| #{items.join(' | ')} |"
@@ -36,6 +39,8 @@ namespace :readme do
       | Name | Links | Status |
       |:-----|:------|:------:|
       #{list.sort_by(&:downcase).join("\n")}
+
+      #{emoji.active} - active, #{emoji.deprecated} - deprecated, #{emoji.beta} - beta
     MARKDOWN
 
     start_tag = "<!-- AUTO-GENERATED-CONTENT:START (analyzers) -->"
