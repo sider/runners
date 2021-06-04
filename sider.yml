@@ -1,12 +1,20 @@
 linter:
   rubocop:
-    gems:
+    dependencies:
       - rubocop
       - rubocop-minitest
       - rubocop-performance
       - rubocop-rake
       - rubocop-rubycw
       - meowcop
+  goodcheck:
+    dependencies:
+      # Test the edge version.
+      - name: goodcheck
+        git:
+          repo: https://github.com/sider/goodcheck.git
+          branch: master
+
 
 ignore:
   - test/smokes/
