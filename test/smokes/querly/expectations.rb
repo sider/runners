@@ -52,9 +52,8 @@ s.add_test(
     {
       message: <<~MESSAGE.strip,
         Sider could not find the required configuration file `querly.yml`.
-        Please create the file according to the following documents:
-        - https://github.com/soutaro/querly
-        - https://help.sider.review/tools/ruby/querly
+        Please create the file according to the document:
+        https://help.sider.review/tools/ruby/querly
       MESSAGE
       file: "querly.yml"
     }

@@ -30,9 +30,8 @@ s.add_test(
     {
       message: <<~MESSAGE.strip,
         Sider could not find the required configuration file `tyscan.yml`.
-        Please create the file according to the following documents:
-        - https://github.com/sider/TyScan
-        - https://help.sider.review/tools/javascript/tyscan
+        Please create the file according to the document:
+        https://help.sider.review/tools/javascript/tyscan
       MESSAGE
       file: "tyscan.yml"
     }

@@ -49,9 +49,8 @@ s.add_offline_test(
     {
       message: <<~MESSAGE.strip,
         Sider could not find the required configuration file `goodcheck.yml`.
-        Please create the file according to the following documents:
-        - https://github.com/sider/goodcheck
-        - https://help.sider.review/tools/others/goodcheck
+        Please create the file according to the document:
+        https://help.sider.review/tools/others/goodcheck
       MESSAGE
       file: "goodcheck.yml"
     }
