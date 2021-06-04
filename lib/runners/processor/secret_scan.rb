@@ -25,7 +25,6 @@ module Runners
       stdout, _stderr = capture3!(
         analyzer_bin, "check", "--config", rule_file, "--format", "json",
         is_success: ->(status) { [0, 2].include?(status.exitstatus) },
-        trace_stderr: !false,
       )
 
       issues = JSON.parse(stdout, symbolize_names: true).map do |hash|
