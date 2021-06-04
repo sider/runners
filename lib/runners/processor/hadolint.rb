@@ -111,7 +111,7 @@ module Runners
       if id.start_with? "DL"
         ["#{analyzer_github}/wiki/#{id}"]
       else
-        ["#{analyzers.github(:shellcheck)}/wiki/#{id}"]
+        ["#{analyzer_github(:shellcheck)}/wiki/#{id}"]
       end
     end
   end

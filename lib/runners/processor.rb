@@ -91,8 +91,8 @@ module Runners
       analyzers.doc(analyzer_id)
     end
 
-    def analyzer_github
-      analyzers.github(analyzer_id)
+    def analyzer_github(id = analyzer_id)
+      analyzers.github(id) or raise "`#{id}` has no GitHub URL"
     end
 
     def analyzer
