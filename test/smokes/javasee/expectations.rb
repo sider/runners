@@ -63,9 +63,8 @@ s.add_test(
     {
       message: <<~MSG.strip,
         Sider could not find the required configuration file `javasee.yml`.
-        Please create the file according to the following documents:
-        - https://github.com/sider/JavaSee
-        - https://help.sider.review/tools/java/javasee
+        Please create the file according to the document:
+        https://help.sider.review/tools/java/javasee
       MSG
       file: "javasee.yml"
     }
