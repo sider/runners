@@ -313,3 +313,13 @@ updates:
     open-pull-requests-limit: 10
     versioning-strategy: increase
     labels: ["dependencies", "language: ruby"]
+
+  - package-ecosystem: bundler
+    directory: "/images/secret_scan"
+    schedule:
+      interval: weekly
+      time: "09:00"
+      timezone: Asia/Tokyo
+    open-pull-requests-limit: 10
+    versioning-strategy: increase
+    labels: ["dependencies", "language: ruby"]
