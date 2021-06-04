@@ -20,7 +20,8 @@ module Runners
       yield
     end
 
-    def analyze(_changes)
+    def analyze(changes)
+      delete_unchanged_files changes
 
       stdout, _stderr = capture3!(
         analyzer_bin, "check", "--config", rule_file, "--format", "json",
