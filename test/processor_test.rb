@@ -342,8 +342,11 @@ class ProcessorTest < Minitest::Test
 
       processor = new_processor(workspace: workspace)
       root = processor.read_report_xml(file)
-      assert_instance_of REXML::Element, root
-      assert_equal "<foo/>", root.to_s
+      assert_instance_of Nokogiri::XML::Document, root
+      assert_equal <<~MSG, root.to_s
+        <?xml version=\"1.0\"?>
+        <foo/>
+      MSG
     end
   end
 
@@ -353,16 +356,11 @@ class ProcessorTest < Minitest::Test
 
       processor = new_processor(workspace: workspace)
       error = assert_raises(Processor::InvalidXML) { processor.read_report_xml(file.to_path) }
-      assert_equal 'Invalid XML: ""', error.message
+      assert_equal 'Empty document', error.message
 
       file.write "<foo"
       error = assert_raises(Processor::InvalidXML) { processor.read_report_xml(file.to_path) }
-      assert_equal <<~MSG, error.message
-        Start tag isn't ended
-        Line: 1
-        Position: 4
-        Last 80 unconsumed characters:
-      MSG
+      assert_equal "1:5: FATAL: Couldn't find end of Start Tag foo line 1", error.message
     end
   end
 

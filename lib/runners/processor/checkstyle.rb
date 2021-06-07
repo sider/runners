@@ -101,11 +101,11 @@ module Runners
     def construct_result(xml_root)
       ignored_severities = Array(config_linter[:ignore])
 
-      xml_root.each_element("file") do |file|
+      xml_root.search("file").each do |file|
         file_name = file[:name] or raise "Invalid file: #{file.inspect}"
         path = relative_path file_name
 
-        file.each_element do |error|
+        file.search("error").each do |error|
           case error.name
           when "error"
             severity = error[:severity]
@@ -125,7 +125,7 @@ module Runners
               schema: SCHEMA.issue,
             )
           when "exception"
-            exception = error.text or raise "Required exception: #{error.inspect}"
+            exception = error.content or raise "Required exception: #{error.inspect}"
             add_warning exception, file: path.to_s
           end
         end

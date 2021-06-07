@@ -91,11 +91,11 @@ module Runners
     def parse_output
       issues = []
 
-      read_report_xml.each_element("file") do |file|
+      read_report_xml.search("file").each do |file|
         filename = file[:name] or raise "Required name: #{file.inspect}"
         path = relative_path(filename)
 
-        file.each_element do |error|
+        file.search("error").each do |error|
           id = error[:source] or raise "Required ID: #{error.inspect}"
           message = error[:message] or raise "Required message: #{error.inspect}"
 
@@ -110,7 +110,7 @@ module Runners
               schema: SCHEMA.issue
             )
           else
-            warning = error.text or raise "Required text: #{error.inspect}"
+            warning = error.content or raise "Required text: #{error.inspect}"
             add_warning warning, file: path.to_path
           end
         end

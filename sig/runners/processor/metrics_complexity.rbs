@@ -13,6 +13,6 @@ module Runners
 
     private
 
-    def construct_file_issues: (REXML::Element) -> Array[Issue]
+    def construct_file_issues: (Nokogiri::XML::Document) -> Array[Issue]
   end
 end

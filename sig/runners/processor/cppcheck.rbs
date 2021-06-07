@@ -36,6 +36,6 @@ module Runners
 
     def step_analyzer: (*String) -> result
 
-    def parse_result: (REXML::Element) { (Issue) -> void } -> void
+    def parse_result: (Nokogiri::XML::Document) { (Issue) -> void } -> void
   end
 end

@@ -53,7 +53,7 @@ module Runners
       _stdout, stderr, status = capture3 analyzer_bin, *analyzer_options
 
       if [0, 1].include? status.exitstatus
-        xml_output = REXML::Document.new(stderr).root
+        xml_output = read_xml(stderr)
         if xml_output
           Results::Success.new(guid: guid, analyzer: analyzer, issues: parse_result(xml_output))
         else
@@ -93,12 +93,12 @@ module Runners
       issue_pattern = /^([^:]+): (.+) \[(.+)\] \[(.+)\]$/
       issues = []
 
-      xml_root.each_element("testcase") do |testcase|
+      xml_root.search("testcase").each do |testcase|
         filename = testcase[:name] or raise "Required name: #{testcase.inspect}"
         path = relative_path(filename)
 
-        testcase.each_element("failure") do |failure|
-          result = failure.text or raise "Required result: #{failure.inspect}"
+        testcase.search("failure").each do |failure|
+          result = failure.content or raise "Required result: #{failure.inspect}"
           result.scan(issue_pattern) do |match|
             line, message, category, confidence = match
             no_line_number = (line == "0" || !line.match?(/\A\d+\z/))

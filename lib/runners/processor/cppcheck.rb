@@ -168,11 +168,11 @@ module Runners
 
     # @see https://github.com/danmar/cppcheck/blob/master/man/manual.md#xml-output
     def parse_result(xml_root)
-      xml_root.each_element("errors/error") do |err|
+      xml_root.search("errors/error").each do |err|
         id = err[:id] or raise "Required id: #{err.inspect}"
         msg = err[:msg] or raise "Required msg: #{err.inspect}"
 
-        err.each_element("location") do |loc|
+        err.search("location").each do |loc|
           file = loc[:file] or raise "Required file: #{loc.inspect}"
           yield Issue.new(
             id: id,

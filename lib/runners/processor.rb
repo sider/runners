@@ -218,7 +218,10 @@ module Runners
     class InvalidXML < SystemError; end
 
     def read_xml(text)
-      root = REXML::Document.new(text).root
+      root = Nokogiri::XML(text) do |config|
+        config.options = Nokogiri::XML::ParseOptions::STRICT
+      end
+
       if root
         root
       else
@@ -226,7 +229,7 @@ module Runners
         trace_writer.error message
         raise InvalidXML, message
       end
-    rescue REXML::ParseException => exn
+    rescue Nokogiri::XML::SyntaxError => exn
       message =
         if exn.cause.instance_of? RuntimeError
           exn.cause.message
