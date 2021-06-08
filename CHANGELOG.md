@@ -29,6 +29,7 @@ Misc:
 - `Runners::Analyzers#github` may return `nil` [#2420](https://github.com/sider/runners/pull/2420)
 - Fix metrics doc links on README [#2423](https://github.com/sider/runners/pull/2423)
 - Drop support for JCenter repository [#2429](https://github.com/sider/runners/pull/2429)
+- **JSHint** Enhance JSHint runner [#2430](https://github.com/sider/runners/pull/2430)
 
 ## 0.49.1
 
