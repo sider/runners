@@ -18,6 +18,7 @@ Updated environments:
 Updated tools:
 
 - **GolangCI-Lint** 1.40.0 -> 1.40.1 [#2379](https://github.com/sider/runners/pull/2379)
+- **hadolint** 2.4.0 -> 2.4.1 [#2380](https://github.com/sider/runners/pull/2380)
 
 Misc:
 
