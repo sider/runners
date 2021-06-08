@@ -15,6 +15,10 @@ Updated environments:
 - **devon_rex** 2.43.2 -> 2.44.1 [#2417](https://github.com/sider/runners/pull/2417) [#2428](https://github.com/sider/runners/pull/2428) ([diff](https://github.com/sider/devon_rex/compare/2.43.2...2.44.1))
 - **Bundler** 2.2.18 -> 2.2.19 [#2417](https://github.com/sider/runners/pull/2417)
 
+Updated tools:
+
+- **GolangCI-Lint** 1.40.0 -> 1.40.1 [#2379](https://github.com/sider/runners/pull/2379)
+
 Misc:
 
 - `Runners::Analyzers#github` may return `nil` [#2420](https://github.com/sider/runners/pull/2420)
