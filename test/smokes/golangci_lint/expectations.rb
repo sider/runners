@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "1.40.0"
+default_version = "1.40.1"
 
 s.add_test(
   "target",
@@ -113,6 +113,7 @@ s.add_test(
   ],
   analyzer: { name: "GolangCI-Lint", version: default_version },
   warnings: [
+    { message: "The linter 'golint' is deprecated (since v1.41.0) due to: The repository of the linter has been archived by the owner.  Replaced by revive.", file: nil },
     { message: "The linter 'interfacer' is deprecated (since v1.38.0) due to: The repository of the linter has been archived by the owner.", file: nil },
     { message: "The linter 'scopelint' is deprecated (since v1.39.0) due to: The repository of the linter has been deprecated by the owner.  Replaced by exportloopref.", file: nil }
   ]
@@ -234,17 +235,6 @@ s.add_test(
       object: { severity: "", replacement: nil },
       git_blame_info: {
         commit: :_, line_hash: "ef19521a896127462566159683262d30dcac3278", original_line: 17, final_line: 17
-      }
-    },
-    {
-      path: "sample.go",
-      location: { start_line: 18, start_column: 6 },
-      id: "golint",
-      message: "don't use underscores in Go names; func redundant_append should be redundantAppend",
-      links: [],
-      object: { severity: "", replacement: nil },
-      git_blame_info: {
-        commit: :_, line_hash: "b37fc2311b8bf5c18ed289e9bb6709cd402f0abe", original_line: 18, final_line: 18
       }
     },
     {
