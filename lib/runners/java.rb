@@ -91,7 +91,8 @@ module Runners
       filename = "build.gradle"
 
       # @see https://docs.gradle.org/current/userguide/declaring_repositories.html
-      repos = ["mavenCentral()", "jcenter()", "google()"].map { |repo| "  #{repo}" }.join("\n")
+      # @see https://blog.gradle.org/jcenter-shutdown
+      repos = ["mavenCentral()", "google()"].map { |repo| "  #{repo}" }.join("\n")
 
       trace_writer.message "Generating #{filename}..." do
         deps = config_jvm_deps.map { |dep| "  implementation '#{dep}'" }.join("\n")
