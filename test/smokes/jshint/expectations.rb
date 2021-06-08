@@ -137,3 +137,10 @@ s.add_test(
   ],
   analyzer: { name: "JSHint", version: default_version }
 )
+
+s.add_test(
+  "no_files",
+  type: "success",
+  issues: [],
+  analyzer: { name: "JSHint", version: default_version }
+)
