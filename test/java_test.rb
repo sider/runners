@@ -22,7 +22,6 @@ class JavaTest < Minitest::Test
         }
         repositories {
           mavenCentral()
-          jcenter()
           google()
         }
         dependencies {
