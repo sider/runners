@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "0.20.2"
+default_version = "0.21.1"
 
 s.add_test(
   "success",
@@ -32,7 +32,7 @@ s.add_test(
       path: "rubocop.slim",
       location: { start_line: 2 },
       id: "RuboCop:Lint/UselessAssignment",
-      message: "Useless assignment to variable - `unused_variable`.",
+      message: "Lint/UselessAssignment: Useless assignment to variable - `unused_variable`.",
       links: %W[
         https://docs.rubocop.org/rubocop/cops_lint.html#lintuselessassignment
         https://github.com/sds/slim-lint/blob/v#{default_version}/lib/slim_lint/linter#rubocop

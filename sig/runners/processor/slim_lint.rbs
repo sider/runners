@@ -23,9 +23,9 @@ module Runners
 
     def setup_slim_lint_config: () -> void
 
-    def parse_result: (String) { (Issue) -> void } -> void
+    def parse_result: (String) -> Array[Issue]
 
-    def build_id: (String?) -> String
+    def build_id: (String?, String) -> String
 
     def build_links: (String?) -> Array[String]
   end

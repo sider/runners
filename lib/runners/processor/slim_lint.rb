@@ -22,7 +22,7 @@ module Runners
     GEM_NAME = "slim_lint".freeze
     REQUIRED_GEM_NAMES = ["rubocop"].freeze
     CONSTRAINTS = {
-      GEM_NAME => Gem::Requirement.new(">= 0.20.2", "< 1.0.0").freeze,
+      GEM_NAME => Gem::Requirement.new(">= 0.21.1", "< 1.0.0").freeze,
     }.freeze
     DEFAULT_TARGET = ".".freeze
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_recommended_slim_lint.yml").to_path.freeze
@@ -66,20 +66,17 @@ module Runners
 
     def analyze(_changes)
       cmd = ruby_analyzer_command(
+        "--reporter=json",
         *(config_linter[:config].then { |config| config ? ["--config", config] : [] }),
         *Array(config_linter[:target] || DEFAULT_TARGET),
       )
 
       stdout, stderr, status = capture3(cmd.bin, *cmd.args)
 
-      # @see https://github.com/sds/slim-lint/blob/v0.20.2/lib/slim_lint/cli.rb#L11-L16
+      # @see https://github.com/sds/slim-lint/blob/v0.21.1/lib/slim_lint/cli.rb#L11-L16
       case status.exitstatus
       when 0, 65
-        Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-          parse_result(stdout) do |issue|
-            result.add_issue(issue)
-          end
-        end
+        Results::Success.new(guid: guid, analyzer: analyzer, issues: parse_result(stdout))
       when 67, 78
         Results::Failure.new(guid: guid, analyzer: analyzer, message: stdout.strip)
       else
@@ -100,41 +97,36 @@ module Runners
     end
 
     def parse_result(output)
-      # NOTE: The Slim-Lint JSON repoter does not output linter names, so we cannot set issue IDs.
-      # @see https://github.com/sds/slim-lint/blob/v0.20.2/lib/slim_lint/reporter/json_reporter.rb
+      JSON.parse(output, symbolize_names: true).fetch(:files).flat_map do |file|
+        path = relative_path(file.fetch(:path))
 
-      # @see https://github.com/sds/slim-lint/blob/v0.20.2/lib/slim_lint/reporter/default_reporter.rb
-      pattern = /^(.+):(\d+) \[(E|W)\] (?:(.+): )?(.+)$/
-      severities = { "E" => "error", "W" => "warning" }
+        # @see https://github.com/sds/slim-lint/blob/v0.21.1/lib/slim_lint/reporter/json_reporter.rb#L42-L49
+        file.fetch(:offenses).map do |offense|
+          message = offense.fetch(:message)
+          issue_id = build_id(offense.fetch(:linter), message)
 
-      output.scan(pattern) do |path, line, severity, id, message|
-        path.is_a?(String) or raise
-        line.is_a?(String) or raise
-        severity.is_a?(String) or raise
-        message.is_a?(String) or raise
-
-        issue_id = build_id(id)
-
-        yield Issue.new(
-          path: relative_path(path),
-          location: Location.new(start_line: line),
-          id: issue_id,
-          message: message,
-          links: build_links(issue_id),
-          object: {
-            severity: severities.fetch(severity),
-          },
-          schema: SCHEMA.issue,
-        )
+          Issue.new(
+            path: path,
+            location: Location.new(start_line: offense.fetch(:location).fetch(:line)),
+            id: issue_id,
+            message: message,
+            links: build_links(issue_id),
+            object: {
+              severity: offense.fetch(:severity),
+            },
+            schema: SCHEMA.issue,
+          )
+        end
       end
     end
 
-    def build_id(id)
-      case
-      when id.nil?
+    def build_id(id, message)
+      case id
+      when nil
         MISSING_ID
-      when id.start_with?("RuboCop:")
-        id.delete(" ")
+      when "RuboCop"
+        cop = message.match(/\A(?<cop>\S+\/\S+): /) { |m| m[:cop] }
+        cop ? "#{id}:#{cop}" : id
       else
         id
       end
