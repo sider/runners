@@ -1,4 +1,4 @@
-'use strict';
+// jshint regexpu:true
 
 class Foo {
   constructor(name) {
@@ -7,6 +7,7 @@ class Foo {
 
   hello() {
     console.log(`Hello, ${this.name}.`);
+    return /a/;
   }
 }
 

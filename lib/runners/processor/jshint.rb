@@ -11,6 +11,10 @@ module Runners
         dir: target, # alias for `target`
         config: string?,
       )
+
+      let :issue, object(
+        severity: string,
+      )
     end
 
     register_config_schema SCHEMA.config
@@ -18,6 +22,7 @@ module Runners
     DEFAULT_TARGET = ".".freeze
     DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / 'sider_jshintrc').to_path.freeze
     DEFAULT_IGNORE_FILE = (Pathname(Dir.home) / 'sider_jshintignore').to_path.freeze
+    CUSTOM_JSON_REPORTER = (Pathname(Dir.home) / 'custom-json-reporter.js').to_path.freeze
 
     def self.config_example
       <<~'YAML'
@@ -27,24 +32,32 @@ module Runners
       YAML
     end
 
-    def analyze(changes)
-      prepare_config
+    def setup
+      # @see https://jshint.com/docs/
+      jshintrc = current_dir / '.jshintrc'
+      if !jshintrc.exist? && !jshint_config_in_package_json?
+        FileUtils.copy_file DEFAULT_CONFIG_FILE, jshintrc
+      end
 
+      jshintignore = current_dir / '.jshintignore'
+      if !jshintignore.exist?
+        FileUtils.copy_file DEFAULT_IGNORE_FILE, jshintignore
+      end
+
+      yield
+    end
+
+    def analyze(_changes)
       args = []
-      args << "--reporter=checkstyle"
-      args << "--config=#{config_path}" if config_path
+      args << "--reporter" << CUSTOM_JSON_REPORTER
+      jshint_config_path&.tap { |path| args << "--config" << path }
       args += Array(config_linter[:target] || config_linter[:dir] || DEFAULT_TARGET)
+
       stdout, _stderr, status = capture3(analyzer_bin, *args)
 
       case status.exitstatus
-      when 0
-        Results::Success.new(guid: guid, analyzer: analyzer)
-      when 2
-        begin
-          Results::Success.new(guid: guid, analyzer: analyzer, issues: parse_result(stdout))
-        rescue InvalidXML => exn
-          Results::Failure.new(guid: guid, analyzer: analyzer, message: exn.message)
-        end
+      when 0, 2
+        Results::Success.new(guid: guid, analyzer: analyzer, issues: parse_result(stdout))
       else
         Results::Failure.new(guid: guid, analyzer: analyzer)
       end
@@ -52,49 +65,30 @@ module Runners
 
     private
 
-    def prepare_config
-      return if jshintrc_exist?
-
-      FileUtils.copy_file(DEFAULT_CONFIG_FILE, current_dir / '.jshintrc')
-      FileUtils.copy_file(DEFAULT_IGNORE_FILE, current_dir / '.jshintignore')
-    end
-
-    def jshintrc_exist?
-      return true if config_path
-      return true if (current_dir / '.jshintrc').exist? || (current_dir / '.jshintignore').exist?
-
-      begin
-        return true if package_json_path.exist? && package_json[:jshintConfig]
-      rescue JSON::ParserError => exn
-        add_warning "`package.json` is broken: #{exn.message}", file: "package.json"
-      end
-
+    def jshint_config_in_package_json?
+      package_json_path.file? && package_json[:jshintConfig]
+    rescue JSON::ParserError => exn
+      add_warning "`#{PACKAGE_JSON}` is broken: #{exn.message}", file: PACKAGE_JSON
       false
     end
 
-    def config_path
+    def jshint_config_path
       config_linter[:config]
     end
 
     def parse_result(output)
-      issues = []
-
-      read_xml(output).each_element("file") do |file|
-        filename = file[:name] or raise "required file: #{file.inspect}"
-
-        file.each_element do |error|
-          message = error[:message] or raise "required message: #{error.inspect}"
-
-          issues << Issue.new(
-            path: relative_path(filename),
-            location: Location.new(start_line: error[:line], start_column: error[:column]),
-            id: error[:source],
-            message: message.strip,
-          )
-        end
+      JSON.parse(output, symbolize_names: true).fetch(:issues).map do |issue|
+        Issue.new(
+          id: issue.fetch(:code),
+          message: issue.fetch(:message),
+          path: relative_path(issue.fetch(:file)),
+          location: Location.new(start_line: issue.fetch(:line), start_column: issue.fetch(:column)),
+          object: {
+            severity: issue.fetch(:severity),
+          },
+          schema: SCHEMA.issue,
+        )
       end
-
-      issues
     end
   end
 end

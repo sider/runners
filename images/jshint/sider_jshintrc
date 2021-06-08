@@ -1,20 +1,35 @@
+// https://jshint.com/docs/options/
 {
-  // TODO: Enable Enforcing options
-  // "unused": true,
-  // "undef": true,
+  // Enforcing
+  "bitwise": true,
+  "eqeqeq": true,
+  "esversion": 8,
+  "forin": true,
+  "freeze": true,
+  "globals": {},
+  "leanswitch": true,
+  "maxcomplexity": 50,
+  "maxdepth": 20,
+  "maxerr": 1000,
+  "maxparams": 20,
+  "maxstatements": 500,
+  "noarg": true,
+  "nocomma": true,
+  "nonbsp": true,
+  "unused": true,
 
-  // Relaxes
+  // Relaxing
   "asi": true,
-  "sub": true,
   "eqnull": true,
 
   // Environments
-  "jquery": true,
   "browser": true,
-
-  // TODO: Specific your global variables
-  "globals": {
-  },
-
-  "esversion": 2015
+  "devel": true,
+  "jasmine": true,
+  "jquery": true,
+  "mocha": true,
+  "module": true,
+  "node": true,
+  "typed": true,
+  "worker": true
 }

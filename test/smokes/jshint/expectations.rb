@@ -9,10 +9,10 @@ s.add_test(
     {
       path: "src/index.js",
       location: { start_line: 3, start_column: 1 },
-      id: "jshint.W067",
+      id: "W067",
       message: "Unorthodox function invocation.",
       links: [],
-      object: nil,
+      object: { severity: "warning" },
       git_blame_info: {
         commit: :_, line_hash: "b419b61355f047cf4b8d3bcceacb6f671bcdd5b1", original_line: 3, final_line: 3
       }
@@ -27,35 +27,13 @@ s.add_test(
   issues: [
     {
       path: "index.js",
-      location: { start_line: 1, start_column: 1 },
-      id: "jshint.W097",
-      message: 'Use the function form of "use strict".',
+      location: { start_line: 10, start_column: 12 },
+      id: "W147",
+      message: "Regular expressions should include the 'u' flag.",
       links: [],
-      object: nil,
+      object: { severity: "warning" },
       git_blame_info: {
-        commit: :_, line_hash: "89b72153bd7e6390415ba25b9b5fbe750e6e16d5", original_line: 1, final_line: 1
-      }
-    },
-    {
-      path: "index.js",
-      location: { start_line: 9, start_column: 5 },
-      id: "jshint.W117",
-      message: "'console' is not defined.",
-      links: [],
-      object: nil,
-      git_blame_info: {
-        commit: :_, line_hash: "4fcccde0e9f839fae12b97b5e3e6064fa5a60bc6", original_line: 9, final_line: 9
-      }
-    },
-    {
-      path: "index.js",
-      location: { start_line: 16, start_column: 3 },
-      id: "jshint.W117",
-      message: "'console' is not defined.",
-      links: [],
-      object: nil,
-      git_blame_info: {
-        commit: :_, line_hash: "9c73ee33849055aae0cbc3e48e46a1d8851db037", original_line: 16, final_line: 16
+        commit: :_, line_hash: "ca4b2c9ee4f84e77d3adaebb8c6a88eb5250c811", original_line: 10, final_line: 10
       }
     }
   ],
@@ -69,10 +47,10 @@ s.add_test(
     {
       path: "src/app.js",
       location: { start_line: 3, start_column: 1 },
-      id: "jshint.W067",
+      id: "W067",
       message: "Unorthodox function invocation.",
       links: [],
-      object: nil,
+      object: { severity: "warning" },
       git_blame_info: {
         commit: :_, line_hash: "b419b61355f047cf4b8d3bcceacb6f671bcdd5b1", original_line: 3, final_line: 3
       }
@@ -95,10 +73,10 @@ s.add_test(
     {
       message: "Unorthodox function invocation.",
       links: [],
-      id: "jshint.W067",
+      id: "W067",
       path: "src/index.js",
       location: { start_line: 3, start_column: 1 },
-      object: nil,
+      object: { severity: "warning" },
       git_blame_info: {
         commit: :_, line_hash: "b419b61355f047cf4b8d3bcceacb6f671bcdd5b1", original_line: 3, final_line: 3
       }
@@ -116,8 +94,46 @@ s.add_test(
 )
 
 s.add_test(
-  "invalid_output_xml",
-  type: "failure",
-  message: 'Illegal character "\\u0000" in raw string "Unexpected &apos;\\u0000&apos;."',
+  "invalid_character",
+  type: "success",
+  issues: [], # handled as a binary file, so considered as no changes
+  analyzer: { name: "JSHint", version: default_version }
+)
+
+s.add_test(
+  "syntax_error",
+  type: "success",
+  issues: [
+    {
+      message: "Unexpected early end of program.",
+      links: [],
+      id: "E006",
+      path: "foo.js",
+      location: { start_line: 1, start_column: 6 },
+      object: { severity: "error" },
+      git_blame_info: {
+        commit: :_, line_hash: "136d962ebe6eb8336c5826e7e91fe503f918ec54", original_line: 1, final_line: 1
+      }
+    }
+  ],
+  analyzer: { name: "JSHint", version: default_version }
+)
+
+s.add_test(
+  "with_package_json_config",
+  type: "success",
+  issues: [
+    {
+      message: "'class' is available in ES6 (use 'esversion: 6') or Mozilla JS extensions (use moz).",
+      links: [],
+      id: "W104",
+      path: "foo.js",
+      location: { start_line: 1, start_column: 1 },
+      object: { severity: "warning" },
+      git_blame_info: {
+        commit: :_, line_hash: "313d20acfe186ea3594870fc6d56c119f658fef2", original_line: 1, final_line: 1
+      }
+    }
+  ],
   analyzer: { name: "JSHint", version: default_version }
 )

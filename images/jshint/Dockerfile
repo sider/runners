@@ -33,6 +33,7 @@ ENV NODE_PATH ${RUNNERS_DEPS_DIR}/node_modules:${NODE_PATH}
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} \
      images/jshint/sider_jshintignore \
      images/jshint/sider_jshintrc \
+     images/jshint/custom-json-reporter.js \
      ${RUNNER_USER_HOME}/
 
 

@@ -6,20 +6,20 @@ module Runners
       include Schema::ConfigTypes
 
       def config: () -> StrongJSON::Type::Object[untyped]
+      def issue: () -> StrongJSON::Type::Object[untyped]
     end
     SCHEMA: SchemaClass
 
     DEFAULT_TARGET: String
     DEFAULT_CONFIG_FILE: String
     DEFAULT_IGNORE_FILE: String
+    CUSTOM_JSON_REPORTER: String
 
     private
 
-    def prepare_config: () -> void
+    def jshint_config_in_package_json?: () -> bool
 
-    def jshintrc_exist?: () -> bool
-
-    def config_path: () -> String?
+    def jshint_config_path: () -> String?
 
     def parse_result: (String) -> Array[Issue]
   end
