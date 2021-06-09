@@ -18,7 +18,7 @@ PATH
       git_diff_parser (>= 3.2)
       json (>= 2.5)
       jsonseq (>= 0.2)
-      nokogiri (>= 1.11.7)
+      nokogiri (>= 1.11)
       open3 (>= 0.1)
       parallel (>= 1.20)
       psych (>= 3.2, < 4.0)

@@ -10,7 +10,6 @@ require "uri"
 require "json"
 require "jsonseq"
 require "strong_json"
-require "nokogiri"
 
 require_relative "../lib/runners/schema/result"
 
