@@ -17,6 +17,7 @@ Updated environments:
 
 Updated tools:
 
+- **Brakeman** 5.0.1 -> 5.0.4 [#2433](https://github.com/sider/runners/pull/2433)
 - **Checkstyle** 8.42 -> 8.43 [#2407](https://github.com/sider/runners/pull/2407)
 - **cpplint** 1.5.4 -> 1.5.5 [#2392](https://github.com/sider/runners/pull/2392)
 - **detekt** 1.16.0 -> 1.17.1 [#2397](https://github.com/sider/runners/pull/2397)
