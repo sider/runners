@@ -5,7 +5,6 @@ module Runners
     class SchemaClass < StrongJSON
       include Schema::ConfigTypes
 
-      def available_languages: () -> StrongJSON::Type::Enum[untyped]
       def config: () -> StrongJSON::Type::Object[untyped]
       def issue: () -> StrongJSON::Type::Object[untyped]
     end
@@ -13,11 +12,14 @@ module Runners
 
     DEFAULT_MINIMUM_TOKENS: Integer
     DEFAULT_TARGET: String
-    DEFAULT_LANGUAGE: Array[String]
+    DEFAULT_LANGUAGES: Array[String]
+    SUPPORTED_LANGUAGES: Array[String]
 
     attr_accessor force_option_skip_lexical_errors: bool
 
     private
+
+    def all_supported_languages: () -> Array[String]
 
     def raise_warnings: (String) -> void
 
