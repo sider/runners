@@ -219,7 +219,7 @@ module Runners
 
     def read_xml(text)
       root = Nokogiri::XML(text) do |config|
-        config.options = Nokogiri::XML::ParseOptions::STRICT
+        config.strict
       end
 
       if root
