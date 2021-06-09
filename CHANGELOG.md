@@ -37,6 +37,7 @@ Misc:
 - Fix metrics doc links on README [#2423](https://github.com/sider/runners/pull/2423)
 - Drop support for JCenter repository [#2429](https://github.com/sider/runners/pull/2429)
 - **JSHint** Enhance JSHint runner [#2430](https://github.com/sider/runners/pull/2430)
+- **PHPMD** Replace XML reporter with JSON one [#2435](https://github.com/sider/runners/pull/2435)
 
 ## 0.49.1
 
