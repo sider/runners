@@ -221,14 +221,6 @@ module Runners
       doc = Nokogiri::XML(text) do |config|
         config.strict
       end
-
-      if doc
-        doc
-      else
-        message = "Invalid XML: #{text.inspect}"
-        trace_writer.error message
-        raise InvalidXML, message
-      end
     rescue Nokogiri::XML::SyntaxError => exn
       message =
         if exn.cause.instance_of? RuntimeError
