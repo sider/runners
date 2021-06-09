@@ -218,12 +218,12 @@ module Runners
     class InvalidXML < SystemError; end
 
     def read_xml(text)
-      root = Nokogiri::XML(text) do |config|
+      doc = Nokogiri::XML(text) do |config|
         config.strict
       end
 
-      if root
-        root
+      if doc
+        doc
       else
         message = "Invalid XML: #{text.inspect}"
         trace_writer.error message
