@@ -20,11 +20,13 @@ Updated tools:
 - **Checkstyle** 8.42 -> 8.43 [#2407](https://github.com/sider/runners/pull/2407)
 - **cpplint** 1.5.4 -> 1.5.5 [#2392](https://github.com/sider/runners/pull/2392)
 - **detekt** 1.16.0 -> 1.17.1 [#2397](https://github.com/sider/runners/pull/2397)
+- **ESLint** 7.26.0 -> 7.28.0 [#2426](https://github.com/sider/runners/pull/2426)
 - **GolangCI-Lint** 1.40.0 -> 1.40.1 [#2379](https://github.com/sider/runners/pull/2379)
 - **hadolint** 2.4.0 -> 2.4.1 [#2380](https://github.com/sider/runners/pull/2380)
 - **JSHint** 2.12.0 -> 2.13.0 [#2402](https://github.com/sider/runners/pull/2402)
 - **PMD Java** 6.34.0 -> 6.35.0 [#2406](https://github.com/sider/runners/pull/2406)
 - **Pylint** 2.8.2 -> 2.8.3 [#2425](https://github.com/sider/runners/pull/2425)
+- **RuboCop** 1.14.0 -> 1.16.0 [#2416](https://github.com/sider/runners/pull/2416)
 - **Slim-Lint** 0.20.2 -> 0.21.1 [#2400](https://github.com/sider/runners/pull/2400)
 
 Misc:
