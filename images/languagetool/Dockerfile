@@ -27,15 +27,11 @@ ARG LANGUAGETOOL_VERSION=5.3
 RUN cd "${RUNNER_USER_HOME}" && \
     curl -sSLO --compressed https://languagetool.org/download/LanguageTool-${LANGUAGETOOL_VERSION}.zip && \
     unzip -q LanguageTool-${LANGUAGETOOL_VERSION}.zip && \
-    rm LanguageTool-${LANGUAGETOOL_VERSION}.zip && \
-    mv LanguageTool-${LANGUAGETOOL_VERSION} LanguageTool
+    rm LanguageTool-${LANGUAGETOOL_VERSION}.zip
 
-ARG LANGUAGETOOL_HOME=${RUNNER_USER_HOME}/LanguageTool
+ENV CLASSPATH ${RUNNER_USER_HOME}/LanguageTool-${LANGUAGETOOL_VERSION}/*:${CLASSPATH}
 
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/languagetool/languagetool ${LANGUAGETOOL_HOME}/
-
-ENV CLASSPATH ${LANGUAGETOOL_HOME}/*:${CLASSPATH}
-ENV PATH ${LANGUAGETOOL_HOME}:${PATH}
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/languagetool/languagetool images/runjava ${RUNNER_USER_BIN}/
 
 
 # Copy the main source code
