@@ -2,6 +2,9 @@ FROM sider/devon_rex_java:2.44.1
 
 <%= render_erb 'images/Dockerfile.base.erb' %>
 
+# Copy wrapper script
+COPY --chown=<%= chown %> images/runjava ${RUNNER_USER_BIN}/
+
 # Install dependencies via Gradle
 COPY --chown=<%= chown %> images/<%= analyzer %>/build.gradle ${RUNNERS_DEPS_DIR}/
 RUN cd "${RUNNERS_DEPS_DIR}" && \
@@ -12,4 +15,3 @@ RUN cd "${RUNNERS_DEPS_DIR}" && \
     gradle --no-build-cache --parallel --quiet installDeps && \
     rm build.gradle
 ENV CLASSPATH ${RUNNERS_DEPS_DIR}/*:${CLASSPATH}
-ENV JAVA_TOOL_OPTIONS "-XX:MaxRAMPercentage=50"

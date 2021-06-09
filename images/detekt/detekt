@@ -1,3 +1,3 @@
 #!/bin/bash
 
-exec java io.gitlab.arturbosch.detekt.cli.Main "$@"
+exec runjava io.gitlab.arturbosch.detekt.cli.Main "$@"

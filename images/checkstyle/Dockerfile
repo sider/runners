@@ -22,6 +22,9 @@ RUN cd "${RUNNERS_DIR}" && \
     lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler.locked_gems.bundler_version') && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
+# Copy wrapper script
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/runjava ${RUNNER_USER_BIN}/
+
 # Install dependencies via Gradle
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/checkstyle/build.gradle ${RUNNERS_DEPS_DIR}/
 RUN cd "${RUNNERS_DEPS_DIR}" && \
@@ -32,7 +35,6 @@ RUN cd "${RUNNERS_DEPS_DIR}" && \
     gradle --no-build-cache --parallel --quiet installDeps && \
     rm build.gradle
 ENV CLASSPATH ${RUNNERS_DEPS_DIR}/*:${CLASSPATH}
-ENV JAVA_TOOL_OPTIONS "-XX:MaxRAMPercentage=50"
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/checkstyle/checkstyle ${RUNNER_USER_BIN}/
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/checkstyle/sider_recommended_checkstyle.xml ${RUNNER_USER_HOME}/
