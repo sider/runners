@@ -119,7 +119,9 @@ module Runners
               location: Location.new(start_line: violation.fetch(:beginLine), end_line: violation.fetch(:endLine)),
               id: violation.fetch(:rule),
               message: violation.fetch(:description),
-              links: Array(violation.fetch(:externalInfoUrl)).reject(&:empty?),
+              links: violation.fetch(:externalInfoUrl).then do |link|
+                (link.nil? || link.empty?) ? [] : [link]
+              end,
             )
           end
         end
