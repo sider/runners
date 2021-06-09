@@ -39,23 +39,20 @@ module Runners
     end
 
     def pmd_help
-      @pmd_help ||=
-        begin
-          # NOTE: Both PMD and CPD support the `-h` option.
-          stdout, _ = capture3!(analyzer_bin, "-h", trace_stdout: false,
-                                is_success: ->(status) { [0, 1].include?(status.exitstatus) })
-          stdout
-        end
+      # NOTE: Both PMD and CPD support the `-h` option.
+      stdout, _ = capture3! analyzer_bin, "-h", trace_stdout: false, is_success: ->(status) { [0, 1].include?(status.exitstatus) }
+      stdout
     end
 
     # NOTE: PMD does not provide a CLI option to show its version.
     def pmd_version
-      version = pmd_help.match(%r{pmd-bin-(?<version>[\d.]+)/bin/}) { |m| m[:version] }
+      help = pmd_help
+      version = help.match(%r{pmd-bin-(?<version>[\d.]+)/bin/}) { |m| m[:version] }
       if version
         trace_writer.message "PMD version: #{version}"
         version
       else
-        raise "Could not find a PMD version:\n#{pmd_help}"
+        raise "Could not find a PMD version:\n#{help}"
       end
     end
 

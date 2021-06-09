@@ -143,11 +143,12 @@ module Runners
     def all_supported_languages
       @all_supported_languages ||=
         begin
-          langs = pmd_help.match(/Supported languages: \[(?<langs>.+)\]/) { |m| m[:langs] }
+          help = pmd_help
+          langs = help.match(/Supported languages: \[(?<langs>.+)\]/) { |m| m[:langs] }
           if langs
             langs.split(",").map(&:strip)
           else
-            raise "Could not find supported languages:\n#{pmd_help}"
+            raise "Could not find supported languages:\n#{help}"
           end
         end
     end
