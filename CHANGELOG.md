@@ -17,6 +17,7 @@ Updated environments:
 
 Updated tools:
 
+- **Brakeman** 5.0.1 -> 5.0.4 [#2433](https://github.com/sider/runners/pull/2433)
 - **Checkstyle** 8.42 -> 8.43 [#2407](https://github.com/sider/runners/pull/2407)
 - **cpplint** 1.5.4 -> 1.5.5 [#2392](https://github.com/sider/runners/pull/2392)
 - **detekt** 1.16.0 -> 1.17.1 [#2397](https://github.com/sider/runners/pull/2397)
@@ -31,6 +32,7 @@ Updated tools:
 
 Misc:
 
+- Replace `JAVA_TOOL_OPTIONS` [#2434](https://github.com/sider/runners/pull/2434)
 - `Runners::Analyzers#github` may return `nil` [#2420](https://github.com/sider/runners/pull/2420)
 - Fix metrics doc links on README [#2423](https://github.com/sider/runners/pull/2423)
 - Drop support for JCenter repository [#2429](https://github.com/sider/runners/pull/2429)
