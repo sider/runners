@@ -82,7 +82,7 @@ module Runners
       _stdout, stderr, status = capture3(
         analyzer_bin,
         target_dirs,
-        "xml",
+        "json",
         rule,
         "--ignore-violations-on-exit",
         "--ignore-errors-on-exit",
@@ -103,39 +103,32 @@ module Runners
         end
       end
 
-      begin
-        xml_root = read_report_xml
-      rescue InvalidXML => exn
-        return Results::Failure.new(guid: guid, analyzer: analyzer, message: exn.message)
-      end
-
-      raise "XML must not be empty" unless xml_root
+      json = read_report_json
 
       Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
         # Note: See below to view the XML schema:
         #
-        # @see https://github.com/phpmd/phpmd/blob/2.9.1/src/main/php/PHPMD/Renderer/XMLRenderer.php
+        # @see https://github.com/phpmd/phpmd/blob/2.10.1/src/main/php/PHPMD/Renderer/JSONRenderer.php
 
-        xml_root.each_element('file') do |file|
-          filename = file[:name] or raise "Filename must be present: #{file.inspect}"
-          path = relative_path(filename)
+        json.fetch(:files, []).each do |file|
+          path = relative_path(file.fetch(:file))
 
-          file.each_element('violation') do |violation|
-            message = violation.text or raise "Message must be present: #{violation.inspect}"
-
+          file.fetch(:violations).each do |violation|
             result.add_issue Issue.new(
               path: path,
-              location: Location.new(start_line: violation[:beginline], end_line: violation[:endline]),
-              id: violation[:rule],
-              message: message.strip,
-              links: violation[:externalInfoUrl].then { |url| url ? [url] : [] },
+              location: Location.new(start_line: violation.fetch(:beginLine), end_line: violation.fetch(:endLine)),
+              id: violation.fetch(:rule),
+              message: violation.fetch(:description),
+              links: violation.fetch(:externalInfoUrl).then do |link|
+                (link.nil? || link.empty?) ? [] : [link]
+              end,
             )
           end
         end
 
-        xml_root.each_element('error') do |error|
-          filename = error[:filename] or raise "Filename must be present: #{error.inspect}"
-          message = error[:msg] or raise "Message must be present: #{error.inspect}"
+        json.fetch(:errors, []).each do |error|
+          filename = error.fetch(:fileName)
+          message = error.fetch(:message)
 
           if filename.empty?
             add_warning message
