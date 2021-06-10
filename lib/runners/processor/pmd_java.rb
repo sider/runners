@@ -100,13 +100,13 @@ module Runners
     def construct_result
       # https://github.com/pmd/pmd.github.io/blob/8b0c31ff8e18215ed213b7df400af27b9137ee67/report_2_0_0.xsd
 
-      read_report_xml.root.children.each do |element|
+      read_report_xml.root.elements.each do |element|
         case element.name
         when "file"
           filename = element[:name] or raise "Unexpected element: #{element.inspect}"
           path = relative_path(filename)
 
-          element.search("violation").each do |violation|
+          element.elements.each do |violation|
             message = violation.content or raise "required message: #{violation.inspect}"
 
             yield Issue.new(

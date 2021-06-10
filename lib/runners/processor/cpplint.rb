@@ -91,15 +91,15 @@ module Runners
     #
     # @see https://github.com/cpplint/cpplint/blob/1.5.2/cpplint.py#L1396
     # @see https://github.com/cpplint/cpplint/blob/1.5.2/cpplint.py#L1686-L1693
-    def parse_result(xml_root)
+    def parse_result(xml_doc)
       issue_pattern = /^([^:]+): (.+) \[(.+)\] \[(.+)\]$/
       issues = []
 
-      xml_root.search("testcase").each do |testcase|
+      xml_doc.root.elements.each do |testcase|
         filename = testcase[:name] or raise "Required name: #{testcase.inspect}"
         path = relative_path(filename)
 
-        testcase.search("failure").each do |failure|
+        testcase.elements.each do |failure|
           result = failure.content or raise "Required result: #{failure.inspect}"
           result.scan(issue_pattern) do |match|
             line, message, category, confidence = match
