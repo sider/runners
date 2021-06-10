@@ -7,10 +7,11 @@ repositories {
 }
 
 dependencies {
-    implementation "net.sourceforge.pmd:pmd-dist:6.34.0"
+    implementation "net.sourceforge.pmd:pmd-dist:6.35.0"
 
     // Additional languages not included in `pmd-dist`
-    implementation "net.sourceforge.pmd:pmd-apex:6.34.0"
-    implementation "net.sourceforge.pmd:pmd-scala_2.13:6.34.0"
-    implementation "net.sourceforge.pmd:pmd-visualforce:6.34.0"
+    implementation "net.sourceforge.pmd:pmd-apex:6.35.0"
+    implementation "net.sourceforge.pmd:pmd-javascript:6.35.0"
+    implementation "net.sourceforge.pmd:pmd-scala_2.13:6.35.0"
+    implementation "net.sourceforge.pmd:pmd-visualforce:6.35.0"
 }

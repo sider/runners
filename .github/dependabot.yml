@@ -65,6 +65,8 @@ updates:
       timezone: Asia/Tokyo
     open-pull-requests-limit: 10
     labels: ["dependencies", "language: java"]
+    allow:
+      - dependency-name: "*pmd-dist*"
 
   - package-ecosystem: gradle
     directory: "/images/pmd_java"
