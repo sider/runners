@@ -178,9 +178,10 @@ s.add_test(
 
 s.add_test(
   "invalid_output_xml",
-  type: "failure",
-  message: "3:45: FATAL: PCDATA invalid Char value 16",
-  analyzer: { name: "PHPMD", version: default_version }
+  type: "success",
+  issues: [],
+  analyzer: { name: "PHPMD", version: default_version },
+  warnings: [{ message: %r{Unexpected token: \u0010, line: 3, col: 7, file: /home/analyzer_runner/project/test.php}, file: nil }]
 )
 
 s.add_test(
