@@ -47,10 +47,10 @@ module Runners
         filepath_attr = elem[:name] or raise "Required name: #{elem.inspect}"
         filepath = relative_path(filepath_attr)
 
-        ccn_text = elem.elements[2].content or raise "Required text: #{elem.elements[2].inspect}"
+        ccn_text = elem.elements[2]&.content or raise "Required text: #{elem.elements[2].inspect}"
         sum_of_CCN = Integer(ccn_text)
 
-        functions_text = elem.elements[3].content or raise "Required text: #{elem.elements[3].inspect}"
+        functions_text = elem.elements[3]&.content or raise "Required text: #{elem.elements[3].inspect}"
         functions = Integer(functions_text)
 
         msg = "The sum of complexity of total #{functions} function(s) is #{sum_of_CCN}."

@@ -218,7 +218,7 @@ module Runners
     class InvalidXML < SystemError; end
 
     def read_xml(text)
-      doc = Nokogiri::XML(text) do |config|
+      Nokogiri::XML(text).root do |config|
         config.strict
       end
     rescue Nokogiri::XML::SyntaxError => exn
