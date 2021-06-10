@@ -59,7 +59,7 @@ module Runners
           end
 
           Results::Success.new(guid: guid, analyzer: analyzer, issues: parse_result(xml_doc))
-        rescue Nokogiri::XML::SyntaxError => exn
+        rescue Nokogiri::XML::SyntaxError
           Results::Failure.new(guid: guid, analyzer: analyzer)
         end
       else
