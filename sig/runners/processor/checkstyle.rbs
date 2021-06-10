@@ -18,7 +18,7 @@ module Runners
 
     def checkstyle_args: () -> Array[String]
 
-    def construct_result: (REXML::Element) { (Issue) -> void } -> void
+    def construct_result: (Nokogiri::XML::Document) { (Issue) -> void } -> void
 
     def normalize_id: (String) -> String
 

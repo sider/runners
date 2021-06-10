@@ -95,6 +95,16 @@
   diagnostics:
   - range:
       start:
+        line: 112
+        character: 12
+      end:
+        line: 112
+        character: 16
+    severity: ERROR
+    message: Cannot jump from here
+    code: Ruby::UnexpectedJump
+  - range:
+      start:
         line: 184
         character: 10
       end:
@@ -209,10 +219,20 @@
     code: Ruby::ArgumentTypeMismatch
   - range:
       start:
-        line: 255
+        line: 227
+        character: 20
+      end:
+        line: 227
+        character: 27
+    severity: ERROR
+    message: Type `(::Exception | nil)` does not have method `message`
+    code: Ruby::NoMethod
+  - range:
+      start:
+        line: 250
         character: 45
       end:
-        line: 255
+        line: 250
         character: 50
     severity: ERROR
     message: Type `(::String | ::Array[::String] | nil)` does not have method `split`

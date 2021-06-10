@@ -14,4 +14,5 @@ target :lib do
   library "rubygems"
   library "strong_json"
   library "retryable"
+  library "nokogiri"
 end

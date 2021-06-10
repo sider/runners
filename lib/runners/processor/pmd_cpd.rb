@@ -166,8 +166,8 @@ module Runners
       #       The PMD CPD writes an XML report as UTF-8 with the inconsistent encoding attribute value when the --encoding option is specified.
       stdout.sub!(/<\?xml version="1\.0" encoding=".+"\?>/, '<?xml version="1.0" encoding="UTF-8"?>')
 
-      read_xml(stdout).each_element('duplication') do |elem_dupli|
-        files = elem_dupli.get_elements('file').map{ |f| to_fileinfo(f) }
+      read_xml(stdout).root.elements.each do |elem_dupli|
+        files = elem_dupli.search('file').map{ |f| to_fileinfo(f) }
 
         files.each do |file|
           yield Issue.new(
@@ -204,7 +204,7 @@ module Runners
       tokens_text = elem_dupli[:tokens] or raise "required tokens: #{elem_dupli.inspect}"
       tokens = Integer(tokens_text)
 
-      codefragment = elem_dupli.elements['codefragment']&.cdatas&.first&.value
+      codefragment = elem_dupli.search('codefragment').first&.content
       codefragment or raise "required codefragment: #{elem_dupli.inspect}"
 
       fileobjs = files.map do |f|

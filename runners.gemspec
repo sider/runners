@@ -31,7 +31,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "json", ">= 2.5"
   spec.add_dependency "open3", ">= 0.1"
   spec.add_dependency "psych", ">= 3.2", "< 4.0" # yaml
-  spec.add_dependency "rexml", ">= 3.2"
   spec.add_dependency "strscan", ">= 3.0"
 
   # 3rd-party libraries
@@ -39,6 +38,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "bugsnag", ">= 6.18"
   spec.add_dependency "git_diff_parser", ">= 3.2"
   spec.add_dependency "jsonseq", ">= 0.2"
+  spec.add_dependency "nokogiri", ">= 1.11"
   spec.add_dependency "parallel", ">= 1.20"
   spec.add_dependency "retryable", ">= 3.0"
   spec.add_dependency "strong_json", ">= 2.1"

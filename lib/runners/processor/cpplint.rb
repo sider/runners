@@ -53,10 +53,13 @@ module Runners
       _stdout, stderr, status = capture3 analyzer_bin, *analyzer_options
 
       if [0, 1].include? status.exitstatus
-        xml_output = REXML::Document.new(stderr).root
-        if xml_output
-          Results::Success.new(guid: guid, analyzer: analyzer, issues: parse_result(xml_output))
-        else
+        begin
+          xml_doc = Nokogiri::XML(stderr) do |config|
+            config.strict
+          end
+
+          Results::Success.new(guid: guid, analyzer: analyzer, issues: parse_result(xml_doc))
+        rescue Nokogiri::XML::SyntaxError
           Results::Failure.new(guid: guid, analyzer: analyzer)
         end
       else
@@ -89,16 +92,16 @@ module Runners
     #
     # @see https://github.com/cpplint/cpplint/blob/1.5.2/cpplint.py#L1396
     # @see https://github.com/cpplint/cpplint/blob/1.5.2/cpplint.py#L1686-L1693
-    def parse_result(xml_root)
+    def parse_result(xml_doc)
       issue_pattern = /^([^:]+): (.+) \[(.+)\] \[(.+)\]$/
       issues = []
 
-      xml_root.each_element("testcase") do |testcase|
+      xml_doc.root.elements.each do |testcase|
         filename = testcase[:name] or raise "Required name: #{testcase.inspect}"
         path = relative_path(filename)
 
-        testcase.each_element("failure") do |failure|
-          result = failure.text or raise "Required result: #{failure.inspect}"
+        testcase.elements.each do |failure|
+          result = failure.content or raise "Required result: #{failure.inspect}"
           result.scan(issue_pattern) do |match|
             line, message, category, confidence = match
             no_line_number = (line == "0" || !line.match?(/\A\d+\z/))

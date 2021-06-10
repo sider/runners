@@ -43,14 +43,14 @@ module Runners
     def construct_file_issues(xml_root)
       issues = []
 
-      xml_root.each_element('//cppncss/measure[@type="File"]/item') do |elem|
+      xml_root.search('//cppncss/measure[@type="File"]/item').each do |elem|
         filepath_attr = elem[:name] or raise "Required name: #{elem.inspect}"
         filepath = relative_path(filepath_attr)
 
-        ccn_text = elem.elements[3]&.text or raise "Required text: #{elem.elements[3].inspect}"
+        ccn_text = elem.elements[2]&.content or raise "Required text: #{elem.elements[2].inspect}"
         sum_of_CCN = Integer(ccn_text)
 
-        functions_text = elem.elements[4]&.text or raise "Required text: #{elem.elements[4].inspect}"
+        functions_text = elem.elements[3]&.content or raise "Required text: #{elem.elements[3].inspect}"
         functions = Integer(functions_text)
 
         msg = "The sum of complexity of total #{functions} function(s) is #{sum_of_CCN}."

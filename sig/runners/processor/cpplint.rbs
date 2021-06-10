@@ -17,6 +17,6 @@ module Runners
 
     def analyzer_options: () -> Array[String]
 
-    def parse_result: (REXML::Element) -> Array[Issue]
+    def parse_result: (Nokogiri::XML::Document) -> Array[Issue]
   end
 end
