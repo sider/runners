@@ -53,7 +53,7 @@ module Runners
       _stdout, stderr, status = capture3 analyzer_bin, *analyzer_options
 
       if [0, 1].include? status.exitstatus
-        xml_output = Nokogiri::XML(stderr).root do |config|
+        xml_output = Nokogiri::XML(stderr) do |config|
           config.strict
         end
         if xml_output
