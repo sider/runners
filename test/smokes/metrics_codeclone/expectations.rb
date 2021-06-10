@@ -661,7 +661,7 @@ s.add_test(
 s.add_test(
   "option_multiple_languages_invalid",
   type: "failure",
-  message: "`linter.pmd_cpd.language` value in `sider.yml` is invalid",
+  message: "`linter.pmd_cpd.language` in `sider.yml` includes unsupported languages: `tcl`",
   analyzer: :_
 )
 

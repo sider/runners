@@ -1,5 +1,5 @@
 linter:
   pmd_cpd:
     minimum-tokens: 15
-    language: [tcl, cs]
+    language: [tcl, cs, foo]
     ignore-usings: true

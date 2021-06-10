@@ -5,6 +5,8 @@ module Runners
 
     def install_jvm_deps: (?to: Pathname) -> void
 
+    def pmd_help: () -> String
+
     def pmd_version: () -> String
 
     private

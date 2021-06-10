@@ -6,38 +6,12 @@ module Runners
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
-      let :available_languages, enum(
-        literal("apex"),
-        literal("cpp"),
-        literal("cs"),
-        literal("dart"),
-        literal("ecmascript"),
-        literal("fortran"),
-        literal("go"),
-        literal("groovy"),
-        literal("java"),
-        literal("jsp"),
-        literal("kotlin"),
-        literal("lua"),
-        literal("matlab"),
-        literal("modelica"),
-        literal("objectivec"),
-        literal("perl"),
-        literal("php"),
-        literal("plsql"),
-        literal("python"),
-        literal("ruby"),
-        literal("scala"),
-        literal("swift"),
-        literal("vf"),
-        literal("xml")
-      )
 
       let :config, base(
         'minimum-tokens': numeric?,
         target: target,
         files: target, # alias for `target`
-        language: enum?(available_languages, array(available_languages)),
+        language: one_or_more_strings?,
         encoding: string?,
         'skip-duplicate-files': boolean?,
         'non-recursive': boolean?,
@@ -67,7 +41,46 @@ module Runners
 
     DEFAULT_MINIMUM_TOKENS = 100
     DEFAULT_TARGET = ".".freeze
-    DEFAULT_LANGUAGE = ["cpp", "cs", "ecmascript", "go", "java", "kotlin", "php", "python", "ruby", "swift"].freeze
+    DEFAULT_LANGUAGES = %w[
+      cpp
+      cs
+      ecmascript
+      go
+      java
+      kotlin
+      php
+      python
+      ruby
+      swift
+    ].freeze
+    SUPPORTED_LANGUAGES = %w[
+      apex
+      cpp
+      cs
+      dart
+      ecmascript
+      fortran
+      go
+      groovy
+      java
+      jsp
+      kotlin
+      lua
+      matlab
+      modelica
+      objectivec
+      perl
+      php
+      plsql
+      python
+      ruby
+      scala
+      swift
+      vf
+      xml
+    ].freeze
+
+    raise unless (DEFAULT_LANGUAGES - SUPPORTED_LANGUAGES).empty?
 
     register_config_schema SCHEMA.config
 
@@ -96,6 +109,23 @@ module Runners
       pmd_version
     end
 
+    def setup
+      unknown_langs = SUPPORTED_LANGUAGES - all_supported_languages
+      unless unknown_langs.empty?
+        raise "Unknown languages: #{unknown_langs.inspect}"
+      end
+
+      unsupported_langs = Array(config_linter[:language]) - all_supported_languages
+      unless unsupported_langs.empty?
+        langs = unsupported_langs.map { |s| "`#{s}`" }.join(", ")
+        msg = "`#{config_field_path(:language)}` in `#{config.path_name}` includes unsupported languages: #{langs}"
+        trace_writer.error msg
+        return Results::Failure.new(guid: guid, analyzer: analyzer, message: msg)
+      end
+
+      yield
+    end
+
     def analyze(_changes)
       issues = []
 
@@ -109,6 +139,19 @@ module Runners
     end
 
     private
+
+    def all_supported_languages
+      @all_supported_languages ||=
+        begin
+          help = pmd_help
+          langs = help.match(/Supported languages: \[(?<langs>.+)\]/) { |m| m[:langs] }
+          if langs
+            langs.split(",").map(&:strip)
+          else
+            raise "Could not find supported languages:\n#{help}"
+          end
+        end
+    end
 
     def raise_warnings(stderr)
       stderr.each_line do |line|
@@ -196,7 +239,7 @@ module Runners
     end
 
     def languages
-      Array(config_linter[:language] || DEFAULT_LANGUAGE)
+      Array(config_linter[:language] || DEFAULT_LANGUAGES)
     end
 
     def option_language(v)
