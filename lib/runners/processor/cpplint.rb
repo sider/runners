@@ -53,12 +53,13 @@ module Runners
       _stdout, stderr, status = capture3 analyzer_bin, *analyzer_options
 
       if [0, 1].include? status.exitstatus
-        xml_output = Nokogiri::XML(stderr) do |config|
-          config.strict
-        end
-        if xml_output
-          Results::Success.new(guid: guid, analyzer: analyzer, issues: parse_result(xml_output))
-        else
+        begin
+          xml_doc = Nokogiri::XML(stderr) do |config|
+            config.strict
+          end
+
+          Results::Success.new(guid: guid, analyzer: analyzer, issues: parse_result(xml_doc))
+        rescue Nokogiri::XML::SyntaxError => exn
           Results::Failure.new(guid: guid, analyzer: analyzer)
         end
       else
