@@ -39,9 +39,8 @@ Misc:
 - Drop support for JCenter repository [#2429](https://github.com/sider/runners/pull/2429)
 - **JSHint** Enhance JSHint runner [#2430](https://github.com/sider/runners/pull/2430)
 - **PMD CPD** Fix supported languages [#2432](https://github.com/sider/runners/pull/2432)
-- **PHPMD** Replace XML reporter with JSON one [#2435](https://github.com/sider/runners/pull/2435)
-- **Cppcheck** Provide new recommended configuration [#2443](https://github.com/sider/runners/pull/2443)
 - Change XML parser from `REXML` to `Nokogiri` [#2427](https://github.com/sider/runners/pull/2427)
+- **Cppcheck** Provide new recommended configuration [#2443](https://github.com/sider/runners/pull/2443)
 
 ## 0.49.1
 
