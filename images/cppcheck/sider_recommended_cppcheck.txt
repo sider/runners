@@ -1,10 +1,10 @@
-toomanyconfigs
-noExplicitConstructor
-uninitMemberVar
+ConfigurationNotChecked
 cstyleCast
+noExplicitConstructor
 redundantAssignment
 redundantInitialization
-useStlAlgorithm
+toomanyconfigs
+uninitMemberVar
 unusedFunction
 unusedStructMember
-ConfigurationNotChecked
+useStlAlgorithm
