@@ -3,6 +3,7 @@ rules:
     pattern: foo
     message: foo is not a good name...
     glob: "app/**/*"
+    severity: warn
 
 exclude:
   - app/excludes

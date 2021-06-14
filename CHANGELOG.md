@@ -12,8 +12,8 @@ Features:
 
 Updated environments:
 
-- **devon_rex** 2.43.2 -> 2.44.1 [#2417](https://github.com/sider/runners/pull/2417) [#2428](https://github.com/sider/runners/pull/2428) ([diff](https://github.com/sider/devon_rex/compare/2.43.2...2.44.1))
-- **Bundler** 2.2.18 -> 2.2.19 [#2417](https://github.com/sider/runners/pull/2417)
+- **devon_rex** 2.43.2 -> 2.44.2 [#2417](https://github.com/sider/runners/pull/2417) [#2428](https://github.com/sider/runners/pull/2428) [#2446](https://github.com/sider/runners/pull/2446) ([diff](https://github.com/sider/devon_rex/compare/2.43.2...2.44.2))
+- **Bundler** 2.2.18 -> 2.2.20 [#2417](https://github.com/sider/runners/pull/2417) [#2446](https://github.com/sider/runners/pull/2446)
 
 Updated tools:
 
@@ -22,8 +22,9 @@ Updated tools:
 - **cpplint** 1.5.4 -> 1.5.5 [#2392](https://github.com/sider/runners/pull/2392)
 - **detekt** 1.16.0 -> 1.17.1 [#2397](https://github.com/sider/runners/pull/2397)
 - **ESLint** 7.26.0 -> 7.28.0 [#2426](https://github.com/sider/runners/pull/2426)
+- **Goodcheck** 2.7.0 -> 3.0.0 [#2449](https://github.com/sider/runners/pull/2449)
 - **GolangCI-Lint** 1.40.0 -> 1.40.1 [#2379](https://github.com/sider/runners/pull/2379)
-- **hadolint** 2.4.0 -> 2.4.1 [#2380](https://github.com/sider/runners/pull/2380)
+- **hadolint** 2.4.0 -> 2.5.0 [#2380](https://github.com/sider/runners/pull/2380) [#2444](https://github.com/sider/runners/pull/2444)
 - **JSHint** 2.12.0 -> 2.13.0 [#2402](https://github.com/sider/runners/pull/2402)
 - **PMD CPD** 6.34.0 -> 6.35.0 [#2440](https://github.com/sider/runners/pull/2440)
 - **PMD Java** 6.34.0 -> 6.35.0 [#2406](https://github.com/sider/runners/pull/2406)
@@ -41,6 +42,7 @@ Misc:
 - **PMD CPD** Fix supported languages [#2432](https://github.com/sider/runners/pull/2432)
 - Change XML parser from `REXML` to `Nokogiri` [#2427](https://github.com/sider/runners/pull/2427)
 - **Cppcheck** Provide new recommended configuration [#2443](https://github.com/sider/runners/pull/2443)
+- **PMD CPD** Performance tuning [#2447](https://github.com/sider/runners/pull/2447)
 
 ## 0.49.1
 

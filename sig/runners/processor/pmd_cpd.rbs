@@ -27,9 +27,11 @@ module Runners
 
     type fileinfo = { id: String, path: Pathname, location: Location }
 
+    def create_files_and_codefragment: (Nokogiri::XML::Node) -> [Array[fileinfo], String]
+
     def to_fileinfo: (Nokogiri::XML::Node) -> fileinfo
 
-    def create_issue_object: (Nokogiri::XML::Node, Array[fileinfo]) -> Hash[Symbol, untyped]
+    def create_duplicated_files: (Array[fileinfo]) -> Array[untyped]
 
     def option_files: () -> Array[String]
 
