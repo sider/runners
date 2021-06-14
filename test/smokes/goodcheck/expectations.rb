@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "2.7.0"
+default_version = "3.0.0"
 
 s.add_offline_test(
   "success",
@@ -12,7 +12,10 @@ s.add_offline_test(
       location: { start_line: 1, start_column: 22, end_line: 1, end_column: 24 },
       message: "foo is not a good name...",
       links: [],
-      object: { id: "com.goodcheck.hello", message: "foo is not a good name...", justifications: [] },
+      object: {
+        justifications: [],
+        severity: "warn"
+      },
       git_blame_info: {
         commit: :_, line_hash: "74914cec8fb77f151285a32e82e35c2c28e584e6", original_line: 1, final_line: 1
       }
@@ -31,7 +34,10 @@ s.add_offline_test(
       id: "com.sample",
       path: "app/foo.rb",
       location: { start_line: 1, start_column: 1, end_line: 1, end_column: 3 },
-      object: { id: "com.sample", message: "Foo", justifications: [] },
+      object: {
+        justifications: [],
+        severity: nil
+      },
       git_blame_info: {
         commit: :_, line_hash: "3c061f52aea718c14c209c91cec7e42536b5c368", original_line: 1, final_line: 1
       }
@@ -103,7 +109,10 @@ s.add_test(
       location: { start_line: 1, start_column: 21, end_line: 1, end_column: 24 },
       message: "foo is not a good name...",
       links: [],
-      object: { id: "com.goodcheck.hello", message: "foo is not a good name...", justifications: [] },
+      object: {
+        justifications: [],
+        severity: nil
+      },
       git_blame_info: {
         commit: :_, line_hash: "74914cec8fb77f151285a32e82e35c2c28e584e6", original_line: 1, final_line: 1
       }
@@ -117,7 +126,10 @@ s.add_offline_test(
   type: "success",
   issues: [
     {
-      object: { id: "smoke", message: "Specify frozen_string_literal magic comment.", justifications: [] },
+      object: {
+        justifications: [],
+        severity: nil
+      },
       git_blame_info: nil,
       message: "Specify frozen_string_literal magic comment.",
       links: [],
@@ -135,11 +147,8 @@ s.add_offline_test(
   issues: [
     {
       object: {
-        id: "com.goodcheck.without_pattern",
-        message:
-          "Check the following documentation when editing this file.\n" \
-            "  * https://example.com/path/to/note",
-        justifications: []
+        justifications: [],
+        severity: nil
       },
       git_blame_info: nil,
       message:
