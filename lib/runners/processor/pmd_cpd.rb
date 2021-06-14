@@ -173,19 +173,8 @@ module Runners
         tokens_text = elem_dupli[:tokens] or raise "required tokens: #{elem_dupli.inspect}"
         tokens = Integer(tokens_text)
 
-        files = []
-        codefragment = nil
-        elem_dupli.elements.each do |elem|
-          case elem.name
-          when "file"
-            files << to_fileinfo(elem)
-          when "codefragment"
-            codefragment = elem.content
-          end
-        end
-        codefragment or raise "required codefragment: #{elem_dupli.inspect}"
-
-        fileobjs = create_file_objects(files)
+        files, codefragment = create_files_and_codefragment(elem_dupli)
+        duplicated_files = create_duplicated_files(files)
 
         files.each do |file|
           yield Issue.new(
@@ -196,13 +185,29 @@ module Runners
             object: {
               lines: lines,
               tokens: tokens,
-              files: fileobjs,
+              files: duplicated_files,
               codefragment: codefragment
             },
             schema: SCHEMA.issue,
           )
         end
       end
+    end
+
+    def create_files_and_codefragment(duplication)
+      files = []
+      codefragment = nil
+      duplication.elements.each do |elem|
+        case elem.name
+        when "file"
+          files << to_fileinfo(elem)
+        when "codefragment"
+          codefragment = elem.content
+        end
+      end
+      codefragment or raise "required codefragment: #{duplication.inspect}"
+
+      [files, codefragment]
     end
 
     def to_fileinfo(elem_file)
@@ -220,7 +225,7 @@ module Runners
       { id: id, path: path, location: location }
     end
 
-    def create_file_objects(files)
+    def create_duplicated_files(files)
       files.map do |f|
         {
           id: f[:id],
