@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 
 Features:
 
-- Introduce Secret Scanning [#2418](https://github.com/sider/runners/pull/2418)
+- Introduce Secret Scanning [#2418](https://github.com/sider/runners/pull/2418) [#2452](https://github.com/sider/runners/pull/2452)
 
 Updated environments:
 
