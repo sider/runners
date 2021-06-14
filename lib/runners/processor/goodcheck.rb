@@ -7,9 +7,8 @@ module Runners
 
       # @type self: SchemaClass
       let :rule, object(
-        id: string,
-        message: string,
         justifications: array(string),
+        severity: string?,
       )
 
       let :config, ruby(
@@ -22,7 +21,7 @@ module Runners
 
     GEM_NAME = "goodcheck".freeze
     CONSTRAINTS = {
-      GEM_NAME => Gem::Requirement.new(">= 1.0.0", "< 3.0.0").freeze,
+      GEM_NAME => Gem::Requirement.new(">= 1.0.0", "< 4.0.0").freeze,
     }.freeze
 
     DEFAULT_TARGET = ".".freeze
@@ -76,42 +75,36 @@ module Runners
         end
       end
 
-      Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        json.each do |hash|
-          id = hash[:rule_id]
-          path = relative_path(hash[:path])
+      issues = json.map do |hash|
+        id = hash[:rule_id]
+        path = relative_path(hash[:path])
 
-          # When the `not` rule detects issues, `location` is null.
-          # @see https://github.com/sider/goodcheck/pull/49/files#r281913022
-          if hash[:location]
-            location = Location.new(
-              start_line: hash[:location][:start_line],
-              start_column: hash[:location][:start_column],
-              end_line: hash[:location][:end_line],
-              end_column: hash[:location][:end_column],
-            )
-          else
-            location = nil
-          end
+        # When the `not` rule detects issues, `location` is null.
+        # @see https://github.com/sider/goodcheck/pull/49/files#r281913022
+        loc = hash[:location]
+        location = if loc
+                     Location.new(
+                       start_line: loc[:start_line],
+                       start_column: loc[:start_column],
+                       end_line: loc[:end_line],
+                       end_column: loc[:end_column],
+                     )
+                   end
 
-          object = {
-            id: id,
-            message: hash[:message],
-            justifications: hash[:justifications]
-          }
-
-          issue = Issue.new(
-            path: path,
-            location: location,
-            id: id,
-            message: hash[:message],
-            object: object,
-            schema: SCHEMA.rule
-          )
-
-          result.add_issue issue
-        end
+        Issue.new(
+          path: path,
+          location: location,
+          id: id,
+          message: hash[:message],
+          object: {
+            justifications: hash[:justifications],
+            severity: hash[:severity],
+          },
+          schema: SCHEMA.rule
+        )
       end
+
+      Results::Success.new(guid: guid, analyzer: analyzer, issues: issues)
     end
 
     def setup
