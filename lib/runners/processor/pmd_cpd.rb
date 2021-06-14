@@ -167,7 +167,25 @@ module Runners
       stdout.sub!(/<\?xml version="1\.0" encoding=".+"\?>/, '<?xml version="1.0" encoding="UTF-8"?>')
 
       read_xml(stdout).root.elements.each do |elem_dupli|
-        files = elem_dupli.search('file').map{ |f| to_fileinfo(f) }
+        lines_text = elem_dupli[:lines] or raise "required lines: #{elem_dupli.inspect}"
+        lines = Integer(lines_text)
+
+        tokens_text = elem_dupli[:tokens] or raise "required tokens: #{elem_dupli.inspect}"
+        tokens = Integer(tokens_text)
+
+        files = []
+        codefragment = nil
+        elem_dupli.elements.each do |elem|
+          case elem.name
+          when "file"
+            files << to_fileinfo(elem)
+          when "codefragment"
+            codefragment = elem.content
+          end
+        end
+        codefragment or raise "required codefragment: #{elem_dupli.inspect}"
+
+        fileobjs = create_file_objects(files)
 
         files.each do |file|
           yield Issue.new(
@@ -175,7 +193,12 @@ module Runners
             path: file[:path],
             location: file[:location],
             message: "Code duplications found (#{files.length} occurrences).",
-            object: create_issue_object(elem_dupli, files),
+            object: {
+              lines: lines,
+              tokens: tokens,
+              files: fileobjs,
+              codefragment: codefragment
+            },
             schema: SCHEMA.issue,
           )
         end
@@ -197,17 +220,8 @@ module Runners
       { id: id, path: path, location: location }
     end
 
-    def create_issue_object(elem_dupli, files)
-      lines_text = elem_dupli[:lines] or raise "required lines: #{elem_dupli.inspect}"
-      lines = Integer(lines_text)
-
-      tokens_text = elem_dupli[:tokens] or raise "required tokens: #{elem_dupli.inspect}"
-      tokens = Integer(tokens_text)
-
-      codefragment = elem_dupli.search('codefragment').first&.content
-      codefragment or raise "required codefragment: #{elem_dupli.inspect}"
-
-      fileobjs = files.map do |f|
+    def create_file_objects(files)
+      files.map do |f|
         {
           id: f[:id],
           path: f[:path].to_path,
@@ -217,13 +231,6 @@ module Runners
           end_column: f[:location].end_column,
         }
       end
-
-      {
-        lines: lines,
-        tokens: tokens,
-        files: fileobjs,
-        codefragment: codefragment
-      }
     end
 
     def option_files

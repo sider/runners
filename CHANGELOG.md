@@ -40,6 +40,7 @@ Misc:
 - **JSHint** Enhance JSHint runner [#2430](https://github.com/sider/runners/pull/2430)
 - **PMD CPD** Fix supported languages [#2432](https://github.com/sider/runners/pull/2432)
 - Change XML parser from `REXML` to `Nokogiri` [#2427](https://github.com/sider/runners/pull/2427)
+- **PMD CPD** Performance tuning [#2447](https://github.com/sider/runners/pull/2447)
 
 ## 0.49.1
 

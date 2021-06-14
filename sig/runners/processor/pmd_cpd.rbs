@@ -29,7 +29,7 @@ module Runners
 
     def to_fileinfo: (Nokogiri::XML::Node) -> fileinfo
 
-    def create_issue_object: (Nokogiri::XML::Node, Array[fileinfo]) -> Hash[Symbol, untyped]
+    def create_file_objects: (Array[fileinfo]) -> Array[untyped]
 
     def option_files: () -> Array[String]
 
