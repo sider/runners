@@ -12,8 +12,8 @@ Features:
 
 Updated environments:
 
-- **devon_rex** 2.43.2 -> 2.44.1 [#2417](https://github.com/sider/runners/pull/2417) [#2428](https://github.com/sider/runners/pull/2428) ([diff](https://github.com/sider/devon_rex/compare/2.43.2...2.44.1))
-- **Bundler** 2.2.18 -> 2.2.19 [#2417](https://github.com/sider/runners/pull/2417)
+- **devon_rex** 2.43.2 -> 2.44.2 [#2417](https://github.com/sider/runners/pull/2417) [#2428](https://github.com/sider/runners/pull/2428) [#2446](https://github.com/sider/runners/pull/2446) ([diff](https://github.com/sider/devon_rex/compare/2.43.2...2.44.2))
+- **Bundler** 2.2.18 -> 2.2.20 [#2417](https://github.com/sider/runners/pull/2417) [#2446](https://github.com/sider/runners/pull/2446)
 
 Updated tools:
 
