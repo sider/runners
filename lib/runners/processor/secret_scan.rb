@@ -4,6 +4,7 @@ module Runners
       # @type self: SchemaClass
       let :rule, object(
         justifications: array(string),
+        severity: string?,
       )
     end
 
@@ -42,7 +43,8 @@ module Runners
             end_column: loc.fetch(:end_column),
           ),
           object: {
-            justifications: hash.fetch(:justifications),
+            justifications: hash[:justifications],
+            severity: hash[:severity],
           },
           schema: SCHEMA.rule,
         )

@@ -29,15 +29,6 @@ RUN cd "${RUNNERS_DEPS_DIR}" && \
     bundle install && \
     rm -r Gemfile Gemfile.lock .bundle/
 
-# TODO: Remove later.
-RUN git clone --depth=50 https://github.com/sider/goodcheck.git "${RUNNER_USER_HOME}/goodcheck" && \
-    cd "${RUNNER_USER_HOME}/goodcheck" && \
-    git checkout 5b5145a59afeca2d67198fcb940ceaf294310e27 && \
-    gem build && \
-    gem install *.gem && \
-    goodcheck --version
-
-
 # Copy the main source code
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} exe ${RUNNERS_DIR}/exe
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} lib ${RUNNERS_DIR}/lib

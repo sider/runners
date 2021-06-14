@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-version = "2.7.0"
+version = "3.0.1"
 
 s.add_test(
   "success",
@@ -12,7 +12,7 @@ s.add_test(
       path: "bad.rb",
       location: { start_line: 1, start_column: 10, end_line: 1, end_column: 15 },
       links: [],
-      object: { justifications: [] },
+      object: { justifications: [], severity: nil },
       git_blame_info: { commit: :_, line_hash: :_, original_line: 1, final_line: 1 }
     }
   ],
