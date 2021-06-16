@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.50.0...HEAD)
 
+- [Secret Scan] Add doc URL [#2455](https://github.com/sider/runners/pull/2455)
+
 ## 0.50.0
 
 [Full diff](https://github.com/sider/runners/compare/0.49.1...0.50.0)
