@@ -175,7 +175,7 @@ analyzers:
     deprecated: true
   secret_scan:
     name: Secret Scan
-    doc: "" # TODO: Fix it later.
+    doc: tools/others/secret-scan
     beta: true
   shellcheck:
     name: ShellCheck
