@@ -19,6 +19,7 @@ class ConfigGeneratorTest < Minitest::Test
       Runners::Processor::Tslint,
     ]
     tools = Runners::Processor.children.filter_map do |id, klass|
+      next unless klass.name.start_with?("Runners::Processor::") # exclude test processor classes
       next if not_implemented_classes.include?(klass)
       id
     end
