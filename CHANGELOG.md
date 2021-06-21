@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.50.2...HEAD)
 
+- **hadolint** Fix parsing directory [#2466](https://github.com/sider/runners/pull/2466)
+
 ## 0.50.2
 
 [Full diff](https://github.com/sider/runners/compare/0.50.1...0.50.2)
