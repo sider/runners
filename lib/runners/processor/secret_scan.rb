@@ -8,6 +8,10 @@ module Runners
       )
     end
 
+    def self.config_example
+      ""
+    end
+
     def analyzer_bin
       "goodcheck"
     end

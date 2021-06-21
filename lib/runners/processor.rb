@@ -20,7 +20,7 @@ module Runners
     end
 
     def self.config_example
-      raise NotImplementedError, name
+      raise NotImplementedError, "#{name} needs to implement `.#{__method__}`"
     end
 
     attr_reader :guid, :working_dir, :config, :shell, :trace_writer, :warnings, :options
