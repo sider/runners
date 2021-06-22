@@ -72,7 +72,7 @@ module Runners
             Array(config_linter[:target])
           else
             current_dir.glob(DEFAULT_TARGET, File::FNM_EXTGLOB)
-              .reject { |path| path.fnmatch?(DEFAULT_TARGET_EXCLUDED, File::FNM_EXTGLOB) }
+              .reject { |path| path.fnmatch?(DEFAULT_TARGET_EXCLUDED, File::FNM_EXTGLOB) || path.directory? }
               .map { |path| relative_path(path).to_path }
           end
         end
