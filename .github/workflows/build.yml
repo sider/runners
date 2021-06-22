@@ -67,13 +67,12 @@ jobs:
           echo "GITHUB_REF: ${GITHUB_REF}"
           tag="${GITHUB_REF#refs/*/}"
           tag="${tag///}"
+          tag=master
           echo "::set-output name=tag::${tag}"
       - name: Print variables
-        run: |
-          echo "tag: ${{ steps.define_vars.outputs.tag }}"
+        run: echo 'tag: ${{ steps.define_vars.outputs.tag }}'
       - name: Build Docker image
-        run: |
-          bundle exec rake dockerfile:generate dockerfile:verify docker:build
+        run: bundle exec rake dockerfile:generate dockerfile:verify docker:build
         env:
           ANALYZER: ${{ matrix.analyzer }}
           TAG: ${{ steps.define_vars.outputs.tag }}
