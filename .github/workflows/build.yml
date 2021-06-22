@@ -7,6 +7,10 @@ on:
   pull_request:
     branches: ["**"]
 
+env:
+  # TODO: Will change to `public.ecr.aws/sider`.
+  AWS_ECR_REGISTRY: public.ecr.aws/r8f9z5e1
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -102,8 +106,8 @@ jobs:
           bundle exec rake docker:push
 
           echo 'Publish to Amazon ECR Public ...'
-          bundle exec rake docker:tag REGISTRY_NEW=public.ecr.aws
-          bundle exec rake docker:push REGISTRY=public.ecr.aws
+          bundle exec rake docker:tag REGISTRY_NEW="${AWS_ECR_REGISTRY}"
+          bundle exec rake docker:push REGISTRY="${AWS_ECR_REGISTRY}"
         env:
           ANALYZER: ${{ matrix.analyzer }}
           TAG: ${{ steps.define_vars.outputs.tag }}
@@ -114,8 +118,8 @@ jobs:
           bundle exec rake docker:push TAG=latest
 
           echo 'Publish to Amazon ECR Public ...'
-          bundle exec rake docker:tag TAG_NEW=latest REGISTRY_NEW=public.ecr.aws
-          bundle exec rake docker:push TAG=latest REGISTRY=public.ecr.aws
+          bundle exec rake docker:tag TAG_NEW=latest REGISTRY_NEW="${AWS_ECR_REGISTRY}"
+          bundle exec rake docker:push TAG=latest REGISTRY="${AWS_ECR_REGISTRY}"
         env:
           ANALYZER: ${{ matrix.analyzer }}
           TAG: ${{ steps.define_vars.outputs.tag }}

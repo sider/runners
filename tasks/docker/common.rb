@@ -6,7 +6,7 @@ module DockerTaskCommon
     if registry.empty?
       "sider/runner_#{analyzer}:#{tag}"
     else
-      "#{registry}/sider/runner_#{analyzer}:#{tag}"
+      "#{registry}/runner_#{analyzer}:#{tag}"
     end
   end
 
