@@ -1,7 +1,7 @@
 module DockerTaskCommon
   def image_name(tag: nil, registry: nil)
-    tag = ENV["TAG"] || "dev"
-    registry = ENV["REGISTRY"] || ""
+    tag ||= (ENV["TAG"] || "dev")
+    registry ||= (ENV["REGISTRY"] || "")
 
     if registry.empty?
       "sider/runner_#{analyzer}:#{tag}"
