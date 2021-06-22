@@ -74,7 +74,7 @@ jobs:
           tag=master
           echo "::set-output name=tag::${tag}"
       - name: Print variables
-        run: echo ${{ steps.define_vars.outputs.tag }}
+        run: echo tag=${{ steps.define_vars.outputs.tag }}
       - name: Build Docker image
         run: bundle exec rake dockerfile:generate dockerfile:verify docker:build
         env:
