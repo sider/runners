@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.50.3...HEAD)
 
-- Add login to Public ECR [#2465](https://github.com/sider/runners/pull/2465)
+- Publish Docker images to Amazon ECR Public [#2465](https://github.com/sider/runners/pull/2465) [#2468](https://github.com/sider/runners/pull/2468)
 
 ## 0.50.3
 
