@@ -1,6 +1,10 @@
 module DockerTaskCommon
   def image_name(t = tag)
-    "sider/runner_#{analyzer}:#{t}"
+    if registry.empty?
+      "sider/runner_#{analyzer}:#{t}"
+    else
+      "#{registry}/sider/runner_#{analyzer}:#{t}"
+    end
   end
 
   def build_context
@@ -20,5 +24,9 @@ module DockerTaskCommon
 
   def tag
     ENV.fetch('TAG') { 'dev' }
+  end
+
+  def registry
+    ENV.fetch('DOCKER_REGISTRY') { '' }
   end
 end

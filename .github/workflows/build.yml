@@ -100,7 +100,9 @@ jobs:
       - name: Publish Docker image
         if: |
           steps.define_vars.outputs.tag == 'master' || startsWith(github.ref, 'refs/tags/')
-        run: bundle exec rake docker:push
+        run: |
+          bundle exec rake docker:push
+          bundle exec rake docker:push DOCKER_REGISTRY=public.ecr.aws
         env:
           ANALYZER: ${{ matrix.analyzer }}
           TAG: ${{ steps.define_vars.outputs.tag }}
