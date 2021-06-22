@@ -6,13 +6,13 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.50.3...HEAD)
 
+- Add login to Public ECR [#2465](https://github.com/sider/runners/pull/2465)
+
 ## 0.50.3
 
 [Full diff](https://github.com/sider/runners/compare/0.50.2...0.50.3)
 
 - **hadolint** Fix parsing directory [#2466](https://github.com/sider/runners/pull/2466)
-
-- Add login to Public ECR [#2465](https://github.com/sider/runners/pull/2465)
 
 ## 0.50.2
 
