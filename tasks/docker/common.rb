@@ -1,9 +1,12 @@
 module DockerTaskCommon
-  def image_name(t = tag)
+  def image_name(tag: nil, registry: nil)
+    tag = ENV["TAG"] || "dev"
+    registry = ENV["REGISTRY"] || ""
+
     if registry.empty?
-      "sider/runner_#{analyzer}:#{t}"
+      "sider/runner_#{analyzer}:#{tag}"
     else
-      "#{registry}/sider/runner_#{analyzer}:#{t}"
+      "#{registry}/sider/runner_#{analyzer}:#{tag}"
     end
   end
 
@@ -20,13 +23,5 @@ module DockerTaskCommon
             $ #{key}=rubocop bundle exec rake docker:build
       MSG
     end
-  end
-
-  def tag
-    ENV.fetch('TAG') { 'dev' }
-  end
-
-  def registry
-    ENV.fetch('DOCKER_REGISTRY') { '' }
   end
 end
