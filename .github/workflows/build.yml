@@ -72,8 +72,9 @@ jobs:
           tag="${GITHUB_REF#refs/*/}"
           tag="${tag///}"
           echo "::set-output name=tag::${tag}"
+          echo "::set-output name=publish::${{ steps.define_vars.outputs.tag == 'master' || startsWith(github.ref, 'refs/tags/') }}"
       - name: Print variables
-        run: echo tag=${{ steps.define_vars.outputs.tag }}
+        run: echo tag=${{ steps.define_vars.outputs.tag }} publish=${{ steps.define_vars.outputs.publish }}
       - name: Build Docker image
         run: bundle exec rake dockerfile:generate dockerfile:verify docker:build
         env:
@@ -87,11 +88,13 @@ jobs:
           DEBUG: true
           RUNNERS_TIMEOUT: 3m
       - name: Login to Docker Hub
+        if: ${{ steps.define_vars.outputs.publish }}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Login to Amazon ECR Public
+        if: ${{ steps.define_vars.outputs.publish }}
         uses: docker/login-action@v1
         with:
           registry: public.ecr.aws
@@ -100,7 +103,7 @@ jobs:
         env:
           AWS_REGION: us-east-1
       - name: Publish Docker image
-        if: ${{ steps.define_vars.outputs.tag == 'master' || startsWith(github.ref, 'refs/tags/') }}
+        if: ${{ steps.define_vars.outputs.publish }}
         run: |
           bundle exec rake docker:push
 
