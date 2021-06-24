@@ -67,12 +67,17 @@ jobs:
       - name: Define variables
         id: define_vars
         # See https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
+        shell: bash
         run: |
           echo "GITHUB_REF: ${GITHUB_REF}"
           tag="${GITHUB_REF#refs/*/}"
           tag="${tag///}"
           echo "::set-output name=tag::${tag}"
-          echo "::set-output name=publish::${{ steps.define_vars.outputs.tag == 'master' || startsWith(github.ref, 'refs/tags/') }}"
+          if [[ $tag == 'master' -o $GITHUB_REF == refs/tags* ]]; then
+            echo '::set-output name=publish::true'
+          else
+            echo '::set-output name=publish::false'
+          fi
       - name: Print variables
         run: echo tag=${{ steps.define_vars.outputs.tag }} publish=${{ steps.define_vars.outputs.publish }}
       - name: Build Docker image
