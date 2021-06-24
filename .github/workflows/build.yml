@@ -69,6 +69,7 @@ jobs:
         # See https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
         shell: bash
         run: |
+          GITHUB_REF=refs/heads/master
           echo "GITHUB_REF: ${GITHUB_REF}"
           tag="${GITHUB_REF#refs/*/}"
           tag="${tag///}"
@@ -78,8 +79,6 @@ jobs:
           else
             echo '::set-output name=publish::false'
           fi
-        env:
-          GITHUB_REF: "refs/heads/master"
       - name: Print variables
         run: echo tag=${{ steps.define_vars.outputs.tag }} publish=${{ steps.define_vars.outputs.publish }}
       - run: exit 1
@@ -111,8 +110,7 @@ jobs:
         env:
           AWS_REGION: us-east-1
       - name: Publish Docker image
-        # if: ${{ steps.define_vars.outputs.publish == 'true' }}
-        if: ${{ false }}
+        if: ${{ steps.define_vars.outputs.publish == 'true' }}
         run: |
           bundle exec rake docker:push
 
@@ -123,8 +121,7 @@ jobs:
           ANALYZER: ${{ matrix.analyzer }}
           TAG: ${{ steps.define_vars.outputs.tag }}
       - name: Publish Docker image as latest
-        # if: ${{ startsWith(github.ref, 'refs/tags/') }}
-        if: ${{ false }}
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
         run: |
           bundle exec rake docker:tag TAG_NEW=latest
           bundle exec rake docker:push TAG=latest
