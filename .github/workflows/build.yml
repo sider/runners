@@ -78,8 +78,11 @@ jobs:
           else
             echo '::set-output name=publish::false'
           fi
+        env:
+          GITHUB_REF: "refs/heads/master"
       - name: Print variables
         run: echo tag=${{ steps.define_vars.outputs.tag }} publish=${{ steps.define_vars.outputs.publish }}
+      - run: exit 1
       - name: Build Docker image
         run: bundle exec rake dockerfile:generate dockerfile:verify docker:build
         env:
