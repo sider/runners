@@ -34,7 +34,7 @@ module Runners
 
     register_config_schema SCHEMA.config
 
-    DEFAULT_SUPPRESSIONS_LIST = (Pathname(Dir.home) / "sider_recommended_cppcheck.txt").to_path.freeze
+    DEFAULT_SUPPRESSIONS_PATH = (Pathname(Dir.home) / "sider_recommended_cppcheck.txt").to_path.freeze
     DEFAULT_TARGET = ".".freeze
     DEFAULT_IGNORE = [].freeze
 
@@ -115,7 +115,7 @@ module Runners
     end
 
     def suppressions_list
-      (config_linter[:'suppressions-list'] || DEFAULT_SUPPRESSIONS_LIST).then { |file| (current_dir / file).exist? ? ["--suppressions-list=#{file}"] : [] }
+      (config_linter[:'suppressions-list'] || DEFAULT_SUPPRESSIONS_PATH).then { |file| (current_dir / file).exist? ? ["--suppressions-list=#{file}"] : [] }
     end
 
     def jobs

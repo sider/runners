@@ -13,6 +13,7 @@ module Runners
     end
     SCHEMA: SchemaClass
 
+    DEFAULT_SUPPRESSIONS_PATH: String
     DEFAULT_TARGET: String
     DEFAULT_IGNORE: Array[String]
 
@@ -31,6 +32,8 @@ module Runners
     def project: () -> Array[String]
 
     def language: () -> Array[String]
+
+    def suppressions_list: () -> Array[String]
 
     def jobs: () -> Array[String]
 
