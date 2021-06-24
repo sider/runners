@@ -69,7 +69,7 @@ jobs:
         # See https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
         shell: bash
         run: |
-          GITHUB_REF=refs/heads/master
+          GITHUB_REF=refs/tags/foo
           echo "GITHUB_REF: ${GITHUB_REF}"
           tag="${GITHUB_REF#refs/*/}"
           tag="${tag///}"
