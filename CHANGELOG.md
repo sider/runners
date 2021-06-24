@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.50.5...HEAD)
 
+Misc:
+
+- **PHPMD** Provide new recommended configuration [#2473](https://github.com/sider/runners/pull/2473)
+
 ## 0.50.5
 
 [Full diff](https://github.com/sider/runners/compare/0.50.4...0.50.5)
