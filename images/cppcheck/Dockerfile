@@ -26,6 +26,8 @@ RUN cd "${RUNNERS_DIR}" && \
     lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler.locked_gems.bundler_version') && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/cppcheck/sider_recommended_cppcheck.txt ${RUNNER_USER_HOME}/
+
 ARG CPPCHECK_VERSION=2.4.1
 
 # NOTE: A segmentation fault occurs with the latest version of libz3.

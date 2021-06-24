@@ -6,6 +6,8 @@ FROM sider/devon_rex_python:2.44.2
 
 <%= render_erb 'images/Dockerfile.base.erb' %>
 
+COPY --chown=<%= chown %> images/<%= analyzer %>/sider_recommended_cppcheck.txt ${RUNNER_USER_HOME}/
+
 ARG CPPCHECK_VERSION=2.4.1
 
 # NOTE: A segmentation fault occurs with the latest version of libz3.
