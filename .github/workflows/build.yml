@@ -69,7 +69,6 @@ jobs:
         # See https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
         shell: bash
         run: |
-          GITHUB_REF=refs/tags/foo
           echo "GITHUB_REF: ${GITHUB_REF}"
           tag="${GITHUB_REF#refs/*/}"
           tag="${tag///}"
@@ -81,7 +80,6 @@ jobs:
           fi
       - name: Print variables
         run: echo tag=${{ steps.define_vars.outputs.tag }} publish=${{ steps.define_vars.outputs.publish }}
-      - run: exit 1
       - name: Build Docker image
         run: bundle exec rake dockerfile:generate dockerfile:verify docker:build
         env:
