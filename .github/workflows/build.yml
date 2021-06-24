@@ -73,7 +73,7 @@ jobs:
           tag="${GITHUB_REF#refs/*/}"
           tag="${tag///}"
           echo "::set-output name=tag::${tag}"
-          if [[ $tag == 'master' ]] || [[ $GITHUB_REF == refs/tags* ]]; then
+          if [[ $tag == 'master' ]] || [[ $GITHUB_REF == refs/tags/* ]]; then
             echo '::set-output name=publish::true'
           else
             echo '::set-output name=publish::false'
