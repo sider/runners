@@ -57,7 +57,7 @@ class RuboCopUtilsTest < Minitest::Test
       assert_links.call %w[
         https://www.rubydoc.info/gems/rubocop-discourse/RuboCop/Cop/Discourse/NoChdir
         https://github.com/discourse/rubocop-discourse
-      ], "Discourse/NoChdir"
+      ], "Discourse/NoChdir", skip: true # TODO: Remove skip.
       assert_links.call %w[
         https://www.rubydoc.info/gems/rubocop-github/RuboCop/Cop/GitHub/RailsApplicationRecord
         https://github.com/github/rubocop-github
