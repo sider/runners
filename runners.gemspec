@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "forwardable", ">= 1.3"
   spec.add_dependency "json", ">= 2.5"
   spec.add_dependency "open3", ">= 0.1"
-  spec.add_dependency "psych", ">= 3.2", "< 4.0" # yaml
+  spec.add_dependency "psych", ">= 3.2", "< 5.0" # yaml
   spec.add_dependency "strscan", ">= 3.0"
 
   # 3rd-party libraries
