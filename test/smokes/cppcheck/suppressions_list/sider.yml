@@ -1,0 +1,4 @@
+linter:
+  cppcheck:
+    std: "c99"
+    suppressions-list: "cfg/suppressions.txt"

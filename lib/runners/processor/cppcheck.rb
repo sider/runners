@@ -52,7 +52,7 @@ module Runners
         addon: [cert, misra]
         bug-hunting: true
         parallel: false
-        suppressions-list: suppresions.txt
+        suppressions-list: suppressions.txt
       YAML
     end
 
@@ -115,7 +115,7 @@ module Runners
     end
 
     def suppressions_list
-      (config_linter[:'suppressions-list'] || DEFAULT_SUPPRESSIONS_PATH).then { |file| (current_dir / file).exist? ? ["--suppressions-list=#{file}"] : [] }
+      (config_linter[:'suppressions-list'] || DEFAULT_SUPPRESSIONS_PATH).then { |file| ["--suppressions-list=#{file}"] }
     end
 
     def jobs
