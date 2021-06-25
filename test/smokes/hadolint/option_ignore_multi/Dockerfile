@@ -1,4 +1,4 @@
-FROM sider/devon_rex_haskell:2.4.0
+FROM sider/devon_rex_base:2.4.0
 
 USER root
 RUN cd ..
