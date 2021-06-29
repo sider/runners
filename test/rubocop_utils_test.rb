@@ -76,8 +76,8 @@ class RuboCopUtilsTest < Minitest::Test
       ], "Jekyll/NoPAllowed"
       assert_links.call %w[
         https://www.rubydoc.info/gems/rubocop-rake/RuboCop/Cop/Rake/Desc
-        https://github.com/rubocop-hq/rubocop-rake
-      ], "Rake/Desc", additional_statuses: [301] # TODO: Remove `additional_statuses`
+        https://github.com/rubocop/rubocop-rake
+      ], "Rake/Desc"
       assert_links.call %w[
         https://www.rubydoc.info/gems/rubocop-rubycw/RuboCop/Cop/Rubycw/Rubycw
         https://github.com/rubocop/rubocop-rubycw
