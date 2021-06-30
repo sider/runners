@@ -15,6 +15,10 @@ Updated tools:
 
 - **GolangCI-Lint** 1.40.1 -> 1.41.1 [#2458](https://github.com/sider/runners/pull/2458)
 
+Misc:
+
+- **PHPMD** Provide new recommended configuration [#2473](https://github.com/sider/runners/pull/2473)
+
 ## 0.50.5
 
 [Full diff](https://github.com/sider/runners/compare/0.50.4...0.50.5)
