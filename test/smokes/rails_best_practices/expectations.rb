@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "1.20.1"
+default_version = "1.21.0"
 
 deprecated_warning = {
   message: "The support for Rails Best Practices is deprecated and will be removed on September 30, 2021. Please migrate to RuboCop, HAML-Lint, or Slim-Lint.",
