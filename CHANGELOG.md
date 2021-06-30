@@ -19,6 +19,7 @@ Updated tools:
 - **GolangCI-Lint** 1.40.1 -> 1.41.1 [#2458](https://github.com/sider/runners/pull/2458)
 - **HAML-Lint** 0.37.0 -> 0.37.1 [#2477](https://github.com/sider/runners/pull/2477)
 - **PMD CPD** 6.35.0 -> 6.36.0 [#2482](https://github.com/sider/runners/pull/2482)
+- **PMD Java** 6.35.0 -> 6.36.0 [#2483](https://github.com/sider/runners/pull/2483)
 - **Rails Best Practices** 1.20.1 -> 1.21.0 [#2461](https://github.com/sider/runners/pull/2461)
 
 Misc:
