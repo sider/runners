@@ -15,6 +15,7 @@ Updated tools:
 
 - **ESLint** 7.28.0 -> 7.29.0 [#2459](https://github.com/sider/runners/pull/2459)
 - **GolangCI-Lint** 1.40.1 -> 1.41.1 [#2458](https://github.com/sider/runners/pull/2458)
+- **Rails Best Practices** 1.20.1 -> 1.21.0 [#2461](https://github.com/sider/runners/pull/2461)
 
 Misc:
 
