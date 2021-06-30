@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails_best_practices', '1.20.1'
+gem 'rails_best_practices', '1.21.0'
 gem 'slim', '4.1.0'
 gem 'haml', '5.2.1'
 gem 'sass', '3.7.4'
