@@ -1,0 +1,7 @@
+module Runners
+  module Exitstatus
+    SUCCESS: Integer
+    TIMEOUT: Integer
+    SIGTERM: Integer
+  end
+end

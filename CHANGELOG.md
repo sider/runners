@@ -6,6 +6,24 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.50.5...HEAD)
 
+Updated environments:
+
+- **devon_rex** 2.44.2 -> 2.45.1 [#2490](https://github.com/sider/runners/pull/2490) ([diff](https://github.com/sider/devon_rex/compare/2.44.2...2.45.1))
+- **Bundler** 2.2.20 -> 2.2.21 [#2490](https://github.com/sider/runners/pull/2490)
+
+Updated tools:
+
+- **ESLint** 7.28.0 -> 7.29.0 [#2459](https://github.com/sider/runners/pull/2459)
+- **Goodcheck** 3.0.1 -> 3.0.3 [#2479](https://github.com/sider/runners/pull/2479) [#2485](https://github.com/sider/runners/pull/2485)
+- **GolangCI-Lint** 1.40.1 -> 1.41.1 [#2458](https://github.com/sider/runners/pull/2458)
+- **HAML-Lint** 0.37.0 -> 0.37.1 [#2477](https://github.com/sider/runners/pull/2477)
+- **Rails Best Practices** 1.20.1 -> 1.21.0 [#2461](https://github.com/sider/runners/pull/2461)
+
+Misc:
+
+- **PHPMD** Provide new recommended configuration [#2473](https://github.com/sider/runners/pull/2473)
+- Add exit status constants [#2492](https://github.com/sider/runners/pull/2492)
+
 ## 0.50.5
 
 [Full diff](https://github.com/sider/runners/compare/0.50.4...0.50.5)

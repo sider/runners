@@ -1,18 +1,16 @@
 #!/usr/bin/env ruby
 
-$LOAD_PATH.prepend File.join(__dir__, "..", "lib")
+$LOAD_PATH.prepend File.join(__dir__.to_s, "..", "lib")
 
 require "runners"
 require "runners/cli"
 
-EXIT_STATUS_FOR_SIGTERM = 126
-
-trap('SIGTERM') do
+Signal.trap('SIGTERM') do
   Bugsnag.notify(Runners::TimeoutError.new)
-  exit(EXIT_STATUS_FOR_SIGTERM)
+  exit Runners::Exitstatus::SIGTERM
 end
 
-trap('SIGUSR2') do
+Signal.trap('SIGUSR2') do
   Bugsnag.notify(Runners::TimeoutError.new)
 end
 

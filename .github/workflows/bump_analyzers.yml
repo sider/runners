@@ -4,7 +4,6 @@ on:
   schedule:
     - cron: "0 0 1,5,15,25 * *"
   workflow_dispatch:
-    branches: ["**"]
 
 jobs:
   build:

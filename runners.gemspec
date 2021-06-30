@@ -24,13 +24,13 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   # standard libraries
-  spec.add_dependency "bundler", ">= 2.2.20", "< 2.3.0" # NOTE: It must be same as devon_rex.
+  spec.add_dependency "bundler", ">= 2.2.21", "< 2.3.0" # NOTE: It must be same as devon_rex.
   spec.add_dependency "erb", ">= 2.2"
   spec.add_dependency "fileutils", ">= 1.5"
   spec.add_dependency "forwardable", ">= 1.3"
   spec.add_dependency "json", ">= 2.5"
   spec.add_dependency "open3", ">= 0.1"
-  spec.add_dependency "psych", ">= 3.2", "< 4.0" # yaml
+  spec.add_dependency "psych", ">= 3.2", "< 5.0" # yaml
   spec.add_dependency "strscan", ">= 3.0"
 
   # 3rd-party libraries
