@@ -5,11 +5,9 @@ $LOAD_PATH.prepend File.join(__dir__, "..", "lib")
 require "runners"
 require "runners/cli"
 
-EXIT_STATUS_FOR_SIGTERM = 126
-
 trap('SIGTERM') do
   Bugsnag.notify(Runners::TimeoutError.new)
-  exit(EXIT_STATUS_FOR_SIGTERM)
+  exit Runners::Exitstatus::SIGTERM
 end
 
 trap('SIGUSR2') do
