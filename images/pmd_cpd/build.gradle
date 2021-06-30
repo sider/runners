@@ -7,7 +7,7 @@ repositories {
 }
 
 dependencies {
-    implementation "net.sourceforge.pmd:pmd-dist:6.35.0"
+    implementation "net.sourceforge.pmd:pmd-dist:6.36.0"
 
     // Additional languages not included in `pmd-dist`
     implementation "net.sourceforge.pmd:pmd-apex:6.35.0"
