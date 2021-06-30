@@ -23,6 +23,7 @@ Misc:
 
 - **PHPMD** Provide new recommended configuration [#2473](https://github.com/sider/runners/pull/2473)
 - Add exit status constants [#2492](https://github.com/sider/runners/pull/2492)
+- **Cppcheck** Enable new recommended configuration [#2474](https://github.com/sider/runners/pull/2474)
 
 ## 0.50.5
 
