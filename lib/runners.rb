@@ -27,6 +27,7 @@ require "parallel"
 
 # application
 require "runners/version"
+require "runners/exitstatus"
 require "runners/errors"
 require "runners/tmpdir"
 require "runners/config"
