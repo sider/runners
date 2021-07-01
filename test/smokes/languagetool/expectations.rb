@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "5.3"
+default_version = "5.4"
 
 s.add_test(
   "success",
@@ -134,38 +134,6 @@ s.add_test(
   type: "success",
   issues: [
     {
-      id: "EN_QUOTES",
-      path: "target.html",
-      location: { start_line: 3 },
-      message: "Use a smart closing quote here.",
-      links: [],
-      object: {
-        sentence: '<p class="normal">This is a sample <em>HTML</em> file.</p>',
-        type: "typographical",
-        category: "TYPOGRAPHY",
-        replacements: %w[”]
-      },
-      git_blame_info: {
-        commit: :_, line_hash: "1ef5a9be332328cae50b56633d537394351bf340", original_line: 3, final_line: 3
-      }
-    },
-    {
-      id: "EN_QUOTES",
-      path: "target.html",
-      location: { start_line: 3 },
-      message: "Use a smart closing quote here.",
-      links: [],
-      object: {
-        sentence: '<p class="normal">This is a sample <em>HTML</em> file.</p>',
-        type: "typographical",
-        category: "TYPOGRAPHY",
-        replacements: %w[”]
-      },
-      git_blame_info: {
-        commit: :_, line_hash: "1ef5a9be332328cae50b56633d537394351bf340", original_line: 3, final_line: 3
-      }
-    },
-    {
       id: "MORFOLOGIK_RULE_EN_US",
       path: "target.md",
       location: { start_line: 3 },
@@ -179,6 +147,22 @@ s.add_test(
       },
       git_blame_info: {
         commit: :_, line_hash: "0cd318e72c6c0682c98b6174a41887e9a1764c16", original_line: 3, final_line: 3
+      }
+    },
+    {
+      id: "PLURAL_VERB_AFTER_THIS",
+      path: "target.html",
+      location: { start_line: 3 },
+      message: %(The verb 'are' is plural. Did you mean "these are", "This is" or "This was"?),
+      links: [],
+      object: {
+        sentence: '<p class="normal">This are a sample <em>HTML</em> file.</p>',
+        type: "grammar",
+        category: "GRAMMAR",
+        replacements: ["These are", "This is", "This was"]
+      },
+      git_blame_info: {
+        commit: :_, line_hash: "0c9f1f820a780533cbeba51d7d56de2d6a28635b", original_line: 3, final_line: 3
       }
     }
   ],
