@@ -81,6 +81,7 @@ module Runners
       shell.capture3!("git", "remote", "add", "origin", remote_url)
     end
 
+    # @see https://git-scm.com/docs/git-fetch
     def git_fetch
       args = [
         '--quiet',
@@ -95,20 +96,18 @@ module Runners
       raise FetchFailed, "git-fetch failed: #{exn.stderr_str}"
     end
 
+    # @see https://git-scm.com/docs/git-checkout
     def git_checkout
       shell.capture3_with_retry!("git", "checkout", git_source.head, tries: try_count)
     rescue Shell::ExecError => exn
       raise CheckoutFailed, "git-checkout failed: #{exn.stderr_str}"
     end
 
+    # @see https://git-scm.com/docs/git-sparse-checkout
     def git_sparse_checkout(*patterns)
       shell.capture3_with_retry!("git", "sparse-checkout", "set", *patterns)
     rescue Shell::ExecError => exn
       raise SparseCheckoutFailed, "git-sparse-checkout failed: #{exn.stderr_str}"
-    end
-
-    def git_ignore_patterns
-      @git_ignore_patterns ||= Config.load_from_dir(working_dir).ignore_patterns.map { |pat| "!#{pat}" }
     end
   end
 end
