@@ -22,7 +22,7 @@ RUN cd "${RUNNERS_DIR}" && \
     lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler.locked_gems.bundler_version') && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
-ARG LANGUAGETOOL_VERSION=5.3
+ARG LANGUAGETOOL_VERSION=5.4
 
 RUN cd "${RUNNER_USER_HOME}" && \
     curl -sSLO --compressed https://languagetool.org/download/LanguageTool-${LANGUAGETOOL_VERSION}.zip && \

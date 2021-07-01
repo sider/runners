@@ -2,7 +2,7 @@ FROM sider/devon_rex_java:2.45.1
 
 <%= render_erb 'images/Dockerfile.base.erb' %>
 
-ARG LANGUAGETOOL_VERSION=5.3
+ARG LANGUAGETOOL_VERSION=5.4
 
 RUN cd "${RUNNER_USER_HOME}" && \
     curl -sSLO --compressed https://languagetool.org/download/LanguageTool-${LANGUAGETOOL_VERSION}.zip && \
