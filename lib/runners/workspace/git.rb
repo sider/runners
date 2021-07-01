@@ -104,6 +104,7 @@ module Runners
     end
 
     # @see https://git-scm.com/docs/git-sparse-checkout
+    # @see https://git-scm.com/docs/gitignore
     def git_sparse_checkout(*patterns)
       shell.capture3_with_retry!("git", "sparse-checkout", "set", *patterns)
     rescue Shell::ExecError => exn
