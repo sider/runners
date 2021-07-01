@@ -19,6 +19,8 @@ module Runners
 
     def patches: () -> GitDiffParser::Patches
 
+    def config: () -> Config
+
     private
 
     def prepare_ssh: [X] () { (Pathname?) -> X } -> X

@@ -47,6 +47,10 @@ module Runners
       raise NotImplementedError
     end
 
+    def config
+      @config ||= Config.load_from_dir(working_dir)
+    end
+
     private
 
     def prepare_ssh

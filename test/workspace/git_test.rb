@@ -42,11 +42,34 @@ class WorkspaceGitTest < Minitest::Test
 
       refute_empty dest.children
       assert_path_exists dest / "README.md"
+      assert_match %r{^# runners_test$}, (dest/ "README.md").read
       assert_path_exists dest / ".git"
       assert_path_exists dest / ".git" / "hooks" / "post-checkout"
 
       # Suppress hint via `git init`
       refute workspace.trace_writer.writer.find { _1[:string]&.include?("git config --global init.defaultBranch <name>") }
+    end
+  end
+
+  def test_prepare_head_source_with_pull_request
+    # https://github.com/sider/runners_test/pull/6
+    with_workspace(refspec: "+refs/pull/6/head:refs/remotes/pull/6/head", head: "05975e6") do |workspace|
+      workspace.prepare_head_source
+
+      file = workspace.working_dir / "README.md"
+      assert_path_exists file
+      assert_match %r{^# dummy$}, file.read
+    end
+  end
+
+  def test_prepare_head_source_with_ignoring_files
+    # https://github.com/sider/runners_test/pull/7
+    with_workspace(head: "0a86de1") do |workspace|
+      workspace.prepare_head_source
+
+      dest = workspace.working_dir
+      assert_equal Set["sider.yml", "sideci.yml", ".git"],
+                   dest.children.map { |c| c.relative_path_from(dest).to_path }.to_set
     end
   end
 
@@ -65,36 +88,6 @@ class WorkspaceGitTest < Minitest::Test
   def test_remote_url_with_token
     with_workspace(git_url_userinfo: "x-access-token:v1.aaabbbcccdddeeefffgggbc06400127f248a82ac") do |workspace|
       assert_equal "https://x-access-token:v1.aaabbbcccdddeeefffgggbc06400127f248a82ac@github.com/sider/runners_test", workspace.send(:remote_url)
-    end
-  end
-
-  def test_git_fetch_args
-    with_workspace(refspec: "+refs/pull/533/head:refs/remotes/pull/533/head") do |workspace|
-      assert_equal %w[
-        --quiet --no-tags --no-recurse-submodules origin
-        +refs/heads/*:refs/remotes/origin/*
-        +refs/pull/533/head:refs/remotes/pull/533/head
-      ], workspace.send(:git_fetch_args)
-    end
-  end
-
-  def test_git_fetch_args_with_multiple_refspecs
-    with_workspace(refspec: ["+refs/pull/533/head:refs/remotes/pull/533/head", "+refs/foo/533/head:refs/remotes/foo/533/head"]) do |workspace|
-      assert_equal %w[
-        --quiet --no-tags --no-recurse-submodules origin
-        +refs/heads/*:refs/remotes/origin/*
-        +refs/pull/533/head:refs/remotes/pull/533/head
-        +refs/foo/533/head:refs/remotes/foo/533/head
-      ], workspace.send(:git_fetch_args)
-    end
-  end
-
-  def test_git_fetch_args_without_refspaces
-    with_workspace do |workspace|
-      assert_equal %w[
-        --quiet --no-tags --no-recurse-submodules origin
-        +refs/heads/*:refs/remotes/origin/*
-      ], workspace.send(:git_fetch_args)
     end
   end
 

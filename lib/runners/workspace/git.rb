@@ -3,6 +3,7 @@ module Runners
     class Error < SystemError; end
     class FetchFailed < Error; end
     class CheckoutFailed < Error; end
+    class SparseCheckoutFailed < Error; end
     class BlameFailed < Error; end
 
     def range_git_blame_info(path_string, start_line, end_line, trace: false)
@@ -21,24 +22,30 @@ module Runners
     end
 
     def prepare_head_source
-      shell.capture3!("git", "init", "--initial-branch=main")
-      shell.capture3!("git", "config", "gc.auto", "0")
-      shell.capture3!("git", "config", "advice.detachedHead", "false")
-      shell.capture3!("git", "config", "core.quotePath", "false")
-      shell.capture3!("git", "config", "core.hooksPath", mktmpdir.to_path) # NOTE: Prevent evil hooks from being executed.
-      shell.capture3!("git", "remote", "add", "origin", remote_url)
+      git_setup
+      git_fetch
 
-      begin
-        shell.capture3_with_retry!("git", "fetch", *git_fetch_args, tries: try_count, sleep: sleep_lambda)
-      rescue Shell::ExecError => exn
-        raise FetchFailed, "git-fetch failed: #{exn.stderr_str}"
-      end
+      # First, fetch only a configuration file.
+      git_sparse_checkout "/#{Config::FILE_NAME}", "/#{Config::FILE_NAME_OLD}"
+      git_checkout
 
-      begin
-        shell.capture3_with_retry!("git", "checkout", git_source.head, tries: try_count)
-      rescue Shell::ExecError => exn
-        raise CheckoutFailed, "git-checkout failed: #{exn.stderr_str}"
-      end
+      # Next, fetch remaining files except for *ignored* files.
+      git_sparse_checkout "/**", *config.ignore_patterns.map { |pat| "!#{pat}" }
+      git_checkout
+    end
+
+    def patches
+      return @patches if defined? @patches
+
+      base = git_source.base
+      head = git_source.head
+
+      @patches =
+        if base && head
+          # NOTE: We should use `...` (triple-dot) instead of `..` (double-dot). See https://git-scm.com/docs/git-diff
+          stdout, _ = shell.capture3!("git", "diff", "#{base}...#{head}", trace_stdout: false)
+          GitDiffParser.parse(stdout)
+        end
     end
 
     private
@@ -65,29 +72,43 @@ module Runners
       end
     end
 
-    def git_fetch_args
-      @git_fetch_args ||= [
+    def git_setup
+      shell.capture3!("git", "init", "--initial-branch=main")
+      shell.capture3!("git", "config", "gc.auto", "0")
+      shell.capture3!("git", "config", "advice.detachedHead", "false")
+      shell.capture3!("git", "config", "core.quotePath", "false")
+      shell.capture3!("git", "config", "core.hooksPath", mktmpdir.to_path) # NOTE: Prevent evil hooks from being executed.
+      shell.capture3!("git", "remote", "add", "origin", remote_url)
+    end
+
+    def git_fetch
+      args = [
         '--quiet',
         '--no-tags',
         '--no-recurse-submodules',
         'origin',
         '+refs/heads/*:refs/remotes/origin/*',
         *git_source.refspec,
-      ].freeze
+      ]
+      shell.capture3_with_retry!("git", "fetch", *args, tries: try_count, sleep: sleep_lambda)
+    rescue Shell::ExecError => exn
+      raise FetchFailed, "git-fetch failed: #{exn.stderr_str}"
     end
 
-    def patches
-      return @patches if defined? @patches
+    def git_checkout
+      shell.capture3_with_retry!("git", "checkout", git_source.head, tries: try_count)
+    rescue Shell::ExecError => exn
+      raise CheckoutFailed, "git-checkout failed: #{exn.stderr_str}"
+    end
 
-      base = git_source.base
-      head = git_source.head
+    def git_sparse_checkout(*patterns)
+      shell.capture3_with_retry!("git", "sparse-checkout", "set", *patterns)
+    rescue Shell::ExecError => exn
+      raise SparseCheckoutFailed, "git-sparse-checkout failed: #{exn.stderr_str}"
+    end
 
-      @patches =
-        if base && head
-          # NOTE: We should use `...` (triple-dot) instead of `..` (double-dot). See https://git-scm.com/docs/git-diff
-          stdout, _ = shell.capture3!("git", "diff", "#{base}...#{head}", trace_stdout: false)
-          GitDiffParser.parse(stdout)
-        end
+    def git_ignore_patterns
+      @git_ignore_patterns ||= Config.load_from_dir(working_dir).ignore_patterns.map { |pat| "!#{pat}" }
     end
   end
 end
