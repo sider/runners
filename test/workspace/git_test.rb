@@ -26,7 +26,8 @@ class WorkspaceGitTest < Minitest::Test
   end
 
   def test_prepare_head_source
-    with_workspace do |workspace|
+    # https://github.com/sider/runners_test/tree/9e85a0b
+    with_workspace(head: "9e85a0b") do |workspace|
       dest = workspace.working_dir
 
       (dest / ".git" / "hooks").mkpath
@@ -40,10 +41,9 @@ class WorkspaceGitTest < Minitest::Test
 
       workspace.prepare_head_source
 
-      refute_empty dest.children
-      assert_path_exists dest / "README.md"
+      assert_equal Set["sider.yml", "README.md", ".git"],
+                   dest.children.map { |c| c.relative_path_from(dest).to_path }.to_set
       assert_match %r{^# runners_test$}, (dest/ "README.md").read
-      assert_path_exists dest / ".git"
       assert_path_exists dest / ".git" / "hooks" / "post-checkout"
 
       # Suppress hint via `git init`
@@ -56,9 +56,12 @@ class WorkspaceGitTest < Minitest::Test
     with_workspace(refspec: "+refs/pull/6/head:refs/remotes/pull/6/head", head: "05975e6") do |workspace|
       workspace.prepare_head_source
 
-      file = workspace.working_dir / "README.md"
+      dest = workspace.working_dir
+      file = dest / "README.md"
       assert_path_exists file
       assert_match %r{^# dummy$}, file.read
+      assert_equal Set["sider.yml", "README.md", "てすと.txt", ".git"],
+                   dest.children.map { |c| c.relative_path_from(dest).to_path }.to_set
     end
   end
 
