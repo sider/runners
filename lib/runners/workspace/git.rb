@@ -25,6 +25,8 @@ module Runners
     def prepare_head_source
       git_clone
       git_setup
+
+      # Fetch a pull request if specified (including a forked repository).
       git_fetch(git_source.refspec) unless git_source.refspec.empty?
 
       # First, fetch only a configuration file.
