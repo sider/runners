@@ -59,7 +59,22 @@ module Runners
         end
 
         deps = dependencies.map { |dep| dep.is_a?(Hash) ? dep.values.join("@") : dep }
-        npm_install(*deps)
+
+        Tmpdir.mktmpdir do |tmpdir|
+          backup = tmpdir / "backup_#{package_json_path.basename}"
+          begin
+            if package_json_path.exist?
+              trace_writer.message "Backing up `#{package_json_path.basename}` before installing dependencies..."
+              package_json_path.rename(backup)
+            end
+            npm_install(*deps)
+          ensure
+            if backup.exist?
+              trace_writer.message "Restoring `#{package_json_path.basename}`..."
+              backup.rename(package_json_path)
+            end
+          end
+        end
       else
         flags = []
         case install_option

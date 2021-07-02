@@ -778,3 +778,17 @@ s.add_test(
   ],
   analyzer: { name: "ESLint", version: "7.21.0" }
 )
+
+s.add_test(
+  "private_dependencies",
+  type: "failure",
+  message: /`npm install` failed. If you want to avoid this installation, try one of the following in your `sider.yml`:/,
+  analyzer: :_
+)
+
+s.add_test(
+  "private_dependencies_with_option_dependencies",
+  type: "success",
+  issues: [],
+  analyzer: { name: "ESLint", version: "7.28.0" }
+)
