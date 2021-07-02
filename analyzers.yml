@@ -102,17 +102,17 @@ analyzers:
   metrics_codeclone:
     name: Metrics Code Clone
     github: pmd/pmd
-    doc: ""
+    doc: getting-started/code-quality
     beta: true
   metrics_complexity:
     name: Metrics Complexity
     github: terryyin/lizard
-    doc: ""
+    doc: getting-started/code-quality
     beta: true
   metrics_fileinfo:
     name: Metrics File Info
     github: coreutils/coreutils
-    doc: ""
+    doc: getting-started/code-quality
     beta: true
   misspell:
     name: Misspell
