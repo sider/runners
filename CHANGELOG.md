@@ -29,6 +29,7 @@ Misc:
 - **PHPMD** Provide new recommended configuration [#2473](https://github.com/sider/runners/pull/2473)
 - Add exit status constants [#2492](https://github.com/sider/runners/pull/2492)
 - Use git-clone(1) and git-sparse-checkout(1) for faster download [#2495](https://github.com/sider/runners/pull/2495)
+- Remove unused `meowcop` dependency and RuboCop configuration files [#2497](https://github.com/sider/runners/pull/2497)
 
 ## 0.50.5
 
