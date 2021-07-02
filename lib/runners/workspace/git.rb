@@ -83,6 +83,7 @@ module Runners
     end
 
     # @see https://git-scm.com/docs/git-clone
+    # @see https://git-scm.com/docs/partial-clone
     def git_clone
       options = %w[
         --filter=blob:none
