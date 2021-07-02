@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.50.5...HEAD)
 
+- Fix npm install error with dependencies option and private dependencies [#2499](https://github.com/sider/runners/pull/2499)
+
 ## 0.50.5
 
 [Full diff](https://github.com/sider/runners/compare/0.50.4...0.50.5)
