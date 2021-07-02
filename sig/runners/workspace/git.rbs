@@ -24,10 +24,12 @@ module Runners
 
     def git_setup: () -> void
 
-    def git_fetch: () -> void
+    def git_clone: () -> void
+
+    def git_fetch: (Array[String]) -> void
 
     def git_checkout: () -> void
 
-    def git_sparse_checkout: (*String) -> void
+    def git_sparse_checkout_set: (*String) -> void
   end
 end

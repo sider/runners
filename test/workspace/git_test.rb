@@ -30,21 +30,11 @@ class WorkspaceGitTest < Minitest::Test
     with_workspace(head: "9e85a0b") do |workspace|
       dest = workspace.working_dir
 
-      (dest / ".git" / "hooks").mkpath
-      (dest / ".git" / "hooks" / "post-checkout").tap do |hook|
-        hook.write <<~EOF
-          #!/usr/bin/env ruby
-          raise "Error!"
-        EOF
-        hook.chmod 0777
-      end
-
       workspace.prepare_head_source
 
       assert_equal Set["sider.yml", "README.md", ".git"],
                    dest.children.map { |c| c.relative_path_from(dest).to_path }.to_set
       assert_match %r{^# runners_test$}, (dest/ "README.md").read
-      assert_path_exists dest / ".git" / "hooks" / "post-checkout"
 
       # Suppress hint via `git init`
       refute workspace.trace_writer.writer.find { _1[:string]&.include?("git config --global init.defaultBranch <name>") }
@@ -162,6 +152,15 @@ class WorkspaceGitTest < Minitest::Test
         workspace.prepare_head_source
       end
       assert_match %r{\Agit-checkout failed: error: pathspec 'invalid_commit' did not match any file\(s\) known to git}, error.message
+    end
+  end
+
+  def test_git_clone_failed
+    with_workspace(git_url: "https://github.com/sider/unknown999") do |workspace|
+      error = assert_raises(Runners::Workspace::Git::CloneFailed) do
+        workspace.prepare_head_source
+      end
+      assert_match %r{\Agit-clone failed: remote: Repository not found.\nfatal: repository 'https://github.com/sider/unknown999/' not found}, error.message
     end
   end
 end
