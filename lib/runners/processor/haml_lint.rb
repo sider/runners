@@ -58,13 +58,9 @@ module Runners
 
     def setup
       setup_haml_lint_config
+      setup_default_rubocop_config
 
       default_gems = default_gem_specs(GEM_NAME, *REQUIRED_GEM_NAMES)
-      if setup_default_rubocop_config
-        # NOTE: See rubocop.rb about no versions.
-        default_gems << GemInstaller::Spec.new("meowcop")
-      end
-
       optionals = official_rubocop_plugins + third_party_rubocop_plugins
       install_gems(default_gems, optionals: optionals, constraints: CONSTRAINTS) { yield }
     rescue InstallGemsFailure => exn
