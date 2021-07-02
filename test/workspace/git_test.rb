@@ -156,11 +156,11 @@ class WorkspaceGitTest < Minitest::Test
   end
 
   def test_git_clone_failed
-    with_workspace(git_url: "https://github.com/sider/unknown999") do |workspace|
+    with_workspace(git_url: "https://github.com/sider/unknown999.git") do |workspace|
       error = assert_raises(Runners::Workspace::Git::CloneFailed) do
         workspace.prepare_head_source
       end
-      assert_match %r{\Agit-clone failed: remote: Repository not found.\nfatal: repository 'https://github.com/sider/unknown999/' not found}, error.message
+      assert_match %r{\Agit-clone failed: .+}, error.message
     end
   end
 end
