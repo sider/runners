@@ -35,6 +35,7 @@ Misc:
 - Use git-clone(1) and git-sparse-checkout(1) for faster download [#2495](https://github.com/sider/runners/pull/2495)
 - Remove unused `meowcop` dependency and RuboCop configuration files [#2497](https://github.com/sider/runners/pull/2497)
 - Add the documentation URL to `Metrics Code Clone`, `Metrics Complexity` and `Metrics File Info` [#2498](https://github.com/sider/runners/pull/2498)
+- **Cppcheck** Optimize installation [#2513](https://github.com/sider/runners/pull/2513)
 
 ## 0.50.6
 
