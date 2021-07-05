@@ -1,7 +1,0 @@
-{
-  "defaultSeverity": "error",
-  "jsRules": {},
-  "rules": {
-    "no-any": true
-  }
-}

@@ -55,7 +55,6 @@ jobs:
           - slim_lint
           - stylelint
           - swiftlint
-          - tslint
           - tyscan
     steps:
       - uses: actions/checkout@v2

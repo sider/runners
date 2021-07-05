@@ -1,6 +1,0 @@
-linter:
-  tslint:
-    npm_install: true
-    rules-dir:
-      - rules/NoCats
-      - rules/NoDogs

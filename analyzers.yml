@@ -198,12 +198,6 @@ analyzers:
     doc: tools/swift/swiftlint
     website: https://realm.github.io/SwiftLint
     dependabot: false
-  tslint:
-    name: TSLint
-    github: palantir/tslint
-    doc: tools/javascript/tslint
-    website: https://palantir.github.io/tslint
-    deprecated: true
   tyscan:
     name: TyScan
     github: sider/TyScan

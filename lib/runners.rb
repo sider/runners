@@ -113,7 +113,6 @@ require "runners/processor/shellcheck"
 require "runners/processor/slim_lint"
 require "runners/processor/stylelint"
 require "runners/processor/swiftlint"
-require "runners/processor/tslint"
 require "runners/processor/tyscan"
 
 module Runners

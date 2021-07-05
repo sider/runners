@@ -16,7 +16,6 @@ class ConfigGeneratorTest < Minitest::Test
       Runners::Processor::MetricsComplexity,
       Runners::Processor::MetricsFileInfo,
       Runners::Processor::ScssLint,
-      Runners::Processor::Tslint,
     ]
     tools = Runners::Processor.children.filter_map do |id, klass|
       next unless klass.name.start_with?("Runners::Processor::") # exclude test processor classes
@@ -33,7 +32,7 @@ class ConfigGeneratorTest < Minitest::Test
                                 :eslint, :flake8, :fxcop, :golangci_lint, :goodcheck, :hadolint, :haml_lint, :javasee, :jshint,
                                 :ktlint, :languagetool, :misspell, :phinder, :phpmd, :pmd_cpd, :pmd_java, :pylint, :querly,
                                 :rails_best_practices, :reek, :remark_lint, :rubocop, :scss_lint, :shellcheck, :slim_lint,
-                                :stylelint, :swiftlint, :tslint, :tyscan],
+                                :stylelint, :swiftlint, :tyscan],
                                config.content[:linter].keys.sort, config.inspect
                 }
   end

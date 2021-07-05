@@ -1,4 +1,0 @@
-linter:
-  tslint:
-    project: 'tsconfig.json'
-    type-check: true
