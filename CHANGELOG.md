@@ -23,6 +23,7 @@ Updated tools:
 - **PMD CPD** 6.35.0 -> 6.36.0 [#2482](https://github.com/sider/runners/pull/2482)
 - **PMD Java** 6.35.0 -> 6.36.0 [#2483](https://github.com/sider/runners/pull/2483)
 - **Pylint** 2.8.3 -> 2.9.3 [#2504](https://github.com/sider/runners/pull/2504)
+- **Querly** 1.2.0 -> 1.3.0 [#2512](https://github.com/sider/runners/pull/2512)
 - **Rails Best Practices** 1.20.1 -> 1.21.0 [#2461](https://github.com/sider/runners/pull/2461)
 - **RuboCop** 1.16.1 -> 1.18.2 [#2491](https://github.com/sider/runners/pull/2491) [#2502](https://github.com/sider/runners/pull/2502)
 
