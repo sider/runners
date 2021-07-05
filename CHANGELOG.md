@@ -17,12 +17,14 @@ Updated tools:
 - **ESLint** 7.28.0 -> 7.30.0 [#2459](https://github.com/sider/runners/pull/2459) [#2506](https://github.com/sider/runners/pull/2506)
 - **Goodcheck** 3.0.1 -> 3.0.3 [#2479](https://github.com/sider/runners/pull/2479) [#2485](https://github.com/sider/runners/pull/2485)
 - **GolangCI-Lint** 1.40.1 -> 1.41.1 [#2458](https://github.com/sider/runners/pull/2458)
+- **hadolint** 2.5.0 -> 2.6.0 [#2501](https://github.com/sider/runners/pull/2501)
 - **HAML-Lint** 0.37.0 -> 0.37.1 [#2477](https://github.com/sider/runners/pull/2477)
 - **LanguageTool** 5.3 -> 5.4 [#2493](https://github.com/sider/runners/pull/2493)
 - **PMD CPD** 6.35.0 -> 6.36.0 [#2482](https://github.com/sider/runners/pull/2482)
 - **PMD Java** 6.35.0 -> 6.36.0 [#2483](https://github.com/sider/runners/pull/2483)
+- **Pylint** 2.8.3 -> 2.9.3 [#2504](https://github.com/sider/runners/pull/2504)
 - **Rails Best Practices** 1.20.1 -> 1.21.0 [#2461](https://github.com/sider/runners/pull/2461)
-- **RuboCop** 1.16.1 -> 1.18.1 [#2491](https://github.com/sider/runners/pull/2491)
+- **RuboCop** 1.16.1 -> 1.18.2 [#2491](https://github.com/sider/runners/pull/2491) [#2502](https://github.com/sider/runners/pull/2502)
 
 Misc:
 
