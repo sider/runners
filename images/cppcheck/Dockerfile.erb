@@ -6,7 +6,7 @@ FROM sider/devon_rex_python:2.45.2
 
 <%= render_erb 'images/Dockerfile.base.erb' %>
 
-ARG CPPCHECK_VERSION=2.4.1
+ARG CPPCHECK_VERSION=2.5
 
 # NOTE: A segmentation fault occurs with the latest version of libz3.
 ARG LIBZ3_VERSION=4.4.1-1~deb10u1

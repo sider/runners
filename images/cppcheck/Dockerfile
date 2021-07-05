@@ -26,7 +26,7 @@ RUN cd "${RUNNERS_DIR}" && \
     lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler.locked_gems.bundler_version') && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
-ARG CPPCHECK_VERSION=2.4.1
+ARG CPPCHECK_VERSION=2.5
 
 # NOTE: A segmentation fault occurs with the latest version of libz3.
 ARG LIBZ3_VERSION=4.4.1-1~deb10u1
