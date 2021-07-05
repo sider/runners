@@ -7,13 +7,11 @@ on:
   pull_request:
     branches: ["**"]
 
-env:
-  # TODO: Will change to `public.ecr.aws/sider`.
-  AWS_ECR_REGISTRY: public.ecr.aws/r8f9z5e1
-
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      AWS_ECR_REGISTRY: public.ecr.aws/sider
     strategy:
       fail-fast: false
       matrix:
