@@ -14,6 +14,7 @@ Updated environments:
 Updated tools:
 
 - **Checkstyle** 8.43 -> 8.44 [#2484](https://github.com/sider/runners/pull/2484)
+- **Cppcheck** 2.4.1 -> 2.5 [#2509](https://github.com/sider/runners/pull/2509)
 - **ESLint** 7.28.0 -> 7.29.0 [#2459](https://github.com/sider/runners/pull/2459)
 - **Goodcheck** 3.0.1 -> 3.0.3 [#2479](https://github.com/sider/runners/pull/2479) [#2485](https://github.com/sider/runners/pull/2485)
 - **GolangCI-Lint** 1.40.1 -> 1.41.1 [#2458](https://github.com/sider/runners/pull/2458)
