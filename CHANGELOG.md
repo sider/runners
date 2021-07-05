@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.50.6...HEAD)
 
+Notable changes:
+
+- **TSLint** Drop support [#2515](https://github.com/sider/runners/pull/2515)
+
 Updated environments:
 
 - **devon_rex** 2.44.2 -> 2.45.2 [#2490](https://github.com/sider/runners/pull/2490) [#2496](https://github.com/sider/runners/pull/2496) ([diff](https://github.com/sider/devon_rex/compare/2.44.2...2.45.2))
