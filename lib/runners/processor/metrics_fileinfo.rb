@@ -84,8 +84,7 @@ module Runners
 
     def analyze_lines_of_code(targets)
       trace_writer.message "Analyzing line of code..." do
-        text_files = targets.select { |f| text_file?(f) }
-        text_files.each_slice(1000) do |files|
+        extract_text_files(targets).each_slice(1000) do |files|
           stdout, _ = capture3!("wc", "-l", *files, trace_stdout: false, trace_command_line: false)
           lines = stdout.lines(chomp: true)
 
@@ -204,22 +203,20 @@ module Runners
     #  * A binary file, but having .txt extension. (e.g. no_text.txt)
     #  * A text files not encoded in UTF-8 but EUC-JP, ISO-2022-JP, Shift JIS.
     #  * A text file having a non-well-known extension. (e.g. foo.my_original_extension )
-    def text_files
-      @text_files ||= Set[].tap do |result|
-        stdout, _ = git("ls-files", "--eol", "--error-unmatch")
+    def extract_text_files(targets)
+      text_files = Set[]
+
+      targets.each_slice(1000) do |files|
+        stdout, _stderr = git("ls-files", "--eol", "--error-unmatch", "--", *files)
         stdout.each_line(chomp: true) do |line|
-          fields = line.split(" ")
-          type = (fields[1] or raise)
-          file = (fields[3] or raise)
-          if type != "w/-text"
-            result << Pathname(file)
+          _ignored, type, _ignored2, file = line.split(" ", 4)
+          if type != "w/-text" && file
+            text_files << Pathname(file)
           end
         end
       end
-    end
 
-    def text_file?(target)
-      text_files.include?(target)
+      text_files
     end
 
     def git(*args)

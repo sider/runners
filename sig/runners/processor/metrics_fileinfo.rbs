@@ -39,9 +39,7 @@ module Runners
 
     def commit_summary_within: (*String) -> commit_summary
 
-    def text_files: () -> Set[Pathname]
-
-    def text_file?: (Pathname) -> bool
+    def extract_text_files: (Array[Pathname]) -> Set[Pathname]
 
     def git: (*Shell::command_argument) -> [String, String]
   end
