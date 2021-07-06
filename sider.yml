@@ -17,4 +17,4 @@ linter:
 
 
 ignore:
-  - test/smokes/
+  - test/smokes/**
