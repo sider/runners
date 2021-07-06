@@ -42,6 +42,7 @@ Misc:
 - **Cppcheck** Optimize installation [#2513](https://github.com/sider/runners/pull/2513)
 - **Querly** Report syntax error as warning [#2516](https://github.com/sider/runners/pull/2516) [#2520](https://github.com/sider/runners/pull/2520) [#2521](https://github.com/sider/runners/pull/2521)
 - **Metrics File Info** Improve text files extraction [#2519](https://github.com/sider/runners/pull/2519)
+- **Metrics File Info** Improve `git log --numstat` speed [#2522](https://github.com/sider/runners/pull/2522)
 
 ## 0.50.6
 
