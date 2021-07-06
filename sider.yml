@@ -14,7 +14,13 @@ linter:
         git:
           repo: https://github.com/sider/goodcheck.git
           branch: master
-
+  querly:
+    dependencies:
+      # Test the edge version.
+      - name: querly
+        git:
+          repo: https://github.com/soutaro/querly.git
+          branch: master
 
 ignore:
   - test/smokes/**
