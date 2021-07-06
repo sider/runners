@@ -41,6 +41,7 @@ Misc:
 - Add the documentation URL to `Metrics Code Clone`, `Metrics Complexity` and `Metrics File Info` [#2498](https://github.com/sider/runners/pull/2498)
 - **Cppcheck** Optimize installation [#2513](https://github.com/sider/runners/pull/2513)
 - **Querly** Report syntax error as warning [#2516](https://github.com/sider/runners/pull/2516)
+- **Metrics File Info** Improve text files extraction [#2519](https://github.com/sider/runners/pull/2519)
 
 ## 0.50.6
 
