@@ -93,10 +93,15 @@ module Runners
         )
       end
 
-      Array(json[:errors]).each do |error|
-        # @type var error: Hash[Symbol, untyped]
-        add_warning error.fetch(:error).fetch(:message), file: error.fetch(:path)
-      end
+      Array(json[:errors])
+        .sort_by do |error|
+          # @type var error: Hash[Symbol, untyped]
+          error.fetch(:path)
+        end
+        .each do |error|
+          # @type var error: Hash[Symbol, untyped]
+          add_warning error.fetch(:error).fetch(:message), file: error.fetch(:path)
+        end
 
       Results::Success.new(guid: guid, analyzer: analyzer, issues: issues)
     end
