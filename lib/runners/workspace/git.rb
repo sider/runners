@@ -22,8 +22,8 @@ module Runners
       raise BlameFailed, "git-blame failed: #{exn.stderr_str}"
     end
 
-    def prepare_head_source
-      git_clone
+    def prepare_head_source(fast: true)
+      git_clone(fast: fast)
       git_setup
 
       # Fetch a pull request if specified (including a forked repository).
@@ -86,14 +86,14 @@ module Runners
 
     # @see https://git-scm.com/docs/git-clone
     # @see https://git-scm.com/docs/partial-clone
-    def git_clone
+    def git_clone(fast:)
       options = %w[
-        --filter=blob:none
         --no-checkout
         --no-recurse-submodules
         --no-tags
         --quiet
       ]
+      options << "--filter=blob:none" if fast
       shell.capture3_with_retry!("git", "clone", *options, "--", remote_url, ".", tries: try_count, sleep: sleep_lambda)
     rescue Shell::ExecError => exn
       raise CloneFailed, "git-clone failed: #{exn.stderr_str}"

@@ -11,11 +11,11 @@ module Runners
 
     def initialize: (options: Options, working_dir: Pathname, trace_writer: TraceWriter) -> void
 
-    def open: [X] () { (Pathname?, Changes) -> X } -> X
+    def open: [X] (?fast: bool) { (Pathname?, Changes) -> X } -> X
 
     def range_git_blame_info: (String, Integer, Integer, ?trace: bool) -> Array[GitBlameInfo]
 
-    def prepare_head_source: () -> void
+    def prepare_head_source: (?fast: bool) -> void
 
     def patches: () -> GitDiffParser::Patches
 

@@ -24,7 +24,7 @@ module Runners
 
     def git_setup: () -> void
 
-    def git_clone: () -> void
+    def git_clone: (fast: bool) -> void
 
     def git_fetch: (Array[String]) -> void
 

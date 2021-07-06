@@ -31,7 +31,12 @@ module Runners
     def run
       ensure_result do
         workspace = Workspace.prepare(options: options, working_dir: working_dir, trace_writer: trace_writer)
-        workspace.open do |git_ssh_path, changes|
+
+        # HACK: MetricsFileInfo needs all Git blob objects to calculate code churn.
+        #       This code is so ugly, but I could not find a good way.
+        fast = processor_class != Processor::MetricsFileInfo
+
+        workspace.open(fast: fast) do |git_ssh_path, changes|
           @config = conf = workspace.config
 
           begin
