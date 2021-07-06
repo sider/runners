@@ -71,29 +71,34 @@ module Runners
 
       json = JSON.parse(stdout, symbolize_names: true)
 
-      Results::Success.new(guid: guid, analyzer: analyzer).tap do |result|
-        Array(json[:issues]).each do |hash|
-          # @type var hash: Hash[Symbol, untyped]
-          start_line, start_column = hash[:location][:start]
-          end_line, end_column = hash[:location][:end]
-          rule = hash[:rule]
-          message, _ = rule[:messages]
+      issues = Array(json[:issues]).map do |issue|
+        # @type var issue: Hash[Symbol, untyped]
+        start_line, start_column = issue[:location][:start]
+        end_line, end_column = issue[:location][:end]
+        rule = issue[:rule]
+        message, _ = rule[:messages]
 
-          result.add_issue Issue.new(
-            path: relative_path(hash[:script]),
-            location: Location.new(
-              start_line: start_line,
-              start_column: start_column,
-              end_line: end_line,
-              end_column: end_column,
-            ),
-            id: rule[:id],
-            message: message || "No message",
-            object: rule,
-            schema: SCHEMA.rule
-          )
-        end
+        Issue.new(
+          path: relative_path(issue[:script]),
+          location: Location.new(
+            start_line: start_line,
+            start_column: start_column,
+            end_line: end_line,
+            end_column: end_column,
+          ),
+          id: rule[:id],
+          message: message || "No message",
+          object: rule,
+          schema: SCHEMA.rule
+        )
       end
+
+      Array(json[:errors]).each do |error|
+        # @type var error: Hash[Symbol, untyped]
+        add_warning error.fetch(:error).fetch(:message), file: error.fetch(:path)
+      end
+
+      Results::Success.new(guid: guid, analyzer: analyzer, issues: issues)
     end
 
     private

@@ -195,3 +195,14 @@ s.add_test(
     }
   ]
 )
+
+s.add_test(
+  "syntax_error",
+  type: "success",
+  issues: [],
+  analyzer: { name: "Querly", version: default_version },
+  warnings: [
+    { message: "#<Parser::SyntaxError: unexpected token kEND>", file: "a.rb" },
+    { message: "#<Parser::SyntaxError: class or module name must be a constant literal>", file: "lib/b.rb" }
+  ]
+)
