@@ -202,7 +202,7 @@ s.add_test(
   issues: [],
   analyzer: { name: "Querly", version: default_version },
   warnings: [
-    { message: "#<Parser::SyntaxError: unexpected token kEND>", file: "a.rb" },
-    { message: "#<Parser::SyntaxError: class or module name must be a constant literal>", file: "lib/b.rb" }
+    { message: "#<Parser::SyntaxError: unexpected token kEND> in `a.rb`", file: "a.rb" },
+    { message: "#<Parser::SyntaxError: class or module name must be a constant literal> in `lib/b.rb`", file: "lib/b.rb" }
   ]
 )

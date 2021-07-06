@@ -100,7 +100,9 @@ module Runners
         end
         .each do |error|
           # @type var error: Hash[Symbol, untyped]
-          add_warning error.fetch(:error).fetch(:message), file: error.fetch(:path)
+          file = error.fetch(:path)
+          msg = error.fetch(:error).fetch(:message) + " in `#{file}`"
+          add_warning msg, file: file
         end
 
       Results::Success.new(guid: guid, analyzer: analyzer, issues: issues)
