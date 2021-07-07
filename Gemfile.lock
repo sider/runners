@@ -29,7 +29,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (6.1.3.2)
+    activesupport (6.1.4)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
@@ -38,8 +38,8 @@ GEM
     amazing_print (1.3.0)
     ast (2.4.2)
     aws-eventstream (1.1.1)
-    aws-partitions (1.469.0)
-    aws-sdk-core (3.114.3)
+    aws-partitions (1.474.0)
+    aws-sdk-core (3.115.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.239.0)
       aws-sigv4 (~> 1.1)
@@ -89,7 +89,7 @@ GEM
     psych (4.0.1)
     racc (1.5.2)
     rainbow (3.0.0)
-    rake (13.0.3)
+    rake (13.0.4)
     rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
@@ -97,7 +97,7 @@ GEM
     regexp_parser (2.1.1)
     retryable (3.0.5)
     rexml (3.2.5)
-    rubocop (1.17.0)
+    rubocop (1.18.3)
       parallel (~> 1.10)
       parser (>= 3.0.0.0)
       rainbow (>= 2.2.2, < 4.0)
