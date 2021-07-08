@@ -15,7 +15,7 @@ module Runners
 
     def analyzer_options: () -> Array[String]
 
-    def analysis_target: () -> Array[String]
+    def analysis_targets: () -> Array[String]
 
     def parse_result: (String) -> Array[Issue]
 

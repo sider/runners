@@ -39,7 +39,7 @@ module Runners
     def analyze(_changes)
       invalid_dockerfiles_failure = Results::Failure.new(guid: guid, analyzer: analyzer, message: "Invalid Dockerfile(s) specified.")
 
-      if analysis_target.empty?
+      if analysis_targets.empty?
         if config_linter[:target]
           return invalid_dockerfiles_failure
         else
@@ -48,7 +48,7 @@ module Runners
         end
       end
 
-      stdout, stderr, status = capture3(analyzer_bin, *analyzer_options, *analysis_target)
+      stdout, stderr, status = capture3(analyzer_bin, *analyzer_options, *analysis_targets)
 
       if status.success?
         Results::Success.new(guid: guid, analyzer: analyzer, issues: parse_result(stdout))
@@ -71,8 +71,8 @@ module Runners
       ]
     end
 
-    def analysis_target
-      @analysis_target ||=
+    def analysis_targets
+      @analysis_targets ||=
         begin
           # @type var config_targets: Array[String]
           config_targets = Array(config_linter[:target])
