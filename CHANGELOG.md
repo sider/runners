@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.51.0...HEAD)
 
+- **Metrics File Info** Fix parsing git-ls-files(1) output [#2526](https://github.com/sider/runners/pull/2526)
+
 ## 0.51.0
 
 [Full diff](https://github.com/sider/runners/compare/0.50.6...0.51.0)
