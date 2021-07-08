@@ -3,4 +3,5 @@ linter:
     target:
       - docker/**/Dockerfile
       - Dockerfile*
-      - bar/Dockerfile
+      - empty_Dockerfile
+      - missing_Dockerfile
