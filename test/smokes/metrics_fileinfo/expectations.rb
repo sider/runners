@@ -440,3 +440,59 @@ s.add_test_with_git_metadata(
     ],
     analyzer: { name: "Metrics File Info", version: default_version } }
 )
+
+s.add_test_with_git_metadata(
+  "gitattributes",
+  type: "success",
+  issues: [
+    {
+      id: "metrics_fileinfo",
+      path: ".foorc",
+      location: nil,
+      message: ".foorc: loc = 1, last commit datetime = 2021-07-08T13:49:29+09:00",
+      links: [],
+      object: {
+        lines_of_code: 1,
+        last_committed_at: "2021-07-08T13:49:29+09:00",
+        number_of_commits: 0,
+        occurrence: 0,
+        additions: 0,
+        deletions: 0
+      },
+      git_blame_info: nil
+    },
+    {
+      id: "metrics_fileinfo",
+      path: ".gitattributes",
+      location: nil,
+      message: ".gitattributes: loc = 1, last commit datetime = 2021-07-08T13:49:29+09:00",
+      links: [],
+      object: {
+        lines_of_code: 1,
+        last_committed_at: "2021-07-08T13:49:29+09:00",
+        number_of_commits: 0,
+        occurrence: 0,
+        additions: 0,
+        deletions: 0
+      },
+      git_blame_info: nil
+    },
+    {
+      id: "metrics_fileinfo",
+      path: "readme.md",
+      location: nil,
+      message: "readme.md: loc = 1, last commit datetime = 2021-07-08T13:49:29+09:00",
+      links: [],
+      object: {
+        lines_of_code: 1,
+        last_committed_at: "2021-07-08T13:49:29+09:00",
+        number_of_commits: 0,
+        occurrence: 0,
+        additions: 0,
+        deletions: 0
+      },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "Metrics File Info", version: default_version }
+)

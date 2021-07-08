@@ -8,7 +8,7 @@ GIT
 PATH
   remote: .
   specs:
-    runners (0.51.0)
+    runners (0.51.1)
       aws-sdk-s3 (>= 1.87)
       bugsnag (>= 6.18)
       bundler (>= 2.2.21, < 2.3.0)
