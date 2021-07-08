@@ -1,0 +1,5 @@
+linter:
+  hadolint:
+    target:
+      - docker/**/Dockerfile
+      - Dockerfile*

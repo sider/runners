@@ -217,3 +217,55 @@ s.add_test(
   ],
   analyzer: { name: "hadolint", version: default_version }
 )
+
+s.add_test(
+  "option_target_glob",
+  type: "success",
+  issues: [
+    {
+      id: "DL3006",
+      path: "Dockerfile",
+      location: { start_line: 1, start_column: 1 },
+      message: "Always tag the version of an image explicitly",
+      links: ["https://github.com/hadolint/hadolint/wiki/DL3006"],
+      object: { severity: "warning" },
+      git_blame_info: {
+        commit: :_, line_hash: "c1d8fb28ccce7fd5b3125a0590e6654cce63258d", original_line: 1, final_line: 1
+      }
+    },
+    {
+      id: "DL3006",
+      path: "Dockerfile.production",
+      location: { start_line: 1, start_column: 1 },
+      message: "Always tag the version of an image explicitly",
+      links: ["https://github.com/hadolint/hadolint/wiki/DL3006"],
+      object: { severity: "warning" },
+      git_blame_info: {
+        commit: :_, line_hash: "0fbd1c1415636a0e6c52db62657e041b2f0ade8c", original_line: 1, final_line: 1
+      }
+    },
+    {
+      id: "DL3006",
+      path: "docker/Dockerfile",
+      location: { start_line: 1, start_column: 1 },
+      message: "Always tag the version of an image explicitly",
+      links: ["https://github.com/hadolint/hadolint/wiki/DL3006"],
+      object: { severity: "warning" },
+      git_blame_info: {
+        commit: :_, line_hash: "b58b94ee00556a92a9b7025975e14ae4a6effb71", original_line: 1, final_line: 1
+      }
+    },
+    {
+      id: "DL3006",
+      path: "docker/foo/Dockerfile",
+      location: { start_line: 1, start_column: 1 },
+      message: "Always tag the version of an image explicitly",
+      links: ["https://github.com/hadolint/hadolint/wiki/DL3006"],
+      object: { severity: "warning" },
+      git_blame_info: {
+        commit: :_, line_hash: "2c639ff956e0d64e9fe67ffa313df6bb7ab62695", original_line: 1, final_line: 1
+      }
+    }
+  ],
+  analyzer: { name: "hadolint", version: default_version }
+)
