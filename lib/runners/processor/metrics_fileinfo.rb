@@ -209,8 +209,15 @@ module Runners
       targets.each_slice(1000) do |files|
         stdout, _stderr = git("ls-files", "--eol", "--error-unmatch", "--", *files)
         stdout.each_line(chomp: true) do |line|
-          _ignored, type, _ignored2, file = line.split(" ", 4)
-          if type != "w/-text" && file
+          # NOTE: A simple splitting by spaces does not work, e.g. `text eol=lf`.
+          #
+          # @see https://git-scm.com/docs/git-ls-files#_output
+          # @see https://git-scm.com/docs/git-ls-files#Documentation/git-ls-files.txt---eol
+          fields, file = line.split("\t", 2)
+          next if fields.nil? || file.nil?
+
+          _i_eol, w_eol, _ignored = fields.split(" ", 3)
+          if w_eol != "w/-text"
             text_files << Pathname(file)
           end
         end
