@@ -1,10 +1,3 @@
-GIT
-  remote: https://github.com/ybiquitous/aufgaben.git
-  revision: da96337a89168a878ea85e0e8eed795af1deb982
-  tag: 0.7.1
-  specs:
-    aufgaben (0.7.1)
-
 PATH
   remote: .
   specs:
@@ -37,6 +30,7 @@ GEM
       zeitwerk (~> 2.3)
     amazing_print (1.3.0)
     ast (2.4.2)
+    aufgaben (0.8.2)
     aws-eventstream (1.1.1)
     aws-partitions (1.474.0)
     aws-sdk-core (3.115.0)
@@ -136,7 +130,7 @@ PLATFORMS
 
 DEPENDENCIES
   amazing_print
-  aufgaben!
+  aufgaben
   lefthook
   minitest
   rainbow
