@@ -49,6 +49,8 @@ Misc:
 - **PHPMD** Enable new recommended configuration [#2536](https://github.com/sider/runners/pull/2536)
 - **PMD CPD** Remove codefragment from results [#2525](https://github.com/sider/runners/pull/2525)
 
+- **Secret Scan** Change Beta to Release [#2529](https://github.com/sider/runners/pull/2529)
+
 ## 0.51.2
 
 [Full diff](https://github.com/sider/runners/compare/0.51.1...0.51.2)
