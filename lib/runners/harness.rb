@@ -65,6 +65,7 @@ module Runners
 
               case result
               when Results::Success
+                trace_writer.message "#{result.issues.size} issue(s) found."
                 trace_writer.message "Removing issues from unchanged or untracked files..." do
                   result.filter_issues(changes)
                   if options.source.head && options.source.base
