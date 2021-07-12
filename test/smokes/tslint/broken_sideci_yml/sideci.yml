@@ -1,4 +1,0 @@
-linter:
-  tslint:
-    npm_install: false
-    config: true

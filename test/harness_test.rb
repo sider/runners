@@ -16,9 +16,9 @@ class HarnessTest < Minitest::Test
     @trace_writer ||= new_trace_writer
   end
 
-  def with_harness(processor_class: TestProcessor)
+  def with_harness(processor_class: TestProcessor, head: "330716dcd50a7a2c7d8ff79d74035c05453528b4")
     mktmpdir do |working_dir|
-      options_json = JSON.dump(source: new_source(head: "330716dcd50a7a2c7d8ff79d74035c05453528b4"))
+      options_json = JSON.dump(source: new_source(head: head))
       yield Harness.new(
         guid: "test-guid",
         processor_class: processor_class,
@@ -64,11 +64,7 @@ class HarnessTest < Minitest::Test
   end
 
   def test_run_filters_issues
-    processor_class = Class.new(Processor) do
-      def analyzer_id; :test; end
-      def analyzer_name; "Test"; end
-      def default_analyzer_version; "0.1.3"; end
-
+    klass = Class.new(TestProcessor) do
       def analyze(changes)
         issues = [
           Issue.new(
@@ -94,10 +90,9 @@ class HarnessTest < Minitest::Test
       end
     end
 
-    with_harness(processor_class: processor_class) do |harness|
-      (harness.working_dir / "test.rb").write("puts 1\n")
+    # https://github.com/sider/runners_test/pull/10
+    with_harness processor_class: klass, head: "0f6d00e" do |harness|
       result = harness.run
-
       assert_instance_of Results::Success, result
       assert_equal [
         Issue.new(
@@ -111,15 +106,21 @@ class HarnessTest < Minitest::Test
   end
 
   def test_run_when_root_dir_not_found
-    with_harness do |harness|
-      (harness.working_dir / "sider.yml").write(YAML.dump({ "linter" => { "test" => { "root_dir" => "foo" } } }))
-      assert_instance_of Results::Failure, harness.run
+    klass = Class.new(TestProcessor) do
+      def analyzer_id; :eslint; end
+    end
+
+    # https://github.com/sider/runners_test/pull/8
+    with_harness processor_class: klass, head: "7151469" do |harness|
+      result = harness.run
+      assert_instance_of Results::Failure, result
+      assert_match "`foo` directory is not found!", result.message
     end
   end
 
   def test_run_when_config_is_broken
-    with_harness do |harness|
-      (harness.working_dir / "sider.yml").write('1: 1:')
+    # https://github.com/sider/runners_test/pull/9
+    with_harness head: "7b15466" do |harness|
       result = harness.run
       assert_instance_of Results::Failure, result
       assert_equal "`sider.yml` is broken at line 1 and column 5 (mapping values are not allowed in this context)", result.message

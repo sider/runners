@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@sider/private-npm-example": "https://github.com/sider/private-npm-example.git"
+  }
+}

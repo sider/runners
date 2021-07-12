@@ -4,26 +4,71 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.50.5...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.51.2...HEAD)
+
+Misc:
+
+- **Cppcheck** Enable new recommended configuration and add `suppressions-list` option  [#2474](https://github.com/sider/runners/pull/2474)
+
+## 0.51.2
+
+[Full diff](https://github.com/sider/runners/compare/0.51.1...0.51.2)
+
+- **hadolint** Fix `target` option with glob [#2527](https://github.com/sider/runners/pull/2527)
+
+## 0.51.1
+
+[Full diff](https://github.com/sider/runners/compare/0.51.0...0.51.1)
+
+- **Metrics File Info** Fix parsing git-ls-files(1) output [#2526](https://github.com/sider/runners/pull/2526)
+
+## 0.51.0
+
+[Full diff](https://github.com/sider/runners/compare/0.50.6...0.51.0)
+
+Notable changes:
+
+- **TSLint** Drop support [#2515](https://github.com/sider/runners/pull/2515)
 
 Updated environments:
 
-- **devon_rex** 2.44.2 -> 2.45.1 [#2490](https://github.com/sider/runners/pull/2490) ([diff](https://github.com/sider/devon_rex/compare/2.44.2...2.45.1))
+- **devon_rex** 2.44.2 -> 2.45.2 [#2490](https://github.com/sider/runners/pull/2490) [#2496](https://github.com/sider/runners/pull/2496) ([diff](https://github.com/sider/devon_rex/compare/2.44.2...2.45.2))
 - **Bundler** 2.2.20 -> 2.2.21 [#2490](https://github.com/sider/runners/pull/2490)
 
 Updated tools:
 
-- **ESLint** 7.28.0 -> 7.29.0 [#2459](https://github.com/sider/runners/pull/2459)
+- **Checkstyle** 8.43 -> 8.44 [#2484](https://github.com/sider/runners/pull/2484)
+- **Cppcheck** 2.4.1 -> 2.5 [#2509](https://github.com/sider/runners/pull/2509)
+- **ESLint** 7.28.0 -> 7.30.0 [#2459](https://github.com/sider/runners/pull/2459) [#2506](https://github.com/sider/runners/pull/2506)
 - **Goodcheck** 3.0.1 -> 3.0.3 [#2479](https://github.com/sider/runners/pull/2479) [#2485](https://github.com/sider/runners/pull/2485)
 - **GolangCI-Lint** 1.40.1 -> 1.41.1 [#2458](https://github.com/sider/runners/pull/2458)
+- **hadolint** 2.5.0 -> 2.6.0 [#2501](https://github.com/sider/runners/pull/2501)
 - **HAML-Lint** 0.37.0 -> 0.37.1 [#2477](https://github.com/sider/runners/pull/2477)
+- **LanguageTool** 5.3 -> 5.4 [#2493](https://github.com/sider/runners/pull/2493)
+- **PMD CPD** 6.35.0 -> 6.36.0 [#2482](https://github.com/sider/runners/pull/2482)
+- **PMD Java** 6.35.0 -> 6.36.0 [#2483](https://github.com/sider/runners/pull/2483)
+- **Pylint** 2.8.3 -> 2.9.3 [#2504](https://github.com/sider/runners/pull/2504)
+- **Querly** 1.2.0 -> 1.3.0 [#2512](https://github.com/sider/runners/pull/2512)
 - **Rails Best Practices** 1.20.1 -> 1.21.0 [#2461](https://github.com/sider/runners/pull/2461)
+- **RuboCop** 1.16.1 -> 1.18.3 [#2491](https://github.com/sider/runners/pull/2491) [#2502](https://github.com/sider/runners/pull/2502) [#2523](https://github.com/sider/runners/pull/2523)
 
 Misc:
 
 - **PHPMD** Provide new recommended configuration [#2473](https://github.com/sider/runners/pull/2473)
 - Add exit status constants [#2492](https://github.com/sider/runners/pull/2492)
-- **Cppcheck** Enable new recommended configuration and add `suppressions-list` option  [#2474](https://github.com/sider/runners/pull/2474)
+- Use git-clone(1) and git-sparse-checkout(1) for faster download [#2495](https://github.com/sider/runners/pull/2495)
+- Remove unused `meowcop` dependency and RuboCop configuration files [#2497](https://github.com/sider/runners/pull/2497)
+- Add the documentation URL to `Metrics Code Clone`, `Metrics Complexity` and `Metrics File Info` [#2498](https://github.com/sider/runners/pull/2498)
+- **Cppcheck** Optimize installation [#2513](https://github.com/sider/runners/pull/2513)
+- **Querly** Report syntax error as warning [#2516](https://github.com/sider/runners/pull/2516) [#2520](https://github.com/sider/runners/pull/2520) [#2521](https://github.com/sider/runners/pull/2521)
+- **Metrics File Info** Improve text files extraction [#2519](https://github.com/sider/runners/pull/2519)
+- **Metrics File Info** Improve `git log --numstat` speed [#2522](https://github.com/sider/runners/pull/2522)
+
+## 0.50.6
+
+[Full diff](https://github.com/sider/runners/compare/0.50.5...0.50.6)
+
+- Fix npm install error with dependencies option and private dependencies [#2499](https://github.com/sider/runners/pull/2499)
 
 ## 0.50.5
 

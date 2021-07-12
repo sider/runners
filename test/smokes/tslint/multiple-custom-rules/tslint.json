@@ -1,7 +1,0 @@
-{
-  "defaultSeverity": "error",
-  "rules": {
-    "no-cats": true,
-    "no-dogs": true
-  }
-}

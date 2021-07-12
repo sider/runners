@@ -102,17 +102,17 @@ analyzers:
   metrics_codeclone:
     name: Metrics Code Clone
     github: pmd/pmd
-    doc: ""
+    doc: getting-started/code-quality
     beta: true
   metrics_complexity:
     name: Metrics Complexity
     github: terryyin/lizard
-    doc: ""
+    doc: getting-started/code-quality
     beta: true
   metrics_fileinfo:
     name: Metrics File Info
     github: coreutils/coreutils
-    doc: ""
+    doc: getting-started/code-quality
     beta: true
   misspell:
     name: Misspell
@@ -198,12 +198,6 @@ analyzers:
     doc: tools/swift/swiftlint
     website: https://realm.github.io/SwiftLint
     dependabot: false
-  tslint:
-    name: TSLint
-    github: palantir/tslint
-    doc: tools/javascript/tslint
-    website: https://palantir.github.io/tslint
-    deprecated: true
   tyscan:
     name: TyScan
     github: sider/TyScan

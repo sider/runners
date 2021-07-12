@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "1.2.0"
+default_version = "1.3.0"
 
 s.add_test(
   "success",
@@ -193,5 +193,16 @@ s.add_test(
       message: "There are duplicate configuration files (`querly.yml`, `querly.yaml`). Remove the files except the first one.",
       file: "querly.yml"
     }
+  ]
+)
+
+s.add_test(
+  "syntax_error",
+  type: "success",
+  issues: [],
+  analyzer: { name: "Querly", version: default_version },
+  warnings: [
+    { message: "#<Parser::SyntaxError: unexpected token kEND> in `a.rb`", file: "a.rb" },
+    { message: "#<Parser::SyntaxError: class or module name must be a constant literal> in `lib/b.rb`", file: "lib/b.rb" }
   ]
 )

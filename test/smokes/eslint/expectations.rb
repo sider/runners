@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "7.29.0"
+default_version = "7.30.0"
 
 s.add_test(
   "no_config",
@@ -490,7 +490,7 @@ s.add_test(
       id: "@typescript-eslint/no-unused-vars",
       message: "'x' is assigned a value but never used.",
       links: %w[
-        https://github.com/typescript-eslint/typescript-eslint/blob/v4.28.0/packages/eslint-plugin/docs/rules/no-unused-vars.md
+        https://github.com/typescript-eslint/typescript-eslint/blob/v4.28.1/packages/eslint-plugin/docs/rules/no-unused-vars.md
       ],
       path: "index.ts",
       location: { start_line: 1, start_column: 7, end_line: 1, end_column: 8 },
@@ -777,4 +777,18 @@ s.add_test(
     }
   ],
   analyzer: { name: "ESLint", version: "7.21.0" }
+)
+
+s.add_test(
+  "private_dependencies",
+  type: "failure",
+  message: /`npm install` failed. If you want to avoid this installation, try one of the following in your `sider.yml`:/,
+  analyzer: :_
+)
+
+s.add_test(
+  "private_dependencies_with_option_dependencies",
+  type: "success",
+  issues: [],
+  analyzer: { name: "ESLint", version: "7.28.0" }
 )

@@ -15,12 +15,12 @@ module Runners
       @shell = Shell.new(current_dir: working_dir, trace_writer: trace_writer, env_hash: {})
     end
 
-    def open
+    def open(fast: true)
       prepare_ssh do |git_ssh_path|
         trace_writer.header "Set up source code"
 
         trace_writer.message "Preparing head commit tree..."
-        prepare_head_source
+        prepare_head_source(fast: fast)
 
         changes =
           if options.source.base
@@ -39,12 +39,16 @@ module Runners
       []
     end
 
-    def prepare_head_source
+    def prepare_head_source(fast: true)
       raise NotImplementedError
     end
 
     def patches
       raise NotImplementedError
+    end
+
+    def config
+      @config ||= Config.load_from_dir(working_dir)
     end
 
     private

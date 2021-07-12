@@ -22,6 +22,14 @@ module Runners
 
     def remote_url: () -> String
 
-    def git_fetch_args: () -> Array[String]
+    def git_setup: () -> void
+
+    def git_clone: (fast: bool) -> void
+
+    def git_fetch: (Array[String]) -> void
+
+    def git_checkout: () -> void
+
+    def git_sparse_checkout_set: (*String) -> void
   end
 end

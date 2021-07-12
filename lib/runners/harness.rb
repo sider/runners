@@ -31,15 +31,13 @@ module Runners
     def run
       ensure_result do
         workspace = Workspace.prepare(options: options, working_dir: working_dir, trace_writer: trace_writer)
-        workspace.open do |git_ssh_path, changes|
-          @config = conf = Config.load_from_dir(workspace.working_dir)
 
-          unless conf.ignore_patterns.empty?
-            trace_writer.message "Deleting ignored files..." do
-              files = Ignoring.new(workspace: workspace, ignore_patterns: conf.ignore_patterns).delete_ignored_files!
-              trace_writer.message(files.empty? ? "No deleted files." : "Successfully deleted #{files.size} file(s)")
-            end
-          end
+        # HACK: MetricsFileInfo needs all Git blob objects to calculate code churn.
+        #       This code is so ugly, but I could not find a good way.
+        fast = processor_class != Processor::MetricsFileInfo
+
+        workspace.open(fast: fast) do |git_ssh_path, changes|
+          @config = conf = workspace.config
 
           begin
             processor = processor_class.new(guid: guid, working_dir: working_dir, config: conf,
