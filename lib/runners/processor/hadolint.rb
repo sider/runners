@@ -37,17 +37,23 @@ module Runners
     end
 
     def analyze(_changes)
-      if analysis_target.empty?
-        trace_writer.message "Dockerfile not found."
-        return Results::Success.new(guid: guid, analyzer: analyzer)
+      invalid_dockerfiles_failure = Results::Failure.new(guid: guid, analyzer: analyzer, message: "Invalid Dockerfile(s) specified.")
+
+      if analysis_targets.empty?
+        if config_linter[:target]
+          return invalid_dockerfiles_failure
+        else
+          trace_writer.message "Dockerfile not found."
+          return Results::Success.new(guid: guid, analyzer: analyzer)
+        end
       end
 
-      stdout, stderr, status = capture3(analyzer_bin, *analyzer_options, *analysis_target)
+      stdout, stderr, status = capture3(analyzer_bin, *analyzer_options, *analysis_targets)
 
       if status.success?
         Results::Success.new(guid: guid, analyzer: analyzer, issues: parse_result(stdout))
       elsif stderr.include?("openBinaryFile: does not exist (No such file or directory)")
-        Results::Failure.new(guid: guid, analyzer: analyzer, message: "Invalid Dockerfile(s) specified.")
+        invalid_dockerfiles_failure
       else
         raise "Unexpected error: status=#{status.inspect}, stderr=#{stderr.inspect}"
       end
@@ -65,11 +71,16 @@ module Runners
       ]
     end
 
-    def analysis_target
-      @analysis_target ||=
+    def analysis_targets
+      @analysis_targets ||=
         begin
-          if config_linter[:target]
-            Array(config_linter[:target])
+          # @type var config_targets: Array[String]
+          config_targets = Array(config_linter[:target])
+          if !config_targets.empty?
+            config_targets.flat_map do |target|
+              current_dir.glob(target, File::FNM_EXTGLOB)
+                .map { |path| relative_path(path).to_path }
+            end
           else
             current_dir.glob(DEFAULT_TARGET, File::FNM_EXTGLOB)
               .reject { |path| path.fnmatch?(DEFAULT_TARGET_EXCLUDED, File::FNM_EXTGLOB) || path.directory? }

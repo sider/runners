@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.51.1...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.51.2...HEAD)
+
+## 0.51.2
+
+[Full diff](https://github.com/sider/runners/compare/0.51.1...0.51.2)
+
+- **hadolint** Fix `target` option with glob [#2527](https://github.com/sider/runners/pull/2527)
 
 Misc:
 

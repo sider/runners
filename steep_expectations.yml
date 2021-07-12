@@ -113,6 +113,25 @@
     severity: ERROR
     message: The branch is unreachable because the condition is exhaustive
     code: Ruby::ElseOnExhaustiveCase
+- file: lib/runners/processor/hadolint.rb
+  diagnostics:
+  - range:
+      start:
+        line: 74
+        character: 4
+      end:
+        line: 90
+        character: 7
+    severity: ERROR
+    message: |-
+      Cannot allow method body have type `(::Array[(::String | ::Array[::String])] | ::Array[::String])` because declared as type `::Array[::String]`
+        (::Array[(::String | ::Array[::String])] | ::Array[::String]) <: ::Array[::String]
+          ::Array[(::String | ::Array[::String])] <: ::Array[::String]
+            (::String | ::Array[::String]) <: ::String
+              ::Array[::String] <: ::String
+                ::Object <: ::String
+                  ::BasicObject <: ::String
+    code: Ruby::MethodBodyTypeMismatch
 - file: lib/runners/processor/languagetool.rb
   diagnostics:
   - range:
