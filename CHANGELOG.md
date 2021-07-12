@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.51.2...HEAD)
 
+Misc:
+
+- **PMD CPD** Remove codefragment from results [#2525](https://github.com/sider/runners/pull/2525)
+
 ## 0.51.2
 
 [Full diff](https://github.com/sider/runners/compare/0.51.1...0.51.2)
