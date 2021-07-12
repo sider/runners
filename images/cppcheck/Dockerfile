@@ -12,8 +12,6 @@ ARG CPPCHECK_VERSION=2.5
 # NOTE: A segmentation fault occurs with the latest version of libz3.
 ARG LIBZ3_VERSION=4.4.1-1~deb10u1
 
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/cppcheck/sider_recommended_cppcheck.txt ${RUNNER_USER_HOME}/
-
 RUN apt-get update && \
     apt-get install -qq -y --no-install-recommends \
       curl \
@@ -65,6 +63,8 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 COPY --from=cppcheck /opt/cppcheck /opt/cppcheck
 ENV PATH /opt/cppcheck/bin:${PATH}
+
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/cppcheck/sider_recommended_cppcheck.txt ${RUNNER_USER_HOME}/
 
 
 # Copy the main source code

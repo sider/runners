@@ -8,8 +8,6 @@ ARG CPPCHECK_VERSION=2.5
 # NOTE: A segmentation fault occurs with the latest version of libz3.
 ARG LIBZ3_VERSION=4.4.1-1~deb10u1
 
-COPY --chown=<%= chown %> images/<%= analyzer %>/sider_recommended_cppcheck.txt ${RUNNER_USER_HOME}/
-
 RUN apt-get update && \
     apt-get install -qq -y --no-install-recommends \
       curl \
@@ -45,5 +43,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 COPY --from=cppcheck /opt/cppcheck /opt/cppcheck
 ENV PATH /opt/cppcheck/bin:${PATH}
+
+COPY --chown=<%= chown %> images/<%= analyzer %>/sider_recommended_cppcheck.txt ${RUNNER_USER_HOME}/
 
 <%= render_erb 'images/Dockerfile.end.erb' %>
