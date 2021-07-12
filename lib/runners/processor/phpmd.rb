@@ -20,7 +20,7 @@ module Runners
     register_config_schema SCHEMA.config
 
     DEFAULT_TARGET = ".".freeze
-    DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_config.xml").to_path.freeze
+    DEFAULT_CONFIG_FILE = (Pathname(Dir.home) / "sider_recommended_phpmd.xml").to_path.freeze
 
     def self.config_example
       <<~'YAML'

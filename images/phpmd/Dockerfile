@@ -26,7 +26,7 @@ RUN cd "${RUNNERS_DIR}" && \
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/phpmd/composer.* ${COMPOSER_HOME}/
 RUN composer global install
 
-COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/phpmd/sider_config.xml ${RUNNER_USER_HOME}/
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/phpmd/sider_recommended_phpmd.xml ${RUNNER_USER_HOME}/
 
 
 # Copy the main source code
