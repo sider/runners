@@ -8,6 +8,17 @@ s.add_test(
   issues: [
     {
       path: "app.php",
+      location: { start_line: 7, end_line: 9 },
+      id: "ShortMethodName",
+      message: "Avoid using short method names like Main::a(). The configured minimum method name length is 3.",
+      links: %w[https://phpmd.org/rules/naming.html#shortmethodname],
+      object: nil,
+      git_blame_info: {
+        commit: :_, line_hash: "23d6d0d6e5409c00584ef7955f9e4f41bb087792", original_line: 7, final_line: 7
+      }
+    },
+    {
+      path: "app.php",
       location: { start_line: 5, end_line: 5 },
       id: "UnusedLocalVariable",
       message: "Avoid unused local variables such as '$hoge'.",
