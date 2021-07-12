@@ -64,6 +64,8 @@ RUN apt-get update && \
 COPY --from=cppcheck /opt/cppcheck /opt/cppcheck
 ENV PATH /opt/cppcheck/bin:${PATH}
 
+COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/cppcheck/sider_recommended_cppcheck.txt ${RUNNER_USER_HOME}/
+
 
 # Copy the main source code
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} exe ${RUNNERS_DIR}/exe

@@ -20,6 +20,7 @@ module Runners
         language: string?,
         'bug-hunting': boolean?,
         parallel: boolean?,
+        'suppressions-list': string?,
       )
 
       let :issue, object(
@@ -33,6 +34,7 @@ module Runners
 
     register_config_schema SCHEMA.config
 
+    DEFAULT_SUPPRESSIONS_PATH = (Pathname(Dir.home) / "sider_recommended_cppcheck.txt").to_path.freeze
     DEFAULT_TARGET = ".".freeze
     DEFAULT_IGNORE = [].freeze
 
@@ -50,6 +52,7 @@ module Runners
         addon: [cert, misra]
         bug-hunting: true
         parallel: false
+        suppressions-list: suppressions.txt
       YAML
     end
 
@@ -111,6 +114,10 @@ module Runners
       config_linter[:language].then { |lang| lang ? ["--language=#{lang}"] : [] }
     end
 
+    def suppressions_list
+      (config_linter[:'suppressions-list'] || DEFAULT_SUPPRESSIONS_PATH).then { |file| ["--suppressions-list=#{file}"] }
+    end
+
     def jobs
       @jobs ||=
         if config_linter[:parallel]
@@ -139,6 +146,7 @@ module Runners
         *language,
         *config_include_path,
         *jobs,
+        *suppressions_list,
         *args,
         *target
       )

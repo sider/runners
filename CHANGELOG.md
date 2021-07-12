@@ -8,7 +8,9 @@ All notable changes to this project will be documented in this file.
 
 Misc:
 
+- **Cppcheck** Enable new recommended configuration and add `suppressions-list` option [#2474](https://github.com/sider/runners/pull/2474)
 - **PHPMD** Enable new recommended configuration [#2536](https://github.com/sider/runners/pull/2536)
+- **PMD CPD** Remove codefragment from results [#2525](https://github.com/sider/runners/pull/2525)
 
 ## 0.51.2
 

@@ -44,4 +44,6 @@ RUN apt-get update && \
 COPY --from=cppcheck /opt/cppcheck /opt/cppcheck
 ENV PATH /opt/cppcheck/bin:${PATH}
 
+COPY --chown=<%= chown %> images/<%= analyzer %>/sider_recommended_cppcheck.txt ${RUNNER_USER_HOME}/
+
 <%= render_erb 'images/Dockerfile.end.erb' %>

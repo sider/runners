@@ -35,7 +35,6 @@ module Runners
           end_line: integer,
           end_column: integer?
         )),
-        codefragment: string
       )
     end
 
@@ -173,7 +172,7 @@ module Runners
         tokens_text = elem_dupli[:tokens] or raise "required tokens: #{elem_dupli.inspect}"
         tokens = Integer(tokens_text)
 
-        files, codefragment = create_files_and_codefragment(elem_dupli)
+        files = create_files(elem_dupli)
         duplicated_files = create_duplicated_files(files)
 
         files.each do |file|
@@ -186,7 +185,6 @@ module Runners
               lines: lines,
               tokens: tokens,
               files: duplicated_files,
-              codefragment: codefragment
             },
             schema: SCHEMA.issue,
           )
@@ -194,20 +192,16 @@ module Runners
       end
     end
 
-    def create_files_and_codefragment(duplication)
+    def create_files(duplication)
       files = []
-      codefragment = nil
       duplication.elements.each do |elem|
         case elem.name
         when "file"
           files << to_fileinfo(elem)
-        when "codefragment"
-          codefragment = elem.content
         end
       end
-      codefragment or raise "required codefragment: #{duplication.inspect}"
 
-      [files, codefragment]
+      files
     end
 
     def to_fileinfo(elem_file)

@@ -23,7 +23,7 @@ class ConfigGeneratorTest < Minitest::Test
       id
     end
 
-    end_line = 416
+    end_line = 417
     assert_yaml "test_generate_with_tools.yml",
                 tools: tools,
                 comment_out_lines: [9..end_line, (end_line + 3)..(end_line + 7), (end_line + 10)..(end_line + 14)],

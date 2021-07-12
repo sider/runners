@@ -354,19 +354,6 @@ s.add_test(
       git_blame_info: {
         commit: :_, line_hash: "90556cd318a1aaf1aa004d2b6c37189d79f5d3a0", original_line: 4, final_line: 4
       }
-    },
-    {
-      id: "unusedFunction",
-      path: "bad.c",
-      location: { start_line: 1, start_column: 0 },
-      message: "The function 'foo' is never used.",
-      links: [],
-      object: {
-        severity: "style", verbose: nil, inconclusive: false, cwe: "561", location_info: nil
-      },
-      git_blame_info: {
-        commit: :_, line_hash: "aba21ca7df06967d62bb367398a9d2f826c398f9", original_line: 1, final_line: 1
-      }
     }
   ],
   analyzer: { name: "Cppcheck", version: default_version }
@@ -1176,6 +1163,27 @@ s.add_test(
       },
       git_blame_info: {
         commit: :_, line_hash: "d170f5327fbab43247efa9e0283e882d7efbb141", original_line: 9, final_line: 9
+      }
+    }
+  ],
+  analyzer: { name: "Cppcheck", version: default_version }
+)
+
+s.add_test(
+  "suppressions_list",
+  type: "success",
+  issues: [
+    {
+      id: "arrayIndexOutOfBounds",
+      path: "src/not_good.c",
+      location: { start_line: 5, start_column: 6 },
+      message: "Array 'a[2]' accessed at index 2, which is out of bounds.",
+      links: [],
+      object: {
+        severity: "error", verbose: nil, inconclusive: false, cwe: "788", location_info: "Array index out of bounds"
+      },
+      git_blame_info: {
+        commit: :_, line_hash: "ee83b2b825ac1de8537e3d566f59b3b1deb6e83e", original_line: 5, final_line: 5
       }
     }
   ],

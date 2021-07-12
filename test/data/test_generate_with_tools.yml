@@ -67,6 +67,7 @@ linter:
 #     addon: [cert, misra]
 #     bug-hunting: true
 #     parallel: false
+#     suppressions-list: suppressions.txt
 
 #   # cpplint example. See https://help.sider.review/tools/cplusplus/cpplint
 #   cpplint:
