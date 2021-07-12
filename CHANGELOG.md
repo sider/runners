@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 
 Misc:
 
-- **Cppcheck** Enable new recommended configuration and add `suppressions-list` option  [#2474](https://github.com/sider/runners/pull/2474)
+- **Cppcheck** Enable new recommended configuration and add `suppressions-list` option [#2474](https://github.com/sider/runners/pull/2474)
 
 ## 0.51.2
 
