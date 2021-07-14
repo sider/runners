@@ -15,6 +15,7 @@ Updated environments:
 Misc:
 
 - Make the requirement for Bundler more relax [#2537](https://github.com/sider/runners/pull/2537)
+- Make the requirement for Ruby more relax [#2539](https://github.com/sider/runners/pull/2539)
 
 ## 0.52.0
 
