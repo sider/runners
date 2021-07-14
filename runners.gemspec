@@ -11,8 +11,8 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/sider/runners"
   spec.license       = "MIT"
 
-  # NOTE: It must be the same as sider/devon_rex and the `.ruby-version` file.
-  spec.required_ruby_version = [">= 2.7.4", "< 3.0.0"]
+  # NOTE: It must be between the range required by sider/devon_rex and the `.ruby-version` file.
+  spec.required_ruby_version = [">= 2.7.1", "< 3.0.0"]
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = spec.homepage
