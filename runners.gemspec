@@ -11,8 +11,8 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/sider/runners"
   spec.license       = "MIT"
 
-  # NOTE: It must be same as devon_rex and .ruby-version
-  spec.required_ruby_version = [">= 2.7.3", "< 3.0.0"]
+  # NOTE: It must be the same as sider/devon_rex and the `.ruby-version` file.
+  spec.required_ruby_version = [">= 2.7.4", "< 3.0.0"]
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = spec.homepage
@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   # standard libraries
-  spec.add_dependency "bundler", ">= 2.2.21", "< 2.3.0" # NOTE: It must be same as devon_rex.
+  spec.add_dependency "bundler", ">= 2.2.20", "< 2.3.0" # NOTE: It must be between the range required by sider/devon_rex.
   spec.add_dependency "erb", ">= 2.2"
   spec.add_dependency "fileutils", ">= 1.5"
   spec.add_dependency "forwardable", ">= 1.3"
