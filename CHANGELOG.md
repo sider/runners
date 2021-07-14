@@ -6,6 +6,16 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.52.0...HEAD)
 
+Updated environments:
+
+- **devon_rex** 2.45.2 -> 2.45.3 [#2537](https://github.com/sider/runners/pull/2537) ([diff](https://github.com/sider/devon_rex/compare/2.45.2...2.45.3))
+- **Ruby** 2.7.3 -> 2.7.4 [#2537](https://github.com/sider/runners/pull/2537)
+- **Bundler** 2.2.21 -> 2.2.23 [#2537](https://github.com/sider/runners/pull/2537)
+
+Misc:
+
+- Make the requirement for Bundler more relax [#2537](https://github.com/sider/runners/pull/2537)
+
 ## 0.52.0
 
 [Full diff](https://github.com/sider/runners/compare/0.51.2...0.52.0)
