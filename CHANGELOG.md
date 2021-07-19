@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 Updated tools:
 
 - **ESLint** 7.30.0 -> 7.31.0 [#2544](https://github.com/sider/runners/pull/2544)
+- **Goodcheck** 3.0.3 -> 3.1.0 [#2542](https://github.com/sider/runners/pull/2542)
 
 ## 0.52.1
 
