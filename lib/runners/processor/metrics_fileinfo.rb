@@ -207,8 +207,8 @@ module Runners
       text_files = Set[]
 
       targets.each_slice(1000) do |files|
-        stdout, _stderr = git("ls-files", "--eol", "--error-unmatch", "--", *files)
-        stdout.each_line(chomp: true) do |line|
+        stdout, _stderr = git("ls-files", "--eol", "--error-unmatch", "-z", "--", *files)
+        stdout.each_line("\0", chomp: true) do |line|
           # NOTE: A simple splitting by spaces does not work, e.g. `text eol=lf`.
           #
           # @see https://git-scm.com/docs/git-ls-files#_output
