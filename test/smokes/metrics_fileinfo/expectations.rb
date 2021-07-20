@@ -505,78 +505,14 @@ s.add_test_with_git_metadata(
       id: "metrics_fileinfo",
       path: "<img onerror=\"alert('ok')\" src=\"foo.png\">.js",
       location: nil,
-      message: "<img onerror=\"alert('ok')\" src=\"foo.png\">.js: loc = (no info), last commit datetime = 2021-02-01T17:20:23+09:00",
+      message: "<img onerror=\"alert('ok')\" src=\"foo.png\">.js: loc = (no info), last commit datetime = 2021-07-20T10:26:16+09:00",
       links: [],
       object: {
         lines_of_code: nil,
-        last_committed_at: "2021-02-01T17:20:23+09:00",
-        number_of_commits: 28,
+        last_committed_at: "2021-07-20T10:26:16+09:00",
+        number_of_commits: 0,
         occurrence: 0,
         additions: 0,
-        deletions: 0
-      },
-      git_blame_info: nil
-    },
-    {
-      id: "metrics_fileinfo",
-      path: "asdfsider copy 2.yml",
-      location: nil,
-      message: "asdfsider copy 2.yml: loc = (no info), last commit datetime = 2021-02-19T09:44:29+09:00",
-      links: [],
-      object: {
-        lines_of_code: nil,
-        last_committed_at: "2021-02-19T09:44:29+09:00",
-        number_of_commits: 28,
-        occurrence: 1,
-        additions: 3,
-        deletions: 0
-      },
-      git_blame_info: nil
-    },
-    {
-      id: "metrics_fileinfo",
-      path: "asdfsider copy.yml",
-      location: nil,
-      message: "asdfsider copy.yml: loc = (no info), last commit datetime = 2021-02-19T09:39:56+09:00",
-      links: [],
-      object: {
-        lines_of_code: nil,
-        last_committed_at: "2021-02-19T09:39:56+09:00",
-        number_of_commits: 28,
-        occurrence: 1,
-        additions: 3,
-        deletions: 0
-      },
-      git_blame_info: nil
-    },
-    {
-      id: "metrics_fileinfo",
-      path: "asdfsider.yml",
-      location: nil,
-      message: "asdfsider.yml: loc = 3, last commit datetime = 2021-01-26T15:02:05+09:00",
-      links: [],
-      object: {
-        lines_of_code: 3,
-        last_committed_at: "2021-01-26T15:02:05+09:00",
-        number_of_commits: 28,
-        occurrence: 0,
-        additions: 0,
-        deletions: 0
-      },
-      git_blame_info: nil
-    },
-    {
-      id: "metrics_fileinfo",
-      path: "goodcheck copy 2.yml",
-      location: nil,
-      message: "goodcheck copy 2.yml: loc = (no info), last commit datetime = 2021-02-19T09:44:29+09:00",
-      links: [],
-      object: {
-        lines_of_code: nil,
-        last_committed_at: "2021-02-19T09:44:29+09:00",
-        number_of_commits: 28,
-        occurrence: 1,
-        additions: 1,
         deletions: 0
       },
       git_blame_info: nil
@@ -585,140 +521,12 @@ s.add_test_with_git_metadata(
       id: "metrics_fileinfo",
       path: "goodcheck copy.yml",
       location: nil,
-      message: "goodcheck copy.yml: loc = (no info), last commit datetime = 2021-02-19T09:44:29+09:00",
+      message: "goodcheck copy.yml: loc = (no info), last commit datetime = 2021-07-20T10:26:16+09:00",
       links: [],
       object: {
         lines_of_code: nil,
-        last_committed_at: "2021-02-19T09:44:29+09:00",
-        number_of_commits: 28,
-        occurrence: 2,
-        additions: 2,
-        deletions: 1
-      },
-      git_blame_info: nil
-    },
-    {
-      id: "metrics_fileinfo",
-      path: "goodcheck.yml",
-      location: nil,
-      message: "goodcheck.yml: loc = 1, last commit datetime = 2021-01-26T13:55:21+09:00",
-      links: [],
-      object: {
-        lines_of_code: 1,
-        last_committed_at: "2021-01-26T13:55:21+09:00",
-        number_of_commits: 28,
-        occurrence: 1,
-        additions: 1,
-        deletions: 0
-      },
-      git_blame_info: nil
-    },
-    {
-      id: "metrics_fileinfo",
-      path: "index.js",
-      location: nil,
-      message: "index.js: loc = 2, last commit datetime = 2021-01-08T13:44:28+09:00",
-      links: [],
-      object: {
-        lines_of_code: 2,
-        last_committed_at: "2021-01-08T13:44:28+09:00",
-        number_of_commits: 28,
-        occurrence: 2,
-        additions: 3,
-        deletions: 1
-      },
-      git_blame_info: nil
-    },
-    {
-      id: "metrics_fileinfo",
-      path: "master-test.copy/first_depth_file.js",
-      location: nil,
-      message: "master-test.copy/first_depth_file.js: loc = 2, last commit datetime = 2021-03-22T16:49:53+09:00",
-      links: [],
-      object: {
-        lines_of_code: 2,
-        last_committed_at: "2021-03-22T16:49:53+09:00",
-        number_of_commits: 28,
-        occurrence: 1,
-        additions: 2,
-        deletions: 0
-      },
-      git_blame_info: nil
-    },
-    {
-      id: "metrics_fileinfo",
-      path: "master-test.copy/master/second_depth_file.js",
-      location: nil,
-      message: "master-test.copy/master/second_depth_file.js: loc = 2, last commit datetime = 2021-03-22T16:49:53+09:00",
-      links: [],
-      object: {
-        lines_of_code: 2,
-        last_committed_at: "2021-03-22T16:49:53+09:00",
-        number_of_commits: 28,
-        occurrence: 1,
-        additions: 2,
-        deletions: 0
-      },
-      git_blame_info: nil
-    },
-    {
-      id: "metrics_fileinfo",
-      path: "master-test.copy/📁/second_depth_file.js",
-      location: nil,
-      message: "master-test.copy/📁/second_depth_file.js: loc = 2, last commit datetime = 2021-03-22T16:49:53+09:00",
-      links: [],
-      object: {
-        lines_of_code: 2,
-        last_committed_at: "2021-03-22T16:49:53+09:00",
-        number_of_commits: 28,
-        occurrence: 1,
-        additions: 2,
-        deletions: 0
-      },
-      git_blame_info: nil
-    },
-    {
-      id: "metrics_fileinfo",
-      path: "master-test.copy/🗄️.js",
-      location: nil,
-      message: "master-test.copy/🗄️.js: loc = 2, last commit datetime = 2021-03-22T16:49:53+09:00",
-      links: [],
-      object: {
-        lines_of_code: 2,
-        last_committed_at: "2021-03-22T16:49:53+09:00",
-        number_of_commits: 28,
-        occurrence: 1,
-        additions: 2,
-        deletions: 0
-      },
-      git_blame_info: nil
-    },
-    {
-      id: "metrics_fileinfo",
-      path: "master-test/first_depth_file.js",
-      location: nil,
-      message: "master-test/first_depth_file.js: loc = 2, last commit datetime = 2021-01-14T13:18:27+09:00",
-      links: [],
-      object: {
-        lines_of_code: 2,
-        last_committed_at: "2021-01-14T13:18:27+09:00",
-        number_of_commits: 28,
-        occurrence: 0,
-        additions: 0,
-        deletions: 0
-      },
-      git_blame_info: nil
-    },
-    {
-      id: "metrics_fileinfo",
-      path: "master-test/master/second_depth_file.js",
-      location: nil,
-      message: "master-test/master/second_depth_file.js: loc = 2, last commit datetime = 2021-01-14T13:18:27+09:00",
-      links: [],
-      object: {
-        lines_of_code: 2,
-        last_committed_at: "2021-01-14T13:18:27+09:00",
-        number_of_commits: 28,
+        last_committed_at: "2021-07-20T10:26:16+09:00",
+        number_of_commits: 0,
         occurrence: 0,
         additions: 0,
         deletions: 0
@@ -729,14 +537,14 @@ s.add_test_with_git_metadata(
       id: "metrics_fileinfo",
       path: "master-test/📁/second_depth_file.js",
       location: nil,
-      message: "master-test/📁/second_depth_file.js: loc = 2, last commit datetime = 2021-01-19T13:41:03+09:00",
+      message: "master-test/📁/second_depth_file.js: loc = 2, last commit datetime = 2021-07-20T10:26:16+09:00",
       links: [],
       object: {
         lines_of_code: 2,
-        last_committed_at: "2021-01-19T13:41:03+09:00",
-        number_of_commits: 28,
-        occurrence: 1,
-        additions: 2,
+        last_committed_at: "2021-07-20T10:26:16+09:00",
+        number_of_commits: 0,
+        occurrence: 0,
+        additions: 0,
         deletions: 0
       },
       git_blame_info: nil
@@ -745,29 +553,13 @@ s.add_test_with_git_metadata(
       id: "metrics_fileinfo",
       path: "master-test/🗄️.js",
       location: nil,
-      message: "master-test/🗄️.js: loc = 2, last commit datetime = 2021-01-19T13:41:03+09:00",
+      message: "master-test/🗄️.js: loc = 2, last commit datetime = 2021-07-20T10:26:16+09:00",
       links: [],
       object: {
         lines_of_code: 2,
-        last_committed_at: "2021-01-19T13:41:03+09:00",
-        number_of_commits: 28,
-        occurrence: 1,
-        additions: 2,
-        deletions: 0
-      },
-      git_blame_info: nil
-    },
-    {
-      id: "metrics_fileinfo",
-      path: "zzzzz",
-      location: nil,
-      message: "zzzzz: loc = 0, last commit datetime = 2021-02-26T12:54:38+09:00",
-      links: [],
-      object: {
-        lines_of_code: 0,
-        last_committed_at: "2021-02-26T12:54:38+09:00",
-        number_of_commits: 28,
-        occurrence: 1,
+        last_committed_at: "2021-07-20T10:26:16+09:00",
+        number_of_commits: 0,
+        occurrence: 0,
         additions: 0,
         deletions: 0
       },
@@ -777,13 +569,13 @@ s.add_test_with_git_metadata(
       id: "metrics_fileinfo",
       path: "zzzzz;' SHOW TABLES; SELECT '.txt",
       location: nil,
-      message: "zzzzz;' SHOW TABLES; SELECT '.txt: loc = (no info), last commit datetime = 2021-02-26T12:54:38+09:00",
+      message: "zzzzz;' SHOW TABLES; SELECT '.txt: loc = (no info), last commit datetime = 2021-07-20T10:26:16+09:00",
       links: [],
       object: {
         lines_of_code: nil,
-        last_committed_at: "2021-02-26T12:54:38+09:00",
-        number_of_commits: 28,
-        occurrence: 1,
+        last_committed_at: "2021-07-20T10:26:16+09:00",
+        number_of_commits: 0,
+        occurrence: 0,
         additions: 0,
         deletions: 0
       },
