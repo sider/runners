@@ -22,7 +22,7 @@ module Runners
       raise BlameFailed, "git-blame failed: #{exn.stderr_str}"
     end
 
-    def prepare_head_source(fast: true)
+    def prepare_head_source(fast: true, run_metrics: false)
       git_clone(fast: fast)
       git_setup
 
@@ -34,7 +34,8 @@ module Runners
       git_checkout
 
       # Next, fetch remaining files except for *ignored* files.
-      git_sparse_checkout_set "/**", *config.ignore_patterns.map { |pat| "!#{pat}" }
+      patterns = (run_metrics ? config.metrics_ignore_patterns : []) + config.ignore_patterns
+      git_sparse_checkout_set "/**", *Config.invert_patterns(patterns)
       git_checkout
     end
 

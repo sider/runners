@@ -14,6 +14,10 @@ class ConfigTest < Minitest::Test
     end
   end
 
+  def test_invert_patterns
+    assert_equal ["foo.txt", "!bar/baz/**", "qux/**"], Runners::Config.invert_patterns(["!foo.txt", "bar/baz/**", "!qux/**"])
+  end
+
   def test_content_without_sider_yml
     assert_equal({}, Runners::Config.new(path: nil, raw_content: nil).content)
   end
@@ -68,6 +72,7 @@ class ConfigTest < Minitest::Test
           jshint: nil,
           ktlint: nil,
           languagetool: nil,
+          metrics: nil,
           misspell: nil,
           phinder: nil,
           phpmd: nil,

@@ -35,8 +35,9 @@ module Runners
         # HACK: MetricsFileInfo needs all Git blob objects to calculate code churn.
         #       This code is so ugly, but I could not find a good way.
         fast = processor_class != Processor::MetricsFileInfo
+        run_metrics = [Processor::MetricsCodeClone, Processor::MetricsComplexity, Processor::MetricsFileInfo].include?(processor_class)
 
-        workspace.open(fast: fast) do |git_ssh_path, changes|
+        workspace.open(fast: fast, run_metrics: run_metrics) do |git_ssh_path, changes|
           @config = conf = workspace.config
 
           begin

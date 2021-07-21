@@ -58,6 +58,10 @@ module Runners
       end
     end
 
+    def self.invert_patterns(patterns)
+      patterns.map { |pat| pat.start_with?('!') ? pat.delete_prefix('!') : "!#{pat}" }
+    end
+
     attr_reader :path, :raw_content
 
     def initialize(path:, raw_content:)
@@ -99,6 +103,10 @@ module Runners
 
     def ignore_patterns
       @ignore_patterns ||= Array(content[:ignore])
+    end
+
+    def metrics_ignore_patterns
+      @metrics_ignore_patterns || Array(content.dig(:linter, :metrics, :ignore))
     end
 
     def linter(id)
