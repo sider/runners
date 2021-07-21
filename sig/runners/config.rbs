@@ -30,6 +30,8 @@ module Runners
 
     def self.check_warnings: (instance) -> void
 
+    def self.invert_patterns: (Array[String]) -> Array[String]
+
     attr_reader path: Pathname?
     attr_reader raw_content: String?
 
@@ -50,6 +52,8 @@ module Runners
     def path_exist?: () -> bool
 
     def ignore_patterns: () -> Array[String]
+
+    def metrics_ignore_patterns: () -> Array[String]
 
     def linter: (Symbol | String) -> Hash[Symbol, untyped]
 

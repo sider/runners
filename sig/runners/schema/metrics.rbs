@@ -1,0 +1,10 @@
+module Runners
+  module Schema
+    class MetricsClass < StrongJSON
+      include Schema::ConfigTypes
+
+      def config: () -> StrongJSON::Type::Object[untyped]
+    end
+    Metrics: MetricsClass
+  end
+end
