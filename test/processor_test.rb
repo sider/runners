@@ -431,10 +431,10 @@ class ProcessorTest < Minitest::Test
   end
 
   def test_metrics
-    assert_equal true, Runners::Processor::MetricsCodeClone.metrics?
-    assert_equal true, Runners::Processor::MetricsComplexity.metrics?
-    assert_equal true, Runners::Processor::MetricsFileInfo.metrics?
-    assert_equal false, Runners::Processor::Eslint.metrics?
-    assert_equal false, Runners::Processor::RuboCop.metrics?
+    assert Runners::Processor::MetricsCodeClone.metrics?
+    assert Runners::Processor::MetricsComplexity.metrics?
+    assert Runners::Processor::MetricsFileInfo.metrics?
+    refute Runners::Processor::Eslint.metrics?
+    refute Runners::Processor::RuboCop.metrics?
   end
 end

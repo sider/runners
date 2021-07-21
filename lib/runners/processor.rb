@@ -24,7 +24,7 @@ module Runners
     end
 
     def self.metrics?
-      self.analyzer_id.to_s.start_with?("metrics_")
+      !!self.name&.start_with?("Runners::Processor::Metrics")
     end
 
     attr_reader :guid, :working_dir, :config, :shell, :trace_writer, :warnings, :options
