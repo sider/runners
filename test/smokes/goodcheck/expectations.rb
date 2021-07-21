@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "3.0.3"
+default_version = "3.1.0"
 
 s.add_offline_test(
   "success",

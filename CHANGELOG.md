@@ -4,7 +4,25 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.52.1...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.53.0...HEAD)
+
+## 0.53.0
+
+[Full diff](https://github.com/sider/runners/compare/0.52.1...0.53.0)
+
+Updated environments:
+
+- **devon_rex** 2.45.3 -> 2.45.4 [#2551](https://github.com/sider/runners/pull/2551) ([diff](https://github.com/sider/devon_rex/compare/2.45.3...2.45.4))
+- **Bundler** 2.2.23 -> 2.2.24 [#2551](https://github.com/sider/runners/pull/2551)
+
+Updated tools:
+
+- **ESLint** 7.30.0 -> 7.31.0 [#2544](https://github.com/sider/runners/pull/2544)
+- **Goodcheck** 3.0.3 -> 3.1.0 [#2542](https://github.com/sider/runners/pull/2542)
+
+Misc:
+
+- **Metrics File Info** Fix unicode filepath [#2549](https://github.com/sider/runners/pull/2549)
 
 ## 0.52.1
 

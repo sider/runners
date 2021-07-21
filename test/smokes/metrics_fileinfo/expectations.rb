@@ -496,3 +496,91 @@ s.add_test_with_git_metadata(
   ],
   analyzer: { name: "Metrics File Info", version: default_version }
 )
+
+s.add_test_with_git_metadata(
+  "unicode_filepath",
+  type: "success",
+  issues: [
+    {
+      id: "metrics_fileinfo",
+      path: "<img onerror=\"alert('ok')\" src=\"foo.png\">.js",
+      location: nil,
+      message: "<img onerror=\"alert('ok')\" src=\"foo.png\">.js: loc = (no info), last commit datetime = 2021-07-20T10:26:16+09:00",
+      links: [],
+      object: {
+        lines_of_code: nil,
+        last_committed_at: "2021-07-20T10:26:16+09:00",
+        number_of_commits: 0,
+        occurrence: 0,
+        additions: 0,
+        deletions: 0
+      },
+      git_blame_info: nil
+    },
+    {
+      id: "metrics_fileinfo",
+      path: "goodcheck copy.yml",
+      location: nil,
+      message: "goodcheck copy.yml: loc = (no info), last commit datetime = 2021-07-20T10:26:16+09:00",
+      links: [],
+      object: {
+        lines_of_code: nil,
+        last_committed_at: "2021-07-20T10:26:16+09:00",
+        number_of_commits: 0,
+        occurrence: 0,
+        additions: 0,
+        deletions: 0
+      },
+      git_blame_info: nil
+    },
+    {
+      id: "metrics_fileinfo",
+      path: "master-test/📁/second_depth_file.js",
+      location: nil,
+      message: "master-test/📁/second_depth_file.js: loc = 2, last commit datetime = 2021-07-20T10:26:16+09:00",
+      links: [],
+      object: {
+        lines_of_code: 2,
+        last_committed_at: "2021-07-20T10:26:16+09:00",
+        number_of_commits: 0,
+        occurrence: 0,
+        additions: 0,
+        deletions: 0
+      },
+      git_blame_info: nil
+    },
+    {
+      id: "metrics_fileinfo",
+      path: "master-test/🗄️.js",
+      location: nil,
+      message: "master-test/🗄️.js: loc = 2, last commit datetime = 2021-07-20T10:26:16+09:00",
+      links: [],
+      object: {
+        lines_of_code: 2,
+        last_committed_at: "2021-07-20T10:26:16+09:00",
+        number_of_commits: 0,
+        occurrence: 0,
+        additions: 0,
+        deletions: 0
+      },
+      git_blame_info: nil
+    },
+    {
+      id: "metrics_fileinfo",
+      path: "zzzzz;' SHOW TABLES; SELECT '.txt",
+      location: nil,
+      message: "zzzzz;' SHOW TABLES; SELECT '.txt: loc = (no info), last commit datetime = 2021-07-20T10:26:16+09:00",
+      links: [],
+      object: {
+        lines_of_code: nil,
+        last_committed_at: "2021-07-20T10:26:16+09:00",
+        number_of_commits: 0,
+        occurrence: 0,
+        additions: 0,
+        deletions: 0
+      },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "Metrics File Info", version: default_version }
+)
