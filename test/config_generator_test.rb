@@ -30,7 +30,7 @@ class ConfigGeneratorTest < Minitest::Test
                 assert_config: ->(config) {
                   assert_equal [:brakeman, :checkstyle, :clang_tidy, :code_sniffer, :coffeelint, :cppcheck, :cpplint, :detekt,
                                 :eslint, :flake8, :fxcop, :golangci_lint, :goodcheck, :hadolint, :haml_lint, :javasee, :jshint,
-                                :ktlint, :languagetool, :misspell, :phinder, :phpmd, :pmd_cpd, :pmd_java, :pylint, :querly,
+                                :ktlint, :languagetool, :metrics, :misspell, :phinder, :phpmd, :pmd_cpd, :pmd_java, :pylint, :querly,
                                 :rails_best_practices, :reek, :remark_lint, :rubocop, :scss_lint, :shellcheck, :slim_lint,
                                 :stylelint, :swiftlint, :tyscan],
                                config.content[:linter].keys.sort, config.inspect
