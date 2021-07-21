@@ -23,6 +23,10 @@ module Runners
       raise NotImplementedError, "#{name} needs to implement `.#{__method__}`"
     end
 
+    def self.metrics?
+      self.analyzer_id.to_s.start_with?("metrics_")
+    end
+
     attr_reader :guid, :working_dir, :config, :shell, :trace_writer, :warnings, :options
 
     def_delegators :@shell,

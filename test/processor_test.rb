@@ -429,4 +429,12 @@ class ProcessorTest < Minitest::Test
     assert_equal Runners::Processor::RuboCop, Runners::Processor.children[:rubocop]
     assert_nil Runners::Processor.children[:unknown]
   end
+
+  def test_metrics
+    assert_equal true, Runners::Processor::MetricsCodeClone.metrics?
+    assert_equal true, Runners::Processor::MetricsComplexity.metrics?
+    assert_equal true, Runners::Processor::MetricsFileInfo.metrics?
+    assert_equal false, Runners::Processor::Eslint.metrics?
+    assert_equal false, Runners::Processor::RuboCop.metrics?
+  end
 end

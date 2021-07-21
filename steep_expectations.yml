@@ -205,10 +205,10 @@
   diagnostics:
   - range:
       start:
-        line: 124
+        line: 128
         character: 26
       end:
-        line: 124
+        line: 128
         character: 29
     severity: ERROR
     message: |-
@@ -220,10 +220,10 @@
     code: Ruby::ArgumentTypeMismatch
   - range:
       start:
-        line: 124
+        line: 128
         character: 31
       end:
-        line: 124
+        line: 128
         character: 40
     severity: ERROR
     message: |-
@@ -238,20 +238,20 @@
     code: Ruby::ArgumentTypeMismatch
   - range:
       start:
-        line: 227
+        line: 231
         character: 20
       end:
-        line: 227
+        line: 231
         character: 27
     severity: ERROR
     message: Type `(::Exception | nil)` does not have method `message`
     code: Ruby::NoMethod
   - range:
       start:
-        line: 250
+        line: 254
         character: 45
       end:
-        line: 250
+        line: 254
         character: 50
     severity: ERROR
     message: Type `(::String | ::Array[::String] | nil)` does not have method `split`

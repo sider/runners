@@ -10,6 +10,8 @@ module Runners
 
     def self.config_example: () -> String
 
+    def self.metrics?: () -> bool
+
     attr_reader guid: String
     attr_reader working_dir: Pathname
     attr_reader config: Config
