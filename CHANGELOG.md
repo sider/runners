@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.53.0...HEAD)
 
+Misc:
+
+- **Secret Scan** Change Beta to Release [#2529](https://github.com/sider/runners/pull/2529)
+
 ## 0.53.0
 
 [Full diff](https://github.com/sider/runners/compare/0.52.1...0.53.0)
@@ -48,8 +52,6 @@ Misc:
 - **Cppcheck** Enable new recommended configuration and add `suppressions-list` option [#2474](https://github.com/sider/runners/pull/2474)
 - **PHPMD** Enable new recommended configuration [#2536](https://github.com/sider/runners/pull/2536)
 - **PMD CPD** Remove codefragment from results [#2525](https://github.com/sider/runners/pull/2525)
-
-- **Secret Scan** Change Beta to Release [#2529](https://github.com/sider/runners/pull/2529)
 
 ## 0.51.2
 
