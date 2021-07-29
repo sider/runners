@@ -19,6 +19,7 @@ jobs:
       - run: bundle add --skip-install rubocop-minitest rubocop-performance rubocop-rake rubocop-rubycw meowcop
       - run: bundle add --skip-install code-scanning-rubocop
       - run: bundle install
+      - run: rm -rf test/smokes/
       - run: bundle exec rubocop --require code_scanning --format CodeScanning::SarifFormatter --out rubocop.sarif
       - uses: github/codeql-action/upload-sarif@v1
         with:
