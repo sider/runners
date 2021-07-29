@@ -1,7 +1,7 @@
 AllCops:
   NewCops: enable
   Exclude:
-    - test/smokes/**
+    - test/smokes/**/*
 
 require:
   - rubocop-minitest
