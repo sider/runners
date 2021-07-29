@@ -20,6 +20,9 @@ jobs:
       - run: bundle add --skip-install code-scanning-rubocop
       - run: bundle install
       - run: rm -rf test/smokes/
+      # TODO: Remove this test
+      - run: |
+          echo 'eval "a"' > a.rb
       - run: |
           bash -c "
             bundle exec rubocop --require code_scanning --format CodeScanning::SarifFormatter --out rubocop.sarif
