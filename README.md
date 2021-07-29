@@ -47,7 +47,7 @@ All **40** analyzers are provided as a Docker image:
 | remark-lint | [docker](https://hub.docker.com/r/sider/runner_remark_lint), [source](https://github.com/remarkjs/remark-lint), [doc](https://help.sider.review/tools/markdown/remark-lint) | ✅ |
 | RuboCop | [docker](https://hub.docker.com/r/sider/runner_rubocop), [source](https://github.com/rubocop/rubocop), [doc](https://help.sider.review/tools/ruby/rubocop), [website](https://rubocop.org) | ✅ |
 | SCSS-Lint | [docker](https://hub.docker.com/r/sider/runner_scss_lint), [source](https://github.com/sds/scss-lint), [doc](https://help.sider.review/tools/css/scss-lint) | ⚠️ |
-| Secret Scan | [docker](https://hub.docker.com/r/sider/runner_secret_scan), [doc](https://help.sider.review/tools/others/secret-scan) | 🔨 |
+| Secret Scan | [docker](https://hub.docker.com/r/sider/runner_secret_scan), [doc](https://help.sider.review/tools/others/secret-scan) | ✅ |
 | ShellCheck | [docker](https://hub.docker.com/r/sider/runner_shellcheck), [source](https://github.com/koalaman/shellcheck), [doc](https://help.sider.review/tools/shellscript/shellcheck), [website](https://www.shellcheck.net) | ✅ |
 | Slim-Lint | [docker](https://hub.docker.com/r/sider/runner_slim_lint), [source](https://github.com/sds/slim-lint), [doc](https://help.sider.review/tools/ruby/slim-lint) | 🔨 |
 | stylelint | [docker](https://hub.docker.com/r/sider/runner_stylelint), [source](https://github.com/stylelint/stylelint), [doc](https://help.sider.review/tools/css/stylelint), [website](https://stylelint.io) | ✅ |

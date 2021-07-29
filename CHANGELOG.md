@@ -4,7 +4,23 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.53.0...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.53.2...HEAD)
+
+## 0.53.2
+
+[Full diff](https://github.com/sider/runners/compare/0.53.1...0.53.2)
+
+Misc:
+
+- Fix broken links on ChangeLog [#2567](https://github.com/sider/runners/pull/2567)
+
+## 0.53.1
+
+[Full diff](https://github.com/sider/runners/compare/0.53.0...0.53.1)
+
+Misc:
+
+- **Secret Scan** Change Beta to Release [#2529](https://github.com/sider/runners/pull/2529)
 
 ## 0.53.0
 
