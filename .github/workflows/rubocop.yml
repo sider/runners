@@ -14,8 +14,8 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-      - run: bundle add code-scanning-rubocop --skip-install
-      - run: bundle install
+      - run: bundle config unset deployment
+      - run: bundle add code-scanning-rubocop
       - run: bundle exec rubocop --require code_scanning --format CodeScanning::SarifFormatter --out rubocop.sarif
       - uses: github/codeql-action/upload-sarif@v1
         with:
