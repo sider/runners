@@ -117,3 +117,8 @@ require "runners/processor/tyscan"
 
 module Runners
 end
+
+a = [1, 2].each do
+end
+
+p a
