@@ -11,6 +11,7 @@ target :lib do
   library "forwardable"
   library "time"
   library "uri"
+  library "optparse"
   library "erb"
   library "rubygems"
   library "strong_json"

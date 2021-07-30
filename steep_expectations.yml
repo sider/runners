@@ -19,6 +19,22 @@
   diagnostics:
   - range:
       start:
+        line: 25
+        character: 8
+      end:
+        line: 27
+        character: 11
+    severity: ERROR
+    message: |-
+      Cannot find compatible overloading of method `on` of type `::OptionParser`
+      Method types:
+        def on: (*::String) ?{ (*untyped) -> untyped } -> ::OptionParser
+              | (::String, (::Class | ::Array[::String] | ::Hash[::Symbol, untyped] | ::Regexp), ?::String) ?{ (*untyped) -> untyped } -> ::OptionParser
+              | (*::String) -> ::OptionParser
+              | (::String, (::Class | ::Array[::String] | ::Hash[::Symbol, untyped] | ::Regexp), ?::String) -> ::OptionParser
+    code: Ruby::UnresolvedOverloading
+  - range:
+      start:
         line: 111
         character: 28
       end:
