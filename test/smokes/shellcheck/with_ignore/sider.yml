@@ -1,4 +1,13 @@
 ignore:
   - "*.min.sh"
   - "*.min.bash"
+  - "!*.min.sh"
   - "dist/**/*.sh"
+  - "*.min.sh"
+
+linter:
+  metrics:
+    ignore:
+      - "abc.bash"
+      - "abc.sh"
+      - "!dist/**/*.sh"

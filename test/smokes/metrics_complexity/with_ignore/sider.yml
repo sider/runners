@@ -1,0 +1,13 @@
+ignore:
+  - "example.*"
+
+linter:
+  metrics:
+    ignore:
+      - "assets/**"
+      - "!assets/bar/hello.swift"
+      - "!assets/*.cpp"
+      - "src/**"
+      - "!src/baz/qux/**"
+      - "**/*.rs"
+
