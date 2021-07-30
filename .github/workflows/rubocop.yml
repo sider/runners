@@ -1,0 +1,28 @@
+name: RuboCop
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - run: bundle config unset deployment
+      # NOTE: Same dependencies as sider.yml
+      - run: bundle add --skip-install rubocop-minitest rubocop-performance rubocop-rake rubocop-rubycw meowcop
+      - run: bundle add --skip-install code-scanning-rubocop
+      - run: bundle install
+      - run: rm -rf test/smokes/
+      - run: bundle exec rubocop --require code_scanning --format CodeScanning::SarifFormatter --out rubocop.sarif
+        continue-on-error: true
+      - run: cat rubocop.sarif
+      - uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: rubocop.sarif
