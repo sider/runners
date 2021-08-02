@@ -327,7 +327,7 @@ s.add_test(
       }
     },
     {
-      message: 'Unexpected unknown at-rule "@functio" (at-rule-no-unknown)',
+      message: 'Unexpected unknown at-rule "@functio"',
       links: [],
       id: "scss/at-rule-no-unknown",
       path: "test.scss",
