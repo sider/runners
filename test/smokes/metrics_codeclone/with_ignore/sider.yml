@@ -1,0 +1,7 @@
+linter:
+  metrics:
+    ignore:
+      - "bar/**"
+      - "foo/**"
+      - "!bar/app_bar.java"
+      - "app.java"

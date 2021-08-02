@@ -686,3 +686,23 @@ s.add_test(
   warnings: [{ message: /`linter.eslint.dir`/, file: "sider.yml" }],
   analyzer: { name: "Metrics Code Clone", version: default_version }
 )
+
+s.add_test(
+  "with_ignore",
+  type: "success",
+  issues: [
+    {
+      path: "bar/app_bar.java",
+      location: nil,
+      id: "metrics_codeclone",
+      message: "The number of code clones is 2 with total 56 lines.",
+      links: [],
+      object: {
+        clones: 2,
+        total_clone_lines: 56
+      },
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "Metrics Code Clone", version: default_version }
+)
