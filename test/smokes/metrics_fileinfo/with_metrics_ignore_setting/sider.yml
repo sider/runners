@@ -1,0 +1,4 @@
+linter:
+  metrics:
+    ignore:
+      - "ignored_dir/**"
