@@ -1,4 +1,4 @@
 source "https://rubygems.org"
 
-gem "slim_lint", "0.21.1"
+gem "slim_lint", "0.22.0"
 gem "sassc", "2.4.0"

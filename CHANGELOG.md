@@ -10,6 +10,7 @@ Updated tools:
 
 - **Brakeman** 5.0.4 -> 5.1.1 [#2555](https://github.com/sider/runners/pull/2555)
 - **PHPMD** 2.10.1 -> 2.10.2 [#2560](https://github.com/sider/runners/pull/2560)
+- **Slim-Lint** 0.21.1 -> 0.22.0 [#2565](https://github.com/sider/runners/pull/2565)
 
 ## 0.53.2
 
