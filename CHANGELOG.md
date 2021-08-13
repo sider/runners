@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.53.2...HEAD)
 
+Updated tools:
+
+- **Brakeman** 5.0.4 -> 5.1.1 [#2433](https://github.com/sider/runners/pull/2555)
+
 ## 0.53.2
 
 [Full diff](https://github.com/sider/runners/compare/0.53.1...0.53.2)
