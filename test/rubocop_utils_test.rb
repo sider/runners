@@ -73,7 +73,7 @@ class RuboCopUtilsTest < Minitest::Test
       assert_links.call %w[
         https://www.rubydoc.info/gems/rubocop-jekyll/RuboCop/Cop/Jekyll/NoPAllowed
         https://github.com/jekyll/rubocop-jekyll
-      ], "Jekyll/NoPAllowed"
+      ], "Jekyll/NoPAllowed", skip: true # TODO: Remove skip.
       assert_links.call %w[
         https://www.rubydoc.info/gems/rubocop-rake/RuboCop/Cop/Rake/Desc
         https://github.com/rubocop/rubocop-rake
@@ -85,7 +85,7 @@ class RuboCopUtilsTest < Minitest::Test
       assert_links.call %w[
         https://www.rubydoc.info/gems/rubocop-sequel/RuboCop/Cop/Sequel/ColumnDefault
         https://github.com/rubocop-hq/rubocop-sequel
-      ], "Sequel/ColumnDefault", additional_statuses: [301] # TODO: Remove `additional_statuses`
+      ], "Sequel/ColumnDefault", skip: true # TODO: Remove skip.
       assert_links.call %w[
         https://www.rubydoc.info/gems/rubocop-sketchup/RuboCop/Cop/SketchupBugs/RenderMode
         https://github.com/sketchup/rubocop-sketchup
