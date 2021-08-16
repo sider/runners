@@ -109,6 +109,10 @@ s.add_test(
       file: nil
     },
     {
+      message: "Discontinue using Rule name category/java/performance.xml/UnnecessaryWrapperObjectCreation as it is scheduled for removal from PMD. PMD 7.0.0 will remove support for this Rule.",
+      file: nil
+    },
+    {
       message:
         "Use Rule name category/java/performance.xml/UnnecessaryWrapperObjectCreation instead of the deprecated Rule name rulesets/java/optimizations.xml/UnnecessaryWrapperObjectCreation. PMD 7.0.0 will remove support for this deprecated Rule name usage.",
       file: nil
