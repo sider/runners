@@ -268,3 +268,44 @@ s.add_test(
   ],
   analyzer: { name: "Metrics Complexity", version: default_version }
 )
+
+s.add_test(
+  "with_override_metrics_ignore",
+  type: "success",
+  issues: [
+    {
+      id: "metrics_file-complexity",
+      path: "node_modules/ex3.c",
+      location: nil,
+      message: "The sum of complexity of total 2 function(s) is 2.",
+      object: {
+        CCN: 2
+      },
+      links: [],
+      git_blame_info: nil
+    },
+    {
+      id: "metrics_file-complexity",
+      path: "source/files/ex4.min.c",
+      location: nil,
+      message: "The sum of complexity of total 2 function(s) is 2.",
+      object: {
+        CCN: 2
+      },
+      links: [],
+      git_blame_info: nil
+    },
+    {
+      id: "metrics_file-complexity",
+      path: "source/vendor/ex2.c",
+      location: nil,
+      message: "The sum of complexity of total 2 function(s) is 2.",
+      object: {
+        CCN: 2
+      },
+      links: [],
+      git_blame_info: nil
+    }
+  ],
+  analyzer: { name: "Metrics Complexity", version: default_version }
+)

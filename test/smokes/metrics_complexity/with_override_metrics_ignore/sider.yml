@@ -1,0 +1,10 @@
+ignore:
+  - "example.*"
+
+linter:
+  metrics:
+    ignore:
+      - "!*.min.*"
+      - "!**/vendor/**"
+      - "!**/node_modules/**"
+      - "source/vendor/ex1.c"
