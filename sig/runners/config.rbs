@@ -23,6 +23,7 @@ module Runners
 
     FILE_NAME: String
     FILE_NAME_OLD: String
+    DEFAULT_METRICS_IGNORE_PATTERNS: Array[String]
 
     def self.load_from_dir: (Pathname) -> instance
 

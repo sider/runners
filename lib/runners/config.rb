@@ -35,6 +35,7 @@ module Runners
 
     FILE_NAME = "sider.yml".freeze
     FILE_NAME_OLD = "sideci.yml".freeze
+    DEFAULT_METRICS_IGNORE_PATTERNS = ["**/vendor/**", "**/node_modules/**", "*.min.*", "*.map"].freeze
 
     def self.load_from_dir(dir)
       file = [
@@ -106,7 +107,7 @@ module Runners
     end
 
     def metrics_ignore_patterns
-      @metrics_ignore_patterns ||= Array(content.dig(:linter, :metrics, :ignore))
+      @metrics_ignore_patterns ||= DEFAULT_METRICS_IGNORE_PATTERNS + Array(content.dig(:linter, :metrics, :ignore))
     end
 
     def linter(id)
