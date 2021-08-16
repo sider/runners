@@ -10,6 +10,7 @@ Updated tools:
 
 - **Brakeman** 5.0.4 -> 5.1.1 [#2555](https://github.com/sider/runners/pull/2555)
 - **PHPMD** 2.10.1 -> 2.10.2 [#2560](https://github.com/sider/runners/pull/2560)
+- **PMD CPD** 6.36.0 -> 6.37.0 [#2585](https://github.com/sider/runners/pull/2585)
 - **PMD Java** 6.36.0 -> 6.37.0 [#2583](https://github.com/sider/runners/pull/2583)
 - **Pylint** 2.9.3 -> 2.9.6 [#2569](https://github.com/sider/runners/pull/2569)
 - **Slim-Lint** 0.21.1 -> 0.22.0 [#2565](https://github.com/sider/runners/pull/2565)
