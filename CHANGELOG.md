@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 Updated tools:
 
 - **Brakeman** 5.0.4 -> 5.1.1 [#2555](https://github.com/sider/runners/pull/2555)
+- **ESLint** 7.31.0 -> 7.32.0 [#2588](https://github.com/sider/runners/pull/2588)
 - **PHPMD** 2.10.1 -> 2.10.2 [#2560](https://github.com/sider/runners/pull/2560)
 - **PMD CPD** 6.36.0 -> 6.37.0 [#2585](https://github.com/sider/runners/pull/2585)
 - **PMD Java** 6.36.0 -> 6.37.0 [#2583](https://github.com/sider/runners/pull/2583)
