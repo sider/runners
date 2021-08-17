@@ -109,6 +109,17 @@ s.add_test(
       git_blame_info: {
         commit: :_, line_hash: "d17640b09a222cb552b20361eb18540d7d3029f0", original_line: 2, final_line: 2
       }
+    },
+    {
+      path: "app/test.php",
+      location: { start_line: 1, start_column: 1 },
+      id: "SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing",
+      message: "Missing declare(strict_types=1).",
+      links: [],
+      object: { type: "ERROR", severity: 5, fixable: true },
+      git_blame_info: {
+        commit: :_, line_hash: "9166a7b7093b6ef318e436c6b16866e360ab4381", original_line: 1, final_line: 1
+      }
     }
   ],
   analyzer: { name: "PHP_CodeSniffer", version: default_version }
