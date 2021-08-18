@@ -15,7 +15,7 @@ class ConfigTest < Minitest::Test
   end
 
   def test_invert_patterns
-    assert_equal ["foo.txt", "!bar/baz/**", "qux/**"], Runners::Config.invert_patterns(["!foo.txt", "bar/baz/**", "!qux/**"])
+    assert_equal ["foo.txt", "!bar/baz/**", "!qux/**"], Runners::Config.invert_patterns(["!foo.txt", "bar/baz/**", "!!qux/**"])
   end
 
   def test_content_without_sider_yml
