@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "6.36.0"
+default_version = "6.37.0"
 
 s.add_test(
   "success",
@@ -106,6 +106,10 @@ s.add_test(
     {
       message:
         "Use Rule name category/java/performance.xml/SimplifyStartsWith instead of the deprecated Rule name rulesets/java/optimizations.xml/SimplifyStartsWith. PMD 7.0.0 will remove support for this deprecated Rule name usage.",
+      file: nil
+    },
+    {
+      message: "Discontinue using Rule name category/java/performance.xml/UnnecessaryWrapperObjectCreation as it is scheduled for removal from PMD. PMD 7.0.0 will remove support for this Rule.",
       file: nil
     },
     {

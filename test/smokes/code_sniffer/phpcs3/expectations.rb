@@ -131,14 +131,25 @@ s.add_test(
     },
     {
       path: "app.php",
-      location: { start_line: 5, start_column: 1 },
-      id: "PSR2.Namespaces.NamespaceDeclaration.BlankLineAfter",
-      message: "There must be one blank line after the namespace declaration",
+      location: { start_line: 1, start_column: 1 },
+      id: "SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing",
+      message: "Missing declare(strict_types=1).",
       links: [],
       object: { type: "ERROR", severity: 5, fixable: true },
       git_blame_info: {
-        commit: :_, line_hash: "68f7bcc539b5ba5aa7e78a9957c469885db007ff", original_line: 5, final_line: 5
+        commit: :_, line_hash: "9166a7b7093b6ef318e436c6b16866e360ab4381", original_line: 1, final_line: 1
       }
+    },
+    {
+      path: "app.php",
+      location: { start_line: 11, start_column:1 },
+      id: "Squiz.Classes.ClassFileName.NoMatch",
+      message: "Class name doesn't match filename; expected \"class app\"",
+      links: [],
+      object: { type: "ERROR", severity: 5, fixable: false },
+      git_blame_info: {
+        commit: :_, line_hash: "4286cd269b2cb816bdd12499bd7d7a431d5181a6", original_line: 11, final_line: 11
+}
     }
   ],
   analyzer: { name: "PHP_CodeSniffer", version: default_version }
