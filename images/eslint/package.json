@@ -20,6 +20,6 @@
     "eslint-plugin-react": "7.24.0",
     "eslint-plugin-react-hooks": "4.2.0",
     "eslint-plugin-unicorn": "35.0.0",
-    "eslint-plugin-vue": "7.14.0"
+    "eslint-plugin-vue": "7.16.0"
   }
 }
