@@ -7,5 +7,5 @@ repositories {
 }
 
 dependencies {
-    implementation "com.pinterest:ktlint:0.41.0"
+    implementation "com.pinterest:ktlint:0.42.1"
 }

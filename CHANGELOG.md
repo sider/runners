@@ -9,11 +9,16 @@ All notable changes to this project will be documented in this file.
 Updated tools:
 
 - **Brakeman** 5.0.4 -> 5.1.1 [#2555](https://github.com/sider/runners/pull/2555)
+- **Checkstyle** 8.44 -> 8.45.1 [#2599](https://github.com/sider/runners/pull/2599)
+- **detekt** 1.17.1 -> 1.18.0 (**breaking**) [#2616](https://github.com/sider/runners/pull/2616)
 - **ESLint** 7.31.0 -> 7.32.0 [#2588](https://github.com/sider/runners/pull/2588)
+- **JSHint** 2.13.0 -> 2.13.1 [#2607](https://github.com/sider/runners/pull/2607)
+- **ktlint** 0.41.0 -> 0.42.1 [#2600](https://github.com/sider/runners/pull/2600)
 - **PHPMD** 2.10.1 -> 2.10.2 [#2560](https://github.com/sider/runners/pull/2560)
 - **PMD CPD** 6.36.0 -> 6.37.0 [#2585](https://github.com/sider/runners/pull/2585)
 - **PMD Java** 6.36.0 -> 6.37.0 [#2583](https://github.com/sider/runners/pull/2583)
 - **Pylint** 2.9.3 -> 2.9.6 [#2569](https://github.com/sider/runners/pull/2569)
+- **Reek** 6.0.4 -> 6.0.6 [#2603](https://github.com/sider/runners/pull/2603)
 - **Slim-Lint** 0.21.1 -> 0.22.0 [#2565](https://github.com/sider/runners/pull/2565)
 
 ## 0.53.2

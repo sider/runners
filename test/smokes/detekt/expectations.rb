@@ -1,6 +1,6 @@
 s = Runners::Testing::Smoke
 
-default_version = "1.17.1"
+default_version = "1.18.0"
 
 s.add_test(
   "with_broken_sider_yml",
@@ -27,54 +27,9 @@ s.add_test(
 
 s.add_test(
   "with_options",
-  type: "success",
-  analyzer: { name: "detekt", version: default_version },
-  issues: [
-    {
-      id: "detekt.EmptyClassBlock",
-      path: "src/FilteredClass.kt",
-      location: { start_line: 2, start_column: 21 },
-      message: "The class or object FilteredClass is empty.",
-      links: [],
-      object: { severity: "warning" },
-      git_blame_info: {
-        commit: :_, line_hash: "7494b1780aef71f48580c650d038aaac5f785284", original_line: 2, final_line: 2
-      }
-    },
-    {
-      id: "detekt.ForEachOnRange",
-      path: "src/ComplexClass.kt",
-      location: { start_line: 44, start_column: 21 },
-      message: "Using the forEach method on ranges has a heavy performance cost. Prefer using simple for loops.",
-      links: [],
-      object: { severity: "warning" },
-      git_blame_info: {
-        commit: :_, line_hash: "1bf72cecb9822789d23028a44c47ea56fae147ab", original_line: 44, final_line: 44
-      }
-    },
-    {
-      id: "detekt.FunctionOnlyReturningConstant",
-      path: "src/App.kt",
-      location: { start_line: 8, start_column: 7 },
-      message: "get is returning a constant. Prefer declaring a constant instead.",
-      links: [],
-      object: { severity: "warning" },
-      git_blame_info: {
-        commit: :_, line_hash: "6619184f836068051c8c20ecda475e7f8c99ca76", original_line: 8, final_line: 8
-      }
-    },
-    {
-      id: "detekt.NestedBlockDepth",
-      path: "src/ComplexClass.kt",
-      location: { start_line: 9, start_column: 13 },
-      message: "Function complex is nested too deeply.",
-      links: [],
-      object: { severity: "warning" },
-      git_blame_info: {
-        commit: :_, line_hash: "dd9e211e3f4dc188f60577b9aa455e52ff083a00", original_line: 9, final_line: 9
-      }
-    }
-  ]
+  type: "failure",
+  message: "Your detekt configuration is invalid",
+  analyzer: { name: "detekt", version: default_version }
 )
 
 s.add_test(
