@@ -22,6 +22,10 @@ Updated tools:
 - **RuboCop** 1.18.3 -> 1.19.1 [#2618](https://github.com/sider/runners/pull/2618)
 - **Slim-Lint** 0.21.1 -> 0.22.0 [#2565](https://github.com/sider/runners/pull/2565)
 
+Misc:
+
+- **Metrics** Filter out package directories from being analyzed by default [#2553](https://github.com/sider/runners/pull/2553)
+
 ## 0.53.2
 
 [Full diff](https://github.com/sider/runners/compare/0.53.1...0.53.2)
