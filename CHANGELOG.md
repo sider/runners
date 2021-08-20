@@ -16,6 +16,7 @@ Updated tools:
 - **PMD CPD** 6.36.0 -> 6.37.0 [#2585](https://github.com/sider/runners/pull/2585)
 - **PMD Java** 6.36.0 -> 6.37.0 [#2583](https://github.com/sider/runners/pull/2583)
 - **Pylint** 2.9.3 -> 2.9.6 [#2569](https://github.com/sider/runners/pull/2569)
+- **Reek** 6.0.4 -> 6.0.6 [#2603](https://github.com/sider/runners/pull/2603)
 - **Slim-Lint** 0.21.1 -> 0.22.0 [#2565](https://github.com/sider/runners/pull/2565)
 
 ## 0.53.2
