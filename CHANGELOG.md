@@ -10,6 +10,7 @@ Updated tools:
 
 - **Brakeman** 5.0.4 -> 5.1.1 [#2555](https://github.com/sider/runners/pull/2555)
 - **Checkstyle** 8.44 -> 8.45.1 [#2599](https://github.com/sider/runners/pull/2599)
+- **detekt** 1.17.1 -> 1.18.0 [#2616](https://github.com/sider/runners/pull/2616)
 - **ESLint** 7.31.0 -> 7.32.0 [#2588](https://github.com/sider/runners/pull/2588)
 - **JSHint** 2.13.0 -> 2.13.1 [#2607](https://github.com/sider/runners/pull/2607)
 - **ktlint** 0.41.0 -> 0.42.1 [#2600](https://github.com/sider/runners/pull/2600)
