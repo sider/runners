@@ -15,7 +15,7 @@ s.add_test_with_git_metadata(
         object: {
           lines_of_code: 7,
           last_committed_at: "2021-01-01T10:00:00+09:00",
-          number_of_commits: 1,
+          number_of_commits: 0,
           occurrence: 0,
           additions: 0,
           deletions: 0
