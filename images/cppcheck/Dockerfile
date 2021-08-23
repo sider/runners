@@ -33,7 +33,7 @@ RUN apt-get update && \
       USE_Z3=yes \
       CXXFLAGS="-O2 -DNDEBUG -Wall -Wno-sign-compare -Wno-unused-function"
 
-FROM sider/devon_rex_base:2.45.4
+FROM sider/devon_rex_base:2.45.9
 
 
 ENV RUNNERS_DEPS_DIR ${RUNNER_USER_HOME}/dependencies

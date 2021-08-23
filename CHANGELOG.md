@@ -4,7 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-[Full diff](https://github.com/sider/runners/compare/0.53.2...HEAD)
+[Full diff](https://github.com/sider/runners/compare/0.53.3...HEAD)
+
+## 0.53.3
+
+[Full diff](https://github.com/sider/runners/compare/0.53.2...0.53.3)
+
+Updated environments:
+
+- **devon_rex** 2.45.4 -> 2.45.9 [#2632](https://github.com/sider/runners/pull/2632) ([diff](https://github.com/sider/devon_rex/compare/2.45.4...2.45.9))
+- **Bundler** 2.2.24 -> 2.2.26 [#2632](https://github.com/sider/runners/pull/2632)
 
 Updated tools:
 
