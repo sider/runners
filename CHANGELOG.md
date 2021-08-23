@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 [Full diff](https://github.com/sider/runners/compare/0.53.3...HEAD)
 
+Misc:
+
+- **Metrics** Filter out package directories from being analyzed by default [#2553](https://github.com/sider/runners/pull/2553)
+
 ## 0.53.3
 
 [Full diff](https://github.com/sider/runners/compare/0.53.2...0.53.3)
@@ -30,10 +34,6 @@ Updated tools:
 - **Reek** 6.0.4 -> 6.0.6 [#2603](https://github.com/sider/runners/pull/2603)
 - **RuboCop** 1.18.3 -> 1.19.1 [#2618](https://github.com/sider/runners/pull/2618)
 - **Slim-Lint** 0.21.1 -> 0.22.0 [#2565](https://github.com/sider/runners/pull/2565)
-
-Misc:
-
-- **Metrics** Filter out package directories from being analyzed by default [#2553](https://github.com/sider/runners/pull/2553)
 
 ## 0.53.2
 
