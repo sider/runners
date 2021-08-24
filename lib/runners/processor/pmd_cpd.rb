@@ -104,7 +104,7 @@ module Runners
 
     attr_accessor :force_option_skip_lexical_errors
 
-    def extract_version!(*)
+    def extract_version!(_command, _version_option = '', pattern: '')
       pmd_version
     end
 

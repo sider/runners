@@ -37,7 +37,7 @@ module Runners
 
     def parse_result: (Array[untyped]) { (Issue) -> void } -> void
 
-    def run_analyzer: (?config: String) -> result
+    def run_analyzer: (?config: String?) -> result
 
     def no_linting_files?: (String) -> bool
 

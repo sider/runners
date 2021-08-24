@@ -39,7 +39,7 @@ module Runners
       YAML
     end
 
-    def extract_version!(*)
+    def extract_version!(_command, _version_option = '', pattern: '')
       pmd_version
     end
 

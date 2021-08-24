@@ -23,9 +23,9 @@ module Runners
       :setup,
       :use_git_metadata_dir?
 
-    def initialize(**params)
-      super(**params)
-      @pmd_cpd = PmdCpd.new(**params).tap { |obj| obj.force_option_skip_lexical_errors = true }
+    def initialize(...)
+      super(...)
+      @pmd_cpd = PmdCpd.new(...).tap { |obj| obj.force_option_skip_lexical_errors = true }
     end
 
     def analyze(changes)

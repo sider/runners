@@ -4,10 +4,10 @@
   - range:
       start:
         line: 77
-        character: 4
+        character: 13
       end:
-        line: 83
-        character: 7
+        line: 77
+        character: 25
     severity: ERROR
     message: |-
       Cannot allow method body have type `::Array[(::Pathname | nil)]` because declared as type `::Array[::Pathname]`
@@ -84,10 +84,10 @@
   - range:
       start:
         line: 65
-        character: 4
+        character: 8
       end:
-        line: 69
-        character: 7
+        line: 65
+        character: 37
     severity: ERROR
     message: |-
       Cannot allow method body have type `::Array[(::String | nil)]` because declared as type `::Array[::String]`
@@ -107,6 +107,19 @@
     severity: ERROR
     message: Type `bot` does not have method `inspect`
     code: Ruby::NoMethod
+- file: lib/runners/nodejs.rb
+  diagnostics:
+  - range:
+      start:
+        line: 135
+        character: 19
+      end:
+        line: 135
+        character: 60
+    severity: ERROR
+    message: 'Method parameters are incompatible with declaration `(*::String, ?flags:
+      ::Array[::String], ?subcommand: ::String) -> void`'
+    code: Ruby::MethodArityMismatch
 - file: lib/runners/processor/checkstyle.rb
   diagnostics:
   - range:
@@ -134,10 +147,10 @@
   - range:
       start:
         line: 74
-        character: 4
+        character: 8
       end:
-        line: 90
-        character: 7
+        line: 74
+        character: 24
     severity: ERROR
     message: |-
       Cannot allow method body have type `(::Array[(::String | ::Array[::String])] | ::Array[::String])` because declared as type `::Array[::String]`
@@ -160,6 +173,82 @@
     severity: ERROR
     message: Type `bot` does not have method `delete_prefix`
     code: Ruby::NoMethod
+- file: lib/runners/processor/metrics_codeclone.rb
+  diagnostics:
+  - range:
+      start:
+        line: 26
+        character: 18
+      end:
+        line: 26
+        character: 23
+    severity: ERROR
+    message: 'Method parameters are incompatible with declaration `(trace_writer:
+      ::Runners::TraceWriter, shell: ::Runners::Shell, config: ::Runners::Config,
+      working_dir: ::Pathname, guid: ::String, ?options: ::Runners::Options) -> void`'
+    code: Ruby::MethodArityMismatch
+  - range:
+      start:
+        line: 27
+        character: 6
+      end:
+        line: 27
+        character: 16
+    severity: ERROR
+    message: 'More keyword arguments are required: trace_writer, shell, config, working_dir,
+      guid'
+    code: Ruby::InsufficientKeywordArguments
+  - range:
+      start:
+        line: 27
+        character: 12
+      end:
+        line: 27
+        character: 15
+    severity: ERROR
+    message: Unexpected positional argument
+    code: Ruby::UnexpectedPositionalArgument
+  - range:
+      start:
+        line: 27
+        character: 12
+      end:
+        line: 27
+        character: 15
+    severity: ERROR
+    message: Syntax `forwarded_args` is not supported in Steep
+    code: Ruby::UnsupportedSyntax
+  - range:
+      start:
+        line: 28
+        character: 24
+      end:
+        line: 28
+        character: 32
+    severity: ERROR
+    message: 'More keyword arguments are required: trace_writer, shell, config, working_dir,
+      guid'
+    code: Ruby::InsufficientKeywordArguments
+  - range:
+      start:
+        line: 28
+        character: 28
+      end:
+        line: 28
+        character: 31
+    severity: ERROR
+    message: Unexpected positional argument
+    code: Ruby::UnexpectedPositionalArgument
+  - range:
+      start:
+        line: 28
+        character: 28
+      end:
+        line: 28
+        character: 31
+    severity: ERROR
+    message: Syntax `forwarded_args` is not supported in Steep
+    code: Ruby::UnsupportedSyntax
 - file: lib/runners/processor/misspell.rb
   diagnostics:
   - range:
@@ -172,32 +261,6 @@
     severity: ERROR
     message: Type `bot` does not have method `size`
     code: Ruby::NoMethod
-- file: lib/runners/processor/pmd_cpd.rb
-  diagnostics:
-  - range:
-      start:
-        line: 107
-        character: 24
-      end:
-        line: 107
-        character: 27
-    severity: ERROR
-    message: 'Method parameters are incompatible with declaration `((::String | ::Array[::String]),
-      ?(::String | ::Array[::String]), ?pattern: ::Regexp) -> ::String`'
-    code: Ruby::MethodArityMismatch
-- file: lib/runners/processor/pmd_java.rb
-  diagnostics:
-  - range:
-      start:
-        line: 42
-        character: 24
-      end:
-        line: 42
-        character: 27
-    severity: ERROR
-    message: 'Method parameters are incompatible with declaration `((::String | ::Array[::String]),
-      ?(::String | ::Array[::String]), ?pattern: ::Regexp) -> ::String`'
-    code: Ruby::MethodArityMismatch
 - file: lib/runners/processor/shellcheck.rb
   diagnostics:
   - range:
@@ -272,3 +335,52 @@
     severity: ERROR
     message: Type `(::String | ::Array[::String] | nil)` does not have method `split`
     code: Ruby::NoMethod
+- file: lib/runners/shell.rb
+  diagnostics:
+  - range:
+      start:
+        line: 78
+        character: 16
+      end:
+        line: 78
+        character: 43
+    severity: ERROR
+    message: Method parameters are incompatible with declaration `(::String, *::Runners::Shell::command_argument,
+      **untyped) -> [::String, ::String, ::Process::Status]`
+    code: Ruby::MethodArityMismatch
+  - range:
+      start:
+        line: 82
+        character: 17
+      end:
+        line: 82
+        character: 44
+    severity: ERROR
+    message: Method parameters are incompatible with declaration `(::String, *::Runners::Shell::command_argument,
+      **untyped) -> [::String, ::String]`
+    code: Ruby::MethodArityMismatch
+  - range:
+      start:
+        line: 87
+        character: 28
+      end:
+        line: 87
+        character: 88
+    severity: ERROR
+    message: 'Method parameters are incompatible with declaration `(::String, *::Runners::Shell::command_argument,
+      ?sleep: ^(::Numeric) -> ::Numeric, ?tries: ::Integer) -> [::String, ::String]`'
+    code: Ruby::MethodArityMismatch
+  - range:
+      start:
+        line: 98
+        character: 22
+      end:
+        line: 102
+        character: 60
+    severity: ERROR
+    message: 'Method parameters are incompatible with declaration `(::String, *::Runners::Shell::command_argument,
+      ?merge_output: ::boolish, ?stdin_data: (::String | nil), ?is_success: ^(::Process::Status)
+      -> ::boolish, ?chdir: (::Pathname | nil), ?raise_on_failure: ::boolish, ?trace_command_line:
+      ::boolish, ?trace_stderr: ::boolish, ?trace_stdout: ::boolish) -> [::String,
+      ::String, ::Process::Status]`'
+    code: Ruby::MethodArityMismatch

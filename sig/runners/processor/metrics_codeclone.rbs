@@ -8,8 +8,6 @@ module Runners
     end
     SCHEMA: SchemaClass
 
-    def initialize: (**untyped) -> void
-
     private
 
     def construct_file_issue: (Array[Issue], Pathname) -> Issue
