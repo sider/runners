@@ -24,7 +24,7 @@ module Runners
     end
 
     def self.metrics?
-      !!self.name&.start_with?("Runners::Processor::Metrics")
+      [MetricsComplexity, MetricsCodeClone, MetricsFileInfo].include?(self)
     end
 
     attr_reader :guid, :working_dir, :config, :shell, :trace_writer, :warnings, :options
