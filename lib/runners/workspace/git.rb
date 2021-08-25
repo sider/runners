@@ -34,7 +34,8 @@ module Runners
       git_checkout
 
       # Next, fetch remaining files except for *ignored* files.
-      patterns = (processor_class.metrics? ? config.metrics_ignore_patterns : []) + config.ignore_patterns
+      patterns = processor_class.metrics? ? config.metrics_ignore_patterns : []
+      patterns += config.ignore_patterns
       git_sparse_checkout_set "/**", *Config.invert_patterns(patterns)
       git_checkout
     end
