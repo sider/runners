@@ -69,7 +69,7 @@ class RuboCopUtilsTest < Minitest::Test
       assert_links.call %w[
         https://www.rubydoc.info/gems/rubocop-i18n/RuboCop/Cop/I18n/RailsI18n/DecorateString
         https://github.com/puppetlabs/rubocop-i18n
-      ], "I18n/RailsI18n/DecorateString"
+      ], "I18n/RailsI18n/DecorateString", skip: true # TODO: Remove skip.
       assert_links.call %w[
         https://www.rubydoc.info/gems/rubocop-jekyll/RuboCop/Cop/Jekyll/NoPAllowed
         https://github.com/jekyll/rubocop-jekyll
@@ -81,7 +81,7 @@ class RuboCopUtilsTest < Minitest::Test
       assert_links.call %w[
         https://www.rubydoc.info/gems/rubocop-rubycw/RuboCop/Cop/Rubycw/Rubycw
         https://github.com/rubocop/rubocop-rubycw
-      ], "Rubycw/Rubycw"
+      ], "Rubycw/Rubycw", skip: true # TODO: Remove skip.
       assert_links.call %w[
         https://www.rubydoc.info/gems/rubocop-sequel/RuboCop/Cop/Sequel/ColumnDefault
         https://github.com/rubocop-hq/rubocop-sequel
@@ -89,19 +89,19 @@ class RuboCopUtilsTest < Minitest::Test
       assert_links.call %w[
         https://www.rubydoc.info/gems/rubocop-sketchup/RuboCop/Cop/SketchupBugs/RenderMode
         https://github.com/sketchup/rubocop-sketchup
-      ], "SketchupBugs/RenderMode"
+      ], "SketchupBugs/RenderMode", skip: true # TODO: Remove skip.
       assert_links.call %w[
         https://www.rubydoc.info/gems/rubocop-sorbet/RuboCop/Cop/Sorbet/FalseSigil
         https://github.com/shopify/rubocop-sorbet
-      ], "Sorbet/FalseSigil"
+      ], "Sorbet/FalseSigil", skip: true # TODO: Remove skip.
       assert_links.call %w[
         https://www.rubydoc.info/gems/rubocop-thread_safety/RuboCop/Cop/ThreadSafety/NewThread
         https://github.com/covermymeds/rubocop-thread_safety
-      ], "ThreadSafety/NewThread"
+      ], "ThreadSafety/NewThread", skip: true # TODO: Remove skip.
       assert_links.call %w[
         https://www.rubydoc.info/gems/rubocop-vendor/RuboCop/Cop/Vendor/RollbarLog
         https://github.com/wealthsimple/rubocop-vendor
-      ], "Vendor/RollbarLog"
+      ], "Vendor/RollbarLog", skip: true # TODO: Remove skip.
 
       # unknown
       assert_links.call [], "Foo"
