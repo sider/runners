@@ -73,6 +73,10 @@ module Runners
           **fields,
         )
       end
+
+      def metrics
+        object?(ignore: one_or_more_strings?)
+      end
     end
 
     Config = _ = StrongJSON.new do

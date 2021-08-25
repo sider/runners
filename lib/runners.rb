@@ -71,7 +71,6 @@ require "runners/schema/options"
 require "runners/schema/trace"
 require "runners/schema/config"
 require "runners/schema/result"
-require "runners/schema/metrics"
 
 # processors
 require "runners/processor"

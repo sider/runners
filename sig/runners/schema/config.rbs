@@ -13,6 +13,7 @@ module Runners
       def npm: (**untyped) -> StrongJSON::Type::Object[untyped]
       def java: (**untyped) -> StrongJSON::Type::Object[untyped]
       def python: (**untyped) -> StrongJSON::Type::Object[untyped]
+      def metrics: () -> StrongJSON::Type::Optional[untyped]
     end
 
     class ConfigClass < StrongJSON

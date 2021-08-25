@@ -3,6 +3,7 @@ module Runners
     class SchemaClass < StrongJSON
       include Schema::ConfigTypes
 
+      def config: () -> StrongJSON::Type::Object[untyped]
       def issue: () -> StrongJSON::Type::Object[untyped]
     end
     SCHEMA: SchemaClass

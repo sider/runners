@@ -15,8 +15,8 @@ module Runners
         .freeze
     end
 
-    def self.register_config_schema(schema)
-      Schema::Config.register(name: analyzer_id, schema: schema)
+    def self.register_config_schema(schema, name: analyzer_id)
+      Schema::Config.register(name: name, schema: schema)
     end
 
     def self.config_example

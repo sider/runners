@@ -4,6 +4,8 @@ module Runners
       extend Schema::ConfigTypes
 
       # @type self: SchemaClass
+      let :config, metrics
+
       let :issue, object(
         lines_of_code: integer?,
         last_committed_at: string,
@@ -13,6 +15,8 @@ module Runners
         deletions: integer
       )
     end
+
+    register_config_schema SCHEMA.config, name: :metrics
 
     # Basically, the code churn is the number of times or the sum of added/deleted lines a file has changed within a specified period of time.
     # Like other products, we adopt the last 90 days before the latest commit date. However, if a project is not so active and has only
