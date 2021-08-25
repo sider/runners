@@ -2,25 +2,26 @@ module Runners
   class Workspace
     include Tmpdir
 
-    def self.prepare(options:, working_dir:, trace_writer:)
-      Workspace::Git.new(options: options, working_dir: working_dir, trace_writer: trace_writer)
+    def self.prepare(options:, working_dir:, trace_writer:, processor_class:)
+      Workspace::Git.new(options: options, working_dir: working_dir, trace_writer: trace_writer, processor_class: processor_class)
     end
 
-    attr_reader :options, :working_dir, :trace_writer, :shell
+    attr_reader :options, :working_dir, :trace_writer, :processor_class, :shell
 
-    def initialize(options:, working_dir:, trace_writer:)
+    def initialize(options:, working_dir:, trace_writer:, processor_class:)
       @options = options
       @working_dir = working_dir
       @trace_writer = trace_writer
+      @processor_class = processor_class
       @shell = Shell.new(current_dir: working_dir, trace_writer: trace_writer, env_hash: {})
     end
 
-    def open(fast: true, run_metrics: false)
+    def open
       prepare_ssh do |git_ssh_path|
         trace_writer.header "Set up source code"
 
         trace_writer.message "Preparing head commit tree..."
-        prepare_head_source(fast: fast, run_metrics: run_metrics)
+        prepare_head_source
 
         changes =
           if options.source.base
@@ -39,7 +40,7 @@ module Runners
       []
     end
 
-    def prepare_head_source(fast: true, run_metrics: false)
+    def prepare_head_source
       raise NotImplementedError
     end
 

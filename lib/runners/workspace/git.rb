@@ -22,8 +22,8 @@ module Runners
       raise BlameFailed, "git-blame failed: #{exn.stderr_str}"
     end
 
-    def prepare_head_source(fast: true, run_metrics: false)
-      git_clone(fast: fast)
+    def prepare_head_source
+      git_clone
       git_setup
 
       # Fetch a pull request if specified (including a forked repository).
@@ -34,7 +34,7 @@ module Runners
       git_checkout
 
       # Next, fetch remaining files except for *ignored* files.
-      patterns = (run_metrics ? config.metrics_ignore_patterns : []) + config.ignore_patterns
+      patterns = (processor_class.metrics? ? config.metrics_ignore_patterns : []) + config.ignore_patterns
       git_sparse_checkout_set "/**", *Config.invert_patterns(patterns)
       git_checkout
     end
@@ -87,14 +87,19 @@ module Runners
 
     # @see https://git-scm.com/docs/git-clone
     # @see https://git-scm.com/docs/partial-clone
-    def git_clone(fast:)
+    def git_clone
       options = %w[
         --no-checkout
         --no-recurse-submodules
         --no-tags
         --quiet
       ]
-      options << "--filter=blob:none" if fast
+
+      # NOTE: MetricsFileInfo needs all Git blob objects to calculate code churn.
+      if processor_class != Processor::MetricsFileInfo
+        options << "--filter=blob:none"
+      end
+
       shell.capture3_with_retry!("git", "clone", *options, "--", remote_url, ".", tries: try_count, sleep: sleep_lambda)
     rescue Shell::ExecError => exn
       raise CloneFailed, "git-clone failed: #{exn.stderr_str}"
