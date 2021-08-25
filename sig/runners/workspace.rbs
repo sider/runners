@@ -2,20 +2,21 @@ module Runners
   class Workspace
     include Tmpdir
 
-    def self.prepare: (options: Options, working_dir: Pathname, trace_writer: TraceWriter) -> Workspace
+    def self.prepare: (options: Options, working_dir: Pathname, trace_writer: TraceWriter, processor_class: singleton(Processor)) -> Workspace
 
     attr_reader options: Options
     attr_reader working_dir: Pathname
     attr_reader trace_writer: TraceWriter
+    attr_reader processor_class: singleton(Processor)
     attr_reader shell: Shell
 
-    def initialize: (options: Options, working_dir: Pathname, trace_writer: TraceWriter) -> void
+    def initialize: (options: Options, working_dir: Pathname, trace_writer: TraceWriter, processor_class: singleton(Processor)) -> void
 
-    def open: [X] (?fast: bool, ?run_metrics: bool) { (Pathname?, Changes) -> X } -> X
+    def open: [X] () { (Pathname?, Changes) -> X } -> X
 
     def range_git_blame_info: (String, Integer, Integer, ?trace: bool) -> Array[GitBlameInfo]
 
-    def prepare_head_source: (?fast: bool, ?run_metrics: bool) -> void
+    def prepare_head_source: () -> void
 
     def patches: () -> GitDiffParser::Patches
 
