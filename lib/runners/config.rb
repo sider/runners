@@ -35,7 +35,12 @@ module Runners
 
     FILE_NAME = "sider.yml".freeze
     FILE_NAME_OLD = "sideci.yml".freeze
-    DEFAULT_METRICS_IGNORE_PATTERNS = ["**/vendor/**", "**/node_modules/**", "*.min.*", "*.map"].freeze
+    DEFAULT_METRICS_IGNORE_PATTERNS = [
+      "**/node_modules/**",
+      "**/vendor/**",
+      "*.map",
+      "*.min.*",
+    ].freeze
 
     def self.load_from_dir(dir)
       file = [
