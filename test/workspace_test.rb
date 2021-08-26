@@ -9,7 +9,8 @@ class WorkspaceTest < Minitest::Test
     json = JSON.dump(source: { head: "commit", git_url: "https://github.com/foo/bar" })
     options = Runners::Options.new(json, StringIO.new, StringIO.new)
     filter = Runners::SensitiveFilter.new(options: options)
-    workspace = Workspace.prepare(options: options, trace_writer: new_trace_writer(filter: filter), working_dir: Pathname("/"))
+    processor_class = Runners::Processor
+    workspace = Workspace.prepare(options: options, trace_writer: new_trace_writer(filter: filter), working_dir: Pathname("/"), processor_class: processor_class)
     assert_instance_of Workspace::Git, workspace
   end
 

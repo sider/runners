@@ -36,8 +36,9 @@ module TestHelper
     source = new_source(**source_params)
     options = Runners::Options.new(JSON.dump(source: source, ssh_key: ssh_key), StringIO.new, StringIO.new)
     filter = Runners::SensitiveFilter.new(options: options)
+    processor_class = Runners::Processor
     mktmpdir do |dir|
-      yield Runners::Workspace.prepare(options: options, working_dir: dir, trace_writer: new_trace_writer(filter: filter))
+      yield Runners::Workspace.prepare(options: options, working_dir: dir, trace_writer: new_trace_writer(filter: filter), processor_class: processor_class)
     end
   end
 
