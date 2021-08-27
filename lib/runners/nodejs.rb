@@ -69,7 +69,7 @@ module Runners
             end
             package_json_path.write("{}")
             npm_install(*deps, flags: ["--no-package-lock"])
-            capture3! "rm", PACKAGE_JSON
+            package_json_path.delete
           ensure
             if backup.exist?
               trace_writer.message "Restoring `#{package_json_path.basename}`..."
