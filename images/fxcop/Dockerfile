@@ -22,7 +22,7 @@ RUN cd "${RUNNERS_DIR}" && \
     lockfile_bundler_version=$(bundle exec ruby -e 'puts Bundler.locked_gems.bundler_version') && \
     bundle version | grep "Bundler version ${lockfile_bundler_version}"
 
-ENV FXCOP_VERSION=3.3.2
+ENV FXCOP_VERSION=5.0.3
 
 ARG ROSLYN_ANALYZERS_RUNNER_VERSION=0.1.4
 ARG ROSLYN_ANALYZERS_RUNNER_HOME=${RUNNER_USER_HOME}/roslyn-analyzers-runner
