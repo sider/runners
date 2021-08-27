@@ -8,6 +8,6 @@
     "remark-preset-lint-markdown-style-guide": "5.0.1",
     "remark-preset-lint-sider": "0.7.0",
     "remark-validate-links": "11.0.0",
-    "vfile-reporter-json": "3.1.0"
+    "vfile-reporter-json": "2.0.2"
   }
 }
