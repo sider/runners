@@ -22,7 +22,7 @@ module Runners
     register_config_schema SCHEMA.config
 
     CONSTRAINTS = {
-      "remark-cli" => Gem::Requirement.new(">= 7.0.0", "< 10.0.0").freeze,
+      "remark-cli" => Gem::Requirement.new(">= 7.0.0", "< 11.0.0").freeze,
     }.freeze
 
     DEFAULT_TARGET = ".".freeze

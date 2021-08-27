@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "remark-cli": "9.0.0",
+    "remark-cli": "10.0.0",
     "remark-gfm": "2.0.0",
     "remark-lint": "9.0.1",
     "remark-preset-lint-consistent": "5.0.1",
