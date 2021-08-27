@@ -67,7 +67,7 @@ module Runners
               trace_writer.message "Backing up `#{package_json_path.basename}` before installing dependencies..."
               package_json_path.rename(backup)
             end
-            capture3! "npm", "init", "-y"
+            package_json_path.write("{}")
             npm_install(*deps, flags: ["--no-package-lock"])
             capture3! "rm", PACKAGE_JSON
           ensure
