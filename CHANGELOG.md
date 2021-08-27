@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 Misc:
 
 - **Metrics** Filter out package directories from being analyzed by default [#2553](https://github.com/sider/runners/pull/2553)
+- Change node_modules resolution to fix NODE_PATH issue [#2638](https://github.com/sider/runners/pull/2638)
 
 ## 0.53.3
 

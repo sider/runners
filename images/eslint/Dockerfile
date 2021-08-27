@@ -28,7 +28,9 @@ RUN cd "${RUNNERS_DEPS_DIR}" && \
     npm install --strict-peer-deps --ignore-scripts --engine-strict --no-progress --no-save && \
     rm package*.json
 ENV PATH ${RUNNERS_DEPS_DIR}/node_modules/.bin:${PATH}
-ENV NODE_PATH ${RUNNERS_DEPS_DIR}/node_modules:${NODE_PATH}
+# We can't use NODE_PATH
+# See the details here: https://github.com/sider/runners/issues/2636
+RUN ln -s "${RUNNERS_DEPS_DIR}"/node_modules "${HOME}"
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} \
      images/eslint/sider_recommended_eslint.js \

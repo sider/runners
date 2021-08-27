@@ -28,13 +28,17 @@ RUN cd "${RUNNERS_DEPS_DIR}" && \
     npm install --strict-peer-deps --ignore-scripts --engine-strict --no-progress --no-save && \
     rm package*.json
 ENV PATH ${RUNNERS_DEPS_DIR}/node_modules/.bin:${PATH}
-ENV NODE_PATH ${RUNNERS_DEPS_DIR}/node_modules:${NODE_PATH}
+# We can't use NODE_PATH
+# See the details here: https://github.com/sider/runners/issues/2636
+RUN ln -s "${RUNNERS_DEPS_DIR}"/node_modules "${HOME}"
 
 # NOTE: Install the older version to run `stylelint-config-recommended` with stylelint v8.
 RUN cd "${RUNNER_USER_HOME}" && \
     mkdir stylelint-config-recommended.old && \
     cd stylelint-config-recommended.old && \
-    npm install stylelint-config-recommended@2
+    npm init -y && \
+    npm install stylelint-config-recommended@2 && \
+    rm package*.json
 
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} \
      images/stylelint/sider_recommended_config.old.yaml \
