@@ -26,11 +26,11 @@ RUN cd "${RUNNERS_DIR}" && \
 COPY --chown=${RUNNER_USER}:${RUNNER_GROUP} images/stylelint/package.json ${RUNNERS_DEPS_DIR}/
 RUN cd "${RUNNERS_DEPS_DIR}" && \
     npm install --strict-peer-deps --ignore-scripts --engine-strict --no-progress --no-save && \
-    rm package*.json
+    rm package*.json && \
+    # We can't use NODE_PATH
+    # See the details here: https://github.com/sider/runners/issues/2636
+    ln -s "${RUNNERS_DEPS_DIR}"/node_modules "${RUNNER_USER_HOME}"
 ENV PATH ${RUNNERS_DEPS_DIR}/node_modules/.bin:${PATH}
-# We can't use NODE_PATH
-# See the details here: https://github.com/sider/runners/issues/2636
-RUN ln -s "${RUNNERS_DEPS_DIR}"/node_modules "${HOME}"
 
 # NOTE: Install the older version to run `stylelint-config-recommended` with stylelint v8.
 RUN cd "${RUNNER_USER_HOME}" && \
