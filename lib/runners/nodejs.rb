@@ -68,8 +68,8 @@ module Runners
               package_json_path.rename(backup)
             end
             capture3! "npm", "init", "-y"
-            npm_install(*deps)
-            capture3! "rm package*.json"
+            npm_install(*deps, flags: ["--no-package-lock"])
+            capture3! "rm", PACKAGE_JSON
           ensure
             if backup.exist?
               trace_writer.message "Restoring `#{package_json_path.basename}`..."
